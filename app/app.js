@@ -300,6 +300,6 @@ app.get("*", function(req, res){
 })
 
 //Setting environment
-app.listen((process.env.PORT || 3000), function(){
+app.listen((process.env.PORT || 5000), function(){
     console.log("Server has started!!! Listening at 3000...");
 });
