@@ -1,0 +1,164 @@
+<% include partials/header.ejs%>
+	<div class="container">
+		<form id="uploadForm" enctype="multipart/form-data" method="post" action="/">
+			<h3>Subjects</h3>
+			<div class="row">
+				<div class="col-xs-4">
+					<label>
+						<input type="radio" name="subjects" id="physics" value="physics" checked>
+						Physics
+					</label>
+				</div>
+				<div class="col-xs-4">
+					<label>
+						<input type="radio" name="subjects" id="chemistry" value="chemistry">
+						Chemistry
+					</label>
+				</div>
+				<div class="col-xs-4">
+					<label>
+						<input type="radio" name="subjects" id="biology" value="biology">
+						Biology
+					</label>
+				</div>
+			</div>
+			<br>
+			<br>
+			<h3>Chapters</h3>
+			<div class="row">
+				<div class="col-xs-4">
+					<div class="radio">
+						<label>
+							<input type="radio" name="chapter" id="biology" value="biology">
+							Waves
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="chapter" id="biology" value="biology">
+							Magnetism
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="chapter" id="biology" value="biology">
+							Electronic devices
+						</label>
+					</div>
+					
+				</div>
+				<div class="col-xs-4">
+					<div class="radio">
+						<label>
+							<input type="radio" name="chapter" id="biology" value="biology">
+							Periodic Table
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="chapter" id="biology" value="biology">
+							Bonding
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="chapter" id="biology" value="biology">
+							Phases of matter
+						</label>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="radio">
+						<label>
+							<input type="radio" name="chapter" id="biology" value="biology">
+							Cell structure
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="chapter" id="biology" value="biology">
+							Human Physiology
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="chapter" id="biology" value="biology">
+							Plant Physiology
+						</label>
+					</div>
+				</div>
+			</div>
+					
+			<br>
+			<br>
+			<h3>Topics</h3>
+			<div class="row">
+				<div class="col-xs-4">
+					<div class="radio">
+						<label>
+							<input type="radio" name="topic" id="biology" value="biology">
+							phyWaveTopic1
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="topic" id="biology" value="biology">
+							phyMagTopic2						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="topic" id="biology" value="biology">
+							phyElectronicTopic3
+						</label>
+					</div>
+					
+				</div>
+				<div class="col-xs-4">
+					<div class="radio">
+						<label>
+							<input type="radio" name="topic" id="biology" value="biology">
+							chemPeriodicTopic1
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="topic" id="biology" value="biology">
+							chemBondingTopic2
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="topic" id="chemMatterTopic3" value="biology">
+							chemMatterTopic3
+						</label>
+					</div>
+					
+				</div>
+				<div class="col-xs-4">
+					<div class="radio">
+						<label>
+							<input type="radio" name="topic" id="bioCellTopic1" value="bioCellTopic1">
+							bioCellTopic1
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="topic" id="bioHumanTopic2" value="bioHumanTopic2">
+							bioHumanTopic2						
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="topic" id="bioPlantTopic3" value="bioPlantTopic3">
+							bioPlantTopic3
+						</label>
+					</div>
+					
+				</div>
+			</div>
+			
+			<input type="file" name="userFile" class="btn"/><br>
+			<input type="submit" value="Upload File" name="submit" class="btn btn-primary">
+		</form>
+	</div>
+<% include partials/footer.ejs%>
