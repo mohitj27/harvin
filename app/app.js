@@ -9,6 +9,9 @@ var localStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
 var session = require("express-session");
 var flash = require("connect-flash");
+var adminRoutes = require("./routes/admin.js");
+var studentRoutes = require("./routes/student.js");
+var indexRoutes = require("./routes/index.js");
 
 var app = express();
 var conn = mongoose.connection;
@@ -18,6 +21,7 @@ mongoose.Promise = Promise;
 
 //========connection to database
 var url = process.env.DATABASEURL || "mongodb://localhost/innov8";
+// var url = process.env.DATABASEURL || "mongodb://gopal:151295@ds157342.mlab.com:57342/harvin";
 mongoose.connect(url,{ useMongoClient: true });
 
 conn.on("error", console.error.bind(console, "connection error"));
@@ -62,36 +66,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//====================SCHEMAS=========================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//===================DATA MODELS=====================
-
+//models and schema
 var File = require("./models/File.js");
 var Topic = require("./models/Topic.js");
 var Chapter = require("./models/Chapter.js");
 var Subject = require("./models/Subject.js");
 var User = require("./models/User.js");
-
-
-
-
-
-
-
-
 
 //Setting local strategy for authentication of user
 passport.use(new localStrategy(User.authenticate()));
@@ -106,145 +86,9 @@ app.use(function(req, res, next) {
   next();
 });
 
-//==========database===========
-var subjects=[
-	{
-		subjectName:"subject1",
-	},
-	{
-		subjectName:"subject2",
-	},
-	{
-		subjectName:"subject3",
-	},
-	{
-		subjectName:"subject4",
-	},
-	{
-		subjectName:"subject5",
-	},
-	{
-		subjectName:"subject6",
-	},
-	{
-		subjectName:"subject7",
-	}
-];
-
-//===================ROUTES======================
-
-//Home
-app.get("/", function(req, res){
-	var jsondata = {"hello": "world"};
-    res.render("home");
-});
-
-//Handle file upload
-app.post('/', function(req, res) {
-	var upload = multer({
-		storage: storage
-	}).single('userFile')
-	upload(req, res, function(err) {
-        //TODO: save the file URI in mongodb
-		res.end('File is uploaded')
-	})
-})
-
-//User registration form-- for admin
-app.get("/admin/signup", function(req, res){
-    res.render("signup");
-});
-
-//Handle user registration-- for admin
-app.post("/admin/signup", function(req, res){
-    User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
-        if (err) {
-            console.log(err);
-            return res.json(err);
-        }
-
-        passport.authenticate("local")(req, res, function () {
-            res.redirect("/");
-        });
-    });
-});
-
-//Handle user registration-- for student
-app.post("/student/signup", function(req, res){
-    User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
-        if (err) {
-            console.log(err);
-            return res.json(err);
-        }
-
-        passport.authenticate("local")(req, res, function () {
-            res.json(user);
-        });
-    });
-});
-
-//User login form-- admin
-app.get("/admin/login", function(req, res){
-    res.render("login",{error:res.locals.msg_error});
-});
-
-//User login form-- for student
-app.get("/student/login", function(req, res){
-	console.log(res.locals.msg_error);
-    res.send({error:res.locals.msg_error});
-});
-
-//Handle user login -- for admin
-app.post("/admin/login", passport.authenticate("local", 
-    { 
-        successRedirect: "/",
-        failureRedirect: "/admin/login",
-        successFlash:"Welcome back",
-        failureFlash:true
-    }),
-    function(req, res) {
-		
-    }
-);
-
-//Handle user login -- for student
-app.post("/student/login", passport.authenticate("local", 
-    { 
-        failureRedirect: "/student/login",
-        successFlash:"Welcome back",
-        failureFlash:true
-    }),
-    function(req, res) {
-		res.json(req.user);
-    }
-);
-
-//User logout-- admin
-app.get("/admin/logout", function(req, res) {
-    req.logout();
-    res.redirect("/");
-});
-
-//User logout-- student
-app.get("/student/logout", function(req, res) {
-    req.logout();
-    res.json({"success":"You Logged out successfully"});
-});
-
-//sending subject list
-app.get("/student/subjects", function(req, res){
-	res.json(subjects);
-});
-
-//Form for uploading a file
-app.get('/uploadFile', function(req, res) {
-	res.render('upload');
-});
-
-//if not route mentioned in url
-app.get("*", function(req, res){
-    res.send("No page found :(((((((");
-})
+app.use("/",indexRoutes);
+app.use("/student", studentRoutes);
+app.use("/admin/", adminRoutes);
 
 //Setting environment
 app.listen((process.env.PORT || 3000), function(){
