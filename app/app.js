@@ -158,6 +158,30 @@ app.use(function(req, res, next) {
   next();
 });
 
+//==========database===========
+var subjects=[
+	{
+		subjectName:"subject1",
+	},
+	{
+		subjectName:"subject2",
+	},
+	{
+		subjectName:"subject3",
+	},
+	{
+		subjectName:"subject4",
+	},
+	{
+		subjectName:"subject5",
+	},
+	{
+		subjectName:"subject6",
+	},
+	{
+		subjectName:"subject7",
+	}
+];
 
 //===================ROUTES======================
 
@@ -199,6 +223,7 @@ app.post("/admin/signup", function(req, res){
 
 //Handle user registration-- for student
 app.post("/student/signup", function(req, res){
+	console.log("trying to register");
     User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
         if (err) {
             console.log(err);
@@ -257,6 +282,11 @@ app.get("/admin/logout", function(req, res) {
 app.get("/student/logout", function(req, res) {
     req.logout();
     res.json({"success":"You Logged out successfully"});
+});
+
+//sending subject list
+app.get("/student/subjects", function(req, res){
+	res.json(subjects);
 });
 
 //Form for uploading a file
