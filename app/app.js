@@ -17,7 +17,7 @@ var Schema = mongoose.Schema;
 mongoose.Promise = Promise;
 
 //========connection to database
-var url = "mongodb://localhost:27017/innov8";
+var url = process.env.DATABASEURL || "mongodb://localhost/innov8";
 mongoose.connect(url,{ useMongoClient: true });
 
 conn.on("error", console.error.bind(console, "connection error"));
@@ -64,85 +64,34 @@ app.use(passport.session());
 
 //====================SCHEMAS=========================
 
-//file schema
-var fileSchema = mongoose.Schema(
-	{
-		filePath: {
-			type: String,
-			required: true,
-			trim: true
-		},
-		fileName: {
-			type: String,
-			required: true
-		},
-		uploadDate:{
-			type:Date,
-			default:Date.now
-		},
-		fileType:String
-	}
-);
-
-//====topicSchema====
-var topicSchema = new Schema(
-	{
-		topicName:String,
-		files:[fileSchema]
-	}
-);
-
-//====chapterSchema====
-var chapterSchema = new Schema(
-	{
-		chapterName:String,
-		topics:[topicSchema]
-	}
-);
-
-//====subjectSchema====
-var subjectSchema = new Schema(
-	{
-		subjectName:String,
-		chapters:[chapterSchema]
-	}
-);
 
 
-//User schema
-var userSchema = mongoose.Schema(
-    {
-        username: {
-            type: String,
-            unique: true,
-            mandatory:true
-        },
-        password: String
-        
-    }
-);
 
-//passport local mongoose
-userSchema.plugin(passportLocalMongoose);
+
+
+
+
+
+
+
 
 
 
 //===================DATA MODELS=====================
 
-//file model
-var File = mongoose.model("File", fileSchema);
+var File = require("./models/File.js");
+var Topic = require("./models/Topic.js");
+var Chapter = require("./models/Chapter.js");
+var Subject = require("./models/Subject.js");
+var User = require("./models/User.js");
 
-//topic model
-var Topic = mongoose.model("Topic", topicSchema);
 
-//chapter model
-var Chapter = mongoose.model("Chapter", chapterSchema);
 
-//subject model
-var Subject = mongoose.model("Subject", subjectSchema);
 
-//exporting User model
-var User = mongoose.model("User", userSchema);
+
+
+
+
 
 //Setting local strategy for authentication of user
 passport.use(new localStrategy(User.authenticate()));
@@ -222,7 +171,6 @@ app.post("/admin/signup", function(req, res){
 
 //Handle user registration-- for student
 app.post("/student/signup", function(req, res){
-	console.log("trying to register");
     User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
         if (err) {
             console.log(err);
@@ -299,6 +247,6 @@ app.get("*", function(req, res){
 })
 
 //Setting environment
-app.listen((process.env.PORT || 5000), function(){
+app.listen((process.env.PORT || 3000), function(){
     console.log("Server has started!!! Listening at 3000...");
 });
