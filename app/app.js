@@ -42,6 +42,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //flash
 app.use(flash());
 
+//view engine
+app.set('views', __dirname + '/views');
+app.set("view engine", "ejs");
+
 // parse application/json 
 app.use(bodyParser.json())
 
@@ -57,11 +61,6 @@ app.use(session({
 //setting passport
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
-//view engine
-app.set("view engine", "ejs");
 
 //====================SCHEMAS=========================
 
