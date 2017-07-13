@@ -8,6 +8,7 @@ var passport = require("passport");
 var localStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
 var session = require("express-session");
+var flash = require("connect-flash");
 
 var app = express();
 var conn = mongoose.connection;
@@ -38,6 +39,9 @@ var storage = multer.diskStorage({
 //setting up body-parser
 app.use(bodyParser.urlencoded({ extended: false }))
  
+//flash
+app.use(flash());
+
 // parse application/json 
 app.use(bodyParser.json())
 
@@ -149,6 +153,8 @@ passport.deserializeUser(User.deserializeUser());
 //Middleware function 
 app.use(function(req, res, next) {
   res.locals.currentUser = req.user || null;
+  res.locals.msg_error = req.flash("error");
+  res.locals.msg_success = req.flash("success");
   next();
 });
 
@@ -157,6 +163,7 @@ app.use(function(req, res, next) {
 
 //Home
 app.get("/", function(req, res){
+	var jsondata = {"hello": "world"};
     res.render("home");
 });
 
@@ -171,13 +178,27 @@ app.post('/', function(req, res) {
 	})
 })
 
-//User registration form
-app.get("/signup", function(req, res){
+//User registration form-- for admin
+app.get("/admin/signup", function(req, res){
     res.render("signup");
 });
 
-//Handle user registration
-app.post("/signup", function(req, res){
+//Handle user registration-- for admin
+app.post("/admin/signup", function(req, res){
+    User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.json(err);
+        }
+
+        passport.authenticate("local")(req, res, function () {
+            res.redirect("/");
+        });
+    });
+});
+
+//Handle user registration-- for student
+app.post("/student/signup", function(req, res){
     User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
         if (err) {
             console.log(err);
@@ -190,30 +211,52 @@ app.post("/signup", function(req, res){
     });
 });
 
-//User login form
-app.get("/login", function(req, res, next){
-    res.render("login");
-},function(req, res){
-	console.log("logged out");
-	res.json({"success":"logged out successfully"});
+//User login form-- admin
+app.get("/admin/login", function(req, res){
+    res.render("login",{error:res.locals.msg_error});
 });
 
-//Handle user login
-app.post("/login", passport.authenticate("local", 
+//User login form-- for student
+app.get("/student/login", function(req, res){
+	console.log(res.locals.msg_error);
+    res.send({error:res.locals.msg_error});
+});
+
+//Handle user login -- for admin
+app.post("/admin/login", passport.authenticate("local", 
     { 
         successRedirect: "/",
-        failureRedirect: "/login"
+        failureRedirect: "/admin/login",
+        successFlash:"Welcome back",
+        failureFlash:true
     }),
     function(req, res) {
-		console.log("loged in");
-        res.json(res.locals.currentUser);
+		
     }
 );
 
-//User logout
-app.get("/logout", function(req, res) {
+//Handle user login -- for student
+app.post("/student/login", passport.authenticate("local", 
+    { 
+        failureRedirect: "/student/login",
+        successFlash:"Welcome back",
+        failureFlash:true
+    }),
+    function(req, res) {
+		res.json(req.user);
+    }
+);
+
+//User logout-- admin
+app.get("/admin/logout", function(req, res) {
     req.logout();
     res.redirect("/");
+});
+
+//User logout-- student
+app.get("/student/logout", function(req, res) {
+    req.logout();
+    res.json({"success":"You Logged out successfully"});
 });
 
 //Form for uploading a file
