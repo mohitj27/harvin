@@ -1,14 +1,25 @@
 {
   "name": "innov8",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.11.1"
+  },
   "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./app/app.js"
   },
-  "author": "gopal",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gopal151295/innov8.git"
+  },
+  "author": "Gopal sharma",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gopal151295/innov8/issues"
+  },
+  "homepage": "https://github.com/gopal151295/innov8#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
     "connect-flash": "^0.1.1",
