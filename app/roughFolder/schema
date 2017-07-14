@@ -1,0 +1,170 @@
+files[
+    {
+        name:
+        subject:
+        chapter:
+        topic:
+    },
+    {
+        name:
+        subject:
+        chapter:
+        topic:
+    },
+    
+]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+subjects:[
+        math:{
+            chapters:[
+                calculas:{
+                    topics:[
+                        integration:[
+                            pdf1,
+                            pdf2,
+                            pdf3
+                        ],
+                        differentiation:[
+                            pdf1,
+                            pdf2,
+                            pdf3
+                        ]
+                    ]
+                }
+            ]
+        },
+        chem:{
+            chapters:[
+                p-block:{
+                    topics:[
+                        topic1:[
+                            pdf1,
+                            pdf2,
+                            pdf3
+                        ],
+                        topic2:[
+                            pdf1,
+                            pdf2,
+                            pdf3
+                        ]
+                    ]
+                }
+            ]
+        },
+
+]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[
+    {
+        subjectName: math,
+        chapters:[
+            {
+                chapterName: calculas,
+                topics:[
+                    {
+                        topicName:integration,
+                        files:[
+                            {
+                                fileName:pdf1,
+                                fileType: pdf,
+                                uploadDate: timeStamp,
+                            },
+                            {
+                                fileName:pdf2,
+                                fileType: pdf,
+                                uploadDate: timeStamp,
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        subjectName: chem,
+        chapters:[
+            {
+                chapterName: p-block,
+                topics:[
+                    {
+                        topicName:topic1,
+                        files:[
+                            {
+                                fileName:pdf3,
+                                fileType: pdf,
+                                uploadDate: timeStamp,
+                            },
+                            {
+                                fileName:pdf4,
+                                fileType: pdf,
+                                uploadDate: timeStamp,
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+====filesSchema====
+{
+    fileName:String,
+    fileType:String,
+    filePath:String,
+    uploadDate:{type:Date, default:Date.now}
+}
+
+=====topicsSchema=====
+{
+    topicName:String,
+    files:[filesSchema]
+}
+
+=====chaptersSchema====
+{
+    chapterName:String,
+    topics:[topicsSchema]
+}
+
+=====subjectsSchema=====
+{
+    subjectName:String,
+    chapters:[chaptersSchema]
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+=========END POINTS ============
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@@ admin home
+    get -->/
+
+@@ admin -handle file upload
+    post --> /admin/uploadFile
+
+@@ admin - signup form  
+    get -> /admin/signup
+
+@@ admin - handle signup  
+    post -> /admin/signup
+
+@@ admin - login form  
+    get -> /admin/login
+
+@@ admin - handle login  
+    post -> /admin/login
+
+
+{ fieldname: 'userFile',
+  originalname: 'file1.txt',
+  encoding: '7bit',
+  mimetype: 'text/plain' }
+{ fieldname: 'userFile',
+  originalname: 'file1.txt',
+  encoding: '7bit',
+  mimetype: 'text/plain',
+  destination: './uploads',
+  filename: 'userFile-1500021416039.txt',
+  path: 'uploads/userFile-1500021416039.txt',
+  size: 10 }

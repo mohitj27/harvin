@@ -30,16 +30,7 @@ conn.once("open", function(callback) {
 });
 
 //
-//setting disk storage for uploaded files
-var storage = multer.diskStorage({
-	destination: function(req, file, callback) {
-		callback(null, './uploads')
-	},
-	filename: function(req, file, callback) {
-		console.log(file)
-		callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-	}
-});
+
 
 //setting up body-parser
 app.use(bodyParser.urlencoded({ extended: false }))

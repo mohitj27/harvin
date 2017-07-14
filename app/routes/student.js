@@ -3,29 +3,31 @@ var router = express.Router();
 var passport = require("passport");
 var User = require("../models/User.js");
 
-var subjects=[
-	{
-		subjectName:"subject1",
-	},
-	{
-		subjectName:"subject2",
-	},
-	{
-		subjectName:"subject3",
-	},
-	{
-		subjectName:"subject4",
-	},
-	{
-		subjectName:"subject5",
-	},
-	{
-		subjectName:"subject6",
-	},
-	{
-		subjectName:"subject7",
-	}
-];
+var subjects={
+	"subjects":[
+					{
+						subjectName:"subject1",
+					},
+					{
+						subjectName:"subject2",
+					},
+					{
+						subjectName:"subject3",
+					},
+					{
+						subjectName:"subject4",
+					},
+					{
+						subjectName:"subject5",
+					},
+					{
+						subjectName:"subject6",
+					},
+					{
+						subjectName:"subject7",
+					}
+				]
+};
 
 //User login form-- admin
 router.get("/login", function(req, res){
