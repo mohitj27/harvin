@@ -29,6 +29,19 @@ var subjects={
 				]
 };
 
+//clear all student database
+router.get("/clearall", function(req, res){
+	User.remove({}, function(err){
+		if(err){
+                        console.log(err);
+                        res.json(err);
+                    }else{
+                        console.log("Removed all camps");
+                        res.json({"success":"Removed all users"});
+                    }
+	});
+});
+
 //User login form-- admin
 router.get("/login", function(req, res){
     res.json({error:res.locals.msg_error});
