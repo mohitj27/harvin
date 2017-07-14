@@ -29,6 +29,7 @@ conn.once("open", function(callback) {
     console.log("Connection succeeded.");
 });
 
+//
 //setting disk storage for uploaded files
 var storage = multer.diskStorage({
 	destination: function(req, file, callback) {
@@ -86,9 +87,9 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use("/",indexRoutes);
-app.use("/student", studentRoutes);
 app.use("/admin/", adminRoutes);
+app.use("/student", studentRoutes);
+app.use("/",indexRoutes);
 
 //Setting environment
 app.listen((process.env.PORT || 3000), function(){
