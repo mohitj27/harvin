@@ -112,8 +112,7 @@ subjects:[
     fileName:String,
     fileType:String,
     filePath:String,
-    uploadDate:Date,
-    fileType:String,
+    uploadDate:String,
     fileSize:Number,
     subjectName:String,
     chapterName:String,
@@ -159,17 +158,3 @@ subjects:[
 
 @@ admin - handle login  
     post -> /admin/login
-
-
-{ fieldname: 'userFile',
-  originalname: 'file1.txt',
-  encoding: '7bit',
-  mimetype: 'text/plain' }
-{ fieldname: 'userFile',
-  originalname: 'file1.txt',
-  encoding: '7bit',
-  mimetype: 'text/plain',
-  destination: './uploads',
-  filename: 'userFile-1500021416039.txt',
-  path: 'uploads/userFile-1500021416039.txt',
-  size: 10 }

@@ -24,11 +24,32 @@
                         <li><a href="/admin/uploadFile">Upload File</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/admin/signup">Sign up</a></li>
+                        <!--<li><a href="/admin/signup">Sign up</a></li>
                         <li><a href="/admin/login">Log in</a></li>
-                        <li><a href="/admin/logout">Log out</a></li>
+                        <li><a href="/admin/logout">Log out</a></li>-->
+                        <%if(!currentUser){%>
+                      
+                            <li><a href="/admin/login">Login</a></li>
+                            <li><a href="/admin/signup">Signup</a></li>
+                        <%}else{%>
+                            <li><a href="#">Signed in as <%=currentUser.username%></a></li>
+                            <li><a href="/admin/logout">Logout</a></li>
+                        <%}%>
                     </ul>
                     </div><!-- /.navbar-collapse -->
             </div>
         </nav>
+        <div class="container">
+            <%if(msg_error && msg_error.length > 0){ %>
+                <div class="alert alert-danger" role="alert">
+                    <p style = "text-align:center"><%=msg_error%></p>
+                </div>
+            <%}%>
+            
+            <%if(msg_success && msg_success.length > 0){ %>
+                <div class="alert alert-success" role="alert">
+                    <p style = "text-align:center"><%=msg_success%></p>
+                </div>
+            <%}%>
+        </div>
         
