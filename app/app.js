@@ -43,7 +43,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json())
 
 //serving public directory as static
-app.use(express.static("public"));
+app.use(express.static( __dirname + "/public"));
 
 app.use(session({
   secret: 'This is a secret phrase, it will be used for hashing the session id',

@@ -10,11 +10,9 @@ var fs = require("file-system");
 
 //setting disk storage for uploaded files
 var storage = multer.diskStorage({
-	destination: function(req, file, callback) {
-		callback(null, './uploads')
-	},
+	destination: "./uploads",
 	filename: function(req, file, callback) {
-		callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+		callback(null, file.originalname + '-' + Date.now() + path.extname(file.originalname))
 	}
 });
 
