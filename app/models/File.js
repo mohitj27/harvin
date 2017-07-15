@@ -14,7 +14,8 @@ var fileSchema = new Schema(
       trim: true 
     }, 
     uploadDate:{ 
-      type:String
+      type:String,
+      required:true
     }, 
     fileType:{
       type:String,

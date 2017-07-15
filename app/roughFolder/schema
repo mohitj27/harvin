@@ -112,7 +112,12 @@ subjects:[
     fileName:String,
     fileType:String,
     filePath:String,
-    uploadDate:{type:Date, default:Date.now}
+    uploadDate:Date,
+    fileType:String,
+    fileSize:Number,
+    subjectName:String,
+    chapterName:String,
+    topicName:String
 }
 
 =====topicsSchema=====

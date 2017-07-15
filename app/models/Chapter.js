@@ -1,14 +1,19 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var Topic = require("./Topic.js");
-var topicSchema = Topic.schema;
+// var Topic = require("./Topic.js");
+// var topicSchema = Topic.schema;
 
 //====chapterSchema====
 var chapterSchema = new Schema(
 	{
 		chapterName:String,
-		topics:[topicSchema]
+		topics:[
+			{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Topic"
+            }
+		]
 	}
 );
 
