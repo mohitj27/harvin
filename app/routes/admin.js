@@ -12,6 +12,8 @@ var moment = require("moment-timezone");
 var fs = require("file-system");
 var async = require("async");
 
+var Seed = require("../seed.js");
+
 //setting disk storage for uploaded files
 var storage = multer.diskStorage({
 	destination: "uploads/",
@@ -39,6 +41,8 @@ function fileUploadSuccess(req, res){
     req.flash("success", req.file.originalname +" uploaded successfully");
     res.redirect("/admin/uploadFile");
 }
+
+// Seed();
 
 //Handle file upload
 router.post('/uploadFile', function(req, res) {
@@ -348,6 +352,61 @@ router.post('/uploadFile', function(req, res) {
                                                                                                         }
                                                                                                     }
                                                                                                 );
+                                                                                            }
+                                                                                            else{
+                                                                                                //here createdFile, foundTopic, createdChapter
+                                                                                                //not found any subject, create one
+                                                                                                //todos create new subject 
+                                                                                                async.waterfall(
+                                                                                                    [
+                                                                                                        function(callback){
+                                                                                                            Subject.create(
+                                                                                                                {
+                                                                                                                    "subjectName": subjectName
+                                                                                                                },
+                                                                                                                function(err, createdSubject){
+                                                                                                                    if(err) {
+                                                                                                                        console.log("creating subject error-->/n")
+                                                                                                                        console.log(err);
+                                                                                                                        // fileUploadError(req,res)
+                                                                                                                        callback(err);
+                                                                                                                        
+                                                                                                                    }else{
+                                                                                                                        callback(null, createdSubject);
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            );
+                                                                                                        },
+                                                                                                        function(createdSubject, callback){
+                                                                                                            //here createdFile, foundTopic, createdChapter
+                                                                                                            //subject created
+                                                                                                            //now update subject
+                                                                                                            Subject.update({_id:createdSubject._id},{$addToSet:{chapters:createdChapter}}, function(err){
+                                                                                                                if(err) {
+                                                                                                                    console.log("updating subject error-->/n")
+                                                                                                                    console.log(err);
+                                                                                                                    // fileUploadError(req,res)
+                                                                                                                    callback(err);
+                                                                                                                    
+                                                                                                                }else{
+                                                                                                                    //here createdFile, foundTopic, createdChapter, createdSubject
+                                                                                                                    //todo
+                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\ncreatedChapter->\n"+createdChapter+"\ncreatedSubject->\n"+createdSubject);
+                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                    
+                                                                                                                    
+                                                                                                                }
+                                                                                                            });
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    function(err, result){
+                                                                                                        if(err){
+                                                                                                            console.log(err);
+                                                                                                            fileUploadError(req,res);
+                                                                                                        }
+                                                                                                    }
+                                                                                                );
+
                                                                                             }
                                                                                         }
                                                                                     }
