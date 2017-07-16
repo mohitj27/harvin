@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/User.js");
+var Subject = require("../models/Subject.js");
+
 
 //clear all student database
 router.get("/clearall", function(req, res){
