@@ -9,12 +9,12 @@ var userSchema = new Schema(
     {
         username: {
             type: String,
-            unique: true,
-            mandatory:true
+            unique:true,
+            required:true
         },
         password:{
             type:String,
-            mandatory:true
+            required:true
         }
         
     }

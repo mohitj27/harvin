@@ -1,23 +1,16 @@
-var subjects=[
-	{
-		subjectName:"subject1",
-	},
-	{
-		subjectName:"subject2",
-	},
-	{
-		subjectName:"subject3",
-	},
-	{
-		subjectName:"subject4",
-	},
-	{
-		subjectName:"subject5",
-	},
-	{
-		subjectName:"subject6",
-	},
-	{
-		subjectName:"subject7",
-	}
-];
+{
+	"subjects":{
+        [
+            {
+                "subjectName":"subject1",
+                "chapters":{
+                    [
+                        9sd87sd433b234287nvbd,
+                        6dhd73d73t56g8d5s25dg,
+                        73jdgws5278597jgdts54,
+                    ]
+                }
+            }
+        ]
+    }
+}

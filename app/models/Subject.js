@@ -7,7 +7,11 @@ var Schema = mongoose.Schema;
 //====subjectSchema====
 var subjectSchema = new Schema(
 	{
-		subjectName:String,
+		subjectName:{
+			type:String,
+			unique:true,
+			required:true
+		},
 		chapters:[
 			{
                 type: mongoose.Schema.Types.ObjectId,

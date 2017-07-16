@@ -7,10 +7,11 @@ var path = require('path');
 var multer = require('multer') ;
 var moment = require("moment-timezone");
 var fs = require("file-system");
+var async = require("async");
 
 //setting disk storage for uploaded files
 var storage = multer.diskStorage({
-	destination: "./uploads",
+	destination: "uploads/",
 	filename: function(req, file, callback) {
 		callback(null, file.originalname + '-' + Date.now() + path.extname(file.originalname))
 	}
@@ -22,37 +23,71 @@ router.post('/uploadFile', function(req, res) {
 		storage: storage
 	}).single('userFile')
 	upload(req, res, function(err) {
-        var currentTime = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
+        /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        File is not uploading onto heroku. upload it to amazon s3 or something else.
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+        var fileName = req.file.originalname;
+        var fileType = path.extname(req.file.originalname);
+        var filePath = req.file.path;
+        var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
+        var fileSize = req.file.size;
+        var subjectName = req.body.subjectName;
+        var chapterName = req.body.chapterName;
+        var topicName = req.body.topicName;
+
         var newFile = {
-            fileName:req.file.originalname,
-            fileType:path.extname(req.file.originalname),
-            filePath:req.file.path,
-            uploadDate:currentTime,
-            fileSize:req.file.size,
-            subjectName:req.body.subjectName,
-            chapterName:req.body.chapterName,
-            topicName:req.body.topicName
+            fileName,
+            fileType,
+            filePath,
+            uploadDate,
+            fileSize,
+            subjectName,
+            chapterName,
+            topicName
         }
 
         File.create(newFile, function(err, createdFile){
             if(err){
+                console.log("error while storing file in db-->/n");
                 console.log(err);
 
                 //deleting uploaded file from upload directory
                 fs.unlink(req.file.path, function(err){
-                    if(err) console.log("file deletion err\n" + err);
+                    if(err) {
+                        console.log("error while deleting uploaded file-->/n");
+                        console.log(err);
+                    }
                     else console.log("file deleted from uploads directory")
                 });
 
-                req.flash("error", err);
+                req.flash("error", err._message);
                 res.redirect("/admin/uploadFile");
 
             }
             else{
+                console.log(createdFile);
                 req.flash("success", req.file.originalname +" uploaded successfully");
                 res.redirect("/admin/uploadFile");
+//
+                // async.waterfall(
+                //     [
+                //         function(callback){
+                            
+                //         }
+                //     ],
+                //     function(err, result){
+                //         if(err) {
+                //             console.log(err);
+                //             req.flash("error", "Please try again");
+                //             res.redirect("/admin/uploadFile");
+                //         }
+                //     }
+                // );
             }
         });
+
+        
+
 	})
 });
 

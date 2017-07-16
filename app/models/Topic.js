@@ -9,6 +9,7 @@ var topicSchema = new Schema(
 	{
 		topicName:{
 			type:String,
+			unique:true,
 			required:true
 		},
 		files:[
