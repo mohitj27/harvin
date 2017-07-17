@@ -16,7 +16,6 @@ var topicSchema = new Schema(
 			type:String,
 			required:true
 		},
-		topicField:String,
 		files:[
 			{
                 type: mongoose.Schema.Types.ObjectId,
