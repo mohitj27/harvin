@@ -12,6 +12,10 @@ var chapterSchema = new Schema(
             unique:true,
             required:true
 		},
+		chapterDescription:{
+			type:String,
+			required:true
+		},
 		topics:[
 			{
                 type: mongoose.Schema.Types.ObjectId,

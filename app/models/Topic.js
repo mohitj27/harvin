@@ -12,6 +12,10 @@ var topicSchema = new Schema(
 			unique:true,
 			required:true
 		},
+		topicDescription:{
+			type:String,
+			required:true
+		},
 		files:[
 			{
                 type: mongoose.Schema.Types.ObjectId,

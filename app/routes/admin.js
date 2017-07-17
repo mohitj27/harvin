@@ -278,7 +278,8 @@ router.post('/uploadFile', function(req, res) {
                                                                             function(callback){
                                                                                 Chapter.create(
                                                                                     {
-                                                                                        "chapterName": chapterName
+                                                                                        "chapterName": chapterName,
+                                                                                        "chapterDescription":"Chapter description"
                                                                                     },
                                                                                     function(err, createdChapter){
                                                                                         if(err) {
@@ -443,7 +444,8 @@ router.post('/uploadFile', function(req, res) {
                                                 function(callback){
                                                     Topic.create(
                                                         {
-                                                            "topicName": topicName
+                                                            "topicName": topicName,
+                                                            "topicDescription":"Topic description"
                                                         },
                                                         function(err, createdTopic){
                                                             if(err) {
@@ -625,7 +627,8 @@ router.post('/uploadFile', function(req, res) {
                                                                             function(callback){
                                                                                 Chapter.create(
                                                                                     {
-                                                                                        "chapterName": chapterName
+                                                                                        "chapterName": chapterName,
+                                                                                        "chapterDescription":"Chapter description"
                                                                                     },
                                                                                     function(err, createdChapter){
                                                                                         if(err) {
