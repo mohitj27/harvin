@@ -4,6 +4,31 @@ var passport = require("passport");
 var User = require("../models/User.js");
 var Subject = require("../models/Subject.js");
 
+var subjects={
+	"subjects":[
+		{
+			subjectName:"subject1",
+		},
+		{
+			subjectName:"subject2",
+		},
+		{
+			subjectName:"subject3",
+		},
+		{
+			subjectName:"subject4",
+		},
+		{
+			subjectName:"subject5",
+		},
+		{
+			subjectName:"subject6",
+		},
+		{
+			subjectName:"subject7",
+		}
+	]
+}
 
 //clear all student database
 router.get("/clearall", function(req, res){
@@ -60,30 +85,32 @@ router.post("/signup", function(req, res){
 //sending subject list
 router.get("/subjects", function(req, res){
 
-	Subject.find({}, function(err, subjects){
-		if(err) console.log(err);
-	})
-	.populate({
-		path:"chapters",
-		model:"Chapter",
-		populate:{
-			path:"topics",
-			model:"Topic",
-			populate:{
-				path:"files",
-				model:"File"
-			}
-		}
-	})
-	.exec(function(err, subjects){
-		if(err){
-			 console.log(err);
-			 res.json("error", "Please try again");
-		}
-		else{
-			res.json(subjects);
-		}
-	});
+	res.json(subjects);
+	// Subject.find({}, function(err, subjects){
+	// 	if(err) console.log(err);
+	// })
+	// .populate({
+	// 	path:"chapters",
+	// 	model:"Chapter",
+	// 	populate:{
+	// 		path:"topics",
+	// 		model:"Topic",
+	// 		populate:{
+	// 			path:"files",
+	// 			model:"File"
+	// 		}
+	// 	}
+	// })
+	// .exec(function(err, subjects){
+	// 	if(err){
+	// 		 console.log(err);
+	// 		 res.json("error", "Please try again");
+	// 	}
+	// 	else{
+	// 		res.json(subjects);
+	// 	}
+	// });
+
 });
 
 module.exports = router;
