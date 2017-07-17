@@ -85,31 +85,31 @@ router.post("/signup", function(req, res){
 //sending subject list
 router.get("/subjects", function(req, res){
 
-	res.json(subjects);
-	// Subject.find({}, function(err, subjects){
-	// 	if(err) console.log(err);
-	// })
-	// .populate({
-	// 	path:"chapters",
-	// 	model:"Chapter",
-	// 	populate:{
-	// 		path:"topics",
-	// 		model:"Topic",
-	// 		populate:{
-	// 			path:"files",
-	// 			model:"File"
-	// 		}
-	// 	}
-	// })
-	// .exec(function(err, subjects){
-	// 	if(err){
-	// 		 console.log(err);
-	// 		 res.json("error", "Please try again");
-	// 	}
-	// 	else{
-	// 		res.json(subjects);
-	// 	}
-	// });
+	// res.json(subjects);
+	Subject.find({}, function(err, subjects){
+		if(err) console.log(err);
+	})
+	.populate({
+		path:"chapters",
+		model:"Chapter",
+		populate:{
+			path:"topics",
+			model:"Topic",
+			populate:{
+				path:"files",
+				model:"File"
+			}
+		}
+	})
+	.exec(function(err, subjects){
+		if(err){
+			 console.log(err);
+			 res.json("error", "Please try again");
+		}
+		else{
+			res.json({"subjects": subjects});
+		}
+	});
 
 });
 
