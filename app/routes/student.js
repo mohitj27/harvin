@@ -56,9 +56,7 @@ router.post("/login", passport.authenticate("local",
         failureFlash:true
     }),
     function(req, res) {
-		// res.json(req.user);
-		// res.status(200).json(user);
-			res.sendStatus(200);
+		res.status(200).json(req.user);
     }
 );
 
@@ -77,7 +75,7 @@ router.post("/signup", function(req, res){
         }
 
         passport.authenticate("local")(req, res, function () {
-			res.sendStatus(200);
+			res.status(200).json(user);
         });
     });
 });
