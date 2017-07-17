@@ -279,7 +279,8 @@ router.post('/uploadFile', function(req, res) {
                                                                                 Chapter.create(
                                                                                     {
                                                                                         "chapterName": chapterName,
-                                                                                        "chapterDescription":"Chapter description"
+                                                                                        "chapterDescription":"Chapter description",
+                                                                                        "chapterField":"this is chapter field"
                                                                                     },
                                                                                     function(err, createdChapter){
                                                                                         if(err) {
@@ -445,7 +446,8 @@ router.post('/uploadFile', function(req, res) {
                                                     Topic.create(
                                                         {
                                                             "topicName": topicName,
-                                                            "topicDescription":"Topic description"
+                                                            "topicDescription":"Topic description",
+                                                            "topicField":"this is topic field"
                                                         },
                                                         function(err, createdTopic){
                                                             if(err) {
@@ -628,7 +630,8 @@ router.post('/uploadFile', function(req, res) {
                                                                                 Chapter.create(
                                                                                     {
                                                                                         "chapterName": chapterName,
-                                                                                        "chapterDescription":"Chapter description"
+                                                                                        "chapterDescription":"Chapter description",
+                                                                                        "chapterField":"this is chapter field"
                                                                                     },
                                                                                     function(err, createdChapter){
                                                                                         if(err) {

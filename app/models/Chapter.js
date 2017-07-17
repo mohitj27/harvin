@@ -16,6 +16,7 @@ var chapterSchema = new Schema(
 			type:String,
 			required:true
 		},
+		chapterField:String,
 		topics:[
 			{
                 type: mongoose.Schema.Types.ObjectId,
