@@ -32,7 +32,8 @@ router.post("/login", passport.authenticate("local",
     }),
     function(req, res) {
 		// res.json(req.user);
-		res.status(200);
+		// res.status(200).json(user);
+			res.sendStatus(200);
     }
 );
 
@@ -51,8 +52,7 @@ router.post("/signup", function(req, res){
         }
 
         passport.authenticate("local")(req, res, function () {
-            // res.json(user);
-			res.status(200);
+			res.sendStatus(200);
         });
     });
 });
@@ -78,10 +78,10 @@ router.get("/subjects", function(req, res){
 	.exec(function(err, subjects){
 		if(err){
 			 console.log(err);
-			 res.status(500).json("error", "Please try again");
+			 res.json("error", "Please try again");
 		}
 		else{
-			res.status(200).json(subjects);
+			res.json(subjects);
 		}
 	});
 });
