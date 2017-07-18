@@ -9,6 +9,9 @@ var flash = require("connect-flash");
 var adminRoutes = require("./routes/admin.js");
 var studentRoutes = require("./routes/student.js");
 var indexRoutes = require("./routes/index.js");
+var morgan = require("morgan");
+var fs = require('fs')
+var config = require('./config')();
 
 var app = express();
 var conn = mongoose.connection;
@@ -26,8 +29,7 @@ conn.once("open", function(callback) {
     console.log("Connection succeeded.");
 });
 
-//
-
+app.use(morgan("dev"))
 
 //setting up body-parser
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -75,11 +77,19 @@ app.use(function(req, res, next) {
   next();
 });
 
+// dynamically include routes (Controller)
+fs.readdirSync('./controllers').forEach(function (file) {
+  if(file.substr(-3) == '.js') {
+      route = require('./controllers/' + file);
+      route.controller(app);
+  }
+});
+
 app.use("/admin/", adminRoutes);
 app.use("/student", studentRoutes);
 app.use("/",indexRoutes);
 
 //Setting environment
-app.listen((process.env.PORT || 3000), function(){
-    console.log("Server has started!!! Listening at 3000...");
+app.listen(config.port, function(){
+    console.log("Server has started!!! Listening at" +config.port);
 });
