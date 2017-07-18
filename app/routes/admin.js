@@ -846,7 +846,7 @@ router.get("/logout", function(req, res) {
 
 //Form for uploading a file
 router.get('/uploadFile', function(req, res) {
-	res.render('upload');
+	res.render('uploadFileDynamic');
 });
 
 
