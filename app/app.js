@@ -9,6 +9,7 @@ var flash = require("connect-flash");
 var adminRoutes = require("./routes/admin.js");
 var studentRoutes = require("./routes/student.js");
 var indexRoutes = require("./routes/index.js");
+var morgan = require("morgan");
 
 var app = express();
 var conn = mongoose.connection;
@@ -27,7 +28,7 @@ conn.once("open", function(callback) {
 });
 
 //
-
+app.use(morgan("dev"));
 
 //setting up body-parser
 app.use(bodyParser.urlencoded({ extended: false }))

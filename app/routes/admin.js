@@ -16,9 +16,9 @@ var Seed = require("../seed.js");
 
 //setting disk storage for uploaded files
 var storage = multer.diskStorage({
-	destination: "uploads/",
+	destination: "app/uploads/",
 	filename: function(req, file, callback) {
-		callback(null, file.originalname + '-' + Date.now() + path.extname(file.originalname))
+		callback(null,Date.now()+"__" +file.originalname);
 	}
 });
 
