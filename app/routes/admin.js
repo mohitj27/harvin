@@ -45,12 +45,12 @@ function fileUploadSuccess(req, res){
 
 // Seed();
 //Form for uploading a file
-router.get('/uploadFile',middleware.isLoggedIn, function(req, res) {
+router.get('/uploadFile', function(req, res) {
 	res.render('uploadFileDynamic');
 });
 
 //Handle file upload
-router.post('/uploadFile',middleware.isLoggedIn, function(req, res) {
+router.post('/uploadFile', function(req, res) {
 	var upload = multer({
 		storage: storage
 	}).single('userFile')
