@@ -56,18 +56,23 @@ router.post("/signup", function(req, res){
 });
 
 router.get("/files/:fileId", function(req, res){
-	File.findById(req.params.fileId, function(err, foundFile){
+	// File.findById(req.params.fileId, function(err, foundFile){
+	// 	if(err){
+	// 		console.log(err);
+	// 		res.json({"error":"File not found"});
+	// 	}
+	// 	else{
+	// 		res.download(__dirname+"/../../"+ foundFile.filePath, foundFile.fileName, function(err){
+	// 			if(err){
+	// 				console.log(err);
+	// 			}
+				
+	// 		});
+	// 	}
+	// });
+	res.download(__dirname+"/../views/The-Power-of-HABIT.pdf", "File1.pdf", function(err){
 		if(err){
 			console.log(err);
-			res.json({"error":"File not found"});
-		}
-		else{
-			res.download(__dirname+"/../../"+ foundFile.filePath, foundFile.fileName, function(err){
-				if(err){
-					console.log(err);
-				}
-				
-			});
 		}
 	});
 });
