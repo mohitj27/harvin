@@ -1,9 +1,10 @@
 var middleware = {
-    isStudentLoggedIn:     function(req, res, next){
+    isLoggedIn:     function(req, res, next){
                     if(req.isAuthenticated()){
                         return next();
                     }
-                    res.json({"error":"You are not logged in"});
+                    req.flash("error", "login please");
+                    res.redirect("/admin/login");
     }
     
 

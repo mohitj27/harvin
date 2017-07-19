@@ -1,7 +1,12 @@
-var express = require("express");
-var router = express.Router();
-var passport = require("passport");
+var express = require("express"),
+    router = express.Router(),
+    passport = require("passport"),
 
+    adminRoutes = require("./admin"),
+    studentRoutes = require("./student");
+
+router.use("/admin", adminRoutes);
+router.use("/student", studentRoutes);
 
 //Home-admin
 router.get("/", function(req, res){

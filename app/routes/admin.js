@@ -1,18 +1,19 @@
-var express = require("express");
-var router = express.Router();
-var passport = require("passport");
-var User = require("../models/User.js");
-var File = require("../models/File.js");
-var Topic = require("../models/Topic.js");
-var Chapter = require("../models/Chapter.js");
-var Subject = require("../models/Subject.js");
-var path = require('path');
-var multer = require('multer') ;
-var moment = require("moment-timezone");
-var fs = require("file-system");
-var async = require("async");
+var express = require("express"),
+    router = express.Router(),
+    passport = require("passport"),
+    User = require("../models/User.js"),
+    File = require("../models/File.js"),
+    Topic = require("../models/Topic.js"),
+    Chapter = require("../models/Chapter.js"),
+    Subject = require("../models/Subject.js"),
+    path = require('path'),
+    multer = require('multer'),
+    moment = require("moment-timezone"),
+    fs = require("file-system"),
+    async = require("async"),
+    middleware = require("../middleware");
 
-var Seed = require("../seed.js");
+    // Seed = require("../seed.js");
 
 //setting disk storage for uploaded files
 var storage = multer.diskStorage({
@@ -43,16 +44,17 @@ function fileUploadSuccess(req, res){
 }
 
 // Seed();
+//Form for uploading a file
+router.get('/uploadFile',middleware.isLoggedIn, function(req, res) {
+	res.render('uploadFileDynamic');
+});
 
 //Handle file upload
-router.post('/uploadFile', function(req, res) {
+router.post('/uploadFile',middleware.isLoggedIn, function(req, res) {
 	var upload = multer({
 		storage: storage
 	}).single('userFile')
 	upload(req, res, function(err) {
-        /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        File is not uploading onto heroku. upload it to amazon s3 or something else.
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
         var fileName = req.file.originalname;
         var fileType = path.extname(req.file.originalname);
         var filePath = req.file.path;
@@ -809,7 +811,9 @@ router.post("/signup", function(req, res){
     User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
         if (err) {
             console.log(err);
-            return res.json(err);
+            req.flash("error", err.message);
+            return res.redirect("/admin/signup");
+            
         }
 
         passport.authenticate("local")(req, res, function () {
@@ -822,7 +826,7 @@ router.post("/signup", function(req, res){
 
 //User login form-- admin
 router.get("/login", function(req, res){
-    res.render("login");
+    res.render("login",{error:res.locals.msg_error});
 });
 
 //Handle user login -- for admin
@@ -844,10 +848,6 @@ router.get("/logout", function(req, res) {
     res.redirect("/");
 });
 
-//Form for uploading a file
-router.get('/uploadFile', function(req, res) {
-	res.render('uploadFileDynamic');
-});
 
 
 
