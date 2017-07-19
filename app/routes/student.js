@@ -4,32 +4,6 @@ var passport = require("passport");
 var User = require("../models/User.js");
 var Subject = require("../models/Subject.js");
 
-var subjects={
-	"subjects":[
-		{
-			subjectName:"subject1",
-		},
-		{
-			subjectName:"subject2",
-		},
-		{
-			subjectName:"subject3",
-		},
-		{
-			subjectName:"subject4",
-		},
-		{
-			subjectName:"subject5",
-		},
-		{
-			subjectName:"subject6",
-		},
-		{
-			subjectName:"subject7",
-		}
-	]
-}
-
 //clear all student database
 router.get("/clearall", function(req, res){
 	User.remove({}, function(err){
