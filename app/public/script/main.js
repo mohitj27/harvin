@@ -28,7 +28,7 @@ function addSelectItem(t,ev)
 
    var o=$('option',p).eq(-2);
 
-   o.before( $("<option>", { "selected": true, "text": txt}) );
+   o.before( $("<option>", { "selected": true, "text": txt, "val":txt}) );
    p.selectpicker('refresh');
 }
 

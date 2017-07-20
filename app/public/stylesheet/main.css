@@ -45,3 +45,9 @@
 .addnewicon:hover {
    color: #222;
 }
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    margin: 150px 0 20px 0;
+}
