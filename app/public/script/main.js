@@ -1,28 +1,5 @@
-/* 
-    Text fields 
-*/
-$(function(){
-    
-	$(document).on('focus', 'div.myInput div.form-group-options:last-child div.input-group-option input', function(){
-		console.log("focused");
-		var sInputGroupHtml = $(this).parent().html();
-		var sInputGroupClasses = $(this).parent().attr('class');
-		var sFormGroupHtml = $(this).parent().parent().html();
-		var sFormGroupClasses = $(this).parent().parent().attr('class');
-		$(this).parent().parent().parent().append('<div class="'+sFormGroupClasses+'">'+sFormGroupHtml+'</div>');
-        
-	});
-	
-	
-	$(document).on('click', 'div.form-group-options .input-group-addon-remove', function(){
-        
-		$(this).parent().parent().remove();
-        
-	});
-
-	//
-	console.log("main function");
-	var content = "<input type=text onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
+$(function() {
+  var content = "<input type=text onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
  
   var divider = $('<option/>')
           .addClass('divider')
@@ -33,30 +10,32 @@ $(function(){
           .addClass('additem')
           .data('content', content)
       
-  $('.selectpicker')
-          .append(divider)
+  $('#add').hide()
+          
           .append(addoption)
+          .append(divider)
           .selectpicker();
-    
+ 
 });
-// 
-
+ 
 function addSelectItem(t,ev)
 {
-	console.log("add selectedItem");
    ev.stopPropagation();
- 
    var txt=$(t).prev().val().replace(/[|]/g,"");
    if ($.trim(txt)=='') return;
-   var p=$(t).closest('.bootstrap-select').prev();
-   var o=$('option', p).eq(-2);
-   o.before( $("<option>", { "selected": true, "text": txt}) );
-   p.selectpicker('refresh');
+    var select = document.getElementById("select1");
+    var opt = document.createElement("option");
+    opt.value = txt;
+    opt.text=txt;
+    opt.selected= true;
+
+    select.appendChild(opt);
+    $(".selectpicker").selectpicker('refresh');
+
 }
  
 function addSelectInpKeyPress(t,ev)
 {
-	console.log("add selectedkeyIput");
    ev.stopPropagation();
  
    // do not allow pipe character
@@ -69,7 +48,3 @@ function addSelectInpKeyPress(t,ev)
       addSelectItem($(t).next(),ev);
    }
 }
-
-
-
-
