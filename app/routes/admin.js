@@ -69,7 +69,7 @@ router.get('/uploadFile', function(req, res) {
 			 res.redirect("/admin/uploadFileDynamic");
 		}
 		else{
-            res.render('uploadFileDynamic',{subjects: subjects});
+            res.render('uploadFile2');
 		}
 	});
 

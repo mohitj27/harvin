@@ -7,7 +7,7 @@
         <div class="col-sm-4">
             <h2>Subject</h2> <br>
             
-            <select class="selectpicker" id="subject">
+            <select name="subject" class="selectpicker" id="subject">
                 <option selected disabled>----------</option>
                 <%subjects.forEach(function(subject){%>
                     <option value="<%=subject.subjectName%>"><%=subject.subjectName%></option>
@@ -19,7 +19,7 @@
         </div>
         <div class="col-sm-4">
             <h2>Chapter</h2><br>
-            <select class="selectpicker" id="chapter">
+            <select name="chapter"  class="selectpicker" id="chapter">
                 <option selected disabled>----------</option>
                 <%subjects.forEach(function(subject){%>
                     <%subject.chapters.forEach(function(chapter){%>
@@ -31,7 +31,7 @@
         </div>
         <div class="col-sm-4">
             <h2>Topic</h2> <br>
-            <select class="selectpicker" id="topic">
+            <select name="topic"  class="selectpicker" id="topic">
                 <option selected disabled>----------</option>
                 <%subjects.forEach(function(subject){%>
                     <%subject.chapters.forEach(function(chapter){%>
