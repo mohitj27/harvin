@@ -3,8 +3,8 @@
 */
 $(function(){
     
-	$(document).on('focus', 'div.form-group-options div.input-group-option:last-child input', function(){
-        
+	$(document).on('focus', 'div.myInput div.form-group-options:last-child div.input-group-option input', function(){
+		console.log("focused");
 		var sInputGroupHtml = $(this).parent().html();
 		var sInputGroupClasses = $(this).parent().attr('class');
 		var sFormGroupHtml = $(this).parent().parent().html();
@@ -13,11 +13,14 @@ $(function(){
         
 	});
 	
+	
 	$(document).on('click', 'div.form-group-options .input-group-addon-remove', function(){
         
-		$(this).parent().remove();
+		$(this).parent().parent().remove();
         
 	});
     
 });
+
+
 

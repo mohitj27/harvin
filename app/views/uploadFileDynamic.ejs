@@ -6,43 +6,56 @@
     <div class="row">
         <div class="col-sm-4">
             <h2>Subject</h2> <br>
+            
             <select class="selectpicker" id="subject">
-            <option>Mustard</option>
-            <option>Ketchup</option>
-            <option>Relish</option>
+                <option selected disabled>----------</option>
+                <%subjects.forEach(function(subject){%>
+                    <option value="<%=subject.subjectName%>"><%=subject.subjectName%></option>
+                <%})%>
+                
+                
             </select>   
                 
         </div>
         <div class="col-sm-4">
             <h2>Chapter</h2><br>
             <select class="selectpicker" id="chapter">
-            <option>Mustard</option>
-            <option>Ketchup</option>
-            <option>Relish</option>
+                <option selected disabled>----------</option>
+                <%subjects.forEach(function(subject){%>
+                    <%subject.chapters.forEach(function(chapter){%>
+                        <option value="<%=chapter.chapterName%>"><%=chapter.chapterName%></option>
+                    <%})%>
+                <%})%>
             </select>    
                 
         </div>
         <div class="col-sm-4">
             <h2>Topic</h2> <br>
             <select class="selectpicker" id="topic">
-            <option>Mustard</option>
-            <option>Ketchup</option>
-            <option>Relish</option>
+                <option selected disabled>----------</option>
+                <%subjects.forEach(function(subject){%>
+                    <%subject.chapters.forEach(function(chapter){%>
+                        <%chapter.topics.forEach(function(topic){%>
+                            <option value="<%=topic.topicName%>"><%=topic.topicName%></option>
+                        <%})%>
+                    <%})%>
+                <%})%>
+                
             </select>  
         </div>    
     </div>
     <br>
     <br>
     <h2>Not listed?</h2>
-    <div class="row">
-    		<div class="input-group input-group-option col-xs-4">
-    			<input type="text" name="option[]" class="form-control " placeholder="Add new">
-    			<span class="input-group-addon input-group-addon-remove ">
-    				<span class="glyphicon glyphicon-remove"></span>
-    			</span>
-    		</div>
-       
-        
+    <div class="myInput row">
+            <div class="form-group form-group-options col-md-4">
+                <div class="input-group input-group-option col-xs-8">
+                    <input type="text" name="option[]" class="form-control" placeholder="Add new">
+                    <span class="input-group-addon input-group-addon-remove">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </span>
+                </div>
+            </div>
     </div>
 </div>
 

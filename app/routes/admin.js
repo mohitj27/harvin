@@ -46,7 +46,34 @@ function fileUploadSuccess(req, res){
 // Seed();
 //Form for uploading a file
 router.get('/uploadFile', function(req, res) {
-	res.render('uploadFileDynamic');
+    // res.json(subjects);
+	Subject.find({}, function(err, subjects){
+		if(err) console.log(err);
+	})
+	.populate({
+		path:"chapters",
+		model:"Chapter",
+		populate:{
+			path:"topics",
+			model:"Topic",
+			populate:{
+				path:"files",
+				model:"File"
+			}
+		}
+	})
+	.exec(function(err, subjects){
+		if(err){
+			 console.log(err);
+             req.flash("error","Please try again");
+			 res.redirect("/admin/uploadFileDynamic");
+		}
+		else{
+            res.render('uploadFileDynamic',{subjects: subjects});
+		}
+	});
+
+	// res.render('uploadFileDynamic');
 });
 
 //Handle file upload
