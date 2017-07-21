@@ -15,6 +15,36 @@ $(function() {
           .append(addoption)
           .selectpicker();
 
+          $('#subject').on('change', function() {
+                console.log( "subject: "+this.value );
+                $.get("/admin/subject/"+this.value, function(res){
+                        var length = res.subject.chapters.length
+                        console.log(length);
+                        var $chapter = $("#chapter");
+                        // console.log($chapter)
+                        $chapter.empty();
+                        for(var i = 0; i < length;i++){
+                                console.log("setting chapter")
+                                $chapter.append('<option value=' + res.subject.chapters[i].chapterName + '>' + res.subject.chapters[i].chapterName + '</option>');
+                        }
+
+                });
+                 $(".selectpicker").selectpicker("refresh");
+                
+        });
+
+        $('#chapter').on('change', function() {
+                console.log( "chapter: "+this.value );
+                // $("#topic").val('');
+                // $(".selectpicker").selectpicker("refresh");
+        });
+
+        $('#topic').on('change', function() {
+                console.log( "topic: "+this.value );
+        });
+
+
+
 });
 
 function addSelectItem(t,ev)
@@ -45,4 +75,10 @@ function addSelectInpKeyPress(t,ev)
       ev.preventDefault();
       addSelectItem($(t).next(),ev);
    }
+}
+
+function reset(t, ev){
+
+        console.log(t);
+        console.log(ev);
 }

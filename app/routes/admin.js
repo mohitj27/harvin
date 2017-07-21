@@ -76,6 +76,27 @@ router.get('/uploadFile', function(req, res) {
 	// res.render('uploadFileDynamic');
 });
 
+router.get("/subject/:subjectName", function(req, res){
+    Subject.findOne({subjectName:req.params.subjectName}, function(err, subjects){
+		if(err) console.log(err);
+	})
+	.populate({
+		path:"chapters",
+		model:"Chapter"
+		
+	})
+	.exec(function(err, subject){
+		if(err){
+			 console.log(err);
+             req.flash("error","Please try again");
+			 res.redirect("/");
+		}
+		else{
+            res.json({subject:subject});
+		}
+	});
+});
+
 //Handle file upload
 router.post('/uploadFile', function(req, res) {
 	var upload = multer({

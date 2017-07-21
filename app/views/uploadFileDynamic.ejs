@@ -8,7 +8,7 @@
             <div class="col-sm-4">
                 <h2>Subject</h2> <br>
                 
-                <select autofocus required  name="subjectName" class="selectpicker" id="subject">
+                <select autofocus required  name="subjectName" class="selectpicker" id="subject" >
                     <option selected value="" disabled>----------</option>
                     <%subjects.forEach(function(subject){%>
                         <option value="<%=subject.subjectName%>"><%=subject.subjectName%></option>
@@ -20,27 +20,17 @@
             </div>
             <div class="col-sm-4">
                 <h2>Chapter</h2><br>
-                <select required  name="chapterName"  class="selectpicker" id="chapter">
+                <select required  name="chapterName"  class="selectpicker" id="chapter" >
                     <option selected value="" disabled>----------</option>
-                    <%subjects.forEach(function(subject){%>
-                        <%subject.chapters.forEach(function(chapter){%>
-                            <option value="<%=chapter.chapterName%>"><%=chapter.chapterName%></option>
-                        <%})%>
-                    <%})%>
+                    
                 </select>    
                     
             </div>
             <div class="col-sm-4">
                 <h2>Topic</h2> <br>
-                <select required  name="topicName"  class="selectpicker" id="topic">
+                <select required  name="topicName"  class="selectpicker" id="topic" >
                     <option selected value="" disabled>----------</option>
-                    <%subjects.forEach(function(subject){%>
-                        <%subject.chapters.forEach(function(chapter){%>
-                            <%chapter.topics.forEach(function(topic){%>
-                                <option value="<%=topic.topicName%>"><%=topic.topicName%></option>
-                            <%})%>
-                        <%})%>
-                    <%})%>
+                    
                     
                 </select>  
             </div> 
