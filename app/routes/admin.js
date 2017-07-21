@@ -97,6 +97,27 @@ router.get("/subject/:subjectName", function(req, res){
 	});
 });
 
+router.get("/chapter/:chapterName", function(req, res){
+    Chapter.findOne({chapterName:req.params.chapterName}, function(err, chapters){
+		if(err) console.log(err);
+	})
+	.populate({
+		path:"topics",
+		model:"Topic"
+		
+	})
+	.exec(function(err, chapter){
+		if(err){
+			 console.log(err);
+             req.flash("error","Please try again");
+			 res.redirect("/");
+		}
+		else{
+            res.json({chapter:chapter});
+		}
+	});
+});
+
 //Handle file upload
 router.post('/uploadFile', function(req, res) {
 	var upload = multer({

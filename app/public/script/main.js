@@ -2,12 +2,12 @@ $(function() {
   var content = "<input type=text onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
 
   var divider = $('<option/>')
-          .addClass('divider')
+          .addClass('divider lastTwo')
           .data('divider', true);
           
 
   var addoption = $('<option/>')
-          .addClass('additem')
+          .addClass('additem lastTwo')
           .data('content', content)
 		  
   $('.selectpicker')
@@ -16,32 +16,50 @@ $(function() {
           .selectpicker();
 
           $('#subject').on('change', function() {
-                console.log( "subject: "+this.value );
+                var $chapter = $("#chapter");
+                var o = $("option", $chapter).eq(-2);
+                $chapter.children().not(".lastTwo").not(":first").remove();
                 $.get("/admin/subject/"+this.value, function(res){
-                        var length = res.subject.chapters.length
-                        console.log(length);
-                        var $chapter = $("#chapter");
-                        // console.log($chapter)
-                        $chapter.empty();
-                        for(var i = 0; i < length;i++){
-                                console.log("setting chapter")
-                                $chapter.append('<option value=' + res.subject.chapters[i].chapterName + '>' + res.subject.chapters[i].chapterName + '</option>');
+                        $(".selectpicker").selectpicker("refresh");
+                        
+                        if(res.subject){
+                                var length = res.subject.chapters.length
+                                if(length>0){
+                                        for(var i = 0; i < length;i++){
+                                                o.before( $("<option>", { "text": res.subject.chapters[i].chapterName, "val":res.subject.chapters[i].chapterName}) );
+                                                
+                                        }
+                                        $(".selectpicker").selectpicker("refresh");
+                                }
                         }
 
                 });
-                 $(".selectpicker").selectpicker("refresh");
+                
                 
         });
 
         $('#chapter').on('change', function() {
-                console.log( "chapter: "+this.value );
-                // $("#topic").val('');
-                // $(".selectpicker").selectpicker("refresh");
+                var $topic = $("#topic");
+                var o = $("option", $topic).eq(-2);
+                $topic.children().not(".lastTwo").not(":first").remove();
+                $.get("/admin/chapter/"+this.value, function(res){
+                        $(".selectpicker").selectpicker("refresh");
+                        
+                        if(res.chapter){
+                                var length = res.chapter.topics.length
+                                if(length>0){
+                                        for(var i = 0; i < length;i++){
+                                                o.before( $("<option>", { "text": res.chapter.topics[i].topicName, "val":res.chapter.topics[i].topicName}) );
+                                                
+                                        }
+                                        $(".selectpicker").selectpicker("refresh");
+                                }
+                        }
+
+                });
         });
 
-        $('#topic').on('change', function() {
-                console.log( "topic: "+this.value );
-        });
+        
 
 
 
@@ -58,7 +76,7 @@ function addSelectItem(t,ev)
 
    var o=$('option',p).eq(-2);
 
-   o.before( $("<option>", { "selected": true, "text": txt, "val":txt}) );
+   o.before( $("<option>", { "selected": false, "text": txt, "val":txt}) );
    p.selectpicker('refresh');
 }
 
@@ -75,10 +93,4 @@ function addSelectInpKeyPress(t,ev)
       ev.preventDefault();
       addSelectItem($(t).next(),ev);
    }
-}
-
-function reset(t, ev){
-
-        console.log(t);
-        console.log(ev);
 }
