@@ -99,10 +99,12 @@ router.get("/subjects", function(req, res){
 	.exec(function(err, subjects){
 		if(err){
 			 console.log(err);
-			 res.json("error", "Please try again");
+			 res.type('application/json');
+			 res.status(404).json({"error": "Please try again"});
 		}
 		else{
-			res.json({"subjects": subjects});
+			res.type('application/json');
+   			res.json({"subjects": subjects});
 		}
 	});
 

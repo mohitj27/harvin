@@ -1,0 +1,50 @@
+<% include partials/header.ejs%>
+
+
+<div class="container">
+    <h1><b> Choose </b></h1>
+    <form id="uploadForm" enctype="multipart/form-data" method="post" action="/admin/uploadFile">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>Subject</h2> <br>
+                
+                <select autofocus required  name="subjectName" class="selectpicker" id="subject" >
+                    <option selected value="" disabled>----------</option>
+                    <%subjects.forEach(function(subject){%>
+                        <option value="<%=subject.subjectName%>"><%=subject.subjectName%></option>
+                    <%})%>
+                    
+                    
+                </select>   
+                    
+            </div>
+            <div class="col-sm-4">
+                <h2>Chapter</h2><br>
+                <select required  name="chapterName"  class="selectpicker" id="chapter" >
+                    <option selected value="" disabled>----------</option>
+                    
+                </select>    
+                    
+            </div>
+            <div class="col-sm-4">
+                <h2>Topic</h2> <br>
+                <select required  name="topicName"  class="selectpicker" id="topic" >
+                    <option selected value="" disabled>----------</option>
+                    
+                    
+                </select>  
+            </div> 
+            <br>
+            <br>
+            <!--<span class="btn btn-default btn-file">
+                <h4><b>Browse file...</b></h4> <input required type="file" name ="userFile">
+            </span>
+            <br>
+            <br>-->
+            <input type="file" name="userFile" class="btn btn-default btn-file" required/><br>
+			<input type="submit" value="Upload File" name="submit" class="btn btn-primary">   
+        </div>
+    </form>
+</div>
+
+<% include partials/footer.ejs%>
