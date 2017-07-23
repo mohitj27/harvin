@@ -16,7 +16,7 @@ router.get("/", function(req, res){
 
 //if not route mentioned in url
 router.get("*", function(req, res){
-    res.send("No page found :(((((((");
+    res.send("No page found :(");
 });
 
 module.exports = router;

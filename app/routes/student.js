@@ -5,22 +5,9 @@ var User = require("../models/User.js");
 var Subject = require("../models/Subject.js");
 var File = require("../models/File.js");
 
-//clear all student database
-router.get("/clearall", function(req, res){
-	User.remove({}, function(err){
-		if(err){
-                        console.log(err);
-                        res.json(err);
-                    }else{
-                        console.log("Removed all camps");
-                        res.json({"success":"Removed all users"});
-                    }
-	});
-});
-
 //User login form-- admin
 router.get("/login", function(req, res){
-    res.json({error:res.locals.msg_error});
+    res.json({erro:res.locals.msg_error[0]});
 });
 
 //Handle user login -- for student
@@ -56,23 +43,18 @@ router.post("/signup", function(req, res){
 });
 
 router.get("/files/:fileId", function(req, res){
-	// File.findById(req.params.fileId, function(err, foundFile){
-	// 	if(err){
-	// 		console.log(err);
-	// 		res.json({"error":"File not found"});
-	// 	}
-	// 	else{
-	// 		res.download(__dirname+"/../../"+ foundFile.filePath, foundFile.fileName, function(err){
-	// 			if(err){
-	// 				console.log(err);
-	// 			}
-				
-	// 		});
-	// 	}
-	// });
-	res.download(__dirname+"/../views/The-Power-of-HABIT.pdf", "File1.pdf", function(err){
+	File.findById(req.params.fileId, function(err, foundFile){
 		if(err){
 			console.log(err);
+			res.json({"error":"File not found"});
+		}
+		else{
+			res.download(__dirname+"/../../"+ foundFile.filePath, foundFile.fileName, function(err){
+				if(err){
+					console.log(err);
+				}
+				
+			});
 		}
 	});
 });

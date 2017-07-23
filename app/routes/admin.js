@@ -13,8 +13,6 @@ var express = require("express"),
     async = require("async"),
     middleware = require("../middleware");
 
-    // Seed = require("../seed.js");
-
 //setting disk storage for uploaded files
 var storage = multer.diskStorage({
 	destination: "app/uploads/",
@@ -38,14 +36,13 @@ function fileUploadError(req,res){
 }
 
 function fileUploadSuccess(req, res){
-    // console.log("\ncreatedFile->\n"+createdFile);
     req.flash("success", req.file.originalname +" uploaded successfully");
     res.redirect("/admin/uploadFile");
 }
 
 // Seed();
 //Form for uploading a file
-router.get('/uploadFile', function(req, res) {
+router.get('/uploadFile', middleware.isLoggedIn, function(req, res) {
     // res.json(subjects);
 	Subject.find({}, function(err, subjects){
 		if(err) console.log(err);
@@ -66,14 +63,12 @@ router.get('/uploadFile', function(req, res) {
 		if(err){
 			 console.log(err);
              req.flash("error","Please try again");
-			 res.redirect("/admin/uploadFileDynamic");
+			 res.redirect("/admin/uploadFile");
 		}
 		else{
-            res.render('uploadFileDynamic',{subjects:subjects});
+            res.render('uploadFile',{subjects:subjects});
 		}
 	});
-
-	// res.render('uploadFileDynamic');
 });
 
 router.get("/subject/:subjectName", function(req, res){
@@ -88,8 +83,8 @@ router.get("/subject/:subjectName", function(req, res){
 	.exec(function(err, subject){
 		if(err){
 			 console.log(err);
-             req.flash("error","Please try again");
-			 res.redirect("/");
+             req.flash("error","Couldn't find the chosen subject");
+			 res.redirect("/admin/uploadFile");
 		}
 		else{
             res.json({subject:subject});
@@ -109,8 +104,8 @@ router.get("/chapter/:chapterName", function(req, res){
 	.exec(function(err, chapter){
 		if(err){
 			 console.log(err);
-             req.flash("error","Please try again");
-			 res.redirect("/");
+             req.flash("error","Couldn't find the chosen chapter");
+			 res.redirect("/admin/uploadFile");
 		}
 		else{
             res.json({chapter:chapter});
@@ -119,7 +114,7 @@ router.get("/chapter/:chapterName", function(req, res){
 });
 
 //Handle file upload
-router.post('/uploadFile', function(req, res) {
+router.post('/uploadFile', middleware.isLoggedIn, function(req, res) {
 	var upload = multer({
 		storage: storage
 	}).single('userFile')
@@ -886,16 +881,15 @@ router.post("/signup", function(req, res){
         }
 
         passport.authenticate("local")(req, res, function () {
+            req.flash("success","Successfully signed you in as "+ req.body.username);
             res.redirect("/");
         });
     });
 });
 
-
-
 //User login form-- admin
 router.get("/login", function(req, res){
-    res.render("login",{error:res.locals.msg_error});
+    res.render("login");
 });
 
 //Handle user login -- for admin
@@ -916,8 +910,5 @@ router.get("/logout", function(req, res) {
     req.logout();
     res.redirect("/");
 });
-
-
-
 
 module.exports = router;

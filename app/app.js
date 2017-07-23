@@ -26,7 +26,8 @@ if ('development' == app.get('env')) {
 }
 
 //========connection to database
-var url = process.env.DATABASEURL || "mongodb://localhost/innov8";
+var url = process.env.DATABASEURL 
+        || 'mongodb://'+config.mongo.host+':'+config.mongo.port+'/harvin';
 
 mongoose.connect(url,{ useMongoClient: true }, function(err, db) {
     if(err) {
@@ -36,7 +37,7 @@ mongoose.connect(url,{ useMongoClient: true }, function(err, db) {
             req.db = db;
             next();
         };
-        app.listen(config.port, function(){
+        app.listen(process.env.PORT || config.port , function(){
             console.log("Server has started!!! Listening at " +config.port);
         });
     }
