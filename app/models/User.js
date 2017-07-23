@@ -2,8 +2,6 @@ var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
 var Schema = mongoose.Schema;
 
-
-
 //User schema
 var userSchema = new Schema(
     {
@@ -14,8 +12,12 @@ var userSchema = new Schema(
         },
         password:{
             type:String
+        },
+        isAdmin :{
+            type:Boolean,
+            required:true,
+            default:false
         }
-        
     }
 );
 

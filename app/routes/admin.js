@@ -40,36 +40,6 @@ function fileUploadSuccess(req, res){
     res.redirect("/admin/uploadFile");
 }
 
-// Seed();
-//Form for uploading a file
-router.get('/uploadFile', middleware.isLoggedIn, function(req, res) {
-    // res.json(subjects);
-	Subject.find({}, function(err, subjects){
-		if(err) console.log(err);
-	})
-	.populate({
-		path:"chapters",
-		model:"Chapter",
-		populate:{
-			path:"topics",
-			model:"Topic",
-			populate:{
-				path:"files",
-				model:"File"
-			}
-		}
-	})
-	.exec(function(err, subjects){
-		if(err){
-			 console.log(err);
-             req.flash("error","Please try again");
-			 res.redirect("/admin/uploadFile");
-		}
-		else{
-            res.render('uploadFile',{subjects:subjects});
-		}
-	});
-});
 
 router.get("/subject/:subjectName", function(req, res){
     Subject.findOne({subjectName:req.params.subjectName}, function(err, subjects){
@@ -113,8 +83,89 @@ router.get("/chapter/:chapterName", function(req, res){
 	});
 });
 
+
+//User registration form-- for admin
+router.get("/signup", function(req, res){
+    res.render("signup");
+});
+
+//Handle user registration-- for admin
+router.post("/signup", function(req, res){
+    User.register(new User(
+            { 
+                username : req.body.username,
+                isAdmin:true 
+            }), req.body.password, function(err, user) {
+        if (err) {
+            console.log(err);
+            req.flash("error", err.message);
+            return res.redirect("/admin/signup");
+            
+        }
+
+        passport.authenticate("local")(req, res, function () {
+            req.flash("success","Successfully signed you in as "+ req.body.username);
+            res.redirect("/");
+        });
+    });
+});
+
+//User login form-- admin
+router.get("/login", function(req, res){
+    res.render("login");
+});
+
+//Handle user login -- for admin
+router.post("/login", passport.authenticate("local", 
+    { 
+        successRedirect: "/",
+        failureRedirect: "/admin/login",
+        successFlash:"Welcome back",
+        failureFlash:true
+    }),
+    function(req, res) {
+		
+    }
+);
+
+//User logout-- admin
+router.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/");
+});
+
+//Form for uploading a file
+router.get('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(req, res) {
+    // res.json(subjects);
+	Subject.find({}, function(err, subjects){
+		if(err) console.log(err);
+	})
+	.populate({
+		path:"chapters",
+		model:"Chapter",
+		populate:{
+			path:"topics",
+			model:"Topic",
+			populate:{
+				path:"files",
+				model:"File"
+			}
+		}
+	})
+	.exec(function(err, subjects){
+		if(err){
+			 console.log(err);
+             req.flash("error","Please try again");
+			 res.redirect("/admin/uploadFile");
+		}
+		else{
+            res.render('uploadFile',{subjects:subjects});
+		}
+	});
+});
+
 //Handle file upload
-router.post('/uploadFile', middleware.isLoggedIn, function(req, res) {
+router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(req, res) {
 	var upload = multer({
 		storage: storage
 	}).single('userFile')
@@ -863,52 +914,6 @@ router.post('/uploadFile', middleware.isLoggedIn, function(req, res) {
         );
 
 	})
-});
-
-//User registration form-- for admin
-router.get("/signup", function(req, res){
-    res.render("signup");
-});
-
-//Handle user registration-- for admin
-router.post("/signup", function(req, res){
-    User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
-        if (err) {
-            console.log(err);
-            req.flash("error", err.message);
-            return res.redirect("/admin/signup");
-            
-        }
-
-        passport.authenticate("local")(req, res, function () {
-            req.flash("success","Successfully signed you in as "+ req.body.username);
-            res.redirect("/");
-        });
-    });
-});
-
-//User login form-- admin
-router.get("/login", function(req, res){
-    res.render("login");
-});
-
-//Handle user login -- for admin
-router.post("/login", passport.authenticate("local", 
-    { 
-        successRedirect: "/",
-        failureRedirect: "/admin/login",
-        successFlash:"Welcome back",
-        failureFlash:true
-    }),
-    function(req, res) {
-		
-    }
-);
-
-//User logout-- admin
-router.get("/logout", function(req, res) {
-    req.logout();
-    res.redirect("/");
 });
 
 module.exports = router;
