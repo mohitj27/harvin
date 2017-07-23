@@ -3,7 +3,9 @@ describe("MongoDB", function() {
 		// var MongoClient = require('mongodb').MongoClient;
 		mongoose = require("mongoose");
 		config = require('../config')();
-		mongoose.connect('mongodb://'+config.mongo.host+':'+config.mongo.port+'/harvin',{ useMongoClient: true }, function(err, db) {
+		var url = process.env.DATABASEURL 
+        || 'mongodb://'+config.mongo.host+':'+config.mongo.port+'/harvin';
+		mongoose.connect(url,{ useMongoClient: true }, function(err, db) {
 			expect(err).toBe(null);
 			expect(db).toBeDefined();
 			next();
