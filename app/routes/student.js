@@ -44,6 +44,7 @@ router.post("/signup", function(req, res){
 
 router.get("/files/:fileId", function(req, res){
 	File.findById(req.params.fileId, function(err, foundFile){
+		console.log(foundFile.filePath);
 		if(err){
 			console.log(err);
 			res.json({"error":"File not found"});
