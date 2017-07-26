@@ -15,18 +15,20 @@ $(function() {
           .append(addoption)
           .selectpicker();
 
-          $('#class').on('change', function() {
+          $('#classs').on('change', function() {
                 var $subject = $("#subject");
                 var o = $("option", $subject).eq(-2);
                 $subject.children().not(".lastTwo").not(":first").remove();
                 $.get("/admin/class/"+this.value, function(res){
                         $(".selectpicker").selectpicker("refresh");
                         
-                        if(res.class){
-                                var length = res.class.subjects.length
+                                console.log(res.classs)
+                        if(res.classs){
+                                var length = res.classs.subjects.length
                                 if(length>0){
+                                        console.log(length)
                                         for(var i = 0; i < length;i++){
-                                                o.before( $("<option>", { "text": res.class.subject[i].subjectName, "val":res.class.subject[i].subjectName}) );
+                                                o.before( $("<option>", { "text": res.classs.subjects[i].subjectName, "val":res.classs.subjects[i].subjectName}) );
                                                 
                                         }
                                         $(".selectpicker").selectpicker("refresh");

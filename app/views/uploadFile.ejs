@@ -8,23 +8,20 @@
             <div class="col-sm-3">
                 <h2>Class</h2> <br>
                 
-                <select autofocus required  name="className" class="selectpicker" id="class" >
+                <select autofocus required  name="className" class="selectpicker" id="classs" >
                     <option selected value="" disabled>Class</option>
-                    <%classes.forEach(function(class){%>
-                        <option value="<%=class.className%>">"Class "+<%=class.className%></option>
-                    <%})%>
-                    
+                     <%classes.forEach(function(classs){%>
+                     <option value="<%=classs.className%>"><%=classs.className%></option>   
+                     <%})%>
                     
                 </select>
             </div>
             <div class="col-sm-3">
                 <h2>Subject</h2> <br>
 
-                <select autofocus required  name="subjectName" class="selectpicker" id="subject" >
+                <select required  name="subjectName" class="selectpicker" id="subject" >
                     <option selected value="" disabled>Subject</option>
-                    <%subjects.forEach(function(subject){%>
-                        <option value="<%=subject.subjectName%>"><%=subject.subjectName%></option>
-                    <%})%>
+                   
                     
                     
                 </select>   
@@ -50,7 +47,7 @@
             <br>
             
             <input type="file" name="userFile" class="btn btn-default btn-file" required/><br>
-			<input type="submit" value="Upload File" name="submit" class="btn btn-primary">   
+			<input type="submit" value="Upload File" name="submit" class="btn btn-primary"/>   
         </div>
     </form>
 </div>

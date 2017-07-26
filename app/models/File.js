@@ -25,6 +25,10 @@ var fileSchema = new Schema(
       type:Number,
       required:true
     },
+    className:{
+      type:String,
+      required:true
+    },
     subjectName:{
       type:String,
       required:true

@@ -57,7 +57,7 @@ router.get("/class/:className", function(req, res){
 			 res.redirect("/admin/uploadFile");
 		}
 		else{
-            res.json({class:classs});
+            res.json({classs:classs});
 		}
 	});
 });
@@ -159,7 +159,8 @@ router.get("/logout", function(req, res) {
 router.get('/uploadFile', function(req, res) {
     // res.json(subjects);
 	Class.find({}, function(err, classes){
-		if(err) console.log(err);
+        if(err) console.log(err);
+        // console.log(classes)
 	})
 	.populate({
         path:"subjects",
@@ -185,6 +186,7 @@ router.get('/uploadFile', function(req, res) {
 		}
 		else{
             res.render('uploadFile',{classes:classes});
+            // res.json(classes)
 		}
 	});
 });
@@ -204,6 +206,7 @@ router.post('/uploadFile', function(req, res) {
         var subjectName = req.body.subjectName;
         var chapterName = req.body.chapterName;
         var topicName = req.body.topicName;
+        console.log(className)
 
         var newFile = {
             fileName,
