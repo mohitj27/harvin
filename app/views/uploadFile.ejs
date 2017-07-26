@@ -5,11 +5,23 @@
     <h1><b> Choose </b></h1>
     <form id="uploadForm" enctype="multipart/form-data" method="post" action="/admin/uploadFile">
         <div class="row">
-            <div class="col-sm-4">
-                <h2>Subject</h2> <br>
+            <div class="col-sm-3">
+                <h2>Class</h2> <br>
                 
+                <select autofocus required  name="className" class="selectpicker" id="class" >
+                    <option selected value="" disabled>Class</option>
+                    <%classes.forEach(function(class){%>
+                        <option value="<%=class.className%>">"Class "+<%=class.className%></option>
+                    <%})%>
+                    
+                    
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <h2>Subject</h2> <br>
+
                 <select autofocus required  name="subjectName" class="selectpicker" id="subject" >
-                    <option selected value="" disabled>----------</option>
+                    <option selected value="" disabled>Subject</option>
                     <%subjects.forEach(function(subject){%>
                         <option value="<%=subject.subjectName%>"><%=subject.subjectName%></option>
                     <%})%>
@@ -18,29 +30,25 @@
                 </select>   
                     
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <h2>Chapter</h2><br>
                 <select required  name="chapterName"  class="selectpicker" id="chapter" >
-                    <option selected value="" disabled>----------</option>
+                    <option selected value="" disabled>Chapter</option>
                     
                 </select>    
                     
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <h2>Topic</h2> <br>
                 <select required  name="topicName"  class="selectpicker" id="topic" >
-                    <option selected value="" disabled>----------</option>
+                    <option selected value="" disabled>Topic</option>
                     
                     
                 </select>  
             </div> 
             <br>
             <br>
-            <!--<span class="btn btn-default btn-file">
-                <h4><b>Browse file...</b></h4> <input required type="file" name ="userFile">
-            </span>
-            <br>
-            <br>-->
+            
             <input type="file" name="userFile" class="btn btn-default btn-file" required/><br>
 			<input type="submit" value="Upload File" name="submit" class="btn btn-primary">   
         </div>

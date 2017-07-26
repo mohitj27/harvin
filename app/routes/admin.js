@@ -6,6 +6,7 @@ var express = require("express"),
     Topic = require("../models/Topic.js"),
     Chapter = require("../models/Chapter.js"),
     Subject = require("../models/Subject.js"),
+    Class = require("../models/Class.js"),
     path = require('path'),
     multer = require('multer'),
     moment = require("moment-timezone"),
@@ -40,6 +41,26 @@ function fileUploadSuccess(req, res){
     res.redirect("/admin/uploadFile");
 }
 
+router.get("/class/:className", function(req, res){
+    Class.findOne({className:req.params.className}, function(err, classes){
+		if(err) console.log(err);
+	})
+	.populate({
+		path:"subjects",
+		model:"Subject"
+		
+	})
+	.exec(function(err, classs){
+		if(err){
+			 console.log(err);
+             req.flash("error","Couldn't find the chosen class");
+			 res.redirect("/admin/uploadFile");
+		}
+		else{
+            res.json({class:classs});
+		}
+	});
+});
 
 router.get("/subject/:subjectName", function(req, res){
     Subject.findOne({subjectName:req.params.subjectName}, function(err, subjects){
@@ -135,37 +156,41 @@ router.get("/logout", function(req, res) {
 });
 
 //Form for uploading a file
-router.get('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(req, res) {
+router.get('/uploadFile', function(req, res) {
     // res.json(subjects);
-	Subject.find({}, function(err, subjects){
+	Class.find({}, function(err, classes){
 		if(err) console.log(err);
 	})
 	.populate({
-		path:"chapters",
-		model:"Chapter",
-		populate:{
-			path:"topics",
-			model:"Topic",
-			populate:{
-				path:"files",
-				model:"File"
-			}
-		}
+        path:"subjects",
+        model:"Subject",
+        populate:{
+            path:"chapters",
+            model:"Chapter",
+            populate:{
+                path:"topics",
+                model:"Topic",
+                populate:{
+                        path:"files",
+                        model:"File"
+                }
+		    }
+        }
 	})
-	.exec(function(err, subjects){
+	.exec(function(err, classes){
 		if(err){
 			 console.log(err);
              req.flash("error","Please try again");
 			 res.redirect("/admin/uploadFile");
 		}
 		else{
-            res.render('uploadFile',{subjects:subjects});
+            res.render('uploadFile',{classes:classes});
 		}
 	});
 });
 
 //Handle file upload
-router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(req, res) {
+router.post('/uploadFile', function(req, res) {
 	var upload = multer({
 		storage: storage
 	}).single('userFile')
@@ -175,6 +200,7 @@ router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(re
         var filePath = req.file.path;
         var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
         var fileSize = req.file.size;
+        var className = req.body.className;
         var subjectName = req.body.subjectName;
         var chapterName = req.body.chapterName;
         var topicName = req.body.topicName;
@@ -185,9 +211,11 @@ router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(re
             filePath,
             uploadDate,
             fileSize,
+            className,
             subjectName,
             chapterName,
-            topicName
+            topicName,
+
         }
 
         async.waterfall(
@@ -300,10 +328,111 @@ router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(re
                                                                                                                             callback(err);
                                                                                                                             
                                                                                                                         }else{
-                                                                                                                            //here createdFile, foundTopic, foundChapter, found subject
+                                                                                                                            //here createdFile, foundTopic, foundChapter, foundSubject
+                                                                                                                            //Find class
                                                                                                                             //todo
-                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\nfoundChapter->\n"+foundChapter+"\nfoundSubject->\n"+foundSubject);
-                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                            //classStart
+                                                                                                                            Class.findOne(
+                                                                                                                            {
+                                                                                                                                "className":className
+                                                                                                                            },
+                                                                                                                            function(err, foundClass){
+                                                                                                                                if(err) {
+                                                                                                                                    console.log("finding class error-->/n")
+                                                                                                                                    console.log(err);
+                                                                                                                                //    fileUploadError(req,res)
+                                                                                                                                    callback(err);
+                                                                                                                                    
+                                                                                                                                }
+                                                                                                                                else{
+                                                                                                                                    if(foundClass != null){
+                                                                                                                                        //here createdFile, foundTopic, foundChapter, foundSubject
+                                                                                                                                        //we found one Class 
+                                                                                                                                        async.waterfall(
+                                                                                                                                            [
+                                                                                                                                                function(callback){
+                                                                                                                                                    Class.update({_id:foundClass._id},{$addToSet:{subjects:foundSubject}}, function(err){
+                                                                                                                                                        if(err) {
+                                                                                                                                                            console.log("updating class error-->/n")
+                                                                                                                                                            console.log(err);
+                                                                                                                                                            // fileUploadError(req,res)
+                                                                                                                                                            callback(err);
+                                                                                                                                                            
+                                                                                                                                                        }else{
+                                                                                                                                                            // here createdFile, foundTopic, foundChapter, foundSubject, foundClass
+                                                                                                                                                            // todo
+                                                                                                                                                            
+                                                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\nfoundChapter->\n"+foundChapter+"\nfoundSubject->\n"+foundSubject+"\nfoundClass->\n"+foundClass);
+                                                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            function(err, result){
+                                                                                                                                                if(err){
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    fileUploadError(req,res);
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    }
+                                                                                                                                    else{
+                                                                                                                                        //here createdFile, foundTopic, foundChapter, foundSubject
+                                                                                                                                        //not found any class, create one
+                                                                                                                                        //todos create new class 
+                                                                                                                                        async.waterfall(
+                                                                                                                                            [
+                                                                                                                                                function(callback){
+                                                                                                                                                    Class.create(
+                                                                                                                                                        {
+                                                                                                                                                            "className": className
+                                                                                                                                                        },
+                                                                                                                                                        function(err, createdClass){
+                                                                                                                                                            if(err) {
+                                                                                                                                                                console.log("creating class error-->/n")
+                                                                                                                                                                console.log(err);
+                                                                                                                                                                //fileUploadError(req,res)
+                                                                                                                                                                callback(err);
+                                                                                                                                                                
+                                                                                                                                                            }else{
+                                                                                                                                                                callback(null, createdClass);
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                    );
+                                                                                                                                                },
+                                                                                                                                                function(createdClass, callback){
+                                                                                                                                                    //here createdFile, foundTopic, foundChapter, foundSubject
+                                                                                                                                                    //class created
+                                                                                                                                                    //now update class
+                                                                                                                                                    Class.update({_id:createdClass._id},{$addToSet:{subjects:foundSubject}}, function(err){
+                                                                                                                                                        if(err) {
+                                                                                                                                                            console.log("updating class error-->/n")
+                                                                                                                                                            console.log(err);
+                                                                                                                                                            //fileUploadError(req,res)
+                                                                                                                                                            callback(err);
+                                                                                                                                                            
+                                                                                                                                                        }else{
+                                                                                                                                                            //here createdFile, foundTopic, foundChapter, foundSubject, createdClass
+                                                                                                                                                            //todo
+                                                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\nfoundChapter->\n"+foundChapter+"\nfoundSubject->\n"+foundSubject+"\ncreatedClass->\n"+createdClass);
+                                                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                                                            
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            function(err, result){
+                                                                                                                                                if(err){
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    fileUploadError(req,res);
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            );
+                                                                                                                            
                                                                                                                         }
                                                                                                                     });
                                                                                                                 }
@@ -355,8 +484,108 @@ router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(re
                                                                                                                         }else{
                                                                                                                             //here createdFile, foundTopic, foundChapter, createdSubject
                                                                                                                             //todo
-                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\nfoundChapter->\n"+foundChapter+"\ncreatedSubject->\n"+createdSubject);
-                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                            //classStart
+                                                                                                                            Class.findOne(
+                                                                                                                            {
+                                                                                                                                "className":className
+                                                                                                                            },
+                                                                                                                            function(err, foundClass){
+                                                                                                                                if(err) {
+                                                                                                                                    console.log("finding class error-->/n")
+                                                                                                                                    console.log(err);
+                                                                                                                                //    fileUploadError(req,res)
+                                                                                                                                    callback(err);
+                                                                                                                                    
+                                                                                                                                }
+                                                                                                                                else{
+                                                                                                                                    if(foundClass != null){
+                                                                                                                                        //here createdFile, foundTopic, foundChapter, createSubject
+                                                                                                                                        //we found one Class 
+                                                                                                                                        async.waterfall(
+                                                                                                                                            [
+                                                                                                                                                function(callback){
+                                                                                                                                                    Class.update({_id:foundClass._id},{$addToSet:{subjects:createdSubject}}, function(err){
+                                                                                                                                                        if(err) {
+                                                                                                                                                            console.log("updating class error-->/n")
+                                                                                                                                                            console.log(err);
+                                                                                                                                                            // fileUploadError(req,res)
+                                                                                                                                                            callback(err);
+                                                                                                                                                            
+                                                                                                                                                        }else{
+                                                                                                                                                            // here createdFile, foundTopic, foundChapter, createdSubject, foundClass
+                                                                                                                                                            // todo
+                                                                                                                                                            
+                                                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\nfoundChapter->\n"+foundChapter+"\ncreatedSubjectt->\n"+createdSubject+"\nfoundClass->\n"+foundClass);
+                                                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            function(err, result){
+                                                                                                                                                if(err){
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    fileUploadError(req,res);
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    }
+                                                                                                                                    else{
+                                                                                                                                        //here createdFile, foundTopic, foundChapter, createdSubject
+                                                                                                                                        //not found any class, create one
+                                                                                                                                        //todos create new class 
+                                                                                                                                        async.waterfall(
+                                                                                                                                            [
+                                                                                                                                                function(callback){
+                                                                                                                                                    Class.create(
+                                                                                                                                                        {
+                                                                                                                                                            "className": className
+                                                                                                                                                        },
+                                                                                                                                                        function(err, createdClass){
+                                                                                                                                                            if(err) {
+                                                                                                                                                                console.log("creating class error-->/n")
+                                                                                                                                                                console.log(err);
+                                                                                                                                                                //fileUploadError(req,res)
+                                                                                                                                                                callback(err);
+                                                                                                                                                                
+                                                                                                                                                            }else{
+                                                                                                                                                                callback(null, createdClass);
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                    );
+                                                                                                                                                },
+                                                                                                                                                function(createdClass, callback){
+                                                                                                                                                    //here createdFile, foundTopic, foundChapter, createdSubject
+                                                                                                                                                    //class created
+                                                                                                                                                    //now update class
+                                                                                                                                                    Class.update({_id:createdClass._id},{$addToSet:{subjects:createdSubject}}, function(err){
+                                                                                                                                                        if(err) {
+                                                                                                                                                            console.log("updating class error-->/n")
+                                                                                                                                                            console.log(err);
+                                                                                                                                                            //fileUploadError(req,res)
+                                                                                                                                                            callback(err);
+                                                                                                                                                            
+                                                                                                                                                        }else{
+                                                                                                                                                            //here createdFile, foundTopic, foundChapter, createdSubject, createdClass
+                                                                                                                                                            //todo
+                                                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\nfoundChapter->\n"+foundChapter+"\ncreatedSubject->\n"+createdSubject+"\ncreatedClass->\n"+createdClass);
+                                                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                                                            
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            function(err, result){
+                                                                                                                                                if(err){
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    fileUploadError(req,res);
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            );
+                                                                                                                            
                                                                                                                             
                                                                                                                         }
                                                                                                                     });
@@ -456,8 +685,108 @@ router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(re
                                                                                                                 }else{
                                                                                                                     //here createdFile, foundTopic, createdChapter, foundSubject
                                                                                                                     //todo
-                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\ncreatedChapter->\n"+createdChapter+"\nfoundSubject->\n"+foundSubject);
-                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                    //classStart
+                                                                                                                    Class.findOne(
+                                                                                                                    {
+                                                                                                                        "className":className
+                                                                                                                    },
+                                                                                                                    function(err, foundClass){
+                                                                                                                        if(err) {
+                                                                                                                            console.log("finding class error-->/n")
+                                                                                                                            console.log(err);
+                                                                                                                        //    fileUploadError(req,res)
+                                                                                                                            callback(err);
+                                                                                                                            
+                                                                                                                        }
+                                                                                                                        else{
+                                                                                                                            if(foundClass != null){
+                                                                                                                                //here createdFile, foundTopic, foundChapter, foundSubject
+                                                                                                                                //we found one Class 
+                                                                                                                                async.waterfall(
+                                                                                                                                    [
+                                                                                                                                        function(callback){
+                                                                                                                                            Class.update({_id:foundClass._id},{$addToSet:{subjects:foundSubject}}, function(err){
+                                                                                                                                                if(err) {
+                                                                                                                                                    console.log("updating class error-->/n")
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    // fileUploadError(req,res)
+                                                                                                                                                    callback(err);
+                                                                                                                                                    
+                                                                                                                                                }else{
+                                                                                                                                                    // here createdFile, foundTopic, createdChapter, foundSubject, foundClass
+                                                                                                                                                    // todo
+                                                                                                                                                    
+                                                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\ncreatedChapter->\n"+createdChapter+"\nfoundSubject->\n"+foundSubject+"\nfoundClass->\n"+foundClass);
+                                                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                                                }
+                                                                                                                                            });
+                                                                                                                                        }
+                                                                                                                                    ],
+                                                                                                                                    function(err, result){
+                                                                                                                                        if(err){
+                                                                                                                                            console.log(err);
+                                                                                                                                            fileUploadError(req,res);
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                );
+                                                                                                                            }
+                                                                                                                            else{
+                                                                                                                                //here createdFile, foundTopic, createdChapter, foundSubject
+                                                                                                                                //not found any class, create one
+                                                                                                                                //todos create new class 
+                                                                                                                                async.waterfall(
+                                                                                                                                    [
+                                                                                                                                        function(callback){
+                                                                                                                                            Class.create(
+                                                                                                                                                {
+                                                                                                                                                    "className": className
+                                                                                                                                                },
+                                                                                                                                                function(err, createdClass){
+                                                                                                                                                    if(err) {
+                                                                                                                                                        console.log("creating class error-->/n")
+                                                                                                                                                        console.log(err);
+                                                                                                                                                        //fileUploadError(req,res)
+                                                                                                                                                        callback(err);
+                                                                                                                                                        
+                                                                                                                                                    }else{
+                                                                                                                                                        callback(null, createdClass);
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            );
+                                                                                                                                        },
+                                                                                                                                        function(createdClass, callback){
+                                                                                                                                            //here createdFile, foundTopic, createdChapter, foundSubject
+                                                                                                                                            //class created
+                                                                                                                                            //now update class
+                                                                                                                                            Class.update({_id:createdClass._id},{$addToSet:{subjects:foundSubject}}, function(err){
+                                                                                                                                                if(err) {
+                                                                                                                                                    console.log("updating class error-->/n")
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    //fileUploadError(req,res)
+                                                                                                                                                    callback(err);
+                                                                                                                                                    
+                                                                                                                                                }else{
+                                                                                                                                                    //here createdFile, foundTopic, createdChapter, foundSubject, createdClass
+                                                                                                                                                    //todo
+                                                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\ncreatedChapter->\n"+createdChapter+"\nfoundSubject->\n"+foundSubject+"\ncreatedClass->\n"+createdClass);
+                                                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                                                    
+                                                                                                                                                }
+                                                                                                                                            });
+                                                                                                                                        }
+                                                                                                                                    ],
+                                                                                                                                    function(err, result){
+                                                                                                                                        if(err){
+                                                                                                                                            console.log(err);
+                                                                                                                                            fileUploadError(req,res);
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                );
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    );
+                                                                                                                    
                                                                                                                     
                                                                                                                 }
                                                                                                             });
@@ -509,8 +838,108 @@ router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(re
                                                                                                                 }else{
                                                                                                                     //here createdFile, foundTopic, createdChapter, createdSubject
                                                                                                                     //todo
-                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\ncreatedChapter->\n"+createdChapter+"\ncreatedSubject->\n"+createdSubject);
-                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                    //classStart
+                                                                                                                            Class.findOne(
+                                                                                                                            {
+                                                                                                                                "className":className
+                                                                                                                            },
+                                                                                                                            function(err, foundClass){
+                                                                                                                                if(err) {
+                                                                                                                                    console.log("finding class error-->/n")
+                                                                                                                                    console.log(err);
+                                                                                                                                //    fileUploadError(req,res)
+                                                                                                                                    callback(err);
+                                                                                                                                    
+                                                                                                                                }
+                                                                                                                                else{
+                                                                                                                                    if(foundClass != null){
+                                                                                                                                        //here createdFile, foundTopic, createdChapter, createSubject
+                                                                                                                                        //we found one Class 
+                                                                                                                                        async.waterfall(
+                                                                                                                                            [
+                                                                                                                                                function(callback){
+                                                                                                                                                    Class.update({_id:foundClass._id},{$addToSet:{subjects:createdSubject}}, function(err){
+                                                                                                                                                        if(err) {
+                                                                                                                                                            console.log("updating class error-->/n")
+                                                                                                                                                            console.log(err);
+                                                                                                                                                            // fileUploadError(req,res)
+                                                                                                                                                            callback(err);
+                                                                                                                                                            
+                                                                                                                                                        }else{
+                                                                                                                                                            // here createdFile, foundTopic, createdChapter, createdSubject, foundClass
+                                                                                                                                                            // todo
+                                                                                                                                                            
+                                                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\ncreatedChapter->\n"+createdChapter+"\ncreatedSubjectt->\n"+createdSubject+"\nfoundClass->\n"+foundClass);
+                                                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            function(err, result){
+                                                                                                                                                if(err){
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    fileUploadError(req,res);
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    }
+                                                                                                                                    else{
+                                                                                                                                        //here createdFile, foundTopic, createdChapter, createdSubject
+                                                                                                                                        //not found any class, create one
+                                                                                                                                        //todos create new class 
+                                                                                                                                        async.waterfall(
+                                                                                                                                            [
+                                                                                                                                                function(callback){
+                                                                                                                                                    Class.create(
+                                                                                                                                                        {
+                                                                                                                                                            "className": className
+                                                                                                                                                        },
+                                                                                                                                                        function(err, createdClass){
+                                                                                                                                                            if(err) {
+                                                                                                                                                                console.log("creating class error-->/n")
+                                                                                                                                                                console.log(err);
+                                                                                                                                                                //fileUploadError(req,res)
+                                                                                                                                                                callback(err);
+                                                                                                                                                                
+                                                                                                                                                            }else{
+                                                                                                                                                                callback(null, createdClass);
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                    );
+                                                                                                                                                },
+                                                                                                                                                function(createdClass, callback){
+                                                                                                                                                    //here createdFile, foundTopic, createdChapter, createdSubject
+                                                                                                                                                    //class created
+                                                                                                                                                    //now update class
+                                                                                                                                                    Class.update({_id:createdClass._id},{$addToSet:{subjects:createdSubject}}, function(err){
+                                                                                                                                                        if(err) {
+                                                                                                                                                            console.log("updating class error-->/n")
+                                                                                                                                                            console.log(err);
+                                                                                                                                                            //fileUploadError(req,res)
+                                                                                                                                                            callback(err);
+                                                                                                                                                            
+                                                                                                                                                        }else{
+                                                                                                                                                            //here createdFile, foundTopic, createdChapter, createdSubject, createdClass
+                                                                                                                                                            //todo
+                                                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\nfoundTopic->\n"+foundTopic+"\ncreatedChapter->\n"+createdChapter+"\ncreatedSubject->\n"+createdSubject+"\ncreatedClass->\n"+createdClass);
+                                                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                                                            
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            function(err, result){
+                                                                                                                                                if(err){
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    fileUploadError(req,res);
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            );
+                                                                                                                   
                                                                                                                     
                                                                                                                     
                                                                                                                 }
@@ -653,8 +1082,107 @@ router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(re
                                                                                                                 }else{
                                                                                                                     //here createdFile, createdTopic, foundChapter, foundSubject
                                                                                                                     //todo
-                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createdTopic+"\nfoundChapter->\n"+foundChapter+"\nfoundSubject->\n"+foundSubject);
-                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                    //classStart
+                                                                                                                    Class.findOne(
+                                                                                                                    {
+                                                                                                                        "className":className
+                                                                                                                    },
+                                                                                                                    function(err, foundClass){
+                                                                                                                        if(err) {
+                                                                                                                            console.log("finding class error-->/n")
+                                                                                                                            console.log(err);
+                                                                                                                        //    fileUploadError(req,res)
+                                                                                                                            callback(err);
+                                                                                                                            
+                                                                                                                        }
+                                                                                                                        else{
+                                                                                                                            if(foundClass != null){
+                                                                                                                                //here createdFile, createdTopic, foundChapter, foundSubject
+                                                                                                                                //we found one Class 
+                                                                                                                                async.waterfall(
+                                                                                                                                    [
+                                                                                                                                        function(callback){
+                                                                                                                                            Class.update({_id:foundClass._id},{$addToSet:{subjects:foundSubject}}, function(err){
+                                                                                                                                                if(err) {
+                                                                                                                                                    console.log("updating class error-->/n")
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    // fileUploadError(req,res)
+                                                                                                                                                    callback(err);
+                                                                                                                                                    
+                                                                                                                                                }else{
+                                                                                                                                                    // here createdFile, createdTopic, foundChapter, foundSubject, foundClass
+                                                                                                                                                    // todo
+                                                                                                                                                    
+                                                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createdTopic+"\nfoundChapter->\n"+foundChapter+"\nfoundSubject->\n"+foundSubject+"\nfoundClass->\n"+foundClass);
+                                                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                                                }
+                                                                                                                                            });
+                                                                                                                                        }
+                                                                                                                                    ],
+                                                                                                                                    function(err, result){
+                                                                                                                                        if(err){
+                                                                                                                                            console.log(err);
+                                                                                                                                            fileUploadError(req,res);
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                );
+                                                                                                                            }
+                                                                                                                            else{
+                                                                                                                                //here createdFile, createdTopic, foundChapter, foundSubject
+                                                                                                                                //not found any class, create one
+                                                                                                                                //todos create new class 
+                                                                                                                                async.waterfall(
+                                                                                                                                    [
+                                                                                                                                        function(callback){
+                                                                                                                                            Class.create(
+                                                                                                                                                {
+                                                                                                                                                    "className": className
+                                                                                                                                                },
+                                                                                                                                                function(err, createdClass){
+                                                                                                                                                    if(err) {
+                                                                                                                                                        console.log("creating class error-->/n")
+                                                                                                                                                        console.log(err);
+                                                                                                                                                        //fileUploadError(req,res)
+                                                                                                                                                        callback(err);
+                                                                                                                                                        
+                                                                                                                                                    }else{
+                                                                                                                                                        callback(null, createdClass);
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            );
+                                                                                                                                        },
+                                                                                                                                        function(createdClass, callback){
+                                                                                                                                            //here createdFile, createdTopic, foundChapter, foundSubject
+                                                                                                                                            //class created
+                                                                                                                                            //now update class
+                                                                                                                                            Class.update({_id:createdClass._id},{$addToSet:{subjects:foundSubject}}, function(err){
+                                                                                                                                                if(err) {
+                                                                                                                                                    console.log("updating class error-->/n")
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    //fileUploadError(req,res)
+                                                                                                                                                    callback(err);
+                                                                                                                                                    
+                                                                                                                                                }else{
+                                                                                                                                                    //here createdFile, createdTopic, foundChapter, foundSubject, createdClass
+                                                                                                                                                    //todo
+                                                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createdTopic+"\nfoundChapter->\n"+foundChapter+"\nfoundSubject->\n"+foundSubject+"\ncreatedClass->\n"+createdClass);
+                                                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                                                    
+                                                                                                                                                }
+                                                                                                                                            });
+                                                                                                                                        }
+                                                                                                                                    ],
+                                                                                                                                    function(err, result){
+                                                                                                                                        if(err){
+                                                                                                                                            console.log(err);
+                                                                                                                                            fileUploadError(req,res);
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                );
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    );
                                                                                                                     
                                                                                                                     
                                                                                                                 }
@@ -706,8 +1234,108 @@ router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(re
                                                                                                                 }else{
                                                                                                                     //here createdFile, createdTopic, foundChapter, createdSubject
                                                                                                                     //todo
-                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createdTopic+"\nfoundChapter->\n"+foundChapter+"\ncreatedSubject->\n"+createdSubject);
-                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                    //classStart
+                                                                                                                            Class.findOne(
+                                                                                                                            {
+                                                                                                                                "className":className
+                                                                                                                            },
+                                                                                                                            function(err, foundClass){
+                                                                                                                                if(err) {
+                                                                                                                                    console.log("finding class error-->/n")
+                                                                                                                                    console.log(err);
+                                                                                                                                //    fileUploadError(req,res)
+                                                                                                                                    callback(err);
+                                                                                                                                    
+                                                                                                                                }
+                                                                                                                                else{
+                                                                                                                                    if(foundClass != null){
+                                                                                                                                        //here createdFile, createdTopic, foundChapter, createSubject
+                                                                                                                                        //we found one Class 
+                                                                                                                                        async.waterfall(
+                                                                                                                                            [
+                                                                                                                                                function(callback){
+                                                                                                                                                    Class.update({_id:foundClass._id},{$addToSet:{subjects:createdSubject}}, function(err){
+                                                                                                                                                        if(err) {
+                                                                                                                                                            console.log("updating class error-->/n")
+                                                                                                                                                            console.log(err);
+                                                                                                                                                            // fileUploadError(req,res)
+                                                                                                                                                            callback(err);
+                                                                                                                                                            
+                                                                                                                                                        }else{
+                                                                                                                                                            // here createdFile, createdTopic, foundChapter, createdSubject, foundClass
+                                                                                                                                                            // todo
+                                                                                                                                                            
+                                                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopicc->\n"+createdTopic+"\nfoundChapter->\n"+foundChapter+"\ncreatedSubjectt->\n"+createdSubject+"\nfoundClass->\n"+foundClass);
+                                                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            function(err, result){
+                                                                                                                                                if(err){
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    fileUploadError(req,res);
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    }
+                                                                                                                                    else{
+                                                                                                                                        //here createdFile, createdTopic, foundChapter, createdSubject
+                                                                                                                                        //not found any class, create one
+                                                                                                                                        //todos create new class 
+                                                                                                                                        async.waterfall(
+                                                                                                                                            [
+                                                                                                                                                function(callback){
+                                                                                                                                                    Class.create(
+                                                                                                                                                        {
+                                                                                                                                                            "className": className
+                                                                                                                                                        },
+                                                                                                                                                        function(err, createdClass){
+                                                                                                                                                            if(err) {
+                                                                                                                                                                console.log("creating class error-->/n")
+                                                                                                                                                                console.log(err);
+                                                                                                                                                                //fileUploadError(req,res)
+                                                                                                                                                                callback(err);
+                                                                                                                                                                
+                                                                                                                                                            }else{
+                                                                                                                                                                callback(null, createdClass);
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                    );
+                                                                                                                                                },
+                                                                                                                                                function(createdClass, callback){
+                                                                                                                                                    //here createdFile, createdTopic, foundChapter, createdSubject
+                                                                                                                                                    //class created
+                                                                                                                                                    //now update class
+                                                                                                                                                    Class.update({_id:createdClass._id},{$addToSet:{subjects:createdSubject}}, function(err){
+                                                                                                                                                        if(err) {
+                                                                                                                                                            console.log("updating class error-->/n")
+                                                                                                                                                            console.log(err);
+                                                                                                                                                            //fileUploadError(req,res)
+                                                                                                                                                            callback(err);
+                                                                                                                                                            
+                                                                                                                                                        }else{
+                                                                                                                                                            //here createdFile, createdTopic, foundChapter, createdSubject, createdClass
+                                                                                                                                                            //todo
+                                                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createdTopic+"\nfoundChapter->\n"+foundChapter+"\ncreatedSubject->\n"+createdSubject+"\ncreatedClass->\n"+createdClass);
+                                                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                                                            
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            function(err, result){
+                                                                                                                                                if(err){
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    fileUploadError(req,res);
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            );
+                                                                                                                    
                                                                                                                     
                                                                                                                     
                                                                                                                 }
@@ -804,8 +1432,107 @@ router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(re
                                                                                                                 }else{
                                                                                                                     //here createdFile, createdTopic, createdChapter, foundSubject
                                                                                                                     //todo
-                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createdTopic+"\ncreatedChapter->\n"+createdChapter+"\nfoundSubject->\n"+foundSubject);
-                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                    //classStart
+                                                                                                                    Class.findOne(
+                                                                                                                    {
+                                                                                                                        "className":className
+                                                                                                                    },
+                                                                                                                    function(err, foundClass){
+                                                                                                                        if(err) {
+                                                                                                                            console.log("finding class error-->/n")
+                                                                                                                            console.log(err);
+                                                                                                                        //    fileUploadError(req,res)
+                                                                                                                            callback(err);
+                                                                                                                            
+                                                                                                                        }
+                                                                                                                        else{
+                                                                                                                            if(foundClass != null){
+                                                                                                                                //here createdFile, createTopic, createdChapter, foundSubject
+                                                                                                                                //we found one Class 
+                                                                                                                                async.waterfall(
+                                                                                                                                    [
+                                                                                                                                        function(callback){
+                                                                                                                                            Class.update({_id:foundClass._id},{$addToSet:{subjects:foundSubject}}, function(err){
+                                                                                                                                                if(err) {
+                                                                                                                                                    console.log("updating class error-->/n")
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    // fileUploadError(req,res)
+                                                                                                                                                    callback(err);
+                                                                                                                                                    
+                                                                                                                                                }else{
+                                                                                                                                                    // here createdFile, createTopic, createdChapter, foundSubject, foundClass
+                                                                                                                                                    // todo
+                                                                                                                                                    
+                                                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createTopic+"\ncreatedChapter->\n"+createdChapter+"\nfoundSubject->\n"+foundSubject+"\nfoundClass->\n"+foundClass);
+                                                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                                                }
+                                                                                                                                            });
+                                                                                                                                        }
+                                                                                                                                    ],
+                                                                                                                                    function(err, result){
+                                                                                                                                        if(err){
+                                                                                                                                            console.log(err);
+                                                                                                                                            fileUploadError(req,res);
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                );
+                                                                                                                            }
+                                                                                                                            else{
+                                                                                                                                //here createdFile, createdTopic, createdChapter, foundSubject
+                                                                                                                                //not found any class, create one
+                                                                                                                                //todos create new class 
+                                                                                                                                async.waterfall(
+                                                                                                                                    [
+                                                                                                                                        function(callback){
+                                                                                                                                            Class.create(
+                                                                                                                                                {
+                                                                                                                                                    "className": className
+                                                                                                                                                },
+                                                                                                                                                function(err, createdClass){
+                                                                                                                                                    if(err) {
+                                                                                                                                                        console.log("creating class error-->/n")
+                                                                                                                                                        console.log(err);
+                                                                                                                                                        //fileUploadError(req,res)
+                                                                                                                                                        callback(err);
+                                                                                                                                                        
+                                                                                                                                                    }else{
+                                                                                                                                                        callback(null, createdClass);
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            );
+                                                                                                                                        },
+                                                                                                                                        function(createdClass, callback){
+                                                                                                                                            //here createdFile, createdTopic, createdChapter, foundSubject
+                                                                                                                                            //class created
+                                                                                                                                            //now update class
+                                                                                                                                            Class.update({_id:createdClass._id},{$addToSet:{subjects:foundSubject}}, function(err){
+                                                                                                                                                if(err) {
+                                                                                                                                                    console.log("updating class error-->/n")
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    //fileUploadError(req,res)
+                                                                                                                                                    callback(err);
+                                                                                                                                                    
+                                                                                                                                                }else{
+                                                                                                                                                    //here createdFile, createdTopic, createdChapter, foundSubject, createdClass
+                                                                                                                                                    //todo
+                                                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createdTopic+"\ncreatedChapter->\n"+createdChapter+"\nfoundSubject->\n"+foundSubject+"\ncreatedClass->\n"+createdClass);
+                                                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                                                    
+                                                                                                                                                }
+                                                                                                                                            });
+                                                                                                                                        }
+                                                                                                                                    ],
+                                                                                                                                    function(err, result){
+                                                                                                                                        if(err){
+                                                                                                                                            console.log(err);
+                                                                                                                                            fileUploadError(req,res);
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                );
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    );
                                                                                                                     
                                                                                                                     
                                                                                                                 }
@@ -857,8 +1584,108 @@ router.post('/uploadFile', middleware.isLoggedIn,middleware.isAdmin, function(re
                                                                                                                 }else{
                                                                                                                     //here createdFile, createdTopic, createdChapter, createdSubject
                                                                                                                     //todo
-                                                                                                                    console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createdTopic+"\ncreatedChapter->\n"+createdChapter+"\ncreatedSubject->\n"+createdSubject);
-                                                                                                                    fileUploadSuccess(req,res);
+                                                                                                                    //classStart
+                                                                                                                            Class.findOne(
+                                                                                                                            {
+                                                                                                                                "className":className
+                                                                                                                            },
+                                                                                                                            function(err, foundClass){
+                                                                                                                                if(err) {
+                                                                                                                                    console.log("finding class error-->/n")
+                                                                                                                                    console.log(err);
+                                                                                                                                //    fileUploadError(req,res)
+                                                                                                                                    callback(err);
+                                                                                                                                    
+                                                                                                                                }
+                                                                                                                                else{
+                                                                                                                                    if(foundClass != null){
+                                                                                                                                        //here createdFile, createdTopic, createdChapter, createSubject
+                                                                                                                                        //we found one Class 
+                                                                                                                                        async.waterfall(
+                                                                                                                                            [
+                                                                                                                                                function(callback){
+                                                                                                                                                    Class.update({_id:foundClass._id},{$addToSet:{subjects:createdSubject}}, function(err){
+                                                                                                                                                        if(err) {
+                                                                                                                                                            console.log("updating class error-->/n")
+                                                                                                                                                            console.log(err);
+                                                                                                                                                            // fileUploadError(req,res)
+                                                                                                                                                            callback(err);
+                                                                                                                                                            
+                                                                                                                                                        }else{
+                                                                                                                                                            // here createdFile, createdTopic, createdChapter, createdSubject, foundClass
+                                                                                                                                                            // todo
+                                                                                                                                                            
+                                                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createdTopic+"\ncreatedChapter->\n"+createdChapter+"\ncreatedSubjectt->\n"+createdSubject+"\nfoundClass->\n"+foundClass);
+                                                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            function(err, result){
+                                                                                                                                                if(err){
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    fileUploadError(req,res);
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    }
+                                                                                                                                    else{
+                                                                                                                                        //here createdFile, createdTopic, createdChapter, createdSubject
+                                                                                                                                        //not found any class, create one
+                                                                                                                                        //todos create new class 
+                                                                                                                                        async.waterfall(
+                                                                                                                                            [
+                                                                                                                                                function(callback){
+                                                                                                                                                    Class.create(
+                                                                                                                                                        {
+                                                                                                                                                            "className": className
+                                                                                                                                                        },
+                                                                                                                                                        function(err, createdClass){
+                                                                                                                                                            if(err) {
+                                                                                                                                                                console.log("creating class error-->/n")
+                                                                                                                                                                console.log(err);
+                                                                                                                                                                //fileUploadError(req,res)
+                                                                                                                                                                callback(err);
+                                                                                                                                                                
+                                                                                                                                                            }else{
+                                                                                                                                                                callback(null, createdClass);
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                    );
+                                                                                                                                                },
+                                                                                                                                                function(createdClass, callback){
+                                                                                                                                                    //here createdFile, createdTopic, createdChapter, createdSubject
+                                                                                                                                                    //class created
+                                                                                                                                                    //now update class
+                                                                                                                                                    Class.update({_id:createdClass._id},{$addToSet:{subjects:createdSubject}}, function(err){
+                                                                                                                                                        if(err) {
+                                                                                                                                                            console.log("updating class error-->/n")
+                                                                                                                                                            console.log(err);
+                                                                                                                                                            //fileUploadError(req,res)
+                                                                                                                                                            callback(err);
+                                                                                                                                                            
+                                                                                                                                                        }else{
+                                                                                                                                                            //here createdFile, createdTopic, createdChapter, createdSubject, createdClass
+                                                                                                                                                            //todo
+                                                                                                                                                            console.log("\ncreatedFile->\n"+createdFile+"\ncreatedTopic->\n"+createdTopic+"\ncreatedChapter->\n"+createdChapter+"\ncreatedSubject->\n"+createdSubject+"\ncreatedClass->\n"+createdClass);
+                                                                                                                                                            fileUploadSuccess(req,res);
+                                                                                                                                                            
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            function(err, result){
+                                                                                                                                                if(err){
+                                                                                                                                                    console.log(err);
+                                                                                                                                                    fileUploadError(req,res);
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            );
+                                                                                                                    
                                                                                                                     
                                                                                                                     
                                                                                                                 }

@@ -15,6 +15,29 @@ $(function() {
           .append(addoption)
           .selectpicker();
 
+          $('#class').on('change', function() {
+                var $subject = $("#subject");
+                var o = $("option", $subject).eq(-2);
+                $subject.children().not(".lastTwo").not(":first").remove();
+                $.get("/admin/class/"+this.value, function(res){
+                        $(".selectpicker").selectpicker("refresh");
+                        
+                        if(res.class){
+                                var length = res.class.subjects.length
+                                if(length>0){
+                                        for(var i = 0; i < length;i++){
+                                                o.before( $("<option>", { "text": res.class.subject[i].subjectName, "val":res.class.subject[i].subjectName}) );
+                                                
+                                        }
+                                        $(".selectpicker").selectpicker("refresh");
+                                }
+                        }
+
+                });
+                
+                
+        });
+
           $('#subject').on('change', function() {
                 var $chapter = $("#chapter");
                 var o = $("option", $chapter).eq(-2);

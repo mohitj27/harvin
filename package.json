@@ -7,7 +7,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/.bin/jasmine-node app/tests --verbose --forceexit --color",
+    "test": "jasmine-node app/tests --verbose --forceexit --color",
     "start": "node ./app/app.js"
   },
   "repository": {

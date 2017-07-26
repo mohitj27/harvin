@@ -2,21 +2,21 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 //====subjectSchema====
-var subjectSchema = new Schema(
+var classSchema = new Schema(
 	{
-		subjectName:{
+		className:{
 			type:String,
 			unique:true,
 			required:true
 		},
-		chapters:[
+		subjects:[
 			{
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Chapter"
+                ref: "Subject"
             }
 		]
 	}
 );
 
 //subject model
-module.exports = mongoose.model("Subject", subjectSchema);
+module.exports = mongoose.model("Class", classSchema);
