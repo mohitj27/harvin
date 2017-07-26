@@ -1,0 +1,22 @@
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+
+//====subjectSchema====
+var batchSchema = new Schema(
+	{
+		batchName:{
+            type:String,
+            required:true,
+            default:""
+        },
+        subject:[
+            {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"Subject"
+            }
+        ]
+	}
+);
+
+//subject model
+module.exports = mongoose.model("Profile", profileSchema);

@@ -17,6 +17,10 @@ var userSchema = new Schema(
             type:Boolean,
             required:true,
             default:false
+        },
+        profile:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Profile"
         }
     }
 );
