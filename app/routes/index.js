@@ -4,9 +4,11 @@ var express = require("express"),
 
     adminRoutes = require("./admin"),
     studentRoutes = require("./student");
+    batchRoutes = require("./batch");
 
 router.use("/admin", adminRoutes);
 router.use("/student", studentRoutes);
+router.use("/batch", batchRoutes);
 
 //Home-admin
 router.get("/", function(req, res){

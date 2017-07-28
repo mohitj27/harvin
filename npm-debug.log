@@ -7,7 +7,7 @@
 6 silly lifecycle innov8@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle innov8@1.0.0~start: innov8@1.0.0
 8 verbose lifecycle innov8@1.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle innov8@1.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/home/gopal/Projects/web/innov8/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/gopal/.rvm/bin:/home/gopal/Android/Sdk/tools:/home/gopal/Android/Sdk/platform-tools:/home/gopal/pycharm-community-2017.1.3/bin:/home/gopal/mongodb-linux-x86_64-amazon-3.4.4/bin:/home/gopal/idea-IC-171.4424.56/bin:/usr/local/ampps/Ampps:/home/gopal/idea-IC-171.4424.56/bin
+9 verbose lifecycle innov8@1.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/home/gopal/Projects/web/innov8/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/gopal/.rvm/bin:/snap/bin:/home/gopal/Android/Sdk/tools:/home/gopal/Android/Sdk/platform-tools:/home/gopal/pycharm-community-2017.1.3/bin:/home/gopal/mongodb-linux-x86_64-amazon-3.4.4/bin:/home/gopal/idea-IC-171.4424.56/bin:/usr/local/ampps/Ampps:/home/gopal/idea-IC-171.4424.56/bin:/home/gopal/.rvm/bin:/home/gopal/Android/Sdk/tools:/home/gopal/Android/Sdk/platform-tools:/home/gopal/pycharm-community-2017.1.3/bin:/home/gopal/mongodb-linux-x86_64-amazon-3.4.4/bin:/home/gopal/idea-IC-171.4424.56/bin:/usr/local/ampps/Ampps:/home/gopal/idea-IC-171.4424.56/bin
 10 verbose lifecycle innov8@1.0.0~start: CWD: /home/gopal/Projects/web/innov8
 11 silly lifecycle innov8@1.0.0~start: Args: [ '-c', 'node ./app/app.js' ]
 12 silly lifecycle innov8@1.0.0~start: Returned: code: 1  signal: null

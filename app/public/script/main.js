@@ -85,9 +85,33 @@ $(function() {
         });
 
         
-
-
-
+        $('#batch').on('change', function() {
+                var $subjectsInBatch = $("#subjectsInBatch");
+                var o = $("option", $subjectsInBatch).not(".lastTwo");
+                $.get("/batch/"+this.value, function(res){
+                        o.each(function(index){
+                                console.log(index)
+                                this.selected=false;
+                        })
+                        $(".selectpicker").selectpicker("refresh");
+                        if(res.batch){
+                                var length = res.batch.subject.length
+                                if(length>0){
+                                       for(var i = 0; i< length; i++){
+                                                o.each(function(j){
+                                                        if(j>0)
+                                                        {
+                                                                if(this.value==res.batch.subject[i].subjectName)
+                                                                        this.selected = true;
+                                                        }
+                                                })
+                                       }
+                                }
+                                $(".selectpicker").selectpicker("refresh");
+                        
+                        }
+                });
+        });
 });
 
 function addSelectItem(t,ev)

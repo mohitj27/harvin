@@ -11,6 +11,7 @@ var bodyParser = require("body-parser"),
    fs = require('fs')
    config = require('./config')(),
    errorHandler = require('express-error-handler'),
+   methodOverride = require("method-override");
 
   app = express(),
   conn = mongoose.connection,
@@ -56,10 +57,11 @@ app.use(flash());
 app.set('views', __dirname + '/views');
 app.set("view engine", "ejs");
 app.use(morgan("dev"))
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(flash());
 app.use(bodyParser.json())
 app.use(express.static( __dirname + "/public"));
+app.use(methodOverride("_method"));
 app.use(session({
   secret: 'This is a secret phrase, it will be used for hashing the session id',
   resave: false,

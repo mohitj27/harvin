@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-//====subjectSchema====
+//====Profile Schmea====
 var profileSchema = new Schema(
 	{
 		fullName:{
@@ -26,5 +26,5 @@ var profileSchema = new Schema(
 	}
 );
 
-//subject model
+//profile model
 module.exports = mongoose.model("Profile", profileSchema);

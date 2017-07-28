@@ -19,4 +19,4 @@ var batchSchema = new Schema(
 );
 
 //subject model
-module.exports = mongoose.model("Profile", profileSchema);
+module.exports = mongoose.model("Batch", batchSchema);
