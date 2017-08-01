@@ -10,7 +10,6 @@ var bodyParser = require("body-parser"),
    morgan = require("morgan"),
    fs = require('fs')
    config = require('./config')(),
-   errorHandler = require('express-error-handler'),
    methodOverride = require("method-override");
 
   app = express(),
@@ -21,10 +20,6 @@ var bodyParser = require("body-parser"),
 
 mongoose.Promise = Promise;
 
-// development only
-if ('development' == app.get('env')) {
-  	app.use(errorHandler());
-}
 
 //========connection to database
 var url = process.env.DATABASEURL 
@@ -49,7 +44,7 @@ app.use(morgan("dev"));
 
 //setting up body-parser
 app.use(bodyParser.urlencoded({ extended: false }))
- 
+
 //flash
 app.use(flash());
 
@@ -63,25 +58,48 @@ app.use(bodyParser.json())
 app.use(express.static( __dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(session({
-  secret: 'This is a secret phrase, it will be used for hashing the session id',
-  resave: false,
-  saveUninitialized: false,
+    secret: 'This is a secret phrase, it will be used for hashing the session id',
+    resave: false,
+    saveUninitialized: false,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 //Setting local strategy for authentication of user
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//Middleware function 
+// General middleware function 
+
 app.use(function(req, res, next) {
-  res.locals.currentUser = req.user || null;
-  res.locals.msg_error = req.flash("error");
-  res.locals.msg_success = req.flash("success");
-  next();
+    res.locals.currentUser = req.user || null;
+    res.locals.msg_error = req.flash("error")||{};
+    res.locals.msg_success = req.flash("success")||{};
+    next();
 });
 
+
+//index route
 app.use("/",indexRoutes);
+
+// Error handling middleware function 
+app.use(function(err, req, res, next) {
+    if(err){
+        err.statusCode = err.statusCode || 500;
+        res.status(err.statusCode);
+        if("development" == app.get("env")){
+            res.render('error', {
+                name:err.name,
+                message: err.message,
+                statusCode: err.statusCode
+            });
+        }else{
+            res.render('error', {
+                message: err.message
+            });
+        }
+    }
+});
+
+

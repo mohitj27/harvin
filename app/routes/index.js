@@ -5,6 +5,7 @@ var express = require("express"),
     adminRoutes = require("./admin"),
     studentRoutes = require("./student");
     batchRoutes = require("./batch");
+    
 
 router.use("/admin", adminRoutes);
 router.use("/student", studentRoutes);
@@ -18,7 +19,7 @@ router.get("/", function(req, res){
 
 //if not route mentioned in url
 router.get("*", function(req, res){
-    res.send("No page found :(");
+    res.redirect("/");
 });
 
 module.exports = router;

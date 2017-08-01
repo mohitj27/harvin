@@ -13,7 +13,8 @@ var express = require("express"),
     fs = require("file-system"),
     async = require("async"),
     middleware = require("../middleware");
-
+    errors = require("../error");
+    
 //setting disk storage for uploaded files
 var storage = multer.diskStorage({
 	destination: __dirname+ "/../../../uploads/",
@@ -22,18 +23,16 @@ var storage = multer.diskStorage({
 	}
 });
 
-function fileUploadError(req,res){
+function fileUploadError(req, res, next){
     //deleting uploaded file from upload directory
     fs.unlink(req.file.path, function(err){
         if(err) {
-            console.log("error while deleting uploaded file-->/n");
             console.log(err);
+            next(new errors.generic)
         }
         else console.log("file deleted from uploads directory")
     });
 
-    req.flash("error", err._message);
-    res.redirect("/admin/uploadFile");
 }
 
 function fileUploadSuccess(req, res){
@@ -41,9 +40,12 @@ function fileUploadSuccess(req, res){
     res.redirect("/admin/uploadFile");
 }
 
-router.get("/class/:className", function(req, res){
+router.get("/class/:className", function(req, res, next){
     Class.findOne({className:req.params.className}, function(err, classes){
-		if(err) console.log(err);
+		if(err) {
+            console.log(err);
+            next(new errors.generic);
+        }
 	})
 	.populate({
 		path:"subjects",
@@ -53,7 +55,7 @@ router.get("/class/:className", function(req, res){
 	.exec(function(err, classs){
 		if(err){
 			 console.log(err);
-             req.flash("error","Couldn't find the chosen class");
+             req.flash("error","Couldn't find the details of chosen class");
 			 res.redirect("/admin/uploadFile");
 		}
 		else{
@@ -62,9 +64,12 @@ router.get("/class/:className", function(req, res){
 	});
 });
 
-router.get("/subject/:subjectName", function(req, res){
+router.get("/subject/:subjectName", function(req, res, next){
     Subject.findOne({subjectName:req.params.subjectName}, function(err, subjects){
-		if(err) console.log(err);
+		if(err) {
+            console.log(err);
+            next(new errors.generic);
+        }
 	})
 	.populate({
 		path:"chapters",
@@ -73,8 +78,8 @@ router.get("/subject/:subjectName", function(req, res){
 	})
 	.exec(function(err, subject){
 		if(err){
-			 console.log(err);
-             req.flash("error","Couldn't find the chosen subject");
+             console.log(err);
+             req.flash("error","Couldn't find the details of chosen subject");
 			 res.redirect("/admin/uploadFile");
 		}
 		else{
@@ -83,9 +88,12 @@ router.get("/subject/:subjectName", function(req, res){
 	});
 });
 
-router.get("/chapter/:chapterName", function(req, res){
+router.get("/chapter/:chapterName", function(req, res, next){
     Chapter.findOne({chapterName:req.params.chapterName}, function(err, chapters){
-		if(err) console.log(err);
+		if(err) {
+            console.log(err);
+            next(new errors.generic);
+        }
 	})
 	.populate({
 		path:"topics",
@@ -94,8 +102,8 @@ router.get("/chapter/:chapterName", function(req, res){
 	})
 	.exec(function(err, chapter){
 		if(err){
-			 console.log(err);
-             req.flash("error","Couldn't find the chosen chapter");
+             console.log(err);
+             req.flash("error","Couldn't find the details of chosen chapter");
 			 res.redirect("/admin/uploadFile");
 		}
 		else{
@@ -111,7 +119,7 @@ router.get("/signup", function(req, res){
 });
 
 //Handle user registration-- for admin
-router.post("/signup", function(req, res){
+router.post("/signup", function(req, res, next){
     User.register(new User(
             { 
                 username : req.body.username,
@@ -156,7 +164,7 @@ router.get("/logout", function(req, res) {
 });
 
 //Form for uploading a file
-router.get('/uploadFile', function(req, res) {
+router.get('/uploadFile', function(req, res, next) {
     // res.json(subjects);
 	Class.find({}, function(err, classes){
         if(err) console.log(err);

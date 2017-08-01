@@ -4,6 +4,7 @@ var passport = require("passport");
 var User = require("../models/User.js");
 var Subject = require("../models/Subject.js");
 var File = require("../models/File.js");
+errors = require("../error");
 
 //User login form-- admin
 router.get("/login", function(req, res){
@@ -42,29 +43,31 @@ router.post("/signup", function(req, res){
     });
 });
 
-router.get("/files/:fileId", function(req, res){
+router.get("/files/:fileId", function(req, res, next){
 	File.findById(req.params.fileId, function(err, foundFile){
 		if(err){
-			console.log(err);
-			res.json({"error":"File not found"});
+			console.log(err)
+			next(new errors.notFound);
 		}
 		else{
 			res.download(foundFile.filePath, foundFile.fileName, function(err){
 				if(err){
 					console.log(err);
 				}
-				
 			});
 		}
 	});
 });
 
 //sending subject list
-router.get("/subjects", function(req, res){
+router.get("/subjects", function(req, res, next){
 
 	// res.json(subjects);
 	Subject.find({}, function(err, subjects){
-		if(err) console.log(err);
+		if(err){
+			console.log(err)
+			next(new errors.notFound);
+		}
 	})
 	.populate({
 		path:"chapters",
@@ -80,9 +83,8 @@ router.get("/subjects", function(req, res){
 	})
 	.exec(function(err, subjects){
 		if(err){
-			 console.log(err);
-			 res.type('application/json');
-			 res.status(404).json({"error": "Please try again"});
+			console.log(err)
+			next(new errors.generic);
 		}
 		else{
 			res.type('application/json');
