@@ -3,6 +3,7 @@ var express = require("express"),
     Batch = require("../models/Batch")
     Subject = require("../models/Subject")
     errors = require("../error");
+    async = require("async"),
 
 router.get("/",function(req, res, next){
     Batch.find({}, function(err, foundBatches){
@@ -53,75 +54,42 @@ router.post("/update",function(req, res, next){
     var subjectName = req.body.subjectName;
     var batchName = req.body.batchName;
 
-    Batch.findOne({batchName:batchName}, function(err, foundBatch){
-        if(err) {
-            console.log(err);
-            next(new errors.generic)
-        }else{
-            if(foundBatch!=null){
-                Subject.find({subjectName:subjectName}, function(err, foundSubject){
-                    if(err) {
-                        console.log(err);
-                        next(new errors.generic)
+    async.waterfall(
+        [
+            function (callback) {
+                Subject.find({subjectName:subjectName}, function(err, foundSubjects){
+                    if(!err && foundSubjects) {
+                        callback(null, foundSubjects)
+                        
                     }else{
-                        if(foundSubject!=null){
-                            console.log(foundSubject.length);
-                            const doc = {
-                                subject:foundSubject
-                            }
-                            Batch.update({_id:foundBatch._id},doc , function(err){
-                                if(err) {
-                                    console.log(err);
-                                    next(new errors.generic)
-                                }
-                                else{
-                                    req.flash("success", "Batch updated successfully");
-                                    res.redirect("/batch")
-                                }
-                            });
-                        }
+                        console.log(err);
+                        callback(err);
                     }
                 });
-            }else{
-                Batch.create(
-                    {
-                        batchName:batchName
-                    },
-                    function(err, createdBatch){
-                        if(err) {
-                            console.log(err);
-                            next(new errors.generic)
-                        }
-                        else{
-                            Subject.find({subjectName:subjectName}, function(err, foundSubject){
-                                if(err) {
-                                    console.log(err);
-                                    next(new errors.generic)
-                                }else{
-                                    if(foundSubject!=null){
-                                        console.log(foundSubject.length);
-                                        const doc = {
-                                            subject:foundSubject
-                                        }
-                                        Batch.update({_id:createdBatch._id},doc , function(err){
-                                            if(err) {
-                                                console.log(err);
-                                                next(new errors.generic)
-                                            }
-                                            else{
-                                                req.flash("success", "Batch updated successfully");
-                                                res.redirect("/batch")
-                                            }
-                                        });
-                                    }
-                                }
-                            });
+            },
+    
+            function (foundSubjects, callback) {
+                Batch.findOneAndUpdate(
+                    { batchName:batchName },
+                    { $set:{ batchName: batchName, subject: foundSubjects} },
+                    { upsert: true, new: true, setDefaultsOnInsert: true },
+                    function (err, createdBatch) {
+                        if(!err && createdBatch){
+                           req.flash("success", "Batch updated successfully");
+                           res.redirect("/batch")
                         }
                     }
                 );
             }
+        ],
+        function (err, result) {
+            if(err){ {batchName:batchName}
+                console.log(err)
+                next(new errors.generic)
+            }
         }
-    })
+    );
+    
 
     
 });

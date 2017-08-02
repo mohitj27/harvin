@@ -243,8 +243,8 @@ router.post('/uploadFile', function(req, res) {
                 },
                 function (createdFile, callback) {
                     Topic.findOneAndUpdate(
-                        { "topicName": topicName },
-                        { $addToSet:{ files:createdFile } , $set:{"topicName":topicName}},
+                        { topicName: topicName },
+                        { $addToSet:{ files:createdFile } , $set:{topicName:topicName}},
                         { upsert: true, new: true, setDefaultsOnInsert: true },
                         function (err, createdTopic) {
                             if(!err && createdTopic){
@@ -258,8 +258,8 @@ router.post('/uploadFile', function(req, res) {
                 },
                 function (createdTopic, callback) {
                     Chapter.findOneAndUpdate(
-                       { "chapterName": chapterName },
-                       { $addToSet:{ topics:createdTopic } , $set:{"chapterName":chapterName}},
+                       { chapterName: chapterName },
+                       { $addToSet:{ topics:createdTopic } , $set:{chapterName:chapterName}},
                        { upsert: true, new: true, setDefaultsOnInsert: true },
                        function (err, createdChapter) {
                            if(!err && createdChapter){
@@ -273,8 +273,8 @@ router.post('/uploadFile', function(req, res) {
                 },
                 function (createdChapter, callback) {
                      Subject.findOneAndUpdate(
-                       { "subjectName": subjectName },
-                       { $addToSet:{ chapters:createdChapter } , $set:{"subjectName":subjectName}},
+                       { subjectName: subjectName },
+                       { $addToSet:{ chapters:createdChapter } , $set:{ subjectName:subjectName}},
                        { upsert: true, new: true, setDefaultsOnInsert: true },
                        function (err, createdSubject) {
                            if(!err && createdSubject){
@@ -289,8 +289,8 @@ router.post('/uploadFile', function(req, res) {
                 },
                 function (createdSubject, callback) {
                     Class.findOneAndUpdate(
-                        { "className": className },
-                        { $addToSet:{ subjects:createdSubject } , $set:{"className":className}},
+                        { className: className },
+                        { $addToSet:{ subjects:createdSubject } , $set:{className:className}},
                         { upsert: true, new: true, setDefaultsOnInsert: true },
                         function (err, createdClass) {
                             if(!err && createdClass){
