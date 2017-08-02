@@ -43,22 +43,6 @@ router.post("/signup", function(req, res){
     });
 });
 
-router.get("/files/:fileId", function(req, res, next){
-	File.findById(req.params.fileId, function(err, foundFile){
-		if(err){
-			console.log(err)
-			next(new errors.notFound);
-		}
-		else{
-			res.download(foundFile.filePath, foundFile.fileName, function(err){
-				if(err){
-					console.log(err);
-				}
-			});
-		}
-	});
-});
-
 //sending subject list
 router.get("/subjects", function(req, res, next){
 

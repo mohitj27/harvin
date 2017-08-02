@@ -1,25 +1,31 @@
 $(function() {
-  var content = "<input type=text onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
+        var content = "<input type=text onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
 
-  var divider = $('<option/>')
-          .addClass('divider lastTwo')
-          .data('divider', true);
-          
+        var divider = $('<option/>')
+                .addClass('divider lastTwo')
+                .data('divider', true);
+                
 
-  var addoption = $('<option/>')
+        var addoption = $('<option/>')
           .addClass('additem lastTwo')
           .data('content', content)
-		  
-  $('.selectpicker')
+
+	//appending divider and add item element	  
+        $('.selectpicker')
           .append(divider)
           .append(addoption)
           .selectpicker();
 
-          $('#classs').on('change', function() {
+        //removing add item from #subjectInBatch        
+        $("#subjectsInBatch").children().last().remove();        
+        $(".selectpicker").selectpicker("refresh");
+        
+        //populating subject option after class has been chosen
+        $('#classs').on('change', function() {
                 var $subject = $("#subject");
                 var o = $("option", $subject).eq(-2);
                 $subject.children().not(".lastTwo").not(":first").remove();
-                $.get("/admin/class/"+this.value, function(res){
+                $.get("/class/"+this.value, function(res){
                         $(".selectpicker").selectpicker("refresh");
                         
                                 console.log(res.classs)
@@ -36,15 +42,14 @@ $(function() {
                         }
 
                 });
-                
-                
         });
 
-          $('#subject').on('change', function() {
-                var $chapter = $("#chapter");
-                var o = $("option", $chapter).eq(-2);
-                $chapter.children().not(".lastTwo").not(":first").remove();
-                $.get("/admin/subject/"+this.value, function(res){
+        //populating chapter option after subject has been chosen
+        $('#subject').on('change', function() {
+        var $chapter = $("#chapter");
+        var o = $("option", $chapter).eq(-2);
+        $chapter.children().not(".lastTwo").not(":first").remove();
+                $.get("/subject/"+this.value, function(res){
                         $(".selectpicker").selectpicker("refresh");
                         
                         if(res.subject){
@@ -60,14 +65,14 @@ $(function() {
 
                 });
                 
-                
-        });
+        });        
 
+        //populating topic option after chapter has been chosen
         $('#chapter').on('change', function() {
                 var $topic = $("#topic");
                 var o = $("option", $topic).eq(-2);
                 $topic.children().not(".lastTwo").not(":first").remove();
-                $.get("/admin/chapter/"+this.value, function(res){
+                $.get("/chapter/"+this.value, function(res){
                         $(".selectpicker").selectpicker("refresh");
                         
                         if(res.chapter){
@@ -85,10 +90,11 @@ $(function() {
         });
 
         
+        //selecting the subject available in particular batch
         $('#batch').on('change', function() {
                 var $subjectsInBatch = $("#subjectsInBatch");
                 var o = $("option", $subjectsInBatch).not(".lastTwo");
-                $.get("/batch/"+this.value, function(res){
+                $.get("/batches/"+this.value, function(res){
                         o.each(function(index){
                                 console.log(index)
                                 this.selected=false;
@@ -97,7 +103,7 @@ $(function() {
                         if(res.batch){
                                 var length = res.batch.subject.length
                                 if(length>0){
-                                       for(var i = 0; i< length; i++){
+                                        for(var i = 0; i< length; i++){
                                                 o.each(function(j){
                                                         if(j>0)
                                                         {
@@ -105,7 +111,7 @@ $(function() {
                                                                         this.selected = true;
                                                         }
                                                 })
-                                       }
+                                        }
                                 }
                                 $(".selectpicker").selectpicker("refresh");
                         

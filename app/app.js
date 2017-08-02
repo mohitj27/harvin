@@ -39,9 +39,6 @@ mongoose.connect(url,{ useMongoClient: true }, function(err, db) {
     }
 });
 
-//
-app.use(morgan("dev"));
-
 //setting up body-parser
 app.use(bodyParser.urlencoded({ extended: false }))
 

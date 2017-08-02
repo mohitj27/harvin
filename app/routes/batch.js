@@ -5,7 +5,7 @@ var express = require("express"),
     errors = require("../error");
     async = require("async"),
 
-router.get("/",function(req, res, next){
+router.get("/updateBatch",function(req, res, next){
     Batch.find({}, function(err, foundBatches){
         if(err) {
             console.log(err);
@@ -18,7 +18,7 @@ router.get("/",function(req, res, next){
                     next(new errors.notFound)
                 }
                 else{
-                    res.render("batch",{batches:foundBatches, subjects:foundSubjects});
+                    res.render("updateBatch",{batches:foundBatches, subjects:foundSubjects});
                 }
             })
         }            
@@ -50,7 +50,7 @@ router.get("/:batchName", function(req, res, next){
     });
 });
 
-router.post("/update",function(req, res, next){
+router.post("/updateBatch",function(req, res, next){
     var subjectName = req.body.subjectName;
     var batchName = req.body.batchName;
 
@@ -76,7 +76,7 @@ router.post("/update",function(req, res, next){
                     function (err, createdBatch) {
                         if(!err && createdBatch){
                            req.flash("success", "Batch updated successfully");
-                           res.redirect("/batch")
+                           res.redirect("/batches/updateBatch")
                         }
                     }
                 );
