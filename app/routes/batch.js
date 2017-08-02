@@ -1,9 +1,11 @@
 var express = require("express"),
-    router = express.Router()
-    Batch = require("../models/Batch")
-    Subject = require("../models/Subject")
-    errors = require("../error");
     async = require("async"),
+
+    Batch = require("../models/Batch"),
+    Subject = require("../models/Subject"),
+    errors = require("../error"),
+
+    router = express.Router();
 
 router.get("/updateBatch",function(req, res, next){
     Batch.find({}, function(err, foundBatches){
@@ -89,11 +91,6 @@ router.post("/updateBatch",function(req, res, next){
             }
         }
     );
-    
-
-    
 });
-
-
 
 module.exports = router;

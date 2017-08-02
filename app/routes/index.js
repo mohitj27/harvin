@@ -1,16 +1,15 @@
 var express = require("express"),
-    router = express.Router(),
-    passport = require("passport"),
-
-    adminRoutes = require("./admin"),
-    studentRoutes = require("./student");
-    batchRoutes = require("./batch");
-	fileRoutes = require("./file");
+	router = express.Router(),
 	
+    adminRoutes = require("./admin"),
+    studentRoutes = require("./student"),
+    batchRoutes = require("./batch"),
+	fileRoutes = require("./file"),
+
 	Topic = require("../models/Topic.js"),
     Chapter = require("../models/Chapter.js"),
     Subject = require("../models/Subject.js"),
-    Class = require("../models/Class.js"),
+    Class = require("../models/Class.js");
 
 router.use("/admin", adminRoutes);
 router.use("/student", studentRoutes);

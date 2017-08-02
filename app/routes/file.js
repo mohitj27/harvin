@@ -1,19 +1,18 @@
 var express = require("express"),
-    router = express.Router(),
-    passport = require("passport"),
-    User = require("../models/User.js"),
+    path = require('path'),
+    multer = require('multer'),
+    moment = require("moment-timezone"),
+    async = require("async"),
+
     File = require("../models/File.js"),
     Topic = require("../models/Topic.js"),
     Chapter = require("../models/Chapter.js"),
     Subject = require("../models/Subject.js"),
     Class = require("../models/Class.js"),
-    path = require('path'),
-    multer = require('multer'),
-    moment = require("moment-timezone"),
-    fs = require("file-system"),
-    async = require("async"),
-    middleware = require("../middleware");
-    errors = require("../error");
+    middleware = require("../middleware")
+    errors = require("../error"),
+
+    router = express.Router();
 
 //file uplaod helper
 //setting disk storage for uploaded files

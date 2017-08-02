@@ -1,10 +1,12 @@
-var express = require("express");
-var router = express.Router();
-var passport = require("passport");
-var User = require("../models/User.js");
-var Subject = require("../models/Subject.js");
-var File = require("../models/File.js");
-errors = require("../error");
+var express = require("express"),
+	passport = require("passport"),
+
+	User = require("../models/User.js"),
+	Subject = require("../models/Subject.js"),
+	File = require("../models/File.js"),
+	errors = require("../error"),
+
+	router = express.Router();
 
 //User login form-- admin
 router.get("/login", function(req, res){
