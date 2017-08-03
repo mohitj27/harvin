@@ -125,16 +125,33 @@ $(function() {
                 $.get("/db/collections/"+this.value, function(res){
                         $documents = $("#documents");
                         $documents.children().remove();
+
+                        $data = $("#data");
+                        $data.children().remove();
+                        
                         if(res.objects.length>0){
                                 res.objects.forEach(function(object) {
-                                        $button = $("<button>", {"class":"btn btn-large btn-default objectButton document", "text":object._id})
+                                        $button = $("<button>", {"class":"btn btn-large btn-default objectButton document", "text":object._id, "value":res.dbType})
                                         $documents.append($button);
                                 }, this);
                         }
                 });
-
-                
         });
+
+        $("#documents").on('click', ".document", function(event){
+                var documentId = event.target.textContent;
+                var collectionName = event.target.value;
+                $.get("/db/collections/"+collectionName+"/"+ documentId, function(res){
+                        $data = $("#data");
+                        $data.children().remove();
+                        if(res.object){
+                                $pre = $("<pre>", {"class":"data pre-scrollable", "text":JSON.stringify(res.object, null, 4), "height":"300px"})
+                                $data.append($pre) 
+                        }
+                });
+                        
+        });    
+        
 });
 
 function addSelectItem(t,ev)

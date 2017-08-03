@@ -59,13 +59,103 @@ router.get("/collections/:collectionName", function(req, res, next){
     }
 });
 
-//functions of collections
+router.get("/collections/:collectionName/:documentId", function(req, res, next){
+    var collectionName = req.params.collectionName;
+    var documentId =  req.params.documentId;
+    switch(collectionName){
+        case "file":  collection.file(req, res, next)
+                    break;
+
+        case "topic":  collection.topic(req, res, next)
+                    break;
+
+        case "chapter":  collection.chapter(req, res, next)
+                    break;
+
+        case "subject":  collection.subject(req, res, next)
+                    break;
+
+        case "class":  collection.class(req, res, next)
+                    break;
+
+        case "batch":  collection.batch(req, res, next)
+                    break;
+
+        case "user":  collection.user(req, res, next)
+                    break;
+
+        default: next(new errors.generic); 
+    }
+})
+
+
+//functions of collection- return particular documents in particular collection
+var collection = {
+    
+        file:function(req,res,next){
+            File.findById(req.params.documentId, function(err, foundFile){
+                if(!err && foundFile){
+                    res.json({ dbType:"file",object:foundFile});
+                }
+            })
+        },
+    
+        topic:function(req,res,next){
+            Topic.findById(req.params.documentId, function(err, foundTopic){
+                if(!err && foundTopic){
+                    res.json({ dbType:"topic",object:foundTopic});
+                }
+            });
+        },
+
+        chapter:function(req,res,next){
+            Chapter.findById(req.params.documentId, function(err, foundChapter){
+                if(!err && foundChapter){
+                    res.json({ dbType:"chapter",object:foundChapter});
+                }
+            });
+        },
+
+        subject:function(req,res,next){
+            Subject.findById(req.params.documentId, function(err, foundSubject){
+                if(!err && foundSubject){
+                    res.json({ dbType:"subject",object:foundSubject});
+                }
+            });
+        },
+
+        class:function(req,res,next){
+            Class.findById(req.params.documentId, function(err, foundClasse){
+                if(!err && foundClasse){
+                    res.json({ dbType:"class",object:foundClasse});
+                }
+            });
+        },
+
+        user:function(req,res,next){
+            User.findById(req.params.documentId, function(err, foundUser){
+                if(!err && foundUser){
+                    res.json({ dbType:"user",object:foundUser});
+                }
+            });
+        },
+
+        batch:function(req,res,next){
+            Batch.findById(req.params.documentId, function(err, foundBatch){
+                if(!err && foundBatch){
+                    res.json({ dbType:"batch",object:foundBatch});
+                }
+            });
+        }
+};
+
+//functions of collections- return list of documents in particular collection
 var collections = {
     
         file:function(req,res,next){
             File.find({}, function(err, foundFiles){
                 if(!err && foundFiles){
-                    res.json({objects:foundFiles});
+                    res.json({ dbType:"file",objects:foundFiles});
                 }
             })
         },
@@ -73,7 +163,7 @@ var collections = {
         topic:function(req,res,next){
             Topic.find({}, function(err, foundTopics){
                 if(!err && foundTopics){
-                    res.json({objects:foundTopics});
+                    res.json({ dbType:"topic",objects:foundTopics});
                 }
             });
         },
@@ -81,7 +171,7 @@ var collections = {
         chapter:function(req,res,next){
             Chapter.find({}, function(err, foundChapters){
                 if(!err && foundChapters){
-                    res.json({objects:foundChapters});
+                    res.json({ dbType:"chapter",objects:foundChapters});
                 }
             });
         },
@@ -89,7 +179,7 @@ var collections = {
         subject:function(req,res,next){
             Subject.find({}, function(err, foundSubjects){
                 if(!err && foundSubjects){
-                    res.json({objects:foundSubjects});
+                    res.json({ dbType:"subject",objects:foundSubjects});
                 }
             });
         },
@@ -97,7 +187,7 @@ var collections = {
         class:function(req,res,next){
             Class.find({}, function(err, foundClasses){
                 if(!err && foundClasses){
-                    res.json({objects:foundClasses});
+                    res.json({ dbType:"class",objects:foundClasses});
                 }
             });
         },
@@ -105,7 +195,7 @@ var collections = {
         user:function(req,res,next){
             User.find({}, function(err, foundUsers){
                 if(!err && foundUsers){
-                    res.json({objects:foundUsers});
+                    res.json({ dbType:"user",objects:foundUsers});
                 }
             });
         },
@@ -113,8 +203,9 @@ var collections = {
         batch:function(req,res,next){
             Batch.find({}, function(err, foundBatches){
                 if(!err && foundBatches){
-                    res.json({objects:foundBatches});
+                    res.json({ dbType:"batch",objects:foundBatches});
                 }
+                
             });
         }
 };
