@@ -119,6 +119,22 @@ $(function() {
                 });
         });
 
+        //retrieve collection name from button and populate document column
+        $(".collection").click(function(event){
+                var collectionName = this.value;
+                $.get("/db/collections/"+this.value, function(res){
+                        $documents = $("#documents");
+                        $documents.children().remove();
+                        if(res.objects.length>0){
+                                res.objects.forEach(function(object) {
+                                        $button = $("<button>", {"class":"btn btn-large btn-default objectButton document", "text":object._id})
+                                        $documents.append($button);
+                                }, this);
+                        }
+                });
+
+                
+        });
 });
 
 function addSelectItem(t,ev)

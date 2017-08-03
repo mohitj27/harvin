@@ -10,7 +10,6 @@ var express = require("express"),
     fs = require('fs')
     config = require('./config')(),
     methodOverride = require("method-override"),
-    db = require("./db");
 
     app = express();
     var mongoose = require("mongoose");
@@ -21,13 +20,21 @@ var express = require("express"),
 
     mongoose.Promise = Promise;
 
-if(db != null){
-    app.listen(process.env.PORT || config.port , function(){
-        console.log("Server has started!!! Listening at " +config.port);
-    });
-}else{
-    console.log("database problem")
-}
+var url = process.env.DATABASEURL 
+|| 'mongodb://'+config.mongo.host+':'+config.mongo.port+'/harvin';
+mongoose.connect(url,{ useMongoClient: true });
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', function (err) {
+      if (err) {
+        console.log(err);
+      }else{
+        app.listen(process.env.PORT || config.port , function(){
+                console.log("Server has started!!! Listening at " +config.port);
+            });
+      }
+
+});
 
 //setting up body-parser
 app.use(bodyParser.urlencoded({ extended: false }))

@@ -1,6 +1,11 @@
-div#allDatabase{
-    color:"#18BC9C"
+.objectButton{
+    padding: 10px;
+    margin: 10px;
+    width:60%
 }
+
+
+
 
 .dropdown-menu {
     -webkit-touch-callout: none;
