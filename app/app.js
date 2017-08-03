@@ -1,43 +1,33 @@
-var bodyParser = require("body-parser"),
-   express = require("express"),
-   mongoose = require("mongoose"),
-   passport = require("passport"),
-   localStrategy = require("passport-local"),
-   passportLocalMongoose = require("passport-local-mongoose"),
-   session = require("express-session"),
-   flash = require("connect-flash"),
-   indexRoutes = require("./routes"),
-   morgan = require("morgan"),
-   fs = require('fs')
-   config = require('./config')(),
-   methodOverride = require("method-override");
+var express = require("express"),
+    bodyParser = require("body-parser"),
+    passport = require("passport"),
+    localStrategy = require("passport-local"),
+    passportLocalMongoose = require("passport-local-mongoose"),
+    session = require("express-session"),
+    flash = require("connect-flash"),
+    indexRoutes = require("./routes"),
+    morgan = require("morgan"),
+    fs = require('fs')
+    config = require('./config')(),
+    methodOverride = require("method-override"),
+    db = require("./db");
 
-  app = express(),
-  conn = mongoose.connection,
-  Schema = mongoose.Schema,
+    app = express();
+    var mongoose = require("mongoose");
+    
+    Schema = mongoose.Schema;
 
-  User = require("./models/User.js");
+    User = require("./models/User.js");
 
-mongoose.Promise = Promise;
+    mongoose.Promise = Promise;
 
-
-//========connection to database
-var url = process.env.DATABASEURL 
-        || 'mongodb://'+config.mongo.host+':'+config.mongo.port+'/harvin';
-
-mongoose.connect(url,{ useMongoClient: true }, function(err, db) {
-    if(err) {
-        console.log('Sorry, there is no mongo db server running.');
-    } else {
-        var attachDB = function(req, res, next) {
-            req.db = db;
-            next();
-        };
-        app.listen(process.env.PORT || config.port , function(){
-            console.log("Server has started!!! Listening at " +config.port);
-        });
-    }
-});
+if(db != null){
+    app.listen(process.env.PORT || config.port , function(){
+        console.log("Server has started!!! Listening at " +config.port);
+    });
+}else{
+    console.log("database problem")
+}
 
 //setting up body-parser
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -98,5 +88,4 @@ app.use(function(err, req, res, next) {
         }
     }
 });
-
 

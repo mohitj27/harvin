@@ -1,0 +1,17 @@
+<% include partials/header.ejs%>
+    <div class="container">
+        <div id="allDatabase">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12" id="collections">
+                    <% names.forEach(function(name){%>
+                        <%=name.name%></br>
+                    <%})%>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12" id="documents">
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12" id="data">
+                </div>
+            </div>
+        </div>
+    </div>
+<% include partials/footer.ejs%>

@@ -5,6 +5,7 @@ var express = require("express"),
     studentRoutes = require("./student"),
     batchRoutes = require("./batch"),
 	fileRoutes = require("./file"),
+	dbRoutes = require("./db"),
 
 	Topic = require("../models/Topic.js"),
     Chapter = require("../models/Chapter.js"),
@@ -15,6 +16,7 @@ router.use("/admin", adminRoutes);
 router.use("/student", studentRoutes);
 router.use("/batches", batchRoutes);
 router.use("/files", fileRoutes);
+router.use("/db", dbRoutes);
 
 //Home-admin
 router.get("/", function(req, res){
