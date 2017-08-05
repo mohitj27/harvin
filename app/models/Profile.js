@@ -7,17 +7,17 @@ var profileSchema = new Schema(
 		fullName:{
             type:String,
             required:true,
-            default:""
+            default:"xyz"
         },
         emailId:{
             type:String,
             required:true,
-            default:""
+            default:"xyz@abc.com"
         },
         phone:{
             type:String,
             required:true,
-            default:""
+            default:"0000000000"
         },
         batch:{
             type: mongoose.Schema.Types.ObjectId,

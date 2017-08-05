@@ -6,8 +6,7 @@ var batchSchema = new Schema(
 	{
 		batchName:{
             type:String,
-            required:true,
-            default:""
+            required:true
         },
         subject:[
             {

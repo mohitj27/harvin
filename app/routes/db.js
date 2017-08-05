@@ -8,11 +8,12 @@ var express = require("express"),
     Topic = require("../models/Topic.js"),
     Chapter = require("../models/Chapter.js"),
     Subject = require("../models/Subject.js"),
-    Class = require("../models/Class.js");
-    User = require("../models/User.js");
-    Batch = require("../models/Batch.js");
+    Class = require("../models/Class.js"),
+    User = require("../models/User.js"),
+    Batch = require("../models/Batch.js"),
+    middleware = require("../middleware");
 
-router.get("/collections", function(req, res, next){
+router.get("/collections", middleware.isLoggedIn, middleware.isAdmin,  function(req, res, next){
 
     mongoose.connection.db.listCollections().toArray(function (err, names) {
         if (err) {

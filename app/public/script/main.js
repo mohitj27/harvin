@@ -1,11 +1,13 @@
 $(function() {
+        //content inside add button in selectpicker
         var content = "<input type=text onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
 
+        //divider btw options and add button in selectpicker
         var divider = $('<option/>')
                 .addClass('divider lastTwo')
                 .data('divider', true);
                 
-
+        //add button in selectpicker
         var addoption = $('<option/>')
           .addClass('additem lastTwo')
           .data('content', content)
@@ -138,6 +140,7 @@ $(function() {
                 });
         });
 
+        //retrieving json of the particular document and populate data column
         $("#documents").on('click', ".document", function(event){
                 var documentId = event.target.textContent;
                 var collectionName = event.target.value;

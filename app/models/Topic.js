@@ -11,7 +11,8 @@ var topicSchema = new Schema(
 		},
 		topicDescription:{
 			type:String,
-			required:true
+			required:true,
+			default:"No description available yet"
 		},
 		files:[
 			{

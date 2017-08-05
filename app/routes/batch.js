@@ -4,10 +4,11 @@ var express = require("express"),
     Batch = require("../models/Batch"),
     Subject = require("../models/Subject"),
     errors = require("../error"),
+    middleware = require("../middleware"),
 
     router = express.Router();
 
-router.get("/updateBatch",function(req, res, next){
+router.get("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function(req, res, next){
     Batch.find({}, function(err, foundBatches){
         if(err) {
             console.log(err);
@@ -27,32 +28,8 @@ router.get("/updateBatch",function(req, res, next){
     });
 });
 
-//finding batch with given batchName and populating the subject field in it
-router.get("/:batchName", function(req, res, next){
-    Batch.findOne({batchName: req.params.batchName}, function(err, foundBatch){
-        if(err) {
-            console.log(err);
-            next(new errors.generic)
-        }
-    })
-    .populate(
-        {
-            path:"subject",
-            model:"Subject"
-        }
-    )
-    .exec(function(err, batch){
-        if(err){
-             req.flash("error","Couldn't find the chosen Batch");
-			 res.redirect("/batch");
-		}
-		else{
-            res.json({batch:batch});
-		}
-    });
-});
 
-router.post("/updateBatch",function(req, res, next){
+router.post("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function(req, res, next){
     var subjectName = req.body.subjectName;
     var batchName = req.body.batchName;
 
@@ -92,5 +69,31 @@ router.post("/updateBatch",function(req, res, next){
         }
     );
 });
+
+//finding batch with given batchName and populating the subject field in it
+router.get("/:batchName", function(req, res, next){
+    Batch.findOne({batchName: req.params.batchName}, function(err, foundBatch){
+        if(err) {
+            console.log(err);
+            next(new errors.generic)
+        }
+    })
+    .populate(
+        {
+            path:"subject",
+            model:"Subject"
+        }
+    )
+    .exec(function(err, batch){
+        if(err){
+             req.flash("error","Couldn't find the chosen Batch");
+			 res.redirect("/batch");
+		}
+		else{
+            res.json({batch:batch});
+		}
+    });
+});
+
 
 module.exports = router;

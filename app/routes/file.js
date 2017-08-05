@@ -43,7 +43,7 @@ function fileUploadSuccess(req, res){
 
 
 //Form for uploading a file
-router.get('/uploadFile', function(req, res, next) {
+router.get('/uploadFile', middleware.isLoggedIn, middleware.isAdmin,  function(req, res, next) {
     // res.json(subjects);
 	Class.find({}, function(err, classes){
         if(err) console.log(err);
@@ -78,7 +78,7 @@ router.get('/uploadFile', function(req, res, next) {
 });
 
 //Handle file upload
-router.post('/uploadFile', function(req, res) {
+router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin,  function(req, res) {
 	var upload = multer({
 		storage: storage
 	}).single('userFile')

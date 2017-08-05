@@ -4,9 +4,6 @@
     width:60%
 }
 
-
-
-
 .dropdown-menu {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -55,8 +52,12 @@
    color: #222;
 }
 
-.btn-file {
-    position: relative;
-    overflow: hidden;
-    margin: 150px 0 20px 0;
+.btn-file { 
+        position: relative; 
+        overflow: hidden; 
+        margin: 150px 0 20px 0;
+}
+
+.submit{
+    margin: 50px 0px  
 }

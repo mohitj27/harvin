@@ -2,6 +2,7 @@ var express = require("express"),
     passport = require("passport"),
     
     User = require("../models/User.js"),
+    middleware = require("../middleware"),
 
     router = express.Router();
 
