@@ -145,7 +145,7 @@ router.put("/collections/:collectionName/:documentId", function(req, res, next){
     async.waterfall(
         [
             function(callback){
-                console.log(currentObject._id)
+                console.log(currentObject)
                 File.findOneAndUpdate(
                     {_id:currentObject._id},
                     {
@@ -153,7 +153,7 @@ router.put("/collections/:collectionName/:documentId", function(req, res, next){
                             className:newFile.className,
                             subjectName:newFile.subjectName,
                             chapterName:newFile.chapterName,
-                            topicName:newFile.chapterName,
+                            topicName:newFile.topicName,
                             uploadDate:newFile.uploadDate
                         },
                     },
@@ -161,9 +161,38 @@ router.put("/collections/:collectionName/:documentId", function(req, res, next){
                     
                     function (err, updatedFile) {
                         if(!err && updatedFile){
-                            console.log(updatedFile)
-                            callback(null)
+                            callback(null, updatedFile)
                             fileUpdateSuccess(req, res, updatedFile);
+                        }else{
+                            console.log(err);
+                            callback(err);
+                        }
+                    }
+                );
+            },
+            function(updateFile, callback){
+                Topic.findOneAndUpdate(
+                    { topicName: currentObject.topicName},
+                    {$pull:{files:currentObject._id}},
+                    function(err, updatedTopic){
+                        if(!err){
+                            callback(null,updateFile ,updatedTopic)
+                        }else{
+                            console.log(err);
+                            callback(err);
+                        }
+                    }
+                );
+            },
+            function(updatedFile,updatedTopic, callback){
+                Topic.findOneAndUpdate(
+                    { topicName: updatedFile.topicName },
+                    { $addToSet:{ files:updatedFile } , $set:{topicName:updatedFile.topicName}},
+                    { upsert: true, new: true, setDefaultsOnInsert: true },
+                    function (err, createdTopic) {
+                        if(!err && createdTopic){
+                            console.log(createdTopic)
+                            callback(null, createdTopic)
                         }else{
                             console.log(err);
                             callback(err);
