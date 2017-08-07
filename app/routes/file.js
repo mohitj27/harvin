@@ -92,7 +92,6 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin,  function(
         var subjectName = req.body.subjectName;
         var chapterName = req.body.chapterName;
         var topicName = req.body.topicName;
-        console.log(className)
 
         var newFile = {
             fileName,

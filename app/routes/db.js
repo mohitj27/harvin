@@ -3,6 +3,8 @@ var express = require("express"),
     mongoose = require("mongoose"),
     errors = require("../error"),
     pluralize = require("pluralize"),
+    moment = require("moment-timezone"),
+    async = require("async"),
 
     File = require("../models/File.js"),
     Topic = require("../models/Topic.js"),
@@ -13,6 +15,13 @@ var express = require("express"),
     Batch = require("../models/Batch.js"),
     middleware = require("../middleware");
 
+//file update helper
+function fileUpdateSuccess(req, res, currentObject){
+    req.flash("success", currentObject.fileName +" updated successfully");
+    res.redirect("/db/collections");
+}
+
+//returns name of collections
 router.get("/collections", middleware.isLoggedIn, middleware.isAdmin,  function(req, res, next){
 
     mongoose.connection.db.listCollections().toArray(function (err, names) {
@@ -32,63 +41,176 @@ router.get("/collections", middleware.isLoggedIn, middleware.isAdmin,  function(
 
 });
 
+//returns documents in particular collections
 router.get("/collections/:collectionName", function(req, res, next){
     var collectionName = req.params.collectionName;
     switch(collectionName){
-        case "file":  collections.file(req, res, next)
+        case "file":    collections.file(req, res, next)
                     break;
 
-        case "topic":  collections.topic(req, res, next)
+        case "topic":   collections.topic(req, res, next)
                     break;
 
-        case "chapter":  collections.chapter(req, res, next)
+        case "chapter": collections.chapter(req, res, next)
                     break;
 
-        case "subject":  collections.subject(req, res, next)
+        case "subject": collections.subject(req, res, next)
                     break;
 
-        case "class":  collections.class(req, res, next)
+        case "class":   collections.class(req, res, next)
                     break;
 
-        case "batch":  collections.batch(req, res, next)
+        case "batch":   collections.batch(req, res, next)
                     break;
 
-        case "user":  collections.user(req, res, next)
+        case "user":    collections.user(req, res, next)
                     break;
 
         default: next(new errors.generic); 
     }
 });
 
+//returns json of particular document of particular collections
 router.get("/collections/:collectionName/:documentId", function(req, res, next){
     var collectionName = req.params.collectionName;
     var documentId =  req.params.documentId;
     switch(collectionName){
-        case "file":  collection.file(req, res, next)
+        case "file":    collection.file(req, res, next)
                     break;
 
-        case "topic":  collection.topic(req, res, next)
+        case "topic":   collection.topic(req, res, next)
                     break;
 
-        case "chapter":  collection.chapter(req, res, next)
+        case "chapter": collection.chapter(req, res, next)
                     break;
 
-        case "subject":  collection.subject(req, res, next)
+        case "subject": collection.subject(req, res, next)
                     break;
 
-        case "class":  collection.class(req, res, next)
+        case "class":   collection.class(req, res, next)
                     break;
 
-        case "batch":  collection.batch(req, res, next)
+        case "batch":   collection.batch(req, res, next)
                     break;
 
-        case "user":  collection.user(req, res, next)
+        case "user":    collection.user(req, res, next)
                     break;
 
         default: next(new errors.generic); 
     }
 })
 
+//Editing particular document of particular collections
+router.post("/collections/:collectionName/:documentId/edit", function(req, res, next){
+    var currentObject = JSON.parse(req.body.object);
+    var collectionName = req.body.collectionName;
+
+    switch(collectionName){
+        case "file":   update.file(req, res, next, currentObject) 
+                    break;
+
+        // case "topic":   
+        //             break;
+
+        // case "chapter": 
+        //             break;
+
+        // case "subject": 
+        //             break;
+
+        // case "class":  
+        //             break;
+
+        // case "batch":   
+        //             break;
+
+        // case "user":   
+        //             break;
+
+        default: next(new errors.generic); 
+    }
+
+});
+
+router.put("/collections/:collectionName/:documentId", function(req, res, next){
+    var currentObject = JSON.parse(req.body.currentObject);
+    var newFile = {
+        uploadDate:moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
+        className : req.body.className,
+        subjectName : req.body.subjectName,
+        chapterName : req.body.chapterName,
+        topicName : req.body.topicName
+    }
+
+    async.waterfall(
+        [
+            function(callback){
+                console.log(currentObject._id)
+                File.findOneAndUpdate(
+                    {_id:currentObject._id},
+                    {
+                        $set:{
+                            className:newFile.className,
+                            subjectName:newFile.subjectName,
+                            chapterName:newFile.chapterName,
+                            topicName:newFile.chapterName,
+                            uploadDate:newFile.uploadDate
+                        },
+                    },
+                    { upsert: true, new: true, setDefaultsOnInsert: true },
+                    
+                    function (err, updatedFile) {
+                        if(!err && updatedFile){
+                            console.log(updatedFile)
+                            callback(null)
+                            fileUpdateSuccess(req, res, updatedFile);
+                        }else{
+                            console.log(err);
+                            callback(err);
+                        }
+                    }
+                );
+            }
+        ],
+        function(err, result){
+            if(err){
+                console.log(err);
+            }
+        }
+    );
+});
+   
+router.delete("/collections/:collectionName/:documentId", function(req, res, next){
+    // console.log(req.body.object);
+    res.send("deleted")
+    console.log("deleted")
+
+    switch(collectionName){
+        case "file":    
+                    break;
+
+        // case "topic":   
+        //             break;
+
+        // case "chapter": 
+        //             break;
+
+        // case "subject": 
+        //             break;
+
+        // case "class":  
+        //             break;
+
+        // case "batch":   
+        //             break;
+
+        // case "user":   
+        //             break;
+
+        default: next(new errors.generic); 
+    }
+
+});
 
 //functions of collection- return particular documents in particular collection
 var collection = {
@@ -208,6 +330,67 @@ var collections = {
                 }
                 
             });
+        }
+};
+
+//update
+var update = {
+    
+        file:function(req,res,next, currentObject){
+            Class.find({}, function(err, classes){
+                if(err) console.log(err);
+            })
+            .populate({
+                path:"subjects",
+                model:"Subject",
+                populate:{
+                    path:"chapters",
+                    model:"Chapter",
+                    populate:{
+                        path:"topics",
+                        model:"Topic",
+                        populate:{
+                                path:"files",
+                                model:"File"
+                        }
+                    }
+                }
+            })
+            .exec(function(err, classes){
+                if(err){
+                    console.log(err);
+                    req.flash("error","Please try again");
+                    res.redirect("/files/uploadFile");
+                }
+                else{
+                    console.log(currentObject)
+                    res.render('updateFile',{classes:classes, currentObject:currentObject});
+                }
+            });
+        },
+    
+        topic:function(req,res,next){
+            
+        },
+
+        chapter:function(req,res,next){
+           
+        },
+
+        subject:function(req,res,next){
+            
+        },
+
+        class:function(req,res,next){
+            
+        },
+
+        user:function(req,res,next){
+            
+        },
+
+        batch:function(req,res,next){
+            
         }
 };
 

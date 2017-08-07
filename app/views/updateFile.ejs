@@ -2,16 +2,16 @@
 
 
 <div class="container">
-    <h1><b> Upload a new File </b></h1>
-    <form id="uploadForm" enctype="multipart/form-data" method="post" action="/files/uploadFile">
+    <h1> <b>Edit File: </b><i> <%=currentObject.fileName%></i></h1>
+    <form id="updateForm" method="post" action="/db/collections/file/<%=currentObject._id%>?_method=put">
         <div class="row">
             <div class="col-sm-3">
                 <h2>Class</h2> <br>
                 
                 <select autofocus required  name="className" class="selectpicker" id="classs" >
-                    <option selected value="" disabled>Class</option>
+                    <option value="" selected disabled>Class</option>
                      <%classes.forEach(function(classs){%>
-                     <option value="<%=classs.className%>"><%=classs.className%></option>   
+                            <option value="<%=classs.className%>"><%=classs.className%></option>   
                      <%})%>
                     
                 </select>
@@ -20,7 +20,7 @@
                 <h2>Subject</h2> <br>
 
                 <select required  name="subjectName" class="selectpicker" id="subject" >
-                    <option selected value="" disabled>Subject</option>
+                    <option value="" selected disabled>Subject</option>
                    
                     
                     
@@ -30,7 +30,7 @@
             <div class="col-sm-3">
                 <h2>Chapter</h2><br>
                 <select required  name="chapterName"  class="selectpicker" id="chapter" >
-                    <option selected value="" disabled>Chapter</option>
+                    <option value="" selected disabled>Chapter</option>
                     
                 </select>    
                     
@@ -38,14 +38,14 @@
             <div class="col-sm-3">
                 <h2>Topic</h2> <br>
                 <select required  name="topicName"  class="selectpicker" id="topic" >
-                    <option selected value="" disabled>Topic</option>
+                    <option value="" selected disabled>Topic</option>
                     
                     
                 </select>  
             </div> 
             
-            <input type="file" name="userFile" class="btn btn-default btn-file" required/><br>
-			<input type="submit" value="Upload File" name="submit" class="btn btn-primary btn-lg submit"/>   
+            <input type="hidden" name="currentObject" value='<%-JSON.stringify(currentObject)%>'>
+			<input type="submit" value="Update File" name="submit" class="btn btn-primary btn-lg submit"/>   
         </div>
     </form>
 </div>

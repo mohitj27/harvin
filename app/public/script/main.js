@@ -1,4 +1,7 @@
 $(function() {
+        //=========================================
+        //*****FILE UPLAOD************************
+        //=========================================
         //content inside add button in selectpicker
         var content = "<input type=text onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
 
@@ -30,11 +33,9 @@ $(function() {
                 $.get("/class/"+this.value, function(res){
                         $(".selectpicker").selectpicker("refresh");
                         
-                                console.log(res.classs)
                         if(res.classs){
                                 var length = res.classs.subjects.length
                                 if(length>0){
-                                        console.log(length)
                                         for(var i = 0; i < length;i++){
                                                 o.before( $("<option>", { "text": res.classs.subjects[i].subjectName, "val":res.classs.subjects[i].subjectName}) );
                                                 
@@ -121,19 +122,24 @@ $(function() {
                 });
         });
 
+        //=========================================
+        //*****SHOWING DATABASE*******************
+        //=========================================
+
         //retrieve collection name from button and populate document column
         $(".collection").click(function(event){
                 var collectionName = this.value;
                 $.get("/db/collections/"+this.value, function(res){
                         $documents = $("#documents");
-                        $documents.children().remove();
+                        $documents.children("#objects").text(collectionName);
+                        $documents.children().not(":first").remove();
 
                         $data = $("#data");
-                        $data.children().remove();
+                        $data.children().not(":first").remove();
                         
                         if(res.objects.length>0){
                                 res.objects.forEach(function(object) {
-                                        $button = $("<button>", {"class":"btn btn-large btn-default objectButton document", "text":object._id, "value":res.dbType})
+                                        $button = $("<button>", {"class":"btn btn-large btn-default objectButton document ids", "text":object._id, "value":res.dbType})
                                         $documents.append($button);
                                 }, this);
                         }
@@ -146,10 +152,25 @@ $(function() {
                 var collectionName = event.target.value;
                 $.get("/db/collections/"+collectionName+"/"+ documentId, function(res){
                         $data = $("#data");
-                        $data.children().remove();
+                        $data.children().not(":first").remove();
                         if(res.object){
-                                $pre = $("<pre>", {"class":"data pre-scrollable", "text":JSON.stringify(res.object, null, 4), "height":"300px"})
-                                $data.append($pre) 
+                                //showing json data
+                                var objectString = JSON.stringify(res.object, null, 4)
+                                $pre = $("<pre>", {"class":"data pre-scrollable", "text":objectString, "height":"300px"})
+                                $data.append($pre) ;
+
+                                //update and delete data button
+                                $form = $("<form>",{class:"dbUpdateForm", action:"/db/collections/"+collectionName+"/"+ documentId+"/edit", "method":"POST"})
+                                $hiddenObjectInput = $("<input>",{type: "hidden", value:objectString, name:"object"})
+                                $hiddenCollectionNameInput = $("<input>",{type: "hidden", value:collectionName, name:"collectionName"})
+                                $updateButton = $("<button>", {class:"btn btn-warning updateButton", text:"Update"});
+                                $deleteButton = $("<button>", {class:"btn btn-danger deleteButton", text:"Delete", formaction:"/db/collections/"+collectionName+"/"+ documentId+"?_method=delete", "method":"POST"});
+                                $data.append($form);
+                                $form.append($hiddenObjectInput)
+                                        .append($hiddenCollectionNameInput)
+                                        .append($updateButton)
+                                        .append($deleteButton);
+                                
                         }
                 });
                         
