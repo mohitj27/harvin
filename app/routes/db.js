@@ -145,7 +145,6 @@ router.put("/collections/:collectionName/:documentId", function(req, res, next){
     async.waterfall(
         [
             function(callback){
-                console.log(currentObject)
                 File.findOneAndUpdate(
                     {_id:currentObject._id},
                     {
@@ -162,7 +161,6 @@ router.put("/collections/:collectionName/:documentId", function(req, res, next){
                     function (err, updatedFile) {
                         if(!err && updatedFile){
                             callback(null, updatedFile)
-                            fileUpdateSuccess(req, res, updatedFile);
                         }else{
                             console.log(err);
                             callback(err);
@@ -186,12 +184,11 @@ router.put("/collections/:collectionName/:documentId", function(req, res, next){
             },
             function(updatedFile,updatedTopic, callback){
                 Topic.findOneAndUpdate(
-                    { topicName: updatedFile.topicName },
-                    { $addToSet:{ files:updatedFile } , $set:{topicName:updatedFile.topicName}},
+                    { topicName: newFile.topicName },
+                    { $addToSet:{ files:updatedFile } , $set:{topicName:newFile.topicName}},
                     { upsert: true, new: true, setDefaultsOnInsert: true },
                     function (err, createdTopic) {
                         if(!err && createdTopic){
-                            console.log(createdTopic)
                             callback(null, createdTopic)
                         }else{
                             console.log(err);
@@ -199,7 +196,54 @@ router.put("/collections/:collectionName/:documentId", function(req, res, next){
                         }
                     }
                 );
-            }
+            },
+            function (createdTopic, callback) {
+                Chapter.findOneAndUpdate(
+                   { chapterName: newFile.chapterName },
+                   { $addToSet:{ topics:createdTopic } , $set:{chapterName:newFile.chapterName}},
+                   { upsert: true, new: true, setDefaultsOnInsert: true },
+                   function (err, createdChapter) {
+                       if(!err && createdChapter){
+                           callback(null, createdChapter)
+                       }else{
+                           console.log(err);
+                           callback(err);
+                       }
+                   }
+               );
+            },
+            function (createdChapter, callback) {
+                Subject.findOneAndUpdate(
+                  { subjectName: newFile.subjectName },
+                  { $addToSet:{ chapters:createdChapter } , $set:{ subjectName:newFile.subjectName}},
+                  { upsert: true, new: true, setDefaultsOnInsert: true },
+                  function (err, createdSubject) {
+                      if(!err && createdSubject){
+                          callback(null, createdSubject)
+                          
+                      }else{
+                          console.log(err);
+                          callback(err);
+                      }
+                   }
+               );
+           },
+           function (createdSubject, callback) {
+               Class.findOneAndUpdate(
+                   { className: newFile.className },
+                   { $addToSet:{ subjects:createdSubject } , $set:{className:newFile.className}},
+                   { upsert: true, new: true, setDefaultsOnInsert: true },
+                   function (err, createdClass) {
+                       if(!err && createdClass){
+                           callback(null)
+                           fileUpdateSuccess(req,res, currentObject);
+                       }else{
+                          console.log(err);
+                          callback(err);
+                      }
+                   }
+               );
+           }
         ],
         function(err, result){
             if(err){

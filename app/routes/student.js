@@ -48,7 +48,6 @@ router.post("/signup", function(req, res){
 //sending subject list
 router.get("/subjects", function(req, res, next){
 
-	// res.json(subjects);
 	Subject.find({}, function(err, subjects){
 		if(err){
 			console.log(err)
