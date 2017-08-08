@@ -160,10 +160,12 @@ router.put("/collections/:collectionName/:documentId", function(req, res, next){
 });
    
 router.delete("/collections/:collectionName/:documentId", function(req, res, next){
-    res.send("deleted")
+
+    var currentObject = JSON.parse(req.body.object);
+    var collectionName = req.body.collectionName;
 
     switch(collectionName){
-        case "file":    
+        case "file":    deleteHandle.file(req,res, next, currentObject, collectionName);
                     break;
 
         // case "topic":   
@@ -504,6 +506,7 @@ var updateHandle = {
             function(err, result){
                 if(err){
                     console.log(err);
+                    next(new errors.generic);
                 }
             }
         );
@@ -544,6 +547,54 @@ var updateHandle = {
                 if(err){ {batchName:batchName}
                     console.log(err)
                     next(new errors.generic)
+                }
+            }
+        );
+    }
+}
+
+//deleteHandle
+var deleteHandle = {
+    file:function(req, res, next, currentObject, collectionName){
+        async.waterfall(
+            [
+                //TODO:delete file from upload folder
+                //deleting json (file data)
+                function(callback){
+                    File.findOneAndRemove(
+                        {_id : currentObject._id},
+                        function(err,doc, result){
+                            if(!err && doc){
+                                callback(null);
+                            }else{
+                                console.log(err);
+                                callback(err);
+                            }
+            
+                        }
+                    );
+                },
+                function(callback){
+                    Topic.findOneAndUpdate(
+                        { topicName: currentObject.topicName},
+                        {$pull:{files:currentObject._id}},
+                        function(err, updatedTopic){
+                            if(!err){
+                                req.flash("success", "File " + currentObject.fileName + " deleted successfully")
+                                res.redirect("/db/collections");
+                                callback(null)
+                            }else{
+                                console.log(err);
+                                callback(err);
+                            }
+                        }
+                    );
+                }
+            ],
+            function(err, result){
+                if(err){
+                    console.log(err);
+                    next(new errors.generic);
                 }
             }
         );
