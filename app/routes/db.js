@@ -102,7 +102,7 @@ router.get("/collections/:collectionName/:documentId", function(req, res, next){
 })
 
 //Editing particular document of particular collections
-router.post("/collections/:collectionName/:documentId/edit", function(req, res, next){
+router.post("/collections/:collectionName/:documentId/edit", middleware.isLoggedIn ,middleware.isAdmin , function(req, res, next){
     var currentObject = JSON.parse(req.body.object);
     var collectionName = req.body.collectionName;
 
@@ -133,7 +133,7 @@ router.post("/collections/:collectionName/:documentId/edit", function(req, res, 
 
 });
 
-router.put("/collections/:collectionName/:documentId", function(req, res, next){
+router.put("/collections/:collectionName/:documentId", middleware.isLoggedIn ,middleware.isAdmin , function(req, res, next){
     var collectionName = req.body.collectionName;
     switch(collectionName){
         case "file":updateHandle.file(req, res, next)
@@ -160,7 +160,7 @@ router.put("/collections/:collectionName/:documentId", function(req, res, next){
     }
 });
    
-router.delete("/collections/:collectionName/:documentId", function(req, res, next){
+router.delete("/collections/:collectionName/:documentId", middleware.isLoggedIn ,middleware.isAdmin , function(req, res, next){
 
     var currentObject = JSON.parse(req.body.object);
     var collectionName = req.body.collectionName;
