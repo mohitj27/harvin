@@ -3,6 +3,7 @@ var express = require("express"),
     multer = require('multer'),
     moment = require("moment-timezone"),
     async = require("async"),
+    fs = require('fs'),
 
     File = require("../models/File.js"),
     Topic = require("../models/Topic.js"),

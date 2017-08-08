@@ -5,6 +5,7 @@ var express = require("express"),
     pluralize = require("pluralize"),
     moment = require("moment-timezone"),
     async = require("async"),
+    fs = require('fs'),
 
     File = require("../models/File.js"),
     Topic = require("../models/Topic.js"),
@@ -559,6 +560,18 @@ var deleteHandle = {
         async.waterfall(
             [
                 //TODO:delete file from upload folder
+                function(callback){
+                    fs.unlink(currentObject.filePath, function(err){
+                        if(!err) {
+                            console.log("file deleted from uploads directory")
+                            callback(null);
+                        }
+                        else {
+                            console.log(err);
+                            callback(err);
+                        }
+                    });
+                },
                 //deleting json (file data)
                 function(callback){
                     File.findOneAndRemove(
