@@ -1,0 +1,45 @@
+<% include partials/header.ejs%>
+
+<div class="container">
+    <h1><b> Update Batch </b></h1>
+    <form id="batchUpdateForm" method="post" action="/batches/updateBatch">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Batch</h2> <br>
+                
+                <select autofocus required  name="batchName" class="selectpicker" id="batch" >
+                    <option selected value="" disabled>Batch</option>
+                    <%=batches%>
+                    <%if(batches){%>
+                        <%batches.forEach(function(batch){%>
+                            <option value="<%=batch.batchName%>"><%=batch.batchName%></option>   
+                        <%})%>
+                    <%}%>
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <h2>Subject</h2> <br>
+
+                <select required  name="subjectName" class="selectpicker" id="subjectsInBatch" multiple >
+                    <option value="" disabled>Subject</option>
+                    <%if(subjects){%>
+                        <%subjects.forEach(function(subject){%>
+                            <option value="<%=subject.subjectName%>"><%=subject.subjectName%></option>   
+                        <%})%>
+                    <%}%>
+                </select>   
+                    
+            </div>
+            <hr>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-lg btn-primary submit">Update selected subject</button>
+                </div>
+                
+            </div>
+        </div>
+    </form>
+</div>
+
+<% include partials/footer.ejs%>

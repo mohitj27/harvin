@@ -6,7 +6,7 @@
             <i> <%=currentObject.batchName%></i>
         <%}%>
     </h1>
-    <form id="batchUpdateForm" method="post" action="/db/collections/batch/anyId?_method=put">
+    <form id="batchUpdateForm" method="post" action="/db/collections/batch/<%=currentObject._id%>?_method=put">
         <div class="row">
             <div class="col-sm-6">
                 <h2>Batch</h2> <br>

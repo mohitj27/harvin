@@ -21,7 +21,7 @@ router.get("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function(r
                     next(new errors.notFound)
                 }
                 else{
-                    res.render("updateBatch",{batches:foundBatches, subjects:foundSubjects});
+                    res.render("createBatch",{batches:foundBatches, subjects:foundSubjects});
                 }
             })
         }            

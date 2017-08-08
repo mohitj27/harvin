@@ -29,12 +29,8 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="/files/uploadFile">Upload File</a></li>
+                        <li><a href="/batches/updateBatch">Update Batch</a></li>
                         <li><a href="/db/collections">Database</a></li>
-                        <li>
-                            <form action="/db/collections/batch/anyId/edit" method="post" >
-                                <input type="submit" value="Update Batch" name="submit" class="btn btn-default btn-md updateBatch"/> 
-                            </form>
-                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <%if(!currentUser){%>

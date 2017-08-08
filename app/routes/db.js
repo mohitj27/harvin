@@ -102,12 +102,8 @@ router.get("/collections/:collectionName/:documentId", function(req, res, next){
 
 //Editing particular document of particular collections
 router.post("/collections/:collectionName/:documentId/edit", function(req, res, next){
-    
-    var collectionName = req.params.collectionName;
-
-    if(req.body.object && req.body.collectionName){
-        var currentObject = JSON.parse(req.body.object);
-    }
+    var currentObject = JSON.parse(req.body.object);
+    var collectionName = req.body.collectionName;
 
     switch(collectionName){
         case "file":   updateSwitch.file(req, res, next, currentObject, collectionName) ;
@@ -125,7 +121,7 @@ router.post("/collections/:collectionName/:documentId/edit", function(req, res, 
         // case "class":  
         //             break;
 
-        case "batch":   updateSwitch.batch(req, res, next, collectionName);
+        case "batch":   updateSwitch.batch(req, res, next, currentObject, collectionName);
                     break;
 
         // case "user":   
@@ -138,7 +134,6 @@ router.post("/collections/:collectionName/:documentId/edit", function(req, res, 
 
 router.put("/collections/:collectionName/:documentId", function(req, res, next){
     var collectionName = req.body.collectionName;
-    console.log(collectionName)
     switch(collectionName){
         case "file":updateHandle.file(req, res, next)
                     break;
@@ -165,9 +160,7 @@ router.put("/collections/:collectionName/:documentId", function(req, res, next){
 });
    
 router.delete("/collections/:collectionName/:documentId", function(req, res, next){
-    // console.log(req.body.object);
     res.send("deleted")
-    console.log("deleted")
 
     switch(collectionName){
         case "file":    
@@ -347,7 +340,6 @@ var updateSwitch = {
                     res.redirect("/files/uploadFile");
                 }
                 else{
-                    console.log(currentObject)
                     res.render('updateFile',{classes:classes, currentObject:currentObject, collectionName:collectionName});
                 }
             });
@@ -373,7 +365,7 @@ var updateSwitch = {
             
         },
 
-        batch:function(req,res,next,collectionName){
+        batch:function(req,res,next, currentObject, collectionName){
             Batch.find({}, function(err, foundBatches){
                 if(err) {
                     console.log(err);
@@ -386,7 +378,7 @@ var updateSwitch = {
                             next(new errors.notFound)
                         }
                         else{
-                            res.render("updateBatch",{batches:foundBatches, subjects:foundSubjects, collectionName:collectionName});
+                            res.render("updateBatch2",{batches:foundBatches, subjects:foundSubjects,currentObject:currentObject , collectionName:collectionName});
                         }
                     })
                 }            
@@ -519,7 +511,7 @@ var updateHandle = {
     batch: function(req, res, next){
         var subjectName = req.body.subjectName;
         var batchName = req.body.batchName;
-    
+
         async.waterfall(
             [
                 function (callback) {
@@ -541,8 +533,8 @@ var updateHandle = {
                         { upsert: true, new: true, setDefaultsOnInsert: true },
                         function (err, createdBatch) {
                             if(!err && createdBatch){
-                               req.flash("success", "Batch updated successfully");
-                               res.redirect("/db/collections")
+                            req.flash("success", "Batch "+createdBatch.batchName+" updated successfully");
+                            res.redirect("/batches/updateBatch")
                             }
                         }
                     );
