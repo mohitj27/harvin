@@ -1,8 +1,12 @@
 <% include partials/header.ejs%>
 
 <div class="container">
-    <h1><b> Choose </b></h1>
-    <form id="batchUpdateForm" method="post" action="/batches/updateBatch">
+    <h1> <b>Update Batch: </b>
+        <%if(currentObject){%>
+            <i> <%=currentObject.batchName%></i>
+        <%}%>
+    </h1>
+    <form id="batchUpdateForm" method="post" action="/db/collections/batch/anyId?_method=put">
         <div class="row">
             <div class="col-sm-6">
                 <h2>Batch</h2> <br>
@@ -31,13 +35,12 @@
                     
             </div>
             <hr>
+            <%if(currentObject && collectionName){%>
+                <input type="hidden" name="currentObject" value='<%-JSON.stringify(currentObject)%>'>
+                <input type="hidden" name="collectionName" value='<%=collectionName%>'>
+            <%}%>
+			<input type="submit" value="Update selected subject" name="submit" class="btn btn-primary btn-lg submit"/> 
             
-            <div class="row">
-                <div class="col-md-6">
-                    <button class="btn btn-lg btn-primary submit">Update selected subject</button>
-                </div>
-                
-            </div>
         </div>
     </form>
 </div>

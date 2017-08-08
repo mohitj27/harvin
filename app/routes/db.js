@@ -102,11 +102,15 @@ router.get("/collections/:collectionName/:documentId", function(req, res, next){
 
 //Editing particular document of particular collections
 router.post("/collections/:collectionName/:documentId/edit", function(req, res, next){
-    var currentObject = JSON.parse(req.body.object);
-    var collectionName = req.body.collectionName;
+    
+    var collectionName = req.params.collectionName;
+
+    if(req.body.object && req.body.collectionName){
+        var currentObject = JSON.parse(req.body.object);
+    }
 
     switch(collectionName){
-        case "file":   update.file(req, res, next, currentObject) 
+        case "file":   updateSwitch.file(req, res, next, currentObject, collectionName) ;
                     break;
 
         // case "topic":   
@@ -121,8 +125,8 @@ router.post("/collections/:collectionName/:documentId/edit", function(req, res, 
         // case "class":  
         //             break;
 
-        // case "batch":   
-        //             break;
+        case "batch":   updateSwitch.batch(req, res, next, collectionName);
+                    break;
 
         // case "user":   
         //             break;
@@ -133,124 +137,31 @@ router.post("/collections/:collectionName/:documentId/edit", function(req, res, 
 });
 
 router.put("/collections/:collectionName/:documentId", function(req, res, next){
-    var currentObject = JSON.parse(req.body.currentObject);
-    var newFile = {
-        uploadDate:moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
-        className : req.body.className,
-        subjectName : req.body.subjectName,
-        chapterName : req.body.chapterName,
-        topicName : req.body.topicName
-    }
+    var collectionName = req.body.collectionName;
+    console.log(collectionName)
+    switch(collectionName){
+        case "file":updateHandle.file(req, res, next)
+                    break;
+        // case "topic":   
+        //             break;
 
-    async.waterfall(
-        [
-            function(callback){
-                File.findOneAndUpdate(
-                    {_id:currentObject._id},
-                    {
-                        $set:{
-                            className:newFile.className,
-                            subjectName:newFile.subjectName,
-                            chapterName:newFile.chapterName,
-                            topicName:newFile.topicName,
-                            uploadDate:newFile.uploadDate
-                        },
-                    },
-                    { upsert: true, new: true, setDefaultsOnInsert: true },
-                    
-                    function (err, updatedFile) {
-                        if(!err && updatedFile){
-                            callback(null, updatedFile)
-                        }else{
-                            console.log(err);
-                            callback(err);
-                        }
-                    }
-                );
-            },
-            function(updateFile, callback){
-                Topic.findOneAndUpdate(
-                    { topicName: currentObject.topicName},
-                    {$pull:{files:currentObject._id}},
-                    function(err, updatedTopic){
-                        if(!err){
-                            callback(null,updateFile ,updatedTopic)
-                        }else{
-                            console.log(err);
-                            callback(err);
-                        }
-                    }
-                );
-            },
-            function(updatedFile,updatedTopic, callback){
-                Topic.findOneAndUpdate(
-                    { topicName: newFile.topicName },
-                    { $addToSet:{ files:updatedFile } , $set:{topicName:newFile.topicName}},
-                    { upsert: true, new: true, setDefaultsOnInsert: true },
-                    function (err, createdTopic) {
-                        if(!err && createdTopic){
-                            callback(null, createdTopic)
-                        }else{
-                            console.log(err);
-                            callback(err);
-                        }
-                    }
-                );
-            },
-            function (createdTopic, callback) {
-                Chapter.findOneAndUpdate(
-                   { chapterName: newFile.chapterName },
-                   { $addToSet:{ topics:createdTopic } , $set:{chapterName:newFile.chapterName}},
-                   { upsert: true, new: true, setDefaultsOnInsert: true },
-                   function (err, createdChapter) {
-                       if(!err && createdChapter){
-                           callback(null, createdChapter)
-                       }else{
-                           console.log(err);
-                           callback(err);
-                       }
-                   }
-               );
-            },
-            function (createdChapter, callback) {
-                Subject.findOneAndUpdate(
-                  { subjectName: newFile.subjectName },
-                  { $addToSet:{ chapters:createdChapter } , $set:{ subjectName:newFile.subjectName}},
-                  { upsert: true, new: true, setDefaultsOnInsert: true },
-                  function (err, createdSubject) {
-                      if(!err && createdSubject){
-                          callback(null, createdSubject)
-                          
-                      }else{
-                          console.log(err);
-                          callback(err);
-                      }
-                   }
-               );
-           },
-           function (createdSubject, callback) {
-               Class.findOneAndUpdate(
-                   { className: newFile.className },
-                   { $addToSet:{ subjects:createdSubject } , $set:{className:newFile.className}},
-                   { upsert: true, new: true, setDefaultsOnInsert: true },
-                   function (err, createdClass) {
-                       if(!err && createdClass){
-                           callback(null)
-                           fileUpdateSuccess(req,res, currentObject);
-                       }else{
-                          console.log(err);
-                          callback(err);
-                      }
-                   }
-               );
-           }
-        ],
-        function(err, result){
-            if(err){
-                console.log(err);
-            }
-        }
-    );
+        // case "chapter": 
+        //             break;
+
+        // case "subject": 
+        //             break;
+
+        // case "class":  
+        //             break;
+
+        case "batch":  updateHandle.batch(req, res, next) 
+                    break;
+
+        // case "user":   
+        //             break;
+
+        default: res.send("some prob")
+    }
 });
    
 router.delete("/collections/:collectionName/:documentId", function(req, res, next){
@@ -406,10 +317,10 @@ var collections = {
         }
 };
 
-//update
-var update = {
+//updateSwitch
+var updateSwitch = {
     
-        file:function(req,res,next, currentObject){
+        file:function(req,res,next, currentObject, collectionName){
             Class.find({}, function(err, classes){
                 if(err) console.log(err);
             })
@@ -437,7 +348,7 @@ var update = {
                 }
                 else{
                     console.log(currentObject)
-                    res.render('updateFile',{classes:classes, currentObject:currentObject});
+                    res.render('updateFile',{classes:classes, currentObject:currentObject, collectionName:collectionName});
                 }
             });
         },
@@ -462,9 +373,189 @@ var update = {
             
         },
 
-        batch:function(req,res,next){
-            
+        batch:function(req,res,next,collectionName){
+            Batch.find({}, function(err, foundBatches){
+                if(err) {
+                    console.log(err);
+                    next(new errors.notFound)
+                }
+                else{
+                    Subject.find({},function(err,foundSubjects){
+                        if(err) {
+                            console.log(err);
+                            next(new errors.notFound)
+                        }
+                        else{
+                            res.render("updateBatch",{batches:foundBatches, subjects:foundSubjects, collectionName:collectionName});
+                        }
+                    })
+                }            
+            });
         }
 };
+
+//updateHandle
+var updateHandle = {
+    file:function(req,res, next){
+        var currentObject = JSON.parse(req.body.currentObject);
+        var newFile = {
+            uploadDate:moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
+            className : req.body.className,
+            subjectName : req.body.subjectName,
+            chapterName : req.body.chapterName,
+            topicName : req.body.topicName
+        }
+    
+        async.waterfall(
+            [
+                function(callback){
+                    File.findOneAndUpdate(
+                        {_id:currentObject._id},
+                        {
+                            $set:{
+                                className:newFile.className,
+                                subjectName:newFile.subjectName,
+                                chapterName:newFile.chapterName,
+                                topicName:newFile.topicName,
+                                uploadDate:newFile.uploadDate
+                            },
+                        },
+                        { upsert: true, new: true, setDefaultsOnInsert: true },
+                        
+                        function (err, updatedFile) {
+                            if(!err && updatedFile){
+                                callback(null, updatedFile)
+                            }else{
+                                console.log(err);
+                                callback(err);
+                            }
+                        }
+                    );
+                },
+                function(updateFile, callback){
+                    Topic.findOneAndUpdate(
+                        { topicName: currentObject.topicName},
+                        {$pull:{files:currentObject._id}},
+                        function(err, updatedTopic){
+                            if(!err){
+                                callback(null,updateFile ,updatedTopic)
+                            }else{
+                                console.log(err);
+                                callback(err);
+                            }
+                        }
+                    );
+                },
+                function(updatedFile,updatedTopic, callback){
+                    Topic.findOneAndUpdate(
+                        { topicName: newFile.topicName },
+                        { $addToSet:{ files:updatedFile } , $set:{topicName:newFile.topicName}},
+                        { upsert: true, new: true, setDefaultsOnInsert: true },
+                        function (err, createdTopic) {
+                            if(!err && createdTopic){
+                                callback(null, createdTopic)
+                            }else{
+                                console.log(err);
+                                callback(err);
+                            }
+                        }
+                    );
+                },
+                function (createdTopic, callback) {
+                    Chapter.findOneAndUpdate(
+                    { chapterName: newFile.chapterName },
+                    { $addToSet:{ topics:createdTopic } , $set:{chapterName:newFile.chapterName}},
+                    { upsert: true, new: true, setDefaultsOnInsert: true },
+                    function (err, createdChapter) {
+                        if(!err && createdChapter){
+                            callback(null, createdChapter)
+                        }else{
+                            console.log(err);
+                            callback(err);
+                        }
+                    }
+                );
+                },
+                function (createdChapter, callback) {
+                    Subject.findOneAndUpdate(
+                    { subjectName: newFile.subjectName },
+                    { $addToSet:{ chapters:createdChapter } , $set:{ subjectName:newFile.subjectName}},
+                    { upsert: true, new: true, setDefaultsOnInsert: true },
+                    function (err, createdSubject) {
+                        if(!err && createdSubject){
+                            callback(null, createdSubject)
+                            
+                        }else{
+                            console.log(err);
+                            callback(err);
+                        }
+                    }
+                );
+            },
+            function (createdSubject, callback) {
+                Class.findOneAndUpdate(
+                    { className: newFile.className },
+                    { $addToSet:{ subjects:createdSubject } , $set:{className:newFile.className}},
+                    { upsert: true, new: true, setDefaultsOnInsert: true },
+                    function (err, createdClass) {
+                        if(!err && createdClass){
+                            callback(null)
+                            fileUpdateSuccess(req,res, currentObject);
+                        }else{
+                            console.log(err);
+                            callback(err);
+                        }
+                    }
+                );
+            }
+            ],
+            function(err, result){
+                if(err){
+                    console.log(err);
+                }
+            }
+        );
+    },
+    batch: function(req, res, next){
+        var subjectName = req.body.subjectName;
+        var batchName = req.body.batchName;
+    
+        async.waterfall(
+            [
+                function (callback) {
+                    Subject.find({subjectName:subjectName}, function(err, foundSubjects){
+                        if(!err && foundSubjects) {
+                            callback(null, foundSubjects)
+                            
+                        }else{
+                            console.log(err);
+                            callback(err);
+                        }
+                    });
+                },
+        
+                function (foundSubjects, callback) {
+                    Batch.findOneAndUpdate(
+                        { batchName:batchName },
+                        { $set:{ batchName: batchName, subject: foundSubjects} },
+                        { upsert: true, new: true, setDefaultsOnInsert: true },
+                        function (err, createdBatch) {
+                            if(!err && createdBatch){
+                               req.flash("success", "Batch updated successfully");
+                               res.redirect("/db/collections")
+                            }
+                        }
+                    );
+                }
+            ],
+            function (err, result) {
+                if(err){ {batchName:batchName}
+                    console.log(err)
+                    next(new errors.generic)
+                }
+            }
+        );
+    }
+}
 
 module.exports = router;

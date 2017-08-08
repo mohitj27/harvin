@@ -24,6 +24,12 @@
     width:80%
 }
 
+.updateBatch{
+    margin: 8px;
+    background-color:#F8F8F8;
+    border-color: white
+}
+
 .dropdown-menu {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

@@ -142,6 +142,8 @@ $(function() {
                                         $button = $("<button>", {"class":"btn btn-large btn-default objectButton document ids", "text":object._id, "value":res.dbType})
                                         $documents.append($button);
                                 }, this);
+                        }else if(collectionName == "batch" && res.objects.length == 0){
+                                
                         }
                 });
         });
@@ -159,17 +161,20 @@ $(function() {
                                 $pre = $("<pre>", {"class":"data pre-scrollable", "text":objectString, "height":"300px"})
                                 $data.append($pre) ;
 
-                                //update and delete data button
-                                $form = $("<form>",{class:"dbUpdateForm", action:"/db/collections/"+collectionName+"/"+ documentId+"/edit", "method":"POST"})
-                                $hiddenObjectInput = $("<input>",{type: "hidden", value:objectString, name:"object"})
-                                $hiddenCollectionNameInput = $("<input>",{type: "hidden", value:collectionName, name:"collectionName"})
-                                $updateButton = $("<button>", {class:"btn btn-warning updateButton", text:"Update"});
-                                $deleteButton = $("<button>", {class:"btn btn-danger deleteButton", text:"Delete", formaction:"/db/collections/"+collectionName+"/"+ documentId+"?_method=delete", "method":"POST"});
-                                $data.append($form);
-                                $form.append($hiddenObjectInput)
-                                        .append($hiddenCollectionNameInput)
-                                        .append($updateButton)
-                                        .append($deleteButton);
+                                if(collectionName == "file" || collectionName == "batch"){
+                                        //update and delete data button
+                                        $form = $("<form>",{class:"dbUpdateForm", action:"/db/collections/"+collectionName+"/"+ documentId+"/edit", "method":"POST"})
+                                        $hiddenObjectInput = $("<input>",{type: "hidden", value:objectString, name:"object"})
+                                        $hiddenCollectionNameInput = $("<input>",{type: "hidden", value:collectionName, name:"collectionName"})
+                                        $updateButton = $("<button>", {class:"btn btn-warning updateButton", text:"Update"});
+                                        $deleteButton = $("<button>", {class:"btn btn-danger deleteButton", text:"Delete", formaction:"/db/collections/"+collectionName+"/"+ documentId+"?_method=delete", "method":"POST"});
+                                        $data.append($form);
+                                        $form.append($hiddenObjectInput)
+                                                .append($hiddenCollectionNameInput)
+                                                .append($updateButton)
+                                                .append($deleteButton);
+                                }
+                                
                                 
                         }
                 });

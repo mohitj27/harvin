@@ -70,6 +70,7 @@ app.use(function(req, res, next) {
     res.locals.currentUser = req.user || null;
     res.locals.msg_error = req.flash("error")||{};
     res.locals.msg_success = req.flash("success")||{};
+    res.locals.currentObject = {} || null;
     next();
 });
 
