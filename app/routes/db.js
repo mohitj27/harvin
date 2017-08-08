@@ -181,8 +181,8 @@ router.delete("/collections/:collectionName/:documentId", function(req, res, nex
         // case "class":  
         //             break;
 
-        // case "batch":   
-        //             break;
+        case "batch":   deleteHandle.batch(req,res, next, currentObject, collectionName);
+                    break;
 
         // case "user":   
         //             break;
@@ -609,6 +609,21 @@ var deleteHandle = {
                     console.log(err);
                     next(new errors.generic);
                 }
+            }
+        );
+    },
+    batch:function(req,res, next, currentObject, collectionName){
+        Batch.findOneAndRemove(
+            {_id : currentObject._id},
+            function(err,doc, result){
+                if(!err && doc){
+                    req.flash("success", "Batch " + currentObject.batchName+ " deleted successfully");
+                    res.redirect("/db/collections")
+                }else{
+                    console.log(err);
+                    next(new errors.generic)
+                }
+
             }
         );
     }
