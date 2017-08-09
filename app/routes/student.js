@@ -2,8 +2,7 @@ var express = require("express"),
 	passport = require("passport"),
 
 	User = require("../models/User.js"),
-	Subject = require("../models/Subject.js"),
-	File = require("../models/File.js"),
+    Class = require("../models/Class.js"),
 	errors = require("../error"),
 
 	router = express.Router();
@@ -46,34 +45,37 @@ router.post("/signup", function(req, res){
 });
 
 //sending subject list
-router.get("/subjects", function(req, res, next){
+router.get("/classes", function(req, res, next){
 
-	Subject.find({}, function(err, subjects){
+	Class.find({}, function(err, classes){
 		if(err){
 			console.log(err)
 			next(new errors.notFound);
 		}
 	})
 	.populate({
-		path:"chapters",
-		model:"Chapter",
-		populate:{
-			path:"topics",
-			model:"Topic",
-			populate:{
-				path:"files",
-				model:"File"
-			}
-		}
+		path:"subjects",
+        model:"Subject",
+        populate:{
+            path:"chapters",
+            model:"Chapter",
+            populate:{
+                path:"topics",
+                model:"Topic",
+                populate:{
+                        path:"files",
+                        model:"File"
+                }
+		    }
+        }
 	})
-	.exec(function(err, subjects){
+	.exec(function(err, classes){
 		if(err){
 			console.log(err)
-			next(new errors.generic);
 		}
 		else{
 			res.type('application/json');
-   			res.json({"subjects": subjects});
+   			res.json({"classes": classes});
 		}
 	});
 
