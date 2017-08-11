@@ -3,6 +3,8 @@ var express = require("express"),
 
 	User = require("../models/User.js"),
     Class = require("../models/Class.js"),
+    Batch = require("../models/Batch.js"),
+    Profile = require("../models/Profile.js"),
 	errors = require("../error"),
 
 	router = express.Router();
@@ -32,16 +34,92 @@ router.get("/logout", function(req, res) {
 
 //Handle user registration-- for student
 router.post("/signup", function(req, res){
-    User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
-        if (err) {
-            console.log(err);
-            return res.json(err);
-        }
+    var batchName = req.body.batch;
+    Batch.findOne(
+        { batchName:batchName },
+        function(err, foundBatch){
+            if(!err && foundBatch){
 
-        passport.authenticate("local")(req, res, function () {
-			res.status(200).json(user);
-        });
-    });
+                User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return res.json(err);
+                    }
+                    else if(user && !err){
+                        var newProfile = {
+                            fullName : req.body.fullName,
+                            emailId : req.body.emailId,
+                            phone : req.body.phone,
+                            batch:foundBatch._id
+                        }
+
+                        Profile.create(
+                            newProfile,
+                            function(err, createdProfile){
+                                if(!err && createdProfile){
+                                    User.findOneAndUpdate(
+                                        {_id:user._id},
+                                        {$set:{profile:createdProfile}},
+                                        { upsert: true, new: true, setDefaultsOnInsert: true },
+                                        function(err){
+                                            if(!err){
+                                                passport.authenticate("local")(req, res, function () {
+                                                    User.findOne({_id:user._id}).populate(
+                                                        {
+                                                            path:"profile",
+                                                            model:"Profile",
+                                                            populate:{
+                                                                path:"batch",
+                                                                model:"Batch"
+                                                            }
+                                                        }
+                                                    ).exec(function(err, foundUser){
+                                                        if(!err && foundUser){
+                                                            res.status(200).json(foundUser);
+                                                        }                                                        
+                                                        else{
+                                                            res.json(user);
+                                                        }
+                                                    });
+                                                });
+                                            }
+                                            else{
+                                                console.log(err);
+                                                var errors = {
+                                                    name:"couldn't update the profile",
+                                                    message:"Error while updating profile"
+                                                };
+                                                return res.send(errors);
+                                            }
+                                        }
+                                    );
+                                    
+                                }
+                                else{
+                                    console.log(err);
+                                    var errors = {
+                                        name:"couldn't create the profile",
+                                        message:"Error while creating profile"
+                                    };
+                                    return res.send(errors);
+                                }
+                            }
+                        );
+                        
+                    }
+                });
+
+            }
+            else{
+                console.log(err);
+                var errors = {
+                    name:"batchNotFound",
+                    message:"No batch found with given batch name"
+                };
+                return res.send(errors);
+            }
+        }
+    );
 });
 
 //sending subject list
