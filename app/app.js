@@ -45,7 +45,7 @@ app.use(flash());
 //view engine
 app.set('views', __dirname + '/views');
 app.set("view engine", "ejs");
-app.use(morgan("dev"))
+app.use(morgan("common"))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(flash());
 app.use(bodyParser.json())
