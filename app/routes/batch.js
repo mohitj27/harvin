@@ -50,7 +50,7 @@ router.post("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function(
             function (foundSubjects, callback) {
                 Batch.findOneAndUpdate(
                     { batchName:batchName },
-                    { $set:{ batchName: batchName, subject: foundSubjects} },
+                    { $set:{ batchName: batchName, subjects: foundSubjects} },
                     { upsert: true, new: true, setDefaultsOnInsert: true },
                     function (err, createdBatch) {
                         if(!err && createdBatch){

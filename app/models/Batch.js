@@ -8,7 +8,7 @@ var batchSchema = new Schema(
             type:String,
             required:true
         },
-        subject:[
+        subjects:[
             {
                 type:mongoose.Schema.Types.ObjectId,
                 ref:"Subject"

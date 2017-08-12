@@ -122,6 +122,50 @@ router.post("/signup", function(req, res){
     );
 });
 
+router.get("/:username/subjects", function(req, res){
+    var subjects = {};
+    User.findOne(
+        { username : req.params.username },
+        function(err, foundUser){
+            if(!err && foundUser){
+            }else if(err){
+                console.log(err);
+            }
+        }
+    )
+    .populate(
+        {
+            path:"profile",
+            model:"Profile",
+            populate:{
+                path:"batch",
+                model:"Batch",
+                populate:{
+                    path:"subjects",
+                    model:"Subject",
+                    populate:{
+                        path:"chapters",
+                        model:"Chapter",
+                        populate:{
+                            path:"topics",
+                            model:"Topic",
+                            populate:{
+                                    path:"files",
+                                    model:"File"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ).exec(function(err, userDetail){
+        if(!err && userDetail){
+            subjects = userDetail.profile.batch.subjects;
+            res.json({"subjects":subjects});
+        }
+    });
+});
+
 //sending subject list
 router.get("/classes", function(req, res, next){
 
