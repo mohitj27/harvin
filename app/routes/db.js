@@ -381,7 +381,7 @@ var updateSwitch = {
                             next(new errors.notFound)
                         }
                         else{
-                            res.render("updateBatch2",{batches:foundBatches, subjects:foundSubjects,currentObject:currentObject , collectionName:collectionName});
+                            res.render("updateBatch",{batches:foundBatches, subjects:foundSubjects,currentObject:currentObject , collectionName:collectionName});
                         }
                     })
                 }            

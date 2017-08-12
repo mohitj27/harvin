@@ -80,7 +80,7 @@ router.get("/:batchName", function(req, res, next){
     })
     .populate(
         {
-            path:"subject",
+            path:"subjects",
             model:"Subject"
         }
     )

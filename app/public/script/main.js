@@ -104,13 +104,13 @@ $(function() {
                         })
                         $(".selectpicker").selectpicker("refresh");
                         if(res.batch){
-                                var length = res.batch.subject.length
+                                var length = res.batch.subjects.length;
                                 if(length>0){
                                         for(var i = 0; i< length; i++){
                                                 o.each(function(j){
                                                         if(j>0)
                                                         {
-                                                                if(this.value==res.batch.subject[i].subjectName)
+                                                                if(this.value==res.batch.subjects[i].subjectName)
                                                                         this.selected = true;
                                                         }
                                                 })
