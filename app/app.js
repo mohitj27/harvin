@@ -84,15 +84,12 @@ app.use(function(err, req, res, next) {
         err.statusCode = err.statusCode || 500;
         res.status(err.statusCode);
         if("development" == app.get("env")){
-            console.log(err.statusCode);
-            
             res.render('error', {
                 name:err.name || "",
                 message: err.message || "",
                 statusCode: err.statusCode 
             });
         }else{
-            console.log(err.statusCode);
             res.render('error', {
                 name: "",
                 message: err.message || "",
