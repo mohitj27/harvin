@@ -23,7 +23,7 @@ var config = {
 			port: 27017
 		}
 	}
-}
+};
 module.exports = function(mode) {
 	return config[mode || process.argv[2] || 'local'] || config.local;
-}
+};

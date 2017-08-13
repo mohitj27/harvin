@@ -7,8 +7,9 @@ var express = require("express"),
     flash = require("connect-flash"),
     indexRoutes = require("./routes"),
     morgan = require("morgan"),
-    fs = require('fs')
-    config = require('./config')(),
+    fs = require('fs'),
+    dotenv = require('dotenv').config()
+    config = require('./config')(process.env.LOAD_CONFIG),
     methodOverride = require("method-override"),
 
     app = express();
@@ -45,7 +46,7 @@ app.use(flash());
 //view engine
 app.set('views', __dirname + '/views');
 app.set("view engine", "ejs");
-app.use(morgan("common"))
+app.use(morgan("common"));
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(flash());
 app.use(bodyParser.json())
@@ -84,13 +85,15 @@ app.use(function(err, req, res, next) {
         res.status(err.statusCode);
         if("development" == app.get("env")){
             res.render('error', {
-                name:err.name,
-                message: err.message,
-                statusCode: err.statusCode
+                name:err.name || {},
+                message: err.message || {},
+                statusCode: err.statusCode || {}
             });
         }else{
             res.render('error', {
-                message: err.message
+                name: {},
+                message: err.message || {},
+                statusCode: {}
             });
         }
     }

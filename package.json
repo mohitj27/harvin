@@ -7,7 +7,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jasmine-node app/tests --verbose --forceexit --color",
+    "test": "./node_modules/.bin/mocha app/tests --reporter spec --color --timeout 10000",
     "start": "node ./app/app.js"
   },
   "repository": {
@@ -23,14 +23,17 @@
   "dependencies": {
     "async": "^2.5.0",
     "body-parser": "^1.17.2",
+    "chai": "^4.1.1",
+    "chai-http": "^3.0.0",
     "connect-flash": "^0.1.1",
+    "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
     "express": "^4.15.3",
     "express-error-handler": "^1.1.0",
     "express-session": "^1.15.3",
     "file-system": "^2.2.2",
-    "jasmine-node": "^1.14.5",
     "method-override": "^2.3.9",
+    "mocha": "^3.5.0",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "mongoose": "^4.11.1",

@@ -1,6 +1,12 @@
 <% include partials/header.ejs%>
 <h1>Whoops! Something has gone wrong.</h1>
-<pre>Name: <%= name %></pre>
-<pre>Message: <%= message %></pre>
- <pre>StatusCode: <%= statusCode %></pre> 
+<%if(name && name.length > 0){ %>
+    <pre>Name: <%= name %></pre>
+<%}%>
+<%if(message && message.length > 0){ %>
+    <pre>Message: <%= message %></pre>
+<%}%>
+<%if(statusCode && statusCode.length > 0){ %>
+    <pre>StatusCode: <%= statusCode %></pre> 
+<%}%>
 <% include partials/footer.ejs%>
