@@ -559,7 +559,6 @@ var deleteHandle = {
     file:function(req, res, next, currentObject, collectionName){
         async.waterfall(
             [
-                //TODO:delete file from upload folder
                 function(callback){
                     fs.unlink(currentObject.filePath, function(err){
                         if(!err) {

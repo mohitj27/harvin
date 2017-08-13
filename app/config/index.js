@@ -4,26 +4,30 @@ var config = {
 		port: 3000,
 		mongo: {
 			host: '127.0.0.1',
-			port: 27017
+			port: 27017,
+			dbName: "harvin"
 		}
 	},
-	staging: {
-		mode: 'staging',
+	test: {
+		mode: 'test',
 		port: 4000,
 		mongo: {
 			host: '127.0.0.1',
-			port: 27017
+			port: 27017,
+			dbName: "harvin-test"
 		}
 	},
 	production: {
 		mode: 'production',
-		port: 5000,
+		port: 3000,
 		mongo: {
 			host: '127.0.0.1',
-			port: 27017
+			port: 27017,
+			dbName: "harvin"
 		}
 	}
 };
-module.exports = function(mode) {
+module.exports = function (mode) {
 	return config[mode || process.argv[2] || 'local'] || config.local;
 };
+
