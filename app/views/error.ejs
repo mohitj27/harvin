@@ -6,7 +6,7 @@
 <%if(message && message.length > 0){ %>
     <pre>Message: <%= message %></pre>
 <%}%>
-<%if(statusCode && statusCode.length > 0){ %>
+<%if(statusCode && statusCode > 0){ %>
     <pre>StatusCode: <%= statusCode %></pre> 
 <%}%>
 <% include partials/footer.ejs%>
