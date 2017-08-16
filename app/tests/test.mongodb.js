@@ -1,4 +1,3 @@
-var expect = require('chai').expect;
 process.env.LOAD_CONFIG = 'test';
 mongoose = require("mongoose");
 config = require('../config')(process.env.LOAD_CONFIG);

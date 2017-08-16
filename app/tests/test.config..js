@@ -1,4 +1,3 @@
-var expect = require('chai').expect;
 describe("Configuration setup", function () {
 	it("should load local configurations", function (next) {
 		process.env.LOAD_CONFIG = 'local';
