@@ -1,20 +1,21 @@
 <% include partials/header.ejs%>
-    <div class="container">
-        <div id="allDatabase">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-12 column" id="collections">
-                    <h2 style="font-weight: bold">Collections</h2>
-                    <% names.forEach(function(name){%>
-                            <button class="btn btn-large btn-default objectButton collection" value="<%=name%>"><b><%=name%></b></button>
-                    <%})%>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12  column" id="documents">
-                        <h2 style="font-weight: bold" id="objects">Objects</h2>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12" id="data">
-                        <h2 style="font-weight: bold; text-align: center"; id="object">JSON</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-<% include partials/footer.ejs%>
+	<div class="container">
+		<div id="allDatabase">
+			<div class="row">
+				<div class="col-lg-4 col-md-4 col-sm-12 column" id="collections">
+					<h2 style="font-weight: bold">Collections</h2>
+					<% names.forEach(function(name){%>
+						<button class="btn btn-large btn-default objectButton collection" value="<%=name%>"><b><%=name%></b></button>
+						<%})%>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-12  column" id="documents">
+					<h2 style="font-weight: bold" id="objects">Objects</h2>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-12" id="data">
+					<h2 style="font-weight: bold; text-align: center" ; id="object">JSON</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% include partials/footer.ejs%>
+
