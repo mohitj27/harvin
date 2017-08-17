@@ -13,40 +13,63 @@
                      <%classes.forEach(function(classs){%>
                      <option value="<%=classs.className%>"><%=classs.className%></option>   
                      <%})%>
-                    
                 </select>
             </div>
+
             <div class="col-sm-3">
                 <h2>Subject</h2> <br>
-
                 <select required  name="subjectName" class="selectpicker" id="subject" >
                     <option selected value="" disabled>Subject</option>
-                   
-                    
-                    
                 </select>   
-                    
             </div>
+
             <div class="col-sm-3">
                 <h2>Chapter</h2><br>
                 <select required  name="chapterName"  class="selectpicker" id="chapter" >
                     <option selected value="" disabled>Chapter</option>
-                    
                 </select>    
-                    
             </div>
+
             <div class="col-sm-3">
                 <h2>Topic</h2> <br>
                 <select required  name="topicName"  class="selectpicker" id="topic" >
                     <option selected value="" disabled>Topic</option>
-                    
-                    
                 </select>  
             </div> 
-            
-            <input type="file" name="userFile" class="btn btn-default btn-file" required/><br>
-			<input type="submit" value="Upload File" name="submit" class="btn btn-primary btn-lg submit"/>   
         </div>
+
+        <div class="row">
+            <div class="col-lg-6"></div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label for="chapterDescription">Chapter Description</label>
+                    <textarea 
+                        name="chapterDescription" 
+                        id="chapterDescription" 
+                        rows="5" 
+                        title="Chapter Description" 
+                        placeholder="Give chapter description here" 
+                        class="form-control"></textarea>
+                </div>
+                
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label for="topicDescription">Topic Description</label>
+                    <textarea 
+                        name="topicDescription" 
+                        id="topicDescription"
+                        rows="5"
+                        title="Topic Description"
+                        placeholder="Give topic description here"
+                        class="form-control"></textarea>
+                </div>
+                
+            </div>
+        </div>
+
+        <input type="file" name="userFile" class="btn btn-default btn-file" required/><br>
+        <input type="submit" value="Upload File" name="submit" class="btn btn-primary btn-lg submit"/>   
     </form>
 </div>
 

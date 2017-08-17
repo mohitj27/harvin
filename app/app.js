@@ -9,15 +9,15 @@ var express = require("express"),
 	morgan = require("morgan"),
 	fs = require('fs'),
 	dotenv = require('dotenv').config(),
-    config = require('./config')(process.env.LOAD_CONFIG),
+	config = require('./config')(process.env.LOAD_CONFIG),
 	methodOverride = require("method-override"),
 
 	app = express(),
-    mongoose = require("mongoose"),
+	mongoose = require("mongoose"),
 
-    Schema = mongoose.Schema,
+	Schema = mongoose.Schema,
 
-    User = require("./models/User.js");
+	User = require("./models/User.js");
 
 var url = process.env.DATABASEURL ||
 	'mongodb://' + config.mongo.host + ':' + config.mongo.port + '/' + config.mongo.dbName;

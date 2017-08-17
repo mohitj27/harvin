@@ -24,12 +24,11 @@ router.get("/", function(req, res){
     res.render("home");
 });
 
-//helper
+//helper- class
 router.get("/class/:className", function(req, res, next){
-    Class.findOne({className:req.params.className}, function(err, classes){
+    Class.findOne({className:req.params.className}, function(err, classs){
 		if(err) {
             console.log(err);
-            // next(new errors.generic);
         }
 	})
 	.populate({
@@ -49,9 +48,9 @@ router.get("/class/:className", function(req, res, next){
 	});
 });
 
-//helper
+//helper- subject
 router.get("/subject/:subjectName", function(req, res, next){
-    Subject.findOne({subjectName:req.params.subjectName}, function(err, subjects){
+    Subject.findOne({subjectName:req.params.subjectName}, function(err, subject){
 		if(err) {
             console.log(err);
             next(new errors.generic);
@@ -74,9 +73,9 @@ router.get("/subject/:subjectName", function(req, res, next){
 	});
 });
 
-//helper
+//helper-chapter
 router.get("/chapter/:chapterName", function(req, res, next){
-    Chapter.findOne({chapterName:req.params.chapterName}, function(err, chapters){
+    Chapter.findOne({chapterName:req.params.chapterName}, function(err, chapter){
 		if(err) {
             console.log(err);
             next(new errors.generic);
@@ -99,6 +98,18 @@ router.get("/chapter/:chapterName", function(req, res, next){
 	});
 });
 
+//helper- topic
+router.get("/topic/:topicName", function(req, res, next){
+	Topic.findOne({topicName:req.params.topicName}, function(err, topic){
+		if(err && !topic) {
+            console.log(err);
+            next(new errors.generic);
+		}
+		else{
+			res.json({topic:topic});
+		}
+	});
+});
 
 //if not route mentioned in url
 router.get("*", function(req, res){

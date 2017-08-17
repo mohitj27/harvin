@@ -13,7 +13,7 @@ $(function () {
 	//add button in selectpicker
 	var addoption = $('<option/>')
 		.addClass('additem lastTwo')
-		.data('content', content)
+		.data('content', content);
 
 	//appending divider and add item element	  
 	$('.selectpicker')
@@ -34,7 +34,7 @@ $(function () {
 			$(".selectpicker").selectpicker("refresh");
 
 			if (res.classs) {
-				var length = res.classs.subjects.length
+				var length = res.classs.subjects.length;
 				if (length > 0) {
 					for (var i = 0; i < length; i++) {
 						o.before($("<option>", {
@@ -59,7 +59,7 @@ $(function () {
 			$(".selectpicker").selectpicker("refresh");
 
 			if (res.subject) {
-				var length = res.subject.chapters.length
+				var length = res.subject.chapters.length;
 				if (length > 0) {
 					for (var i = 0; i < length; i++) {
 						o.before($("<option>", {
@@ -78,14 +78,23 @@ $(function () {
 
 	//populating topic option after chapter has been chosen
 	$('#chapter').on('change', function () {
+		//select topic selectpicker
 		var $topic = $("#topic");
 		var o = $("option", $topic).eq(-2);
+
+		//select topic description areatext
+		var $chapterDesc = $("#chapterDescription");
+		$chapterDesc.val("");
+
+		var $topicDesc = $("#topicDescription");
+		$topicDesc.val("");
+
 		$topic.children().not(".lastTwo").not(":first").remove();
 		$.get("/chapter/" + this.value, function (res) {
 			$(".selectpicker").selectpicker("refresh");
 
 			if (res.chapter) {
-				var length = res.chapter.topics.length
+				var length = res.chapter.topics.length;
 				if (length > 0) {
 					for (var i = 0; i < length; i++) {
 						o.before($("<option>", {
@@ -94,10 +103,24 @@ $(function () {
 						}));
 
 					}
+					$chapterDesc.val(res.chapter.chapterDescription);
 					$(".selectpicker").selectpicker("refresh");
 				}
 			}
 
+		});
+	});
+
+	//populating topic option after chapter has been chosen
+	$('#topic').on('change', function () {
+		var $topicDesc = $("#topicDescription");
+		$topicDesc.val("");
+		$.get("/topic/" + this.value, function (res) {
+			$(".selectpicker").selectpicker("refresh");
+			if (res.topic) {
+				$topicDesc.val(res.topic.topicDescription);
+				$(".selectpicker").selectpicker("refresh");
+			}
 		});
 	});
 
@@ -108,20 +131,19 @@ $(function () {
 		var o = $("option", $subjectsInBatch).not(".lastTwo");
 		$.get("/batches/" + this.value, function (res) {
 			o.each(function (index) {
-				console.log(index)
 				this.selected = false;
-			})
+			});
 			$(".selectpicker").selectpicker("refresh");
 			if (res.batch) {
 				var length = res.batch.subjects.length;
 				if (length > 0) {
 					for (var i = 0; i < length; i++) {
-						o.each(function (j) {
+						o.each(function (j){
 							if (j > 0) {
 								if (this.value == res.batch.subjects[i].subjectName)
 									this.selected = true;
 							}
-						})
+						});
 					}
 				}
 				$(".selectpicker").selectpicker("refresh");
@@ -151,7 +173,7 @@ $(function () {
 						"class": "btn btn-large btn-default objectButton document ids",
 						"text": object._id,
 						"value": res.dbType
-					})
+					});
 					$documents.append($button);
 				}, this);
 			}
@@ -167,12 +189,12 @@ $(function () {
 			$data.children().not(":first").remove();
 			if (res.object) {
 				//showing json data
-				var objectString = JSON.stringify(res.object, null, 4)
+				var objectString = JSON.stringify(res.object, null, 4);
 				$pre = $("<pre>", {
 					"class": "data pre-scrollable",
 					"text": objectString,
 					"height": "300px"
-				})
+				});
 				$data.append($pre);
 
 				if (collectionName == "file" || collectionName == "batch") {
@@ -181,17 +203,17 @@ $(function () {
 						class: "dbUpdateForm",
 						action: "/db/collections/" + collectionName + "/" + documentId + "/edit",
 						"method": "POST"
-					})
+					});
 					$hiddenObjectInput = $("<input>", {
 						type: "hidden",
 						value: objectString,
 						name: "object"
-					})
+					});
 					$hiddenCollectionNameInput = $("<input>", {
 						type: "hidden",
 						value: collectionName,
 						name: "collectionName"
-					})
+					});
 					$updateButton = $("<button>", {
 						class: "btn btn-warning updateButton",
 						text: "Update"
