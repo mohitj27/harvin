@@ -6,7 +6,10 @@ var subjectSchema = new Schema(
 	{
 		subjectName:{
 			type:String,
-			unique:true,
+			required:true
+		},
+		className:{
+			type:String,
 			required:true
 		},
 		chapters:[

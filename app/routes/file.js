@@ -122,15 +122,23 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 						},
 						function (err, createdTopic) {
 							if (!err && createdTopic) {
-								callback(null, createdTopic);
+								callback(null,createdFile, createdTopic);
 							} else {
 								console.log(err);
-								callback(err);
+								var _err = err;
+								File.findByIdAndRemove(createdFile._id, function(err, res){
+									if(!err && res){
+										callback(_err);
+									}
+									else{
+										callback(err);
+									}
+								});								
 							}
 						}
 					);
 				},
-				function (createdTopic, callback) {
+				function (createdFile, createdTopic, callback) {
 					Chapter.findOneAndUpdate({
 							chapterName: chapterName
 						}, {
@@ -148,17 +156,33 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 						},
 						function (err, createdChapter) {
 							if (!err && createdChapter) {
-								callback(null, createdChapter);
+								callback(null,createdFile, createdTopic, createdChapter);
 							} else {
 								console.log(err);
-								callback(err);
+								var _err = err;
+								File.findByIdAndRemove(createdFile._id, function(err, res){
+									if(!err && res){
+										Topic.findByIdAndRemove(createdTopic._id, function(err, res){
+											if(!err && res){
+												callback(_err);
+											}
+											else{
+												callback(err);
+											}
+										});	
+									}
+									else{
+										callback(err);
+									}
+								});	
 							}
 						}
 					);
 				},
-				function (createdChapter, callback) {
+				function (createdFile, createdTopic, createdChapter, callback) {
 					Subject.findOneAndUpdate({
-							subjectName: subjectName
+							subjectName: subjectName,
+							className: className
 						}, {
 							$addToSet: {
 								chapters: createdChapter
@@ -173,16 +197,39 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 						},
 						function (err, createdSubject) {
 							if (!err && createdSubject) {
-								callback(null, createdSubject);
+								callback(null,createdFile, createdTopic, createdChapter, createdSubject);
 
 							} else {
-								console.log(err);
-								callback(err);
+								console.log(err)
+								var _err = err;
+								File.findByIdAndRemove(createdFile._id, function(err, res){
+									if(!err && res){
+										Topic.findByIdAndRemove(createdTopic._id, function(err, res){
+											if(!err && res){
+												Chapter.findByIdAndRemove(createdChapter._id, function(err, res){
+													if(!err && res){
+														callback(_err);
+													}
+													else{
+														callback(err);
+													}
+												});	
+											}
+											else{
+												callback(err);
+											}
+										});	
+									}
+									else{
+										callback(err);
+									}
+								});								
+								
 							}
 						}
 					);
 				},
-				function (createdSubject, callback) {
+				function (createdFile, createdTopic, createdChapter, createdSubject, callback) {
 					Class.findOneAndUpdate({
 							className: className
 						}, {
@@ -199,11 +246,41 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 						},
 						function (err, createdClass) {
 							if (!err && createdClass) {
+
 								callback(null);
 								fileUploadSuccess(req, res);
 							} else {
 								console.log(err);
-								callback(err);
+								var _err = err;
+								File.findByIdAndRemove(createdFile._id, function(err, res){
+									if(!err && res){
+										Topic.findByIdAndRemove(createdTopic._id, function(err, res){
+											if(!err && res){
+												Chapter.findByIdAndRemove(createdChapter._id, function(err, res){
+													if(!err && res){
+														Subject.findByIdAndRemove(createdSubject._id, function(err, res){
+															if(!err && res){
+																callback(_err);
+															}
+															else{
+																callback(err);
+															}
+														});	
+													}
+													else{
+														callback(err);
+													}
+												});	
+											}
+											else{
+												callback(err);
+											}
+										});	
+									}
+									else{
+										callback(err);
+									}
+								});	
 							}
 						}
 					);

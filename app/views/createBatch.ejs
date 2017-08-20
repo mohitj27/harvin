@@ -24,20 +24,16 @@
                     <option value="" disabled>Subject</option>
                     <%if(subjects){%>
                         <%subjects.forEach(function(subject){%>
-                            <option value="<%=subject.subjectName%>"><%=subject.subjectName%></option>   
+                            <option value="<%=subject.subjectName%>"><%=subject.subjectName%> - <%=subject.className%></option>   
                         <%})%>
                     <%}%>
                 </select>   
                     
             </div>
-            <hr>
+            <br>
             
-            <div class="row">
-                <div class="col-md-6">
-                    <button class="btn btn-lg btn-primary submit">Update selected subject</button>
-                </div>
-                
-            </div>
+            <button class="btn btn-lg btn-primary submit">Update selected subject</button>
+            
         </div>
     </form>
 </div>

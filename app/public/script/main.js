@@ -52,10 +52,11 @@ $(function () {
 
 	//populating chapter option after subject has been chosen
 	$('#subject').on('change', function () {
+		var className = $("#classs option:selected").val();
 		var $chapter = $("#chapter");
 		var o = $("option", $chapter).eq(-2);
 		$chapter.children().not(".lastTwo").not(":first").remove();
-		$.get("/subject/" + this.value, function (res) {
+		$.get("/class/" + className + "/subject/" + this.value, function (res) {
 			$(".selectpicker").selectpicker("refresh");
 
 			if (res.subject) {
@@ -197,7 +198,7 @@ $(function () {
 				});
 				$data.append($pre);
 
-				if (collectionName == "file" || collectionName == "batch") {
+				if (collectionName == "batch") {
 					//update and delete data button
 					$form = $("<form>", {
 						class: "dbUpdateForm",
