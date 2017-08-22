@@ -31,7 +31,6 @@ router.post("/", (req, res, next) => {
     var maximumMarks = req.body.maxMarks;
     var passingMarks = req.body.passMarks;
     var negativeMarks = req.body.negMarks;
-    console.log(examName)
 
     var newExam = {
         examName,
@@ -42,14 +41,77 @@ router.post("/", (req, res, next) => {
         negativeMarks,
     };
 
-    Exam.create(newExam, function(err, createdExam){
+    Exam.create(newExam, (err, createdExam) => {
         if(!err && createdExam){
             req.flash("success", examName + " created Successfully");
             res.redirect("/exams");
-        }else
-            console.log(err)
+        }else{
+            console.log(err);
+            next(new errors.generic);
+        }
     });
 
+});
+
+router.get("/:examId/edit", (req, res, next) => {
+    var examId = req.params.examId;
+    Exam.findById(examId, (err, foundExam) => {
+        if(!err && foundExam){
+            res.render("editExam", {exam: foundExam});
+        }
+    });
+});
+
+router.put("/:examId", (req, res, next) => {
+    var examId = req.params.examId;
+    var examName = req.body.examName;
+    var examDate = req.body.examDate;
+    var examType = req.body.examType;
+    var maximumMarks = req.body.maxMarks;
+    var passingMarks = req.body.passMarks;
+    var negativeMarks = req.body.negMarks;
+
+    Exam.findByIdAndUpdate(examId,
+         {
+             $set:{
+                examName,
+                examDate,
+                examType,
+                maximumMarks,
+                passingMarks,
+                negativeMarks
+            }
+        },
+        {
+            upsert: true,
+            new: true,
+            setDefaultsOnInsert: true
+        },
+        (err, updatedExam) => {
+            if(!err && updatedExam){
+                req.flash("success", examName + " updated Successfully");
+                res.redirect("/exams")
+            }
+            else{
+                console.log(err);
+                next(new errors.generic)
+            }
+        }
+    );
+});
+
+router.delete("/:examId", (req, res, next) =>{
+    var examId = req.params.examId;
+    Exam.findByIdAndRemove(examId, (err, removedExam) => {
+        if(!err && removedExam){
+            req.flash("success", removedExam.examName + " removed Successfully");
+            res.redirect("/exams");
+        }
+        else{
+            console.log(err);
+            next(new errors.generic)
+        }
+    });
 });
 
 module.exports = router;

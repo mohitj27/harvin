@@ -32,7 +32,9 @@
 						<a class="btn btn-warning btn-sm" href="/exams/<%=exam._id%>/edit">Edit</a>
 					</div>
 					<div class="col-xs-1">
-						<a class="btn btn-danger btn-sm" href="/exams/<%=exam._id%>">Delete</a>
+						<form action="/exams/<%=exam._id%>?_method=delete" method="post">
+							<input type="submit" value="Delete" class="btn btn-danger btn-sm">
+						</form>
 					</div>
 				</div>
 			<% }) %>
