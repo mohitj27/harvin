@@ -1,4 +1,4 @@
-$(function () {
+$(function () {	
 	//=========================================
 	//*****FILE UPLAOD************************
 	//=========================================
@@ -16,14 +16,10 @@ $(function () {
 		.data('content', content);
 
 	//appending divider and add item element	  
-	$('.selectpicker')
+	$(".selectpicker.addbtn")
 		.append(divider)
 		.append(addoption)
 		.selectpicker();
-
-	//removing add item from #subjectInBatch        
-	$("#subjectsInBatch").children().last().remove();
-	$(".selectpicker").selectpicker("refresh");
 
 	//populating subject option after class has been chosen
 	$('#classs').on('change', function () {
@@ -237,6 +233,12 @@ $(function () {
 		});
 
 	});
+
+	//=========================================
+	//*****EXTRAS*******************
+	//=========================================
+	$("#dtBox").DateTimePicker();
+	
 
 });
 

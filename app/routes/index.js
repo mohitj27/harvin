@@ -6,6 +6,7 @@ var express = require("express"),
 	batchRoutes = require("./batch"),
 	fileRoutes = require("./file"),
 	dbRoutes = require("./db"),
+	examRoutes = require("./exam"),
 
 	Topic = require("../models/Topic.js"),
 	Chapter = require("../models/Chapter.js"),
@@ -17,6 +18,7 @@ router.use("/student", studentRoutes);
 router.use("/batches", batchRoutes);
 router.use("/files", fileRoutes);
 router.use("/db", dbRoutes);
+router.use("/exams", examRoutes);
 
 //Home-admin
 router.get("/", function (req, res) {
@@ -129,3 +131,4 @@ router.get("*", function (req, res) {
 });
 
 module.exports = router;
+

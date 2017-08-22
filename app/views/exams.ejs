@@ -1,0 +1,29 @@
+<% include partials/header.ejs%>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 col-sm-12">
+				<h2><b>List of exams</b></h2>
+			</div>
+			<a href="/exams/new" class="btn btn-primary newExam">Set An Exam</a>
+        </div>
+		
+		
+		
+		<div class="row">
+			<div class="col-sm-12">
+                <% if(foundExams && foundExams.length > 0){ %>
+                    <% foundExams.forEach(function(exam){ %>
+                        <div>
+                            <%= exam %>
+                        </div>
+                    <% }) %>
+                <% } %>
+			</div>
+        </div>
+        
+        
+
+	</div>
+
+<% include partials/footer.ejs%>
+
