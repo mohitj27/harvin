@@ -7,23 +7,36 @@
 			<a href="/exams/new" class="btn btn-primary newExam">Set An Exam</a>
         </div>
 		
-		
-		
 		<div class="row">
-			<div class="col-sm-12">
-                <% if(foundExams && foundExams.length > 0){ %>
-                    <% foundExams.forEach(function(exam){ %>
-                        <div>
-                            <%= exam %>
-                        </div>
-                    <% }) %>
-                <% } %>
-			</div>
-        </div>
-        
-        
-
+			<div class="col-xs-2"><b>Name</b></div>
+			<div class="col-xs-2"><b>Date</b></div>
+			<div class="col-xs-2"><b>Type</b></div>
+			<div class="col-xs-1"><b>Maximum Marks</b></div>
+			<div class="col-xs-1"><b>Passing Marks</b></div>
+			<div class="col-xs-1"><b>Negative Marks</b></div>
+		</div>
+		
+		<% if(foundExams && foundExams.length > 0){ %>
+			<% foundExams.forEach(function(exam){ %>
+				<div class="row">
+					<div class="col-xs-2"><%=exam.examName%></div>
+					<div class="col-xs-2"><%=exam.examDate%></div>
+					<div class="col-xs-2"><%=exam.examType%></div>
+					<div class="col-xs-1"><%=exam.maximumMarks%></div>
+					<div class="col-xs-1"><%=exam.passingMarks%></div>
+					<div class="col-xs-1"><%=exam.negativeMarks%></div>
+					<div class="col-xs-1">
+						<a class="btn btn-info btn-sm" href="#">Publish</a>
+					</div>
+					<div class="col-xs-1">
+						<a class="btn btn-warning btn-sm" href="/exams/<%=exam._id%>/edit">Edit</a>
+					</div>
+					<div class="col-xs-1">
+						<a class="btn btn-danger btn-sm" href="/exams/<%=exam._id%>">Delete</a>
+					</div>
+				</div>
+			<% }) %>
+		<% } %>
 	</div>
-
 <% include partials/footer.ejs%>
 
