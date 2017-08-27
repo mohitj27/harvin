@@ -1,0 +1,31 @@
+<% include partials/header.ejs%>
+<h1 style="text-align: center">Edit Question paper for exam: <b> <i><%= exam.examName%></i> </b> </h1>
+
+<div class="container">
+    <form action="/exams/<%=exam._id%>/question-paper/" method="post" class="form-horizontal">
+        <div class="form-group">
+            <label for="question" class="col-sm-3 control-label">Question</label>
+            <div class="col-sm-9">
+                <input required name="question" type="text" class="form-control" id="question" placeholder="e.g: Delhi is a..?">
+            </div>
+        </div>
+        <label style="margin:0px 25%;" for="options">Seperate options with comma followed by double spaces.</label>
+        <div class="form-group">
+            <label for="options" class="col-sm-3 control-label">Options:</label>
+            <div class="col-sm-9">
+                <input required name="options" type="text" class="form-control" id="options" placeholder="e.g: Capital,  City,  Country,  Island">
+            </div>
+        </div>
+        <label style="margin:0px 25%;" for="options">Seperate answers with comma followed by double spaces.</label>
+        <div class="form-group">
+            <label for="answer" class="col-sm-3 control-label">Answer</label>
+            <div class="col-sm-9">
+                <input required name="answer" type="text" class="form-control" id="answer" placeholder="e.g: Capital,  City">
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary">
+    </form>
+</div>
+
+<% include partials/footer.ejs%>
+

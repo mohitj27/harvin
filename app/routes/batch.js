@@ -107,10 +107,5 @@ router.get("/:batchName", function (req, res, next) {
 		});
 });
 
-
-
-
-
-
 module.exports = router;
 

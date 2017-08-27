@@ -228,8 +228,6 @@ router.delete("/collections/:collectionName/:documentId", middleware.isLoggedIn,
 
 });
 
-
-
 //functions of collections- return list of documents in particular collection
 var collections = {
 
@@ -415,8 +413,6 @@ var collection = {
 		});
 	}
 };
-
-
 
 //updateSwitch
 var updateSwitch = {

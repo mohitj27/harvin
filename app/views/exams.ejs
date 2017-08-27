@@ -19,7 +19,9 @@
 		<% if(foundExams && foundExams.length > 0){ %>
 			<% foundExams.forEach(function(exam){ %>
 				<div class="row">
-					<div class="col-xs-2"><%=exam.examName%></div>
+					<div class="col-xs-2">
+						<a href="/exams/<%=exam._id%>/question-paper/"><%=exam.examName%></a>
+					</div>
 					<div class="col-xs-2"><%=exam.examDate%></div>
 					<div class="col-xs-2"><%=exam.examType%></div>
 					<div class="col-xs-1"><%=exam.maximumMarks%></div>
