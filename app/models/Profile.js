@@ -22,7 +22,14 @@ var profileSchema = new Schema(
         batch:{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Batch"
-        }
+        },
+        progresses:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Progress"
+            }
+        ]
+        
 	}
 );
 

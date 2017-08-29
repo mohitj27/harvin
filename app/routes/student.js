@@ -3,11 +3,14 @@ var express = require("express"),
 
 	User = require("../models/User.js"),
 	Class = require("../models/Class.js"),
+	Chapter = require("../models/Chapter.js"),
 	Batch = require("../models/Batch.js"),
+	Progress = require("../models/Progress.js"),
 	Profile = require("../models/Profile.js"),
 	errors = require("../error"),
 
 	router = express.Router();
+
 
 //User login form-- admin
 router.get("/login", function (req, res) {
@@ -41,15 +44,16 @@ router.post("/signup", function (req, res) {
 	var fullName = req.body.fullName;
 	var emailId = req.body.emailId;
 	var phone = req.body.phone;
-    var batchName = req.body.batch;
-    
-    //find batch
+	var batchName = req.body.batch;
+
+	//find batch
 	Batch.findOne({
 			batchName: batchName
 		},
 		function (err, foundBatch) {
 			if (!err && foundBatch) {
-                //if found register user with given credentials
+
+				//if found register user with given credentials
 				User.register(new User({
 					username: req.body.username
 				}), req.body.password, function (err, user) {
@@ -64,7 +68,7 @@ router.post("/signup", function (req, res) {
 							batch: foundBatch._id
 						};
 
-                        // if registered successfully create profile
+						// if registered successfully create profile
 						Profile.create(
 							newProfile,
 							function (err, createdProfile) {
@@ -173,13 +177,79 @@ router.get("/:username/subjects", function (req, res) {
 			}
 		}).exec(function (err, userDetail) {
 			if (!err && userDetail) {
-				subjects = userDetail.profile.batch.subjects;
-				res.json({
-					"subjects": subjects
-				});
+				//for populating the progress field
+				User.findOne({
+							username: req.params.username
+						},
+						function (err, foundUser) {
+							if (!err && foundUser) {} else if (err) {
+								console.log(err);
+							}
+						}
+					)
+					.populate({
+						path: "profile",
+						model: "Profile",
+						populate: {
+							path: "progresses",
+							model: "Progress",
+						}
+					}).exec(function (err, foundUser) {
+						if (!err && foundUser) {
+							subjects = userDetail.profile.batch.subjects;
+							progresses = foundUser.profile.progresses;
+							res.json({
+								"subjects": subjects,
+								"progresses": progresses
+							});
+						}
+					});
 			}
 		});
 });
+
+//create /update progress of particular chapter
+router.post("/:username/chapters/:chapterId/:completed", (req, res, next) => {
+	var username = req.params.username;
+	var chapterId = req.params.chapterId;
+	var completed = req.params.completed;
+
+	Progress.findOneAndUpdate({
+			chapter: chapterId
+		}, {
+			$set: {
+				completed: completed
+			}
+		}, {
+			upsert: true,
+			new: true,
+			setDefaultsOnInsert: true
+		},
+		function (err, updatedProg) {
+			if (!err && updatedProg) {
+				Profile.findByIdAndUpdate(foundUser.profile, {
+						$addToSet: {
+							progresses: updatedProg
+						}
+					}, {
+						upsert: true,
+						new: true,
+						setDefaultsOnInsert: true
+					},
+					function (err, updatedProfile) {
+						if (!err && updatedProfile) {
+							res.json({
+								"updatedProg": updatedProg
+							});
+						}
+					});
+			} else {
+				console.log(err);
+			}
+		});
+
+});
+
 
 //sending classes list
 router.get("/classes", function (req, res, next) {
