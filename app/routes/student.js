@@ -219,48 +219,67 @@ router.post("/:username/chapters/:chapterId/:completed", (req, res, next) => {
 	var chapterId = req.params.chapterId;
 	var completed = req.params.completed;
 
-	Progress.findOneAndUpdate({
-			chapter: chapterId
-		}, {
-			$set: {
-				completed: completed
+	User.findOne({
+				username: req.params.username
+			},
+			function (err, foundUser) {
+				if (!err && foundUser) {
+					console.log(foundUser);
+
+				} else if (err) {
+					console.log(err);
+				}
 			}
-		}, {
-			upsert: true,
-			new: true,
-			setDefaultsOnInsert: true
-		},
-		function (err, updatedProg) {
-			if (!err && updatedProg) {
-				User.find({username: username}, (err, foundUser)=>{
-					if(!err && foundUser){
-						Profile.findByIdAndUpdate(foundUser.profile, {
-							$addToSet: {
-								progresses: updatedProg
-							}
-						}, {
-							upsert: true,
-							new: true,
-							setDefaultsOnInsert: true
-						},
-						function (err, updatedProfile) {
-							if (!err && updatedProfile) {
-								res.json({
-									"updatedProg": updatedProg
+		)
+		.populate({
+			path: "profile",
+			model: "Profile",
+		})
+		.exec(function (err, foundUser) {
+			if (!err && foundUser) {
+				Progress.findOneAndUpdate({
+						chapter: chapterId
+					}, {
+						$set: {
+							completed: completed
+						}
+					}, {
+						upsert: true,
+						new: true,
+						setDefaultsOnInsert: true
+					},
+					function (err, updatedProg) {
+						if (!err && updatedProg) {
+							Profile.findByIdAndUpdate(foundUser.profile, {
+									$addToSet: {
+										progresses: updatedProg
+									}
+								}, {
+									upsert: true,
+									new: true,
+									setDefaultsOnInsert: true
+								},
+								function (err, updatedProfile) {
+									if (!err && updatedProfile) {
+										res.json({
+											"updatedProg": updatedProg
+										});
+									}
 								});
-							}
-						});
-					}else{
-						console.log(err);
-					}
-				} );
-				
+
+						} else {
+							console.log(err);
+						}
+					});
+
 			} else {
-				console.log(err);
+
 			}
 		});
 
+
 });
+
 
 
 //sending classes list
