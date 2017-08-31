@@ -95,3 +95,23 @@
 .newExam{
     margin: 20px
 }
+  
+/* for options of questions */
+
+#field {
+	margin-bottom: 20px;
+}
+
+.opt{
+    width: 70%;
+    border: 1px solid #dadada;
+    border-radius: 3px;
+    
+} 
+
+.opt:focus { 
+    outline: none;
+    border-color: #69a9f7;
+    box-shadow: 0 0 7px #9ec7fa;
+}
+

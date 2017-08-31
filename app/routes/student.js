@@ -147,7 +147,9 @@ router.get("/:username/subjects", function (req, res) {
 				username: req.params.username
 			},
 			function (err, foundUser) {
-				if (!err && foundUser) {} else if (err) {
+				if (!err && foundUser) {
+
+				} else if (err) {
 					console.log(err);
 				}
 			}
@@ -205,6 +207,9 @@ router.get("/:username/subjects", function (req, res) {
 						}
 					});
 			}
+			else{
+
+			}
 		});
 });
 
@@ -227,22 +232,29 @@ router.post("/:username/chapters/:chapterId/:completed", (req, res, next) => {
 		},
 		function (err, updatedProg) {
 			if (!err && updatedProg) {
-				Profile.findByIdAndUpdate(foundUser.profile, {
-						$addToSet: {
-							progresses: updatedProg
-						}
-					}, {
-						upsert: true,
-						new: true,
-						setDefaultsOnInsert: true
-					},
-					function (err, updatedProfile) {
-						if (!err && updatedProfile) {
-							res.json({
-								"updatedProg": updatedProg
-							});
-						}
-					});
+				User.find({username: username}, (err, foundUser)=>{
+					if(!err && foundUser){
+						Profile.findByIdAndUpdate(foundUser.profile, {
+							$addToSet: {
+								progresses: updatedProg
+							}
+						}, {
+							upsert: true,
+							new: true,
+							setDefaultsOnInsert: true
+						},
+						function (err, updatedProfile) {
+							if (!err && updatedProfile) {
+								res.json({
+									"updatedProg": updatedProg
+								});
+							}
+						});
+					}else{
+						console.log(err);
+					}
+				} );
+				
 			} else {
 				console.log(err);
 			}

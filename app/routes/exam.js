@@ -132,11 +132,17 @@ router.get("/:examId/question-paper", (req, res, next) => {
 
 router.post("/:examId/question-paper", (req, res, next) => {
 	var examId = req.params.examId;
+	var optionString = req.body.options;
+
 	var newQues = {
 		question: req.body.question,
-		options: req.body.options,
 		answer: req.body.answer
     };
+	optionString.forEach(option => {
+		console.log(option);
+	});
+	
+	
 
     async.waterfall(
         [
