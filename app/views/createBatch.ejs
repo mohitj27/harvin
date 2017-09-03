@@ -20,11 +20,11 @@
             <div class="col-sm-6">
                 <h2>Subject</h2> <br>
 
-                <select required  name="subjectName" class="selectpicker" id="subjectsInBatch" multiple >
+                <select required  name="subjectId" class="selectpicker" id="subjectsInBatch" multiple >
                     <option value="" disabled>Subject</option>
                     <%if(subjects){%>
                         <%subjects.forEach(function(subject){%>
-                            <option value="<%=subject.subjectName%>"><%=subject.subjectName%> - <%=subject.className%></option>   
+                            <option value="<%=subject._id%>"><%=subject.subjectName%> - <%=subject.className%></option>   
                         <%})%>
                     <%}%>
                 </select>   

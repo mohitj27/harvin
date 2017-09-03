@@ -136,13 +136,10 @@ router.post("/:examId/question-paper", (req, res, next) => {
 
 	var newQues = {
 		question: req.body.question,
-		answer: req.body.answer
+		answer: req.body.answer,
+		options:[]
     };
-	optionString.forEach(option => {
-		console.log(option);
-	});
-	
-	
+	newQues.options = optionString;
 
     async.waterfall(
         [
@@ -169,26 +166,41 @@ router.post("/:examId/question-paper", (req, res, next) => {
 			},
 			//creating new question paper
             function(foundExam, createdQuestion, callback){
-                QuestionPaper.create({}, (err, createdQuestionPaper) => {
-                    if(!err && createdQuestionPaper){
-						callback(null,foundExam, createdQuestion, createdQuestionPaper);
-                    }else{
-						callback(err);
-                    }
-                });
+				questionPaperId = foundExam.questionPaper;
+				if (questionPaperId){
+					QuestionPaper.findByIdAndUpdate(questionPaperId, 
+						{
+							$addToSet: {
+								questions: createdQuestion._id
+							}
+						}, {
+						upsert: true,
+						new: true,
+						setDefaultsOnInsert: true
+					},
+					 (err, updatedQuestionPaper) => {
+						if(!err && updatedQuestionPaper){
+							callback(null, foundExam, updatedQuestionPaper);
+						}else{
+							callback(err);
+						}
+					});
+				}else{
+					questions = [];
+					questions.push(createdQuestion._id);
+					var questionPaperData = {
+						questions
+					};
+					QuestionPaper.create(questionPaperData, (err, createdQuestionPaper) => {
+						if(!err && createdQuestionPaper){
+							callback(null, foundExam, createdQuestionPaper);
+						}
+					});
+				}
+				
+                
 			},
-			//adding question to question paper
-			function(foundExam, createdQuestion, createdQuestionPaper, callback){
-				createdQuestionPaper.questions.push(createdQuestion);
-				createdQuestionPaper.save((err, updatedQuestionPaper) => {
-					if(!err && updatedQuestionPaper){
-						callback(null, foundExam, updatedQuestionPaper);
-					}else{
-						callback(err);
-					}						
-				});
-			},
-			//adding question paper to exam
+			
 			function(foundExam, updatedQuestionPaper, callback){
 				foundExam.questionPaper = updatedQuestionPaper._id;
 				foundExam.save((err, updatedExam) => {
@@ -211,9 +223,7 @@ router.post("/:examId/question-paper", (req, res, next) => {
                 
             }
         }
-    );
-    
-    
+	);
 });
 
 module.exports = router;

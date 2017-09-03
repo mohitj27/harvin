@@ -137,7 +137,7 @@ $(function () {
 					for (var i = 0; i < length; i++) {
 						o.each(function (j){
 							if (j > 0) {
-								if (this.value == res.batch.subjects[i].subjectName)
+								if (this.value == res.batch.subjects[i]._id)
 									this.selected = true;
 							}
 						});
