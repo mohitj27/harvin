@@ -1,11 +1,11 @@
 <% include partials/header.ejs%>
-<h1 style="text-align: center">Edit Question paper for exam: <b> <i><%= exam.examName%></i> </b> </h1>
+<h1 style="text-align: center">Edit Question paper, for exam: <b> <i><%= exam.examName%></i> </b> </h1>
 
 <div class="container">
-    <form action="/exams/<%=exam._id%>/question-paper/" method="post">
+    <form id="editQuestionPaper" action="/exams/<%=exam._id%>/question-paper/" method="post">
             <div class="form-group">
                 <h2 style="text-align:left;float:left;"><label for="question" class="control-label">Question</label></h2>
-        <input style="text-align:right;float:right;" type="submit" value="Add this Question" class="btn btn-primary">
+                <input style="text-align:right;float:right;" type="submit" value="Add this Question" class="btn btn-primary">
                 <div class="row">
                     <div class="col-sm-12">
                         <textarea required name="question" class="form-control" id="question" cols="30" rows="5" placeholder="e.g: Delhi is a..?">This is ques</textarea>
@@ -14,24 +14,37 @@
             </div>
             <div class="row">
                 <div class="col-sm-6">
-                        <h2><label for="options" class="">Options</label></h2>
-                        <div class="input-append col-sm-12">
-                                <div id="field">
-                                        <input name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text" data-items="8"/>
-                                        <button id="b1" class="btn add-more" type="button">+</button>
-                                </div>
-                        </div>
-                        
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <h2><label for="answer" class="control-label">Answer</label></h2>
-                        <div class="col-sm-9">
-                            <input required name="answer" value="this is ans" type="text" class="form-control" id="answer" placeholder="e.g: Capital,  City">
+                    <h2><label for="options" class="">Options</label></h2>
+                    <div class="input-append col-sm-12">
+                        <div id="field">
+                            <input name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text"/>
+                            <button id="b1" class="btn add-more" type="button">+</button>
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <h2><label for="answer" class="control-label">Answer</label> <span class="btn btn-lg refresh glyphicon glyphicon-refresh" aria-hidden="true"></span></h2>
+                        
+                        <div class="col-sm-9">
+                            <select name="answer" data-live-search="true" title="Choose the correct answers" class="selectpicker show-tick" id="answer" multiple >
+                                <option value="" disabled>Answers</option>
+                            </select>
+                        </div>
+                        
+
+                    </div>
+                </div>
             </div>
+            <hr>
+            <h1 style="text-align: center">Questions available in this question paper</h1>
+            <% if(exam.questionPaper && exam.questionPaper.questions.length > 0){ %>
+                <% exam.questionPaper.questions.forEach(function(question){ %>
+                    <div class="row">
+                        <p><%=question%></p>
+                    </div>
+                <% }) %>
+            <% } %>
     </form>
 </div>
 

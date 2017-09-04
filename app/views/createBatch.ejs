@@ -7,7 +7,7 @@
             <div class="col-sm-6">
                 <h2>Batch</h2> <br>
                 
-                <select autofocus required  name="batchName" class="selectpicker addbtn" id="batch" >
+                <select autofocus required name="batchName" class="selectpicker show-tick addbtn" id="batch" >
                     <option selected value="" disabled>Batch</option>
                     <%=batches%>
                     <%if(batches){%>
@@ -20,7 +20,7 @@
             <div class="col-sm-6">
                 <h2>Subject</h2> <br>
 
-                <select required  name="subjectId" class="selectpicker" id="subjectsInBatch" multiple >
+                <select data-live-search="true" title="Choose one or more Subject" required  name="subjectId" class="selectpicker show-tick" id="subjectsInBatch" multiple >
                     <option value="" disabled>Subject</option>
                     <%if(subjects){%>
                         <%subjects.forEach(function(subject){%>

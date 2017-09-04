@@ -8,7 +8,7 @@
             <div class="col-sm-3">
                 <h2>Class</h2> <br>
                 
-                <select autofocus required  name="className" class="selectpicker addbtn" id="classs" >
+                <select required  name="className" class="selectpicker show-tick addbtn" id="classs" >
                     <option selected value="" disabled>Class</option>
                      <%classes.forEach(function(classs){%>
                      <option value="<%=classs.className%>"><%=classs.className%></option>   
@@ -18,22 +18,19 @@
 
             <div class="col-sm-3">
                 <h2>Subject</h2> <br>
-                <select required  name="subjectName" class="selectpicker addbtn" id="subject" >
-                    <option selected value="" disabled>Subject</option>
+                <select data-live-search="true" title="Choose the Subject" required  name="subjectName" class="selectpicker show-tick addbtn" id="subject" >
                 </select>   
             </div>
 
             <div class="col-sm-3">
                 <h2>Chapter</h2><br>
-                <select required  name="chapterName"  class="selectpicker addbtn" id="chapter" >
-                    <option selected value="" disabled>Chapter</option>
+                <select data-live-search="true" title="Choose the Chapter" required  name="chapterName"  class="selectpicker show-tick addbtn" id="chapter" >
                 </select>    
             </div>
 
             <div class="col-sm-3">
                 <h2>Topic</h2> <br>
-                <select required  name="topicName"  class="selectpicker addbtn" id="topic" >
-                    <option selected value="" disabled>Topic</option>
+                <select data-live-search="true" title="Choose the Topic" required  name="topicName"  class="selectpicker show-tick addbtn" id="topic" >
                 </select>  
             </div> 
         </div>

@@ -33,7 +33,6 @@ router.get("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function (
 router.post("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function (req, res, next) {
 	var subjectId = req.body.subjectId;
 	var batchName = req.body.batchName;
-	console.log("subjectId", subjectId)
 
 	async.waterfall(
 		[
@@ -42,7 +41,6 @@ router.post("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function 
 					_id:{$in:subjectId}
 				}, function (err, foundSubjects) {
 					if (!err && foundSubjects) {
-						console.log("foundSubjects", foundSubjects)
 						callback(null, foundSubjects);
 
 					} else {

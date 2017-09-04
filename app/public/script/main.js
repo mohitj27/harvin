@@ -25,7 +25,7 @@ $(function () {
 	$('#classs').on('change', function () {
 		var $subject = $("#subject");
 		var o = $("option", $subject).eq(-2);
-		$subject.children().not(".lastTwo").not(":first").remove();
+		$subject.children().not(".lastTwo").remove();
 		$.get("/class/" + this.value, function (res) {
 			$(".selectpicker").selectpicker("refresh");
 
@@ -51,7 +51,7 @@ $(function () {
 		var className = $("#classs option:selected").val();
 		var $chapter = $("#chapter");
 		var o = $("option", $chapter).eq(-2);
-		$chapter.children().not(".lastTwo").not(":first").remove();
+		$chapter.children().not(".lastTwo").remove();
 		$.get("/class/" + className + "/subject/" + this.value, function (res) {
 			$(".selectpicker").selectpicker("refresh");
 
@@ -86,7 +86,7 @@ $(function () {
 		var $topicDesc = $("#topicDescription");
 		$topicDesc.val("");
 
-		$topic.children().not(".lastTwo").not(":first").remove();
+		$topic.children().not(".lastTwo").remove();
 		$.get("/chapter/" + this.value, function (res) {
 			$(".selectpicker").selectpicker("refresh");
 
@@ -240,9 +240,10 @@ $(function () {
 	$("#dtBox").DateTimePicker();
 
 	//setting options for question
+	//add options handler
 	var next = 1;
-    $(".add-more").click(function(e){
-        e.preventDefault();
+    $(".add-more").off().click(function(e){
+        // e.preventDefault();
         var addto = "#field" + next;
         var addRemove = "#field" + (next);
         next = next + 1;
@@ -253,19 +254,61 @@ $(function () {
         $(addto).after(newInput);
         $(addRemove).after(removeButton);
         $("#field" + next).attr('data-source',$(addto).attr('data-source'));
-        $("#count").val(next);  
-        
-            $('.remove-me').click(function(e){
-                e.preventDefault();
-                var fieldNum = this.id.charAt(this.id.length-1);
-                var fieldID = "#field" + fieldNum;
-                $(this).remove();
-                $(fieldID).remove();
-            });
-    });
+		$("#count").val(next);  
+		refreshAns();
+
+		//remove option click handler
+		$('.remove-me').off().click(function(e){ 
+			e.preventDefault(); 
+			console.log("remove", e)
+			var fieldNum = this.id.charAt(this.id.length-1); 
+			var fieldID = "#field" + fieldNum; 
+			$(this).remove(); 
+			$(fieldID).remove(); 
+			refreshAns();
+		}); 
+	});
+
+	$('.refresh').on('click', function(){
+		refreshAns();
+	});
+	
 	
 
 });
+
+function refreshAns(){
+	var options = [];
+
+	//selecting the not empty input
+	$opt = $('#editQuestionPaper input[type=text]')
+	.filter(function (index) {
+		if(this.value.length > 0){
+			return $(this).val();
+		
+		}
+	});
+
+	//setting up options string
+	for (var i = 0; i < $opt.length ; i++){
+		options.push($opt[i].value);
+	}
+	
+	//setting up the ans dropdown
+	$answerSelect = $('#answer');
+	$answerSelect.children().remove();
+	for (var i = 0; i < options.length ; i++){
+		$ans = $('<option>', {
+			name:"answer",
+			value:options[i],
+			text:options[i]
+		});
+		$answerSelect.append($ans)
+	}
+
+	$(".selectpicker").selectpicker("refresh");
+	
+}
 
 function addSelectItem(t, ev) {
 

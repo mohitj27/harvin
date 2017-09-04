@@ -117,112 +117,140 @@ router.delete("/:examId", (req, res, next) => {
 
 router.get("/:examId/question-paper", (req, res, next) => {
 	var examId = req.params.examId;
-
 	Exam.findById(examId, (err, foundExam) => {
 		if (!err && foundExam) {
+		}else{
+			console.log(err);
+		}
+	})
+	.populate(
+		{
+			path:"questionPaper",
+			model:"QuestionPaper",
+			populate:{
+				path:"questions",
+				model:"Question"		
+			}
+		}
+	)
+	.exec((err, foundExam) => {
+		if(!err && foundExam){
 			res.render("editQuesPaper", {
 				exam: foundExam
-			});
+			});	
 		} else {
 			console.log(err);
 			next(new errors.generic);
 		}
 	});
+
 });
 
 router.post("/:examId/question-paper", (req, res, next) => {
 	var examId = req.params.examId;
 	var optionString = req.body.options;
+	var answerString = req.body.answer;
 
+	//data for new question
 	var newQues = {
 		question: req.body.question,
-		answer: req.body.answer,
-		options:[]
-    };
-	newQues.options = optionString;
+		answer: [],
+		options: []
+	};
 
-    async.waterfall(
-        [
+	//pushing options in options array
+	for(var i = 0; i < optionString.length; i++){
+		if(optionString[i] != '')
+			newQues.options.push(optionString[i]);
+	}
+
+	//pushing answers in answer array
+	for(var j = 0; j < answerString.length; j++){
+		if(answerString[j] != '')
+			newQues.answer.push(answerString[j]);
+	}
+	
+
+	async.waterfall(
+		[
 			//finding particular exam
-            function(callback){
-                Exam.findById(examId, (err, foundExam) => {
-                    if(!err && foundExam){
-                        callback(null, foundExam);
-                    }else{
-                        callback(err);
-                    }
-                });
+			function (callback) {
+				Exam.findById(examId, (err, foundExam) => {
+					if (!err && foundExam) {
+						callback(null, foundExam);
+					} else {
+						callback(err);
+					}
+				});
 			},
 			//creating new question
-            function(foundExam, callback){
-                Question.create(newQues, (err, createdQuestion) => {
-                    if(!err && createdQuestion){
-                        callback(null, foundExam, createdQuestion);
-                    }
-                    else{
-                        callback(err);
-                    }
-                });
+			function (foundExam, callback) {
+				Question.create(newQues, (err, createdQuestion) => {
+					if (!err && createdQuestion) {
+						callback(null, foundExam, createdQuestion);
+					} else {
+						callback(err);
+					}
+				});
 			},
 			//creating new question paper
-            function(foundExam, createdQuestion, callback){
+			function (foundExam, createdQuestion, callback) {
 				questionPaperId = foundExam.questionPaper;
-				if (questionPaperId){
-					QuestionPaper.findByIdAndUpdate(questionPaperId, 
-						{
+				//if already a question paper available for this exam, update it
+				if (questionPaperId) {
+					QuestionPaper.findByIdAndUpdate(questionPaperId, {
 							$addToSet: {
 								questions: createdQuestion._id
 							}
 						}, {
-						upsert: true,
-						new: true,
-						setDefaultsOnInsert: true
-					},
-					 (err, updatedQuestionPaper) => {
-						if(!err && updatedQuestionPaper){
-							callback(null, foundExam, updatedQuestionPaper);
-						}else{
-							callback(err);
-						}
-					});
-				}else{
+							upsert: true,
+							new: true,
+							setDefaultsOnInsert: true
+						},
+						(err, updatedQuestionPaper) => {
+							if (!err && updatedQuestionPaper) {
+								callback(null, foundExam, updatedQuestionPaper);
+							} else {
+								callback(err);
+							}
+						});
+				} else {
+					//else create new question paper
 					questions = [];
 					questions.push(createdQuestion._id);
 					var questionPaperData = {
 						questions
 					};
 					QuestionPaper.create(questionPaperData, (err, createdQuestionPaper) => {
-						if(!err && createdQuestionPaper){
+						if (!err && createdQuestionPaper) {
 							callback(null, foundExam, createdQuestionPaper);
 						}
 					});
 				}
-				
-                
 			},
-			
-			function(foundExam, updatedQuestionPaper, callback){
+
+			function (foundExam, updatedQuestionPaper, callback) {
 				foundExam.questionPaper = updatedQuestionPaper._id;
 				foundExam.save((err, updatedExam) => {
-					if(!err && updatedExam){
+					if (!err && updatedExam) {
 						req.flash("success", "Question has been added Successfully");
-						res.redirect("/exams/");
+						res.redirect("/exams/"+updatedExam._id+"/question-paper");
 						callback(null);
-					}else{
+					} else {
 						callback(err);
 					}
 				});
 			},
-			
-        ],
-        function(err, result){
-            if(err){
-                console.log(err);
-                next(new errors.generic);
-            }else{
-                
-            }
-        }
+
+		],
+		function (err, result) {
+			if (err) {
+				console.log(err);
+				next(new errors.generic);
+			} else {
+
+			}
+		}
 	);
 });
 
