@@ -249,7 +249,7 @@ $(function () {
         next = next + 1;
         var newIn = '<input name="options" autocomplete="off" class="input opt" id="field' + next + '" type="text">';
         var newInput = $(newIn);
-        var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+        var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button><div id="field"></div>';
         var removeButton = $(removeBtn);
         $(addto).after(newInput);
         $(addRemove).after(removeButton);
@@ -273,7 +273,13 @@ $(function () {
 		refreshAns();
 	});
 	
-	
+	//preventing submiting form on pressing enter
+	$(window).keydown(function(event){
+		if(event.keyCode == 13) {
+		  event.preventDefault();
+		  return false;
+		}
+	});
 
 });
 
@@ -293,20 +299,15 @@ function refreshAns(){
 	for (var i = 0; i < $opt.length ; i++){
 		options.push($opt[i].value);
 	}
-	
-	//setting up the ans dropdown
-	$answerSelect = $('#answer');
-	$answerSelect.children().remove();
-	for (var i = 0; i < options.length ; i++){
-		$ans = $('<option>', {
-			name:"answer",
-			value:options[i],
-			text:options[i]
-		});
-		$answerSelect.append($ans)
-	}
 
-	$(".selectpicker").selectpicker("refresh");
+
+	//setting up the ans radio checkbox
+	$answerCheckbox = $('#answers');
+	$answerCheckbox.children().remove();
+	for (var j = 0; j < options.length; j++) {
+		var cbox = '<div class="wrapAns"><label><input class="answer" type="checkbox" name = "answer" value= '+ options[j] + '> '+options[j]+'</lable></div><br>';
+		$answerCheckbox.append(cbox);
+	}
 	
 }
 

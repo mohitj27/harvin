@@ -24,13 +24,11 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <h2><label for="answer" class="control-label">Answer</label> <span class="btn btn-lg refresh glyphicon glyphicon-refresh" aria-hidden="true"></span></h2>
-                        
-                        <div class="col-sm-9">
-                            <select name="answer" data-live-search="true" title="Choose the correct answers" class="selectpicker show-tick" id="answer" multiple >
-                                <option value="" disabled>Answers</option>
-                            </select>
-                        </div>
+                        <h2>
+                            <label for="answer" class="control-label">Answer</label>
+                             <span class="btn btn-lg refresh glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </h2>
+                        <div class="col-sm-9" id="answers"></div>
                         
 
                     </div>
@@ -40,8 +38,28 @@
             <h1 style="text-align: center">Questions available in this question paper</h1>
             <% if(exam.questionPaper && exam.questionPaper.questions.length > 0){ %>
                 <% exam.questionPaper.questions.forEach(function(question){ %>
-                    <div class="row">
-                        <p><%=question%></p>
+                    <div class="jumbotron">
+                        <div style="text-align:right;float:right;">
+                            <button type="button" class="btn btn-info">Edit</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                        <h2><b><%=question.question%></b></h2>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2><label class="">Options</label></h2>
+                                <% question.options.forEach(function(option){ %>
+                                    <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label> 
+                                    </div>
+                                <% }) %>
+                            </div>
+                            <div class="col-sm-6">
+                                <h2><label class="control-label">Answer</label></h2>
+                                <% question.answers.forEach(function(answer){ %>
+                                    <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label> 
+                                    </div>
+                                <% }) %>
+                            </div>
+                        </div>
                     </div>
                 <% }) %>
             <% } %>

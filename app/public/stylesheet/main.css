@@ -115,3 +115,8 @@
     box-shadow: 0 0 7px #9ec7fa;
 }
 
+/* ans wrapper for the answer checkbox */
+.wrapAns{
+    margin: 2px;
+}
+

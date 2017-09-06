@@ -154,7 +154,7 @@ router.post("/:examId/question-paper", (req, res, next) => {
 	//data for new question
 	var newQues = {
 		question: req.body.question,
-		answer: [],
+		answers: [],
 		options: []
 	};
 
@@ -163,11 +163,12 @@ router.post("/:examId/question-paper", (req, res, next) => {
 		if(optionString[i] != '')
 			newQues.options.push(optionString[i]);
 	}
-
+	console.log(optionString)
+	console.log(answerString)
 	//pushing answers in answer array
 	for(var j = 0; j < answerString.length; j++){
 		if(answerString[j] != '')
-			newQues.answer.push(answerString[j]);
+			newQues.answers.push(answerString[j]);
 	}
 	
 

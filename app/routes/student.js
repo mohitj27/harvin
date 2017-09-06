@@ -213,6 +213,34 @@ router.get("/:username/subjects", function (req, res) {
 		});
 });
 
+router.get("/:username/progresses", (req, res, next) => {
+	User.findOne({
+				username: req.params.username
+			},
+			function (err, foundUser) {
+				if (!err && foundUser) {} else if (err) {
+					console.log(err);
+				}
+			}
+		)
+		.populate({
+			path: "profile",
+			model: "Profile",
+			populate: {
+				path: "progresses",
+				model: "Progress",
+			}
+		}).exec(function (err, foundUser) {
+			if (!err && foundUser) {
+				progresses = foundUser.profile.progresses;
+				res.json({
+					"progresses": progresses
+				});
+			}
+		});
+});
+
+
 //create /update progress of particular chapter
 router.post("/:username/chapters/:chapterId/:completed", (req, res, next) => {
 	var username = req.params.username;

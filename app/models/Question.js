@@ -10,7 +10,7 @@ var questionSchema = new Schema({
 	options: [{
 		type: String,
 	}],
-	answer: [{
+	answers: [{
 		type: String,
 		required: true,
 	}]
