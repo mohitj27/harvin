@@ -242,10 +242,11 @@ router.get("/:username/progresses", (req, res, next) => {
 
 
 //create /update progress of particular chapter
-router.post("/:username/chapters/:chapterId/:completed", (req, res, next) => {
+router.post("/:username/chapters/:chapterId/:completed/:status", (req, res, next) => {
 	var username = req.params.username;
 	var chapterId = req.params.chapterId;
 	var completed = req.params.completed;
+	var status = req.params.status;
 
 	User.findOne({
 				username: req.params.username
@@ -269,7 +270,8 @@ router.post("/:username/chapters/:chapterId/:completed", (req, res, next) => {
 						chapter: chapterId
 					}, {
 						$set: {
-							completed: completed
+							completed: completed,
+							status: status
 						}
 					}, {
 						upsert: true,
