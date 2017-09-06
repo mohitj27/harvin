@@ -17,7 +17,7 @@
                     <h2><label for="options" class="">Options</label></h2>
                     <div class="input-append col-sm-12">
                         <div id="field">
-                            <input name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text"/>
+                            <input required name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text"/>
                             <button id="b1" class="btn add-more" type="button">+</button>
                         </div>
                     </div>
@@ -36,14 +36,14 @@
             </div>
             <hr>
             <h1 style="text-align: center">Questions available in this question paper</h1>
-            <% if(exam.questionPaper && exam.questionPaper.questions.length > 0){ %>
-                <% exam.questionPaper.questions.forEach(function(question){ %>
+            <% if(exam.questionPaper && questions.length > 0){ %>
+                <% questions.forEach(function(question, i){ %>
                     <div class="jumbotron">
                         <div style="text-align:right;float:right;">
                             <button type="button" class="btn btn-info">Edit</button>
                             <button type="button" class="btn btn-danger">Delete</button>
                         </div>
-                        <h2><b><%=question.question%></b></h2>
+                        <h2><b><%=i+1%>. <%=question.question%></b></h2>
                         <div class="row">
                             <div class="col-sm-6">
                                 <h2><label class="">Options</label></h2>

@@ -179,33 +179,10 @@ router.get("/:username/subjects", function (req, res) {
 			}
 		}).exec(function (err, userDetail) {
 			if (!err && userDetail) {
-				//for populating the progress field
-				User.findOne({
-							username: req.params.username
-						},
-						function (err, foundUser) {
-							if (!err && foundUser) {} else if (err) {
-								console.log(err);
-							}
-						}
-					)
-					.populate({
-						path: "profile",
-						model: "Profile",
-						populate: {
-							path: "progresses",
-							model: "Progress",
-						}
-					}).exec(function (err, foundUser) {
-						if (!err && foundUser) {
-							subjects = userDetail.profile.batch.subjects;
-							progresses = foundUser.profile.progresses;
-							res.json({
-								"subjects": subjects,
-								"progresses": progresses
-							});
-						}
-					});
+				subjects = userDetail.profile.batch.subjects;
+				res.json({
+					"subjects": subjects,
+				});
 			}
 			else{
 

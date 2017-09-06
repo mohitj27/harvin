@@ -32,7 +32,7 @@ router.post("/", (req, res, next) => {
 	var examDate = req.body.examDate;
 	var examType = req.body.examType;
 	var maximumMarks = req.body.maxMarks;
-	var passingMarks = req.body.passMarks;
+	var positiveMarks = req.body.posMarks;
 	var negativeMarks = req.body.negMarks;
 
 	var newExam = {
@@ -40,7 +40,7 @@ router.post("/", (req, res, next) => {
 		examDate,
 		examType,
 		maximumMarks,
-		passingMarks,
+		positiveMarks,
 		negativeMarks,
 	};
 
@@ -73,7 +73,7 @@ router.put("/:examId", (req, res, next) => {
 	var examDate = req.body.examDate;
 	var examType = req.body.examType;
 	var maximumMarks = req.body.maxMarks;
-	var passingMarks = req.body.passMarks;
+	var positiveMarks = req.body.posMarks;
 	var negativeMarks = req.body.negMarks;
 
 	Exam.findByIdAndUpdate(examId, {
@@ -82,7 +82,7 @@ router.put("/:examId", (req, res, next) => {
 				examDate,
 				examType,
 				maximumMarks,
-				passingMarks,
+				positiveMarks,
 				negativeMarks
 			}
 		}, {
@@ -127,17 +127,43 @@ router.get("/:examId/question-paper", (req, res, next) => {
 		{
 			path:"questionPaper",
 			model:"QuestionPaper",
-			populate:{
-				path:"questions",
-				model:"Question"		
-			}
 		}
 	)
 	.exec((err, foundExam) => {
 		if(!err && foundExam){
-			res.render("editQuesPaper", {
-				exam: foundExam
-			});	
+
+			if( foundExam.questionPaper && foundExam.questionPaper != null){
+				Question.find(
+					{
+						_id:{$in:foundExam.questionPaper.questions}
+					},
+					(err, foundQuestions) => {
+						if(!err && foundQuestions){
+	
+						}else{
+							console.log(err);
+						}
+					}
+				)
+				.sort({'_id':-1})
+				.exec((err, foundQuestions) => {
+					if(!err && foundQuestions){
+						res.render("editQuesPaper", {
+							exam: foundExam,
+							questions: foundQuestions
+						});
+					}else{
+						console.log(err);
+					}
+				}
+	
+				);
+			}else{
+				res.render("editQuesPaper", {
+					exam: foundExam,
+				});
+			}
+				
 		} else {
 			console.log(err);
 			next(new errors.generic);
@@ -148,8 +174,19 @@ router.get("/:examId/question-paper", (req, res, next) => {
 
 router.post("/:examId/question-paper", (req, res, next) => {
 	var examId = req.params.examId;
-	var optionString = req.body.options;
-	var answerString = req.body.answer;
+	var optionString = req.body.options || "";
+	var answerString = req.body.answer || "";
+	
+	//check the data type of options, if string convert to array
+	if(typeof(req.body.options) == typeof("")){
+		optionString = [];
+		optionString.push(req.body.options || "");
+	}
+	//check the data type of answer, if string convert to array
+	if(typeof(req.body.answer) == typeof("")){
+		answerString = [];
+		answerString.push(req.body.answer || "");
+	}
 
 	//data for new question
 	var newQues = {
@@ -163,14 +200,13 @@ router.post("/:examId/question-paper", (req, res, next) => {
 		if(optionString[i] != '')
 			newQues.options.push(optionString[i]);
 	}
-	console.log(optionString)
-	console.log(answerString)
+
 	//pushing answers in answer array
 	for(var j = 0; j < answerString.length; j++){
 		if(answerString[j] != '')
 			newQues.answers.push(answerString[j]);
 	}
-	
+
 
 	async.waterfall(
 		[
@@ -230,6 +266,7 @@ router.post("/:examId/question-paper", (req, res, next) => {
 				}
 			},
 
+			//adding updated questionpaper to exam
 			function (foundExam, updatedQuestionPaper, callback) {
 				foundExam.questionPaper = updatedQuestionPaper._id;
 				foundExam.save((err, updatedExam) => {

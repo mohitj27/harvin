@@ -305,7 +305,9 @@ function refreshAns(){
 	$answerCheckbox = $('#answers');
 	$answerCheckbox.children().remove();
 	for (var j = 0; j < options.length; j++) {
-		var cbox = '<div class="wrapAns"><label><input class="answer" type="checkbox" name = "answer" value= '+ options[j] + '> '+options[j]+'</lable></div><br>';
+		var opt = options[j].replace(/"/g, '\&quot;');
+		opt = opt.replace(/'/g, '\&apos;');
+		var cbox = '<div class="wrapAns"><label><input class="answer" type="checkbox" name = "answer" value="'+opt+'">'+options[j]+'</lable></div><br>';
 		$answerCheckbox.append(cbox);
 	}
 	

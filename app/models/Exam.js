@@ -19,7 +19,7 @@ var examSchema = new Schema({
 		type: Number,
 		required: true
 	},
-	passingMarks: {
+	positiveMarks: {
 		type: Number,
 		required: true
 	},

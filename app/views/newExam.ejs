@@ -20,8 +20,7 @@
                 <div class="form-group">
                     <label for="examType" class="col-sm-3 control-label">Exam Type</label>
                     <div class="col-sm-9">
-                        <select required required class="selectpicker form-control" name="examType" id="examType">
-                            <option value="" disabled>Choose type</option>
+                        <select data-live-search="true" title="Choose the Type of exam" required required class="selectpicker form-control" name="examType" id="examType">
                             <option value="True - False">True - False</option>
                             <option value="MCQ- Only 1 correct">MCQ- Only 1 correct</option>
                             <option value="MCQ- More than 1 correct">MCQ- More than 1 correct</option>
@@ -36,9 +35,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="passMarks" class="col-sm-3 control-label">Passing Marks</label>
+                    <label for="posMarks" class="col-sm-3 control-label">Positive Marks</label>
                     <div class="col-sm-9">
-                        <input required name="passMarks" type="number" class="form-control" id="passMarks" placeholder="Minimum marks to pass this exam">
+                        <input required name="posMarks" type="number" class="form-control" id="passMarks" placeholder="Minimum marks to pass this exam">
                     </div>
                 </div>
                 <div class="form-group">

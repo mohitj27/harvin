@@ -20,8 +20,7 @@
                 <div class="form-group">
                     <label for="examType" class="col-sm-3 control-label">Exam Type</label>
                     <div class="col-sm-1">
-                        <select required class="selectpicker" name="examType" id="examType">
-                            <option value="" disabled>Choose type</option>
+                        <select data-live-search="true" title="Choose the Type of exam" required class="selectpicker" name="examType" id="examType">
                             
                             <option value="True - False"
                                 <%if(exam.examType == "True - False"){%>
@@ -53,9 +52,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="passMarks" class="col-sm-3 control-label">Passing Marks</label>
+                    <label for="posMarks" class="col-sm-3 control-label">Positive Marks</label>
                     <div class="col-sm-9">
-                        <input required name="passMarks" type="number" class="form-control" id="passMarks" placeholder="Minimum marks to pass this exam" value="<%=exam.passingMarks%>">
+                        <input required name="posMarks" type="number" class="form-control" id="passMarks" placeholder="Minimum marks to pass this exam" value="<%=exam.positiveMarks%>">
                     </div>
                 </div>
                 <div class="form-group">
