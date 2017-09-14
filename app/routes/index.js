@@ -7,6 +7,7 @@ var express = require("express"),
 	fileRoutes = require("./file"),
 	dbRoutes = require("./db"),
 	examRoutes = require("./exam"),
+	qbRoutes = require("./questionBank"),
 
 	Topic = require("../models/Topic.js"),
 	Chapter = require("../models/Chapter.js"),
@@ -19,6 +20,8 @@ router.use("/batches", batchRoutes);
 router.use("/files", fileRoutes);
 router.use("/db", dbRoutes);
 router.use("/exams", examRoutes);
+router.use("/questionBank", qbRoutes);
+
 
 //Home-admin
 router.get("/", function (req, res) {
