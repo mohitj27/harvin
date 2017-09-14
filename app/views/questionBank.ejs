@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-sm-12">
-            <h1> Question Bank </b></h1>
+            <h1><b>Question Bank</b></h1>
             
         </div>
         <a href="/questionBank/addNew" class="btn btn-primary new">Add new Question</a>
@@ -15,7 +15,7 @@
             <div class="col-sm-4">
                 <h2>Class</h2><br>
                 
-                <select required  name="className" class="selectpicker show-tick addbtn" id="qb_classs" >
+                <select required  name="className" class="selectpicker show-tick" id="qb_classs" >
                     <option selected value="" disabled>Class</option>
                      <%classes.forEach(function(classs){%>
                      <option value="<%=classs.className%>"><%=classs.className%></option>   
@@ -25,13 +25,13 @@
 
             <div class="col-sm-4">
                 <h2>Subject</h2> <br>
-                <select data-live-search="true" title="Choose the Subject" required  name="subjectName" class="selectpicker show-tick addbtn" id="qb_subject" >
+                <select data-live-search="true" title="Choose the Subject" required  name="subjectName" class="selectpicker show-tick" id="qb_subject" >
                 </select>   
             </div>
 
             <div class="col-sm-4">
                 <h2>Chapter</h2><br>
-                <select data-live-search="true" title="Choose the Chapter" required  name="chapterName"  class="selectpicker show-tick addbtn" id="qb_chapter" >
+                <select data-live-search="true" title="Choose the Chapter" required  name="chapterName"  class="selectpicker show-tick" id="qb_chapter" >
                 </select>    
             </div>
 

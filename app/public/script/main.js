@@ -286,8 +286,8 @@ $(function () {
 	//populating subject option after class has been chosen
 	$('#qb_classs').on('change', function () {
 		var $subject = $("#qb_subject");
-		var o = $("option", $subject).eq(-2);
-		$subject.children().not(".lastTwo").remove();
+		var o = $("option", $subject).eq(-1);
+		$subject.children().not(":last").remove();
 		$.get("/questionBank/class/" + this.value, function (res) {
 			$(".selectpicker").selectpicker("refresh");
 
@@ -312,8 +312,8 @@ $(function () {
 	$('#qb_subject').on('change', function () {
 		var className = $("#qb_classs option:selected").val();
 		var $chapter = $("#qb_chapter");
-		var o = $("option", $chapter).eq(-2);
-		$chapter.children().not(".lastTwo").remove();
+		var o = $("option", $chapter).eq(-1);
+		$chapter.children().not(":last").remove();
 		$.get("/questionBank/class/" + className + "/subject/" + this.value, function (res) {
 			$(".selectpicker").selectpicker("refresh");
 
