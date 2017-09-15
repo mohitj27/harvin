@@ -347,7 +347,7 @@ function refreshAns(){
 	var options = [];
 
 	//selecting the not empty input
-	$opt = $('#addNewQuestion input[type=text]')
+	$opt = $('.addNewQuestion input[type=text]')
 	.filter(function (index) {
 		if(this.value.length > 0){
 			return $(this).val();
@@ -359,9 +359,6 @@ function refreshAns(){
 	for (var i = 0; i < $opt.length ; i++){
 		options.push($opt[i].value);
 	}
-
-	console.log($opt);
-
 
 	//setting up the ans radio checkbox
 	$answerCheckbox = $('#answers');

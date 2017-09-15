@@ -2,7 +2,7 @@
 <h1 style="text-align: center">Edit Question paper, for exam: <b> <i><%= exam.examName%></i> </b> </h1>
 
 <div class="container">
-    <form id="editQuestionPaper" action="/exams/<%=exam._id%>/question-paper/" method="post">
+    <form id="editQuestionPaper" class="addNewQuestion"  action="/exams/<%=exam._id%>/question-paper/" method="post">
             <div class="form-group">
                 <h2 style="text-align:left;float:left;"><label for="question" class="control-label">Question</label></h2>
                 <input style="text-align:right;float:right;" type="submit" value="Add this Question" class="btn btn-primary">
