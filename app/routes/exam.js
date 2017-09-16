@@ -568,5 +568,16 @@ router.post("/:examId/question-paper/chooseFromQB", (req, res, next) => {
 	);
 });	
 
+//Giving exam list 
+router.get("/:username/exams", (req, res, next) => {
+	Exam.find({}, (err, foundExams) => {
+		if(!err && foundExams){
+			res.json({exams:foundExams});
+		}else{
+			console.log(err);
+		}
+	});
+});
+
 module.exports = router;
 
