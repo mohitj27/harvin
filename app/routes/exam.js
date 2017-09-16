@@ -2,7 +2,9 @@ var express = require("express"),
 	async = require("async"),
 
 	Batch = require("../models/Batch"),
-	Subject = require("../models/Subject"),
+	QB_Class = require("../models/QB_Class"),
+	QB_Subject = require("../models/QB_Subject"),
+	QB_Chapter = require("../models/QB_Chapter"),
 	Question = require("../models/Question"),
 	QuestionPaper = require("../models/QuestionPaper"),
 	Exam = require("../models/Exam"),
@@ -54,6 +56,59 @@ router.post("/", (req, res, next) => {
 		}
 	});
 
+});
+
+router.get("/qbData", (req, res, next) => {
+	var className = req.query.className;
+	var subjectName = req.query.subjectName;
+	var chapterName = req.query.chapterName;
+
+	var examId = req.query.examId;
+
+	QB_Class.findOne({className: className}, (err, foundClass) => {
+		if(!err && foundClass){
+		}
+		else if(err){
+			console.log("error",err);
+		}
+	})
+	.populate({
+		path:"subjects",
+		model:"QB_Subject",
+		populate:{
+			path:"chapters",
+			model:"QB_Chapter",
+			populate:{
+				path:"questions",
+				model:"Question"
+			}
+		}
+	})
+	.exec(function (err, qbData) {
+
+		if (!err && qbData) {
+			// questions = qbData[subjectName][chapterName][questions];
+			subject = qbData.subjects.find(item => item.subjectName == subjectName);
+			chapter = subject.chapters.find(item => item.chapterName == chapterName);
+			questions = chapter.questions;
+			QB_Class.find({}, (err, foundClasses) => {
+				if(!err && foundClasses){
+					res.render("chooseFromQB",{
+						classes: foundClasses,
+						questions:questions,
+						className:className,
+						subjectName:subjectName,
+						chapterName:chapterName,
+						examId:examId
+					});
+				}
+			});
+			
+		}
+		else if(err){
+			console.log("error",err);
+		}
+	});
 });
 
 router.get("/:examId/edit", (req, res, next) => {
@@ -132,37 +187,46 @@ router.get("/:examId/question-paper", (req, res, next) => {
 	.exec((err, foundExam) => {
 		if(!err && foundExam){
 
-			if( foundExam.questionPaper && foundExam.questionPaper != null){
-				Question.find(
-					{
-						_id:{$in:foundExam.questionPaper.questions}
-					},
-					(err, foundQuestions) => {
-						if(!err && foundQuestions){
-	
-						}else{
-							console.log(err);
+			QB_Class.find({}, (err, foundClasses) => {
+				if(!err && foundClasses){
+					if( foundExam.questionPaper && foundExam.questionPaper != null){
+						Question.find(
+							{
+								_id:{$in:foundExam.questionPaper.questions}
+							},
+							(err, foundQuestions) => {
+								if(!err && foundQuestions){
+									res.render("editQuesPaper", {
+										classes: foundClasses,
+										exam: foundExam,
+										questions: foundQuestions
+									});
+								}else{
+									console.log(err);
+								}
+							}
+						)
+						.sort({'_id':-1})
+						.exec((err, foundQuestions) => {
+							if(!err && foundQuestions){
+								
+							}else{
+								console.log(err);
+							}
 						}
-					}
-				)
-				.sort({'_id':-1})
-				.exec((err, foundQuestions) => {
-					if(!err && foundQuestions){
-						res.render("editQuesPaper", {
-							exam: foundExam,
-							questions: foundQuestions
-						});
+			
+						);
 					}else{
-						console.log(err);
+						res.render("editQuesPaper", {
+							classes: foundClasses,
+							exam: foundExam,
+						});
 					}
+
 				}
-	
-				);
-			}else{
-				res.render("editQuesPaper", {
-					exam: foundExam,
-				});
-			}
+			});
+
+			
 				
 		} else {
 			console.log(err);
@@ -176,6 +240,10 @@ router.post("/:examId/question-paper", (req, res, next) => {
 	var examId = req.params.examId;
 	var optionString = req.body.options || "";
 	var answerString = req.body.answer || "";
+
+	var className = req.body.className;
+	var subjectName = req.body.subjectName;
+	var chapterName = req.body.chapterName;
 	
 	//check the data type of options, if string convert to array
 	if(typeof(req.body.options) == typeof("")){
@@ -246,7 +314,7 @@ router.post("/:examId/question-paper", (req, res, next) => {
 						},
 						(err, updatedQuestionPaper) => {
 							if (!err && updatedQuestionPaper) {
-								callback(null, foundExam, updatedQuestionPaper);
+								callback(null, foundExam, createdQuestion, updatedQuestionPaper);
 							} else {
 								callback(err);
 							}
@@ -260,25 +328,105 @@ router.post("/:examId/question-paper", (req, res, next) => {
 					};
 					QuestionPaper.create(questionPaperData, (err, createdQuestionPaper) => {
 						if (!err && createdQuestionPaper) {
-							callback(null, foundExam, createdQuestionPaper);
+							callback(null, foundExam, createdQuestion, createdQuestionPaper);
+						}
+						else{
+							callback(err);
 						}
 					});
 				}
 			},
 
 			//adding updated questionpaper to exam
-			function (foundExam, updatedQuestionPaper, callback) {
+			function (foundExam, createdQuestion, updatedQuestionPaper, callback) {
 				foundExam.questionPaper = updatedQuestionPaper._id;
 				foundExam.save((err, updatedExam) => {
 					if (!err && updatedExam) {
-						req.flash("success", "Question has been added Successfully");
-						res.redirect("/exams/"+updatedExam._id+"/question-paper");
-						callback(null);
+						callback(null, updatedExam, createdQuestion);
 					} else {
 						callback(err);
 					}
 				});
 			},
+
+			//add this question to question Bank also
+			function (updatedExam, createdQuestion, callback) {
+				QB_Chapter.findOneAndUpdate({
+						chapterName: chapterName
+					}, {
+						$addToSet: {
+							questions: createdQuestion
+						},
+						$set: {
+							chapterName: chapterName,
+						}
+					}, {
+						upsert: true,
+						new: true,
+						setDefaultsOnInsert: true
+					},
+					function (err, createdChapter) {
+						if (!err && createdChapter) {
+							callback(null, updatedExam,createdQuestion, createdChapter);
+						} else {
+							console.log(err);
+							callback(err);								
+						}
+					}
+				);
+			},
+			function (updatedExam, createdQuestion, createdChapter, callback) {
+				QB_Subject.findOneAndUpdate({
+						subjectName: subjectName,
+						className: className
+					}, {
+						$addToSet: {
+							chapters: createdChapter
+						},
+						$set: {
+							subjectName: subjectName
+						}
+					}, {
+						upsert: true,
+						new: true,
+						setDefaultsOnInsert: true
+					},
+					function (err, createdSubject) {
+						if (!err && createdSubject) {
+							callback(null, updatedExam, createdQuestion, createdChapter, createdSubject);
+
+						} else {
+							callback(err);							
+						}
+					}
+				);
+			},
+			function (updatedExam, createdQuestion, createdChapter, createdSubject, callback) {
+				QB_Class.findOneAndUpdate({
+						className: className
+					}, {
+						$addToSet: {
+							subjects: createdSubject
+						},
+						$set: {
+							className: className
+						}
+					}, {
+						upsert: true,
+						new: true,
+						setDefaultsOnInsert: true
+					},
+					function (err, createdClass) {
+						if (!err && createdClass) {
+							callback(null);
+							req.flash("success", "Question has been added Successfully");
+							res.redirect("/exams/"+updatedExam._id+"/question-paper");
+						} else {
+							callback(err);	
+						}
+					}
+				);
+			}
 
 		],
 		function (err, result) {
@@ -291,6 +439,134 @@ router.post("/:examId/question-paper", (req, res, next) => {
 		}
 	);
 });
+
+router.get("/:examId/question-paper/chooseFromQB", (req, res, next) => {
+	var examId = req.params.examId;
+	QB_Class.find({}, (err, foundClasses) => {
+		if(!err && foundClasses){
+			res.render("chooseFromQB", {
+				classes: foundClasses,
+				examId: examId,
+				questions:{}
+			});
+		}
+	});
+});	
+
+router.post("/:examId/question-paper/chooseFromQB", (req, res, next) => {
+	var examId = req.params.examId;
+	var questionsIdString = req.body.questions || "";
+	
+	if(typeof(req.body.questions) == typeof("")){
+		questionsIdString = [];
+		questionsIdString.push(req.body.questions || "");
+	}
+
+	var questions = []
+	for(var i = 0; i < questionsIdString.length; i++){
+		if(questionsIdString[i] != '')
+			questions.push(questionsIdString[i]);
+	}
+
+	async.waterfall(
+		[
+			function(callback){
+				Exam.findById(examId, (err, foundExam) => {
+					if(!err && foundExam){
+						if (foundExam.questionPaper && foundExam.questionPaper != null) {
+							async.waterfall(
+								[
+									function(callback){
+										QuestionPaper.findByIdAndUpdate(foundExam.questionPaper, {
+											$addToSet: {
+												questions:{$each: questions}
+											}
+										}, {
+											upsert: true,
+											new: true,
+											setDefaultsOnInsert: true
+										},
+										(err, foundQuestionPaper) => {
+											if(!err && foundQuestionPaper){
+												callback(null, foundQuestionPaper);
+											}else{
+												callback(err)
+											}
+										});
+									},
+									function(foundQuestionPaper, callback){
+										foundExam.questionPaper = foundQuestionPaper._id;
+										foundExam.save((err, updatedExam) => {
+											if (!err && updatedExam) {
+												req.flash("success", "Questions added Successfully");
+												res.redirect("/exams/"+ foundExam._id +"/question-paper");
+											} else {
+												callback(err);
+											}
+										});
+									}
+								],
+								function (err, result) {
+									if (err) {
+										console.log(err);
+										next(new errors.generic);
+									} else {
+						
+									}
+								}
+							);
+						}else{
+							async.waterfall(
+								[
+									function(callback){
+										var questionPaperData = {
+											questions: questions
+										};
+										QuestionPaper.create(questionPaperData, (err, createdQuestionPaper) => {
+											if (!err && createdQuestionPaper) {
+												callback(null, createdQuestionPaper);
+											}
+											else{
+												callback(err);
+											}
+										});
+									},
+									function(createdQuestionPaper, callback){
+										foundExam.questionPaper = createdQuestionPaper._id;
+										foundExam.save((err, updatedExam) => {
+											if (!err && updatedExam) {
+												req.flash("success", "Questions added Successfully");
+												res.redirect("/exams/"+ foundExam._id +"/question-paper");
+											} else {
+												callback(err);
+											}
+										});
+									}
+								],
+								function (err, result) {
+									if (err) {
+										console.log(err);
+										next(new errors.generic);
+									} else {
+						
+									}
+								}
+							);
+						}
+					}
+				});
+			}
+		],
+		function (err, result) {
+			if (err) {
+				console.log(err);
+				next(new errors.generic);
+			} else {
+
+			}
+		}
+	);
+});	
 
 module.exports = router;
 

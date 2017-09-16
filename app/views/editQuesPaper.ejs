@@ -3,66 +3,97 @@
 
 <div class="container">
     <form id="editQuestionPaper" class="addNewQuestion"  action="/exams/<%=exam._id%>/question-paper/" method="post">
-            <div class="form-group">
-                <h2 style="text-align:left;float:left;"><label for="question" class="control-label">Question</label></h2>
-                <input style="text-align:right;float:right;" type="submit" value="Add this Question" class="btn btn-primary">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <textarea required name="question" class="form-control" id="question" cols="30" rows="5" placeholder="e.g: Delhi is a..?">This is ques</textarea>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>Class</h2><br>
+                
+                <select required  name="className" class="selectpicker show-tick addbtn" id="qb_classs" >
+                    <option selected value="" disabled>Class</option>
+                    <%classes.forEach(function(classs){%>
+                    <option value="<%=classs.className%>"><%=classs.className%></option>   
+                    <%})%>
+                </select>
+            </div>
+
+            <div class="col-sm-4">
+                <h2>Subject</h2> <br>
+                <select data-live-search="true" title="Choose the Subject" required  name="subjectName" class="selectpicker show-tick addbtn" id="qb_subject" >
+                </select>   
+            </div>
+
+            <div class="col-sm-4">
+                <h2>Chapter</h2><br>
+                <select data-live-search="true" title="Choose the Chapter" required  name="chapterName"  class="selectpicker show-tick addbtn" id="qb_chapter" >
+                </select>    
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <h2 style="text-align:left;float:left;"><label for="question" class="control-label">Question</label></h2>
+            <div style="text-align:right;float:right;" class="new">
+                <input  type="submit" value="Add this Question" class="btn btn-primary">
+                <span style="margin:20px;"><b><i>OR</i></b></span>
+                <a href="/exams/<%=exam._id%>/question-paper/chooseFromQB" class="btn btn-primary">Choose from Question Bank</a>
+
             </div>
             <div class="row">
-                <div class="col-sm-6">
-                    <h2><label for="options" class="">Options</label></h2>
-                    <div class="input-append col-sm-12">
-                        <div id="field">
-                            <input required name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text"/>
-                            <button id="b1" class="btn add-more" type="button">+</button>
-                        </div>
-                    </div>
+                <div class="col-sm-12">
+                    <textarea required name="question" class="form-control" id="question" cols="30" rows="5" placeholder="e.g: Delhi is a..?">This is ques</textarea>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <h2>
-                            <label for="answer" class="control-label">Answer</label>
-                             <span class="btn btn-lg refresh glyphicon glyphicon-refresh" aria-hidden="true"></span>
-                        </h2>
-                        <div class="col-sm-9" id="answers"></div>
-                        
-
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <h2><label for="options" class="">Options</label></h2>
+                <div class="input-append col-sm-12">
+                    <div id="field">
+                        <input required name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text"/>
+                        <button id="b1" class="btn add-more" type="button">+</button>
                     </div>
                 </div>
             </div>
-            <hr>
-            <h1 style="text-align: center">Questions available in this question paper</h1>
-            <% if(exam.questionPaper && questions.length > 0){ %>
-                <% questions.forEach(function(question, i){ %>
-                    <div class="jumbotron">
-                        <div style="text-align:right;float:right;">
-                            <button type="button" class="btn btn-info">Edit</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <h2>
+                        <label for="answer" class="control-label">Answer</label>
+                            <span class="btn btn-lg refresh glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </h2>
+                    <div class="col-sm-9" id="answers"></div>
+                    
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h1 style="text-align: center">Questions available in this question paper</h1>
+        <% if(exam.questionPaper && questions.length > 0){ %>
+            <% questions.forEach(function(question, i){ %>
+                <div class="jumbotron">
+                    <div style="text-align:right;float:right;">
+                        <button type="button" class="btn btn-info">Edit</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                    <h2><b><%=i+1%>. <%=question.question%></b></h2>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2><label class="">Options</label></h2>
+                            <% question.options.forEach(function(option){ %>
+                                <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label> 
+                                </div>
+                            <% }) %>
                         </div>
-                        <h2><b><%=i+1%>. <%=question.question%></b></h2>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h2><label class="">Options</label></h2>
-                                <% question.options.forEach(function(option){ %>
-                                    <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label> 
-                                    </div>
-                                <% }) %>
-                            </div>
-                            <div class="col-sm-6">
-                                <h2><label class="control-label">Answer</label></h2>
-                                <% question.answers.forEach(function(answer){ %>
-                                    <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label> 
-                                    </div>
-                                <% }) %>
-                            </div>
+                        <div class="col-sm-6">
+                            <h2><label class="control-label">Answer</label></h2>
+                            <% question.answers.forEach(function(answer){ %>
+                                <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label> 
+                                </div>
+                            <% }) %>
                         </div>
                     </div>
-                <% }) %>
-            <% } %>
+                </div>
+            <% }) %>
+        <% } %>
     </form>
 </div>
 

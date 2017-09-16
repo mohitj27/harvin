@@ -40,8 +40,9 @@
             <input  type="submit" value="Show Questions" class="btn btn-lg btn-block btn-primary">
 
         </div>
-        <hr>
-        <% if(questions && questions.length > 0){ %>
+    </form>
+    <hr>
+    <% if(questions && questions.length > 0){ %>
         <h1 style="text-align: center"><b>Questions available in</b> </h1>
         <div class="row">
             <div class="col-sm-4">
@@ -58,33 +59,33 @@
             </div>
 
         </div>
-            <% questions.forEach(function(question, i){ %>
-                <div class="jumbotron">
-                    <div style="text-align:right;float:right;">
-                        <button type="button" class="btn btn-info">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+        <% questions.forEach(function(question, i){ %>
+            <div class="jumbotron">
+                <div style="text-align:right;float:right;">
+                    <button type="button" class="btn btn-info">Edit</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+                <h2><%=i+1%>. <%=question.question%></b></h2>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><label class="">Options</label></h2>
+                        <% question.options.forEach(function(option){ %>
+                            <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label> 
+                            </div>
+                        <% }) %>
                     </div>
-                    <h2><%=i+1%>. <%=question.question%></b></h2>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2><label class="">Options</label></h2>
-                            <% question.options.forEach(function(option){ %>
-                                <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label> 
-                                </div>
-                            <% }) %>
-                        </div>
-                        <div class="col-sm-6">
-                            <h2><label class="control-label">Answer</label></h2>
-                            <% question.answers.forEach(function(answer){ %>
-                                <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label> 
-                                </div>
-                            <% }) %>
-                        </div>
+                    <div class="col-sm-6">
+                        <h2><label class="control-label">Answer</label></h2>
+                        <% question.answers.forEach(function(answer){ %>
+                            <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label> 
+                            </div>
+                        <% }) %>
                     </div>
                 </div>
-            <% }) %>
-        <% } %>
-        
+            </div>
+        <% }) %>
+    <% } %>
+    
         
 </div>
 
