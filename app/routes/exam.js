@@ -579,5 +579,32 @@ router.get("/:username/exams", (req, res, next) => {
 	});
 });
 
+//giving question paper of particular exam
+router.get("/:username/exams/:examId/questionPaper", (req, res, next) => {
+	var examId = req.params.examId;
+	Exam.findById(examId, (err, foundExam) => {
+		if(!err && foundExam){
+		}else{
+			console.log(err);
+		}
+	})
+	.populate({
+		path:"questionPaper",
+		model:"QuestionPaper",
+		populate:{
+			path:"questions",
+			model:"Question"
+		}
+	})
+	.exec((err, foundExam) => {
+		if(!err && foundExam){
+			var questionPaper = foundExam.questionPaper;
+			res.json({questionPaper:questionPaper});
+		}else{
+			console.log(err);
+		}
+	});
+});
+
 module.exports = router;
 
