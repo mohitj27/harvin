@@ -1,5 +1,6 @@
 var express = require("express"),
 	router = express.Router(),
+	passport = require("passport"),
 
 	adminRoutes = require("./admin"),
 	studentRoutes = require("./student"),
@@ -22,10 +23,35 @@ router.use("/db", dbRoutes);
 router.use("/exams", examRoutes);
 router.use("/questionBank", qbRoutes);
 
-
-//Home-admin
+//Home
 router.get("/", function (req, res) {
 	res.render("home");
+});
+
+//user login -- for admin
+router.get("/login", function (req, res) {
+	res.render("login",{
+		error: res.locals.msg_error[0]
+	});
+});
+
+//Handle user login -- for admin
+router.post("/login", passport.authenticate("local", {
+		successRedirect: "/",
+		failureRedirect: "/login",
+		successFlash: "Welcome back",
+		failureFlash: true
+	}),
+	function (req, res) {
+
+	}
+);
+
+//User logout-
+router.get("/logout", function (req, res) {
+	req.logout();
+	req.flash({"success": "You Logged out successfully"});
+	res.redirect("home");
 });
 
 //helper- class

@@ -60,6 +60,9 @@ app.use(session({
 	secret: 'This is a secret phrase, it will be used for hashing the session id',
 	resave: false,
 	saveUninitialized: false,
+	cookie:{
+		sameSite:true
+	}
 }));
 app.use(passport.initialize());
 app.use(passport.session());

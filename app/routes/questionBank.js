@@ -10,7 +10,7 @@ var express = require("express"),
 
 	router = express.Router();
 
-router.get("/", (req, res, next) => {
+router.get("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	QB_Class.find({}, function (err, classes) {
 		if (err) console.log(err);
 	})
@@ -32,7 +32,7 @@ router.get("/", (req, res, next) => {
 	});
 });
 
-router.get("/addNew", (req, res, next) => {
+router.get("/addNew", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	QB_Class.find({}, function (err, classes) {
 		if (err) console.log(err);
 	})
@@ -104,7 +104,7 @@ router.get("/qbData", (req, res, next) => {
 });
 
 
-router.post("/", (req, res, next) => {
+router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var className = req.body.className;
 	var subjectName = req.body.subjectName;
 	var chapterName = req.body.chapterName;

@@ -1,5 +1,6 @@
 var express = require("express"),
 	passport = require("passport"),
+	async = require("async"),	
 
 	User = require("../models/User.js"),
 	Class = require("../models/Class.js"),
@@ -14,7 +15,7 @@ var express = require("express"),
 
 //User login form-- admin
 router.get("/login", function (req, res) {
-	res.json({
+	res.render("studentSignup",{
 		error: res.locals.msg_error[0]
 	});
 });
@@ -30,116 +31,222 @@ router.post("/login", passport.authenticate("local", {
 	}
 );
 
-//User logout-- student
-router.get("/logout", function (req, res) {
-	req.logout();
-	res.json({
-		"success": "You Logged out successfully"
-	});
-});
 
-//Handle user registration-- for student
-//TODO: Update it with async methods [waterfall]
+
+//Handle user registration-- for student->Mobile interface
 router.post("/signup", function (req, res) {
+	var username = req.body.username;
+	var password = req.body.password;
 	var fullName = req.body.fullName;
 	var emailId = req.body.emailId;
 	var phone = req.body.phone;
-	var batchName = req.body.batch;
+	var batchName = req.body.batch || "";
 
-	//find batch
-	Batch.findOne({
-			batchName: batchName
-		},
-		function (err, foundBatch) {
-			if (!err && foundBatch) {
+	//for the student who are enrolled in any batch
+	if(batchName && batchName.length > 0){
+		//find batch
+		async.waterfall(
+			[
+				function(callback){
+					Batch.findOne({
+						batchName: batchName
+					},
+					function (err, foundBatch) {
+						if (!err && foundBatch) {
+							callback(null, foundBatch);
+						}else{
+							callback(err);
+						}
+						
+					});
+				},
+				function(foundBatch, callback){
+					User.register(new User({
+						username: username
+					}), password, function (err, user) {
+						if (err) {
+							console.log(err);
+							req.flash("error", err.message);
+							return res.redirect("/student/signup");
+							
+						}else if (user && !err) {
+							callback(null,foundBatch, user);
+						}
+					});
+				},
+				function(foundBatch, user, callback){
+					var newProfile = {
+						fullName,
+						emailId,
+						phone,
+						batch: foundBatch._id
+					};
 
-				//if found register user with given credentials
+					// if registered successfully create profile
+					Profile.create(
+						newProfile,
+						function (err, createdProfile) {
+							if (!err && createdProfile) {
+								callback(null, foundBatch, user, createdProfile);
+							}else{
+								callback(err);
+							}
+						});
+				},
+				function(foundBatch, user, createdProfile, callback){
+					User.findOneAndUpdate({
+						_id: user._id
+					}, {
+						$set: {
+							profile: createdProfile
+						}
+					}, {
+						upsert: true,
+						new: true,
+						setDefaultsOnInsert: true
+					},
+					function (err, updatedUser) {
+						if (!err && updatedUser) {
+							callback(null, foundBatch, createdProfile, updatedUser);
+						}else{
+							callback(err);
+						}
+					});
+				},
+				function(foundBatch, createdProfile, updatedUser, callback){
+					passport.authenticate("local")(req, res, function () {
+						User.findOne({
+							_id: updatedUser._id
+						}).populate({
+							path: "profile",
+							model: "Profile",
+							populate: {
+								path: "batch",
+								model: "Batch"
+							}
+						}).exec(function (err, foundUser) {
+							if (!err && foundUser) {
+								res.json(foundUser);
+							} else {
+								console.log(err);
+							}
+						});
+					});
+				}
+
+			],
+			function (err, result) {
+				if (err) {
+					console.log(err);
+					next(new errors.generic);
+				} else {
+	
+				}
+			}
+		);
+	}
+});
+
+//User Register form-- student->from web interface
+router.get("/register", function (req, res) {
+	res.render("studentRegister",{
+		error: res.locals.msg_error[0]
+	});
+});
+
+//Handle User Register form-- student->from web interface
+router.post("/register", function (req, res) {
+
+	var username = req.body.username;
+	var password = req.body.password;
+	var fullName = req.body.fullName;
+	var emailId = req.body.emailId;
+	var phone = req.body.phone;
+	var batchName = req.body.batch || "";
+
+	async.waterfall(
+		[
+			function(callback){
 				User.register(new User({
-					username: req.body.username
-				}), req.body.password, function (err, user) {
+					username: username
+				}), password, function (err, user) {
 					if (err) {
 						console.log(err);
-						return res.json(err);
-					} else if (user && !err) {
-						var newProfile = {
-							fullName,
-							emailId,
-							phone,
-							batch: foundBatch._id
-						};
-
-						// if registered successfully create profile
-						Profile.create(
-							newProfile,
-							function (err, createdProfile) {
-								if (!err && createdProfile) {
-									User.findOneAndUpdate({
-											_id: user._id
-										}, {
-											$set: {
-												profile: createdProfile
-											}
-										}, {
-											upsert: true,
-											new: true,
-											setDefaultsOnInsert: true
-										},
-										function (err) {
-											if (!err) {
-												passport.authenticate("local")(req, res, function () {
-													User.findOne({
-														_id: user._id
-													}).populate({
-														path: "profile",
-														model: "Profile",
-														populate: {
-															path: "batch",
-															model: "Batch"
-														}
-													}).exec(function (err, foundUser) {
-														if (!err && foundUser) {
-															res.status(200).json(foundUser);
-														} else {
-															res.json(user);
-														}
-													});
-												});
-											} else {
-												console.log(err);
-												var errors = {
-													name: "couldn't update the profile",
-													message: "Error while updating profile"
-												};
-												return res.send(errors);
-											}
-										}
-									);
-
-								} else {
-									console.log(err);
-									var errors = {
-										name: "couldn't create the profile",
-										message: "Error while creating profile"
-									};
-									return res.send(errors);
-								}
-							}
-						);
-
+						req.flash("error", err.message);
+						return res.redirect("/student/register");
+						
+					}else if (user && !err) {
+						callback(null, user);
 					}
 				});
-
-			} else {
-				console.log(err);
-				var errors = {
-					name: "batchNotFound",
-					message: "No batch found with given batch name"
+			},
+			function(user, callback){
+				var newProfile = {
+					fullName,
+					emailId,
+					phone
 				};
-				return res.send(errors);
+
+				// if registered successfully create profile
+				Profile.create(
+					newProfile,
+					function (err, createdProfile) {
+						if (!err && createdProfile) {
+							callback(null, user, createdProfile);
+						}else{
+							callback(err);
+						}
+					});
+			},
+			function(user, createdProfile, callback){
+				User.findOneAndUpdate({
+					_id: user._id
+				}, {
+					$set: {
+						profile: createdProfile
+					}
+				}, {
+					upsert: true,
+					new: true,
+					setDefaultsOnInsert: true
+				},
+				function (err, updatedUser) {
+					if (!err && updatedUser) {
+						callback(null, createdProfile, updatedUser);
+					}else{
+						callback(err);
+					}
+				});
+			},
+			function(createdProfile, updatedUser, callback){
+				passport.authenticate("local")(req, res, function () {
+					User.findOne({
+						_id: updatedUser._id
+					}).populate({
+						path: "profile",
+						model: "Profile"
+					}).exec(function (err, foundUser) {
+						if (!err && foundUser) {
+							req.flash("success","Successfully signed you in as "+ req.body.username);
+							res.redirect("/");
+						} else {
+							console.log(err);
+						}
+					});
+				});
+			}
+		],
+		function (err, result) {
+			if (err) {
+				console.log(err);
+				next(new errors.generic);
+			} else {
+
 			}
 		}
 	);
 });
+
 
 router.get("/:username/subjects", function (req, res) {
 	var subjects = {};

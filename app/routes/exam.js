@@ -13,7 +13,7 @@ var express = require("express"),
 
 	router = express.Router();
 
-router.get("/", (req, res, next) => {
+router.get("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	Exam.find({}, (err, foundExams) => {
 		if (!err && foundExams) {
 			res.render("exams", {
@@ -25,11 +25,11 @@ router.get("/", (req, res, next) => {
 	});
 });
 
-router.get("/new", (req, res, next) => {
+router.get("/new", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	res.render("newExam");
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examName = req.body.examName;
 	var examDate = req.body.examDate;
 	var examType = req.body.examType;
@@ -111,7 +111,7 @@ router.get("/qbData", (req, res, next) => {
 	});
 });
 
-router.get("/:examId/edit", (req, res, next) => {
+router.get("/:examId/edit", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examId = req.params.examId;
 	Exam.findById(examId, (err, foundExam) => {
 		if (!err && foundExam) {
@@ -122,7 +122,7 @@ router.get("/:examId/edit", (req, res, next) => {
 	});
 });
 
-router.put("/:examId", (req, res, next) => {
+router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examId = req.params.examId;
 	var examName = req.body.examName;
 	var examDate = req.body.examDate;
@@ -157,7 +157,7 @@ router.put("/:examId", (req, res, next) => {
 	);
 });
 
-router.delete("/:examId", (req, res, next) => {
+router.delete("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examId = req.params.examId;
 	Exam.findByIdAndRemove(examId, (err, removedExam) => {
 		if (!err && removedExam) {
@@ -170,7 +170,7 @@ router.delete("/:examId", (req, res, next) => {
 	});
 });
 
-router.get("/:examId/question-paper", (req, res, next) => {
+router.get("/:examId/question-paper", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examId = req.params.examId;
 	Exam.findById(examId, (err, foundExam) => {
 		if (!err && foundExam) {
@@ -236,7 +236,7 @@ router.get("/:examId/question-paper", (req, res, next) => {
 
 });
 
-router.post("/:examId/question-paper", (req, res, next) => {
+router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examId = req.params.examId;
 	var optionString = req.body.options || "";
 	var answerString = req.body.answer || "";
@@ -440,7 +440,7 @@ router.post("/:examId/question-paper", (req, res, next) => {
 	);
 });
 
-router.get("/:examId/question-paper/chooseFromQB", (req, res, next) => {
+router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examId = req.params.examId;
 	QB_Class.find({}, (err, foundClasses) => {
 		if(!err && foundClasses){
@@ -453,7 +453,7 @@ router.get("/:examId/question-paper/chooseFromQB", (req, res, next) => {
 	});
 });	
 
-router.post("/:examId/question-paper/chooseFromQB", (req, res, next) => {
+router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examId = req.params.examId;
 	var questionsIdString = req.body.questions || "";
 	

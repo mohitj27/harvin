@@ -46,11 +46,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <%if(!currentUser){%>
                       
-                            <li><a href="/admin/login">Login</a></li>
-                            <li><a href="/admin/signup">Signup</a></li>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/student/register">Signup</a></li>
                         <%}else{%>
                             <li><a href="#">Signed in as <%=currentUser.username%></a></li>
-                            <li><a href="/admin/logout">Logout</a></li>
+                            <li><a href="/logout">Logout</a></li>
                         <%}%>
                     </ul>
                 </div>

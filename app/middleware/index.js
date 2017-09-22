@@ -11,7 +11,7 @@ var middleware = {
 		if(req.user.isAdmin){
 		    return next();
 		}
-		req.flash("error", "You are not authorized. Please login into admin account before uploading the file.");
+		req.flash("error", "You are not authorized. Please login into admin account.");
 		res.redirect("/admin/login");
 		// next();
 	}
