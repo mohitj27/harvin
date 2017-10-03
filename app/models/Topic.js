@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var	Chapter = require("./Chapter");
 
 //====topicSchema====
 var topicSchema = new Schema(
@@ -13,6 +14,10 @@ var topicSchema = new Schema(
 			type:String,
 			required:true,
 			default:"No description available yet"
+		},
+		chapter:{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Chapter"
 		},
 		files:[
 			{

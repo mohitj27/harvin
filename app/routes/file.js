@@ -85,11 +85,7 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 			fileType,
 			filePath,
 			uploadDate,
-			fileSize,
-			className,
-			subjectName,
-			chapterName,
-			topicName,
+			fileSize
 		};
 
 		async.waterfall(
@@ -200,7 +196,7 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 								callback(null,createdFile, createdTopic, createdChapter, createdSubject);
 
 							} else {
-								console.log(err)
+								console.log(err);
 								var _err = err;
 								File.findByIdAndRemove(createdFile._id, function(err, res){
 									if(!err && res){
@@ -247,8 +243,7 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 						function (err, createdClass) {
 							if (!err && createdClass) {
 
-								callback(null);
-								fileUploadSuccess(req, res);
+								callback(null,createdFile, createdTopic, createdChapter, createdSubject, createdClass );
 							} else {
 								console.log(err);
 								var _err = err;
@@ -284,7 +279,92 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 							}
 						}
 					);
-				}
+				},
+				function(createdFile, createdTopic, createdChapter, createdSubject, createdClass, callback){
+					Subject.findByIdAndUpdate(createdSubject._id, 
+						{
+							$set: {
+								class: createdClass._id
+							}
+						}, {
+							upsert: true,
+							new: true,
+							setDefaultsOnInsert: true
+						}, function(err, updatedSubject){
+							if(!err && updatedSubject){
+								callback(null, createdFile, createdTopic, createdChapter, updatedSubject, createdClass);
+							}else{
+								console.log(err);
+								callback(err);
+							}
+						}
+					);
+				},
+				function(createdFile, createdTopic, createdChapter, updatedSubject, createdClass, callback){
+					Chapter.findByIdAndUpdate(createdChapter._id, 
+						{
+							$set: {
+								subject: updatedSubject._id
+							}
+						}, {
+							upsert: true,
+							new: true,
+							setDefaultsOnInsert: true
+						}, function(err, updatedChapter){
+							if(!err && updatedChapter){
+								callback(null, createdFile, createdTopic, updatedChapter, updatedSubject, createdClass);
+							}else{
+								console.log(err);
+								callback(err);
+							}
+						}
+					);
+				},
+				function(createdFile, createdTopic, updatedChapter, updatedSubject, createdClass, callback){
+					Topic.findByIdAndUpdate(createdTopic._id, 
+						{
+							$set: {
+								chapter: updatedChapter._id
+							}
+						}, {
+							upsert: true,
+							new: true,
+							setDefaultsOnInsert: true
+						}, function(err, updatedTopic){
+							if(!err && updatedTopic){
+								callback(null, createdFile, updatedTopic, updatedChapter, updatedSubject, createdClass);
+							}else{
+								console.log(err);
+								callback(err);
+							}
+						}
+					);
+				},
+				function(createdFile, updatedTopic, updatedChapter, updatedSubject, createdClass, callback){
+					File.findByIdAndUpdate(createdFile._id, 
+						{
+							$set: {
+								topic: updatedTopic._id,
+								chapter: updatedChapter._id,
+								subject: updatedSubject._id,
+								class: createdClass._id
+							}
+						}, {
+							upsert: true,
+							new: true,
+							setDefaultsOnInsert: true
+						}, function(err, updatedFile){
+							if(!err && updatedFile){
+								callback(null);
+								fileUploadSuccess(req, res);
+
+							}else{
+								console.log(err);
+								callback(err);
+							}
+						}
+					);
+				},
 			],
 			function (err, result) {
 				if (err) {

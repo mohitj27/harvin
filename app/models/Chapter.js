@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var	Subject = require("./Subject");
 
 //====chapterSchema====
 var chapterSchema = new Schema(
@@ -8,6 +9,10 @@ var chapterSchema = new Schema(
 			type: String,
             unique:true,
             required:true
+		},
+		subject:{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Subject"
 		},
 		chapterDescription:{
 			type:String,

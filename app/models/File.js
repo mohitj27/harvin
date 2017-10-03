@@ -1,8 +1,12 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var	Topic = require("./Topic");
+var	Chapter = require("./Chapter");
+var	Subject = require("./Subject");
+var	Class = require("./Class");
 
 //file schema 
-var fileSchema = new Schema( 
+var fileSchema = new Schema(
   { 
     fileName: { 
       type: String, 
@@ -25,21 +29,21 @@ var fileSchema = new Schema(
       type:Number,
       required:true
     },
-    className:{
-      type:String,
-      required:true
+    class:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Class"
     },
-    subjectName:{
-      type:String,
-      required:true
+    subject:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subject"
     },
-    chapterName:{
-      type:String,
-      required:true
+    chapter:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Chapter"
     },
-    topicName:{
-      type:String,
-      required:true
+    topic:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Topic"
     }
   } 
 ); 
