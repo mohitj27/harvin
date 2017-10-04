@@ -1,7 +1,8 @@
 var express = require("express"),
 	router = express.Router(),
 	passport = require("passport"),
-
+	User = require("../models/User.js"),
+	
 	adminRoutes = require("./admin"),
 	studentRoutes = require("./student"),
 	batchRoutes = require("./batch"),
@@ -14,7 +15,8 @@ var express = require("express"),
 	Chapter = require("../models/Chapter.js"),
 	Subject = require("../models/Subject.js"),
 	Class = require("../models/Class.js");
-
+	File = require("../models/File.js");
+	
 router.use("/admin", adminRoutes);
 router.use("/student", studentRoutes);
 router.use("/batches", batchRoutes);
@@ -26,6 +28,27 @@ router.use("/questionBank", qbRoutes);
 //Home
 router.get("/", function (req, res) {
 	res.render("home");
+});
+
+//user login -- for admin
+router.get("/signup", function (req, res) {
+	res.render("signup",{
+		error: res.locals.msg_error[0]
+	});
+});
+
+router.post("/signup", function (req, res) {
+	var newUser = new User({username: req.body.username, isAdmin: true});
+    User.register(newUser, req.body.password, function(err, user){
+        if(err){
+            req.flash("error", err.message);
+            return res.redirect('/signup');
+        }
+        passport.authenticate("local") (req, res, function(){
+            req.flash("success", "Welcome to Harvin Academy :)");
+			res.redirect("/");
+        });
+    });
 });
 
 //user login -- for admin
@@ -152,6 +175,118 @@ router.get("/topic/:topicName", function (req, res, next) {
 			});
 		}
 	});
+});
+
+router.get("/refactor", (req, res, next) =>{
+	Class.find({}, (err, foundClasses) => {
+		if(!err && foundClasses){
+			foundClasses.forEach((classs, i) => {
+				// console.log("i", i);
+				Class.findById(classs._id, (err, foundClasss) =>{
+					// console.log("foundClass", foundClasss);
+					if(!err && foundClasss){
+						foundClasss.subjects.forEach((subjectId, j ) => {
+							// console.log("subjectId", subjectId);
+							Subject.findByIdAndUpdate(subjectId,
+								{
+									$set: {
+										class: foundClasss._id
+									}
+								}, {
+									upsert: true,
+									new: true,
+									setDefaultsOnInsert: true
+								}, function(err, updatedFoundSubject){
+									if(!err && updatedFoundSubject){
+										//updating chapter with the help of foundSubject id
+										updatedFoundSubject.chapters.forEach((chapterId, k) => {
+											//
+											Chapter.findByIdAndUpdate(chapterId,
+												{
+													$set: {
+														subject: subjectId
+													}
+												}, {
+													upsert: true,
+													new: true,
+													setDefaultsOnInsert: true
+												}, function(err, updatedFoundChapter){
+													if(!err && updatedFoundChapter){
+														//updating topic with the help of foundChapter id
+														updatedFoundChapter.topics.forEach((topicId, k) => {
+															//
+															Topic.findByIdAndUpdate(topicId,
+																{
+																	$set: {
+																		chapter: chapterId
+																	}
+																}, {
+																	upsert: true,
+																	new: true,
+																	setDefaultsOnInsert: true
+																}, function(err, updatedFoundTopic){
+																	if(!err && updatedFoundTopic){
+																		//updating files with the help of foundTopic id
+																		updatedFoundTopic.files.forEach((fileId, k) => {
+																			//
+																			File.findByIdAndUpdate(fileId,
+																				{
+																					$set: {
+																						class: classs._id,
+																						chapter: updatedFoundChapter._id,
+																						subject:updatedFoundSubject._id,
+																						topic: updatedFoundTopic._id
+																					}
+																				}, {
+																					upsert: true,
+																					new: true,
+																					setDefaultsOnInsert: true
+																				}, function(err, updatedFoundFile){
+																					if(!err && updatedFoundFile){
+																						//updating files with the help of foundTopic id
+																						// updatedFoundTopic.files.forEach((fileId, k) => {
+																						// 	//
+																							
+																						// 	//
+																						// });
+																					}else{
+																						console.log(err);
+																					}
+																				}
+																			);
+																			//
+																		});
+																	}else{
+																		console.log(err);
+																	}
+																}
+															);
+															//
+														});
+													}else{
+														console.log(err);
+													}
+												}
+											);
+											//
+										});
+									}else{
+										console.log(err);
+									}
+								}
+							);
+						});
+					}else{
+						console.log(err);
+					}
+				});
+			});
+		}else{
+			console.log(err);
+		}
+	});
+	res.send('ok');
+	
 });
 
 //if not route mentioned in url

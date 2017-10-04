@@ -13,25 +13,12 @@ var express = require("express"),
 	router = express.Router();
 
 
-//User login form-- admin
-router.get("/login", function (req, res) {
-	res.render("studentSignup",{
-		error: res.locals.msg_error[0]
-	});
-});
-
 //Handle user login -- for student
-router.post("/login", passport.authenticate("local", {
-		failureRedirect: "/student/login",
-		successFlash: "Welcome back",
-		failureFlash: true
-	}),
+router.post("/login", passport.authenticate("local"),
 	function (req, res) {
-		res.status(200).json(req.user);
+		res.json(req.user);
 	}
 );
-
-
 
 //Handle user registration-- for student->Mobile interface
 router.post("/signup", function (req, res) {
