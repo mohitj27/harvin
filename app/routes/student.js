@@ -20,6 +20,48 @@ router.post("/login", passport.authenticate("local"),
 	}
 );
 
+//Handle login with email
+router.post('/loginWithEmail', (req, res, next) => {
+	var emailId = req.body.username;
+	var index = emailId.indexOf('@');
+	var username = emailId.substring(0, index);
+	var password = Math.floor(Math.random()*89999+10000);
+
+	// find details of the user
+	User.findOne({
+		username: username
+	}).populate({
+		path: "profile",
+		model: "Profile",
+		populate: {
+			path: "batch",
+			model: "Batch"
+		}
+	}).exec(function (err, foundUser) {
+		if (!err && foundUser) {
+			let userDetail = {
+				username,
+				password,
+				batch: foundUser.profile.batch.batchName
+			};
+			res.json({userDetail: userDetail});
+		}
+		else if(foundUser == null) {
+			let userDetail = {
+				username,
+				password,
+				batch: ''
+			};
+			res.json({userDetail: userDetail});
+			
+		} 
+		else {
+			res.sendStatus(500);
+			console.log(err);
+		}
+	});
+});
+
 //Handle user registration-- for student->Mobile interface
 router.post("/signup", function (req, res) {
 	var username = req.body.username;

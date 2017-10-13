@@ -181,12 +181,9 @@ router.get("/refactor", (req, res, next) =>{
 	Class.find({}, (err, foundClasses) => {
 		if(!err && foundClasses){
 			foundClasses.forEach((classs, i) => {
-				// console.log("i", i);
 				Class.findById(classs._id, (err, foundClasss) =>{
-					// console.log("foundClass", foundClasss);
 					if(!err && foundClasss){
 						foundClasss.subjects.forEach((subjectId, j ) => {
-							// console.log("subjectId", subjectId);
 							Subject.findByIdAndUpdate(subjectId,
 								{
 									$set: {
@@ -198,9 +195,7 @@ router.get("/refactor", (req, res, next) =>{
 									setDefaultsOnInsert: true
 								}, function(err, updatedFoundSubject){
 									if(!err && updatedFoundSubject){
-										//updating chapter with the help of foundSubject id
 										updatedFoundSubject.chapters.forEach((chapterId, k) => {
-											//
 											Chapter.findByIdAndUpdate(chapterId,
 												{
 													$set: {
@@ -212,9 +207,7 @@ router.get("/refactor", (req, res, next) =>{
 													setDefaultsOnInsert: true
 												}, function(err, updatedFoundChapter){
 													if(!err && updatedFoundChapter){
-														//updating topic with the help of foundChapter id
 														updatedFoundChapter.topics.forEach((topicId, k) => {
-															//
 															Topic.findByIdAndUpdate(topicId,
 																{
 																	$set: {
@@ -226,9 +219,7 @@ router.get("/refactor", (req, res, next) =>{
 																	setDefaultsOnInsert: true
 																}, function(err, updatedFoundTopic){
 																	if(!err && updatedFoundTopic){
-																		//updating files with the help of foundTopic id
 																		updatedFoundTopic.files.forEach((fileId, k) => {
-																			//
 																			File.findByIdAndUpdate(fileId,
 																				{
 																					$set: {
@@ -243,32 +234,24 @@ router.get("/refactor", (req, res, next) =>{
 																					setDefaultsOnInsert: true
 																				}, function(err, updatedFoundFile){
 																					if(!err && updatedFoundFile){
-																						//updating files with the help of foundTopic id
-																						// updatedFoundTopic.files.forEach((fileId, k) => {
 																						// 	//
-																							
-																						// 	//
-																						// });
 																					}else{
 																						console.log(err);
 																					}
 																				}
 																			);
-																			//
 																		});
 																	}else{
 																		console.log(err);
 																	}
 																}
 															);
-															//
 														});
 													}else{
 														console.log(err);
 													}
 												}
 											);
-											//
 										});
 									}else{
 										console.log(err);

@@ -568,16 +568,6 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
 	);
 });	
 
-//Giving exam list 
-router.get("/:username/exams", (req, res, next) => {
-	Exam.find({}, (err, foundExams) => {
-		if(!err && foundExams){
-			res.json({exams:foundExams});
-		}else{
-			console.log(err);
-		}
-	});
-});
 
 //giving question paper of particular exam
 router.get("/:username/exams/:examId/questionPaper", (req, res, next) => {
@@ -600,6 +590,17 @@ router.get("/:username/exams/:examId/questionPaper", (req, res, next) => {
 		if(!err && foundExam){
 			var questionPaper = foundExam.questionPaper;
 			res.json({questionPaper:questionPaper});
+		}else{
+			console.log(err);
+		}
+	});
+});
+
+//Giving exam list 
+router.get("/:username/exams", (req, res, next) => {
+	Exam.find({}, (err, foundExams) => {
+		if(!err && foundExams){
+			res.json({exams:foundExams});
 		}else{
 			console.log(err);
 		}
