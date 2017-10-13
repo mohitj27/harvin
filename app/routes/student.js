@@ -44,7 +44,7 @@ router.post('/loginWithEmail', (req, res, next) => {
 				password,
 				batch: foundUser.profile.batch.batchName
 			};
-			res.json({userDetail: userDetail});
+			res.json(userDetail);
 		}
 		else if(foundUser == null) {
 			let userDetail = {
@@ -52,7 +52,7 @@ router.post('/loginWithEmail', (req, res, next) => {
 				password,
 				batch: ''
 			};
-			res.json({userDetail: userDetail});
+			res.json(userDetail);
 			
 		} 
 		else {
