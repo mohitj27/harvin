@@ -12,6 +12,69 @@ var express = require("express"),
 
 	router = express.Router();
 
+//Handle user detail update
+router.put('/:username', (req, res, next) => {
+	var username = req.body.username || '';
+	var batchName = req.body.batch || '';
+	var password = req.body.password || null;
+	
+	Batch.findOne(
+		{batchName: batchName},
+		( err, foundBatch ) => {
+			if( !err && foundBatch){
+				User.findOne(
+					{username: username},
+					(err , foundUser) => {
+						if( !err && foundUser ) {
+
+						}else{
+							res.sendStatus(400);
+							console.log(err);
+						}
+					}
+				)
+				.populate({
+					path: 'profile',
+					model: 'Profile'
+				})
+				.exec((err, foundUser) => {
+					if(!err && foundUser){
+						Profile.findByIdAndUpdate(foundUser.profile._id,
+							{
+								$set: {
+									batch: foundBatch._id
+								}
+							}, 
+							{
+								upsert: false,
+								new: true,
+							},
+							( err, updatedProfile) => {
+								if( !err && updatedProfile ){
+									var userDetail = {
+										username,
+										password,
+										batchName
+									}
+									res.json(userDetail);
+								}
+								else{
+									res.sendStatus(400);
+									console.log(err);
+								}
+							}
+						);
+					}
+				});
+			}
+			else{
+				res.sendStatus(400);
+				console.log(err);
+			}
+		}
+	);
+
+});
 
 //Handle user login -- for student
 router.post("/login", passport.authenticate("local"),

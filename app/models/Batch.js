@@ -7,6 +7,10 @@ var batchSchema = new Schema({
 		type: String,
 		required: true
 	},
+	batchDesc: {
+		type: String,
+		default: "Default batch description"
+	},
 	subjects: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Subject"
