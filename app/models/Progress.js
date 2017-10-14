@@ -7,6 +7,10 @@ var progressSchema = new Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Chapter"
 	},
+	topics:[{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Topic"
+	}],
 	completed: {
 		type: String,
 		default: "0",

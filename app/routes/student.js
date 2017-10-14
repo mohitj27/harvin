@@ -5,12 +5,15 @@ var express = require("express"),
 	User = require("../models/User.js"),
 	Class = require("../models/Class.js"),
 	Chapter = require("../models/Chapter.js"),
+	Topic = require("../models/Topic.js"),
 	Batch = require("../models/Batch.js"),
 	Progress = require("../models/Progress.js"),
 	Profile = require("../models/Profile.js"),
 	errors = require("../error"),
 
 	router = express.Router();
+	mongoose = require("mongoose");
+	
 
 //Handle user detail update
 router.put('/:username', (req, res, next) => {
@@ -416,22 +419,24 @@ router.get("/:username/progresses", (req, res, next) => {
 		});
 });
 
-
 //create /update progress of particular chapter
-router.post("/:username/chapters/:chapterId/:completed/:status", (req, res, next) => {
+router.put("/:username/chapters/:chapterId", (req, res, next) => {
 	var username = req.params.username;
 	var chapterId = req.params.chapterId;
-	var completed = req.params.completed;
-	var status = req.params.status;
+	var completed = req.body.completed;
+	var status = req.body.status;
+	var topics = req.body.topics;
 
 	User.findOne({
-				username: req.params.username
+				username: username
 			},
 			function (err, foundUser) {
 				if (!err && foundUser) {
-					console.log(foundUser);
 
-				} else if (err) {
+				} else if (foundUser == null) {
+					res.sendStatus(400);
+				}else{
+					res.sendStatus(400);
 					console.log(err);
 				}
 			}
@@ -447,7 +452,8 @@ router.post("/:username/chapters/:chapterId/:completed/:status", (req, res, next
 					}, {
 						$set: {
 							completed: completed,
-							status: status
+							status: status,
+							topics: topics
 						}
 					}, {
 						upsert: true,
@@ -467,26 +473,29 @@ router.post("/:username/chapters/:chapterId/:completed/:status", (req, res, next
 								},
 								function (err, updatedProfile) {
 									if (!err && updatedProfile) {
+										console.log('updatedProg', updatedProg);
 										res.json({
 											"updatedProg": updatedProg
 										});
 									}
+									else{
+										res.sendStatus(400);
+										console.log(400);
+									}
 								});
 
-						} else {
-							console.log(err);
+						}else{
+							res.sendStatus(400);
+							console.log(400);
 						}
 					});
 
-			} else {
-
+			} else{
+				res.sendStatus(400);
+				console.log(400);
 			}
 		});
-
-
 });
-
-
 
 //sending classes list
 router.get("/classes", function (req, res, next) {
