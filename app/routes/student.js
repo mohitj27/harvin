@@ -57,7 +57,7 @@ router.put('/:username', (req, res, next) => {
 									var userDetail = {
 										username,
 										password,
-										batchName
+										batch:batchName
 									}
 									res.json(userDetail);
 								}
