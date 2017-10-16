@@ -33,6 +33,7 @@ router.get("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function (
 router.post("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function (req, res, next) {
 	var subjectId = req.body.subjectId;
 	var batchName = req.body.batchName;
+	var batchDesc = req.body.batchDesc;
 
 	async.waterfall(
 		[
@@ -56,7 +57,8 @@ router.post("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function 
 					}, {
 						$set: {
 							batchName: batchName,
-							subjects: foundSubjects
+							subjects: foundSubjects,
+							batchDesc: batchDesc
 						}
 					}, {
 						upsert: true,

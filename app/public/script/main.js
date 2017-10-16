@@ -124,6 +124,7 @@ $(function () {
 	//selecting the subject available in particular batch
 	$('#batch').on('change', function () {
 		var $subjectsInBatch = $("#subjectsInBatch");
+		var $batchDesc = $("#batchDesc");
 		var o = $("option", $subjectsInBatch).not(".lastTwo");
 		$.get("/batches/" + this.value, function (res) {
 			o.each(function (index) {
@@ -142,6 +143,7 @@ $(function () {
 						});
 					}
 				}
+				$batchDesc.val(res.batch.batchDesc);
 				$(".selectpicker").selectpicker("refresh");
 
 			}
