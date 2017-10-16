@@ -91,7 +91,7 @@ router.post('/loginWithEmail', (req, res, next) => {
 	var emailId = req.body.username;
 	var index = emailId.indexOf('@');
 	var username = emailId.substring(0, index);
-	var password = Math.floor(Math.random()*89999+10000);
+	var password = Math.floor(Math.random()*89999+10000) + '';
 
 	// find details of the user
 	User.findOne({
@@ -113,16 +113,80 @@ router.post('/loginWithEmail', (req, res, next) => {
 			res.json(userDetail);
 		}
 		else if(foundUser == null) {
-			let userDetail = {
-				username,
-				password,
-				batch: ''
-			};
-			res.json(userDetail);
+			//
+			async.waterfall(
+				[
+					function( callback){
+						User.register(new User({
+							username: username
+						}), password, function (err, user) {
+							if (err) {
+								console.log(err);
+								req.flash("error", err.message);
+								return res.redirect("/student/signup");
+								
+							}else if (user && !err) {
+								callback(null, user);
+							}
+						});
+					},
+					function( user, callback){
+						var newProfile = {
+							fullName: username,
+							emailId: emailId,
+						};
+	
+						// if registered successfully create profile
+						Profile.create(
+							newProfile,
+							function (err, createdProfile) {
+								if (!err && createdProfile) {
+									callback(null,  user, createdProfile);
+								}else{
+									callback(err);
+								}
+							});
+					},
+					function( user, createdProfile, callback){
+						User.findOneAndUpdate({
+							_id: user._id
+						}, {
+							$set: {
+								profile: createdProfile
+							}
+						}, {
+							upsert: true,
+							new: true,
+							setDefaultsOnInsert: true
+						},
+						function (err, updatedUser) {
+							if (!err && updatedUser) {
+								let userDetail = {
+									username,
+									password,
+									batch: ''
+								};
+								res.json(userDetail);
+							}else{
+								callback(err);
+							}
+						});
+					}
+	
+				],
+				function (err, result) {
+					if (err) {
+						res.sendStatus(400);
+						console.log(err);
+						next(new errors.generic);
+					} else {
+		
+					}
+				}
+			);
 			
-		} 
-		else {
-			res.sendStatus(500);
+		}else{
+			res.sendStatus(400);
 			console.log(err);
 		}
 	});
@@ -155,7 +219,7 @@ router.post("/signup", function (req, res) {
 						
 					});
 				},
-				function(foundBatch, callback){
+				function( callback){
 					User.register(new User({
 						username: username
 					}), password, function (err, user) {
@@ -165,11 +229,11 @@ router.post("/signup", function (req, res) {
 							return res.redirect("/student/signup");
 							
 						}else if (user && !err) {
-							callback(null,foundBatch, user);
+							callback(null, user);
 						}
 					});
 				},
-				function(foundBatch, user, callback){
+				function( user, callback){
 					var newProfile = {
 						fullName,
 						emailId,
@@ -182,13 +246,13 @@ router.post("/signup", function (req, res) {
 						newProfile,
 						function (err, createdProfile) {
 							if (!err && createdProfile) {
-								callback(null, foundBatch, user, createdProfile);
+								callback(null,  user, createdProfile);
 							}else{
 								callback(err);
 							}
 						});
 				},
-				function(foundBatch, user, createdProfile, callback){
+				function( user, createdProfile, callback){
 					User.findOneAndUpdate({
 						_id: user._id
 					}, {
@@ -202,13 +266,13 @@ router.post("/signup", function (req, res) {
 					},
 					function (err, updatedUser) {
 						if (!err && updatedUser) {
-							callback(null, foundBatch, createdProfile, updatedUser);
+							callback(null,  createdProfile, updatedUser);
 						}else{
 							callback(err);
 						}
 					});
 				},
-				function(foundBatch, createdProfile, updatedUser, callback){
+				function( createdProfile, updatedUser, callback){
 					passport.authenticate("local")(req, res, function () {
 						User.findOne({
 							_id: updatedUser._id

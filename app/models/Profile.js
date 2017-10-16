@@ -7,12 +7,12 @@ var profileSchema = new Schema(
 		fullName:{
             type:String,
             required:true,
-            default:"xyz"
+            default:"full name"
         },
         emailId:{
             type:String,
             required:true,
-            default:"xyz@abc.com"
+            default:"abc@xyz.com"
         },
         phone:{
             type:String,
