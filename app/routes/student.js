@@ -1,195 +1,222 @@
 var express = require("express"),
-	passport = require("passport"),
-	async = require("async"),	
-
-	User = require("../models/User.js"),
-	Class = require("../models/Class.js"),
-	Chapter = require("../models/Chapter.js"),
-	Topic = require("../models/Topic.js"),
-	Batch = require("../models/Batch.js"),
-	Progress = require("../models/Progress.js"),
-	Profile = require("../models/Profile.js"),
-	errors = require("../error"),
-
-	router = express.Router();
-	mongoose = require("mongoose");
-	
+  passport = require("passport"),
+  async = require("async"),
+  User = require("../models/User.js"),
+  Class = require("../models/Class.js"),
+  Chapter = require("../models/Chapter.js"),
+  Subject = require("../models/Subject"),
+  Topic = require("../models/Topic.js"),
+  Batch = require("../models/Batch.js"),
+  Progress = require("../models/Progress.js"),
+  Profile = require("../models/Profile.js"),
+  errors = require("../error"),
+  router = express.Router();
+mongoose = require("mongoose");
 
 //Handle user detail update
-router.put('/:username', (req, res, next) => {
-	var username = req.body.username || '';
-	var batchName = req.body.batch || '';
+router.put("/:username", (req, res, next) => {
+	var username = req.body.username || "";
+	var batchName = req.body.batch || "";
 	var password = req.body.password || null;
-	
-	Batch.findOne(
-		{batchName: batchName},
-		( err, foundBatch ) => {
-			if( !err && foundBatch){
-				User.findOne(
-					{username: username},
-					(err , foundUser) => {
-						if( !err && foundUser ) {
 
-						}else{
-							res.sendStatus(400);
-							console.log(err);
-						}
+	Batch.findOne({
+		batchName: batchName
+	}, (err, foundBatch) => {
+		if (!err && foundBatch) {
+			User.findOne({
+					username: username
+				}, (err, foundUser) => {
+					if (!err && foundUser) {} else {
+						res.sendStatus(400);
+						console.log(err);
 					}
-				)
+				})
 				.populate({
-					path: 'profile',
-					model: 'Profile'
+					path: "profile",
+					model: "Profile"
 				})
 				.exec((err, foundUser) => {
-					if(!err && foundUser){
-						Profile.findByIdAndUpdate(foundUser.profile._id,
-							{
-								$set: {
-									batch: foundBatch._id
+					if (!err && foundUser) {
+						//
+						let subjectId = foundBatch.subjects;
+						Subject.find({
+								_id: {
+									$in: subjectId
 								}
-							}, 
-							{
-								upsert: false,
-								new: true,
 							},
-							( err, updatedProfile) => {
-								if( !err && updatedProfile ){
-									var userDetail = {
-										username,
-										password,
-										batch:batchName
-									}
-									res.json(userDetail);
-								}
-								else{
-									res.sendStatus(400);
+							function (err, foundSubjects) {
+								if (!err && foundSubjects) {
+									var progresses = [];
+									var counter = 0;
+									foundSubjects.forEach((subject, subjectIndex) => {
+										var chapterIds = subject.chapters;
+										counter += chapterIds.length;
+										chapterIds.forEach((chapterId, chapterIndex) => {
+											var newProg = {
+												chapter: chapterId
+											};
+											Progress.create(newProg, (err, createdProgress) => {
+												if (!err && createdProgress) {
+													progresses.push(createdProgress);
+													if (subjectIndex === foundSubjects.length - 1 && chapterIndex === chapterIds.length - 1 && progresses.length === counter) {
+														console.log(progresses);
+														Profile.findByIdAndUpdate(
+															foundUser.profile._id, {
+																$set: {
+																	batch: foundBatch._id,
+																	progresses: progresses
+																}
+															}, {
+																upsert: false,
+																new: true
+															},
+															(err, updatedProfile) => {
+																if (!err && updatedProfile) {
+																	var userDetail = {
+																		username,
+																		password,
+																		batch: batchName
+																	};
+
+																	res.json(userDetail);
+																} else {
+																	res.sendStatus(400);
+																	console.log(err);
+																}
+															}
+														);
+													}
+												} else {
+													console.log('err', err);
+												}
+											});
+										});
+									});
+								} else {
 									console.log(err);
+									callback(err);
 								}
 							}
 						);
+						//
+
 					}
 				});
-			}
-			else{
-				res.sendStatus(400);
-				console.log(err);
-			}
-		}
-	);
-
-});
-
-//Handle user login -- for student
-router.post("/login", passport.authenticate("local"),
-	function (req, res) {
-		res.json(req.user);
-	}
-);
-
-//Handle login with email
-router.post('/loginWithEmail', (req, res, next) => {
-	var emailId = req.body.username;
-	var index = emailId.indexOf('@');
-	var username = emailId.substring(0, index);
-	var password = Math.floor(Math.random()*89999+10000) + '';
-
-	// find details of the user
-	User.findOne({
-		username: username
-	}).populate({
-		path: "profile",
-		model: "Profile",
-		populate: {
-			path: "batch",
-			model: "Batch"
-		}
-	}).exec(function (err, foundUser) {
-		if (!err && foundUser) {
-			let userDetail = {
-				username,
-				password,
-				batch: foundUser.profile.batch.batchName
-			};
-			res.json(userDetail);
-		}
-		else if(foundUser == null) {
-			//
-			async.waterfall(
-				[
-					function( callback){
-						User.register(new User({
-							username: username
-						}), password, function (err, user) {
-							if (err) {
-								console.log(err);
-								req.flash("error", err.message);
-								return res.redirect("/student/signup");
-								
-							}else if (user && !err) {
-								callback(null, user);
-							}
-						});
-					},
-					function( user, callback){
-						var newProfile = {
-							fullName: username,
-							emailId: emailId,
-						};
-	
-						// if registered successfully create profile
-						Profile.create(
-							newProfile,
-							function (err, createdProfile) {
-								if (!err && createdProfile) {
-									callback(null,  user, createdProfile);
-								}else{
-									callback(err);
-								}
-							});
-					},
-					function( user, createdProfile, callback){
-						User.findOneAndUpdate({
-							_id: user._id
-						}, {
-							$set: {
-								profile: createdProfile
-							}
-						}, {
-							upsert: true,
-							new: true,
-							setDefaultsOnInsert: true
-						},
-						function (err, updatedUser) {
-							if (!err && updatedUser) {
-								let userDetail = {
-									username,
-									password,
-									batch: ''
-								};
-								res.json(userDetail);
-							}else{
-								callback(err);
-							}
-						});
-					}
-	
-				],
-				function (err, result) {
-					if (err) {
-						res.sendStatus(400);
-						console.log(err);
-						next(new errors.generic);
-					} else {
-		
-					}
-				}
-			);
-			
-		}else{
+		} else {
 			res.sendStatus(400);
 			console.log(err);
 		}
 	});
+});
+
+//Handle user login -- for student
+router.post("/login", passport.authenticate("local"), function (req, res) {
+	res.json(req.user);
+});
+
+//Handle login with email
+router.post("/loginWithEmail", (req, res, next) => {
+	var emailId = req.body.username;
+	var index = emailId.indexOf("@");
+	var username = emailId.substring(0, index);
+	var password = Math.floor(Math.random() * 89999 + 10000) + "";
+
+	// find details of the user
+	User.findOne({
+			username: username
+		})
+		.populate({
+			path: "profile",
+			model: "Profile",
+			populate: {
+				path: "batch",
+				model: "Batch"
+			}
+		})
+		.exec(function (err, foundUser) {
+			if (!err && foundUser) {
+				let userDetail = {
+					username,
+					password,
+					batch: foundUser.profile.batch.batchName
+				};
+				res.json(userDetail);
+			} else if (foundUser == null) {
+				//
+				async.waterfall(
+					[
+						function (callback) {
+							User.register(
+								new User({
+									username: username
+								}),
+								password,
+								function (err, user) {
+									if (err) {
+										console.log(err);
+										req.flash("error", err.message);
+										return res.redirect("/student/signup");
+									} else if (user && !err) {
+										callback(null, user);
+									}
+								}
+							);
+						},
+						function (user, callback) {
+							var newProfile = {
+								fullName: username,
+								emailId: emailId
+							};
+
+							// if registered successfully create profile
+							Profile.create(newProfile, function (err, createdProfile) {
+								if (!err && createdProfile) {
+									callback(null, user, createdProfile);
+								} else {
+									callback(err);
+								}
+							});
+						},
+						function (user, createdProfile, callback) {
+							User.findOneAndUpdate({
+									_id: user._id
+								}, {
+									$set: {
+										profile: createdProfile
+									}
+								}, {
+									upsert: true,
+									new: true,
+									setDefaultsOnInsert: true
+								},
+								function (err, updatedUser) {
+									if (!err && updatedUser) {
+										let userDetail = {
+											username,
+											password,
+											batch: ""
+										};
+										res.json(userDetail);
+									} else {
+										callback(err);
+									}
+								}
+							);
+						}
+					],
+					function (err, result) {
+						if (err) {
+							res.sendStatus(400);
+							console.log(err);
+							next(new errors.generic());
+						} else {}
+					}
+				);
+			} else {
+				res.sendStatus(400);
+				console.log(err);
+			}
+		});
 });
 
 //Handle user registration-- for student->Mobile interface
@@ -202,38 +229,41 @@ router.post("/signup", function (req, res) {
 	var batchName = req.body.batch || "";
 
 	//for the student who are enrolled in any batch
-	if(batchName && batchName.length > 0){
+	if (batchName && batchName.length > 0) {
 		//find batch
 		async.waterfall(
 			[
-				function(callback){
+				function (callback) {
 					Batch.findOne({
-						batchName: batchName
-					},
-					function (err, foundBatch) {
-						if (!err && foundBatch) {
-							callback(null, foundBatch);
-						}else{
-							callback(err);
+							batchName: batchName
+						},
+						function (err, foundBatch) {
+							if (!err && foundBatch) {
+								callback(null, foundBatch);
+							} else {
+								callback(err);
+							}
 						}
-						
-					});
+					);
 				},
-				function( callback){
-					User.register(new User({
-						username: username
-					}), password, function (err, user) {
-						if (err) {
-							console.log(err);
-							req.flash("error", err.message);
-							return res.redirect("/student/signup");
-							
-						}else if (user && !err) {
-							callback(null, user);
+				function (callback) {
+					User.register(
+						new User({
+							username: username
+						}),
+						password,
+						function (err, user) {
+							if (err) {
+								console.log(err);
+								req.flash("error", err.message);
+								return res.redirect("/student/signup");
+							} else if (user && !err) {
+								callback(null, user);
+							}
 						}
-					});
+					);
 				},
-				function( user, callback){
+				function (user, callback) {
 					var newProfile = {
 						fullName,
 						emailId,
@@ -242,18 +272,121 @@ router.post("/signup", function (req, res) {
 					};
 
 					// if registered successfully create profile
-					Profile.create(
-						newProfile,
-						function (err, createdProfile) {
-							if (!err && createdProfile) {
-								callback(null,  user, createdProfile);
-							}else{
+					Profile.create(newProfile, function (err, createdProfile) {
+						if (!err && createdProfile) {
+							callback(null, user, createdProfile);
+						} else {
+							callback(err);
+						}
+					});
+				},
+				function (user, createdProfile, callback) {
+					User.findOneAndUpdate({
+							_id: user._id
+						}, {
+							$set: {
+								profile: createdProfile
+							}
+						}, {
+							upsert: true,
+							new: true,
+							setDefaultsOnInsert: true
+						},
+						function (err, updatedUser) {
+							if (!err && updatedUser) {
+								callback(null, createdProfile, updatedUser);
+							} else {
 								callback(err);
 							}
-						});
+						}
+					);
 				},
-				function( user, createdProfile, callback){
-					User.findOneAndUpdate({
+				function (createdProfile, updatedUser, callback) {
+					passport.authenticate("local")(req, res, function () {
+						User.findOne({
+								_id: updatedUser._id
+							})
+							.populate({
+								path: "profile",
+								model: "Profile",
+								populate: {
+									path: "batch",
+									model: "Batch"
+								}
+							})
+							.exec(function (err, foundUser) {
+								if (!err && foundUser) {
+									res.json(foundUser);
+								} else {
+									console.log(err);
+								}
+							});
+					});
+				}
+			],
+			function (err, result) {
+				if (err) {
+					console.log(err);
+					next(new errors.generic());
+				} else {}
+			}
+		);
+	}
+});
+
+//User Register form-- student->from web interface
+router.get("/register", function (req, res) {
+	res.render("studentRegister", {
+		error: res.locals.msg_error[0]
+	});
+});
+
+//Handle User Register form-- student->from web interface
+router.post("/register", function (req, res) {
+	var username = req.body.username;
+	var password = req.body.password;
+	var fullName = req.body.fullName;
+	var emailId = req.body.emailId;
+	var phone = req.body.phone;
+	var batchName = req.body.batch || "";
+
+	async.waterfall(
+		[
+			function (callback) {
+				User.register(
+					new User({
+						username: username
+					}),
+					password,
+					function (err, user) {
+						if (err) {
+							console.log(err);
+							req.flash("error", err.message);
+							return res.redirect("/student/register");
+						} else if (user && !err) {
+							callback(null, user);
+						}
+					}
+				);
+			},
+			function (user, callback) {
+				var newProfile = {
+					fullName,
+					emailId,
+					phone
+				};
+
+				// if registered successfully create profile
+				Profile.create(newProfile, function (err, createdProfile) {
+					if (!err && createdProfile) {
+						callback(null, user, createdProfile);
+					} else {
+						callback(err);
+					}
+				});
+			},
+			function (user, createdProfile, callback) {
+				User.findOneAndUpdate({
 						_id: user._id
 					}, {
 						$set: {
@@ -266,146 +399,44 @@ router.post("/signup", function (req, res) {
 					},
 					function (err, updatedUser) {
 						if (!err && updatedUser) {
-							callback(null,  createdProfile, updatedUser);
-						}else{
+							callback(null, createdProfile, updatedUser);
+						} else {
 							callback(err);
 						}
-					});
-				},
-				function( createdProfile, updatedUser, callback){
-					passport.authenticate("local")(req, res, function () {
-						User.findOne({
+					}
+				);
+			},
+			function (createdProfile, updatedUser, callback) {
+				passport.authenticate("local")(req, res, function () {
+					User.findOne({
 							_id: updatedUser._id
-						}).populate({
+						})
+						.populate({
 							path: "profile",
-							model: "Profile",
-							populate: {
-								path: "batch",
-								model: "Batch"
-							}
-						}).exec(function (err, foundUser) {
+							model: "Profile"
+						})
+						.exec(function (err, foundUser) {
 							if (!err && foundUser) {
-								res.json(foundUser);
+								req.flash(
+									"success",
+									"Successfully signed you in as " + req.body.username
+								);
+								res.redirect("/");
 							} else {
 								console.log(err);
 							}
 						});
-					});
-				}
-
-			],
-			function (err, result) {
-				if (err) {
-					console.log(err);
-					next(new errors.generic);
-				} else {
-	
-				}
-			}
-		);
-	}
-});
-
-//User Register form-- student->from web interface
-router.get("/register", function (req, res) {
-	res.render("studentRegister",{
-		error: res.locals.msg_error[0]
-	});
-});
-
-//Handle User Register form-- student->from web interface
-router.post("/register", function (req, res) {
-
-	var username = req.body.username;
-	var password = req.body.password;
-	var fullName = req.body.fullName;
-	var emailId = req.body.emailId;
-	var phone = req.body.phone;
-	var batchName = req.body.batch || "";
-
-	async.waterfall(
-		[
-			function(callback){
-				User.register(new User({
-					username: username
-				}), password, function (err, user) {
-					if (err) {
-						console.log(err);
-						req.flash("error", err.message);
-						return res.redirect("/student/register");
-						
-					}else if (user && !err) {
-						callback(null, user);
-					}
-				});
-			},
-			function(user, callback){
-				var newProfile = {
-					fullName,
-					emailId,
-					phone
-				};
-
-				// if registered successfully create profile
-				Profile.create(
-					newProfile,
-					function (err, createdProfile) {
-						if (!err && createdProfile) {
-							callback(null, user, createdProfile);
-						}else{
-							callback(err);
-						}
-					});
-			},
-			function(user, createdProfile, callback){
-				User.findOneAndUpdate({
-					_id: user._id
-				}, {
-					$set: {
-						profile: createdProfile
-					}
-				}, {
-					upsert: true,
-					new: true,
-					setDefaultsOnInsert: true
-				},
-				function (err, updatedUser) {
-					if (!err && updatedUser) {
-						callback(null, createdProfile, updatedUser);
-					}else{
-						callback(err);
-					}
-				});
-			},
-			function(createdProfile, updatedUser, callback){
-				passport.authenticate("local")(req, res, function () {
-					User.findOne({
-						_id: updatedUser._id
-					}).populate({
-						path: "profile",
-						model: "Profile"
-					}).exec(function (err, foundUser) {
-						if (!err && foundUser) {
-							req.flash("success","Successfully signed you in as "+ req.body.username);
-							res.redirect("/");
-						} else {
-							console.log(err);
-						}
-					});
 				});
 			}
 		],
 		function (err, result) {
 			if (err) {
 				console.log(err);
-				next(new errors.generic);
-			} else {
-
-			}
+				next(new errors.generic());
+			} else {}
 		}
 	);
 });
-
 
 router.get("/:username/subjects", function (req, res) {
 	var subjects = {};
@@ -413,9 +444,7 @@ router.get("/:username/subjects", function (req, res) {
 				username: req.params.username
 			},
 			function (err, foundUser) {
-				if (!err && foundUser) {
-
-				} else if (err) {
+				if (!err && foundUser) {} else if (err) {
 					console.log(err);
 				}
 			}
@@ -443,16 +472,14 @@ router.get("/:username/subjects", function (req, res) {
 					}
 				}
 			}
-		}).exec(function (err, userDetail) {
+		})
+		.exec(function (err, userDetail) {
 			if (!err && userDetail) {
 				subjects = userDetail.profile.batch.subjects;
 				res.json({
-					"subjects": subjects,
+					subjects: subjects
 				});
-			}
-			else{
-
-			}
+			} else {}
 		});
 });
 
@@ -471,13 +498,14 @@ router.get("/:username/progresses", (req, res, next) => {
 			model: "Profile",
 			populate: {
 				path: "progresses",
-				model: "Progress",
+				model: "Progress"
 			}
-		}).exec(function (err, foundUser) {
+		})
+		.exec(function (err, foundUser) {
 			if (!err && foundUser) {
 				progresses = foundUser.profile.progresses;
 				res.json({
-					"progresses": progresses
+					progresses: progresses
 				});
 			}
 		});
@@ -495,11 +523,9 @@ router.put("/:username/chapters/:chapterId", (req, res, next) => {
 				username: username
 			},
 			function (err, foundUser) {
-				if (!err && foundUser) {
-
-				} else if (foundUser == null) {
+				if (!err && foundUser) {} else if (foundUser == null) {
 					res.sendStatus(400);
-				}else{
+				} else {
 					res.sendStatus(400);
 					console.log(err);
 				}
@@ -507,7 +533,7 @@ router.put("/:username/chapters/:chapterId", (req, res, next) => {
 		)
 		.populate({
 			path: "profile",
-			model: "Profile",
+			model: "Profile"
 		})
 		.exec(function (err, foundUser) {
 			if (!err && foundUser) {
@@ -526,7 +552,8 @@ router.put("/:username/chapters/:chapterId", (req, res, next) => {
 					},
 					function (err, updatedProg) {
 						if (!err && updatedProg) {
-							Profile.findByIdAndUpdate(foundUser.profile, {
+							Profile.findByIdAndUpdate(
+								foundUser.profile, {
 									$addToSet: {
 										progresses: updatedProg
 									}
@@ -537,24 +564,23 @@ router.put("/:username/chapters/:chapterId", (req, res, next) => {
 								},
 								function (err, updatedProfile) {
 									if (!err && updatedProfile) {
-										console.log('updatedProg', updatedProg);
+										console.log("updatedProg", updatedProg);
 										res.json({
-											"updatedProg": updatedProg
+											updatedProg: updatedProg
 										});
-									}
-									else{
+									} else {
 										res.sendStatus(400);
 										console.log(400);
 									}
-								});
-
-						}else{
+								}
+							);
+						} else {
 							res.sendStatus(400);
 							console.log(400);
 						}
-					});
-
-			} else{
+					}
+				);
+			} else {
 				res.sendStatus(400);
 				console.log(400);
 			}
@@ -563,11 +589,10 @@ router.put("/:username/chapters/:chapterId", (req, res, next) => {
 
 //sending classes list
 router.get("/classes", function (req, res, next) {
-
 	Class.find({}, function (err, classes) {
 			if (err) {
-				console.log(err)
-				next(new errors.notFound);
+				console.log(err);
+				next(new errors.notFound());
 			}
 		})
 		.populate({
@@ -588,16 +613,14 @@ router.get("/classes", function (req, res, next) {
 		})
 		.exec(function (err, classes) {
 			if (err) {
-				console.log(err)
+				console.log(err);
 			} else {
-				res.type('application/json');
+				res.type("application/json");
 				res.json({
-					"classes": classes
+					classes: classes
 				});
 			}
 		});
-
 });
 
 module.exports = router;
-
