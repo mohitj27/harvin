@@ -9,6 +9,7 @@ var express = require("express"),
 	fileRoutes = require("./file"),
 	dbRoutes = require("./db"),
 	examRoutes = require("./exam"),
+	assignmentRoutes = require("./assignment"),
 	qbRoutes = require("./questionBank"),
 
 	Topic = require("../models/Topic.js"),
@@ -23,6 +24,7 @@ router.use("/batches", batchRoutes);
 router.use("/files", fileRoutes);
 router.use("/db", dbRoutes);
 router.use("/exams", examRoutes);
+router.use("/assignment", assignmentRoutes);
 router.use("/questionBank", qbRoutes);
 
 //Home

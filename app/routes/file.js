@@ -381,7 +381,7 @@ router.get("/:fileId", function (req, res, next) {
 	File.findById(req.params.fileId, function (err, foundFile) {
 		if (err) {
 			console.log(err);
-			next(new errors.notFound);
+			res.sendStatus(404);
 		} else {
 			res.download(foundFile.filePath, foundFile.fileName, function (err) {
 				if (err) {
