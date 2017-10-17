@@ -9,6 +9,11 @@ var questionSchema = new Schema({
 	},
 	options: [{
 		type: String,
+		require: true
+	}],
+	answersIndex:[{
+		type: Number,
+		require: true
 	}],
 	answers: [{
 		type: String,

@@ -329,5 +329,42 @@ router.get("/chapter/:chapterName", function (req, res, next) {
 		});
 });
 
+router.get('/refactor', (req, res, next) => {
+	Question.find({}, (err, foundQuestions) => {
+		if(!err && foundQuestions){
+			var answerIndex = [];
+			foundQuestions.forEach((question, quesIndex) => {
+				answerIndex = [];
+				question.answers.forEach((answer) => {
+					question.options.forEach((option, optIndex) => {
+						if(answer === option){
+							answerIndex.push(optIndex);
+						}
+					}); 
+				});
+				Question.findByIdAndUpdate(question._id,
+					{
+						$set:{
+							answersIndex: answerIndex
+						}
+					},
+					{
+						upsert: true,
+						new: true,
+						setDefaultsOnInsert: true
+					},
+					function (err, updatedQuestion) {
+						if (!err && updatedQuestion) {
+						} else {
+							console.log(err);
+						}
+					}
+				);
+			});
+			res.send('ok');
+		}
+	});
+});
+
 module.exports = router;
 
