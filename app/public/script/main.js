@@ -240,7 +240,7 @@ $(function () {
 	//=========================================
 	$("#dtBox").DateTimePicker();
 
-	//setting options for question
+	// setting options for question
 	//add options handler
 	var next = 1;
     $(".add-more").off().click(function(e){

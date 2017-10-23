@@ -74,7 +74,7 @@ router.post('/uploadAssignment', function (req, res, next) {
 	});
 });
 
-router.get('/', (req, res, next) => {
+router.get('/:username/assignments', (req, res, next) => {
 	Assignment.find({}, (err, foundAssignments) => {
 		if (!err && foundAssignments) {
 			res.send({assignments: foundAssignments});
