@@ -36,6 +36,7 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 	var maximumMarks = req.body.maxMarks;
 	var positiveMarks = req.body.posMarks;
 	var negativeMarks = req.body.negMarks;
+	var totalTime = req.body.totalTime;
 
 	var newExam = {
 		examName,
@@ -44,6 +45,7 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 		maximumMarks,
 		positiveMarks,
 		negativeMarks,
+        totalTime
 	};
 
 	Exam.create(newExam, (err, createdExam) => {
@@ -130,6 +132,7 @@ router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, nex
 	var maximumMarks = req.body.maxMarks;
 	var positiveMarks = req.body.posMarks;
 	var negativeMarks = req.body.negMarks;
+	var totalTime = req.body.totalTime;
 
 	Exam.findByIdAndUpdate(examId, {
 			$set: {
@@ -138,7 +141,8 @@ router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, nex
 				examType,
 				maximumMarks,
 				positiveMarks,
-				negativeMarks
+				negativeMarks,
+                totalTime
 			}
 		}, {
 			upsert: true,

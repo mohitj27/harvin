@@ -27,6 +27,10 @@ var examSchema = new Schema({
 		type: Number,
 		required: true
 	},
+    totalTime: {
+        type: String,
+        required: true
+    },
 	questionPaper: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "QuestionPaper"

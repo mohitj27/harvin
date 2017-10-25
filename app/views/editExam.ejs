@@ -46,6 +46,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="totalTime" class="col-sm-3 control-label">Total time (in Minutes) </label>
+                    <div class="col-sm-9">
+                        <input required name="totalTime" type="number" class="form-control" id="totalTime" placeholder="Total available time ( in Minutes ) for exam" value="<%=exam.totalTime%>">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="maxMarks" class="col-sm-3 control-label">Maximum Marks</label>
                     <div class="col-sm-9">
                         <input required name="maxMarks" type="number" class="form-control" id="maxMarks" placeholder="Maximum marks for this exam" value="<%=exam.maximumMarks%>">
