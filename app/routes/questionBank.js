@@ -127,7 +127,8 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 	var newQues = {
 		question: req.body.question,
 		answers: [],
-		options: []
+		options: [],
+        answersIndex: []
 	};
 
 	//pushing options in options array
@@ -141,6 +142,14 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 		if(answerString[j] != '')
 			newQues.answers.push(answerString[j]);
 	}
+
+    newQues.answers.forEach((answer) => {
+        newQues.options.forEach((option, optIndex) => {
+            if(answer === option){
+                newQues.answersIndex.push(optIndex);
+            }
+        });
+    });
 
 	async.waterfall(
 		[

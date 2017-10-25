@@ -15,10 +15,6 @@ var examSchema = new Schema({
 		type: String,
 		required: true
 	},
-	maximumMarks: {
-		type: Number,
-		required: true
-	},
 	positiveMarks: {
 		type: Number,
 		required: true

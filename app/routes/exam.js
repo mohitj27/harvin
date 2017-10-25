@@ -33,7 +33,6 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 	var examName = req.body.examName;
 	var examDate = req.body.examDate;
 	var examType = req.body.examType;
-	var maximumMarks = req.body.maxMarks;
 	var positiveMarks = req.body.posMarks;
 	var negativeMarks = req.body.negMarks;
 	var totalTime = req.body.totalTime;
@@ -42,7 +41,6 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 		examName,
 		examDate,
 		examType,
-		maximumMarks,
 		positiveMarks,
 		negativeMarks,
         totalTime
@@ -129,7 +127,6 @@ router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, nex
 	var examName = req.body.examName;
 	var examDate = req.body.examDate;
 	var examType = req.body.examType;
-	var maximumMarks = req.body.maxMarks;
 	var positiveMarks = req.body.posMarks;
 	var negativeMarks = req.body.negMarks;
 	var totalTime = req.body.totalTime;
@@ -139,7 +136,6 @@ router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, nex
 				examName,
 				examDate,
 				examType,
-				maximumMarks,
 				positiveMarks,
 				negativeMarks,
                 totalTime
@@ -264,7 +260,8 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isAdmin
 	var newQues = {
 		question: req.body.question,
 		answers: [],
-		options: []
+		options: [],
+        answersIndex: []
 	};
 
 	//pushing options in options array
@@ -279,6 +276,13 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isAdmin
 			newQues.answers.push(answerString[j]);
 	}
 
+    newQues.answers.forEach((answer) => {
+        newQues.options.forEach((option, optIndex) => {
+            if(answer === option){
+                newQues.answersIndex.push(optIndex);
+            }
+        });
+    });
 
 	async.waterfall(
 		[
@@ -576,28 +580,31 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
 //giving question paper of particular exam
 router.get("/:username/exams/:examId/questionPaper", (req, res, next) => {
 	var examId = req.params.examId;
-	Exam.findById(examId, (err, foundExam) => {
-		if(!err && foundExam){
-		}else{
-			console.log(err);
-		}
-	})
-	.populate({
-		path:"questionPaper",
-		model:"QuestionPaper",
-		populate:{
-			path:"questions",
-			model:"Question"
-		}
-	})
-	.exec((err, foundExam) => {
-		if(!err && foundExam){
-			var questionPaper = foundExam.questionPaper;
-			res.json({questionPaper:questionPaper});
-		}else{
-			console.log(err);
-		}
-	});
+	Exam
+        .findById(examId)
+        .populate({
+            path:"questionPaper",
+            model:"QuestionPaper",
+            populate:{
+                path:"questions",
+                model:"Question"
+            }
+        })
+        .exec((err, foundExam) => {
+            if(!err && foundExam){
+                var questionPaper = {};
+                questionPaper._id = foundExam.questionPaper._id;
+                questionPaper.__v = foundExam.questionPaper.__v;
+                questionPaper.positiveMarks = foundExam.positiveMarks;
+                questionPaper.negativeMarks = foundExam.negativeMarks;
+                questionPaper.totalTime = foundExam.totalTime;
+                questionPaper.questions = foundExam.questionPaper.questions;
+
+                res.json({questionPaper});
+            }else{
+                console.log(err);
+            }
+        });
 });
 
 //Giving exam list 
