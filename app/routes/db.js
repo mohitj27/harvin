@@ -12,7 +12,8 @@ var express = require("express"),
 	Chapter = require("../models/Chapter.js"),
 	Subject = require("../models/Subject.js"),
 	Class = require("../models/Class.js"),
-	User = require("../models/User.js"),
+    User = require("../models/User.js"),
+    Exam = require("../models/Exam.js"),
 	Batch = require("../models/Batch.js"),
 	Profile = require("../models/Profile.js"),
 	middleware = require("../middleware");
@@ -42,6 +43,17 @@ router.get('/users', (req, res, next) => {
                 next(new errors.generic());
             }
        });
+});
+
+router.get('/exams', (req, res, next) => {
+    Exam.find({}, (err, foundExams) => {
+        if(!err && foundExams){
+            res.render('examDb', {exams: foundExams});
+        }else{
+            console.log(err);
+            next(new errors.generic());
+        }
+    });
 });
 // //file update helper
 // function fileUpdateSuccess(req, res, currentObject) {

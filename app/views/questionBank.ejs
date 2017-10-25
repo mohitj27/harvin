@@ -25,13 +25,14 @@
 
             <div class="col-sm-4">
                 <h2>Subject</h2> <br>
-                <select data-live-search="true" title="Choose the Subject" required  name="subjectName" class="selectpicker show-tick" id="qb_subject" >
-                </select>   
+                <select required  title="Choose the Subject" name="subjectName" class="selectpicker show-tick" id="qb_subject" >
+                </select>
             </div>
 
             <div class="col-sm-4">
                 <h2>Chapter</h2><br>
-                <select data-live-search="true" title="Choose the Chapter" required  name="chapterName"  class="selectpicker show-tick" id="qb_chapter" >
+                <select required title="Choose the Chapter" name="chapterName"  class="selectpicker show-tick" id="qb_chapter" >
+
                 </select>    
             </div>
 
@@ -65,7 +66,7 @@
                     <button type="button" class="btn btn-info">Edit</button>
                     <button type="button" class="btn btn-danger">Delete</button>
                 </div>
-                <h2><%=i+1%>. <%=question.question%></b></h2>
+                <h2><%=i+1%>. <%=question.question%></h2>
                 <div class="row">
                     <div class="col-sm-6">
                         <h2><label class="">Options</label></h2>

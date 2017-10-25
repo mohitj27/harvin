@@ -58,49 +58,65 @@ router.get("/qbData", (req, res, next) => {
 	var subjectName = req.query.subjectName;
 	var chapterName = req.query.chapterName;
 
-	QB_Class.findOne({className: className}, (err, foundClass) => {
-		if(!err && foundClass){
-		}
-		else if(err){
-			console.log("error",err);
-		}
-	})
-	.populate({
-		path:"subjects",
-		model:"QB_Subject",
-		populate:{
-			path:"chapters",
-			model:"QB_Chapter",
-			populate:{
-				path:"questions",
-				model:"Question"
-			}
-		}
-	})
-	.exec(function (err, qbData) {
+    if(!className){
+	    next(new errors.noContent('Please select class name'));
+    }
 
-		if (!err && qbData) {
-			// questions = qbData[subjectName][chapterName][questions];
-			subject = qbData.subjects.find(item => item.subjectName == subjectName);
-			chapter = subject.chapters.find(item => item.chapterName == chapterName);
-			questions = chapter.questions;
-			QB_Class.find({}, (err, foundClasses) => {
-				if(!err && foundClasses){
-					res.render("questionBank",{
-						classes: foundClasses,
-						questions:questions,
-						className:className,
-						subjectName:subjectName,
-						chapterName:chapterName
-					});
-				}
-			});
-			
-		}
-		else if(err){
-			console.log("error",err);
-		}
-	});
+    else if(!subjectName){
+        next(new errors.noContent('Please select subject name'));
+    }
+
+    else if(!chapterName){
+        console.log('called');
+        next(new errors.generic('Please select chapter name'));
+    }
+
+    else{
+        QB_Class.findOne({className: className}, (err, foundClass) => {
+            if(!err && foundClass){
+            }
+            else if(err){
+                console.log("error",err);
+            }
+        })
+            .populate({
+                path:"subjects",
+                model:"QB_Subject",
+                populate:{
+                    path:"chapters",
+                    model:"QB_Chapter",
+                    populate:{
+                        path:"questions",
+                        model:"Question"
+                    }
+                }
+            })
+            .exec(function (err, qbData) {
+
+                if (!err && qbData) {
+                    // questions = qbData[subjectName][chapterName][questions];
+                    subject = qbData.subjects.find(item => item.subjectName == subjectName);
+                    chapter = subject.chapters.find(item => item.chapterName == chapterName);
+                    questions = chapter.questions;
+                    QB_Class.find({}, (err, foundClasses) => {
+                        if(!err && foundClasses){
+                            res.render("questionBank",{
+                                classes: foundClasses,
+                                questions:questions,
+                                className:className,
+                                subjectName:subjectName,
+                                chapterName:chapterName
+                            });
+                        }
+                    });
+
+                }
+                else if(err){
+                    console.log("error",err);
+                }
+            });
+    }
+
 });
 
 
