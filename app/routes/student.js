@@ -59,7 +59,6 @@ router.put("/:username", (req, res, next) => {
 												if (!err && createdProgress) {
 													progresses.push(createdProgress);
 													if (subjectIndex === foundSubjects.length - 1 && chapterIndex === chapterIds.length - 1 && progresses.length === counter) {
-														console.log(progresses);
 														Profile.findByIdAndUpdate(
 															foundUser.profile._id, {
 																$set: {

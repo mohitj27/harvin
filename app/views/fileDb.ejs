@@ -1,0 +1,62 @@
+<% include partials/header.ejs%>
+
+<div class="container">
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/db">Database</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Files</li>
+        </ol>
+    </nav>
+
+    <table width="100%">
+        <thead>
+        <tr>
+            <th width="(100/9)%" style="text-align: center">Serial no.</th>
+            <th width="(100/9)%" style="text-align: center">Name</th>
+            <th width="(100/9)%" style="text-align: center">Uploaded on</th>
+            <th width="(100/9)%" style="text-align: center">File size(MB)</th>
+            <th width="(100/9)%" style="text-align: center">Class</th>
+            <th width="(100/9)%" style="text-align: center">Subject</th>
+            <th width="(100/9)%" style="text-align: center">Chapter</th>
+            <th width="(100/9)%" style="text-align: center">Topic</th>
+            <th width="(100/9)%" style="text-align: center">Download link</th>
+        </tr>
+        </thead>
+        <tbody>
+        <%files.forEach(function (file, i) { %>
+        <tr>
+            <td width="(100/9)%" style="text-align: center"><%=i+1%></td>
+            <td width="(100/9)%" style="text-align: center"><%=file.fileName%></td>
+            <td width="(100/9)%" style="text-align: center"><%=file.uploadDate%></td>
+            <td width="(100/9)%" style="text-align: center"><%=Math.round(file.fileSize / 1000000 * 100) /100%></td>
+            <% if(file.class){ %>
+                <td width="(100/9)%" style="text-align: center"><%=file.class.className%></td>
+            <% }else{ %>
+                <td width="(100/9)%" style="text-align: center">--</td>
+            <%}%>
+            <% if(file.subject){ %>
+            <td width="(100/9)%" style="text-align: center"><%=file.subject.subjectName%></td>
+            <% }else{ %>
+            <td width="(100/9)%" style="text-align: center">--</td>
+            <%}%>
+            <% if(file.chapter){ %>
+            <td width="(100/9)%" style="text-align: center"><%=file.chapter.chapterName%></td>
+            <% }else{ %>
+            <td width="(100/9)%" style="text-align: center">--</td>
+            <%}%>
+            <% if(file.topic){ %>
+            <td width="(100/9)%" style="text-align: center"><%=file.topic.topicName%></td>
+            <% }else{ %>
+            <td width="(100/9)%" style="text-align: center">--</td>
+            <%}%>
+            <td width="(100/8)%" height="30px" style="text-align: center">
+                <a href="/files/<%=file._id%>">Download now</a>
+            </td>
+        </tr>
+        <%})%>
+
+        </tbody>
+    </table>
+</div>
+
+<% include partials/footer.ejs%>

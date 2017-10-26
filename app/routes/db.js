@@ -81,7 +81,43 @@ router.get('/assignments', middleware.isLoggedIn, middleware.isAdmin, (req, res,
                 next(new errors.generic());
             }
         });
+});
 
+
+router.get('/files', middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+    File.find({})
+        .populate(
+            {
+                path:'class',
+                model: 'Class'
+            }
+        )
+        .populate(
+            {
+                path:'subject',
+                model: 'Subject'
+            }
+        )
+        .populate(
+            {
+                path:'chapter',
+                model: 'Chapter'
+            }
+        )
+        .populate(
+            {
+                path:'topic',
+                model: 'Topic'
+            }
+        )
+        .exec((err, foundFiles) => {
+            if(!err && foundFiles){
+                res.render('fileDb', {files: foundFiles});
+            }else{
+                console.log(err);
+                next(new errors.generic());
+            }
+        });
 });
 // //file update helper
 // function fileUpdateSuccess(req, res, currentObject) {
