@@ -14,25 +14,41 @@ var express = require("express"),
 	router = express.Router();
 
 router.get("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
-	Exam.find({}, (err, foundExams) => {
-		if (!err && foundExams) {
-			res.render("exams", {
-				foundExams: foundExams
-			});
-		} else {
-			next(new errors.generic);
-		}
-	});
+	Exam.find({})
+        .populate(
+            {
+                path:'batch',
+                model: 'Batch'
+            }
+        )
+        .exec((err, foundExams) => {
+            if (!err && foundExams) {
+                res.render("exams", {
+                    foundExams: foundExams
+                });
+            } else {
+                next(new errors.generic);
+            }
+        });
 });
 
 router.get("/new", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
-	res.render("newExam");
+    Batch.find({}, (err, foundBatches) => {
+        if(!err && foundBatches){
+            res.render("newExam", {batches: foundBatches});
+        }else{
+            console.log('error', err);
+            next(new errors.generic());
+        }
+    });
+
 });
 
 router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examName = req.body.examName;
 	var examDate = req.body.examDate;
 	var examType = req.body.examType;
+	var batchId = req.body.batchName;
 	var positiveMarks = req.body.posMarks;
 	var negativeMarks = req.body.negMarks;
 	var totalTime = req.body.totalTime;
@@ -46,8 +62,19 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
         totalTime
 	};
 
-	Exam.create(newExam, (err, createdExam) => {
+	Exam.findOneAndUpdate(newExam,
+        {
+            $set:{
+                batch: batchId
+            }
+        }, {
+            upsert: true,
+            new: true,
+            setDefaultsOnInsert: true
+        },
+        (err, createdExam) => {
 		if (!err && createdExam) {
+		    console.log('createdExam', createdExam);
 			req.flash("success", examName + " created Successfully");
 			res.redirect("/exams");
 		} else {
@@ -58,68 +85,103 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 
 });
 
-router.get("/qbData", (req, res, next) => {
+router.get("/qbData" , middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var className = req.query.className;
 	var subjectName = req.query.subjectName;
 	var chapterName = req.query.chapterName;
 
-	var examId = req.query.examId;
+    if(!className){
+        next(new errors.noContent('Please select class name'));
+    }
 
-	QB_Class.findOne({className: className}, (err, foundClass) => {
-		if(!err && foundClass){
-		}
-		else if(err){
-			console.log("error",err);
-		}
-	})
-	.populate({
-		path:"subjects",
-		model:"QB_Subject",
-		populate:{
-			path:"chapters",
-			model:"QB_Chapter",
-			populate:{
-				path:"questions",
-				model:"Question"
-			}
-		}
-	})
-	.exec(function (err, qbData) {
+    else if(!subjectName){
+        next(new errors.noContent('Please select subject name'));
+    }
 
-		if (!err && qbData) {
-			// questions = qbData[subjectName][chapterName][questions];
-			subject = qbData.subjects.find(item => item.subjectName == subjectName);
-			chapter = subject.chapters.find(item => item.chapterName == chapterName);
-			questions = chapter.questions;
-			QB_Class.find({}, (err, foundClasses) => {
-				if(!err && foundClasses){
-					res.render("chooseFromQB",{
-						classes: foundClasses,
-						questions:questions,
-						className:className,
-						subjectName:subjectName,
-						chapterName:chapterName,
-						examId:examId
-					});
-				}
-			});
-			
-		}
-		else if(err){
-			console.log("error",err);
-		}
-	});
+    else if(!chapterName){
+        console.log('called');
+        next(new errors.generic('Please select chapter name'));
+    }
+
+    else{
+        var examId = req.query.examId;
+
+        QB_Class.findOne({className: className}, (err, foundClass) => {
+            if(!err && foundClass){
+            }
+            else if(err){
+                console.log("error",err);
+            }
+        })
+            .populate({
+                path:"subjects",
+                model:"QB_Subject",
+                populate:{
+                    path:"chapters",
+                    model:"QB_Chapter",
+                    populate:{
+                        path:"questions",
+                        model:"Question"
+                    }
+                }
+            })
+            .exec(function (err, qbData) {
+
+                if (!err && qbData) {
+                    // questions = qbData[subjectName][chapterName][questions];
+                    subject = qbData.subjects.find(item => item.subjectName == subjectName);
+                    chapter = subject.chapters.find(item => item.chapterName == chapterName);
+                    questions = chapter.questions;
+                    QB_Class.find({}, (err, foundClasses) => {
+                        if(!err && foundClasses){
+                            res.render("chooseFromQB",{
+                                classes: foundClasses,
+                                questions:questions,
+                                className:className,
+                                subjectName:subjectName,
+                                chapterName:chapterName,
+                                examId:examId
+                            });
+                        }
+                    });
+
+                }
+                else if(err){
+                    console.log("error",err);
+                }
+            });
+    }
+
+
 });
 
 router.get("/:examId/edit", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examId = req.params.examId;
-	Exam.findById(examId, (err, foundExam) => {
-		if (!err && foundExam) {
-			res.render("editExam", {
-				exam: foundExam
-			});
-		}
-	});
+
+    Batch.find({}, (err, foundBatches) => {
+        if(!err && foundBatches){
+            Exam.findById(examId)
+                .populate(
+                    {
+                        path:'batch',
+                        model: "Batch"
+                    }
+                )
+                .exec((err, foundExam) => {
+                    if (!err && foundExam) {
+                        res.render("editExam", {
+                            exam: foundExam,
+                            batches: foundBatches
+                        });
+                    }
+                })
+        }else{
+            console.log('error', err);
+            next(new errors.generic());
+        }
+    });
+
+
 });
 
 router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {

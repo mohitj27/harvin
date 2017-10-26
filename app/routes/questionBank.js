@@ -53,7 +53,7 @@ router.get("/addNew", middleware.isLoggedIn, middleware.isAdmin, (req, res, next
 	});
 });
 
-router.get("/qbData", (req, res, next) => {
+router.get("/qbData", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var className = req.query.className;
 	var subjectName = req.query.subjectName;
 	var chapterName = req.query.chapterName;

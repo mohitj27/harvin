@@ -19,11 +19,11 @@ var express = require("express"),
 	middleware = require("../middleware");
 
 
-router.get('/', (req, res, next) => {
+router.get('/', middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
     res.render('dbCollection');
 });
 
-router.get('/users', (req, res, next) => {
+router.get('/users', middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
    User.find({})
        .populate(
            {
@@ -45,16 +45,25 @@ router.get('/users', (req, res, next) => {
        });
 });
 
-router.get('/exams', (req, res, next) => {
-    Exam.find({}, (err, foundExams) => {
-        if(!err && foundExams){
-            res.render('examDb', {exams: foundExams});
-        }else{
-            console.log(err);
-            next(new errors.generic());
-        }
-    });
+router.get('/exams', middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+    Exam.find({})
+        .populate(
+            {
+                path:'batch',
+                model: 'Batch'
+            }
+        )
+        .exec((err, foundExams) => {
+            if(!err && foundExams){
+                res.render('examDb', {exams: foundExams});
+            }else{
+                console.log(err);
+                next(new errors.generic());
+            }
+        });
+
 });
+
 // //file update helper
 // function fileUpdateSuccess(req, res, currentObject) {
 // 	req.flash("success", currentObject.fileName + " updated successfully");

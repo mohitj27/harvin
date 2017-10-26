@@ -27,6 +27,10 @@ var examSchema = new Schema({
         type: String,
         required: true
     },
+    batch: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Batch"
+    },
 	questionPaper: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "QuestionPaper"

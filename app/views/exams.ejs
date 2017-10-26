@@ -10,7 +10,8 @@
 		<div class="row">
 			<div class="col-xs-2"><b>Name</b></div>
 			<div class="col-xs-2"><b>Date</b></div>
-			<div class="col-xs-2"><b>Type</b></div>
+            <div class="col-xs-2"><b>Type</b></div>
+            <div class="col-xs-1"><b>For Batch</b></div>
 			<div class="col-xs-1"><b>Positive Marks</b></div>
             <div class="col-xs-1"><b>Negative Marks</b></div>
             <div class="col-xs-1"><b>Total Time</b></div>
@@ -23,7 +24,8 @@
 						<a href="/exams/<%=exam._id%>/question-paper/"><%=exam.examName%></a>
 					</div>
 					<div class="col-xs-2"><%=exam.examDate%></div>
-					<div class="col-xs-2"><%=exam.examType%></div>
+                    <div class="col-xs-2"><%=exam.examType%></div>
+                    <div class="col-xs-1"><%=exam.batch.batchName%></div>
 					<div class="col-xs-1"><%=exam.positiveMarks%></div>
 					<div class="col-xs-1"><%=exam.negativeMarks%></div>
 					<div class="col-xs-1"><%=exam.totalTime%></div>

@@ -11,27 +11,29 @@
     <table width="100%">
         <thead>
         <tr>
-            <th width="(100/7)%" style="text-align: center">Serial no.</th>
-            <th width="(100/7)%" style="text-align: center">Name</th>
-            <th width="(100/7)%" style="text-align: center">Date</th>
-            <th width="(100/7)%" style="text-align: center">Type</th>
-            <th width="(100/7)%" style="text-align: center">Positive marks</th>
-            <th width="(100/7)%" style="text-align: center">Negative marks</th>
-            <th width="(100/7)%" style="text-align: center">Total time(in Minutes)</th>
+            <th width="(100/8)%" style="text-align: center">Serial no.</th>
+            <th width="(100/8)%" style="text-align: center">Name</th>
+            <th width="(100/8)%" style="text-align: center">Date</th>
+            <th width="(100/8)%" style="text-align: center">Type</th>
+            <th width="(100/8)%" style="text-align: center">For Batch</th>
+            <th width="(100/8)%" style="text-align: center">Positive marks</th>
+            <th width="(100/8)%" style="text-align: center">Negative marks</th>
+            <th width="(100/8)%" style="text-align: center">Total time(in Minutes)</th>
         </tr>
         </thead>
         <tbody>
         <%exams.forEach(function (exam, i) { %>
         <tr>
-            <td width="(100/7)%" style="text-align: center"><%=i+1%></td>
-            <td width="(100/7)%" style="text-align: center"><div class="col-xs-2">
+            <td width="(100/8)%" style="text-align: center"><%=i+1%></td>
+            <td width="(100/8)%" style="text-align: center"><div class="col-xs-2">
                     <a href="/exams/<%=exam._id%>/question-paper/"><%=exam.examName%></a>
                 </div></td>
-            <td width="(100/7)%" style="text-align: center"><%=exam.examDate%></td>
-            <td width="(100/7)%" style="text-align: center"><%=exam.examType%></td>
-            <td width="(100/7)%" style="text-align: center"><%=exam.positiveMarks%></td>
-            <td width="(100/7)%" style="text-align: center"><%=exam.negativeMarks%></td>
-            <td width="(100/7)%" style="text-align: center"><%=exam.totalTime%></td>
+            <td width="(100/8)%" style="text-align: center"><%=exam.examDate%></td>
+            <td width="(100/8)%" style="text-align: center"><%=exam.examType%></td>
+            <td width="(100/8)%" style="text-align: center"><%=exam.batch.batchName%></td>
+            <td width="(100/8)%" style="text-align: center"><%=exam.positiveMarks%></td>
+            <td width="(100/8)%" style="text-align: center"><%=exam.negativeMarks%></td>
+            <td width="(100/8)%" style="text-align: center"><%=exam.totalTime%></td>
         </tr>
         <%})%>
 

@@ -46,6 +46,20 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="forBatch" class="col-sm-3 control-label">For Batch</label>
+                    <div class="col-sm-1">
+                        <select  title="Choose the Batch" required  name="batchName" id="forBatch">
+                            <%batches.forEach(function (batch) {%>
+                                <option value="<%=batch._id%>"
+                                    <%if(exam.batch._id.toString() == batch._id.toString()){%>
+                                        selected
+                                    <%}%>
+                                ><%=batch.batchName%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="totalTime" class="col-sm-3 control-label">Total time (in Minutes) </label>
                     <div class="col-sm-9">
                         <input required name="totalTime" type="number" class="form-control" id="totalTime" placeholder="Total available time ( in Minutes ) for exam" value="<%=exam.totalTime%>">
