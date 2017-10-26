@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label for="examType" class="col-sm-3 control-label">Exam Type</label>
                     <div class="col-sm-1">
-                        <select data-live-search="true" title="Choose the Type of exam" required class="selectpicker" name="examType" id="examType">
+                        <select data-live-search="true" title="Choose the Type of exam" required class="selectpicker show-tick" name="examType" id="examType">
                             
                             <option value="True - False"
                                 <%if(exam.examType == "True - False"){%>
@@ -48,12 +48,17 @@
                 <div class="form-group">
                     <label for="forBatch" class="col-sm-3 control-label">For Batch</label>
                     <div class="col-sm-1">
-                        <select  title="Choose the Batch" required  name="batchName" id="forBatch">
+                        <select data-live-search="true" title="Choose the Batch" required class="selectpicker show-tick"  name="batchName" id="forBatch">
                             <%batches.forEach(function (batch) {%>
                                 <option value="<%=batch._id%>"
-                                    <%if(exam.batch._id.toString() == batch._id.toString()){%>
-                                        selected
+                                    <% if(exam.batch){ %>
+                                            <%if(exam.batch._id.toString() == batch._id.toString()){%>
+                                                selected
                                     <%}%>
+                                    <% }else{ %>
+
+                                    <%}%>
+
                                 ><%=batch.batchName%></option>
                             <%})%>
                         </select>

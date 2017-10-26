@@ -27,6 +27,7 @@ router.get("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
                     foundExams: foundExams
                 });
             } else {
+                console.log('error', err);
                 next(new errors.generic);
             }
         });
@@ -74,7 +75,6 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
         },
         (err, createdExam) => {
 		if (!err && createdExam) {
-		    console.log('createdExam', createdExam);
 			req.flash("success", examName + " created Successfully");
 			res.redirect("/exams");
 		} else {
@@ -189,7 +189,8 @@ router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, nex
 	var examName = req.body.examName;
 	var examDate = req.body.examDate;
 	var examType = req.body.examType;
-	var positiveMarks = req.body.posMarks;
+    var batchId = req.body.batchName;
+    var positiveMarks = req.body.posMarks;
 	var negativeMarks = req.body.negMarks;
 	var totalTime = req.body.totalTime;
 
@@ -198,6 +199,7 @@ router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, nex
 				examName,
 				examDate,
 				examType,
+                batch: batchId,
 				positiveMarks,
 				negativeMarks,
                 totalTime
@@ -641,6 +643,7 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
 
 //giving question paper of particular exam
 router.get("/:username/exams/:examId/questionPaper", (req, res, next) => {
+    //TODO: filter exams, provide only those exams of the batch in which user belongs
 	var examId = req.params.examId;
 	Exam
         .findById(examId)

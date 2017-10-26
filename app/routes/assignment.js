@@ -5,7 +5,8 @@ var express = require("express"),
 	moment = require("moment-timezone"),
 	fs = require('fs'),
 
-	Assignment = require("../models/Assignment"),
+    Assignment = require("../models/Assignment"),
+    Batch = require("../models/Batch"),
 	errors = require("../error"),
 	middleware = require("../middleware"),
 
@@ -37,8 +38,35 @@ function assignmentUploadSuccess(req, res) {
 	res.redirect("/assignment/uploadAssignment");
 }
 
+router.get('/', middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+    Assignment.find({})
+        .populate(
+            {
+                path:'batch',
+                model: 'Batch'
+            }
+        )
+        .exec((err, foundAssignments) => {
+            if (!err && foundAssignments) {
+                res.render("assignments", {
+                    foundAssignments: foundAssignments
+                });
+            } else {
+                console.log(err);
+                next(new errors.generic);
+            }
+        });
+});
+
 router.get('/uploadAssignment', (req, res, next) => {
-	res.render('newAssignment');
+    Batch.find({}, (err, foundBatches) => {
+        if(!err && foundBatches){
+            res.render("newAssignment", {batches: foundBatches});
+        }else{
+            console.log('error', err);
+            next(new errors.generic());
+        }
+    });
 });
 
 router.post('/uploadAssignment', function (req, res, next) {
@@ -53,7 +81,7 @@ router.post('/uploadAssignment', function (req, res, next) {
 		var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
 		var lastSubDate = req.body.lastSubDate;
 		var filePath = req.file.path;
-
+        var batchId = req.body.batchName;
 
 
 		var newAssignment = {
@@ -63,7 +91,17 @@ router.post('/uploadAssignment', function (req, res, next) {
 			filePath
 		};
 
-		Assignment.create(newAssignment, (err, createdAsssignment) =>{
+		Assignment.findOneAndUpdate(newAssignment,
+            {
+                $set:{
+                    batch: batchId
+                }
+            }, {
+                upsert: true,
+                new: true,
+                setDefaultsOnInsert: true
+            },
+            (err, createdAsssignment) =>{
 			if (!err && createdAsssignment) {
 				assignmentUploadSuccess(req, res);
 			} else {
@@ -74,8 +112,68 @@ router.post('/uploadAssignment', function (req, res, next) {
 	});
 });
 
+router.get("/:assignmentId/edit", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+    var assignmentId = req.params.assignmentId;
+
+    Batch.find({}, (err, foundBatches) => {
+        if(!err && foundBatches){
+            Assignment.findById(assignmentId)
+                .populate(
+                    {
+                        path:'batch',
+                        model: "Batch"
+                    }
+                )
+                .exec((err, foundAssignment) => {
+                    if (!err && foundAssignment) {
+                        res.render("editAssignment", {
+                            assignment: foundAssignment,
+                            batches: foundBatches
+                        });
+                    }
+                })
+        }else{
+            console.log('error', err);
+            next(new errors.generic());
+        }
+    });
+});
+
+router.put("/:assignmentId", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+    var assignmentId = req.params.assignmentId;
+    var assignmentName = req.body.assignmentName;
+    var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
+    var lastSubDate = req.body.lastSubDate;
+    var batchId = req.body.batchName;
+
+    Assignment.findByIdAndUpdate(assignmentId, {
+            $set: {
+                assignmentName,
+                uploadDate,
+                lastSubDate,
+                batch: batchId,
+            }
+        }, {
+            upsert: true,
+            new: true,
+            setDefaultsOnInsert: true
+        },
+        (err, updatedAssignment) => {
+            if (!err && updatedAssignment) {
+                req.flash("success", assignmentName + " updated Successfully");
+                res.redirect("/assignment");
+            } else {
+                console.log(err);
+                next(new errors.generic);
+            }
+        }
+    );
+});
+
+
 router.get('/:username/assignments', (req, res, next) => {
-	Assignment.find({}, (err, foundAssignments) => {
+    //TODO: filter assignments, provide only those assignments of the batch in which user belongs
+    Assignment.find({}, (err, foundAssignments) => {
 		if (!err && foundAssignments) {
 			res.send({assignments: foundAssignments});
 		} else {

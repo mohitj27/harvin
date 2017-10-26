@@ -13,6 +13,7 @@ var express = require("express"),
 	Subject = require("../models/Subject.js"),
 	Class = require("../models/Class.js"),
     User = require("../models/User.js"),
+    Assignment = require("../models/Assignment.js"),
     Exam = require("../models/Exam.js"),
 	Batch = require("../models/Batch.js"),
 	Profile = require("../models/Profile.js"),
@@ -64,6 +65,24 @@ router.get('/exams', middleware.isLoggedIn, middleware.isAdmin, (req, res, next)
 
 });
 
+router.get('/assignments', middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+    Assignment.find({})
+        .populate(
+            {
+                path:'batch',
+                model: 'Batch'
+            }
+        )
+        .exec((err, foundAssignment) => {
+            if(!err && foundAssignment){
+                res.render('assignmentDb', {assignments: foundAssignment});
+            }else{
+                console.log(err);
+                next(new errors.generic());
+            }
+        });
+
+});
 // //file update helper
 // function fileUpdateSuccess(req, res, currentObject) {
 // 	req.flash("success", currentObject.fileName + " updated successfully");

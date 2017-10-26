@@ -1,0 +1,46 @@
+<% include partials/header.ejs%>
+	<h1 style="text-align: center">Upload new Assignment</h1>
+
+	<div class="container">
+		<div style="width: 50%; margin:25px auto;">
+			<form action="/assignment/<%=assignment._id%>?_method=put" method="post" class="form-horizontal">
+				<div class="form-group">
+					<label for="assignmentName" class="col-sm-3 control-label">Assignment Name</label>
+					<div class="col-sm-9">
+						<input autofocus required name="assignmentName" type="text" class="form-control" id="assignmentName" placeholder="Give Assignment name" value="<%=assignment.assignmentName%>">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="lastSubDate" class="col-sm-3 control-label">Last Submission Date</label>
+					<div class="col-sm-9">
+						<input autofocus required name="lastSubDate" type="datetime" data-field="datetime" id="lastSubDate" class="form-control" placeholder="Click to choose Last Submission Date and Time" value="<%=assignment.lastSubDate%>">
+						<div id="dtBox"></div>
+					</div>
+                </div>
+				<div class="form-group">
+					<label for="forBatch" class="col-sm-3 control-label">For Batch</label>
+					<div class="col-sm-1">
+						<select data-live-search="true" title="Choose the Batch" required class="selectpicker show-tick"  name="batchName" id="forBatch">
+                            <%batches.forEach(function (batch) {%>
+							<option value="<%=batch._id%>"
+                                    <% if(assignment.batch){ %>
+                                    <%if(assignment.batch._id.toString() == batch._id.toString()){%>
+									selected
+                                    <%}%>
+                                    <% }else{ %>
+
+                                    <%}%>
+
+							><%=batch.batchName%></option>
+                            <%})%>
+						</select>
+					</div>
+				</div>
+                <hr>
+                <input type="submit" class="btn btn-primary">
+			</form>
+		</div>
+	</div>
+
+	<% include partials/footer.ejs%>
+
