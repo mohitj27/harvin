@@ -153,8 +153,7 @@ router.post("/loginWithEmail", (req, res, next) => {
 								function (err, user) {
 									if (err) {
 										console.log(err);
-										req.flash("error", err.message);
-										return res.redirect("/student/signup");
+										callback(err);
 									} else if (user && !err) {
 										callback(null, user);
 									}
@@ -480,6 +479,28 @@ router.get("/:username/subjects", function (req, res) {
 				});
 			} else {}
 		});
+});
+
+router.get('/:username/results', function(req, res, next) {
+    let username = req.params.username;
+    User.findOne(
+            {username: username}
+        )
+        .populate(
+            {
+                path:'profile',
+                model:'Profile',
+                populate:{
+                    path:'results',
+                    model:'Result'
+                }
+            }
+        )
+        .exec((err, foundUser) => {
+            if(!err && foundUser){
+                res.json({ results: foundUser.profile.results});
+            }
+        });
 });
 
 router.get("/:username/progresses", (req, res, next) => {

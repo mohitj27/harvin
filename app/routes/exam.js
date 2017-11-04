@@ -525,6 +525,76 @@ router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middle
 	});
 });	
 
+router.post('/:examId/question-paper/:username', (req, res, next) => {
+    let examId = req.params.examId;
+    let username = req.params.username;
+    Exam.findById(examId, (err, foundExam) => {
+        if(!err && foundExam) {
+            let result = {
+                examName: foundExam.examName,
+                examTakenDate: moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
+                nQuestions: req.body.nQuestions ,
+                nQuestionsAttempted: req.body.nQuestionsAttempted ,
+                nQuestionsAnswered: req.body.nQuestionsAnswered ,
+                nQuestionsUnanswered: req.body.nQuestionsUnanswered ,
+                nQuestionsUnAttempted: req.body.nQuestionsUnAttempted ,
+                nCorrectAns: req.body.nCorrectAns ,
+                nIncorrectAns: req.body.nIncorrectAns ,
+                mTotal: req.body.mTotal ,
+            };
+
+            User.findOne(
+                {username: username}
+            )
+                .populate(
+                    {
+                        path:'profile',
+                        model: 'Profile'
+                    }
+                )
+                .exec((err, foundUser) => {
+                    if(!err && foundUser){
+                        Result.create(result, (err, createdResult) => {
+                            if(!err && createdResult){
+                                Profile.findByIdAndUpdate(
+                                    foundUser.profile._id,
+                                    {
+                                        $addToSet:{
+                                            results: createdResult._id
+                                        }
+                                    }, {
+                                        upsert: true,
+                                        new: true,
+                                        setDefaultsOnInsert: true
+                                    },
+                                    (err, updatedProfile) => {
+                                        if(!err && updatedProfile){
+                                            res.json(
+                                                {
+                                                    success: true,
+                                                    msg: "Your result has been saved successfully",
+                                                    result: createdResult
+                                                }
+                                            );
+                                        }
+                                    }
+                                )
+                            }else{
+                                console.log(err);
+                                throw err;
+                            }
+                        });
+                    }
+                });
+        }else{
+            console.log(err);
+            throw err;
+        }
+    });
+
+
+});
+
 router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	var examId = req.params.examId;
 	var questionsIdString = req.body.questions || "";
