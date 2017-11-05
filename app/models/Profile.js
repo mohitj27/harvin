@@ -19,6 +19,12 @@ var profileSchema = new Schema(
             required:true,
             default:"0000000000"
         },
+        results:[
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Result"
+            }
+        ],
         batch:{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Batch"

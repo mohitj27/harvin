@@ -1,12 +1,16 @@
 var express = require("express"),
 	async = require("async"),
-
+	moment = require("moment-timezone"),
+	
 	Batch = require("../models/Batch"),
 	QB_Class = require("../models/QB_Class"),
 	QB_Subject = require("../models/QB_Subject"),
 	QB_Chapter = require("../models/QB_Chapter"),
 	Question = require("../models/Question"),
 	QuestionPaper = require("../models/QuestionPaper"),
+	User = require("../models/User.js"),
+	Profile = require("../models/Profile.js"),
+	Result = require("../models/Result.js"),
 	Exam = require("../models/Exam"),
 	errors = require("../error"),
 	middleware = require("../middleware"),
@@ -541,7 +545,7 @@ router.post('/:examId/question-paper/:username', (req, res, next) => {
                 nCorrectAns: req.body.nCorrectAns ,
                 nIncorrectAns: req.body.nIncorrectAns ,
                 mTotal: req.body.mTotal ,
-            };
+			};
 
             User.findOne(
                 {username: username}
@@ -581,14 +585,14 @@ router.post('/:examId/question-paper/:username', (req, res, next) => {
                                 )
                             }else{
                                 console.log(err);
-                                throw err;
+                                next(new errors.generic);
                             }
                         });
                     }
                 });
         }else{
             console.log(err);
-            throw err;
+            next(new errors.generic);
         }
     });
 
