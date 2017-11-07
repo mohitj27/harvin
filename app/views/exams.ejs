@@ -8,19 +8,20 @@
         </div>
 		
 		<div class="row">
-			<div class="col-xs-2"><b>Name</b></div>
+			<div class="col-xs-1"><b>Name</b></div>
 			<div class="col-xs-2"><b>Date</b></div>
             <div class="col-xs-2"><b>Type</b></div>
             <div class="col-xs-1"><b>For Batch</b></div>
 			<div class="col-xs-1"><b>Positive Marks</b></div>
-            <div class="col-xs-1"><b>Negative Marks</b></div>
+			<div class="col-xs-1"><b>Negative Marks</b></div>
+			<div class="col-xs-1"><b>Maximum Marks</b></div>
             <div class="col-xs-1"><b>Total Time</b></div>
 		</div>
 		
 		<% if(foundExams && foundExams.length > 0){ %>
 			<% foundExams.forEach(function(exam){ %>
 				<div class="row">
-					<div class="col-xs-2">
+					<div class="col-xs-1">
 						<a href="/exams/<%=exam._id%>/question-paper/"><%=exam.examName%></a>
 					</div>
 					<div class="col-xs-2"><%=exam.examDate%></div>
@@ -32,6 +33,7 @@
                     <%}%>
                     <div class="col-xs-1"><%=exam.positiveMarks%></div>
 					<div class="col-xs-1"><%=exam.negativeMarks%></div>
+					<div class="col-xs-1"><%=exam.maximumMarks%></div>
 					<div class="col-xs-1"><%=exam.totalTime%></div>
 
 					<div class="col-xs-1">

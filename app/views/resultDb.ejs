@@ -1,0 +1,39 @@
+<% include partials/header.ejs%>
+
+<div class="container">
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/db">Database</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Results</li>
+        </ol>
+    </nav>
+
+    <table width="100%">
+        <thead>
+        <tr>
+            <th width="(100/10)%" style="text-align: center">Serial no.</th>
+            <th width="(100/10)%" style="text-align: center">Name</th>
+            <th width="(100/10)%" style="text-align: center">Batch</th>
+            <th width="(100/10)%" style="text-align: center">Date</th>
+            <th width="(100/10)%" style="text-align: center">Exam</th>
+            <th width="(100/10)%" style="text-align: center">Marks</th>
+        </tr>
+        </thead>
+        <tbody>
+        <%results.forEach(function (result, i) { %>
+        <tr>
+            <td width="(100/10)%" height="40px" style="text-align: center"><%=i+1%></td>
+            <%if(result.user && result.user != null){%><td width="(100/5)%" style="text-align: center"><%=result.user.username%></td><%}%>
+            <%if(result.user.profile && result.user.profile.batch){%><td width="(100/5)%" style="text-align: center"><%=result.user.profile.batch.batchName%></td><%}%>
+            <td width="(100/10)%" height="40px" style="text-align: center"><%=result.examTakenDate%></td>
+            <%if(result.exam ){%><td width="(100/5)%" style="text-align: center"><%=result.exam.examName%></td><%}%>
+            <%if(result.exam && result.exam.maximumMarks ){%><td width="(100/5)%" style="text-align: center"><%=result.mTotal%> / <%=result.exam.maximumMarks%></td><%}%>
+        </tr>
+
+        <%})%>
+
+        </tbody>
+    </table>
+</div>
+
+<% include partials/footer.ejs%>

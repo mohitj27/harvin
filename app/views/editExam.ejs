@@ -73,13 +73,19 @@
                 <div class="form-group">
                     <label for="posMarks" class="col-sm-3 control-label">Positive Marks</label>
                     <div class="col-sm-9">
-                        <input required name="posMarks" type="number" class="form-control" id="passMarks" placeholder="Minimum marks to pass this exam" value="<%=exam.positiveMarks%>">
+                        <input required name="posMarks" type="number" class="form-control" id="posMarks" placeholder="Positive marks ? If answered correctly" value="<%=exam.positiveMarks%>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="negMarks" class="col-sm-3 control-label">Negative Marks</label>
                     <div class="col-sm-9">
                         <input required name="negMarks" type="number" class="form-control" id="negMarks" placeholder="Negative marks ? If answered incorrectly" value="<%=exam.negativeMarks%>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="maxMarks" class="col-sm-3 control-label">Maximum Marks</label>
+                    <div class="col-sm-9">
+                        <input autofocus required name="maxMarks" type="number" class="form-control" id="maxMarks" placeholder="Maximum marks allowed for this exam" value="<%=exam.maximumMarks%>">
                     </div>
                 </div>
                 <input type="submit" class="btn btn-primary">
