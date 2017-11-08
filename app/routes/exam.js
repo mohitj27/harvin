@@ -534,17 +534,19 @@ router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middle
 });
 
 router.post('/:examId/question-paper/:username', (req, res, next) => {
+  console.log('params', req.params);
+  console.log('body', req.body);
   let examId = req.params.examId;
   let username = req.params.username;
   Exam.findById(examId, (err, foundExam) => {
     if(!err && foundExam) {
       let result = {
         examTakenDate: moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
-        nQuestionsAnswered: req.body.nQuestionsAnswered ,
-        nQuestionsUnanswered: req.body.nQuestionsUnanswered ,
-        nCorrectAns: req.body.nCorrectAns ,
-        nIncorrectAns: req.body.nIncorrectAns ,
-        mTotal: req.body.mTotal ,
+        nQuestionsAnswered: req.body.nQuestionsAnswered || -1,
+        nQuestionsUnanswered: req.body.nQuestionsUnanswered || -1,
+        nCorrectAns: req.body.nCorrectAns || -1,
+        nIncorrectAns: req.body.nIncorrectAns || -1 ,
+        mTotal: req.body.mTotal || -1 ,
       };
 
       User.findOne(
