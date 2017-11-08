@@ -603,7 +603,7 @@ router.post('/:examId/question-paper/:username', (req, res, next) => {
                           }
                       )
                     }else{
-                      console.log(err);
+                      console.log('result',err);
                       next(new errors.generic);
                     }
                   }
@@ -611,7 +611,7 @@ router.post('/:examId/question-paper/:username', (req, res, next) => {
             }
           });
     }else{
-      console.log(err);
+      console.log('exam', err);
       next(new errors.generic);
     }
   });
