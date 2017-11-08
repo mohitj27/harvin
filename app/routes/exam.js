@@ -534,19 +534,17 @@ router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middle
 });
 
 router.post('/:examId/question-paper/:username', (req, res, next) => {
-  console.log('params', req.params);
-  console.log('body', req.body);
   let examId = req.params.examId;
   let username = req.params.username;
   Exam.findById(examId, (err, foundExam) => {
     if(!err && foundExam) {
       let result = {
         examTakenDate: moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
-        nQuestionsAnswered: req.body.nQuestionsAnswered || -1,
-        nQuestionsUnanswered: req.body.nQuestionsUnanswered || -1,
-        nCorrectAns: req.body.nCorrectAns || -1,
-        nIncorrectAns: req.body.nIncorrectAns || -1 ,
-        mTotal: req.body.mTotal || -1 ,
+        nQuestionsAnswered: req.body.nQuestionsAnswered ,
+        nQuestionsUnanswered: req.body.nQuestionsUnanswered ,
+        nCorrectAns: req.body.nCorrectAns ,
+        nIncorrectAns: req.body.nIncorrectAns  ,
+        mTotal: req.body.mTotal  ,
       };
 
       User.findOne(
@@ -560,54 +558,46 @@ router.post('/:examId/question-paper/:username', (req, res, next) => {
           )
           .exec((err, foundUser) => {
             if(!err && foundUser){
-
-              Result.findOneAndUpdate(
-                  {examTakenDate: result.examTakenDate},
-                  {
-                    $set:{
-                      user: foundUser._id,
-                      exam: foundExam._id,
-                      nQuestionsAnswered: result.nQuestionsAnswered ,
-                      nQuestionsUnanswered: result.nQuestionsUnanswered ,
-                      nCorrectAns: result.nCorrectAns,
-                      nIncorrectAns: result.nIncorrectAns,
-                      mTotal: result.mTotal,
+              let newResult = new Result({
+                examTakenDate: result.examTakenDate,
+                nQuestionsAnswered: result.nQuestionsAnswered ,
+                nQuestionsUnanswered: result.nQuestionsUnanswered ,
+                nCorrectAns: result.nCorrectAns,
+                nIncorrectAns: result.nIncorrectAns,
+                mTotal: result.mTotal,
+                user: foundUser._id,
+                exam: foundExam._id
+              });
+              newResult.save(err => {
+                if(!err){
+                  Profile.findByIdAndUpdate(
+                    foundUser.profile._id,
+                    {
+                      $addToSet:{
+                        results: newResult._id
+                      }
+                    }, {
+                      upsert: true,
+                      new: true,
+                      setDefaultsOnInsert: true
                     },
-                  }, {
-                    upsert: true,
-                    new: true,
-                    setDefaultsOnInsert: true
-                  }, (err, createdResult) => {
-                    if(!err && createdResult){
-                      Profile.findByIdAndUpdate(
-                          foundUser.profile._id,
-                          {
-                            $addToSet:{
-                              results: createdResult._id
+                    (err, updatedProfile) => {
+                      if(!err && updatedProfile){
+                        res.json(
+                            {
+                              success: true,
+                              msg: "Your result has been saved successfully",
+                              result: newResult
                             }
-                          }, {
-                            upsert: true,
-                            new: true,
-                            setDefaultsOnInsert: true
-                          },
-                          (err, updatedProfile) => {
-                            if(!err && updatedProfile){
-                              res.json(
-                                  {
-                                    success: true,
-                                    msg: "Your result has been saved successfully",
-                                    result: createdResult
-                                  }
-                              );
-                            }
-                          }
-                      )
-                    }else{
-                      console.log('result',err);
-                      next(new errors.generic);
+                        );
+                      }
                     }
-                  }
-              );
+                );
+                }else{
+                  console.log('result',err);
+                  next(new errors.generic);
+                }
+              });
             }
           });
     }else{
