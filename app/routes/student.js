@@ -140,7 +140,7 @@ router.post("/loginWithEmail", (req, res, next) => {
 					batch: ''
 				};
 
-				if(foundUser.profile.batch && foundUser.profile.batch.batchName){
+				if(foundUser.profile && foundUser.profile.batch && foundUser.profile.batch.batchName){
 					userDetail.batch = foundUser.profile.batch.batchName;
 				}
 
