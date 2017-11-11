@@ -141,9 +141,9 @@ router.post("/loginWithEmail", (req, res, next) => {
 				};
 
 				if(foundUser.profile.batch && foundUser.profile.batch.batchName){
-					userDetail.batch = batch;
+					userDetail.batch = foundUser.profile.batch.batchName;
 				}
-				
+
 				res.json(userDetail);
 			} else if (foundUser == null) {
 				//
