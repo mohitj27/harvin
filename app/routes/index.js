@@ -2,6 +2,7 @@ var express = require("express"),
     router = express.Router(),
     passport = require("passport"),
     User = require("../models/User.js"),
+    Profile = require("../models/Profile.js"),
 
     adminRoutes = require("./admin"),
     studentRoutes = require("./student"),
@@ -36,22 +37,46 @@ router.get("/", function (req, res) {
   res.render("home");
 });
 
+router.delete('/users/:userId', (req, res, next) => {
+  const userId = req.params.userId;
+  User.findById(userId, (err, foundUser) => {
+    if (!err && foundUser) {
+      if (foundUser.profile) {
+        const profileId = foundUser.profile._id;
+        Profile.findByIdAndRemove(profileId, (err) => {
+          if (!err) {
+            foundUser.remove();
+            req.flash('success', 'User removed successfully');
+            res.redirect('/db/users');
+          }
+        })
+
+      } else {
+        foundUser.remove();
+        req.flash('success', 'User removed successfully');
+        res.redirect('/db/users');
+
+      }
+    }
+  });
+});
+
 //user login -- for admin
 router.get("/signup", function (req, res) {
-  res.render("signup",{
+  res.render("signup", {
     error: res.locals.msg_error[0]
   });
 });
 
 router.post("/signup", function (req, res) {
-  var newUser = new User({username: req.body.username, role: req.body.role });
-  User.register(newUser, req.body.password, function(err, user){
-    if(err){
+  var newUser = new User({username: req.body.username, role: req.body.role});
+  User.register(newUser, req.body.password, function (err, user) {
+    if (err) {
       console.log('err', err);
       req.flash("error", err.message);
       return res.redirect('/signup');
     }
-    passport.authenticate("local") (req, res, function(){
+    passport.authenticate("local")(req, res, function () {
       req.flash("success", "Welcome to Harvin Academy :)");
       res.redirect("/");
     });
@@ -60,7 +85,7 @@ router.post("/signup", function (req, res) {
 
 //user login -- for admin
 router.get("/login", function (req, res) {
-  res.render("login",{
+  res.render("login", {
     error: res.locals.msg_error[0]
   });
 });

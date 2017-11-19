@@ -1,36 +1,63 @@
-<% include partials/header.ejs%>
+<% include partials/header.ejs %>
 
 <div class="container">
-    <nav aria-label="breadcrumb" role="navigation">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/db">Database</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Users</li>
-        </ol>
-    </nav>
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/db">Database</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Users</li>
+    </ol>
+  </nav>
 
-    <table width="100%">
-        <thead>
-        <tr>
-            <th width="(100/5)%" style="text-align: center">Serial no.</th>
-            <th width="(100/5)%" style="text-align: center">User Name</th>
-            <th width="(100/5)%" style="text-align: center">Contact no.</th>
-            <th width="(100/5)%" style="text-align: center">Email Id</th>
-            <th width="(100/5)%" style="text-align: center">Registered in Batch</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%users.forEach(function (user, i) { %>
-        <tr>
-            <%if(user.profile && user.profile != null){%><td width="(100/5)%" style="text-align: center"><%=i+1%></td><%}%>
-            <%if(user.profile && user.profile != null){%><td width="(100/5)%" style="text-align: center"><%=user.username%></td><%}%>
-            <%if(user.profile && user.profile != null){%><td width="(100/5)%" style="text-align: center"><%=user.profile.phone%></td><%}%>
-            <%if(user.profile && user.profile != null){%><td width="(100/5)%" style="text-align: center"><%=user.profile.emailId%></td><%}%>
-            <%if(user.profile && user.profile != null && user.profile.batch){%><td width="(100/5)%" style="text-align: center"><%=user.profile.batch.batchName%></td><%}%>
-        </tr>
-        <%})%>
+  <table width="100%">
+    <thead>
+    <tr>
+      <th width="(100/6)%" style="text-align: center">Serial no.</th>
+      <th width="(100/6)%" style="text-align: center">Name</th>
+      <th width="(100/6)%" style="text-align: center">Contact no.</th>
+      <th width="(100/6)%" style="text-align: center">Email Id</th>
+      <th width="(100/6)%" style="text-align: center">Registered in Batch</th>
+      <th width="(100/6)%" style="text-align: center">Delete</th>
 
-        </tbody>
-    </table>
+    </tr>
+    </thead>
+    <tbody>
+    <% users.forEach(function (user, i) { %>
+    <tr>
+      <td width="(100/6)%" style="text-align: center"><%= i + 1 %></td>
+
+      <td width="(100/6)%" style="text-align: center"><%= user.username %></td>
+
+      <% if(user.profile && user.profile != null){ %>
+      <td width="(100/6)%" style="text-align: center"><%= user.profile.phone %></td>
+      <% } else { %>
+      <td width="(100/6)%" style="text-align: center">----
+      </td>
+      <% } %>
+
+      <% if(user.profile && user.profile != null){ %>
+      <td width="(100/6)%" style="text-align: center"><%= user.profile.emailId %></td>
+      <% } else { %>
+      <td width="(100/6)%" style="text-align: center">----
+      </td>
+      <% } %>
+
+      <% if(user.profile && user.profile != null && user.profile.batch){ %>
+      <td width="(100/6)%" style="text-align: center"><%= user.profile.batch.batchName %></td>
+      <% } else { %>
+      <td width="(100/6)%" style="text-align: center">----
+      </td>
+      <% } %>
+
+      <td width="(100/6)%" height="40px" style="text-align: center">
+        <form action="/users/<%= user._id %>?_method=delete" method="post">
+          <button class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+
+    </tbody>
+  </table>
 </div>
 
-<% include partials/footer.ejs%>
+<% include partials/footer.ejs %>
