@@ -20,7 +20,7 @@ var express = require("express"),
 	middleware = require("../middleware");
 
 
-router.get('/', middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.get('/', middleware.isLoggedIn, (req, res, next) => {
     res.render('dbCollection');
 });
 

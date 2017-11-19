@@ -33,6 +33,7 @@
     "express-error-handler": "^1.1.0",
     "express-session": "^1.15.3",
     "file-system": "^2.2.2",
+    "lodash": "^4.17.4",
     "method-override": "^2.3.9",
     "mocha": "^3.5.0",
     "moment": "^2.18.1",

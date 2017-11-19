@@ -90,7 +90,7 @@ app.use(function (err, req, res, next) {
 	if (err) {
 		err.statusCode = err.statusCode || 500;
 		res.status(err.statusCode);
-		if ("development" == app.get("env")) {
+		if ("development" === app.get("env")) {
 			res.render('error', {
 				name: err.name || "",
 				message: err.message || "",

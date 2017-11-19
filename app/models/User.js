@@ -5,23 +5,22 @@ var Schema = mongoose.Schema;
 //User schema
 var userSchema = new Schema(
     {
-        username: {
-            type: String,
-            unique:true,
-            required:true
-        },
-        password:{
-            type:String
-        },
-        isAdmin :{
-            type:Boolean,
-            required:true,
-            default:false
-        },
-        profile:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Profile"
-        }
+      username: {
+        type: String,
+        unique: true,
+        required: true
+      },
+      password: {
+        type: String
+      },
+      role: {
+        type: [{ type: String, enum: [ 'admin', 'centre', 'student' ] }],
+        default: 'student'
+      },
+      profile: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Profile"
+      }
     }
 );
 

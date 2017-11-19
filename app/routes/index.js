@@ -12,6 +12,7 @@ var express = require("express"),
     assignmentRoutes = require("./assignment"),
     qbRoutes = require("./questionBank"),
     resultsRoutes = require("./results"),
+    queryRoutes = require('./query'),
 
     Topic = require("../models/Topic.js"),
     Chapter = require("../models/Chapter.js"),
@@ -28,6 +29,7 @@ router.use("/exams", examRoutes);
 router.use("/assignment", assignmentRoutes);
 router.use("/questionBank", qbRoutes);
 router.use("/results", resultsRoutes);
+router.use('/queries', queryRoutes)
 
 //Home
 router.get("/", function (req, res) {
@@ -42,9 +44,10 @@ router.get("/signup", function (req, res) {
 });
 
 router.post("/signup", function (req, res) {
-  var newUser = new User({username: req.body.username, isAdmin: true});
+  var newUser = new User({username: req.body.username, role: req.body.role });
   User.register(newUser, req.body.password, function(err, user){
     if(err){
+      console.log('err', err);
       req.flash("error", err.message);
       return res.redirect('/signup');
     }

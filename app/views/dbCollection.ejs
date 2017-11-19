@@ -1,87 +1,101 @@
-<% include partials/header.ejs%>
+<% include partials/header.ejs %>
 
 <div class="container">
-    <nav aria-label="breadcrumb" role="navigation">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">Database</li>
-        </ol>
-    </nav>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card" >
-                <img class="card-img-top" style="width: 200px; height:200px" src="user.jpg" >
-                <div class="card-body">
-                    <h2 class="card-title">User profiles</h2>
-                    <p class="card-text">Profiles of the all registered users and their details</p>
-                    <div >
-                        <a href="/db/users" class="btn btn-primary" style="width: 70%">User profiles</a>
-                    </div>
-                </div>
-            </div>
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Database</li>
+    </ol>
+  </nav>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <img class="card-img-top" style="width: 200px; height:200px" src="user.jpg">
+        <div class="card-body">
+          <h2 class="card-title">User profiles</h2>
+          <p class="card-text">Profiles of the all registered users and their details</p>
+          <div>
+            <a href="/db/users" class="btn btn-primary" style="width: 70%">User profiles</a>
+          </div>
         </div>
-        <div class="col-md-4">
-            <div class="card" >
-                <img class="card-img-top" style="width: 200px; height:200px" src="exam.png" >
-                <div class="card-body">
-                    <h2 class="card-title">Exams</h2>
-                    <p class="card-text">List of all exams and their details</p>
-                    <div >
-                        <a href="/db/exams" class="btn btn-primary" style="width: 70%">Exams</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card" >
-                <img class="card-img-top" style="width: 200px; height: 200px;" src="assignments.jpg" >
-                <div class="card-body">
-                    <h2 class="card-title">Assignments</h2>
-                    <p class="card-text">List of all assignments and their details</p>
-                    <div >
-                        <a href="/db/assignments" class="btn btn-primary" style="width: 70%">Assignments</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card" >
-                <img class="card-img-top" style="width: 200px; height:200px" src="files.jpg" >
-                <div class="card-body">
-                    <h2 class="card-title">Files</h2>
-                    <p class="card-text">List of all all uploaded files and their details</p>
-                    <div >
-                        <a href="/db/files" class="btn btn-primary" style="width: 70%">Files</a>
-                    </div>
-                </div>
-            </div>
+    <div class="col-md-4">
+      <div class="card">
+        <img class="card-img-top" style="width: 200px; height:200px" src="exam.png">
+        <div class="card-body">
+          <h2 class="card-title">Exams</h2>
+          <p class="card-text">List of all exams and their details</p>
+          <div>
+            <a href="/db/exams" class="btn btn-primary" style="width: 70%">Exams</a>
+          </div>
         </div>
-        <div class="col-md-4">
-            <div class="card" >
-                <img class="card-img-top" style="width: 200px; height:200px" src="question.jpg" >
-                <div class="card-body">
-                    <h2 class="card-title">Question Bank</h2>
-                    <p class="card-text">List of all questions and their details</p>
-                    <div >
-                        <a href="/questionBank" class="btn btn-primary" style="width: 70%">Question Bank</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card" >
-                <img class="card-img-top" style="width: 200px; height:200px" src="results.png" >
-                <div class="card-body">
-                    <h2 class="card-title">Results</h2>
-                    <p class="card-text">List of all results and their details</p>
-                    <div >
-                        <a href="/results" class="btn btn-primary" style="width: 70%">Results</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="col-md-4">
+      <div class="card">
+        <img class="card-img-top" style="width: 200px; height: 200px;" src="assignments.jpg">
+        <div class="card-body">
+          <h2 class="card-title">Assignments</h2>
+          <p class="card-text">List of all assignments and their details</p>
+          <div>
+            <a href="/db/assignments" class="btn btn-primary" style="width: 70%">Assignments</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <img class="card-img-top" style="width: 200px; height:200px" src="files.jpg">
+        <div class="card-body">
+          <h2 class="card-title">Files</h2>
+          <p class="card-text">List of all all uploaded files and their details</p>
+          <div>
+            <a href="/db/files" class="btn btn-primary" style="width: 70%">Files</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <img class="card-img-top" style="width: 200px; height:200px" src="question.jpg">
+        <div class="card-body">
+          <h2 class="card-title">Question Bank</h2>
+          <p class="card-text">List of all questions and their details</p>
+          <div>
+            <a href="/questionBank" class="btn btn-primary" style="width: 70%">Question Bank</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <img class="card-img-top" style="width: 200px; height:200px" src="results.png">
+        <div class="card-body">
+          <h2 class="card-title">Results</h2>
+          <p class="card-text">List of all results and their details</p>
+          <div>
+            <a href="/results" class="btn btn-primary" style="width: 70%">Results</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <img class="card-img-top" style="width: 200px; height:200px" src="query.png">
+        <div class="card-body">
+          <h2 class="card-title">Student Queries</h2>
+          <p class="card-text">List of all Queries</p>
+          <div>
+            <a href="/queries" class="btn btn-primary" style="width: 70%">Student Queries</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<% include partials/footer.ejs%>
+<% include partials/footer.ejs %>
