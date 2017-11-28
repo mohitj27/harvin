@@ -34,6 +34,7 @@ router.use('/queries', queryRoutes)
 
 //Home
 router.get("/", function (req, res) {
+  console.log('home route');
   res.render("home");
 });
 
@@ -209,10 +210,10 @@ router.get("/topic/:topicName", function (req, res, next) {
   });
 });
 
-//if not route mentioned in url
-router.get("*", function (req, res) {
-  res.redirect("/");
-});
+// //if not route mentioned in url
+// router.get("*", function (req, res) {
+//   res.redirect("/");
+// });
 
 module.exports = router;
 
