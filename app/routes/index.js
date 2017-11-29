@@ -14,6 +14,7 @@ var express = require("express"),
     qbRoutes = require("./questionBank"),
     resultsRoutes = require("./results"),
     queryRoutes = require('./query'),
+    formRoutes = require('./form'),
 
     Topic = require("../models/Topic.js"),
     Chapter = require("../models/Chapter.js"),
@@ -30,11 +31,11 @@ router.use("/exams", examRoutes);
 router.use("/assignment", assignmentRoutes);
 router.use("/questionBank", qbRoutes);
 router.use("/results", resultsRoutes);
-router.use('/queries', queryRoutes)
+router.use('/queries', queryRoutes);
+router.use('/form', formRoutes);
 
 //Home
 router.get("/", function (req, res) {
-  console.log('home route');
   res.render("home");
 });
 
