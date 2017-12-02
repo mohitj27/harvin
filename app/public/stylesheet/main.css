@@ -1,6 +1,6 @@
 .row{
     margin: 30px auto;
-    
+
 }
 .column{
     text-align: center
@@ -10,7 +10,7 @@
     padding: 10px;
     margin: 10px auto;
     width:60%;
-    
+
 }
 
 .updateButton{
@@ -42,12 +42,12 @@
     -ms-user-select: none;
     user-select: none;
 }
- 
+
 .dropdown-menu a {
    overflow: hidden;
    outline: none;
 }
- 
+
 .additem input
 {
    border:0;
@@ -57,18 +57,18 @@
    color: #000;
    width: 99%;
 }
- 
+
 .additem:hover input
 {
    background-color: #f5f5f5;
 }
- 
+
 .additem .check-mark
 {
    opacity: 0;
    z-index: -1000;
 }
- 
+
 .addnewicon {
    position: relative;
    padding: 4px;
@@ -77,25 +77,25 @@
    margin-right: -50px;
    color: #aaa;
 }
- 
+
 .addnewicon:hover {
    color: #222;
 }
 
-.btn-file { 
-        position: relative; 
-        overflow: hidden; 
+.btn-file {
+        position: relative;
+        overflow: hidden;
         margin: 50px 0 0 0;
 }
 
 .submit{
-    margin: 30px 0px  
+    margin: 30px 0px
 }
 
 .new{
     margin: 20px
 }
-  
+
 /* for options of questions */
 
 #field {
@@ -106,10 +106,10 @@
     width: 70%;
     border: 1px solid #dadada;
     border-radius: 3px;
-    
-} 
 
-.opt:focus { 
+}
+
+.opt:focus {
     outline: none;
     border-color: #69a9f7;
     box-shadow: 0 0 7px #9ec7fa;
@@ -121,9 +121,48 @@
 }
 
 /* checkbox for choosing questions */
-.btn span.glyphicon {    			
-	opacity: 0;				
+.btn span.glyphicon {
+	opacity: 0;
 }
-.btn.active span.glyphicon {				
-    opacity: 1;				
+.btn.active span.glyphicon {
+    opacity: 1;
+}
+
+nav a .btn-collapse i{
+
+
+color: #13b38b !important;
+background-color: #f5f5f5;
+
+}
+nav{
+
+  color: #13b38b !important;
+  background-color: #f5f5f5 ;
+
+
+}
+nav .brand-logo{
+
+  color: #13b38b !important;
+  background-color: #f5f5f5;
+      padding-left: 16px !important;
+
+
+}
+.side-nav li>a{
+color: #13b38b;
+
+}
+*{
+  font-family: 'Montserrat', sans-serif;
+   font-weight: bold;
+  text-decoration: none !important;
+  color: #13b38b ;
+
+}
+
+nav ul a {
+
+  color: #13b38b;
 }
