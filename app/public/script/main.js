@@ -1,8 +1,22 @@
-$(function () {	
+$(function () {
 	//=========================================
 	//*****FILE UPLAOD************************
 	//=========================================
 	//content inside add button in selectpicker
+
+
+
+	///NAVBAR INIT
+	$('.button-collapse').sideNav({
+       menuWidth: 300, // Default is 300
+       edge: 'left', // Choose the horizontal origin
+       closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+       draggable: true, // Choose whether you can drag to open on touch screens,
+       onOpen: function(el) {},
+       onClose: function(el) {}
+     }
+   );
+
 	var content = "<input type=text onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
 
 	//divider btw options and add button in selectpicker
@@ -15,7 +29,7 @@ $(function () {
 		.addClass('additem lastTwo')
 		.data('content', content);
 
-	//appending divider and add item element	  
+	//appending divider and add item element
 	$(".selectpicker.addbtn")
 		.append(divider)
 		.append(addoption)
@@ -255,25 +269,25 @@ $(function () {
         $(addto).after(newInput);
         $(addRemove).after(removeButton);
         $("#field" + next).attr('data-source',$(addto).attr('data-source'));
-		$("#count").val(next);  
+		$("#count").val(next);
 		refreshAns();
 
 		//remove option click handler
-		$('.remove-me').off().click(function(e){ 
-			e.preventDefault(); 
+		$('.remove-me').off().click(function(e){
+			e.preventDefault();
 			console.log("remove", e)
-			var fieldNum = this.id.charAt(this.id.length-1); 
-			var fieldID = "#field" + fieldNum; 
-			$(this).remove(); 
-			$(fieldID).remove(); 
+			var fieldNum = this.id.charAt(this.id.length-1);
+			var fieldID = "#field" + fieldNum;
+			$(this).remove();
+			$(fieldID).remove();
 			refreshAns();
-		}); 
+		});
 	});
 
 	$('.refresh').on('click', function(){
 		refreshAns();
 	});
-	
+
 	//preventing submiting form on pressing enter
 	$(window).keydown(function(event){
 		if(event.keyCode == 13) {
@@ -353,7 +367,7 @@ function refreshAns(){
 	.filter(function (index) {
 		if(this.value.length > 0){
 			return $(this).val();
-		
+
 		}
 	});
 
@@ -371,7 +385,7 @@ function refreshAns(){
 		var cbox = '<div class="wrapAns"><label><input class="answer" type="checkbox" name = "answer" value="'+opt+'">'+options[j]+'</lable></div><br>';
 		$answerCheckbox.append(cbox);
 	}
-	
+
 }
 
 function addSelectItem(t, ev) {
@@ -404,4 +418,3 @@ function addSelectInpKeyPress(t, ev) {
 		addSelectItem($(t).next(), ev);
 	}
 }
-

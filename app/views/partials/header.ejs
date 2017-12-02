@@ -12,10 +12,19 @@
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous"></script>
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
           integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
           crossorigin="anonymous"></script>
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
   <script src="/dist/DateTimePicker.min.js" type="text/javascript"></script>
   <script src="/script/main.js"></script>
 
@@ -25,24 +34,20 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
   <link rel="stylesheet" type="text/css" href="/dist/DateTimePicker.min.css"/>
   <link rel="stylesheet" href="/stylesheet/main.css">
 </head>
 <body>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-              data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">Harvin Academy</a>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
+<nav>
+  <div  class="nav-wrapper">
+
+
+      <a class="brand-logo" href="/">Harvin Academy</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+      <ul class="side-nav " id="mobile-demo">
         <li><a href="/files/uploadFile">Upload File</a></li>
         <li><a href="/batches/updateBatch">Create Batch</a></li>
         <li><a href="/exams">Exams</a></li>
@@ -51,8 +56,6 @@
         <li><a href="/vms">VMS</a></li>
         <!-- <li><a href="/queries/new">New Query</a></li> -->
         <li><a href="/db">Database</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
         <% if(!currentUser){ %>
 
         <li><a href="/login">Login</a></li>
@@ -62,7 +65,26 @@
         <li><a href="/logout">Logout</a></li>
         <% } %>
       </ul>
-    </div>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/files/uploadFile">Upload File</a></li>
+        <li><a href="/batches/updateBatch">Create Batch</a></li>
+        <li><a href="/exams">Exams</a></li>
+        <li><a href="/assignment">Assignments</a></li>
+        <li><a href="/questionBank">Question Bank</a></li>
+        <li><a href="/queries/new">New Query</a></li>
+        <li><a href="/db">Database</a></li>
+        <% if(!currentUser){ %>
+
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Signup</a></li>
+        <% }else{ %>
+        <li><a href="#">Signed in as <%= currentUser.username %></a></li>
+        <li><a href="/logout">Logout</a></li>
+        <% } %>
+      </ul>
+
+
+
   </div>
 </nav>
 <div class="container">
@@ -78,4 +100,3 @@
   </div>
   <% } %>
 </div>
-        
