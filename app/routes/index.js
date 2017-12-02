@@ -13,6 +13,7 @@ var express = require("express"),
     assignmentRoutes = require("./assignment"),
     qbRoutes = require("./questionBank"),
     resultsRoutes = require("./results"),
+    vmsRoutes = require("./vms"),
     queryRoutes = require('./query'),
     formRoutes = require('./form'),
 
@@ -31,6 +32,7 @@ router.use("/exams", examRoutes);
 router.use("/assignment", assignmentRoutes);
 router.use("/questionBank", qbRoutes);
 router.use("/results", resultsRoutes);
+router.use("/vms", vmsRoutes);
 router.use('/queries', queryRoutes);
 router.use('/form', formRoutes);
 
