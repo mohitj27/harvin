@@ -1,168 +1,174 @@
-.row{
-    margin: 30px auto;
-
-}
-.column{
-    text-align: center
+.row {
+  margin: 30px auto;
 }
 
-.objectButton{
-    padding: 10px;
-    margin: 10px auto;
-    width:60%;
-
+.column {
+  text-align: center
 }
 
-.updateButton{
-    margin: 50px 20px;
+.objectButton {
+  padding: 10px;
+  margin: 10px auto;
+  width: 60%;
 }
 
-.deleteButton{
-    margin: 50px 20px;
-    float: right
+.updateButton {
+  margin: 50px 20px;
 }
 
-.ids{
-    padding: 10px;
-    margin: 10px;
-    width:80%
+.deleteButton {
+  margin: 50px 20px;
+  float: right
 }
 
-.updateBatch{
-    margin: 8px;
-    background-color:#F8F8F8;
-    border-color: white
+.ids {
+  padding: 10px;
+  margin: 10px;
+  width: 80%
+}
+
+.updateBatch {
+  margin: 8px;
+  background-color: #F8F8F8;
+  border-color: white
 }
 
 .dropdown-menu {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .dropdown-menu a {
-   overflow: hidden;
-   outline: none;
+  overflow: hidden;
+  outline: none;
 }
 
-.additem input
-{
-   border:0;
-   margin:-3px;
-   padding:3px;
-   outline: none;
-   color: #000;
-   width: 99%;
+.additem input {
+  border: 0;
+  margin: -3px;
+  padding: 3px;
+  outline: none;
+  color: #000;
+  width: 99%;
 }
 
-.additem:hover input
-{
-   background-color: #f5f5f5;
+.additem:hover input {
+  background-color: #f5f5f5;
 }
 
-.additem .check-mark
-{
-   opacity: 0;
-   z-index: -1000;
+.additem .check-mark {
+  opacity: 0;
+  z-index: -1000;
 }
 
 .addnewicon {
-   position: relative;
-   padding: 4px;
-   margin: -8px;
-   padding-right: 50px;
-   margin-right: -50px;
-   color: #aaa;
+  position: relative;
+  padding: 4px;
+  margin: -8px;
+  padding-right: 50px;
+  margin-right: -50px;
+  color: #aaa;
 }
 
 .addnewicon:hover {
-   color: #222;
+  color: #222;
 }
 
 .btn-file {
-        position: relative;
-        overflow: hidden;
-        margin: 50px 0 0 0;
+  position: relative;
+  overflow: hidden;
+  margin: 50px 0 0 0;
 }
 
-.submit{
-    margin: 30px 0px
+.submit {
+  margin: 30px 0px
 }
 
-.new{
-    margin: 20px
+.new {
+  margin: 20px
 }
 
 /* for options of questions */
 
 #field {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-.opt{
-    width: 70%;
-    border: 1px solid #dadada;
-    border-radius: 3px;
-
+.opt {
+  width: 70%;
+  border: 1px solid #dadada;
+  border-radius: 3px;
 }
 
 .opt:focus {
-    outline: none;
-    border-color: #69a9f7;
-    box-shadow: 0 0 7px #9ec7fa;
+  outline: none;
+  border-color: #69a9f7;
+  box-shadow: 0 0 7px #9ec7fa;
 }
 
 /* ans wrapper for the answer checkbox */
-.wrapAns{
-    margin: 2px;
+
+.wrapAns {
+  margin: 2px;
 }
 
 /* checkbox for choosing questions */
+
 .btn span.glyphicon {
-	opacity: 0;
+  opacity: 0;
 }
+
 .btn.active span.glyphicon {
-    opacity: 1;
+  opacity: 1;
 }
 
-nav a .btn-collapse i{
-
-
-color: #13b38b !important;
-background-color: #f5f5f5;
-
-}
-nav{
-
-  color: #13b38b !important;
-  background-color: #f5f5f5 ;
-
-
-}
-nav .brand-logo{
-
+nav a .btn-collapse i {
   color: #13b38b !important;
   background-color: #f5f5f5;
-      padding-left: 16px !important;
+}
 
+nav {
+  color: #13b38b !important;
+  background-color: #ffffff;
+}
+
+ .brand-logo {
+  color: #13b38b !important;
 
 }
-.side-nav li>a{
-color: #13b38b;
 
+.side-nav li>a {
+  color: #13b38b;
 }
-*{
+
+* {
   font-family: 'Montserrat', sans-serif;
-   font-weight: bold;
+  font-weight: bold;
   text-decoration: none !important;
-  color: #13b38b ;
-
+  color: #13b38b;
 }
 
 nav ul a {
-
   color: #13b38b;
+}
+
+@media only screen and (max-width: 700px) {
+  .top-nav {
+//    height: 110px !important;
+    color: red !important;
+  }
+  nav .nav-wrapper {
+    text-align: center;
+  }
+  nav .brand-logo{
+    font-size: 14px;
+  }
+}
+
+.container {
+  height: inherit;
 }

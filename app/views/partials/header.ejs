@@ -12,6 +12,8 @@
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous"></script>
+          <meta name="viewport" content="width=device-width">
+
 
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
@@ -40,14 +42,16 @@
   <link rel="stylesheet" href="/stylesheet/main.css">
 </head>
 <body>
-<nav>
+<header>
+<nav class="top-nav">
+  <div class="container">
   <div  class="nav-wrapper">
 
 
       <a class="brand-logo" href="/">Harvin Academy</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
-      <ul class="side-nav " id="mobile-demo">
+      <ul class="side-nav nav-mobile" id="mobile-demo">
         <li><a href="/files/uploadFile">Upload File</a></li>
         <li><a href="/batches/updateBatch">Create Batch</a></li>
         <li><a href="/exams">Exams</a></li>
@@ -85,7 +89,9 @@
 
 
   </div>
+  </div>
 </nav>
+</header>
 <div class="container">
   <% if(msg_error && msg_error.length > 0){ %>
   <div class="alert alert-danger" role="alert">
