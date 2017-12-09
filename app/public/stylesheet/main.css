@@ -167,6 +167,11 @@ nav ul a {
   nav .brand-logo{
     font-size: 14px;
   }
+  .card-image{
+    text-align: center;
+    display:block;
+    margin:auto;
+  }
 }
 
 .container {
