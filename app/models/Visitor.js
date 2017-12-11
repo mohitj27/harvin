@@ -22,7 +22,7 @@ var visitorSchema = new Schema({
   classs: {
     type: String,
     required: true,
-    enum: [ 'IX', 'X', 'XI', 'XII' ]
+    enum: [ 'IX', 'X', 'XI', 'XII', 'XII-Pass']
   },
   date: {
     type: String,
