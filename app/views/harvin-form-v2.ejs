@@ -1,10 +1,18 @@
+
+
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="/script/harvin-vms-main.js"></script>
+
 <!-- Compiled and minified CSS -->
       <!--Let browser know website is optimized for mobile-->
 
 <div class="container">
 
 <form action="/vms" method="post">
+
   <input id="name" name="name" type="text" placeholder="John Doe" required autofocus />
+
   <label for="name">
     <span class="label-text">Full Name</span>
     <span class="nav-dot"></span>
@@ -15,20 +23,39 @@
     <span class="label-text">Email</span>
     <span class="nav-dot"></span>
   </label>
-  <input id="phone" name="phone" type="number" minlength="10" maxlength="10"  placeholder="9999999999" required />
+  <input id="phone" name="phone" type="tel" minlength="10" maxlength="10"  placeholder="9999999999" required />
   <label for="phone">
     <span class="label-text">Phone</span>
     <span class="nav-dot"></span>
   </label>
-  <input type="text" name="classs" value="XI" hidden>
+
+   <select   id="classs" type="text" name="classs">
+
+     <option value="1">Option 1</option>
+     <option value="2">Option 2</option>
+     <option value="3">Option 3</option>
+   </select>
+
+   <label for="classs">
+     <span class="label-text">class</span>
+     <span class="nav-dot"></span>
+   </label>
+
+<!--
+  <input id="classs"  type="text" name="classs" value="XI"/>
+  <label for="classs">
+    <span class="label-text">Phone</span>
+    <span class="nav-dot"></span>
+  </label> -->
   <button >Submit</button>
   <div class="signup-button">Begin</div>
+
 </form>
 </div>
 <link href='https://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
 <style>
 
-input,
+input,select,
 button {
   position: fixed;
   top: 50%;
@@ -43,7 +70,7 @@ button {
   transition: all 0.5s cubic-bezier(0.4, 0.25, 0.8, 0.3);
 }
 
-input {
+input,select {
   padding: .25rem 0;
   border: 0;
   border-bottom: 1px solid #ffffff;
@@ -80,6 +107,7 @@ button,
 }
 
 input:focus,
+select:focus,
 button:focus {
   opacity: 1;
   -webkit-transform: translate(-50%, -100%);
@@ -91,6 +119,8 @@ button:focus {
 }
 
 input:focus ~ input,
+select:focus ~ input,
+select:focus ~ button,
 input:focus ~ button {
   -webkit-transform: translate(-50%, 500%);
           transform: translate(-50%, 500%);
@@ -98,7 +128,7 @@ input:focus ~ button {
   transition: all .5s ease-in;
 }
 
-input:focus ~ label .label-text {
+input:focus ~ label select:focus ~ label .label-text {
   -webkit-transform: translate(-50%, 300%);
           transform: translate(-50%, 300%);
   -webkit-transition: all .5s ease-in;
@@ -114,6 +144,10 @@ button:focus ~ .signup-button {
   opacity: 0;
 }
 
+select:focus ~ .signup-button,
+button:focus ~ .signup-button {
+  opacity: 0;
+}
 input:focus + label .label-text {
   opacity: 1;
   -webkit-transform: translate(-50%, -100%);
@@ -122,7 +156,15 @@ input:focus + label .label-text {
   transition: all 0.3s cubic-bezier(0.1, 0.45, 0.1, 0.85) 0.4s;
 }
 
-input:focus + label .nav-dot:before {
+select:focus + label .label-text {
+  opacity: 1;
+  -webkit-transform: translate(-50%, -100%);
+          transform: translate(-50%, -100%);
+  -webkit-transition: all 0.3s cubic-bezier(0.1, 0.45, 0.1, 0.85) 0.4s;
+  transition: all 0.3s cubic-bezier(0.1, 0.45, 0.1, 0.85) 0.4s;
+}
+
+input:focus +select:focus+ label .nav-dot:before {
   background: #13b38b;
   box-shadow: 0 0 0 0.15rem #111, 0 0 0.05rem 0.26rem #ffffff;
 }
@@ -213,6 +255,13 @@ input:focus + label .nav-dot:before {
   margin-left: -.125rem;
   background-color: #008262;
 }
+select option {
+  color:#fff;
+  background-color: rgba(19, 179, 139, 1.0);
+
+}
+
+
 
 label[for="name"] .nav-dot {
   margin-top: -125px;
