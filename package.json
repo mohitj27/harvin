@@ -5,9 +5,9 @@
     "node": "6.11.1"
   },
   "description": "",
-  "main": "app.js",
+  "main": "./app/app.js",
   "scripts": {
-    "nodemon": "nodemon --watch .env --watch app.js --watch routes --watch models --watch middleware --watch config --watch bin ./app/app.js",
+    "nodemon": "nodemon --watch .env --watch ./app/app.js --watch routes --watch models --watch middleware --watch config --watch bin ./app/app.js",
     "test": "./node_modules/.bin/mocha app/tests --reporter spec --color --timeout 10000 --require app/tests/helper/chai.js",
     "start": "node ./app/app.js"
   },

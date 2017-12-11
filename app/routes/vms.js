@@ -6,6 +6,10 @@ var express = require("express"),
     Visitor = require('./../models/Visitor');
 router = express.Router();
 
+router.get('/new', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
+  res.render('newVisitor');
+});
+
 router.get('/all', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   Visitor.find({}, (err, foundVisitors) => {
     if (!err && foundVisitors) {
@@ -18,7 +22,7 @@ router.get('/all', middleware.isLoggedIn, middleware.isCentre, (req, res, next) 
 });
 
 router.get('/', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
-  res.render('newVisitor');
+  res.render('vmsLanding');
 });
 
 router.post('/', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
