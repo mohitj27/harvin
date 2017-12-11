@@ -6,3 +6,12 @@
 
   }); // end of document ready
 })(jQuery); // end of jQuery name space
+
+
+function scrollDown(){
+  
+$('html, body').animate({
+  scrollTop: $("#foid").offset().top
+  }, 3000);
+
+}

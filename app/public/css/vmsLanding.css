@@ -1,0 +1,24 @@
+.float-btn{
+  text-align: center;
+  
+  
+  
+}
+html,body{
+
+height:100%;
+margin:0;
+
+}
+.btn-floating{
+position: absolute;
+top:80%;
+
+}
+
+.landing-container{
+  height:100%;
+  background:url(./../img/landing_page_icon.png);
+  background-position:center center ;
+  background-repeat: no-repeat;
+}

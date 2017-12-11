@@ -6,6 +6,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+<link href="css/vmsLanding.css" type="text/css" rel="stylesheet"/>
 </div>
 
 <!-- <div id="index-banner" class="parallax-container">
@@ -31,19 +32,13 @@
 </div> -->
 
 
-<div class="container">
-	<div class="section"id="fid" >
-
-		<!--   Icon Section   -->
-		<div class="row">
-			<img class="responsive-img" src="/img/landing_page_icon.png" alt="">
-		</div>
-
-	</div>
+<div class="container float-btn landing-container">
+	
+    <a onClick="scrollDown();" class="btn-floating btn-large waves-effect waves-light grey"><i class="material-icons">expand_more</i></a>
 </div>
 
 
-<div class="parallax-container valign-wrapper">
+<div id="newForm" class="parallax-container valign-wrapper">
 	<div class="section no-pad-bot">
 		<div class="container">
 			<div class="row center">
@@ -78,6 +73,24 @@
 </div>
 
 
+<div class="container">
+	<div class="section">
+
+	
+
+        <div class="carousel">
+            <a class="carousel-item" href="#one!"><img src="https://lorempixel.com/250/250/nature/1"></a>
+            <a class="carousel-item" href="#two!"><img src="https://lorempixel.com/250/250/nature/2"></a>
+            <a class="carousel-item" href="#three!"><img src="https://lorempixel.com/250/250/nature/3"></a>
+            <a class="carousel-item" href="#four!"><img src="https://lorempixel.com/250/250/nature/4"></a>
+            <a class="carousel-item" href="#five!"><img src="https://lorempixel.com/250/250/nature/5"></a>
+          </div>
+              
+
+	</div>
+</div>
+
+
 <div class="parallax-container valign-wrapper">
 	<div class="section no-pad-bot">
 		<div class="container">
@@ -105,7 +118,7 @@
 				<h5 class="white-text">Settings</h5>
 				<ul>
 					<li>
-						<a class="white-text" href="#!">Link 1</a>
+						<a class="white-text" href="/vms/new">Link 1</a>
 					</li>
 					<li>
 						<a class="white-text" href="#!">Link 2</a>
@@ -137,7 +150,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="footer-copyright">
+	<div class="footer-copyright" id="foid">
 		<div class="container">
 			Made by
 			<a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
