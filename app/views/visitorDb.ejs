@@ -1,0 +1,50 @@
+<% include partials/header.ejs %>
+
+	<div class="container">
+		<nav aria-label="breadcrumb" role="navigation">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/db">Database</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Visitors</li>
+			</ol>
+		</nav>
+
+		<% if (visitors){ %>
+			<% visitors.forEach((visitor, i) =>{ %>
+				<div class="well">
+					<div class="row">
+						<div class="col-md-1">
+							<%= i + 1 %>
+						</div>
+						<div class="col-md-2">
+							<%= visitor.date %>
+						</div>
+						<div class="col-md-1">
+							<%= visitor.name %>
+						</div>
+						<div class="col-md-1">
+							<%= visitor.classs %>
+						</div>
+						<div class="col-md-1">
+							<%= visitor.phone %>
+						</div>
+						<div class="col-md-3">
+							<%= visitor.emailId %>
+						</div>
+						<div class="col-md-3">
+							<form method="post" action="/vms/<%=visitor._id%>?_method=delete">
+								<button class="btn btn-sm btn-danger">
+									<i class="fa fa-trash" aria-hidden="true"></i>
+								</button>
+							</form>
+						</div>
+					</div>
+
+				</div>
+
+				<% }) %>
+					<% } %>
+	</div>
+
+	<% include partials/footer.ejs %>

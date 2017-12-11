@@ -11,6 +11,8 @@
 		<title>Harvin Academy</title>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 		crossorigin="anonymous"></script>
+		<meta name="viewport" content="width=device-width">
+
 
 		<!-- Compiled and minified CSS -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
@@ -37,63 +39,106 @@
 	</head>
 
 	<body>
-		<nav>
-			<div class="nav-wrapper">
+		<header>
+			<nav class="top-nav">
+				<div class="container">
+					<div class="nav-wrapper">
 
 
-				<a class="brand-logo" href="/">Harvin Academy</a>
-				<a href="#" data-activates="mobile-demo" class="button-collapse">
-					<i class="material-icons">menu</i>
-				</a>
+						<a class="brand-logo" href="/">Harvin Academy</a>
+						<a href="#" data-activates="mobile-demo" class="button-collapse">
+							<i class="material-icons">menu</i>
+						</a>
 
-
-				<ul class="right hide-on-med-and-down">
-					<li>
-						<a href="/files/uploadFile">Upload File</a>
-					</li>
-					<li>
-						<a href="/batches/updateBatch">Create Batch</a>
-					</li>
-					<li>
-						<a href="/exams">Exams</a>
-					</li>
-					<li>
-						<a href="/assignment">Assignments</a>
-					</li>
-					<li>
-						<a href="/questionBank">Question Bank</a>
-					</li>
-					<li>
-						<a href="/vms">VMS</a>
-					</li>
-					<!-- <li><a href="/queries/new">New Query</a></li> -->
-					<li>
-						<a href="/db">Database</a>
-					</li>
-					<% if(!currentUser){ %>
-
-						<li>
-							<a href="/login">Login</a>
-						</li>
-						<li>
-							<a href="/signup">Signup</a>
-						</li>
-						<% }else{ %>
+						<ul class="side-nav nav-mobile" id="mobile-demo">
 							<li>
-								<a href="#">Signed in as
-									<%= currentUser.username %>
-								</a>
+								<a href="/files/uploadFile">Upload File</a>
 							</li>
 							<li>
-								<a href="/logout">Logout</a>
+								<a href="/batches/updateBatch">Create Batch</a>
 							</li>
-							<% } %>
-				</ul>
+							<li>
+								<a href="/exams">Exams</a>
+							</li>
+							<li>
+								<a href="/assignment">Assignments</a>
+							</li>
+							<li>
+								<a href="/questionBank">Question Bank</a>
+							</li>
+							<li>
+								<a href="/vms">VMS</a>
+							</li>
+							<li>
+								<a href="/db">Database</a>
+							</li>
+							<% if(!currentUser){ %>
+
+								<li>
+									<a href="/login">Login</a>
+								</li>
+								<li>
+									<a href="/signup">Signup</a>
+								</li>
+								<% }else{ %>
+									<li>
+										<a href="#">Signed in as
+											<%= currentUser.username %>
+										</a>
+									</li>
+									<li>
+										<a href="/logout">Logout</a>
+									</li>
+									<% } %>
+						</ul>
+						<ul class="right hide-on-med-and-down">
+							<li>
+								<a href="/files/uploadFile">Upload File</a>
+							</li>
+							<li>
+								<a href="/batches/updateBatch">Create Batch</a>
+							</li>
+							<li>
+								<a href="/exams">Exams</a>
+							</li>
+							<li>
+								<a href="/assignment">Assignments</a>
+							</li>
+							<li>
+								<a href="/questionBank">Question Bank</a>
+							</li>
+							<li>
+								<a href="/vms">VMS</a>
+							</li>
+							<li>
+								<a href="/db">Database</a>
+							</li>
+							<% if(!currentUser){ %>
+
+								<li>
+									<a href="/login">Login</a>
+								</li>
+								<li>
+									<a href="/signup">Signup</a>
+								</li>
+								<% }else{ %>
+									<li>
+										<a href="#">Signed in as
+											<%= currentUser.username %>
+										</a>
+									</li>
+									<li>
+										<a href="/logout">Logout</a>
+									</li>
+									<% } %>
+						</ul>
 
 
 
-			</div>
-		</nav>
+					</div>
+				</div>
+			</nav>
+		</header>
 		<div class="container">
 			<% if(msg_error && msg_error.length > 0){ %>
 				<div class="alert alert-danger" role="alert">

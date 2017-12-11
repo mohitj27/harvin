@@ -6,10 +6,6 @@ var express = require("express"),
     Visitor = require('./../models/Visitor');
 router = express.Router();
 
-router.get('/new', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
-  res.render('newVisitor');
-});
-
 router.get('/all', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   Visitor.find({}, (err, foundVisitors) => {
     if (!err && foundVisitors) {
@@ -22,8 +18,8 @@ router.get('/all', middleware.isLoggedIn, middleware.isCentre, (req, res, next) 
 });
 
 router.get('/', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
-  res.render('vmsLanding');
-})
+  res.render('newVisitor');
+});
 
 router.post('/', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   const name = req.body.name;
@@ -57,7 +53,7 @@ router.delete('/:visitorId', (req, res, next) => {
   Visitor.findByIdAndRemove(req.params.visitorId, (err) => {
     if (!err) {
       req.flash('success', 'Entry deleted successfully');
-      res.redirect('/visitors');
+      res.redirect('/vms/all');
     } else {
       console.log(err);
       next(new errors.generic());

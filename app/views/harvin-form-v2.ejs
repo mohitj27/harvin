@@ -3,36 +3,26 @@
 
 <div class="container">
 
-<form >
-  <input id="input-1" type="text" placeholder="John Doe" required autofocus />
-  <label for="input-1">
+<form action="/vms" method="post">
+  <input id="name" name="name" type="text" placeholder="John Doe" required autofocus />
+  <label for="name">
     <span class="label-text">Full Name</span>
     <span class="nav-dot"></span>
-    <div class="signup-button-trigger">Sign Up</div>
+    <div class="signup-button-trigger">Sign Up 2</div>
   </label>
-  <input id="input-2" type="text" placeholder="john" required />
-  <label for="input-2">
-    <span class="label-text">Username</span>
-    <span class="nav-dot"></span>
-  </label>
-  <input id="input-3" type="email" placeholder="email@address.com" required />
-  <label for="input-3">
+  <input id="emailId" name="emailId" type="email" placeholder="email@address.com" required />
+  <label for="emailId">
     <span class="label-text">Email</span>
     <span class="nav-dot"></span>
   </label>
-  <input id="input-4" type="text" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required />
-  <label for="input-4">
-    <span class="label-text">Password</span>
+  <input id="phone" name="phone" type="number" minlength="10" maxlength="10"  placeholder="9999999999" required />
+  <label for="phone">
+    <span class="label-text">Phone</span>
     <span class="nav-dot"></span>
   </label>
-  <input id="input-5" type="text" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required />
-  <label for="input-5">
-    <span class="label-text">Confirm Password</span>
-    <span class="nav-dot"></span>
-  </label>
-  <button type="submit">Create Your Account</button>
-  <p class="tip">Press Tab</p>
-  <div class="signup-button">Sign Up</div>
+  <input type="text" name="classs" value="XI" hidden>
+  <button >Submit</button>
+  <div class="signup-button">Begin</div>
 </form>
 </div>
 <link href='https://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
@@ -80,8 +70,8 @@ button,
   padding: .25em 0;
   border: 0;
   outline: 0;
-  background: #febf10;
-  color: rgba(0, 0, 0, 1);
+  background: #ffffff;
+  color: #13b38b;
   font-size: 2rem;
   line-height: 3.6rem;
   letter-spacing: .0625rem;
@@ -133,8 +123,8 @@ input:focus + label .label-text {
 }
 
 input:focus + label .nav-dot:before {
-  background: #a41212;
-  box-shadow: 0 0 0 0.15rem #111, 0 0 0.05rem 0.26rem #febf10;
+  background: #13b38b;
+  box-shadow: 0 0 0 0.15rem #111, 0 0 0.05rem 0.26rem #ffffff;
 }
 
 .tip {
@@ -221,7 +211,7 @@ input:focus + label .nav-dot:before {
   height: .625rem;
   margin-top: -.125rem;
   margin-left: -.125rem;
-  background-color: #a41212;
+  background-color: #008262;
 }
 
 label[for="input-1"] .nav-dot {
