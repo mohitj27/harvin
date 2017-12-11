@@ -1,19 +1,15 @@
 .float-btn{
   text-align: center;
-  
-  
-  
 }
 html,body{
 
 height:100%;
 margin:0;
-
 }
+
 .btn-floating{
 position: absolute;
-top:80%;
-
+top:85%;
 }
 
 .landing-container{
