@@ -10,6 +10,23 @@ margin:0;
 .btn-floating{
 position: absolute;
 top:85%;
+left:43%;
+}
+a#menu{
+  left:80%;
+}
+@media only screen and (min-width: 697px){
+
+  .btn-floating{
+  position: absolute;
+  top:85%;
+  left:50%;
+  }
+
+  #carousel1{
+    height:100% !important;
+  }
+
 }
 
 .landing-container{
@@ -17,4 +34,22 @@ top:85%;
   background:url(./../img/landing_page_icon.png);
   background-position:center center ;
   background-repeat: no-repeat;
+  background-size: contain;
 }
+/*
+.tap-target-wrapper{
+  height: 100px;
+  width: 100px
+}
+.tap-target-wrapper.open{
+  position: fixed !important;
+  height:600px !important;
+  width: 600px !important;
+
+}
+.tap-target-wrapper.open .tap-target{
+  transform: scale(0.5);
+}
+.tap-target-origin{
+transform: translate(-15px,-47px) !important;
+}*/
