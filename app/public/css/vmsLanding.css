@@ -10,7 +10,9 @@ margin:0;
 .btn-floating{
 position: absolute;
 top:85%;
-left:43%;
+left:66%;
+background-color: #13b38b !important;
+
 }
 a#menu{
   left:80%;
@@ -20,21 +22,31 @@ a#menu{
   .btn-floating{
   position: absolute;
   top:85%;
-  left:50%;
+  left:60%;
   }
 
   #carousel1{
     height:100% !important;
   }
-
+.visitor-button{
+  left:35% !important;
 }
-
+}
+.visitor-button{
+  left:35% !important;
+}
 .landing-container{
   height:100%;
   background:url(./../img/landing_page_icon.png);
   background-position:center center ;
   background-repeat: no-repeat;
   background-size: contain;
+}
+@media only screen and (max-width:400px){
+
+  .visitor-button{
+    left:25% !important;
+  }
 }
 /*
 .tap-target-wrapper{

@@ -11,19 +11,18 @@
 
 <form action="/vms" method="post">
 
-  <input id="name" name="name" type="text" placeholder="John Doe" required autofocus />
+  <input id="name" name="name" type="text" required autofocus />
 
   <label for="name">
     <span class="label-text">Full Name</span>
     <span class="nav-dot"></span>
-    <div class="signup-button-trigger">Sign Up 2</div>
   </label>
-  <input id="emailId" name="emailId" type="email" placeholder="email@address.com" required />
+  <input id="emailId" name="emailId" type="email" required />
   <label for="emailId">
     <span class="label-text">Email</span>
     <span class="nav-dot"></span>
   </label>
-  <input id="phone" name="phone" type="tel" minlength="10" maxlength="10"  placeholder="9999999999" required />
+  <input id="phone" name="phone" type="tel" minlength="10" maxlength="10"  required />
   <label for="phone">
     <span class="label-text">Phone</span>
     <span class="nav-dot"></span>
@@ -49,8 +48,9 @@
     <span class="label-text">Phone</span>
     <span class="nav-dot"></span>
   </label> -->
+  <p class="tip">Press Tab</p>
   <button >Submit</button>
-  <div class="signup-button">Begin</div>
+  <!-- <div class="signup-button">Begin</div> -->
 
 </form>
 </div>
@@ -111,20 +111,20 @@ button,
 input:focus,
 select:focus,
 button:focus {
-  opacity: 1;
+  opacity: 2;
   -webkit-transform: translate(-50%, -100%);
           transform: translate(-50%, -100%);
   pointer-events: auto;
   -webkit-transition: all 0.4s cubic-bezier(0.1, 0.45, 0.1, 0.85) 0.5s;
   transition: all 0.4s cubic-bezier(0.1, 0.45, 0.1, 0.85) 0.5s;
-  z-index: 10;
+  z-index: 100;
 }
 
 input:focus ~ input,
 select:focus ~ input,
 select:focus ~ button,
 input:focus ~ button {
-  -webkit-transform: translate(-50%, 500%);
+  -webkit-transform: translate(-50%,   500%);
           transform: translate(-50%, 500%);
   -webkit-transition: all .5s ease-in;
   transition: all .5s ease-in;
@@ -141,15 +141,7 @@ input:focus ~ .tip {
   opacity: 1;
 }
 
-input:focus ~ .signup-button,
-button:focus ~ .signup-button {
-  opacity: 0;
-}
 
-select:focus ~ .signup-button,
-button:focus ~ .signup-button {
-  opacity: 0;
-}
 input:focus + label .label-text {
   opacity: 1;
   -webkit-transform: translate(-50%, -100%);
@@ -188,7 +180,7 @@ input:focus +select:focus+ label .nav-dot:before {
   -webkit-transition: opacity .25s .5s;
   transition: opacity .25s .5s;
 }
-
+/*
 .signup-button,
 .signup-button-trigger {
   position: fixed;
@@ -204,12 +196,12 @@ input:focus +select:focus+ label .nav-dot:before {
   cursor: pointer;
   -webkit-transition: opacity .4s .3s;
   transition: opacity .4s .3s;
-}
-
+}*/
+/*
 .signup-button-trigger {
   opacity: 0;
   pointer-events: auto;
-}
+}*/
 
 .label-text {
   position: fixed;
@@ -234,18 +226,18 @@ input:focus +select:focus+ label .nav-dot:before {
   cursor: pointer;
   position: fixed;
   padding: .625rem 1.25rem .625rem .625rem;
-  top: 50%;
+  top: 60%;
   right: 1.25rem;
 }
 .nav-dot:before {
   content: '';
   display: inline-block;
-  border-radius: 50%;
+  border-radius: 60%;
   width: .375rem;
   height: .375rem;
   margin-right: .625rem;
   position: fixed;
-  background-color: #16272f;
+  background-color: #008262;
   border: 0;
   -webkit-transition: all 0.25s;
   transition: all 0.25s;
@@ -255,7 +247,7 @@ input:focus +select:focus+ label .nav-dot:before {
   height: .625rem;
   margin-top: -.125rem;
   margin-left: -.125rem;
-  background-color: #008262;
+  background-color: #ffffff;
 }
 select option {
   color:#fff;
@@ -281,9 +273,6 @@ label[for="classs"] .nav-dot {
   margin-top: -50px;
 }
 
-label[for="input-5"] .nav-dot {
-  margin-top: -25px;
-}
 
 * {
   margin: 0;
