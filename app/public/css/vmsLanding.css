@@ -55,14 +55,15 @@ a#menu{
   font-size: large;
   right: 9% !important;
 
-  transform: translateX(-5px);
+  transform: translate(-9px,5px);
 }
 #register{
   position: absolute;
 top: 75%;
 font-size: large;
 
-transform: translateX(-5px);
+transform: translate(-9px,5px);
+
 }
 *{
     font-family: 'Montserrat', sans-serif;
