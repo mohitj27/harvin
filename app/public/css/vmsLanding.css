@@ -48,6 +48,25 @@ a#menu{
     left:25% !important;
   }
 }
+#explore{
+
+    position: absolute;
+  top: 75%;
+  font-size: large;
+  right: 9% !important;
+
+  transform: translateX(-5px);
+}
+#register{
+  position: absolute;
+top: 75%;
+font-size: large;
+
+transform: translateX(-5px);
+}
+*{
+    font-family: 'Montserrat', sans-serif;
+}
 /*
 .tap-target-wrapper{
   height: 100px;
