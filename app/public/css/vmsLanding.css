@@ -8,9 +8,7 @@ margin:0;
 }
 
 .btn-floating{
-position: absolute;
-top:85%;
-left:66%;
+
 background-color: #13b38b !important;
 
 }
@@ -19,24 +17,30 @@ a#menu{
 }
 @media only screen and (min-width: 697px){
 
+        #explore{
+          right:-18% ;
+
+        }
+
   .btn-floating{
-  position: absolute;
+  /*position: absolute;
   top:85%;
-  left:60%;
+  left:60%;*/
   }
 
   #carousel1{
     height:100% !important;
   }
 .visitor-button{
-  left:35% !important;
+  /*left:35% !important;*/
 }
 }
 .visitor-button{
-  left:35% !important;
+  /*left:35% !important;*/
 }
 .landing-container{
   height:100%;
+  position: relative;
   background:url(./../img/landing_page_icon.png);
   background-position:center center ;
   background-repeat: no-repeat;
@@ -44,29 +48,43 @@ a#menu{
 }
 @media only screen and (max-width:400px){
 
-  .visitor-button{
-    left:25% !important;
-  }
 }
 #explore{
 
-    position: absolute;
-  top: 75%;
   font-size: large;
-  right: 9% !important;
-
-  transform: translate(-9px,5px);
+  /*top: 75%;
+  position: absolute;
+  transform: translate(6px,5px);
+  right:9% ;
+  */
 }
 #register{
-  position: absolute;
-top: 75%;
+  /*position: absolute;*/
+/*top: 75%;*/
 font-size: large;
 
-transform: translate(-9px,5px);
+/*transform: translate(-9px,5px);*/
 
 }
+.pulsate{
+  -webkit-animation: pulsate 2s ease-out;
+  -webkit-animation-iteration-count:infinite;
+  opacity: 0.5;
+
+}
+
+  @-webkit-keyframes pulsate {
+    0%{opacity: 0.5;}
+    50%{opacity: 1.0;}
+    100%{opacity: 0.5;}
+  }
 *{
     font-family: 'Montserrat', sans-serif;
+}
+.btn-text-container{
+  position: absolute;
+  width: 100%;
+  top: 75%;
 }
 /*
 .tap-target-wrapper{

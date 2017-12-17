@@ -5,9 +5,10 @@
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
     // $('.carousel').carousel();
-    $('.carousel.carousel-slider').carousel({
-      fullWidth: true,
-      indicator: true
+    $('.carousel').carousel({
+      fullWidth: false,
+      indicator: true,
+      shift:10
     });
 
     $('.tap-target').tapTarget('open');
