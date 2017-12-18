@@ -177,6 +177,17 @@ nav ul a {
 .container {
   height: inherit;
 }
+.carousel-slider{
+  background-color: #13b38b;
+}
+
+.carousel .indicators .indicator-item.active{
+  background-color: #13b38b !important;
+}
+
+.carousel .indicators .indicator-item{
+  background: #13931b !important;
+}
 
 #navbarContainer{
   width: 85%;

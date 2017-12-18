@@ -30,7 +30,10 @@ a#menu{
 
   #carousel1{
     height:50% !important;
+
+
   }
+
 .visitor-button{
   /*left:35% !important;*/
 }
@@ -45,6 +48,9 @@ a#menu{
   background-position:center center ;
   background-repeat: no-repeat;
   background-size: contain;
+}
+.carousel{
+  background: #13b38b !important;
 }
 @media only screen and (max-width:400px){
 
@@ -62,6 +68,8 @@ a#menu{
   /*position: absolute;*/
 /*top: 75%;*/
 font-size: large;
+display: inline;
+position: relative !important;
 
 /*transform: translate(-9px,5px);*/
 
@@ -71,6 +79,32 @@ font-size: large;
   -webkit-animation-iteration-count:infinite;
   opacity: 0.5;
 
+}
+.pulse{
+  display:block;
+  margin:auto;
+  -webkit-animation: pulse 2s ease-out ;
+  -webkit-animation-iteration-count:infinite;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    text-shadow: 0px 0px rgba(204,169,44, 0.6);
+  }
+  25% {
+      text-shadow: 1px 1px 1px rgba(204,169,44, 0.6);
+  }
+
+  50% {
+      text-shadow: 2px 2px 2 px rgba(204,169,44, 0.6);
+  }
+
+  75% {
+      text-shadow: 3px 3px 3px rgba(204,169,44,0.6);
+  }
+  100% {
+      text-shadow: 4px 4px 4px rgba(204,169,44,0.6);
+  }
 }
 
   @-webkit-keyframes pulsate {

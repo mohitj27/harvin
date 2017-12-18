@@ -11,6 +11,7 @@
       shift:10
     });
 
+
     $('.tap-target').tapTarget('open');
     state=true;
     // $('.tap-target').tapTarget('close');
