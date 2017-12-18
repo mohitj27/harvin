@@ -41,7 +41,25 @@
 	<body>
 		<header>
 			<nav class="top-nav">
-				<div class="container">
+				<div id="navbarContainer" class="container">
+					<ul id="dropdown1" class="dropdown-content">
+						<li>
+							<a href="/files/uploadFile">Upload File</a>
+						</li>
+						<li>
+							<a href="/batches/updateBatch">Create Batch</a>
+						</li>
+						<li>
+							<a href="/exams">Exams</a>
+						</li>
+						<li>
+							<a href="/questionBank">Question Bank</a>
+						</li>
+						<li>
+							<a href="/assignment">Assignments</a>
+						</li>
+
+					</ul>
 					<div class="nav-wrapper">
 
 
@@ -52,7 +70,7 @@
 
 						<ul class="side-nav nav-mobile" id="mobile-demo">
 							<li>
-								<a href="/files/uploadFile">Upload File</a>
+								<a href="#"></a>
 							</li>
 							<li>
 								<a href="/batches/updateBatch">Create Batch</a>
@@ -70,8 +88,9 @@
 								<a href="/vms">VMS</a>
 							</li>
 							<li>
-								<a href="/db">Database</a>
+								<a class="dropdown-button" data-activates="dropdown1" href="#!">Database</a>
 							</li>
+
 							<% if(!currentUser){ %>
 
 								<li>
@@ -92,26 +111,17 @@
 									<% } %>
 						</ul>
 						<ul class="right hide-on-med-and-down">
-							<li>
-								<a href="/files/uploadFile">Upload File</a>
-							</li>
-							<li>
-								<a href="/batches/updateBatch">Create Batch</a>
-							</li>
-							<li>
-								<a href="/exams">Exams</a>
-							</li>
-							<li>
-								<a href="/assignment">Assignments</a>
-							</li>
-							<li>
-								<a href="/questionBank">Question Bank</a>
-							</li>
+
 							<li>
 								<a href="/vms">VMS</a>
 							</li>
 							<li>
 								<a href="/db">Database</a>
+							</li>
+							<li>
+								<a class="dropdown-button" data-activates="dropdown1" href="#!">Insert DB
+									<i class="material-icons right">arrow_drop_down</i>
+								</a>
 							</li>
 							<% if(!currentUser){ %>
 

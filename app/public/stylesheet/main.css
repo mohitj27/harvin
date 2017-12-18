@@ -178,7 +178,11 @@ nav ul a {
   height: inherit;
 }
 
+#navbarContainer{
+  width: 85%;
+}
+
 /* for db collections */
 .dbImg{
-  max-height: 310px;
+  height: 310px;
 }
