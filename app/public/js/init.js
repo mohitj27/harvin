@@ -6,7 +6,7 @@
     $('.parallax').parallax();
     // $('.carousel').carousel();
     $('.carousel').carousel({
-      fullWidth: false,
+      fullWidth: true,
       indicator: true,
       shift:10
     });
