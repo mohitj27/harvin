@@ -7,6 +7,9 @@ height:100%;
 margin:0;
 }
 
+.social-color{
+  background-color: #26a69a !important;
+}
 .btn-floating{
 
 background-color: #13b38b !important;
@@ -134,6 +137,15 @@ position: relative !important;
   filter: blur(0px);
   -webkit-filter: blur(0px);
 
+
+}
+.fa-facebook{
+  margin:4px;
+}
+
+
+.card .card-image img{
+  max-height:300px;
 
 }
 /*
