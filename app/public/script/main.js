@@ -28,12 +28,14 @@ $(function () {
 	var addoption = $('<option/>')
 		.addClass('additem lastTwo')
 		.data('content', content);
-
+		
 	//appending divider and add item element
 	$(".selectpicker.addbtn")
 		.append(divider)
 		.append(addoption)
 		.selectpicker();
+		$(".selectpicker").selectpicker("refresh");
+		
 
 	//populating subject option after class has been chosen
 	$('#classs').on('change', function () {
@@ -382,7 +384,7 @@ function refreshAns(){
 	for (var j = 0; j < options.length; j++) {
 		var opt = options[j].replace(/"/g, '\&quot;');
 		opt = opt.replace(/'/g, '\&apos;');
-		var cbox = '<div class="wrapAns"><label><input class="answer" type="checkbox" name = "answer" value="'+opt+'">'+options[j]+'</lable></div><br>';
+		var cbox = '<div class="wrapAns"><p><input class="answer" type="checkbox" id="answ'+ j + '" name ="answer" value="'+opt+'"><label for="answ'+ j + '">'+options[j]+'</label></p></div><br>';
 		$answerCheckbox.append(cbox);
 	}
 
