@@ -28,14 +28,14 @@ $(function () {
 	var addoption = $('<option/>')
 		.addClass('additem lastTwo')
 		.data('content', content);
-		
+
 	//appending divider and add item element
 	$(".selectpicker.addbtn")
 		.append(divider)
 		.append(addoption)
 		.selectpicker();
 		$(".selectpicker").selectpicker("refresh");
-		
+
 
 	//populating subject option after class has been chosen
 	$('#classs').on('change', function () {
@@ -419,4 +419,8 @@ function addSelectInpKeyPress(t, ev) {
 		ev.preventDefault();
 		addSelectItem($(t).next(), ev);
 	}
+}
+
+function insertDB(){
+	console.log('insertDB clicked');
 }

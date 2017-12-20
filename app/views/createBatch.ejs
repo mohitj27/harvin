@@ -7,13 +7,13 @@
         <div class="row">
             <div class="col-sm-6">
                 <h2>Batch</h2> <br>
-                
+
                 <select autofocus required name="batchName" class="selectpicker show-tick addbtn" id="batch" >
                     <option selected value="" disabled>Batch</option>
                     <%=batches%>
                     <%if(batches){%>
                         <%batches.forEach(function(batch){%>
-                            <option value="<%=batch.batchName%>"><%=batch.batchName%></option>   
+                            <option value="<%=batch.batchName%>"><%=batch.batchName%></option>
                         <%})%>
                     <%}%>
                 </select>
@@ -25,29 +25,29 @@
                     <option value="" disabled>Subject</option>
                     <%if(subjects){%>
                         <%subjects.forEach(function(subject){%>
-                            <option value="<%=subject._id%>"><%=subject.subjectName%> - <%=subject.className%></option>   
+                            <option value="<%=subject._id%>"><%=subject.subjectName%> - <%=subject.className%></option>
                         <%})%>
                     <%}%>
-                </select>   
-                    
-            </div>            
+                </select>
+
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="batchDescription">Batch Description</label>
-                    <textarea 
-                        name="batchDesc" 
-                        id="batchDesc" 
-                        rows="5" 
-                        title="Batch Description" 
-                        placeholder="Give Batch description here" 
+                    <textarea
+                        name="batchDesc"
+                        id="batchDesc"
+                        rows="5"
+                        title="Batch Description"
+                        placeholder="Give Batch description here"
                         class="form-control"></textarea>
                 </div>
             </div>
 
         </div>
-        <button class="btn btn-lg btn-primary submit">Update selected subject</button>
+        <button class="btn submit">Update selected subject</button>
     </form>
 </div>
 

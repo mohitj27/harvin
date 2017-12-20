@@ -10,13 +10,13 @@
         <div class="row">
             <div class="col-sm-6">
                 <h2>Batch</h2> <br>
-                
+
                 <select autofocus required  name="batchName" class="selectpicker addbtn" id="batch" >
                     <option selected value="" disabled>Batch</option>
                     <%=batches%>
                     <%if(batches){%>
                         <%batches.forEach(function(batch){%>
-                            <option value="<%=batch.batchName%>"><%=batch.batchName%></option>   
+                            <option value="<%=batch.batchName%>"><%=batch.batchName%></option>
                         <%})%>
                     <%}%>
                 </select>
@@ -28,19 +28,19 @@
                     <option value="" disabled>Subject</option>
                     <%if(subjects){%>
                         <%subjects.forEach(function(subject){%>
-                            <option value="<%=subject.subjectName%>"><%=subject.subjectName%></option>   
+                            <option value="<%=subject.subjectName%>"><%=subject.subjectName%></option>
                         <%})%>
                     <%}%>
                 </select>
-                    
+
             </div>
             <hr>
             <%if(currentObject && collectionName){%>
                 <input type="hidden" name="currentObject" value='<%-JSON.stringify(currentObject)%>'>
                 <input type="hidden" name="collectionName" value='<%=collectionName%>'>
             <%}%>
-			<input type="submit" value="Update selected subject" name="submit" class="btn btn-primary btn-lg submit"/> 
-            
+			<input type="submit" value="Update selected subject" name="submit" class="btn submit"/>
+
         </div>
     </form>
 </div>
