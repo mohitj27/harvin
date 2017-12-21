@@ -5,6 +5,8 @@ $(function () {
 	//content inside add button in selectpicker
 
 
+	$(".dropdown-button").dropdown({hover:true,belowOrigin:true});
+	console.log($('.dropdown-button'));
 
 	///NAVBAR INIT
 	$('.button-collapse').sideNav({

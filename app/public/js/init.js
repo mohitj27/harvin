@@ -16,7 +16,7 @@
 
 
     // Next slide
-    // 
+    //
     // setInterval(function() {
     //   $('.carousel').carousel('next');
     // }, 4000);
@@ -38,9 +38,9 @@ function tap() {
 }
 
 function scrollDown() {
-
+console.log('scroll')
   $('html, body').animate({
-    scrollTop: $("#carousel1").offset().top
+    scrollTop: $("#content").offset().top
   }, 1000);
 
 }
