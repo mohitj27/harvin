@@ -14,6 +14,14 @@ html, body {
 .btn-floating {
   background-color: #13b38b !important;
 }
+.card:hover{
+  transform: scale(1.1);
+  z-index: 2;
+
+}
+.card{
+  transition: all 500ms ease-out;
+}
 
 a#menu {
   left: 80%;
@@ -162,7 +170,7 @@ a#menu {
 #content {
   background-color: transparent;
   background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
-  
+
   background-size: 50px 50px;
 }
 
