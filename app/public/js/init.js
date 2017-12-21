@@ -6,9 +6,7 @@
     $('.parallax').parallax();
     // $('.carousel').carousel();
     $('.carousel').carousel({
-      fullWidth: true,
-      indicator: true,
-      shift:10
+      fullWidth: true
     });
 
 
@@ -18,10 +16,10 @@
 
 
     // Next slide
-
-    setInterval(function() {
-      $('.carousel').carousel('next');
-    }, 4000);
+    // 
+    // setInterval(function() {
+    //   $('.carousel').carousel('next');
+    // }, 4000);
   }); // end of document ready
 })(jQuery); // end of jQuery name space
 var state=true;

@@ -30,11 +30,8 @@ a#menu{
   top:85%;
   left:60%;*/
   }
-
-  #carousel1{
-    height:50% !important;
-
-
+  .container.carousel-container{
+  width:70% !important;
   }
 
 .visitor-button{
@@ -147,6 +144,9 @@ position: relative !important;
 .card .card-image img{
   max-height:300px;
 
+}
+.btn.social-icon, .btn-large.social-icon, .col.social-icon {
+  background: transparent !important;
 }
 /*
 .tap-target-wrapper{
