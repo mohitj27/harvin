@@ -8,10 +8,10 @@
     </h1>
     <form id="batchUpdateForm" method="post" action="/db/collections/batch/<%=currentObject._id%>?_method=put">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col s6">
                 <h2>Batch</h2> <br>
 
-                <select autofocus required  name="batchName" class="selectpicker addbtn" id="batch" >
+                <select autofocus required  name="batchName" class="selectpickr addbtn" id="batch" >
                     <option selected value="" disabled>Batch</option>
                     <%=batches%>
                     <%if(batches){%>
@@ -21,7 +21,7 @@
                     <%}%>
                 </select>
             </div>
-            <div class="col-sm-6">
+            <div class="col s6">
                 <h2>Subject</h2> <br>
 
                 <select required name="subjectName" class="selectpicker" id="subjectsInBatch" multiple >

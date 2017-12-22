@@ -52,15 +52,15 @@
     <% if(questions && questions.length > 0){ %>
         <h1 style="text-align: center"><b>Questions available in</b> </h1>
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col s4">
                     <h2><b>Class :</b> <i><%=className%></i></h2></b>
 
             </div>
-            <div class="col-sm-4">
+            <div class="col s4">
             <h2><b>Subject :</b> <i><%=subjectName%></i></h2></b>
 
             </div>
-            <div class="col-sm-4">
+            <div class="col s4">
             <h2><b>Chapter :</b> <i><%=chapterName%></i></h2></b>
 
             </div>
@@ -74,14 +74,14 @@
                 </div>
                 <h2><%=i+1%>. <%=question.question%></h2>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col s6">
                         <h2><label class="">Options</label></h2>
                         <% question.options.forEach(function(option){ %>
                             <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label>
                             </div>
                         <% }) %>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col s6">
                         <h2><label class="control-label">Answer</label></h2>
                         <% question.answers.forEach(function(answer){ %>
                             <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label>
