@@ -158,9 +158,14 @@ select:focus + label .label-text {
   transition: all 0.3s cubic-bezier(0.1, 0.45, 0.1, 0.85) 0.4s;
 }
 
-input:focus +select:focus+ label .nav-dot:before {
+input:focus + label .nav-dot:before {
   background: #13b38b;
-  box-shadow: 0 0 0 0.15rem #111, 0 0 0.05rem 0.26rem #ffffff;
+   box-shadow:  0 0 0.05rem 0.26rem #ffffff;
+}
+
+select:focus + label .nav-dot:before {
+  background: #13b38b;
+   box-shadow:  0 0 0.05rem 0.26rem #ffffff;
 }
 
 .tip {

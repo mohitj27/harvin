@@ -5,6 +5,8 @@ $(function () {
 	//content inside add button in selectpicker
 
 
+
+
 	$(".dropdown-button").dropdown({hover:true,belowOrigin:true});
 	console.log($('.dropdown-button'));
 
@@ -425,4 +427,10 @@ function addSelectInpKeyPress(t, ev) {
 
 function insertDB(){
 	console.log('insertDB clicked');
+}
+function selected12(){
+
+	var text=$('#value12').html();
+	console.log(text);
+	$('#select12').text(text);
 }
