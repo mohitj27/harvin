@@ -65,23 +65,23 @@ router.get('/exams', middleware.isLoggedIn, middleware.isAdmin, (req, res, next)
 
 });
 
-router.get('/assignments', middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
-    Assignment.find({})
-        .populate(
-            {
-                path:'batch',
-                model: 'Batch'
-            }
-        )
-        .exec((err, foundAssignment) => {
-            if(!err && foundAssignment){
-                res.render('assignmentDb', {assignments: foundAssignment});
-            }else{
-                console.log(err);
-                next(new errors.generic());
-            }
-        });
-});
+// router.get('/assignments', middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+//     Assignment.find({})
+//         .populate(
+//             {
+//                 path:'batch',
+//                 model: 'Batch'
+//             }
+//         )
+//         .exec((err, foundAssignment) => {
+//             if(!err && foundAssignment){
+//                 res.render('assignments', {foundAssignments: foundAssignment});
+//             }else{
+//                 console.log(err);
+//                 next(new errors.generic());
+//             }
+//         });
+// });
 
 
 router.get('/files', middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {

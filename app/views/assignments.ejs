@@ -1,48 +1,71 @@
 <% include partials/header.ejs%>
-<% include partials/includeBS.ejs%>
 
-	<div class="container">
-		<div class="row">
-			<div class="col s10 col s10">
-				<h2><b>List of Assignments</b></h2>
-			</div>
-			<a href="/assignment/uploadAssignment" class="btn   new">New Assignment</a>
-        </div>
-
-		<div class="row">
-			<div class="col-xs-2"><b>Name</b></div>
-			<div class="col-xs-2"><b>Uploaded on</b></div>
-            <div class="col-xs-2"><b>Submit by</b></div>
-			<div class="col-xs-1"><b>For Batch</b></div>
-			<div class="col-xs-1"><b>Download link</b></div>
-
-		</div>
-
-		<% if(foundAssignments && foundAssignments.length > 0){ %>
-			<% foundAssignments.forEach(function(assignment){ %>
+		<div class="container">
 				<div class="row">
-					<div class="col-xs-2"><%=assignment.assignmentName%></div>
-					<div class="col-xs-2"><%=assignment.uploadDate%></div>
-                    <div class="col-xs-2"><%=assignment.lastSubDate%></div>
-                    <% if(assignment.batch){ %>
-                        <div class="col-xs-1"><%=assignment.batch.batchName%></div>
-                    <% }else{ %>
-                        <div class="col-xs-1">---</div>
-                    <%}%>
-					<div class="col-xs-1">
-						<a href="/assignment/<%=assignment._id%>">Download now</a>
+						<div class="col m8 s12">
+							<h3>
+								List of Assignments
+							</h3>
+						</div>
+						<div class="col m4">
+								<a href="/assignment/uploadAssignment" class="btn new">Upload New Assignment</a>
+						</div>
 					</div>
+			
+			<table class="highlight bordered centered responsive-table" width="100%">
+				<thead>
+					<tr>
+							<th width="(100/8)%" style="text-align: center">Serial no.</th>
+						<th width="(100/8)%" style="text-align: center">Name</th>
+						<th width="(100/8)%" style="text-align: center">Uploaded on</th>
+						<th width="(100/8)%" style="text-align: center">Submit by</th>
+						<th width="(100/8)%" style="text-align: center">For Batch</th>
+						<th width="(100/8)%" style="text-align: center">Download</th>
+						<th width="(100/8)%" style="text-align: center">Edit</th>
+            <th width="(100/8)%" style="text-align: center">Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if(foundAssignments && foundAssignments.length > 0){ %>
+						<% foundAssignments.forEach(function(assignment, i){ %>
+							<tr>
+									<td width="(100/8)%" height="50px" style="text-align: center">
+										<%=i+1%>
+									</td>
+								<td width="(100/8)%" height="50px" style="text-align: center">
+									<%=assignment.assignmentName%>
+								</td>
+								<td width="(100/8)%" height="50px" style="text-align: center">
+									<%=assignment.uploadDate%>
+								</td>
+								<td width="(100/8)%" height="50px" style="text-align: center">
+									<%=assignment.lastSubDate%>
+								</td>
+								<% if(assignment.batch){ %>
+									<td width="(100/8)%" height="50px" style="text-align: center">
+										<%=assignment.batch.batchName%>
+									</td>
+									<% }else{ %>
+										<td width="(100/8)%" height="50px" style="text-align: center">---</td>
+										<%}%>
+											<td width="(100/8)%" height="50px" style="text-align: center">
+												<a href="/assignment/<%=assignment._id%>">Download</a>
+											</td>
+											<td width="(100/8)%" height="50px" style="text-align: center">
+												<a class="btn orange" href="/assignment/<%=assignment._id%>/edit">Edit</a>
+											</td>
+											<td width="(100/8)%" height="50px" style="text-align: center">
+												<form action="/assignment/<%=assignment._id%>?_method=delete" method="post">
+													<input type="submit" value="Delete" class="btn red">
+												</form>
+											</td>
+							</tr>
 
-					<div class="col-xs-1">
-						<a class="btn btn-warning btn-sm" href="/assignment/<%=assignment._id%>/edit">Edit</a>
-					</div>
-					<div class="col-xs-1">
-						<form action="/assignment/<%=assignment._id%>?_method=delete" method="post">
-							<input type="submit" value="Delete" class="btn btn-danger btn-sm">
-						</form>
-					</div>
-				</div>
-			<% }) %>
-		<% } %>
-	</div>
-<% include partials/footer.ejs%>
+							<% }) %>
+						<% } %>
+				</tbody>
+			</table>
+
+			
+		</div>
+		<% include partials/footer.ejs%>
