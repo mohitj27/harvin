@@ -27,14 +27,22 @@ a#menu {
   left: 80%;
 }
 
+@media only screen and (max-width:400px){
+
+  nav ul a, nav .brand-logo {
+    color:#13b38b;
+  left:50%;
+  }
+}
 @media only screen and (min-width: 697px) {
   #explore {
     right: -18%;
   }
-  .btn-floating {
-    /*position: absolute;
-  top:85%;
-  left:60%;*/
+
+  nav ul a, nav .brand-logo {
+    color:#13b38b;
+    left:10%;
+
   }
   .container.carousel-container {
     width: 70% !important;
@@ -55,7 +63,11 @@ a#menu {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
+
+
 }
+
+
 
 .carousel {
   background: #13b38b !important;
@@ -172,6 +184,17 @@ a#menu {
   background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
 
   background-size: 50px 50px;
+}
+.nav-wrapper{
+  background-color:white;
+  color:#13b38b;
+}
+
+
+
+nav ul a, nav .brand-logo {
+  color:#13b38b;
+
 }
 
 /*
