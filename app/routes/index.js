@@ -16,6 +16,8 @@ var express = require("express"),
     vmsRoutes = require("./vms"),
     queryRoutes = require('./query'),
     formRoutes = require('./form'),
+    managementRoutes = require('./management'),
+    testimonialRoutes = require('./testimonial'),
 
     Topic = require("../models/Topic.js"),
     Chapter = require("../models/Chapter.js"),
@@ -35,6 +37,8 @@ router.use("/results", resultsRoutes);
 router.use("/vms", vmsRoutes);
 router.use('/queries', queryRoutes);
 router.use('/form', formRoutes);
+router.use('/management', managementRoutes);
+router.use('/testimonial', testimonialRoutes);
 
 //Home
 router.get("/", function (req, res) {
