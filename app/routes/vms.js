@@ -68,4 +68,24 @@ router.delete('/:visitorId', (req, res, next) => {
 router.get('/aboutus',(req,res,next)=>{
   res.render('aboutus')
 })
+
+router.get('/locations',(req,res,next)=>{
+  res.render('aboutus')
+})
+
+router.get('/Courses',(req,res,next)=>{
+  res.render('aboutus')
+})
+
+router.get('/gallery',(req,res,next)=>{
+  res.render('aboutus')
+})
+
+router.get('/results',(req,res,next)=>{
+  res.render('aboutus')
+})
+
+router.get('/faculty',(req,res,next)=>{
+  res.render('aboutus')
+})
 module.exports = router;
