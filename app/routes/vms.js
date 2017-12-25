@@ -65,5 +65,7 @@ router.delete('/:visitorId', (req, res, next) => {
   });
 });
 
+router.get('/aboutus',(req,res,next)=>{
+  res.render('aboutus')
+})
 module.exports = router;
-

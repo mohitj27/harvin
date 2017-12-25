@@ -2,18 +2,6 @@
   text-align: center;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-.social-color {
-  background-color: #26a69a !important;
-}
-
-.btn-floating {
-  background-color: #13b38b !important;
-}
 .card:hover{
   transform: scale(1.1);
   z-index: 2;
@@ -27,37 +15,19 @@ a#menu {
   left: 80%;
 }
 
-@media only screen and (max-width:400px){
-
-  nav ul a, nav .brand-logo {
-    color:#13b38b;
-  left:50%;
-  }
-}
 @media only screen and (min-width: 697px) {
   #explore {
     right: -18%;
   }
 
-  nav ul a, nav .brand-logo {
-    color:#13b38b;
-    left:10%;
-
-  }
   .container.carousel-container {
     width: 70% !important;
   }
-  .visitor-button {
-    /*left:35% !important;*/
-  }
-}
 
-.visitor-button {
-  /*left:35% !important;*/
 }
 
 .landing-container {
-  height: 100%;
+  height: 90%;
   position: relative;
   background: url(./../img/landing_page_icon.png);
   background-position: center center;
@@ -73,7 +43,6 @@ a#menu {
   background: #13b38b !important;
 }
 
-@media only screen and (max-width:400px) {}
 
 #explore {
   font-size: large;
@@ -136,9 +105,6 @@ a#menu {
   }
 }
 
-* {
-  font-family: 'Montserrat', sans-serif;
-}
 
 .btn-text-container {
   position: relative;
@@ -158,16 +124,8 @@ a#menu {
   -webkit-filter: blur(0px);
 }
 
-.fa-facebook {
-  margin: 4px;
-}
-
 .card .card-image img {
   max-height: 300px;
-}
-
-.btn.social-icon, .btn-large.social-icon, .col.social-icon {
-  background: transparent !important;
 }
 
 #content-parent {
@@ -185,11 +143,6 @@ a#menu {
 
   background-size: 50px 50px;
 }
-.nav-wrapper{
-  background-color:white;
-  color:#13b38b;
-}
-
 
 
 nav ul a, nav .brand-logo {

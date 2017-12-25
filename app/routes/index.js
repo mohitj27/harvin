@@ -18,7 +18,6 @@ var express = require("express"),
     formRoutes = require('./form'),
     managementRoutes = require('./management'),
     testimonialRoutes = require('./testimonial'),
-
     Topic = require("../models/Topic.js"),
     Chapter = require("../models/Chapter.js"),
     Subject = require("../models/Subject.js"),
@@ -223,4 +222,3 @@ router.get("*", function (req, res) {
 });
 
 module.exports = router;
-

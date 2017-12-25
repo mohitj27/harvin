@@ -8,7 +8,7 @@
 
 nav ul a,
 nav .brand-logo {
-  color: #444;
+  color: #13b38b;
 }
 
 p {
@@ -54,4 +54,64 @@ p {
 
 footer.page-footer {
   margin: 0;
+}
+
+
+nav ul a, nav .brand-logo {
+  color:#13b38b;
+
+}
+
+.nav-wrapper{
+  background-color:white;
+  color:#13b38b;
+}
+
+
+.fa-facebook {
+  margin: 4px;
+}
+@media only screen and (max-width:400px) {
+nav ul a, nav .brand-logo {
+  left:50%;
+}
+
+}
+
+@media only screen and (max-width:400px){
+
+  nav ul a, nav .brand-logo {
+    color:#13b38b;
+  left:50%;
+  font-size: 10px;
+  }
+}
+
+.btn.social-icon, .btn-large.social-icon, .col.social-icon {
+  background: transparent !important;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.social-color {
+  background-color: #26a69a !important;
+}
+
+.btn-floating {
+  background-color: #13b38b !important;
+}
+/* Portrait and Landscape */
+@media only screen and (min-width: 950px) {
+    nav ul a, nav .brand-logo {
+      color:#13b38b;
+      left:10%;
+
+    }
+}
+
+* {
+  font-family: 'Montserrat', sans-serif;
 }
