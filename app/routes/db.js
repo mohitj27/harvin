@@ -132,7 +132,8 @@ router.post("/gallery", (req, res, next) => {
         var srcList = filePath.split(path.sep);
 
         //relative file path (required by ejs file)
-        var src = path.join('/', srcList[6], srcList[7]);
+
+        var src = path.join('/', srcList[srcList.length-2], srcList[srcList.length-1]);
         
 		var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
 		var description = req.body.description;
