@@ -55,6 +55,7 @@ app.use(bodyParser.urlencoded({
 app.use(flash());
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "./../../HarvinDb"));
 app.use(methodOverride("_method"));
 app.use(session({
 	secret: 'This is a secret phrase, it will be used for hashing the session id',

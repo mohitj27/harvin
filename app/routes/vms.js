@@ -4,6 +4,7 @@ var express = require("express"),
     errors = require("../error"),
     middleware = require("../middleware"),
     Visitor = require('./../models/Visitor');
+    Gallery = require('./../models/Gallery');
 router = express.Router();
 
 router.get('/new', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
@@ -77,9 +78,17 @@ router.get('/courses',(req,res,next)=>{
   res.render('aboutus')
 })
 
+//TODO: ishank - uncomment the commented lines and remove line 83 
+//TODO: ishank - Check all TODO and refer management.ejs && db.js 
 router.get('/gallery',(req,res,next)=>{
-  res.render('gallery')
-})
+  res.render('gallery');
+
+  // Gallery.find({}, (err, foundImages) => {
+  //   if(!err && foundImages){
+  //     res.render('gallery', {items: foundImages});
+  //   }
+  // });
+});
 
 router.get('/results',(req,res,next)=>{
   res.render('aboutus')
