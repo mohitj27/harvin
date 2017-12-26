@@ -73,12 +73,12 @@ router.get('/locations',(req,res,next)=>{
   res.render('aboutus')
 })
 
-router.get('/Courses',(req,res,next)=>{
+router.get('/courses',(req,res,next)=>{
   res.render('aboutus')
 })
 
 router.get('/gallery',(req,res,next)=>{
-  res.render('aboutus')
+  res.render('gallery')
 })
 
 router.get('/results',(req,res,next)=>{

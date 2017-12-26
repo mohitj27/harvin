@@ -1,0 +1,28 @@
+
+.sub-img{
+
+  padding:0px !important;
+  margin:5px 0px 0px 0px;
+}
+.main-img{
+  left:10% !important;
+}
+/* ----------- iPhone 4 and 4S ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+}
+
+@media screen
+  and (min-device-width: 1200px)
+  and (max-device-width: 1600px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    .h2-gallery{
+      padding-left:6%;
+
+    }
+}
