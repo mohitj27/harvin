@@ -1,6 +1,9 @@
 .float-btn {
   text-align: center;
 }
+.heading-white{
+  color:white;
+}
 
 .card-hover:hover{
   transform: scale(1.1);

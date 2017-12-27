@@ -5,7 +5,34 @@ var express = require("express"),
     middleware = require("../middleware"),
     Visitor = require('./../models/Visitor');
     Gallery = require('./../models/Gallery');
-router = express.Router();
+router = express.Router();//helper- class
+//helper- class
+router.get("/gallery/:category", function (req, res, next) {
+  console.log('heloooooooooooooooooooooooooooop')
+  Class.findOne({
+    className: req.params.className,
+  }, function (err, classs) {
+    if (err) {
+      console.log(err);
+    }
+  })
+      .populate({
+        path: "subjects",
+        model: "Subject"
+
+      })
+      .exec(function (err, classs) {
+        if (err) {
+          console.log(err);
+          req.flash("error", "Couldn't find the details of chosen class");
+          res.redirect("/files/uploadFile");
+        } else {
+          res.json({
+            classs: classs
+          });
+        }
+      });
+});
 
 router.get('/new', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   res.render('newVisitor');
@@ -78,16 +105,17 @@ router.get('/courses',(req,res,next)=>{
   res.render('aboutus')
 })
 
-//TODO: ishank - uncomment the commented lines and remove line 83 
-//TODO: ishank - Check all TODO and refer management.ejs && db.js 
+//TODO: ishank - uncomment the commented lines and remove line 83
+//TODO: ishank - Check all TODO and refer management.ejs && db.js
 router.get('/gallery',(req,res,next)=>{
-  res.render('gallery');
+//  res.render('gallery');
 
-  // Gallery.find({}, (err, foundImages) => {
-  //   if(!err && foundImages){
-  //     res.render('gallery', {items: foundImages});
-  //   }
-  // });
+  Gallery.find({}, (err, foundImages) => {
+    if(!err && foundImages){
+      res.render('gallery', {items: foundImages});
+      console.log({items:foundImages})
+    }
+  });
 });
 
 router.get('/results',(req,res,next)=>{
@@ -97,4 +125,7 @@ router.get('/results',(req,res,next)=>{
 router.get('/faculty',(req,res,next)=>{
   res.render('aboutus')
 })
+//helper- class
+
+
 module.exports = router;
