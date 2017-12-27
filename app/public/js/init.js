@@ -8,8 +8,7 @@
     $('.carousel').carousel({
       fullWidth: true
     });
-
-
+  
     $('.tap-target').tapTarget('open');
     state=true;
     // $('.tap-target').tapTarget('close');
