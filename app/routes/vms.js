@@ -5,35 +5,7 @@ var express = require("express"),
     middleware = require("../middleware"),
     Visitor = require('./../models/Visitor');
     Gallery = require('./../models/Gallery');
-router = express.Router();//helper- class
-//helper- class
-router.get("/gallery/:category", function (req, res, next) {
-  console.log('heloooooooooooooooooooooooooooop')
-  Class.findOne({
-    className: req.params.className,
-  }, function (err, classs) {
-    if (err) {
-      console.log(err);
-    }
-  })
-      .populate({
-        path: "subjects",
-        model: "Subject"
-
-      })
-      .exec(function (err, classs) {
-        if (err) {
-          console.log(err);
-          req.flash("error", "Couldn't find the details of chosen class");
-          res.redirect("/files/uploadFile");
-        } else {
-          res.json({
-            classs: classs
-          });
-        }
-      });
-});
-
+router = express.Router();
 router.get('/new', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   res.render('newVisitor');
 });
