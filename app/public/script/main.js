@@ -10,6 +10,8 @@ $(function () {
 	$(".dropdown-button").dropdown({hover:true,belowOrigin:true});
 	console.log($('.dropdown-button'));
 
+    $('select').material_select();
+
 	///NAVBAR INIT
 	$('.button-collapse').sideNav({
        menuWidth: 300, // Default is 300
