@@ -6,6 +6,7 @@ var express = require("express"),
     Visitor = require('./../models/Visitor');
     Gallery = require('./../models/Gallery');
 router = express.Router();
+
 router.get('/new', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   res.render('newVisitor');
 });
@@ -21,7 +22,7 @@ router.get('/all', middleware.isLoggedIn, middleware.isCentre, (req, res, next) 
   });
 });
 
-router.get('/', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
+router.get('/', (req, res, next) => {
   res.render('vmsLanding');
 });
 
@@ -77,10 +78,13 @@ router.get('/courses',(req,res,next)=>{
   res.render('aboutus')
 })
 
+//helper- class
+
 //TODO: ishank - uncomment the commented lines and remove line 83
 //TODO: ishank - Check all TODO and refer management.ejs && db.js
 router.get('/gallery',(req,res,next)=>{
 //  res.render('gallery');
+console.log('hello gallery')
 
   Gallery.find({}, (err, foundImages) => {
     if(!err && foundImages){

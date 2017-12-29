@@ -8,38 +8,28 @@
     <div class="section">
       <div class="container">
         <div class="row h2-gallery">
-          <div class="col l12">
             <h2>Gallery</h2>
             <hr>
             <div class="container center">
               <div class="row">
 
-                <div class="col l2 s4 offset-l2 offset-m2 chip hoverable z-depth-4">All</div>
-                <div class="col l2 s4 chip hoverable">Event</div>
-                <div class="col l2 s4 chip large hoverable">Centers</div>
-                <div class="col l2 s4 chip hoverable">Student</div>
+                <div class="col l2 s5 offset-l2 offset-m2 chip hoverable z-depth-4 active-chip">All</div>
+                <div class="col l2 s5 chip hoverable">Event</div>
+                <div class="col l2 s5 chip large hoverable">Centers</div>
+                <div class="col l2 s5 chip hoverable">Student</div>
               </div>
             </div>
-          </div>
         </div>
-        <div class="row">
-          /TODO: fix this
+        <div class="row gallery-container">
 
-
-            <div class="col l3">
-
-<img src="/images/1J5A2894.JPG">
-            </div>
-
-            <div class="col l3">
-
-<img src="/images/1J5A2894.JPG">
-            </div>
-
-
-
-            
-
+                    <%items.forEach(function(item,i){%>
+                      <div class="col l3 gallery-image">
+                        <img src="<%=item.src%>" class="responsive-img ">
+                      </div>
+                      <div class="col l3 gallery-image">
+                        <img src="<%=item.src%>" class="responsive-img ">
+                      </div>
+                      <%})%>
 
 
         </div>

@@ -3,18 +3,32 @@ $('document').ready(function() {
   var pswpElement = document.querySelectorAll('.pswp')[0];
 
   // build items array
-  $('.chip').click(function(){
-    $('.chip').removeClass('z-depth-4')
-    $('.chip').css({ "background-color": "", 'color':''})
-    $(this).addClass('z-depth-4')
-    $(this).css({ "background-color": "#13b38b", 'color':'#fff'})
+  $('.chip').click(function() {
+    $('.chip').removeClass('z-depth-4 active-chip')
+    $('.chip').css({
+      "background-color": "",
+      'color': ''
+    })
+    $(this).addClass('z-depth-4 active-chip')
     console.log('gallery');
-let data=$(this).html().toLowerCase();
-console.log(data)
+    let data = $(this).html().toLowerCase();
+    console.log(data)
     $('.gallery-image').remove()
+    // let parent=$('gallery-container')
+    $.get("/gallery/" + data, function(res) {
+      console.log(res);
+      console.log(res.gallery[1]);
+      res.gallery.forEach(function(image, i) {
 
-    $.get("/gallery/"+data, function (data) {
-      console.log(data);
+        let $imageElement = $("<div><img src=" + image.src + "></div>")
+        $imageElement.addClass("col l3 s12 gallery-image")
+        $imageElement.children().addClass("responsive-img")
+        console.log($imageElement.children().height())
+
+          $('.gallery-container').append($imageElement)
+      })
+
+
     });
 
 
@@ -27,7 +41,7 @@ console.log(data)
   };
   $('.chip').removeClass('z-depth-4')
 
-  let startGallery=function(){
+  let startGallery = function() {
     // Initializes and opens PhotoSwipe
     let gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options)
 
@@ -36,44 +50,3 @@ console.log(data)
   }
   $('.main-img').click(startGallery)
 });
-var items = [{
-    src: 'https://placekitten.com/600/400',
-    w: 600,
-    h: 400
-  },
-  {
-    src: 'https://placekitten.com/1200/900',
-    w: 1200,
-    h: 900
-  },
-  {
-    src: 'https://placekitten.com/1200/900',
-    w: 1200,
-    h: 900
-  },
-  {
-    src: 'https://placekitten.com/1200/900',
-    w: 1200,
-    h: 900
-  },
-  {
-    src: 'https://placekitten.com/1200/900',
-    w: 1200,
-    h: 900
-  },
-  {
-    src: 'https://placekitten.com/1200/900',
-    w: 1200,
-    h: 900
-  },
-  {
-    src: 'https://placekitten.com/1200/900',
-    w: 1200,
-    h: 900
-  },
-  {
-    src: 'https://placekitten.com/1200/900',
-    w: 1200,
-    h: 900
-  }
-];

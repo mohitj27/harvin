@@ -8,17 +8,22 @@
     $('.carousel').carousel({
       fullWidth: true
     });
-  
+
     $('.tap-target').tapTarget('open');
     state=true;
     // $('.tap-target').tapTarget('close');
 
+    let i=0;
 
     // Next slide
-    //
-    // setInterval(function() {
-    //   $('.carousel').carousel('next');
-    // }, 4000);
+    setInterval(function() {
+      if(i>4)
+      i=0
+      console.log('hi')
+      $('.landing-container').css({"background-image": "url("+items[i].src+")","transition":"linear 2s"})
+      i++;
+
+    }, 4000);
   }); // end of document ready
 })(jQuery); // end of jQuery name space
 var state=true;
@@ -61,3 +66,45 @@ function myFunction() {
   }
 }
 // $('.carousel.carousel-slider').carousel({fullWidth: true});
+
+var items = [{
+    src: 'http://lorempixel.com/1200/900',
+    w: 600,
+    h: 400
+  },
+  {
+    src: 'http://lorempixel.com/1000/900',
+    w: 1200,
+    h: 900
+  },
+  {
+    src: 'http://lorempixel.com/1200/800',
+    w: 1200,
+    h: 900
+  },
+  {
+    src: 'http://lorempixel.com/1300/800',
+    w: 1200,
+    h: 900
+  },
+  {
+    src: 'http://lorempixel.com/1000/800',
+    w: 1200,
+    h: 900
+  },
+  {
+    src: 'http://lorempixel.com/1000/900',
+    w: 1200,
+    h: 900
+  },
+  {
+    src: 'http://lorempixel.com/1000/1000',
+    w: 1200,
+    h: 900
+  },
+  {
+    src: 'http://lorempixel.com/1100/1000',
+    w: 1200,
+    h: 900
+  }
+];

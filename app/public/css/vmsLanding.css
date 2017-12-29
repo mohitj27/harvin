@@ -31,6 +31,8 @@ a#menu {
 
 .landing-container {
   height: 90%;
+
+
   position: relative;
   background: url(./../img/landing_page_icon.png);
   background-position: center center;
@@ -39,7 +41,6 @@ a#menu {
 
 
 }
-
 
 
 .carousel {
