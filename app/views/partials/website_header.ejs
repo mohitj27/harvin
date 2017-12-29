@@ -1,4 +1,3 @@
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -10,8 +9,8 @@
 
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" >
- <link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection" >
+<link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+<link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
 <link href="../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
 </div>
 
@@ -19,43 +18,55 @@
 
 
 <nav id="navbar" class="z-depth-2">
+  <!-- Dropdown Structure -->
+   <ul id='dropdown1' class='dropdown-content'>
+     <li><a href="#!" class="bordered-list">one</a></li>
+     <li class="divider"></li>
+     <li><a href="#!" class="bordered-list">three</a></li>
+     <li class="divider"></li>
+     <li><a href="#!" class="bordered-list">five</a></li>
+   </ul>
 
-	<div class="nav-wrapper">
-		<a href="/vms" class="brand-logo">Harvin Academy</a>
-		<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+  <div class="nav-wrapper">
 
-		<ul id="nav-mobile" class="right hide-on-med-and-down">
-			<li><a href="/vms/aboutus">About</a></li>
-			<li><a href="/vms/centers">Centers</a></li>
-			<li><a href="/vms/courses">Courses</a></li>
-			<li><a href="/vms/gallery">Gallery</a></li>
-			<li><a href="/vms/results">Results</a></li>
-			<li><a href="/vms/faculty">Our Faculty</a></li>
-		</ul>
-		<ul class="side-nav" id="mobile-demo">
-      <li><h3 href="/vms" class="brand-logo">MENU</h3></li>
+
+    <a href="/vms" class="brand-logo">Harvin Academy</a>
+    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="/vms/aboutus">About</a></li>
+      <li>  <a class='dropdown-button' href='#' data-activates='dropdown1'>Centers</a>
+      </li>
+      <li><a href="/vms/courses">Courses</a></li>
+      <li><a href="/vms/gallery">Gallery</a></li>
+      <li><a href="/vms/results">Results</a></li>
+      <li><a href="/vms/faculty">Our Faculty</a></li>
+    </ul>
+    <ul class="side-nav" id="mobile-demo">
+      <li>
+        <h3 href="/vms" class="brand-logo">MENU</h3></li>
       <br>
-			<li><a href="/vms/aboutus"class="bordered-list">ABOUT</a></li>
-			<li><a href="/vms/centers"class="bordered-list">CENTERS</a></li>
-			<li><a href="/vms/courses"class="bordered-list">COURSES</a></li>
-			<li><a href="/vms/gallery"class="bordered-list">GALLERY</a></li>
-			<li><a href="/vms/results"class="bordered-list">RESULTS</a></li>
-			<li><a href="/vms/faculty"class="bordered-list">OUR TEAM</a></li>
+      <li><a href="/vms/aboutus" class="bordered-list">ABOUT</a></li>
+<li>  <a class='dropdown-button bordered-list' href='#' data-activates='dropdown1'>CENTERS</a></li>
+  <li><a href="/vms/courses" class="bordered-list">COURSES</a></li>
+      <li><a href="/vms/gallery" class="bordered-list">GALLERY</a></li>
+      <li><a href="/vms/results" class="bordered-list">RESULTS</a></li>
+      <li><a href="/vms/faculty" class="bordered-list">OUR TEAM</a></li>
       <div class="contact_box">
         <div class="row">
           <div class="col l12">
-          <a class="waves-effect waves-light" target="_blank" href="https://twitter.com/harvin_academy">
+            <a class="waves-effect waves-light" target="_blank" href="https://twitter.com/harvin_academy">
             <i class="small material-icons ">email</i></a>Email@email.com
-            </div>
+          </div>
 
 
           <div class="col l12">
-          <a class="waves-effect waves-light" target="_blank" href="https://twitter.com/harvin_academy">
+            <a class="waves-effect waves-light" target="_blank" href="https://twitter.com/harvin_academy">
             <i class="small material-icons ">local_phone</i></a>99999999
-            </div>
-            </div>
+          </div>
+        </div>
 
-                </div>
-      </ul>
-	</div>
+      </div>
+    </ul>
+  </div>
 </nav>

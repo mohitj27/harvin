@@ -132,6 +132,9 @@ blockquote{
       font-size: 16px;
 
     }
+    .dropdown-content{
+      width: 100%;
+    }
 
 }
 
