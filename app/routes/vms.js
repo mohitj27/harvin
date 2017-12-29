@@ -70,8 +70,8 @@ router.get('/aboutus',(req,res,next)=>{
   res.render('aboutus')
 })
 
-router.get('/locations',(req,res,next)=>{
-  res.render('aboutus')
+router.get('/centers',(req,res,next)=>{
+  res.render('centers')
 })
 
 router.get('/courses',(req,res,next)=>{
