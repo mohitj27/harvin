@@ -15,7 +15,7 @@ $('document').ready(function() {
     console.log(data)
     $('.gallery-image').remove()
     // let parent=$('gallery-container')
-    $.get("/gallery/" + data, function(res) {
+    $.get("/vms/gallery/" + data, function(res) {
       console.log(res);
       console.log(res.gallery[1]);
       res.gallery.forEach(function(image, i) {

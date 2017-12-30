@@ -10,22 +10,11 @@
     });
 
     $('.tap-target').tapTarget('open');
-    state=true;
+    state = true;
     // $('.tap-target').tapTarget('close');
 
-    let i=0;
 
-    // Next slide
-    setInterval(function() {
-      if(i>4)
-      i=0
-      console.log('hi')
-      $('.landing-container').css({"background-image": "url("+items[i].src+")","transition":"linear 2s"})
-      i++;
-
-    }, 4000);
-
-  $('.dropdown-button').dropdown({
+    $('.dropdown-button').dropdown({
       inDuration: 300,
       outDuration: 225,
       constrainWidth: false, // Does not change width of dropdown to that of the activator
@@ -34,11 +23,11 @@
       belowOrigin: true, // Displays dropdown below the button
       alignment: 'left', // Displays dropdown with edge aligned to the left of button
       stopPropagation: false // Stops event propagation
-    }
-  );
+    });
   }); // end of document ready
 })(jQuery); // end of jQuery name space
-var state=true;
+var state = true;
+
 function tap() {
   console.log('tap');
   if (!state) {
@@ -46,38 +35,20 @@ function tap() {
 
     state = true;
   } else {
-     $('.tap-target').tapTarget('close');
-     state=false;
+    $('.tap-target').tapTarget('close');
+    state = false;
 
   }
 
 }
 
 function scrollDown() {
-console.log('scroll')
+  console.log('scroll')
   $('html, body').animate({
     scrollTop: $("#content").offset().top
   }, 1000);
 
 }
-
-window.onscroll = function() {myFunction()};
-
-// Get the navbar
-var navbar = document.getElementById("navbar");
-
-// Get the offset position of the navbar
-var sticky = navbar.offsetTop;
-
-// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
-function myFunction() {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add("sticky")
-  } else {
-    navbar.classList.remove("sticky");
-  }
-}
-// $('.carousel.carousel-slider').carousel({fullWidth: true});
 
 var items = [{
     src: 'http://lorempixel.com/1200/900',

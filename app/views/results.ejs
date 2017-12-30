@@ -1,0 +1,71 @@
+<%include partials/website_header.ejs%>
+  <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+  <link rel="stylesheet" type="text/css" href="../../css/results.css">
+
+  <div class="section no-pad-top">
+
+    <div class="col s12">
+      <ul class="tabs">
+
+        <li class="tab col l4 s4 m4"><a class="active" href="#result-container">ACHIEVERS</a></li>
+        <li class="tab col l4 s4 m4"><a href="#test2">RESULTS</a></li>
+        <li class="tab col l4 s4 m4"><a href="#test3">TESTIMONIALS</a></li>
+      </ul>l
+   <div id="test2" class="col s12">Test 2</div>
+   <div id="test3" class="col s12">Test 3</div>
+    </div>
+  </div>
+  <div class="container">
+  </div>
+  <main>
+
+    <div class="section" id="result-container">
+      <div class="container">
+                  <div class="row">
+        						<% if (students){ %>
+        							<% students.forEach((student, i) =>{ %>
+
+                          <div class="card small col l3 m3 s12">
+                            <div class="card-image">
+                              <img src="<%=student.src%>" class="responsive-img">
+                              <span class="card-title">Card Title</span>
+                            </div>
+                            <div class="card-content">
+                              <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                            </div>
+                            <div class="card-action">
+                              <a href="#">This is a link</a>
+                            </div>
+                          </div>
+                          <div class="card small col l3 m3 s12">
+                            <div class="card-image">
+                              <img src="<%=student.src%>" class="responsive-img">
+                              <span class="card-title">Card Title</span>
+                            </div>
+                            <div class="card-content">
+                              <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                            </div>
+                            <div class="card-action">
+                              <a href="#">This is a link</a>
+                            </div>
+                          </div>
+                <%if(i!=0&&i%3==0){%>
+                </div>
+                  <div class="row">
+
+                  <%}%>
+        								<% }) %>
+        									<% } %>
+
+      </div>
+    </div>
+  </main>
+  <%include partials/website_footer.ejs%>
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../../js/materialize.js"></script>
+    <script src="../../js/init.js"></script>
+    <script src="../../js/results.js"></script>

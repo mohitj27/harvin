@@ -43,26 +43,6 @@ router.use('/testimonial', testimonialRoutes);
 router.get("/", function (req, res) {
   res.render("home");
 });
-router.get('/gallery/:category', function (req, res, next) {
-  console.log('hello')
-categoryObject=  (req.params.category==='all')?{}:{category: req.params.category,}
-
-  Gallery.find(categoryObject, function (err, gallery) {
-    if (err) {
-      console.log(err);
-    }
-  })
-      .exec(function (err, gallery) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.json({
-            gallery: gallery
-          });
-        }
-      });
-});
-
 router.delete('/users/:userId', (req, res, next) => {
   const userId = req.params.userId;
   User.findById(userId, (err, foundUser) => {
