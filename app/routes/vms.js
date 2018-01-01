@@ -81,19 +81,15 @@ router.get('/aboutus', (req, res, next) => {
   res.render('aboutus')
 })
 
-router.get('/centers/:location', (req, res, next) => {
-  let locations = ['janakpuri', 'preetvihar', 'center3']
-  if (locations.includes(req.params.location))
-    res.render('locations/'+req.params.location)
-  else {
-    console.log(err);
-    next(new errors.generic());
-  }
-  s
+router.get('/centers', (req, res, next) => {
+
+
+    res.render('centers')
+
 })
 
 router.get('/courses', (req, res, next) => {
-  res.render('aboutus')
+  res.render('courses')
 })
 
 //helper- class

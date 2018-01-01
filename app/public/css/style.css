@@ -62,10 +62,10 @@ nav ul a, nav .brand-logo {
 
 }
 
-.nav-wrapper{
-  background-color:white;
-  color:#13b38b;
-}
+  .nav-wrapper{
+    background-color:white;
+    color:#13b38b;
+  }
 
 
 .fa-facebook {
@@ -114,8 +114,10 @@ html, body {
 blockquote{
   border-left: 5px solid #13b38b;
 }
-.border-5{
-  border:5px solid #13b38b;
+.border-2{
+  border:2px solid #13b38b;
+  height:100px !important;
+  width:100px;
 }
 * {
   font-family: 'Montserrat', sans-serif;
@@ -162,4 +164,18 @@ margin-right:20px;
   background-color:#13b38b;
   color:white;
 
+}
+
+.active-chip{
+  background-color:#13b38b;
+  color:white;
+}
+
+
+.chip:hover{
+  background-color:#13b38b;
+  color:white;
+}
+h2,h3,h4,h5{
+color: #13b38b;
 }

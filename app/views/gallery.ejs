@@ -8,34 +8,29 @@
     <div class="section">
       <div class="container">
         <div class="row h2-gallery">
-            <h2>Gallery</h2>
-            <hr>
-            <div class="container center">
-              <div class="row">
-
-                <div class="col l2 s5 offset-l2 offset-m2 chip hoverable z-depth-4 active-chip">All</div>
-                <div class="col l2 s5 chip hoverable">Event</div>
-                <div class="col l2 s5 chip large hoverable">Centers</div>
-                <div class="col l2 s5 chip hoverable">Student</div>
-              </div>
+          <h2 class="center-align">Gallery</h2>
+          <hr>
+          <div class="container center">
+            <div class="row">
+              <div class="col l2 m2 s5 offset-l2 offset-m2 offset-s1 chip hoverable z-depth-4 active-chip">All</div>
+              <div class="col l2 m2 s5 chip hoverable">Event</div>
+              <div class="col l2 m2 s5 chip large hoverable offset-s1">Centers</div>
+              <div class="col l2 m2 s5 chip hoverable">Student</div>
             </div>
+          </div>
         </div>
         <div class="row gallery-container">
-
-                    <%items.forEach(function(item,i){%>
-                      <div class="col l3 gallery-image">
-                        <img src="<%=item.src%>" class="responsive-img ">
-                      </div>
-                      <div class="col l3 gallery-image">
-                        <img src="<%=item.src%>" class="responsive-img ">
-                      </div>
-                      <%})%>
-
-
+          <%items.forEach(function(item,i){%>
+            <div class="col l3 gallery-image">
+              <img src="<%=item.src%>" class="responsive-img ">
+            </div>
+            <div class="col l3 gallery-image">
+              <img src="<%=item.src%>" class="responsive-img ">
+            </div>
+            <%})%>
         </div>
       </div>
     </div>
-
     <!-- Root element of PhotoSwipe. Must have class pswp. -->
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 

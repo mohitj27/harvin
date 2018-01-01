@@ -1,0 +1,83 @@
+
+nav .nav-wrapper,nav ul a{
+
+    color:white ;
+    background-color:#13b38b;
+
+}
+nav .brand-logo{
+  color:white;
+}
+main{  color:white  ;
+  background-color:#13b38b;
+
+}
+.nav-wrapper{
+margin-bottom: 10px;
+}
+
+
+h2,h3,h4,h5{
+color: white;
+}
+
+.tabs .indicator{
+  background-color: white;
+}
+.button-collapse{
+  color: white;
+}
+
+
+/* ----------- iPhone 4 and 4S ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+  nav ul a, nav .brand-logo .side-nav-main{
+      background-color: white;
+      color:#13b38b;
+
+    }
+    .contact-box{  background-color: white;
+      color:#13b38b;
+
+
+    }
+    #mobile-demo > li:nth-child(1) > h3{
+      background-color: white;
+      color:#13b38b;
+
+    }
+
+    #mobile-demo > div > div > *{
+color:#13b38b;
+    }
+
+    .button-collapse{
+      color:white;
+    }
+
+
+}
+
+@media screen
+  and (min-device-width: 1200px)
+  and (max-device-width: 1600px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+}
+.divider{
+background-color: #13b38b;
+
+}
+.dropdown-content li > a, .dropdown-content li > span{
+  color:white;
+}
+
+.dropdown-content li > a:hover, .dropdown-content li > span{
+  color:white;
+  background-color: #13b3ab;
+}

@@ -123,9 +123,9 @@
 							<% students.forEach((student, i) =>{ %>
 								<%if(i<8){%>
 								<div class="col s4 l2 m">
-									<img class="responsive-img circle border-5" id="result-image" src="<%=student.src%>">
-									<h4>name</h4>
-									<p class="flow-text">Rank and exam</p>
+									<img class="responsive-img circle border-2" id="result-image" src="<%=student.src%>">
+									<h5 class="flow-text">Name</h5>
+									<p class="flow-text"><%=student.desc%></p>
 
 									</img>
 								</div>
