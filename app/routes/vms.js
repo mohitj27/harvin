@@ -144,7 +144,7 @@ if(!err&&foundStudents)
 })
 
 router.get('/faculty', (req, res, next) => {
-  res.render('aboutus')
+  res.render('faculty')
 })
 //helper- class
 
