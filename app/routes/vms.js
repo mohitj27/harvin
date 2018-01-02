@@ -7,7 +7,7 @@ var express = require("express"),
 Gallery = require('./../models/Gallery');
 router = express.Router();
 
-router.get('/new', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
+router.get('/new', (req, res, next) => {
   res.render('newVisitor');
 });
 

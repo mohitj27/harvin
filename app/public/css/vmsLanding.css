@@ -28,16 +28,21 @@ a#menu {
   }
 
 }
+#main-landing-section{
+  height:100%;
+  width:100%;
+  /*position: relative;*/
 
-.landing-container {
-  height: 90%;
-
-
-  position: relative;
   background: url(./../img/landing_page_icon.png);
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
+}
+.landing-container {
+  height: 100%;
+
+
+  /*position: relative;*/
 
 
 }
