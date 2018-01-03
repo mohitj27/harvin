@@ -2,40 +2,37 @@
 	<link href="../css/vmsLanding.css" type="text/css" rel="stylesheet" />
 
 
-	<main  >
-<div class="section" id="main-landing-section">
-		<div class="container float-btn landing-container">
-			<div class="container btn-text-container">
-				<div class="row center">
-					<div id="explore" class="visitor-button col s6 ">Explore</div>
-					<div id="register" class="visitor-button  col s6 ">Register</div>
-				</div>
-				<div class="row center">
-					<div class="col s6">
-						<a onClick="scrollDown();" class="btn-floating btn-large waves-effect waves-light grey">
-		<i class="material-icons">expand_more</i>
-	</a>
+	<main>
+		<div class="section" id="main-landing-section">
+			<div class="container float-btn landing-container">
+				<div class="container btn-text-container">
+					<div class="row center">
+						<div id="explore" class="visitor-button col s6 ">Explore</div>
+						<div id="register" class="visitor-button  col s6 ">Register</div>
 					</div>
-					<div class="col s6">
+					<div class="row center">
+						<div class="col s6">
+							<a onClick="scrollDown();" class="btn-floating btn-large waves-effect waves-light grey">
+							<i class="material-icons">expand_more</i>
+							</a>
+						</div>
+						<div class="col s6">
 
-						<a href="/vms/new" class="btn-floating waves-effect btn-large teal black-text darken-text-2 visitor-button">
-		<i class="material-icons">receipt</i></a>
-						</a>
+							<a href="/vms/new" class="btn-floating waves-effect btn-large teal black-text darken-text-2 visitor-button">
+							<i class="material-icons">receipt</i></a>
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		</div>
-
-
-		<div id="content-parent">
+		<!-- Harvin Academy Features -->
+		<div class="section" id="content-parent">
 			<div id="content">
 
 				<div class="container center heading-white">
 					<br>
-					<br>
-					<br>
-					<h2>Harvin Academy Features</h2>
+					<h2 class="white-h3">Harvin Academy Features</h2>
 
 					<div class="row">
 						<div class="col l6 s10 offset-s1 m4">
@@ -86,68 +83,52 @@
 
 			</div>
 		</div>
-
-		<div class="container carousel-container">
-
-			<div hidden id="carousel1" class="carousel carousel-slider center " data-indicators="true">
-
-				<a class="carousel-item" href="#one!">
-		<img class="img-responsive"src="/images/1J5A2889.JPG">
-	</a>
-				<a class="carousel-item" href="#two!">
-		<img src="/images/1J5A2894.JPG">
-	</a>
-				<a class="carousel-item" href="#three!">
-		<img src="/images/1J5A2905.JPG">
-	</a>
-				<a class="carousel-item" href="#four!">
-		<img src="/images/1J5A2930.JPG">
-	</a>
-			</div>
-		</div>
+		<!-- Parallax -->
 		<div class="parallax-container valign-wrapper">
-
 			<div class="parallax normal-blur">
 				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
 			</div>
 		</div>
-		<div class="container">
-			<div class="section">
+		<!-- Our Rsults -->
+		<div class="section" id="content-parent">
+			<div id="content">
+				<div class="container">
 
-				<div class="row">
-					<div class="col s12 center">
+					<div class="row">
+						<div class="col s12 center">
+							<br>
+							<h4 class="white-h3">Our Results</h4>
+							<hr>
+							<br>
 
-						<h4>Our Results</h4>
-						<hr>
-						<br>
+							<% if (students){ %>
+								<% students.forEach((student, i) =>{ %>
+									<%if(i<8){%>
+										<div class="col s4 l2 m">
+											<img class="responsive-img circle border-2" id="result-image" src="<%=student.src%>">
+											<h5 class="flow-text">Name</h5>
+											<p class="flow-text">
+												<%=student.desc%>
+											</p>
 
-						<% if (students){ %>
-							<% students.forEach((student, i) =>{ %>
-								<%if(i<8){%>
-								<div class="col s4 l2 m">
-									<img class="responsive-img circle border-2" id="result-image" src="<%=student.src%>">
-									<h5 class="flow-text">Name</h5>
-									<p class="flow-text"><%=student.desc%></p>
-
-									</img>
-								</div>
-								<%}%>
-								<% }) %>
-									<% } %>
+											</img>
+										</div>
+										<%}%>
+											<% }) %>
+												<% } %>
+						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
-
-
+		<!-- Parallax -->
 		<div class="parallax-container valign-wrapper">
 
 			<div class="parallax normal-blur">
 				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
 			</div>
 		</div>
-
+		<!-- Our Courses -->
 		<div class="section" id="content-parent">
 			<div id="content">
 				<div class="container">
@@ -211,90 +192,186 @@
 				</div>
 			</div>
 		</div>
-
+		<!-- Parallax -->
 		<div class="parallax-container valign-wrapper">
 
 			<div class="parallax normal-blur">
 				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
 			</div>
 		</div>
-		<div class="section">
-			<div class="container center">
-				<h2>Harvin Academy Management</h2>
+		<!-- Advisory Board -->
+		<div class="section" id="content-parent">
+			<div class="" id="content">
+				<div class="container center ">
+					<h3 class="white-h3">Harvin Academy Advisory Board</h3>
 
-				<div class="row">
-					<div class="col l6 m6 s12">
-						<div class="card small">
-							<div class="card-image waves-effect waves-block waves-light">
-								<img class="activator" src="/images/1J5A2894.JPG">
+					<div class="row">
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board1.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
 							</div>
-							<div class="card-content">
-								<span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-								<p><a href="#">This is a link</a></p>
+						</div>
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board2.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
 							</div>
-							<div class="card-reveal">
-								<span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-								<p>Here is some more information about this product that is only revealed once clicked on.</p>
+						</div>
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board3.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board4.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col l6 m6 s12">
-						<div class="card small">
-							<div class="card-image waves-effect waves-block waves-light">
-								<img class="activator" src="/images/1J5A2894.JPG">
+					<div class="row">
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board5.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
 							</div>
-							<div class="card-content">
-								<span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-								<p><a href="#">This is a link</a></p>
+						</div>
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board6.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
 							</div>
-							<div class="card-reveal">
-								<span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-								<p>Here is some more information about this product that is only revealed once clicked on.</p>
+						</div>
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board7.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board8.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col l6 m6 s12">
-						<div class="card small">
-							<div class="card-image waves-effect waves-block waves-light">
-								<img class="activator" src="/images/1J5A2894.JPG">
-							</div>
-							<div class="card-content">
-								<span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-								<p><a href="#">This is a link</a></p>
-							</div>
-							<div class="card-reveal">
-								<span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-								<p>Here is some more information about this product that is only revealed once clicked on.</p>
+					<div class="row">
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board9.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col l6 m6 s12">
-						<div class="card small">
-							<div class="card-image waves-effect waves-block waves-light">
-								<img class="activator" src="/images/1J5A2894.JPG">
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board10.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
 							</div>
-							<div class="card-content">
-								<span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-								<p><a href="#">This is a link</a></p>
+						</div>
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board11.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
 							</div>
-							<div class="card-reveal">
-								<span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-								<p>Here is some more information about this product that is only revealed once clicked on.</p>
+						</div>
+
+						<div class="col l3 m3 s6">
+							<div class="card ">
+								<div class="card-image">
+									<img src="../../images/advisory_board12.jpg">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+										<p>I am a very simple card. I am good at containing small bits of information.</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- Parallax -->
 		<div class="parallax-container valign-wrapper">
 
 			<div class="parallax normal-blur">
 				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
 			</div>
 		</div>
-		<div class="section">
-			<div class="container center">
-				<h2>Testimonails from top people</h2>
+		<!-- Testimonails -->
+		<div class="section" id="content-parent">
+			<div class="container center"><br>
+				<h3 class="white-h3">Testimonails from top people</h3>
 
 				<div class="row">
 					<div class="col l6 m6 s12">
@@ -352,11 +429,8 @@
 				</div>
 			</div>
 		</div>
-
-
-
-		<div class="parallax-container valign-wrapper  normal-blur">
-
+		<!-- Parallax -->
+		<div class="parallax-container valign-wrapper normal-blur">
 			<div class="parallax">
 				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
 			</div>
