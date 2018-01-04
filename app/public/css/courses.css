@@ -81,3 +81,7 @@ background-color: #13b38b;
   color:white;
   background-color: #13b3ab;
 }
+.svg-image{
+  max-height:400px;
+  max-width:400px;
+}
