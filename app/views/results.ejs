@@ -9,58 +9,62 @@
     <div class="col s12">
 
       <ul class="tabs">
-      <div class="container">
-        <li class="tab col l4 s4 m4"><a class="active" href="#result-container">ACHIEVERS</a></li>
-        <li class="tab col l4 s4 m4"><a href="#test2">RESULTS</a></li>
-        <li class="tab col l4 s4 m4"><a href="#test3">TESTIMONIALS</a></li>
+        <div class="container">
+          <li class="tab col l4 s4 m4"><a class="active" href="#result-container">ACHIEVERS</a></li>
+          <li class="tab col l4 s4 m4"><a href="#test2">RESULTS</a></li>
+          <li class="tab col l4 s4 m4"><a href="#test3">TESTIMONIALS</a></li>
         </div>
       </ul>
-   <div id="test2" class="col s12">Test 2</div>
-   <div id="test3" class="col s12">Test 3</div>
+      <div id="test2" class="col s12">Test 2</div>
+      <div id="test3" class="col s12">Test 3</div>
     </div>
   </div>
   <main>
 
     <div class="section" id="result-container">
       <div class="container">
-                  <div class="row">
-        						<% if (students){ %>
-        							<% students.forEach((student, i) =>{ %>
+        <div class="row center">
+          <div class="col l2 m2 s5 offset-l2 offset-m2 offset-s1 chip hoverable z-depth-4 active-chip-rev">All</div>
+          <div class="col l2 m2 s5 chip hoverable">2017</div>
+          <div class="col l2 m2 s5 chip large hoverable offset-s1">2016</div>
+          <div class="col l2 m2 s5 chip hoverable">2015</div>
+        </div>
+        <div class="row">
+          <% if (students){ %>
+            <% students.forEach((student, i) =>{ %>
 
-                          <div class="card small col l3 m3 s12">
-                            <div class="card-image">
-                              <img src="<%=student.src%>" class="responsive-img">
-                              <span class="card-title">Card Title</span>
-                            </div>
-                            <div class="card-content">
-                              <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                            </div>
-                            <div class="card-action">
-                              <a href="#">This is a link</a>
-                            </div>
-                          </div>
-                          <div class="card small col l3 m3 s12">
-                            <div class="card-image">
-                              <img src="<%=student.src%>" class="responsive-img">
-                              <span class="card-title">Card Title</span>
-                            </div>
-                            <div class="card-content">
-                              <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                            </div>
-                            <div class="card-action">
-                              <a href="#">This is a link</a>
-                            </div>
-                          </div>
-                <%if(i!=0&&i%3==0){%>
+              <div class="card small col l3 m3 s12">
+                <div class="card-image">
+                  <img src="<%=student.src%>" class="responsive-img">
+                  <span class="card-title">Card Title</span>
                 </div>
-                  <div class="row">
+                <div class="card-content">
+                  <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                </div>
 
-                  <%}%>
-        								<% }) %>
-        									<% } %>
+              </div>
+              <div class="card small col l3 m3 s12">
+                <div class="card-image">
+                  <img src="<%=student.src%>" class="responsive-img">
+                  <span class="card-title">Card Title</span>
+                </div>
+                <div class="card-content">
+                  <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                </div>
+              </div>
+              <%if(i!=0&&i%3==0){%>
+        </div>
+        <div class="row">
 
+          <%}%>
+            <% }) %>
+              <% } %>
+
+        </div>
       </div>
-    </div>
   </main>
   <%include partials/website_footer.ejs%>
 
