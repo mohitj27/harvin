@@ -135,7 +135,7 @@ router.get('/gallery', (req, res, next) => {
 router.get('/results', (req, res, next) => {
 Gallery.find({},(err,foundStudents)=>{
 if(!err&&foundStudents)
-  res.render('results',{students:foundStudents})
+  res.render('results',{students:foundStudents,testimonials:foundStudents})
   else {
     console.log(err)
     next(new errors.generic())

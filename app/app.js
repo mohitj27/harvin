@@ -11,7 +11,7 @@ var express = require("express"),
 	dotenv = require('dotenv').config(),
 	config = require('./config')(process.env.LOAD_CONFIG),
 	methodOverride = require("method-override"),
-
+	compression=require('compression'),
 	app = express(),
 	mongoose = require("mongoose"),
 
@@ -45,6 +45,9 @@ app.use(bodyParser.urlencoded({
 //flash
 app.use(flash());
 
+//COMPRESSION
+app.use(compression())
+
 //view engine
 app.set('views', __dirname + '/views');
 app.set("view engine", "ejs");
@@ -73,7 +76,7 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// General middleware function 
+// General middleware function
 
 app.use(function (req, res, next) {
 	res.locals.currentUser = req.user || null;
@@ -86,7 +89,7 @@ app.use(function (req, res, next) {
 //index route
 app.use("/", indexRoutes);
 
-// Error handling middleware function 
+// Error handling middleware function
 app.use(function (err, req, res, next) {
 	if (err) {
 		err.statusCode = err.statusCode || 500;
@@ -106,4 +109,3 @@ app.use(function (err, req, res, next) {
 		}
 	}
 });
-

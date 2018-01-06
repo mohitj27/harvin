@@ -10,18 +10,47 @@
 
       <ul class="tabs">
         <div class="container">
-          <li class="tab col l4 s4 m4"><a class="active" href="#result-container">ACHIEVERS</a></li>
-          <li class="tab col l4 s4 m4"><a href="#test2">RESULTS</a></li>
-          <li class="tab col l4 s4 m4"><a href="#test3">TESTIMONIALS</a></li>
+          <div class="row">
+            <li class="tab col l4 s4 m4"><a class="active" href="#achiever-container">ACHIEVERS</a></li>
+            <li class="tab col l4 s4 m4"><a href="#results-container">RESULTS</a></li>
+            <li class="tab col l4 s4 m4"><a href="#testimonials-container">TESTIMONIALS</a></li>
+          </div>
         </div>
       </ul>
-      <div id="test2" class="col s12">Test 2</div>
-      <div id="test3" class="col s12">Test 3</div>
+
+
+
     </div>
   </div>
   <main>
+    <div id="testimonials-container" class="section">
+      <%if(testimonials){%>
+        <div class="container">
+          <div class="row">
+            <%testimonials.forEach((testimonial,i)=>{%>
+            <div class="col l4 m4 s12">
+            <div class="card horizontal">
+              <div class="card-image">
+                <img src="<%=testimonials[0].src%>">
+              </div>
+              <div class="card-stacked valign-wrapper">
+                <div class="card-content">
+                  <p>
+                    <%=testimonial.description%>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%})%>
+          </div>
+        </div>
+        <%}%>
+    </div>
 
-    <div class="section" id="result-container">
+    </div>
+    <div id="results-container" class="section">Test 3</div>
+    <div class="section" id="achiever-container">
       <div class="container">
         <!-- <div class="row center">
           <div class="col l2 m2 s5 offset-l2 offset-m2 offset-s1 chip hoverable z-depth-4 active-chip-rev">All</div>
@@ -33,16 +62,7 @@
           <% if (students){ %>
             <% students.forEach((student, i) =>{ %>
 
-              <div class="card small col l3 m3 s12">
-                <div class="card-image">
-                  <img src="<%=student.src%>" class="responsive-img">
-                  <span class="card-title">Card Title</span>
-                </div>
-                <div class="card-content">
-                  <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                </div>
 
-              </div>
               <div class="card small col l3 m3 s12">
                 <div class="card-image">
                   <img src="<%=student.src%>" class="responsive-img">
@@ -51,11 +71,10 @@
                 <div class="card-content">
                   <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
                 </div>
-                <div class="card-action">
-                  <a href="#">This is a link</a>
-                </div>
               </div>
-              <%if(i!=0&&i%3==0){%>
+
+              <%if((i!=0)&&(i%3==0)){%>
+
         </div>
         <div class="row">
 
@@ -65,6 +84,8 @@
 
         </div>
       </div>
+
+
   </main>
   <%include partials/website_footer.ejs%>
 
