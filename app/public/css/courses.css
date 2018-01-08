@@ -85,3 +85,37 @@ background-color: #13b38b;
   max-height:400px;
   max-width:400px;
 }
+.svg-content{
+  position: relative;
+}
+#layer1 {
+position:absolute;
+z-index:auto;
+height:100%;
+width: 100%;
+}
+#layer2 {
+position:absolute;
+z-index:1;
+
+height:100%;
+width: 100%;
+
+}
+#layer3 {
+position:absolute;
+z-index:2;
+
+height:100%;
+width: 100%;
+
+}
+
+#layer4 {
+position:absolute;
+z-index:3;
+
+height:100%;
+width: 100%;
+
+}

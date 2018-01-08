@@ -93,7 +93,7 @@
     #stop-clock {
       transform-origin: 50% 50% !important;
       -moz-transform-origin: 50% 50% !important;
-      animation: stop-clockAnimation 3s infinite ;
+       animation: stop-clockAnimation 3s infinite ;
       -moz-animation: stop-clockAnimation 3s infinite ;
     }
   </style>

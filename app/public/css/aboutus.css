@@ -13,3 +13,7 @@
   color:white ;
     padding: 20px;
 }
+p,body > main > div:nth-child(2) > div > div > div > blockquote > ul,.card-title,body > main > div > div > div > div > div > div > ul{
+  line-height: 1.5 !important;
+  color:grey;
+}
