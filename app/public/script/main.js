@@ -10,7 +10,7 @@ $(function () {
 	$(".dropdown-button").dropdown({hover:true,belowOrigin:true});
 	console.log($('.dropdown-button'));
 
-    $('select').material_select();
+    $('.materialSelect').material_select();
 
 	///NAVBAR INIT
 	$('.button-collapse').sideNav({
