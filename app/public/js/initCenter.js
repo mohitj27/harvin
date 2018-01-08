@@ -1,6 +1,7 @@
 
 $(function(){
   $('.chip').click(function(){
+
     $('.chip').removeClass('z-depth-4 active-chip')
     $(this).addClass('z-depth-4 active-chip')
 
@@ -23,6 +24,13 @@ $('.overview').html(overview[2])
     }
 
 
+  })
+
+  $('.image-side').click(function(){
+
+    var val=$(this).attr('src')
+    console.log(val)
+    $('.image-main').attr('src',val)
   })
 })
 let locations=[
@@ -64,3 +72,8 @@ social education to create a revolution in the coaching industry. Harvin is the 
 best minds.`
 
 ]
+
+let sideimagesrc=["/images/1J5A2894.JPG",
+"/images/1J5A2945.JPG",
+"/images/1J5A2988.JPG",
+"/images/1J5A3009.JPG"]

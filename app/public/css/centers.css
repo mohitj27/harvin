@@ -4,3 +4,11 @@
   width: 85% ;
 }
 }
+
+.image-side{
+  cursor:pointer;
+}
+.overview{
+  line-height: 2.0;
+  padding-top: 10px;
+}
