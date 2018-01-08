@@ -143,8 +143,8 @@ if(!err&&foundStudents)
 })
 })
 
-router.get('/faculty', (req, res, next) => {
-  res.render('faculty')
+router.get('/team', (req, res, next) => {
+  res.render('team')
 })
 //helper- class
 

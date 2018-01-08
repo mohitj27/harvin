@@ -22,3 +22,6 @@
   background-color:#13b38b;
   color:white;
 }
+*{
+  transition: all 1s ease-out;
+}

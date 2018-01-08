@@ -1,0 +1,47 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <style>
+
+      .cls-2 {
+        fill: #74dde8;
+      }
+      .cls-3 {
+        fill: none;
+        stroke: #74dde8;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+      @keyframes  back-circle-rotation {
+         0% {
+           transform: rotate(0deg);
+         }
+        
+
+         100% {
+           transform: rotate(360deg);
+         }
+       }
+
+       @-moz-keyframes  back-circle-rotation {
+         33.33% {
+           -moz-transform: rotate(0deg);
+         }
+         0% {
+           -moz-transform: rotate(360deg);
+         }
+         100% {
+           -moz-transform: rotate(360deg);
+         }
+       }
+
+   #back-circle{
+transform-origin: 50% 50% !important;
+-moz-transform-origin: 50% 50% !important;
+animation: back-circle-rotation 10s linear infinite;
+-moz-animation: back-circle-rotation 3s ease-in  infinite;
+   }
+    </style>
+  </defs>
+  <title>c4</title>
+  <g class="cls-1" id="back-circle"><circle class="cls-2" cx="173" cy="192.25" r="53.42" transform="translate(-35.88 39.75) rotate(-11.88)"/><circle class="cls-2" cx="104.43" cy="106.06" r="26.71" transform="translate(-19.6 23.78) rotate(-11.88)"/><circle class="cls-2" cx="117.14" cy="296.17" r="26.71" transform="translate(-58.48 30.47) rotate(-11.88)"/><circle class="cls-2" cx="288.1" cy="168.03" r="26.71" transform="translate(-28.43 62.93) rotate(-11.88)"/><line class="cls-3" x1="121.06" y1="126.97" x2="139.73" y2="150.43"/><line class="cls-3" x1="129.78" y1="272.64" x2="147.71" y2="239.3"/><line class="cls-3" x1="261.96" y1="173.53" x2="225.28" y2="181.25"/></g>
+</svg>

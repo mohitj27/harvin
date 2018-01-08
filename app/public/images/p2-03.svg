@@ -1,0 +1,31 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <style>
+      .cls-1,
+      .cls-3,
+      .cls-6 {
+        fill: none;
+        stroke-miterlimit: 10;
+      }
+      .cls-1 {
+        stroke: #7f0b22;
+      }
+      .cls-2 {
+        fill: #d8993f;
+      }
+      .cls-3 {
+        stroke: #421872;
+        stroke-width: 0.5px;
+      }
+      .cls-4 {
+        fill: #145b96;
+      }
+      .cls-5 {
+        fill: #7f0b22;
+      }
+      .cls-6 {
+        stroke: #193660;
+      }
+    </style>
+  </defs>
+  <title>p2</title><path class="cls-1" d="M126.56,170.68a6,6,0,0,0-5.58-1.62,6,6,0,0,0-4.24,3.47A6.24,6.24,0,0,0,117,178a6,6,0,0,0,5,3,6.08,6.08,0,0,0,3.88-1.18,7.41,7.41,0,0,0,2.37-3.78"/><circle class="cls-2" cx="156.96" cy="194.02" r="2.68" transform="translate(-50.03 54.61) rotate(-17.07)"/><circle class="cls-2" cx="272.36" cy="256.51" r="2.68" transform="translate(-63.29 91.23) rotate(-17.07)"/><circle class="cls-3" cx="293.94" cy="131.15" r="3.59" transform="translate(-25.55 92.05) rotate(-17.07)"/><circle class="cls-3" cx="103.53" cy="216.81" r="3.59" transform="translate(-59.08 39.93) rotate(-17.07)"/><circle class="cls-4" cx="290.35" cy="111.84" r="2.23" transform="translate(-20.04 90.14) rotate(-17.07)"/><circle class="cls-4" cx="149.61" cy="78.23" r="2.23" transform="translate(-16.37 47.36) rotate(-17.07)"/><circle class="cls-5" cx="142.95" cy="162.44" r="1.88" transform="translate(-41.38 49.11) rotate(-17.07)"/><line class="cls-1" x1="278.36" y1="282.58" x2="278.36" y2="279.12"/><line class="cls-1" x1="278.36" y1="290.39" x2="278.36" y2="286.93"/><line class="cls-1" x1="279.82" y1="284.78" x2="283.28" y2="284.73"/><line class="cls-1" x1="273.43" y1="284.8" x2="276.89" y2="284.76"/><line class="cls-1" x1="71.86" y1="246.19" x2="71.86" y2="242.73"/><line class="cls-1" x1="71.86" y1="254" x2="71.86" y2="250.54"/><line class="cls-1" x1="73.32" y1="248.39" x2="76.77" y2="248.34"/><line class="cls-1" x1="66.93" y1="248.41" x2="70.38" y2="248.37"/><line class="cls-6" x1="140.95" y1="232.77" x2="142.95" y2="230.87"/><line class="cls-6" x1="136.55" y1="237.01" x2="138.55" y2="235.12"/><line class="cls-6" x1="140.77" y1="235.12" x2="142.69" y2="237.09"/><line class="cls-6" x1="136.71" y1="230.79" x2="138.63" y2="232.77"/><line class="cls-1" x1="93.35" y1="127.85" x2="93.35" y2="134.21"/><line class="cls-1" x1="90.25" y1="131.03" x2="96.45" y2="131.03"/><line class="cls-1" x1="303.37" y1="249.97" x2="303.37" y2="263.05"/><line class="cls-1" x1="296.98" y1="256.51" x2="309.75" y2="256.51"/></svg>

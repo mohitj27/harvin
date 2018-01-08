@@ -10,6 +10,7 @@ $('document').ready(function() {
     })
     $(this).addClass('z-depth-4 active-chip')
     let data = $(this).html().toLowerCase()
+    $('.gallery-image').fadeOut(1000)
     $('.gallery-image').remove()
     $.get("/vms/gallery/" + data, function(res) {
       console.log(res);
