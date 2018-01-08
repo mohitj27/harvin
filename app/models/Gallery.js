@@ -28,9 +28,7 @@ var gallerySchema = new Schema(
       default: "other"
     },
     description: {
-      type: String,
-      required: true,
-      default: "This is defalut description"
+      type: String
     }
   }
 );
