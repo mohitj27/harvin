@@ -10,6 +10,9 @@ router = express.Router();
 router.get('/new', (req, res, next) => {
   res.render('newVisitor');
 });
+router.get('/test', (req, res, next) => {
+  res.render('testGallery');
+});
 
 router.get('/all', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   Visitor.find({}, (err, foundVisitors) => {
@@ -95,17 +98,17 @@ router.get('/courses', (req, res, next) => {
 //helper- class
 
 router.get('/gallery/:category', function(req, res, next) {
-  console.log('hello')
+  console.log(req.query)
   categoryObject = (req.params.category === 'all') ? {} : {
     category: req.params.category,
   }
-
   Gallery.find(categoryObject, function(err, gallery) {
       if (err) {
         console.log(err);
       }
     })
     .exec(function(err, gallery) {
+
       if (err) {
         console.log(err);
       } else {
@@ -114,6 +117,9 @@ router.get('/gallery/:category', function(req, res, next) {
         });
       }
     });
+
+
+
 });
 
 

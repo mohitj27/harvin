@@ -1,5 +1,4 @@
 $('document').ready(function() {
-
   var pswpElement = document.querySelectorAll('.pswp')[0];
   // build items array
   $('.chip').click(function() {
@@ -18,13 +17,23 @@ $('document').ready(function() {
       res.gallery.forEach(function(image, i) {
         let $imageElement = $("<div><img src=" + image.src + "></div>")
         $imageElement.addClass("col l3 s12 gallery-image")
-        $imageElement.children().addClass("responsive-img")
+        $imageElement.children().addClass("responsive-img materialboxed")
         console.log($imageElement.children().height())
+        $('.materialboxed').materialbox();
+
 
           $('.gallery-container').append($imageElement)
       })
     });
   })
+
+  $(window).scroll(function() {
+     if($(window).scrollTop() + $(window).height() == $(document).height()) {
+       moreImages()
+         console.log('hi');
+
+     }
+  });
   // define options (if needed)
   var options = {
     // optionName: 'option value'
@@ -41,4 +50,27 @@ $('document').ready(function() {
 
   }
   $('.main-img').click(startGallery)
+
+
 });
+function moreImages(){
+console.log('moreImages')
+let data = $('.active-chip').html().toLowerCase()
+
+  $.get("/vms/gallery/" + data,{images:4,counter:counter}, function(res) {
+    counter++;
+    console.log(counter);
+      currGallery=res.gallery;
+    res.gallery.forEach(function(image, i) {
+      let $imageElement = $("<div><img src=" + image.src + "></div>")
+      $imageElement.addClass("col l3 s12 gallery-image ")
+      $imageElement.children().addClass("responsive-img materialboxed")
+      console.log($imageElement.children().height())
+
+        $('.gallery-container').append($imageElement)
+    })
+  });
+
+}
+let counter=0;
+let currGallery;

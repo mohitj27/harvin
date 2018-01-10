@@ -1,16 +1,17 @@
 .float-btn {
   text-align: center;
 }
-.heading-white{
-  color:white;
+
+.heading-white {
+  color: white;
 }
 
-.card-hover:hover{
+.card-hover:hover {
   transform: scale(1.1);
   z-index: 2;
-
 }
-.card{
+
+.card {
   transition: all 500ms ease-out;
 }
 
@@ -22,38 +23,33 @@ a#menu {
   #explore {
     right: -18%;
   }
-
   .container.carousel-container {
     width: 70% !important;
   }
-
 }
-#main-landing-section{
-  height:100%;
-  width:100%;
-  /*position: relative;*/
 
+#main-landing-section {
+  height: 100%;
+  width: 100%;
+  /*position: relative;*/
   background: url(./../img/landing_page_icon.png);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .landing-container {
   height: 100%;
-
-
   /*position: relative;*/
-
-
 }
-.advisory-card{
-height:330px;
+
+.advisory-card {
+  height: 330px;
 }
 
 .carousel {
   background: #13b38b !important;
 }
-
 
 #explore {
   font-size: large;
@@ -116,11 +112,10 @@ height:330px;
   }
 }
 
-
 .btn-text-container {
   position: relative;
   width: 100%;
-  top: 75%;
+  top: 65%;
 }
 
 .normal-blur {
@@ -138,25 +133,104 @@ height:330px;
 .card .card-image img {
   max-height: 300px;
 }
-
+nav{
+  background-color: white !important;
+}
 #content-parent {
   margin: 0;
   width: 100%;
   padding: 0;
-
-    background-color: #13b38b;
-    /*background-image:linear-gradient(#434343, #282828);*/
+  background-color: #13b38b;
+  /*background-image:linear-gradient(#434343, #282828);*/
 }
 
 #content {
   background-color: transparent;
   background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.1) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.1) 75%, rgba(255, 255, 255, 0.1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.1) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.1) 75%, rgba(255, 255, 255, 0.1) 76%, transparent 77%, transparent);
-
   background-size: 50px 50px;
 }
 
-
 nav ul a, nav .brand-logo {
-  color:#13b38b;
+  color: #13b38b;
+}
+.filler{
+  background:#ddd;
+    display:inline-block;
+}
+/*WAVESSSSSSSSSSSSSSSSSSSSSSSSS*/
 
+.wave1, .wave2 {
+  height: 30px;
+  position: absolute;
+  width: 100%;
+  z-index: 12;
+  left: 0;
+  bottom: 0;
+}
+
+.wave1 {
+  -webkit-animation: wave-animation1 8.7s infinite linear;
+  /* Safari 4+ */
+  -moz-animation: wave-animation1 8.7s infinite linear;
+  /* Fx 5+ */
+  -o-animation: wave-animation1 8.7s infinite linear;
+  /* Opera 12+ */
+  animation: wave-animation1 8.7s infinite linear;
+  /* IE 10+ */
+}
+
+.wave2 {
+  -webkit-animation: wave-animation1 6.3s infinite linear;
+  /* Safari 4+ */
+  -moz-animation: wave-animation1 6.3s infinite linear;
+  /* Fx 5+ */
+  -o-animation: wave-animation1 6.3s infinite linear;
+  /* Opera 12+ */
+  animation: wave-animation1 6.3s infinite linear;
+  /* IE 10+ */
+  background: red;
+}
+
+@-webkit-keyframes wave-animation1 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1601px 0;
+  }
+}
+
+@-moz-keyframes wave-animation1 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1601px 0;
+  }
+}
+
+@-o-keyframes wave-animation1 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1601px 0;
+  }
+}
+
+@keyframes wave-animation1 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1601px 0;
+  }
+}
+
+.wave1 {
+  background: url('http://www.templates-preview.com/bootstrap-templates/300111854/images/wave1.png') 0 0 repeat-x;
+}
+
+.wave2 {
+  background: url('http://www.templates-preview.com/bootstrap-templates/300111854/images/wave2.png') 0 0 repeat-x;
 }
