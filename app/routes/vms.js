@@ -152,6 +152,15 @@ if(!err&&foundStudents)
 router.get('/team', (req, res, next) => {
   res.render('team')
 })
+
+router.get('/tnc', (req, res, next) => {
+  res.render('tnc')
+});
+
+router.get('/privacy', (req, res, next) => {
+  res.render('privacy')
+})
+
 //helper- class
 
 
