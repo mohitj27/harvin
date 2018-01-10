@@ -29,7 +29,7 @@ a#menu {
 }
 
 #main-landing-section {
-  height: 100%;
+  height: 90%;
   width: 100%;
   /*position: relative;*/
   background: url(./../img/landing_page_icon.png);
@@ -233,4 +233,7 @@ nav ul a, nav .brand-logo {
 
 .wave2 {
   background: url('http://www.templates-preview.com/bootstrap-templates/300111854/images/wave2.png') 0 0 repeat-x;
+}
+.student-result{
+  color:white;
 }

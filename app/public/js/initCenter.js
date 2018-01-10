@@ -1,5 +1,19 @@
 
 $(function(){
+  let counter=1
+  if(window.innerWidth<450){
+    setInterval(function(){
+  $('.image-main').fadeOut(function(){
+    $(this).attr('src',sideimagesrc[counter])
+    $(this).fadeIn('fast')
+  })
+
+
+counter++
+if(counter>4)counter=0
+    },3000)
+
+  }
   $('.chip').click(function(){
 
     $('.chip').removeClass('z-depth-4 active-chip')

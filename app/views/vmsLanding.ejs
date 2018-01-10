@@ -6,7 +6,7 @@
 		<div class="section" style="padding:0px;" id="main-landing-section">
 			<div class="container float-btn landing-container">
 				<div class="container btn-text-container">
-					<div  class="row center">
+					<div class="row center">
 						<div id="explore" class="visitor-button col s12 ">Explore</div>
 						<div id="register" style="visibility: hidden" class="visitor-button  col s6 ">Register</div>
 					</div>
@@ -27,15 +27,14 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col l12 s12 m12"  style="padding:0px;">
-			<div class="wave2"></div>
+				<div class="col l12 s12 m12" style="padding:0px;">
+					<div class="wave2"></div>
+				</div>
 			</div>
-</div>
-<div class="row">
-	<div class="filler">
-		
-	</div>
-</div>
+			<div class="row">
+				<div class="filler">
+				</div>
+			</div>
 		</div>
 		<!-- Harvin Academy Features -->
 		<div class="section" id="content-parent">
@@ -100,7 +99,7 @@
 				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
 			</div>
 		</div>
-		<!-- Our Rsults -->
+		<!-- Our Results -->
 		<div class="section" id="content-parent">
 			<div id="content">
 				<div class="container">
@@ -114,13 +113,13 @@
 
 							<% if (students){ %>
 								<% students.forEach((student, i) =>{ %>
-									<%if(i<8){%>
+									<%if(i<12){%>
 										<div class="col s4 l2 m">
 											<img class="responsive-img circle border-2" id="result-image" src="<%=student.src%>">
-											<h5 class="flow-text">Name</h5>
-											<p class="flow-text">
-												<%=student.desc%>
+											<p class="flow-text student-result">
+												<%=student.description%>
 											</p>
+
 
 											</img>
 										</div>
@@ -265,8 +264,7 @@
 								</div>
 								<div class="card-stacked">
 									<div class="card-content">
-										<p><b>Dr. Anil Arora </b>
-											Ass.Director Max Super Speciality Hospital
+										<p><b>Dr. Anil Arora </b> Ass.Director Max Super Speciality Hospital
 										</p>
 									</div>
 								</div>
@@ -373,84 +371,13 @@
 									</div>
 								</div>
 							</div>
+<br>
 						</div>
 
-
-						<br>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Parallax -->
-		<!-- <div class="parallax-container valign-wrapper">
-
-			<div class="parallax normal-blur">
-				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
-			</div>
-		</div> -->
-		<!-- Testimonails -->
-		<!-- <div class="section" id="content-parent">
-			<div class="container center"><br>
-				<h3 class="white-h3">Testimonails from top people</h3>
-
-				<div class="row">
-					<div class="col l6 m6 s12">
-						<div class="card horizontal">
-							<div class="card-image testimonial-card-image-holder">
-								<img class="activator testimonial-card-image" src="/images/1J5A2894.JPG">
-							</div>
-							<div class="card-stacked">
-								<div class="card-content valign-wrapper">
-									<p>I am a very simple card. I am good at containing small bits of information.</p>
-								</div>
-
-							</div>
-						</div>
-					</div>
-					<div class="col l6 m6 s12">
-						<div class="card horizontal">
-							<div class="card-image testimonial-card-image-holder">
-								<img class="activator testimonial-card-image" src="/images/1J5A2894.JPG">
-							</div>
-							<div class="card-stacked">
-								<div class="card-content valign-wrapper">
-									<p>I am a very simple card. I am good at containing small bits of information.</p>
-								</div>
-
-							</div>
-						</div>
-					</div>
-					<div class="col l6 m6 s12">
-						<div class="card horizontal">
-							<div class="card-image testimonial-card-image-holder">
-								<img class="activator testimonial-card-image" src="/images/1J5A2894.JPG">
-							</div>
-							<div class="card-stacked">
-								<div class="card-content valign-wrapper">
-									<p>I am a very simple card. I am good at containing small bits of information.</p>
-								</div>
-
-							</div>
-						</div>
-					</div>
-					<div class="col l6 m6 s12">
-						<div class="card horizontal">
-							<div class="card-image testimonial-card-image-holder">
-								<img class="activator testimonial-card-image" src="/images/1J5A2894.JPG">
-							</div>
-							<div class="card-stacked ">
-								<div class="card-content valign-wrapper">
-									<p>I am a very simple card. I am good at containing small bits of information.</p>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<br>
-
-		</div> -->
 		<!-- Parallax -->
 		<div class="parallax-container valign-wrapper normal-blur">
 			<div class="parallax">

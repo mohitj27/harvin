@@ -12,3 +12,6 @@
   line-height: 2.0;
   padding-top: 10px;
 }
+*{
+  transition: all 1s linear;
+}

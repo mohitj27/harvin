@@ -45,6 +45,9 @@ color: white;
 
 
     }
+    .small-svg{
+      height:40%;
+    }
     #mobile-demo > li:nth-child(1) > h3{
       background-color: white;
       color:#13b38b;
@@ -59,7 +62,7 @@ color:#13b38b;
       color:white;
     }
     .svg-content{
-      display: none;
+      /*display: none;*/
     }
 
 
