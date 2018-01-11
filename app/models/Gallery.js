@@ -4,11 +4,11 @@ var Schema = mongoose.Schema;
 //====Gallery Schmea====
 var gallerySchema = new Schema(
 	{
-    fileName: { 
-      type: String, 
-      required: true 
+    fileName: {
+      type: String,
+      required: true
     },
-    uploadDate:{ 
+    uploadDate:{
       type:String,
       required:true
     },
@@ -27,6 +27,11 @@ var gallerySchema = new Schema(
       required: true,
       default: "other"
     },
+		thumbPath:{
+			type:String,
+			required:true,
+			default:"images/avatar_1.png"
+		},
     description: {
       type: String
     }
