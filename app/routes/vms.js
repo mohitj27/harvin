@@ -1,10 +1,13 @@
 var express = require("express"),
   async = require("async"),
+  fs=require('fs'),
   moment = require("moment-timezone"),
   errors = require("../error"),
   middleware = require("../middleware"),
-  Visitor = require('./../models/Visitor');
-Gallery = require('./../models/Gallery');
+  Visitor = require('./../models/Visitor'),
+  sharp=require('sharp'),
+  request=require('request'),
+Gallery = require('./../models/Gallery'),
 router = express.Router();
 
 router.get('/new', (req, res, next) => {
@@ -98,6 +101,7 @@ router.get('/courses', (req, res, next) => {
 //helper- class
 
 router.get('/gallery/:category', function(req, res, next) {
+
   console.log(req.query)
   categoryObject = (req.params.category === 'all') ? {} : {
     category: req.params.category,
@@ -112,6 +116,11 @@ router.get('/gallery/:category', function(req, res, next) {
       if (err) {
         console.log(err);
       } else {
+          wr=fs.WriteStream('output1.jpg')
+        const url = "cover.jpg"
+        const pipeline = sharp(url).rotate().resize(300,300)
+      pipeline.pipe(wr)
+
         res.json({
           gallery: gallery
         });

@@ -1,6 +1,14 @@
+let currGallery;
+
 $('document').ready(function() {
-  var pswpElement = document.querySelectorAll('.pswp')[0];
-  // build items array
+  //
+  // var pswpElement = document.querySelectorAll('.pswp')[0];
+  // // build items array
+  // $('.materialboxed').click(function(){
+  //   $(this).attr('src','#!')
+  //   console.log('changed')
+  // })
+
   $('.chip').click(function() {
     $('.chip').removeClass('z-depth-4 active-chip')
     $('.chip').css({
@@ -13,18 +21,20 @@ $('document').ready(function() {
     $('.gallery-image').remove()
     $.get("/vms/gallery/" + data, function(res) {
       console.log(res);
-      console.log(res.gallery[1]);
       res.gallery.forEach(function(image, i) {
-        let $imageElement = $("<div><img src=" + image.src + "></div>")
+        console.log(image.thumbPath)
+        let $imageElement = $("<div><img src=" + image.thumbPath + "></div>")
         $imageElement.addClass("col l3 s12 gallery-image")
         $imageElement.children().addClass("responsive-img materialboxed")
         console.log($imageElement.children().height())
-        $('.materialboxed').materialbox();
 
 
           $('.gallery-container').append($imageElement)
+          $('.materialboxed').materialbox();
+
       })
     });
+
   })
 
   $(window).scroll(function() {
@@ -41,18 +51,19 @@ $('document').ready(function() {
     index: 1 // start at first slide
   };
 
-
-  let startGallery = function() {
-    // Initializes and opens PhotoSwipe
-    let gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options)
-
-    gallery.init()
-
-  }
-  $('.main-img').click(startGallery)
+  //
+  // let startGallery = function() {
+  //   // Initializes and opens PhotoSwipe
+  //   let gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options)
+  //
+  //   gallery.init()
+  //
+  // }
+  // $('.main-img').click(startGallery)
 
 
 });
+
 function moreImages(){
 console.log('moreImages')
 let data = $('.active-chip').html().toLowerCase()
@@ -62,15 +73,16 @@ let data = $('.active-chip').html().toLowerCase()
     console.log(counter);
       currGallery=res.gallery;
     res.gallery.forEach(function(image, i) {
-      let $imageElement = $("<div><img src=" + image.src + "></div>")
+      let $imageElement = $("<div><img src=" + image.thumbPath + "></div>")
       $imageElement.addClass("col l3 s12 gallery-image ")
       $imageElement.children().addClass("responsive-img materialboxed")
       console.log($imageElement.children().height())
 
         $('.gallery-container').append($imageElement)
+        $('.materialboxed').materialbox();
+
     })
   });
 
 }
 let counter=0;
-let currGallery;
