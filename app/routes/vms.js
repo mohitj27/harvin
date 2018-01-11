@@ -31,7 +31,7 @@ router.get('/all', middleware.isLoggedIn, middleware.isCentre, (req, res, next) 
 });
 
 router.get('/', (req, res, next) => {
-  Gallery.find({}, (err, foundStudents) => {
+  Gallery.find({category:"results"}, (err, foundStudents) => {
     if (!err && foundStudents) {
       res.render('vmsLanding', {
         students: foundStudents
@@ -94,6 +94,13 @@ router.get('/centers', (req, res, next) => {
 
 })
 
+router.post('/centers', (req, res, next) => {
+
+  req.flash('success', 'Response recoreded successfully, We will get back to you soon!');
+  res.redirect('/vms/centers');
+
+})
+
 router.get('/courses', (req, res, next) => {
   res.render('courses')
 })
@@ -148,7 +155,7 @@ router.get('/gallery', (req, res, next) => {
 });
 
 router.get('/results', (req, res, next) => {
-Gallery.find({},(err,foundStudents)=>{
+Gallery.find({category:'results'},(err,foundStudents)=>{
 if(!err&&foundStudents)
   res.render('results',{students:foundStudents,testimonials:foundStudents})
   else {
