@@ -161,6 +161,15 @@ router.get('/privacy', (req, res, next) => {
   res.render('privacy')
 })
 
+router.get('/careers', (req, res, next) => {
+  res.render('careers')
+})
+
+router.post('/careers', (req, res, next) => {
+  req.flash('success', 'Response recoreded successfully, We will get back to you soon!');
+  res.redirect('/vms/careers');
+})
+
 //helper- class
 
 
