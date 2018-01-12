@@ -84,8 +84,11 @@
 		.st16 {
 			fill: #13B38B;
 		}
+		#svg{
+			
+		}
 	</style>
-	<g>
+	<g id="svg">
 		<g>
 			<circle class="st0" cx="75" cy="57" r="53"/>
 			<g>
@@ -105,7 +108,6 @@
 			</g>
 		</g>
 		<rect x="0.5" y="115.9" class="st4" width="149.1" height="10.1"/>
-		<text transform="matrix(1 0 0 1 15.9712 122.4844)" class="st5 st6 st7">Highly qualified &amp; trained faculty</text>
-		<text transform="matrix(1 0 0 1 15.9712 122.4844)" class="st5 st6 st7">Highly qualified &amp; trained faculty</text>
+		<text transform="matrix(1 0 0 1 5.9712 122.4844)" class="st5 st6 st7">Highly qualified faculty</text>
 	</g>
 </svg>

@@ -17,6 +17,7 @@
 	.st11{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
 	.st12{fill:#FFFFFF;stroke:#FFFFFF;stroke-miterlimit:10;}
 	.st13{fill:none;stroke:#FEBA06;stroke-miterlimit:10;}
+	.text{font-family:'Montserrat', sans-serif;color:white;font-size:24px;}
 </style>
 <g>
 	<g>
@@ -64,12 +65,13 @@
 		<path id="XMLID_80_" class="st5" d="M140.2,13.1v31c11.5,0,20.8-6.9,20.8-15.5C161,20.1,151.7,13.1,140.2,13.1z M145.5,37V21.6
 			c5.7,0,10.3,3.4,10.3,7.7S151.2,37,145.5,37z"/>
 		<polygon id="XMLID_75_" class="st9" points="144.4,55 149.1,50.8 166.7,70.9 162.5,74.6 		"/>
-		<polyline id="XMLID_74_" class="st11" points="169.4,78.5 140.2,46 140.4,53.1 137.3,56.1 140.6,58.5 137.4,61.1 140.4,64.2 
+		<polyline id="XMLID_74_" class="st11" points="169.4,78.5 140.2,46 140.4,53.1 137.3,56.1 140.6,58.5 137.4,61.1 140.4,64.2
 			137.4,66.5 140,69.3 140,78.8 		"/>
 		<polygon id="XMLID_73_" class="st12" points="162.9,74.9 167,71.4 170,78.9 		"/>
 		<path id="XMLID_72_" class="st11" d="M228.9,21.5h11.8v55.1c0,0-5.9,5.3-11.8,0V21.5z"/>
 	</g>
 	<line id="XMLID_24_" class="st13" x1="146.5" y1="92.2" x2="301.6" y2="92.2"/>
 	<line id="XMLID_17_" class="st4" x1="211.8" y1="87.4" x2="325" y2="87.8"/>
+		<text transform="matrix(1 0 0 1 124.74 122.9844)" class="text" >ACADEMY</text>
 </g>
 </svg>
