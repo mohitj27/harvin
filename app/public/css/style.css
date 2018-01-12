@@ -6,6 +6,11 @@
  * Made By MaterializeCSS.com
  */
 
+@font-face {
+  font-family: bebasneue;
+  src: url(./../fonts/BebasNeue/BebasNeue.otf);
+  }
+
 nav ul a,
 nav .brand-logo {
   color: #13b38b;
@@ -187,3 +192,43 @@ color: #13b38b;
 .harvinTheme{
   background-color: #13b38b;
 }
+
+.harvinThemeText{
+  color: #13b38b;
+}
+
+.logoTextContainer{
+  position: relative;
+  top: 15%;
+}
+
+.welcome{
+  margin-bottom: 0px;
+}
+
+.logoText {
+  font-family: bebasneue;
+  letter-spacing: 9px;
+  transform: scale(1, 1.3);
+}
+
+.harvinLogoImg {
+  height: 120px;
+}
+
+.whyHarvinContainer{
+  height: 100%;
+  width: 100%;
+  background-image: url(./../images/wh-07.svg);
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
+
+.harvinFeature{
+  background-color: white;
+}
+
+.whyHarvinRow{
+  /* height: 300px; */
+}
+  
