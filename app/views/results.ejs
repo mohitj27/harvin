@@ -30,28 +30,75 @@
 	</div>
 	<main>
 		<div id="testimonials-container" class="section">
-			<%if(testimonials){%>
-				<div class="container">
-					<div class="row">
-						<%testimonials.forEach((testimonial,i)=>{%>
-							<div class="col l4 m4 s12">
-								<div class="card horizontal">
+			<div class="container">
+				<div class="row">
+						<div class="col s12 m6">
+								<div class="card horizontal testimonialCard">
 									<div class="card-image">
-										<img src="<%=testimonials[0].src%>">
+											<img class="testimonialImg" src="/images/testimonials/adnan-malik.jpg">
 									</div>
-									<div class="card-stacked valign-wrapper">
+									<div class="card-stacked">
 										<div class="card-content">
-											<p>
-												<%=testimonial.description%>
-											</p>
+											<b class="black-text">Malik Adnan, MAMC, Delhi</b><p class="black-text testimonialContent">Harvin showed me the right path to reach my target that i had chosen.Harvin Academy aid to my dream of becoming a doctor.</p>
 										</div>
 									</div>
 								</div>
 							</div>
-							<%})%>
-					</div>
+							<div class="col s12 m6">
+									<div class="card horizontal testimonialCard">
+										<div class="card-image">
+												<img class="testimonialImg" src="/images/testimonials/akanksha-gupta.jpg">
+										</div>
+										<div class="card-stacked">
+											<div class="card-content">
+												<b class="black-text">Akansha Gupta, BSAMCH, Delhi</b><p class="black-text testimonialContent">I am grateful to Harvin Academy for helping me achieve this golden dream of clearing the NEET exam.</p>
+											</div>
+										</div>
+									</div>
+								</div>
 				</div>
-				<%}%>
+				<div class="row">
+						<div class="col s12 m6">
+								<div class="card horizontal testimonialCard">
+									<div class="card-image">
+											<img class="testimonialImg" src="/images/testimonials/amulya-gupta.jpg">
+									</div>
+									<div class="card-stacked">
+										<div class="card-content">
+											<b class="black-text">Amulya, LHMC, Delhi</b><p class="black-text testimonialContent">I feel lucky to be a part of Harin Academy and thankful for helping me achieve my goal. The faculty is amazing and healpful.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col s12 m6">
+									<div class="card horizontal testimonialCard">
+										<div class="card-image">
+												<img class="testimonialImg" src="/images/testimonials/kritika-gupta.jpg">
+										</div>
+										<div class="card-stacked">
+											<div class="card-content">
+												<b class="black-text">Kratika Gupta, UMMC, Delhi</b><p class="black-text testimonialContent">I feel obliged to Harvin Academy for helping me achive this milestone. Harvin Academy helped me a lot achieve my goal.</p>
+											</div>
+										</div>
+									</div>
+								</div>
+				</div>
+				<div class="row">
+						<div class="col s12 m6">
+								<div class="card horizontal testimonialCard">
+									<div class="card-image">
+											<img class="testimonialImg" src="/images/testimonials/simran-sarthi.jpg">
+									</div>
+									<div class="card-stacked">
+										<div class="card-content">
+											<b class="black-text">Simran Sarthi, VMMS, Delhi</b><p class="black-text testimonialContent">Harvin Academy is the Mecca of Medical Education. It has really helped me a lot to shape my career and case my path in getting admission in Medical College.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+				</div>
+			</div>
 		</div>
 
 		<!-- <div id="results-container" class="section">Test 3</div> -->
@@ -61,15 +108,17 @@
 					<%if(students){%>
 						<%students.forEach(function(student, i){%>
 							<div class="col s12 m3">
-									<div class="card">
-										<div class="card-image">
-											<img src="<%=student.src%>">
-											<div class="card-title achieverDescription"><%=student.description%></div>
+								<div class="card">
+									<div class="card-image">
+										<img src="<%=student.src%>">
+										<div class="card-title achieverDescription">
+											<%=student.description%>
 										</div>
 									</div>
 								</div>
-						<% }) %>
-					<% }%>
+							</div>
+							<% }) %>
+								<% }%>
 				</div>
 			</div>
 		</div>
