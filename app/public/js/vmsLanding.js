@@ -15,7 +15,7 @@
       })
       console.log(i)
       i++
-    }, 3000);
+    }, 4000);
     $.get('/vms/gallery/student', function(students) {
       console.log(students)
       console.log('hi')

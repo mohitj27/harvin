@@ -15,7 +15,9 @@ nav ul a,
 nav .brand-logo {
   color: #13b38b;
 }
-
+.bold{
+  font-weight: bold;
+}
 p {
   line-height: 2rem;
 }
@@ -197,11 +199,6 @@ color: #13b38b;
   color: #13b38b;
 }
 
-.logoTextContainer{
-  position: relative;
-  top: 15%;
-}
-
 .welcome{
   margin-bottom: 0px;
 }
@@ -216,13 +213,6 @@ color: #13b38b;
   height: 120px;
 }
 
-.whyHarvinContainer{
-  height: 100%;
-  width: 100%;
-  background-image: url(./../images/wh-07.svg);
-  background-repeat: no-repeat;
-  margin: 0 auto;
-}
 
 .harvinFeature{
   background-color: white;
@@ -231,4 +221,6 @@ color: #13b38b;
 .whyHarvinRow{
   /* height: 300px; */
 }
-  
+.footer-section{
+  margin-bottom:0;
+}

@@ -11,7 +11,7 @@
 	.st5{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;}
 	.st6{fill-rule:evenodd;clip-rule:evenodd;fill:none;}
 	.st7{font-family:'CenturyGothic';}
-	.st8{font-size:9px;}
+	.st8{font-size:14px;}
 	.st9{fill:none;stroke:#000000;stroke-miterlimit:10;}
 	.st10{fill:#FFFFFF;}
 	.st11{fill:none;stroke:#000000;}
@@ -51,6 +51,6 @@
 		</g>
 	</g>
 	<rect x="0.5" y="115.9" class="st6" width="149.1" height="10.1"/>
-	<text transform="matrix(1 0 0 1 1.165 122.4844)" class="st4 st7 st8">Group discussion &amp; Reading room</text>
+	<text transform="matrix(1 0 0 1 16.165 122.4844)" class="st4 st7 st8">Interactive activities</text>
 </g>
 </svg>

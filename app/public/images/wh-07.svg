@@ -17,8 +17,9 @@
 	.st11{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;stroke:#020202;stroke-width:0.5;stroke-miterlimit:10;}
 	.st12{opacity:0.5;fill:#3DA96C;}
 	.st13{fill:#13B38B;}
+	
 </style>
-<g>
+<g id="institute">
 	<rect x="35.4" y="71" class="st12" width="34.8" height="153.3"/>
 	<rect x="35.4" y="71" class="st13" width="17.4" height="153.3"/>
 	<rect x="94.6" y="71" class="st12" width="34.8" height="153.3"/>

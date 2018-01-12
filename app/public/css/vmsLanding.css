@@ -1,3 +1,4 @@
+
 .float-btn {
   text-align: center;
 }
@@ -34,7 +35,8 @@ a#menu {
   height: 90%;
   width: 100%;
   /*position: relative;*/
-  background: url(./../img/landing_page_icon.png);
+  background: url(./../images/hero03.jpg);
+  background-color:#f7f7f7;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -118,6 +120,13 @@ a#menu {
   position: relative;
   width: 100%;
   top: 25%;
+}
+.whyHarvinContainer{
+height:70%;
+  background-image: url(./../images/wh-07.svg);
+background-repeat: no-repeat;
+background-position: 50% 30%;
+background-size: 30%;
 }
 
 .normal-blur {
@@ -246,6 +255,9 @@ nav ul a, nav .brand-logo {
 }
 .svg-content{
   position: relative;
+  z-index:1000;
+  overlay:none;
+  cursor: pointer;
 }
 #layer1 {
 position:absolute;
@@ -276,8 +288,64 @@ z-index:3;
 
 height:100%;
 width: 100%;
-
+cursor: pointer;
 }
 .course-content{
   height:400px;
+
+
+}
+.tower{
+  position:absolute;
+  top: 50%;
+  left:50%;
+}
+.aboutCourse{
+
+  margin: 0 auto;
+  text-align: center;
+
+}
+.aboutCourse>h4{
+
+  font-weight: bold;
+  z-index:1000;
+  cursor: pointer;
+}
+
+/*  zig-zag pattern             */
+.container1 {
+position: relative;
+background-color:#13b38b;
+margin:0px;
+height:18%;
+padding 0;
+}
+.container1:after {
+background: linear-gradient(-45deg, #13b38b 16px, transparent 0), linear-gradient(45deg, #13b38b 16px, transparent 0);
+background-position: left-top;
+background-repeat: repeat-x;
+background-size: 32px 32px;
+content: " ";
+top:-20;
+display: block;
+position: absolute;
+width: 100%;
+height: 64px;
+}
+
+
+.logoTextContainer{
+  position: relative;
+  top: 35%;
+}
+.welcome-row{
+  top:-10%;
+}
+.courses-svg{
+  height:400px;
+
+}
+.courses-row{
+  margin-bottom: 50px;
 }
