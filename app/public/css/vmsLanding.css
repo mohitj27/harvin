@@ -349,3 +349,15 @@ height: 64px;
 .courses-row{
   margin-bottom: 50px;
 }
+.svg-image:after{
+  cursor:pointer
+}
+
+#main-landing-section::after {
+  display: block;
+  position: relative;
+  background-image: linear-gradient(to right, #00f26000, #057fe6ff );
+  height:100%;
+  width: 100%;
+
+}
