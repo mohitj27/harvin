@@ -32,7 +32,7 @@ a#menu {
 }
 
 #main-landing-section {
-  height: 90%;
+  height: 100%;
   width: 100%;
   /*position: relative;*/
   background: url(./../images/hero03.jpg);
@@ -352,4 +352,15 @@ height: 64px;
 
 .whyHarvinIcon{
   margin-left: -55px;
+}
+.svg-row{
+  width:inherit;
+}
+
+.nav-wrapper{
+position: fixed !important;
+width:100%;
+z-index:1000;
+height:64px !important;
+
 }

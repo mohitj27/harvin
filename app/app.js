@@ -8,12 +8,14 @@ var express = require("express"),
 	indexRoutes = require("./routes"),
 	morgan = require("morgan"),
 	fs = require('fs'),
+	path=require("path"),
 	dotenv = require('dotenv').config(),
 	config = require('./config')(process.env.LOAD_CONFIG),
 	methodOverride = require("method-override"),
 	compression=require('compression'),
 	app = express(),
 	mongoose = require("mongoose"),
+	serveFavicon=require('serve-favicon'),
 
 	Schema = mongoose.Schema,
 
@@ -47,6 +49,10 @@ app.use(flash());
 
 //COMPRESSION
 app.use(compression())
+
+//APP favicon
+app.use(serveFavicon(path.join(__dirname, 'public', 'output1.jpg')))
+
 
 //view engine
 app.set('views', __dirname + '/views');
