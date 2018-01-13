@@ -236,3 +236,7 @@ color: #13b38b;
   font-size: 18px;
   color: #fff;
 }
+
+.side-nav-main{
+  z-index: 100000;
+}

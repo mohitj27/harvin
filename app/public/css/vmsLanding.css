@@ -256,7 +256,6 @@ nav ul a, nav .brand-logo {
 }
 .svg-content{
   position: relative;
-  z-index:1000;
   overlay:none;
   cursor: pointer;
 }
@@ -305,7 +304,6 @@ padding-top: 250px;
 .aboutCourse>h4{
 
   font-weight: bold;
-  z-index:1000;
   cursor: pointer;
 }
 
