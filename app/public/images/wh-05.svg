@@ -16,7 +16,7 @@
 	.st10{font-family:'HelveticaNeue-Bold';}
 	.st11{font-size:59.1836px;}
 	.st12{font-family:'CenturyGothic';}
-	.st13{font-size:9px;}
+	.st13{font-size:11px;}
 	.st14{fill:#FFFFFF;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st15{fill:#020202;}
 	.st16{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;stroke:#020202;stroke-width:0.5;stroke-miterlimit:10;}
@@ -50,6 +50,6 @@
 		</g>
 	</g>
 	<rect x="4.3" y="115.9" class="st8" width="141.3" height="10.1"/>
-	<text transform="matrix(1 0 0 1 4.9051 122.4844)" class="st4 st12 st13">Personal problem solving session</text>
+	<text transform="matrix(1 0 0 1 4.0051 122.4844)" class="st4 st12 st13">Personal problem solving session</text>
 </g>
 </svg>

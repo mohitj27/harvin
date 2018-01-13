@@ -36,7 +36,7 @@
 			font-family: 'CenturyGothic';
 		}
 		.st7 {
-			font-size: 14px;
+			font-size: 11px;
 		}
 		.st8 {
 			fill-rule: evenodd;
