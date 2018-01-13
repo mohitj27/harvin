@@ -16,7 +16,9 @@
   transition: all 500ms ease-out;
 
 }
-
+.activator-image{
+  transform:rotate(-90deg);
+}
 
 a#menu {
   left: 80%;
@@ -129,7 +131,7 @@ a#menu {
 width: 100%;
  background-image: url(./../images/wh-07.svg);
 background-repeat: no-repeat;
-background-position: 50% 50%;
+background-position: 50% 63%;
 background-size: 20%;
 }
 
