@@ -218,9 +218,21 @@ color: #13b38b;
   background-color: white;
 }
 
-.whyHarvinRow{
-  /* height: 300px; */
-}
 .footer-section{
   margin-bottom:0;
+}
+
+.scrollTop {
+  position: fixed;
+  right: 10%;
+  bottom: 10px;
+  background-color: #13b38b;
+  padding: 20px;
+  opacity: 0;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+.scrollTop a {
+  font-size: 18px;
+  color: #fff;
 }
