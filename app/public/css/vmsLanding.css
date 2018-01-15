@@ -263,6 +263,8 @@ nav ul a, nav .brand-logo {
   height:250px;
   max-height:400px;
   max-width:400px;
+  width: inherit;
+
 }
 .svg-content{
   position: relative;
@@ -316,6 +318,7 @@ padding-top: 250px;
 
   font-weight: bold;
   cursor: pointer;
+
 }
 
 /*  zig-zag pattern             */
