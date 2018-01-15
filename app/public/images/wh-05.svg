@@ -13,17 +13,19 @@
 	.st7{fill:#FFFFFF;}
 	.st8{fill-rule:evenodd;clip-rule:evenodd;fill:none;}
 	.st9{fill:none;stroke:#000000;}
-	.st10{font-family:'HelveticaNeue-Bold';}
+	.st10{    font-family: 'Open Sans', sans-serif;
+}
 	.st11{font-size:59.1836px;}
-	.st12{font-family:'CenturyGothic';}
-	.st13{font-size:11px;}
+	text{    font-family: 'Open Sans', sans-serif;
+	}	.st13{font-size:11px;}
 	.st14{fill:#FFFFFF;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st15{fill:#020202;}
 	.st16{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;stroke:#020202;stroke-width:0.5;stroke-miterlimit:10;}
 	.st17{opacity:0.5;fill:#3DA96C;}
 	.st18{fill:#13B38B;}
+
 </style>
-<g>
+
 	<g>
 		<circle class="st0" cx="75" cy="57" r="53"/>
 		<g>
@@ -48,8 +50,6 @@
 				<text transform="matrix(0.8925 0 0 1 51 60.5728)" class="st9 st10 st11">?</text>
 			</g>
 		</g>
+
 	</g>
-	<rect x="4.3" y="115.9" class="st8" width="141.3" height="10.1"/>
-	<text transform="matrix(1 0 0 1 4.0051 122.4844)" class="st4 st12 st13">Personal problem solving session</text>
-</g>
 </svg>
