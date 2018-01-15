@@ -6,7 +6,4 @@ $(document).ready(function() {
     $('.chip').removeClass('active-chip-rev z-depth-4')
     $(this).addClass('active-chip-rev z-depth-4')
   })
-  $('ul.tabs').onShow(curr => {
-    console.log('tab selected')
-  })
 })

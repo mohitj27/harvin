@@ -1,6 +1,12 @@
 (function($) {
-
   $(function() {
+    $("#navbar").slideUp("slow",function(){})
+    $(window).scroll(function(){
+      if ($(window).scrollTop()>=$(window).height()) $("#navbar").slideDown("slow",function(){console.log('down')})
+      else     $("#navbar").slideUp("slow",function(){})
+
+
+    })
     let i = 0;
     // Next slide
     setInterval(function() {

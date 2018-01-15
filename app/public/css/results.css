@@ -106,3 +106,7 @@ div.card-title.achieverDescription{
 .testimonialContent{
   text-overflow: ellipsis;
 }
+achiever-card{
+  max-height:350px;
+  max-width:350px;
+}

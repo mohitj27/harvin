@@ -1,6 +1,7 @@
 node_modules/
 
-
+ecosystem.config.js
 .vscode/
 npm*log*
 \.idea/
+  
