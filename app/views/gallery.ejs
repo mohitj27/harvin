@@ -15,25 +15,28 @@
               <div class="col l2 m2 s5 chip hoverable">Event</div>
               <div class="col l2 m2 s5 chip large hoverable offset-s1">Centers</div>
               <div class="col l2 m2 s5 chip hoverable">Student</div>
-            </div>
+            
           </div>
         </div>
         <div class="row gallery-container">
-          <%items.forEach(function(item,i){%>
-            <%if(i<12){%>
-            <div class="col l3 gallery-image">
-              <img src="<%=item.thumbPath%>" class="responsive-img materialboxed">
-            </div>
-            <%}%>
-            <%})%>
-          </div>
-  <div class="row center">
-      <div class="col l12 m12 s12">
-        <a onClick="moreImages();" class="btn-floating btn-large waves-effect waves-light grey">
-        <i class="material-icons">expand_more</i>
-        </a>
-      </div>
+
         </div>
+
+      </div>
+      <div class="center-align">
+        <ul class="pagination">
+          <li class="waves-effect">
+            <a href="#!" class="prev-button" onClick="prevPage()">
+    					<i class="material-icons">chevron_left</i>
+    				</a>
+          </li>
+
+          <li class="waves-effect">
+            <a href="#!" class="next-button" onClick="nextPage()">
+    					<i class="material-icons">chevron_right</i>
+    				</a>
+          </li>
+        </ul>
       </div>
     </div>
 
