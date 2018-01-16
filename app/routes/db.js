@@ -6,7 +6,7 @@ var express = require("express"),
   moment = require("moment-timezone"),
   async = require("async"),
   fs = require("fs"),
-  sharp = require('sharp'),
+  sharp = require("sharp"),
   File = require("../models/File.js"),
   Topic = require("../models/Topic.js"),
   Chapter = require("../models/Chapter.js"),
@@ -18,13 +18,13 @@ var express = require("express"),
   Batch = require("../models/Batch.js"),
   Gallery = require("../models/Gallery"),
   Profile = require("../models/Profile.js"),
-  path = require('path'),
-  multer = require('multer'),
-  fs = require('fs'),
+  path = require("path"),
+  multer = require("multer"),
+  fs = require("fs"),
   middleware = require("../middleware");
 
 //TODO: This is where all the uploaded images are stored
- var currTime=Date.now().toString()+ "__";
+var currTime = Date.now().toString() + "__";
 var storage = multer.diskStorage({
   destination: __dirname + "/../../../HarvinDb/img",
   filename: function(req, file, callback) {
@@ -125,27 +125,68 @@ router.get("/gallery/upload", (req, res, next) => {
   res.render("insertGallery");
 });
 
-
-
-router.get("/gallery/all", (req, res, next) => {
-  Gallery.find({}, (err, foundImages) => {
-    if(!err && foundImages){
-      res.json({images: foundImages});
-    }
-    else{
-        next(new errors.generic());
+router.get("/gallery/all/:category", (req, res, next) => {
+  let categoryToDelete = req.params.category;
+  Gallery.find({ category: categoryToDelete }).exec((err, items) => {
+    if (!err) {
+      items.forEach(item => {
+        Gallery.findByIdAndRemove(item._id, (err)=>{});
+      });
+      req.flash(
+        "success",
+        "successfully deleted all items from current category"
+      );
+      return res.redirect("/db/gallery");
+    } else {
+      console.log("err", err);
+      return next(new errors.generic());
     }
   });
 });
 
-router.get('/gallery', (req, res, next) => {
-  res.render('galleryDb');
+router.get("/gallery/:imageId/delete", (req, res, next) => {
+  let imageIdToDelete = req.params.imageId;
+  if (mongoose.Types.ObjectId.isValid(imageIdToDelete)) {
+    Gallery.findByIdAndRemove(imageIdToDelete).exec((err, item) => {
+      if (err) {
+        console.log("err", err);
+        return next(new errors.generic());
+      }
+      if (!item) {
+        req.flash("error", "Item not found");
+        return res.redirect("/db/gallery");
+      }
+      req.flash("success", "Image deleted successfully");
+      res.redirect("/db/gallery");
+    });
+  } else {
+    req.flash("error", "Invalid ObjectId provided");
+    res.redirect("/db/gallery");
+  }
+});
+
+
+
+router.get("/gallery/all", (req, res, next) => {
+  Gallery.find({}, (err, foundImages) => {
+    if (!err && foundImages) {
+      res.json({ images: foundImages });
+    } else {
+      next(new errors.generic());
+    }
+  });
+});
+
+
+
+router.get("/gallery", (req, res, next) => {
+  res.render("galleryDb");
 });
 
 router.post("/gallery", (req, res, next) => {
   var upload = multer({
     storage: storage
-  }).single('userFile');
+  }).single("userFile");
 
   upload(req, res, function(err) {
     var fileName = req.file.originalname;
@@ -156,13 +197,24 @@ router.post("/gallery", (req, res, next) => {
 
     //relative file path (required by ejs file)
 
-    var src = path.join('/', srcList[srcList.length - 2], srcList[srcList.length - 1]);
+    var src = path.join(
+      "/",
+      srcList[srcList.length - 2],
+      srcList[srcList.length - 1]
+    );
 
-    var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
+    var uploadDate = moment(Date.now())
+      .tz("Asia/Kolkata")
+      .format("MMMM Do YYYY, h:mm:ss a");
     var description = req.body.description;
     var category = req.body.category;
-    var parsedPath = path.parse(filePath)
-    var thumbPath = path.join('/', srcList[srcList.length - 2], 'thumb',  srcList[srcList.length - 1]);
+    var parsedPath = path.parse(filePath);
+    var thumbPath = path.join(
+      "/",
+      srcList[srcList.length - 2],
+      "thumb",
+      srcList[srcList.length - 1]
+    );
 
     var newFile = {
       fileName,
@@ -176,29 +228,27 @@ router.post("/gallery", (req, res, next) => {
 
     Gallery.create(newFile, (err, createdFile) => {
       if (!err && createdFile) {
-        src = fs.createReadStream(createdFile.filePath)
-        var thumbDir = path.join(parsedPath.dir, 'thumb')
+        src = fs.createReadStream(createdFile.filePath);
+        var thumbDir = path.join(parsedPath.dir, "thumb");
         if (!fs.existsSync(thumbDir)) {
-          fs.mkdirSync(thumbDir)
-          console.log('making thumb')
+          fs.mkdirSync(thumbDir);
+          console.log("making thumb");
         } else {
-          console.log('not making thumb')
+          console.log("not making thumb");
         }
 
-        var thumbPath = path.join(parsedPath.dir, 'thumb', currTime+fileName);
+        var thumbPath = path.join(parsedPath.dir, "thumb", currTime + fileName);
 
-
-        ws = fs.createWriteStream(thumbPath)
-        var sharpStream = sharp().resize(300, 200)
-        src.pipe(sharpStream).pipe(ws)
-
+        ws = fs.createWriteStream(thumbPath);
+        var sharpStream = sharp().resize(300, 200);
+        src.pipe(sharpStream).pipe(ws);
 
         req.flash("success", fileName + " uploaded successfully");
-        res.redirect('/db/gallery/upload');
+        res.redirect("/db/gallery/upload");
       } else {
-        console.log('err:', err);
+        console.log("err:", err);
         req.flash("error", "Couldn't upload the image");
-        res.redirect('/db/gallery/upload');
+        res.redirect("/db/gallery/upload");
       }
     });
   });
