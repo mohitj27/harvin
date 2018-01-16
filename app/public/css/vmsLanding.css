@@ -28,7 +28,11 @@ a#menu {
   #explore {
     right: -18%;
   }
+  #svg-content-feature{
 
+    width:300px !important;
+
+  }
   .whyHarvinIcon{
     margin-left: -55px;
   }
@@ -259,11 +263,14 @@ nav ul a, nav .brand-logo {
   height:250px;
   max-height:400px;
   max-width:400px;
+  width: inherit;
+
 }
 .svg-content{
   position: relative;
-  overlay:none;
   cursor: pointer;
+  width:inherit;
+
 }
 #layer1 {
 position:absolute;
@@ -311,6 +318,7 @@ padding-top: 250px;
 
   font-weight: bold;
   cursor: pointer;
+
 }
 
 /*  zig-zag pattern             */
@@ -357,6 +365,8 @@ height: 64px;
 }
 .svg-row{
   width:inherit;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
 }
 
 .nav-wrapper{

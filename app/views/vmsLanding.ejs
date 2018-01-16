@@ -63,19 +63,21 @@
 				<br>
 				<div class="row svg-row">
 					<div class="col l2 offset-l2 s12 ">
-						<div class="svg-content whyHarvinIcon">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
 							<div class="svg-img">
 
 								<object type="image/svg+xml" class="svg-image" data="../../images/wh-01.svg">Your browser does not support SVGs</object>
-
+<h5 class="no-padding no-margin">Highly qualified faculty</h5>
 							</div>
 						</div>
 					</div>
 					<div class="col l2 offset-l4 s12 ">
-						<div class="svg-content whyHarvinIcon">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
 							<div class="svg-img">
 
 								<object type="image/svg+xml" class="svg-image" data="../../images/wh-02.svg">Your browser does not support SVGs</object>
+
+<h5 class="no-pad no-margin">Adequate library facility</h5>
 
 							</div>
 						</div>
@@ -83,40 +85,40 @@
 				</div>
 				<div class="row svg-row">
 					<div class="col l2 offset-l1 s12 ">
-						<div class="svg-content whyHarvinIcon">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
 							<div class="svg-img">
 
 								<object type="image/svg+xml" class="svg-image" data="../../images/wh-03.svg">Your browser does not support SVGs</object>
-
+<h5 class="no-padding no-margin">Interactive activities</h5>
 							</div>
 						</div>
 					</div>
 					<div class="col l2 offset-l6 s12 ">
-						<div class="svg-content whyHarvinIcon">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
 							<div class="svg-img">
 
 								<object type="image/svg+xml" class="svg-image" data="../../images/wh-04.svg">Your browser does not support SVGs</object>
-
+<h5 class="no-padding no-margin">Systematic &amp; planned teaching</h5>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row svg-row ">
 					<div class="col l2 offset-l2 s12 center">
-						<div class="svg-content whyHarvinIcon">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
 							<div class="svg-img">
 
 								<object type="image/svg+xml" class="svg-image" data="../../images/wh-05.svg">Your browser does not support SVGs</object>
-
+<h5 class="no-pad no-margin">Personal problem solving session</h5>
 							</div>
 						</div>
 					</div>
 					<div class="col l2 offset-l4 s12 ">
-						<div class="svg-content whyHarvinIcon">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
 							<div class="svg-img">
 
 								<object type="image/svg+xml" class="svg-image" data="../../images/wh-06.svg">Your browser does not support SVGs</object>
-
+<h5 class="no-padding no-margin">Practical lab teaching</h5>
 							</div>
 						</div>
 					</div>
@@ -174,7 +176,7 @@
 
 								</div>
 								<div class="aboutCourse" onclick="location.href='/vms/courses#youngBuds';">
-									<h4 class="">YOUNG BUDS</h4>
+									<h4 class="no-padding no-margin center-align">YOUNG BUDS</h4>
 
 								</div>
 							</div>
@@ -211,7 +213,7 @@
 
 								</div>
 								<div class="aboutCourse" onclick="location.href='/vms/courses#blossom';">
-									<h4 class="">BLOSSOM</h4>
+									<h4 class="no-padding no-margin center-align">BLOSSOM</h4>
 
 								</div>
 							</div>
@@ -247,7 +249,7 @@
 
 								</div>
 								<div class="aboutCourse" onclick="location.href='/vms/courses#prodigy';">
-									<h4 class="">PRODIGY</h4>
+									<h4 class="no-padding no-margin center-align">PRODIGY</h4>
 
 								</div>
 							</div>
@@ -288,7 +290,7 @@
 
 								</div>
 								<div class="aboutCourse" onclick="location.href='/vms/courses#wizard';">
-									<h4 class="">WIZARD</h4>
+									<h4 class="no-padding no-margin center-align">WIZARD</h4>
 
 								</div>
 							</div>
@@ -324,7 +326,7 @@
 
 								</div>
 								<div class="aboutCourse" onclick="location.href='/vms/courses#masterMind';">
-									<h4 class="">MASTER MIND</h4>
+									<h4 class="no-padding no-margin center-align">MASTER MIND</h4>
 
 								</div>
 							</div>
@@ -360,7 +362,7 @@
 
 								</div>
 								<div class="aboutCourse" onclick="location.href='/vms/courses#crashCourse';">
-									<h4 class="">CRASH COURSE</h4>
+									<h4 class="no-padding no-margin center-align">CRASH COURSE</h4>
 
 								</div>
 							</div>
@@ -399,12 +401,7 @@
 								<% students.forEach((student, i) =>{ %>
 									<%if(i<12){%>
 										<div class="col s4 l2 m">
-											<img class="responsive-img circle border-2" id="result-image" src="<%=student.src%>">
-											<p class="flow-text student-result">
-												<%=student.description%>
-											</p>
-
-
+											<img class="responsive-img z-depth-4 " id="result-image" src="<%=student.thumbPath%>">
 											</img>
 										</div>
 										<%}%>
@@ -446,7 +443,7 @@
 					<div class="col l4 m6 s12">
 						<div class="card ">
 							<div class="card-image waves-effect waves-block waves-light">
-								<img class="activator activator-image" src="/images/ravi_m.jpg" >
+								<img class="activator " src="/images/ravi_m.jpg" >
 							</div>
 							<div class="card-content">
 								<span class="card-title activator grey-text text-darken-4">Dr. Ravi Malik <i class="material-icons right">more_vert</i></span>
@@ -464,7 +461,7 @@
 					<div class="col l4 m6 s12">
 						<div class="card ">
 							<div class="card-image waves-effect waves-block waves-light">
-								<img class="activator" src="/images/1J5A2894.JPG">
+								<img class="activator responive-img" src="/images/nk_s.jpg">
 							</div>
 							<div class="card-content">
 								<span class="card-title activator grey-text text-darken-4">Dr. N.K. Sharma<i class="material-icons right">more_vert</i></span>
@@ -482,7 +479,7 @@
 					<div class="col l4 m6 s12">
 						<div class="card ">
 							<div class="card-image waves-effect waves-block waves-light">
-								<img class="activator" src="/images/1J5A2894.JPG">
+								<img class="activator" src="/images/vipin_a.jpg">
 							</div>
 							<div class="card-content">
 								<span class="card-title activator grey-text text-darken-4">Dr. Vipin Aggarwal <i class="material-icons right">more_vert</i></span>
@@ -500,7 +497,7 @@
 					<div class="col l4 m6 s12">
 						<div class="card ">
 							<div class="card-image waves-effect waves-block waves-light">
-								<img class="activator" src="/images/1J5A2894.JPG">
+								<img class="activator" src="/images/ritesh_m.jpg">
 							</div>
 							<div class="card-content">
 								<span class="card-title activator grey-text text-darken-4">Dr. Ritesh Malik<i class="material-icons right">more_vert</i></span>
@@ -519,7 +516,7 @@
 					<div class="col l4 m6 s12">
 						<div class="card ">
 							<div class="card-image waves-effect waves-block waves-light">
-								<img class="activator activator-image" src="/images/shruti_m.jpg">
+								<img class="activator " src="/images/shruti_m.jpg">
 							</div>
 							<div class="card-content">
 								<span class="card-title activator grey-text text-darken-4">Dr. Shruti Malik<i class="material-icons right">more_vert</i></span>
