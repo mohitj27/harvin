@@ -25,3 +25,14 @@
 *{
   transition: all 1s ease-out;
 }
+
+.active-chip{
+  background-color:#13b38b;
+  color:white;
+}
+
+
+.active-chip:hover{
+  background-color:#13b38b;
+  color:white;
+}
