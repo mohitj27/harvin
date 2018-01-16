@@ -8,8 +8,6 @@ $(function () {
 
 
 	$(".dropdown-button").dropdown({hover:true,belowOrigin:true});
-	console.log($('.dropdown-button'));
-
     $('.materialSelect').material_select();
 
 	///NAVBAR INIT

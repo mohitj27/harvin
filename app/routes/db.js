@@ -121,12 +121,27 @@ router.get(
   }
 );
 
-//TODO: This renders the form to upload image
-router.get("/gallery", (req, res, next) => {
+router.get("/gallery/upload", (req, res, next) => {
   res.render("insertGallery");
 });
 
-//TODO: It handels the post request to upload image
+
+
+router.get("/gallery/all", (req, res, next) => {
+  Gallery.find({}, (err, foundImages) => {
+    if(!err && foundImages){
+      res.json({images: foundImages});
+    }
+    else{
+        next(new errors.generic());
+    }
+  });
+});
+
+router.get('/gallery', (req, res, next) => {
+  res.render('galleryDb');
+});
+
 router.post("/gallery", (req, res, next) => {
   var upload = multer({
     storage: storage
@@ -179,11 +194,11 @@ router.post("/gallery", (req, res, next) => {
 
 
         req.flash("success", fileName + " uploaded successfully");
-        res.redirect('/db/gallery');
+        res.redirect('/db/gallery/upload');
       } else {
         console.log('err:', err);
         req.flash("error", "Couldn't upload the image");
-        res.redirect('/db/gallery');
+        res.redirect('/db/gallery/upload');
       }
     });
   });
