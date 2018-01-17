@@ -97,10 +97,13 @@ div.card-title.achieverDescription{
 
 .testimonialImg{
   height: 150px;
+  border:2px solid grey;
+  width:150px !important;
+
 }
 
 .testimonialCard{
-  height: 170px;
+  height: 150px;
 }
 
 .testimonialContent{
@@ -109,4 +112,7 @@ div.card-title.achieverDescription{
 achiever-card{
   max-height:350px;
   max-width:350px;
+}
+.card-stacked{
+  overflow-y:scroll;
 }
