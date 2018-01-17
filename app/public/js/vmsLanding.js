@@ -2,7 +2,8 @@
   $(function() {
     $("#navbar").slideUp("slow",function(){})
     $(window).scroll(function(){
-      if ($(window).scrollTop()>=$(window).height()) $("#navbar").slideDown("slow",function(){console.log('down')})
+
+      if ($(window).scrollTop()>=$(window).height()/4) $("#navbar").slideDown("slow",function(){console.log('down')})
       else     $("#navbar").slideUp("slow",function(){})
 
 
