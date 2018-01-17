@@ -152,7 +152,7 @@ background-size: 20%;
 }
 
 .card .card-image img {
-  max-height: 300px;
+  max-height: 400px;
 }
 nav{
   background-color: white !important;
@@ -378,4 +378,7 @@ height:64px !important;
 }
 .results-col{
   margin-bottom: 20px;
+}
+.activator{
+  padding:10px;
 }
