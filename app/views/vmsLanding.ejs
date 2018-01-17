@@ -400,7 +400,7 @@
 							<% if (students){ %>
 								<% students.forEach((student, i) =>{ %>
 									<%if(i<12){%>
-										<div class="col s4 l2 m">
+										<div class="col s4 l3 m3 results-col">
 											<img class="responsive-img z-depth-4 " id="result-image" src="<%=student.thumbPath%>">
 											</img>
 										</div>
@@ -409,7 +409,11 @@
 												<% } %>
 						</div>
 					</div>
-					<br>
+					<br>	<div class="row center-align">
+						<a href="/vms/results" class="btn-floating btn-large waves-effect waves-light grey">
+							<i class="material-icons">chevron_right</i>
+						</a>
+						</div>
 				</div>
 			</div>
 		</div>
