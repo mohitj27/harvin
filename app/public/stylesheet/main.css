@@ -239,6 +239,9 @@ nav ul a {
     display: block;
 }
 
+.newBlogForm{
+  margin: 20px 0; 
+}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 /*.dropdown12:hover .dropbtn {

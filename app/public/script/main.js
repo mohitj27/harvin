@@ -8,7 +8,14 @@ $(function () {
 
 
 	$(".dropdown-button").dropdown({hover:true,belowOrigin:true});
-    $('.materialSelect').material_select();
+		$('.materialSelect').material_select();
+		$('#summernote').summernote({
+			placeholder: 'Write your content here!!!',
+			tabsize: 2,
+		  minHeight: 500,
+		  maxHeight: null,
+		  focus: true
+		});
 
 	///NAVBAR INIT
 	$('.button-collapse').sideNav({

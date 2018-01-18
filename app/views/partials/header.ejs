@@ -6,157 +6,164 @@
 <![endif]-->
 <html lang="en">
 
-<head>
-	<meta charset="UTF-8">
-	<title>Harvin Academy</title>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<meta name="viewport" content="width=device-width">
+	<head>
+		<meta charset="UTF-8">
+		<title>Harvin Academy</title>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous"></script>
+		<meta name="viewport" content="width=device-width">
 
 
-	<!-- Compiled and minified CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+		<!-- Compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
-	<!-- Compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+		<!-- Compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js"></script>
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<script src="/dist/DateTimePicker.min.js" type="text/javascript"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js"></script>
+		<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<script src="/dist/DateTimePicker.min.js" type="text/javascript"></script>
 
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+		crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="/dist/DateTimePicker.min.css" />
-	<link rel="stylesheet" href="/stylesheet/main.css">
-</head>
+		<link rel="stylesheet" type="text/css" href="/dist/DateTimePicker.min.css" />
+		<link rel="stylesheet" href="/stylesheet/main.css">
+	</head>
 
-<body>
-	<header>
-		<nav class="top-nav">
-			<div id="navbarContainer" class="container">
-				<div class="nav-wrapper">
-					<a class="brand-logo" href="/">Harvin Academy</a>
-					<a href="#" data-activates="mobile-demo" class="button-collapse">
+	<body>
+		<header>
+			<nav class="top-nav">
+				<div id="navbarContainer" class="container">
+					<div class="nav-wrapper">
+						<a class="brand-logo" href="/">Harvin Academy</a>
+						<a href="#" data-activates="mobile-demo" class="button-collapse">
 							<i class="material-icons">menu</i>
 						</a>
 
-					<ul class="side-nav nav-mobile" id="mobile-demo">
-						<li>
-							<a href="#"></a>
-						</li>
-						<li>
-							<a href="/batches/updateBatch">Create Batch</a>
-						</li>
-						<li>
-							<a href="/exams/new">Set an Exam</a>
-						</li>
-						<li>
-							<a href="/assignment/uploadAssignment">New Assignment</a>
-						</li>
-						<li>
-							<a href="/questionBank">Question Bank</a>
-						</li>
-						<li>
-							<a href="/db/gallery/upload">Upload Image</a>
-						</li>
-						<li>
-							<a href="/vms">VMS</a>
-						</li>
-						<li>
-							<a class="dropdown-button" data-activates="dropdown1" href="/db">Database</a>
-						</li>
-
-						<% if(!currentUser){ %>
-
+						<ul class="side-nav nav-mobile" id="mobile-demo">
 							<li>
-								<a href="/login">Login</a>
+								<a href="#"></a>
 							</li>
 							<li>
-								<a href="/signup">Signup</a>
+								<a href="/batches/updateBatch">Create Batch</a>
 							</li>
-							<% }else{ %>
+							<li>
+								<a href="/exams/new">Set an Exam</a>
+							</li>
+							<li>
+								<a href="/assignment/uploadAssignment">New Assignment</a>
+							</li>
+							<li>
+								<a href="/questionBank">Question Bank</a>
+							</li>
+							<li>
+								<a href="/blog">New Post</a>
+							</li>
+							<li>
+								<a href="/db/gallery/upload">Upload Image</a>
+							</li>
+							<li>
+								<a href="/vms">VMS</a>
+							</li>
+							<li>
+								<a class="dropdown-button" data-activates="dropdown1" href="/db">Database</a>
+							</li>
+
+							<% if(!currentUser){ %>
+
 								<li>
-									<a href="#">Signed in as
+									<a href="/login">Login</a>
+								</li>
+								<li>
+									<a href="/signup">Signup</a>
+								</li>
+								<% }else{ %>
+									<li>
+										<a href="#">Signed in as
 											<%= currentUser.username %>
 										</a>
-								</li>
-								<li>
-									<a href="/logout">Logout</a>
-								</li>
-								<% } %>
-					</ul>
-					<ul class="right hide-on-med-and-down">
+									</li>
+									<li>
+										<a href="/logout">Logout</a>
+									</li>
+									<% } %>
+						</ul>
+						<ul class="right hide-on-med-and-down">
 
-						<li>
-							<a href="/vms">VMS</a>
-						</li>
-						<li>
-							<a href="/management">Management</a>
-						</li>
-						<li>
-							<a href="/testimonial">Testimonial</a>
-						</li>
-						<li>
-							<a href="/db">Database</a>
-						</li>
-						<li>
-							<div class="dropdown12">
-								<a class="dropbtn" id="select12">Insert DB<span class="caret"></span></a>
-								<div class="dropdown-content12">
-									<a href="/files/uploadFile">Upload File</a>
-									<a href="/batches/updateBatch">Create Batch</a>
-									<a href="/exams/new">Set an Exam</a>
-									<a href="/questionBank">Question Bank</a>
-									<a href="/assignment/uploadAssignment">New Assignment</a>
-									<a href="/assignment">Assignments</a>
-									<a href="/db/gallery/upload">Upload Image</a>
+							<li>
+								<a href="/vms">VMS</a>
+							</li>
+							<li>
+								<a href="/management">Management</a>
+							</li>
+							<li>
+								<a href="/testimonial">Testimonial</a>
+							</li>
+							<li>
+								<a href="/db">Database</a>
+							</li>
+							<li>
+								<div class="dropdown12">
+									<a class="dropbtn" id="select12">Insert DB
+										<span class="caret"></span>
+									</a>
+									<div class="dropdown-content12">
+										<a href="/files/uploadFile">Upload File</a>
+										<a href="/batches/updateBatch">Create Batch</a>
+										<a href="/exams/new">Set an Exam</a>
+										<a href="/questionBank">Question Bank</a>
+										<a href="/assignment/uploadAssignment">New Assignment</a>
+										<a href="/blog">New Post</a>
+										<a href="/db/gallery/upload">Upload Image</a>
+									</div>
 								</div>
-							</div>
-						</li>
-						<% if(!currentUser){ %>
+							</li>
+							<% if(!currentUser){ %>
 
-							<li>
-								<a href="/login">Login</a>
-							</li>
-							<li>
-								<a href="/signup">Signup</a>
-							</li>
-							<% }else{ %>
 								<li>
-									<a href="#">Signed in as
+									<a href="/login">Login</a>
+								</li>
+								<li>
+									<a href="/signup">Signup</a>
+								</li>
+								<% }else{ %>
+									<li>
+										<a href="#">Signed in as
 											<%= currentUser.username %>
 										</a>
-								</li>
-								<li>
-									<a href="/logout">Logout</a>
-								</li>
-								<% } %>
-					</ul>
+									</li>
+									<li>
+										<a href="/logout">Logout</a>
+									</li>
+									<% } %>
+						</ul>
 
 
 
-				</div>
-			</div>
-		</nav>
-	</header>
-	<div class="container">
-		<% if(msg_error && msg_error.length > 0){ %>
-			<div class="alert alert-danger" role="alert">
-				<p style="text-align:center">
-					<%= msg_error %>
-				</p>
-			</div>
-			<% } %>
-
-				<% if(msg_success && msg_success.length > 0){ %>
-					<div class="alert alert-success" role="alert">
-						<p style="text-align:center">
-							<%= msg_success %>
-						</p>
 					</div>
-					<% } %>
-	</div>
-	<script src="/script/main.js"></script>
+				</div>
+			</nav>
+		</header>
+		<div class="container">
+			<% if(msg_error && msg_error.length > 0){ %>
+				<div class="alert alert-danger" role="alert">
+					<p style="text-align:center">
+						<%= msg_error %>
+					</p>
+				</div>
+				<% } %>
+
+					<% if(msg_success && msg_success.length > 0){ %>
+						<div class="alert alert-success" role="alert">
+							<p style="text-align:center">
+								<%= msg_success %>
+							</p>
+						</div>
+						<% } %>
+		</div>
+		<script src="/script/main.js"></script>
