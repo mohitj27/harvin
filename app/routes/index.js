@@ -14,33 +14,40 @@ var express = require("express"),
     qbRoutes = require("./questionBank"),
     resultsRoutes = require("./results"),
     vmsRoutes = require("./vms"),
-    queryRoutes = require('./query'),
     formRoutes = require('./form'),
     blogRoutes = require('./blog'),
     Topic = require("../models/Topic.js"),
     Chapter = require("../models/Chapter.js"),
     Subject = require("../models/Subject.js"),
     Class = require("../models/Class.js"),
+    Gallery = require("../models/Gallery.js"),
 File = require("../models/File.js");
 
 router.use("/admin", adminRoutes);
 router.use("/student", studentRoutes);
-router.use("/batches", batchRoutes);
-router.use("/files", fileRoutes);
-router.use("/db", dbRoutes);
-router.use("/exams", examRoutes);
-router.use("/assignment", assignmentRoutes);
-router.use("/questionBank", qbRoutes);
-router.use("/results", resultsRoutes);
-router.use("/vms", vmsRoutes);
-router.use('/queries', queryRoutes);
-router.use('/form', formRoutes);
-router.use('/blog', blogRoutes);
+router.use("/admin/batches", batchRoutes);
+router.use("/admin/files", fileRoutes);
+router.use("/admin/db", dbRoutes);
+router.use("/admin/exams", examRoutes);
+router.use("/admin/assignment", assignmentRoutes);
+router.use("/admin/questionBank", qbRoutes);
+router.use("/admin/results", resultsRoutes);
+router.use( vmsRoutes);
+router.use('/admin/blog', blogRoutes);
 
 //Home
-router.get("/", function (req, res) {
-  res.render("home");
-});
+// router.get("/", function (req, res) {
+//   Gallery.find({category:"results"}, (err, foundStudents) => {
+//     if (!err && foundStudents) {
+//       res.render('vmsLanding', {
+//         students: foundStudents
+//       });
+//     } else {
+//       console.log(err);
+//       next(new errors.generic());
+//     }
+//   })
+// });
 router.delete('/users/:userId', (req, res, next) => {
   const userId = req.params.userId;
   User.findById(userId, (err, foundUser) => {
@@ -51,14 +58,14 @@ router.delete('/users/:userId', (req, res, next) => {
           if (!err) {
             foundUser.remove();
             req.flash('success', 'User removed successfully');
-            res.redirect('/db/users');
+            res.redirect('/admin/db/users');
           }
         })
 
       } else {
         foundUser.remove();
         req.flash('success', 'User removed successfully');
-        res.redirect('/db/users');
+        res.redirect('/admin/db/users');
 
       }
     }
@@ -78,11 +85,11 @@ router.post("/signup", function (req, res) {
     if (err) {
       console.log('err', err);
       req.flash("error", err.message);
-      return res.redirect('/signup');
+      return res.redirect('/admin/signup');
     }
     passport.authenticate("local")(req, res, function () {
       req.flash("success", "Welcome to Harvin Academy :)");
-      res.redirect("/");
+      res.redirect("/admin");
     });
   });
 });
@@ -96,8 +103,8 @@ router.get("/login", function (req, res) {
 
 //Handle user login -- for admin
 router.post("/login", passport.authenticate("local", {
-      successRedirect: "/",
-      failureRedirect: "/login",
+      successRedirect: "/admin",
+      failureRedirect: "/admin/login",
       successFlash: "Welcome back",
       failureFlash: true
     }),
@@ -110,7 +117,7 @@ router.post("/login", passport.authenticate("local", {
 router.get("/logout", function (req, res) {
   req.logout();
   req.flash({"success": "You Logged out successfully"});
-  res.redirect("home");
+  res.redirect("/admin");
 });
 
 //helper- class
@@ -131,7 +138,7 @@ router.get("/class/:className", function (req, res, next) {
         if (err) {
           console.log(err);
           req.flash("error", "Couldn't find the details of chosen class");
-          res.redirect("/files/uploadFile");
+          res.redirect("/admin/files/uploadFile");
         } else {
           res.json({
             classs: classs
@@ -160,7 +167,7 @@ router.get("/class/:className/subject/:subjectName", function (req, res, next) {
         if (err) {
           console.log(err);
           req.flash("error", "Couldn't find the details of chosen subject");
-          res.redirect("/files/uploadFile");
+          res.redirect("/admin/files/uploadFile");
         } else {
           res.json({
             subject: subject
@@ -188,7 +195,7 @@ router.get("/chapter/:chapterName", function (req, res, next) {
         if (err) {
           console.log(err);
           req.flash("error", "Couldn't find the details of chosen chapter");
-          res.redirect("/files/uploadFile");
+          res.redirect("/admin/files/uploadFile");
         } else {
           res.json({
             chapter: chapter
@@ -215,7 +222,7 @@ router.get("/topic/:topicName", function (req, res, next) {
 
 //if not route mentioned in url
 router.get("*", function (req, res) {
-  res.redirect("/");
+  res.redirect("/admin");
 });
 
 module.exports = router;

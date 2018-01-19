@@ -138,23 +138,23 @@ router.post("/collections/:collectionName/:documentId/edit", middleware.isLogged
 			updateSwitch.file(req, res, next, currentObject, collectionName);
 			break;
 
-			// case "topic":   
+			// case "topic":
 			//             break;
 
-			// case "chapter": 
+			// case "chapter":
 			//             break;
 
-			// case "subject": 
+			// case "subject":
 			//             break;
 
-			// case "class":  
+			// case "class":
 			//             break;
 
 		case "batch":
 			updateSwitch.batch(req, res, next, currentObject, collectionName);
 			break;
 
-			// case "user":   
+			// case "user":
 			//             break;
 
 		default:
@@ -169,23 +169,23 @@ router.put("/collections/:collectionName/:documentId", middleware.isLoggedIn, mi
 		case "file":
 			updateHandle.file(req, res, next);
 			break;
-			// case "topic":   
+			// case "topic":
 			//             break;
 
-			// case "chapter": 
+			// case "chapter":
 			//             break;
 
-			// case "subject": 
+			// case "subject":
 			//             break;
 
-			// case "class":  
+			// case "class":
 			//             break;
 
 		case "batch":
 			updateHandle.batch(req, res, next);
 			break;
 
-			// case "user":   
+			// case "user":
 			//             break;
 
 		default:
@@ -203,23 +203,23 @@ router.delete("/collections/:collectionName/:documentId", middleware.isLoggedIn,
 			deleteHandle.file(req, res, next, currentObject, collectionName);
 			break;
 
-			// case "topic":   
+			// case "topic":
 			//             break;
 
-			// case "chapter": 
+			// case "chapter":
 			//             break;
 
-			// case "subject": 
+			// case "subject":
 			//             break;
 
-			// case "class":  
+			// case "class":
 			//             break;
 
 		case "batch":
 			deleteHandle.batch(req, res, next, currentObject, collectionName);
 			break;
 
-			// case "user":   
+			// case "user":
 			//             break;
 
 		default:
@@ -441,7 +441,7 @@ var updateSwitch = {
 				if (err) {
 					console.log(err);
 					req.flash("error", "Please try again");
-					res.redirect("/files/uploadFile");
+					res.redirect("/admin/files/uploadFile");
 				} else {
 					res.render('updateFile', {
 						classes: classes,
@@ -702,7 +702,7 @@ var updateHandle = {
 						function (err, createdBatch) {
 							if (!err && createdBatch) {
 								req.flash("success", "Batch " + createdBatch.batchName + " updated successfully");
-								res.redirect("/batches/updateBatch")
+								res.redirect("/admin/batches/updateBatch")
 							}
 						}
 					);
@@ -761,7 +761,7 @@ var deleteHandle = {
 						function (err, updatedTopic) {
 							if (!err) {
 								req.flash("success", "File " + currentObject.fileName + " deleted successfully");
-								res.redirect("/db/collections");
+								res.redirect("/admin/db/collections");
 								callback(null);
 							} else {
 								console.log(err);
@@ -786,7 +786,7 @@ var deleteHandle = {
 			function (err, doc, result) {
 				if (!err && doc) {
 					req.flash("success", "Batch " + currentObject.batchName + " deleted successfully");
-					res.redirect("/db/collections");
+					res.redirect("/admin/db/collections");
 				} else {
 					console.log(err);
 					next(new errors.generic);
@@ -798,4 +798,3 @@ var deleteHandle = {
 };
 
 module.exports = router;
-

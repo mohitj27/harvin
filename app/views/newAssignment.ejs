@@ -5,7 +5,7 @@
 
 	<div class="container">
 		<div style="width: 50%; margin:25px auto;">
-			<form action="/assignment/uploadAssignment" method="post" class="form-horizontal" enctype="multipart/form-data">
+			<form action="/admin/assignment/uploadAssignment" method="post" class="form-horizontal" enctype="multipart/form-data">
 				<div class="form-group">
 					<label for="assignmentName" class="col-sm-3 control-label">Assignment Name</label>
 					<div class="col-sm-9">
@@ -31,10 +31,9 @@
 				</div>
                 <input style="text-align: center; margin: 20px auto;" type="file" name="userFile" class="btn btn-default btn-file" required/>
                 <hr>
-                <input type="submit" class="btn  ">
+                <input type="submit" class="btn">
 			</form>
 		</div>
 	</div>
 
 	<% include partials/footer.ejs%>
-

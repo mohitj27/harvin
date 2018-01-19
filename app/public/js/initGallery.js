@@ -42,7 +42,7 @@ console.log(currGallery)
 });
 
 function getImagesFromServer() {
-  $.get("/db/gallery/all", function(res) {
+  $.get("/admin/db/gallery/all", function(res) {
     if (res) {
       allImages = res.images;
       currGallery = res.images;

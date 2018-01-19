@@ -82,7 +82,7 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
       (err, createdExam) => {
         if (!err && createdExam) {
           req.flash("success", examName + " created Successfully");
-          res.redirect("/exams");
+          res.redirect("/admin/exams");
         } else {
           console.log(err);
           next(new errors.generic);
@@ -220,7 +220,7 @@ router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, nex
       (err, updatedExam) => {
         if (!err && updatedExam) {
           req.flash("success", examName + " updated Successfully");
-          res.redirect("/exams");
+          res.redirect("/admin/exams");
         } else {
           console.log(err);
           next(new errors.generic);
@@ -234,7 +234,7 @@ router.delete("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, 
   Exam.findByIdAndRemove(examId, (err, removedExam) => {
     if (!err && removedExam) {
       req.flash("success", removedExam.examName + " removed Successfully");
-      res.redirect("/exams");
+      res.redirect("/admin/exams");
     } else {
       console.log(err);
       next(new errors.generic);
@@ -500,7 +500,7 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isAdmin
                 if (!err && createdClass) {
                   callback(null);
                   req.flash("success", "Question has been added Successfully");
-                  res.redirect("/exams/"+updatedExam._id+"/question-paper");
+                  res.redirect("/admin/exams/"+updatedExam._id+"/question-paper");
                 } else {
                   callback(err);
                 }
@@ -655,7 +655,7 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
                         foundExam.save((err, updatedExam) => {
                           if (!err && updatedExam) {
                             req.flash("success", "Questions added Successfully");
-                            res.redirect("/exams/"+ foundExam._id +"/question-paper");
+                            res.redirect("/admin/exams/"+ foundExam._id +"/question-paper");
                           } else {
                             callback(err);
                           }
@@ -692,7 +692,7 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
                         foundExam.save((err, updatedExam) => {
                           if (!err && updatedExam) {
                             req.flash("success", "Questions added Successfully");
-                            res.redirect("/exams/"+ foundExam._id +"/question-paper");
+                            res.redirect("/admin/exams/"+ foundExam._id +"/question-paper");
                           } else {
                             callback(err);
                           }
@@ -757,7 +757,7 @@ router.get("/:username/exams/:examId/questionPaper", (req, res, next) => {
       });
 });
 
-//Giving exam list 
+//Giving exam list
 router.get("/:username/exams", (req, res, next) => {
   Exam.find({}, (err, foundExams) => {
     if(!err && foundExams){
@@ -769,4 +769,3 @@ router.get("/:username/exams", (req, res, next) => {
 });
 
 module.exports = router;
-

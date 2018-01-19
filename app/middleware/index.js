@@ -5,7 +5,7 @@ var middleware = {
       return next();
     }
     req.flash("error", "login please");
-    res.redirect("/login");
+    res.redirect("/admin/login");
     // next();
   },
 
@@ -14,7 +14,7 @@ var middleware = {
 		  return next();
     }
     req.flash("error", "You are not authorized. Please login into admin account");
-    res.redirect("/login");
+    res.redirect("/admin/login");
   },
 
   isCentre: function (req, res, next) {
@@ -22,7 +22,7 @@ var middleware = {
       return next();
     }
     req.flash("error", "You are not authorized. Please login into Centre account");
-    res.redirect("/login");
+    res.redirect("/admin/login");
   },
 
   isCentreOrAdmin: function (req, res, next) {
@@ -31,7 +31,7 @@ var middleware = {
       return next();
     }
     req.flash("error", "You are not authorized. Please login into Centre or Admin account");
-    res.redirect("/login");
+    res.redirect("/admin/login");
   },
 
   isStudent: function (req, res, next) {
@@ -39,7 +39,7 @@ var middleware = {
       return next();
     }
     req.flash("error", "You are not authorized. Please login into Student account");
-    res.redirect("/login");
+    res.redirect("/admin/login");
   }
 
 };

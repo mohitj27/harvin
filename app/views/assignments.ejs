@@ -8,10 +8,10 @@
 							</h3>
 						</div>
 						<div class="col m4">
-								<a href="/assignment/uploadAssignment" class="btn new">Upload New Assignment</a>
+								<a href="/admin/assignment/uploadAssignment" class="btn new">Upload New Assignment</a>
 						</div>
 					</div>
-			
+
 			<table class="highlight bordered centered responsive-table" width="100%">
 				<thead>
 					<tr>
@@ -49,13 +49,13 @@
 										<td width="(100/8)%" height="50px" style="text-align: center">---</td>
 										<%}%>
 											<td width="(100/8)%" height="50px" style="text-align: center">
-												<a href="/assignment/<%=assignment._id%>">Download</a>
+												<a href="/admin/assignment/<%=assignment._id%>">Download</a>
 											</td>
 											<td width="(100/8)%" height="50px" style="text-align: center">
-												<a class="btn orange" href="/assignment/<%=assignment._id%>/edit">Edit</a>
+												<a class="btn orange" href="/admin/assignment/<%=assignment._id%>/edit">Edit</a>
 											</td>
 											<td width="(100/8)%" height="50px" style="text-align: center">
-												<form action="/assignment/<%=assignment._id%>?_method=delete" method="post">
+												<form action="/admin/assignment/<%=assignment._id%>?_method=delete" method="post">
 													<input type="submit" value="Delete" class="btn red">
 												</form>
 											</td>
@@ -66,6 +66,6 @@
 				</tbody>
 			</table>
 
-			
+
 		</div>
 		<% include partials/footer.ejs%>

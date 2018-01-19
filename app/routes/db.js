@@ -136,7 +136,7 @@ router.get("/gallery/all/:category", (req, res, next) => {
         "success",
         "successfully deleted all items from current category"
       );
-      return res.redirect("/db/gallery");
+      return res.redirect("/admin/db/gallery");
     } else {
       console.log("err", err);
       return next(new errors.generic());
@@ -154,14 +154,14 @@ router.get("/gallery/:imageId/delete", (req, res, next) => {
       }
       if (!item) {
         req.flash("error", "Item not found");
-        return res.redirect("/db/gallery");
+        return res.redirect("/admin/db/gallery");
       }
       req.flash("success", "Image deleted successfully");
-      res.redirect("/db/gallery");
+      res.redirect("/admin/db/gallery");
     });
   } else {
     req.flash("error", "Invalid ObjectId provided");
-    res.redirect("/db/gallery");
+    res.redirect("/admin/db/gallery");
   }
 });
 
@@ -244,11 +244,11 @@ router.post("/gallery", (req, res, next) => {
         src.pipe(sharpStream).pipe(ws);
 
         req.flash("success", fileName + " uploaded successfully");
-        res.redirect("/db/gallery/upload");
+        res.redirect("/admin/db/gallery/upload");
       } else {
         console.log("err:", err);
         req.flash("error", "Couldn't upload the image");
-        res.redirect("/db/gallery/upload");
+        res.redirect("/admin/db/gallery/upload");
       }
     });
   });

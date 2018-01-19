@@ -15,6 +15,7 @@ var express = require("express"),
   compression = require('compression'),
   app = express(),
   mongoose = require("mongoose"),
+  mysql=require('mysql'),
   serveFavicon = require('serve-favicon'),
 
   Schema = mongoose.Schema,
@@ -36,6 +37,18 @@ db.once('open', function(err) {
     });
   }
 
+});
+
+/*MYSQL*/
+var con=mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "harvin"
+})
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
 });
 
 //setting up body-parser

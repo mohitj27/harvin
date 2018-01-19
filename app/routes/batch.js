@@ -68,7 +68,7 @@ router.post("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function 
 					function (err, createdBatch) {
 						if (!err && createdBatch) {
 							req.flash("success", "Batch updated successfully");
-							res.redirect("/batches/updateBatch");
+							res.redirect("/admin/batches/updateBatch");
 						}
 					}
 				);
@@ -100,7 +100,7 @@ router.get("/:batchName", function (req, res, next) {
 		.exec(function (err, batch) {
 			if (err) {
 				req.flash("error", "Couldn't find the chosen Batch");
-				res.redirect("/batch");
+				res.redirect("/admin/batch");
 			} else {
 				res.json({
 					batch: batch
@@ -119,4 +119,3 @@ router.get('/', (req, res, next) => {
 });
 
 module.exports = router;
-

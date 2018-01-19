@@ -76,7 +76,7 @@ router.post('/uploadAssignment', function (req, res, next) {
 	.single('userFile');
 
 	upload(req, res, function(err){
-		
+
 		var assignmentName = req.body.assignmentName;
 		var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
 		var lastSubDate = req.body.lastSubDate;
@@ -161,7 +161,7 @@ router.put("/:assignmentId", middleware.isLoggedIn, middleware.isAdmin, (req, re
         (err, updatedAssignment) => {
             if (!err && updatedAssignment) {
                 req.flash("success", assignmentName + " updated Successfully");
-                res.redirect("/assignment");
+                res.redirect("/admin/assignment");
             } else {
                 console.log(err);
                 next(new errors.generic);
@@ -200,4 +200,3 @@ router.get('/:assignmentId', (req, res, next) => {
 });
 
 module.exports = router;
-

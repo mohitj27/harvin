@@ -37,7 +37,7 @@ function fileUploadError(req, res, next) {
 //file uplaod helper
 function fileUploadSuccess(req, res) {
 	req.flash("success", req.file.originalname + " uploaded successfully");
-	res.redirect("/files/uploadFile");
+	res.redirect("/admin/files/uploadFile");
 }
 
 //Form for uploading a file
@@ -53,7 +53,7 @@ router.get('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (r
 			if (err) {
 				console.log(err);
 				req.flash("error", "Please try again");
-				res.redirect("/files/uploadFile");
+				res.redirect("/admin/files/uploadFile");
 			} else {
 				res.render('uploadFile', {
 					classes: classes
@@ -129,7 +129,7 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 									else{
 										callback(err);
 									}
-								});								
+								});
 							}
 						}
 					);
@@ -165,12 +165,12 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 											else{
 												callback(err);
 											}
-										});	
+										});
 									}
 									else{
 										callback(err);
 									}
-								});	
+								});
 							}
 						}
 					);
@@ -209,18 +209,18 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 													else{
 														callback(err);
 													}
-												});	
+												});
 											}
 											else{
 												callback(err);
 											}
-										});	
+										});
 									}
 									else{
 										callback(err);
 									}
-								});								
-								
+								});
+
 							}
 						}
 					);
@@ -260,28 +260,28 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 															else{
 																callback(err);
 															}
-														});	
+														});
 													}
 													else{
 														callback(err);
 													}
-												});	
+												});
 											}
 											else{
 												callback(err);
 											}
-										});	
+										});
 									}
 									else{
 										callback(err);
 									}
-								});	
+								});
 							}
 						}
 					);
 				},
 				function(createdFile, createdTopic, createdChapter, createdSubject, createdClass, callback){
-					Subject.findByIdAndUpdate(createdSubject._id, 
+					Subject.findByIdAndUpdate(createdSubject._id,
 						{
 							$set: {
 								class: createdClass._id
@@ -301,7 +301,7 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 					);
 				},
 				function(createdFile, createdTopic, createdChapter, updatedSubject, createdClass, callback){
-					Chapter.findByIdAndUpdate(createdChapter._id, 
+					Chapter.findByIdAndUpdate(createdChapter._id,
 						{
 							$set: {
 								subject: updatedSubject._id
@@ -321,7 +321,7 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 					);
 				},
 				function(createdFile, createdTopic, updatedChapter, updatedSubject, createdClass, callback){
-					Topic.findByIdAndUpdate(createdTopic._id, 
+					Topic.findByIdAndUpdate(createdTopic._id,
 						{
 							$set: {
 								chapter: updatedChapter._id
@@ -341,7 +341,7 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (
 					);
 				},
 				function(createdFile, updatedTopic, updatedChapter, updatedSubject, createdClass, callback){
-					File.findByIdAndUpdate(createdFile._id, 
+					File.findByIdAndUpdate(createdFile._id,
 						{
 							$set: {
 								topic: updatedTopic._id,
@@ -393,4 +393,3 @@ router.get("/:fileId", function (req, res, next) {
 });
 
 module.exports = router;
-

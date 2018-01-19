@@ -42,7 +42,7 @@ $('document').ready(function() {
 });
 
 function getImagesFromServer() {
-  $.get("/db/gallery/all", function(res) {
+  $.get("/admin/db/gallery/all", function(res) {
     if (res) {
       allImages = res.images;
       currGallery = res.images;
@@ -92,7 +92,7 @@ function makeGalleryElements(image) {
   $imageElement.addClass("col s12 m4 l3 gallery-image")
   $imageElement.find("img").addClass("responsive-img materialboxed")
   $imageElement.find("i").addClass("material-icons")
-  $imageElement.find("a").attr("href","gallery/"+image._id+"/delete")
+  $imageElement.find("a").attr("href","/admin/db/gallery/"+image._id+"/delete")
 
   $('.gallery-container').append($imageElement)
   $('.materialboxed').materialbox()
@@ -127,7 +127,7 @@ function displayCurrentPageWithCategory(pageNumberToDisplay) {
 
 
       $(img).attr('src', srcValue.thumbPath)
-      $('.gallery-image').find("a").attr('href',"gallery/"+srcValue._id+"/delete")
+      $('.gallery-image').find("a").attr('href',"/admin/db/gallery/"+srcValue._id+"/delete")
       $('.gallery-image').find("p").html(srcValue.description)
     } else {
       console.log('hidden')
@@ -145,7 +145,7 @@ $("#category-delete").click(function(){
   let category=$('.active-chip').html().toLowerCase()
   console.log(category)
   if(category!="all")
-  $.get( '/db/gallery/all/'+category, function(  ) {
+  $.get( '/admin/db/gallery/all/'+category, function(  ) {
 
 });
 })
