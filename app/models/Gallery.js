@@ -1,5 +1,5 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 //====Gallery Schmea====
 var gallerySchema = new Schema(
@@ -36,7 +36,7 @@ var gallerySchema = new Schema(
       type: String
     }
   }
-);
+)
 
 //Gallery model
-module.exports = mongoose.model("Gallery", gallerySchema);
+module.exports = mongoose.model("Gallery", gallerySchema)
