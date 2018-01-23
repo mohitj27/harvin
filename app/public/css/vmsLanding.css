@@ -130,6 +130,7 @@ a#menu {
   position: relative;
   width: 100%;
   top: 25%;
+  z-index: 105;
 }
 .whyHarvinContainer{
 width: 100%;
@@ -381,4 +382,11 @@ height:64px !important;
 }
 .activator{
   padding:10px;
+}
+
+.landing-container-tint{
+  height: inherit;
+  widows: inherit;
+  background: black;
+  opacity: 0.6;
 }
