@@ -2,14 +2,24 @@
 <% include partials/includeBS.ejs%>
 
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<div class="section">
 
-<div class="container">
-	<form method="post" class="newBlogForm" action="/blog" method="post">
-		<textarea id="summernote" name="editordata"></textarea>
-		<div class="center-align">
-				<button class="btn" type="submit">Submit</button>
-		</div>
-	</form>
+	<div class="container">
+		<div class="row">
+				<form method="post" class="newBlogForm" action="/admin/blog" method="post">
+					<div class="input-field">
+				 <input  id="blog_title" type="text" name="title" class="validate">
+				 <label for="first_name">Blog Title</label>
+			 </div>
+
+					<textarea id="summernote" name="editordata"></textarea>
+					<div class="center-align">
+							<button class="btn" type="submit">Submit</button>
+					</div>
+				</form>
+
+	</div>
+	</div>
 
 </div>
 
