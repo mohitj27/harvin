@@ -38,6 +38,13 @@ router.post("/", (req, res, next) => {
   })
   res.send(200)
 })
+
+router.post('/:htmlFilePath/images', (req, res) => {
+  console.log('body', req.body);
+  // console.log('files', req.);
+
+})
+
 router.get('/blog/:htmlFilePath',(req,res)=>{
   let htmlFilePath=req.params.htmlFilePath
   console.log(htmlFilePath)
@@ -46,4 +53,6 @@ router.get('/blog/:htmlFilePath',(req,res)=>{
     res.send(foundBlog)
   })
 })
+
+
 module.exports = router;
