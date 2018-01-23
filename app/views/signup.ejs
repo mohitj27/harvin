@@ -13,8 +13,9 @@
     <div class="form-group">
       <label for="role">Signup as</label>
       <div >
-        <select multiple title="Choose your role" required class="materialSelect"
+        <select data-live-search="true"  multiple required title="Choose your role"  class="materialSelect "
                 name="role" id="role">
+                <option value="" disabled selected>Choose your option</option>
           <option value="admin">Admin</option>
           <option value="centre">Centre</option>
         </select>

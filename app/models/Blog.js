@@ -3,7 +3,8 @@ const Schema = mongoose.Schema
 let BlogSchema = new Schema({
   blogTitle:{
     type:String,
-    required:true
+    required:true,
+    unique:true
   },
   htmlFilePath: {
     type: String,
@@ -12,6 +13,10 @@ let BlogSchema = new Schema({
   uploadDate: {
     type: String,
     default:Date.now().toString()
+  },
+  hashName:{
+    type:String,
+    required:true
   },
 
 })
