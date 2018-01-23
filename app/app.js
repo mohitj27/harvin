@@ -39,10 +39,12 @@ db.once('open', function(err) {
 
 });
 
+//https://www.a2hosting.in/kb/developer-corner/mysql/managing-mysql-databases-and-users-from-the-command-line
+
 /*MYSQL*/
 var con=mysql.createConnection({
   host: "localhost",
-  user: "root",
+  user: "harvin",
   password: "harvin"
 })
 
