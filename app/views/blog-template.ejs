@@ -1,5 +1,5 @@
 <%include partials/website_header.ejs%>
-  <link rel="stylesheet" type="text/css" href="../../css/centers.css">
+  <link rel="stylesheet" type="text/css" href="../../css/blogtemplate.css">
   <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
@@ -11,23 +11,24 @@
 
 
     </h2>
-    <h3 id="path"><%=foundBlog[0].blogTitle%></h3>
-    <p class="content">
-
-
+    <h3 id="title"><%=foundBlog[0].blogTitle%></h3>
+    <p id="path">
+      <%=foundBlog[0].htmlFilePath%>
     </p>
+    <div class="section">
+      <div id="content" class="container">
+
+
+      </div>
+    </div>
+
   </main>
   <%include partials/website_footer.ejs%>
 
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="../../js/materialize.js"></script>
-    <script src="../../js/init.js"></script>
-    <script src="../../js/initCenter.js"></script>
+    <script src="../../js/initBlogTemplate.js"></script>
 
-<script>
-let path=$('#path').html()
-  $.get('/blog/'+path,function(data){
-    console.log(datas)
-  })
-</script>
+    <script>
+    </script>

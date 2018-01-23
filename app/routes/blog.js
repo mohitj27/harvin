@@ -4,9 +4,9 @@ var express = require("express"),
 errors = require("../error"),
   middleware = require("../middleware"),
   path = require('path'),
-  fs = require('fs');
+  fs = require('fs')
 
-router = express.Router();
+router = express.Router()
 const BLOG_DIR = path.normalize(__dirname + '/../../../HarvinDb/blog/');
 
 router.get('/', (req, res, next) => {
@@ -37,5 +37,13 @@ router.post("/", (req, res, next) => {
     if (err) console.log(err)
   })
   res.send(200)
+})
+router.get('/blog/:htmlFilePath',(req,res)=>{
+  let htmlFilePath=req.params.htmlFilePath
+  console.log(htmlFilePath)
+  Blog.find({htmlFilePath},(err,foundBlog)=>{
+    console.log(foundBlog)
+    res.send(foundBlog)
+  })
 })
 module.exports = router;
