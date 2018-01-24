@@ -26,9 +26,9 @@ router.post("/", (req, res, next) => {
   })
   const blogTitle = req.body.title
   console.log(blogTitle)
-  let hashName=''
-  blogTitle.split(' ').forEach(function(word){
-  hashName+=word.charAt(0)
+  let hashName = ''
+  blogTitle.split(' ').forEach(function(word) {
+    hashName += word.charAt(0)
   })
   console.log('hash', hashName)
   const htmlFilePath = blog_name
@@ -46,13 +46,21 @@ router.post("/", (req, res, next) => {
 router.post('/:htmlFilePath/images',(req,res)=>{
   console.log('req', req.body);
   let htmlFilePath = req.params.htmlFilePath
-  let blog_name = htmlFilePath.replace('.html','').concat('/')
-console.log(blog_name)
+  htmlFilePath.concat('_').concat(req.body.uploadCounter);
+
   checkBlogDir()
-  checkBlogImageDir(blog_name)
+  checkBlogImageDir()
+  Blog.findOneAndUpdate({
+    htmlFilePath
+  }, {
+    $addToSet: {
+      blogImages: htmlFilePath
+    }
+  });
   res.send(200)
 })
-function checkBlogDir(){
+
+function checkBlogDir() {
   if (!fs.existsSync(BLOG_DIR)) {
     fs.mkdirSync(BLOG_DIR)
     console.log("making blog dir")
@@ -60,7 +68,8 @@ function checkBlogDir(){
     console.log("not making blog dir")
   }
 }
-function checkBlogImageDir(htmlFilePath){
+
+function checkBlogImageDir() {
   if (!fs.existsSync(BLOG_IMAGE_DIR)) {
     fs.mkdirSync(BLOG_IMAGE_DIR)
     console.log("making blog dir")

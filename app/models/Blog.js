@@ -18,6 +18,12 @@ let BlogSchema = new Schema({
     type:String,
     required:true
   },
+  blogImages:[{
+    type:String,
+    required:true
+
+
+  }]
 
 })
 
