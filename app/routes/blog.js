@@ -42,7 +42,8 @@ router.post("/", (req, res, next) => {
   })
   res.send(200)
 })
-router.post('/:htmlFilePath/images', (req, res) => {
+
+router.post('/:htmlFilePath/images',(req,res)=>{
   let htmlFilePath = req.params.htmlFilePath
   htmlFilePath.concat('_').concat(req.body.uploadCounter);
 
