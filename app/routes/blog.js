@@ -44,7 +44,9 @@ router.post("/", (req, res, next) => {
 })
 
 router.post('/:htmlFilePath/images',(req,res)=>{
-  console.log('req', req.body);
+  console.log('body', req.body);
+  // console.log('files', req.files);
+
   let htmlFilePath = req.params.htmlFilePath
   htmlFilePath.concat('_').concat(req.body.uploadCounter);
 
