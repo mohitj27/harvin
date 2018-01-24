@@ -128,7 +128,7 @@
 							<div class="file-field input-field">
 								<div class="btn">
 									<span>File</span>
-									<input id="img-input" type="file">
+									<input id="files" type="file">
 								</div>
 								<div class="file-path-wrapper">
 									<input class="file-path validate" type="text">
@@ -139,6 +139,8 @@
 						</form>
 
 					</div>
+					<!-- <input type="file" id="files" name="files[]" multiple /> -->
+					<!-- <output id="list"></output> -->
 				</div>
 			</div>
 		</div>
@@ -174,12 +176,73 @@
 				});
 			});
 		</script> -->
+		<style>
+			.thumb {
+				height: 75px;
+				border: 1px solid #000;
+				margin: 10px 5px 0 0;
+			}
+		</style>
+
+
+
 		<script>
 			$(function () {
-				$("#img-input:file").change(function () {
-					var fileName = $(this).val();
-					console.log('filename', fileName);
-				});
+
+				function handleFileSelect(evt) {
+					let blogTitle = $('#blog_title').val();
+				console.log('title', blogTitle)
+					var files = evt.target.files; // FileList object
+
+					// Loop through the FileList and render image files as thumbnails.
+					for (var i = 0, f; f = files[i]; i++) {
+
+						// Only process image files.
+						if (!f.type.match('image.*')) {
+							continue;
+						}
+
+						var reader = new FileReader();
+
+						// Closure to capture the file information.
+						reader.onload = (function (theFile) {
+							return function (e) {
+								// Render thumbnail.
+								var span = document.createElement('span');
+								span.innerHTML = ['<img class="thumb" src="', e.target.result,
+									'" title="', escape(theFile.name), '"/>'
+								].join('');
+								$('#img-to-upload').insertBefore(span, null);
+
+								var fd = new FormData();
+								// var files = $('#file')[0].files[0];
+								fd.append('file', theFile);
+
+								$.ajax({
+									url: '/admin/blog/' + blogTitle + '/images',
+									type: 'post',
+									data: fd,
+									contentType: false,
+									processData: false,
+									success: function (response) {
+										console.log('resp', response)
+										// if (response != 0) {
+										// 	$("#img").attr("src", response);
+										// } else {
+										// 	alert('file not uploaded');
+										// }
+									},
+								});
+							};
+						})(f);
+
+						// Read in the image file as a data URL.
+						reader.readAsDataURL(f);
+					}
+				}
+
+				document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
 			})
 		</script>
 		<% include partials/footer.ejs%>
