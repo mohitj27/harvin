@@ -44,6 +44,7 @@ router.post("/", (req, res, next) => {
 })
 
 router.post('/:htmlFilePath/images',(req,res)=>{
+  console.log('req', req.body);
   let htmlFilePath = req.params.htmlFilePath
   let blog_name = htmlFilePath.replace('.html','').concat('/')
 console.log(blog_name)

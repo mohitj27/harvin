@@ -126,7 +126,7 @@
 						<!-- <div id="fine-uploader-manual-trigger"></div> -->
 						<form action="#">
 							<div class="file-field input-field">
-								<div class="btn">
+								<div class="btn" id="file-input-btn">
 									<span>File</span>
 									<input id="files" type="file">
 								</div>
@@ -134,8 +134,7 @@
 									<input class="file-path validate" type="text">
 								</div>
 							</div>
-							<a class="waves-effect waves-light btn">Upload</a>
-							<img src="../cover.jpg" alt='Selected image' id="img-to-upload" class="img-thumbnail">
+							<output id="img-to-upload"></output>
 						</form>
 
 					</div>
@@ -188,10 +187,15 @@
 
 		<script>
 			$(function () {
+				let counter = 1;
 
 				function handleFileSelect(evt) {
 					let blogTitle = $('#blog_title').val();
-				console.log('title', blogTitle)
+					if(!blogTitle){
+						return alert('Please give blog title and choose image again');
+					}
+
+					console.log('title', blogTitle)
 					var files = evt.target.files; // FileList object
 
 					// Loop through the FileList and render image files as thumbnails.
@@ -217,7 +221,7 @@
 								var fd = new FormData();
 								// var files = $('#file')[0].files[0];
 								fd.append('file', theFile);
-
+								console.log('fd', fd)
 								$.ajax({
 									url: '/admin/blog/' + blogTitle + '/images',
 									type: 'post',
@@ -232,6 +236,9 @@
 										// 	alert('file not uploaded');
 										// }
 									},
+									error: function(error) {
+										console.log('error', error);
+									}
 								});
 							};
 						})(f);
