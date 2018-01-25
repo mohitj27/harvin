@@ -2,9 +2,6 @@
 	<% include partials/includeBS.ejs%>
 
 		<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/file-uploader/5.15.5/all.fine-uploader/fine-uploader-new.min.css"
-		/>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/file-uploader/5.15.5/all.fine-uploader/all.fine-uploader.min.js"></script>
 
 		<!--  -->
 		<!-- <script type="text/template" id="qq-template-manual-trigger">
@@ -123,20 +120,18 @@
 						</form>
 					</div>
 					<div class="col s4">
-						<!-- <div id="fine-uploader-manual-trigger"></div> -->
-						<form action="#">
-							<div class="file-field input-field">
-								<div class="btn" id="file-input-btn">
-									<span>File</span>
-									<input id="files" type="file">
-								</div>
-								<div class="file-path-wrapper">
-									<input class="file-path validate" type="text">
-								</div>
+						<div class="file-field input-field">
+							<div class="btn" id="file-input-btn">
+								<span>File</span>
+								<input id="files" type="file" />
 							</div>
-							<output id="img-to-upload"></output>
-						</form>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+						</div>
 
+
+						<div id="img-to-upload"></div>
 					</div>
 					<!-- <input type="file" id="files" name="files[]" multiple /> -->
 					<!-- <output id="list"></output> -->
@@ -186,16 +181,28 @@
 
 
 		<script>
-			$(function () {
-				let counter = 1;
+			$(function() {
+				let imageTrackArr = []
+				let uploadCounter = 1
+
+				function checkBlogTitle(event) {
+					let blogTitle = $('#blog_title').val()
+					console.log('title1', blogTitle)
+					if (blogTitle == '') {
+						event.preventDefault();
+						event.stopPropagation();
+
+						alert('please specify the blog title')
+						return false
+					} else {
+						return true
+					}
+				}
 
 				function handleFileSelect(evt) {
-					let blogTitle = $('#blog_title').val();
-					if(!blogTitle){
-						return alert('Please give blog title and choose image again');
-					}
+					let blogTitle = $('#blog_title').val()
 
-					console.log('title', blogTitle)
+					console.log('title2', blogTitle)
 					var files = evt.target.files; // FileList object
 
 					// Loop through the FileList and render image files as thumbnails.
@@ -209,37 +216,44 @@
 						var reader = new FileReader();
 
 						// Closure to capture the file information.
-						reader.onload = (function (theFile) {
-							return function (e) {
+						reader.onload = (function(theFile) {
+							return function(e) {
+								let fd=new FormData()
+								fd.append("theFile",theFile)
 								// Render thumbnail.
-								var span = document.createElement('span');
+								let span = document.createElement('span');
 								span.innerHTML = ['<img class="thumb" src="', e.target.result,
 									'" title="', escape(theFile.name), '"/>'
 								].join('');
-								$('#img-to-upload').insertBefore(span, null);
+								document.getElementById('img-to-upload').insertBefore(span, null);
+								if (checkBlogTitle == false)
+									return;
+								else {
+									console.log(typeof e.target.result)
 
-								var fd = new FormData();
-								// var files = $('#file')[0].files[0];
-								fd.append('file', theFile);
-								console.log('fd', fd)
-								$.ajax({
-									url: '/admin/blog/' + blogTitle + '/images',
-									type: 'post',
-									data: fd,
-									contentType: false,
-									processData: false,
-									success: function (response) {
-										console.log('resp', response)
-										// if (response != 0) {
-										// 	$("#img").attr("src", response);
-										// } else {
-										// 	alert('file not uploaded');
-										// }
-									},
-									error: function(error) {
-										console.log('error', error);
-									}
-								});
+									$.ajax({
+										url: '/admin/blog/' + blogTitle + '/images',
+										type: 'POST',
+										data: {'file':e.target.result+''},
+										method:'POST',
+										contentType: false,
+										processData: true,
+										success: function(response) {
+											console.log('resp', response)
+											uploadCounter++
+											//addtick(span)
+											// imageTrackArr.push({counter,response.counter})
+											// if (response != 0) {
+											// 	$("#img").attr("src", response);
+											// } else {
+											// 	alert('file not uploaded');
+											// }
+										},
+										error: function(error) {
+											console.log('error', error);
+										}
+									});
+								}
 							};
 						})(f);
 
@@ -248,8 +262,12 @@
 					}
 				}
 
-				document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
+				document.getElementById('files').addEventListener('change', handleFileSelect, false);
+				document.getElementById('files').addEventListener('click', checkBlogTitle, false);
+				// setInterval(checkUpload, 2000)
+				//
+				// function checkUpload() {}
 			})
 		</script>
 		<% include partials/footer.ejs%>
