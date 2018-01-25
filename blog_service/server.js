@@ -5,12 +5,11 @@ var express = require("express"),
   passportLocalMongoose = require("passport-local-mongoose"),
   session = require("express-session"),
   flash = require("connect-flash"),
-  indexRoutes = require("./routes/index.js"),
   morgan = require("morgan"),
   fs = require('fs'),
+  blogRoutes = require("../app/routes/blog.js"),
   path = require("path"),
   dotenv = require('dotenv').config(),
-  config = require('./config')(process.env.NODE_ENV),
   methodOverride = require("method-override"),
   compression = require('compression'),
   app = express(),
@@ -21,7 +20,7 @@ var express = require("express"),
 
   Schema = mongoose.Schema,
 
-  User = require("./models/User.js"),
+  User = require("../app/models/User.js"),
   http = require('http').Server(app),
    io = require('socket.io')(http)
 
@@ -58,11 +57,11 @@ app.use(flash());
 app.use(compression())
 
 //APP favicon
-app.use(serveFavicon(path.join(__dirname, 'public', 'output1.jpg')))
+
 
 
 //view engine
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/../app/views');
 app.set("view engine", "ejs");
 app.use(morgan("common"));
 app.use(bodyParser.urlencoded({
@@ -70,7 +69,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(flash());
 app.use(bodyParser.json());
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/../app/public"));
 app.use(express.static(__dirname + "./../../HarvinDb"));
 app.use(methodOverride("_method"));
 app.use(session({
@@ -100,15 +99,15 @@ app.use(function(req, res, next) {
 
 
 //index route
-app.use("/", indexRoutes);
+app.use("/admin/blog", blogRoutes);
 
-// Error handling middleware function
+//Error handling middleware function
 app.use(function(err, req, res, next) {
   if (err) {
     err.statusCode = err.statusCode || 500;
     res.status(err.statusCode);
     if ("development" === app.get("env")) {
-      res.render('error', {
+      res.send( {
         name: err.name || "",
         message: err.message || "",
         statusCode: err.statusCode
@@ -124,7 +123,7 @@ app.use(function(err, req, res, next) {
 });
 
 var url = process.env.DATABASEURL ||
-  'mongodb://' + config.mongo.host + ':' + config.mongo.port + '/' + config.mongo.dbName;
+  'mongodb://127.0.0.1:27017/harvin' ;
 mongoose.connect(url, {
   useMongoClient: true
 });
@@ -139,8 +138,8 @@ db.once('open', function(err) {
 
 
 let listener;
-    listener=http.listen(process.env.PORT || config.port, function() {
-      console.log("Server has started!!! Listening at " + config.port);
+    listener=http.listen(process.env.PORT || "3001", function() {
+      console.log("Server has started!!! Listening at " +"3001");
       console.log(listener.address().port);
 
     });

@@ -33,7 +33,7 @@ router.use("/admin/assignment", assignmentRoutes);
 router.use("/admin/questionBank", qbRoutes);
 router.use("/admin/results", resultsRoutes);
 router.use( vmsRoutes);
-router.use('/admin/blog', blogRoutes);
+// router.use('/admin/blog', blogRoutes);
 
 //Home
 // router.get("/", function (req, res) {

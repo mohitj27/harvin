@@ -10,19 +10,19 @@
     })
     let i = 0;
     // Next slide
-    setInterval(function() {
-      if (i >= 4)
-        i = 0
-      $('#main-landing-section').css({
-        "background-image": "url(" + items[i].src + ")",
-        "transition": "ease-in 1s",
-        "background":"cover",
-        "background-position": "center center"
-
-      })
-      console.log(i)
-      i++
-    }, 4000);
+    // setInterval(function() {
+    //   if (i >= 4)
+    //     i = 0
+    //   $('#main-landing-section').css({
+    //     "background-image": "url(" + items[i].src + ")",
+    //     "transition": "ease-in 1s",
+    //     "background":"cover",
+    //     "background-position": "center center"
+    //
+    //   })
+    //   console.log(i)
+    //   i++
+    // }, 4000);
     $.get('/vms/gallery/student', function(students) {
       console.log(students)
       console.log('hi')

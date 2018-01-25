@@ -3,96 +3,6 @@
 
 		<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
 
-		<!--  -->
-		<!-- <script type="text/template" id="qq-template-manual-trigger">
-			<div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here">
-				<div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
-					<div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
-				</div>
-				<div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
-					<span class="qq-upload-drop-area-text-selector"></span>
-				</div>
-				<div class="buttons">
-					<div class="white qq-upload-button-selector qq-upload-button">
-						<div>Select files</div>
-					</div>
-					<div class="upload-container">
-						<button type="button" id="trigger-upload" class="btn btn-primary">
-							<i class="icon-upload icon-white"></i> Upload
-						</button>
-					</div>
-				</div>
-				<span class="qq-drop-processing-selector qq-drop-processing">
-					<span>Processing dropped files...</span>
-					<span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
-				</span>
-				<ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
-					<li>
-						<div class="qq-progress-bar-container-selector">
-							<div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
-						</div>
-						<span class="qq-upload-spinner-selector qq-upload-spinner"></span>
-						<img class="qq-thumbnail-selector" qq-max-size="100" qq-server-scale>
-						<span class="qq-upload-file-selector qq-upload-file"></span>
-						<span class="qq-edit-filename-icon-selector qq-edit-filename-icon" aria-label="Edit filename"></span>
-						<input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
-						<span class="qq-upload-size-selector qq-upload-size"></span>
-						<button type="button" class="qq-btn qq-upload-cancel-selector qq-upload-cancel">Cancel</button>
-						<button type="button" class="qq-btn qq-upload-retry-selector qq-upload-retry">Retry</button>
-						<button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">Delete</button>
-						<span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
-					</li>
-				</ul>
-
-				<dialog class="qq-alert-dialog-selector">
-					<div class="qq-dialog-message-selector"></div>
-					<div class="qq-dialog-buttons">
-						<button type="button" class="qq-cancel-button-selector">Close</button>
-					</div>
-				</dialog>
-
-				<dialog class="qq-confirm-dialog-selector">
-					<div class="qq-dialog-message-selector"></div>
-					<div class="qq-dialog-buttons">
-						<button type="button" class="qq-cancel-button-selector">No</button>
-						<button type="button" class="qq-ok-button-selector">Yes</button>
-					</div>
-				</dialog>
-
-				<dialog class="qq-prompt-dialog-selector">
-					<div class="qq-dialog-message-selector"></div>
-					<input type="text">
-					<div class="qq-dialog-buttons">
-						<button type="button" class="qq-cancel-button-selector">Cancel</button>
-						<button type="button" class="qq-ok-button-selector">Ok</button>
-					</div>
-				</dialog>
-			</div>
-		</script> -->
-
-		<!-- <style>
-			#trigger-upload {
-				color: white;
-				background-color: #00ABC7;
-				font-size: 14px;
-				padding: 7px 20px;
-				background-image: none;
-			}
-
-			#fine-uploader-manual-trigger .qq-upload-button {
-				margin-right: 15px;
-			}
-
-			#fine-uploader-manual-trigger .buttons {
-				width: 36%;
-			}
-
-			#fine-uploader-manual-trigger .qq-uploader .qq-total-progress-bar-container {
-				width: 60%;
-			}
-		</style> -->
-
-		<!--  -->
 		<div class="section">
 
 			<div class="container">
@@ -123,14 +33,17 @@
 						<div class="file-field input-field">
 							<div class="btn" id="file-input-btn">
 								<span>File</span>
-								<input id="files" type="file" name="file" />
+								<input id="files" type="file" name="files[]" multiple />
 							</div>
 							<div class="file-path-wrapper">
 								<input class="file-path validate" type="text">
 							</div>
 						</div>
 
+						<div class="btn" id="file-input-btn">
 
+							<input id="" type="" name="files[]" multiple />
+						</div>
 						<div id="img-to-upload"></div>
 					</div>
 
@@ -140,35 +53,6 @@
 
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 
-		<!-- <script>
-			$(function () {
-				let blogTitle = $('#blog_title').val();
-				var manualUploader = new qq.FineUploader({
-					element: document.getElementById('fine-uploader-manual-trigger'),
-					template: 'qq-template-manual-trigger',
-					request: {
-						endpoint: '/admin/blog/' + blogTitle +'/images'
-					},
-					thumbnails: {
-						placeholders: {
-							waitingPath: '/source/placeholders/waiting-generic.png',
-							notAvailablePath: '/source/placeholders/not_available-generic.png'
-						}
-					},
-					autoUpload: false,
-					debug: false
-				});
-
-				qq(document.getElementById("trigger-upload")).attach("click", function () {
-
-					if(!blogTitle){
-						return alert('Please enter blog title');
-					}
-
-					manualUploader.uploadStoredFiles();
-				});
-			});
-		</script> -->
 		<style>
 			.thumb {
 				height: 75px;
@@ -176,15 +60,6 @@
 				margin: 10px 5px 0 0;
 			}
 		</style>
-
-<!--
-		<div class="file-field input-field">
-			<div class="btn">
-				<span>File</span>
-				<input type="file" name="file">
-			</div> -->
-			<!-- <input type="file" id="files" name="files[]" multiple />
-			<output id="list"></output> -->
 
 		<script>
 			$(function() {
@@ -213,57 +88,65 @@
 
 
 
-				// Loop through the FileList and render image files as thumbnails.
-				for (var i = 0, f; f = files[i]; i++) {
+					// Loop through the FileList and render image files as thumbnails.
+					for (var i = 0, f; f = files[i]; i++) {
+						if (!f.type.match("image.*"))
+							continue
 
-						// Closure to capture the file information.
-						reader.onload = (function(theFile) {
-							return function(e) {
-								let fd=new FormData()
-								fd.append("theFile",theFile)
-								// Render thumbnail.
-								let span = document.createElement('span');
-								span.innerHTML = ['<img class="thumb" src="', e.target.result,
-									'" title="', escape(theFile.name), '"/>'
-								].join('');
-								document.getElementById('img-to-upload').insertBefore(span, null);
-								if (checkBlogTitle == false)
-									return;
-								else {
-									console.log(typeof e.target.result)
+				let reader= new FileReader()
+					// Closure to capture the file information.
+					reader.onload = (function(theFile) {
+						return function(e) {
+							let fd = new FormData()
+							fd.append("files", e.target.result)
+							// Render thumbnail.
+							let span = document.createElement('span');
+							span.innerHTML = ['<img class="thumb" src="', e.target.result,
+								'" title="', escape(theFile.name), '"/>'
+							].join('');
+							document.getElementById('img-to-upload').insertBefore(span, null);
+							if (checkBlogTitle == false)
+								return;
+							else {
+								console.log(typeof e.target.result)
 
-									$.ajax({
+								$.ajax({
 
-											url: '/admin/blog/' + blogTitle + '/images',
-											type: 'post',
-											data: {'files': e.target.result},
-											contentType: 'application/x-www-form-urlencoded',
-											processData: true,
-											success: function (response) {
-												console.log('resp', response)
-											}
+									url: '/admin/blog/' + blogTitle + '/images',
+									type: 'post',
 
-										},
-										error: function(error) {
-											console.log('error', error);
-										}
-									});
-								}
-							};
-						})(f);
+									contentType: 'multipart/form-data',
+									processData: false,
+									success: function(response) {
+										console.log('resp', response)
+									},
+									error: function(error) {
+										console.log('error', error);
+									}
+								});
+							}
+						};
+					})(f);
 
-						// Read in the image file as a data URL.
-						reader.readAsDataURL(f);
-					}
+					// Read in the image file as a data URL.
+					console.log(typeof f)
+					reader.readAsDataURL(f);
 				}
-			}
+
+}
 
 
-				document.getElementById('files').addEventListener('change', handleFileSelect, false);
-				document.getElementById('files').addEventListener('click', checkBlogTitle, false);
-				// setInterval(checkUpload, 2000)
-				//
-				// function checkUpload() {}
+			document.getElementById('files').addEventListener('change', handleFileSelect, false); document.getElementById('files').addEventListener('click', checkBlogTitle, false);
+			// setInterval(checkUpload, 2000)
+			//
+			// function checkUpload() {}
 			})
 		</script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io('/admin/blog',{ forceNew: true });
+	socket.emit('chat message',"hello");
+</script>
+
 		<% include partials/footer.ejs%>
