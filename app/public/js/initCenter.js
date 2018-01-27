@@ -97,20 +97,20 @@ best minds.`
 
 ]
 
-let sideimagesrc_p = ["/images/1J5A2894.jpg",
-  "/images/1J5A2945.jpg",
-  "/images/1J5A2988.jpg",
-  "/images/1J5A3009.jpg"
+let sideimagesrc_j = ["/images/1J5A2894.JPG",
+  "/images/1J5A2945.JPG",
+  "/images/1J5A2988.JPG",
+  "/images/1J5A3009.JPG"
 ]
 
-let sideimagesrc_j = ["/images/harvest4.jpg",
+let sideimagesrc_m = ["/images/harvest4.jpg",
   "/images/harvest2.jpg",
   "/images/harvest3.jpg",
   "/images/harvest1.jpg"
 ]
 
-let sideimagesrc_m = ["/images/1J5A2894.jpg",
-  "/images/1J5A2945.jpg",
-  "/images/1J5A2988.jpg",
-  "/images/1J5A3009.jpg"
+let sideimagesrc_p = ["/images/_J6A1994.JPG",
+  "/images/_J6A2000.JPG",
+  "/images/_J6A2006.JPG",
+  "/images/_J6A2007.JPG"
 ]
