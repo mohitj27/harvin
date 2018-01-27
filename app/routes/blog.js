@@ -4,15 +4,25 @@ var express = require("express"),
   errors = require("../error"),
   middleware = require("../middleware"),
   path = require('path'),
-  fs = require('fs')
+  fs = require('fs'),
+  app = express(),
+  router = express.Router(),
+  http = require('http').Server(app),
+     io = require('socket.io')(http)
 
-router = express.Router()
+
+io.on('connection', function(socket){
+console.log('connected')
+});
+
+
 const BLOG_DIR = path.normalize(__dirname + '/../../../HarvinDb/blog/');
 const BLOG_IMAGE_DIR = path.normalize(__dirname + '/../../../HarvinDb/blogImage/');
 
 router.get('/', (req, res, next) => {
   res.render("newBlog");
 });
+
 
 router.post("/", (req, res, next) => {
   console.log('content', req.body)
@@ -43,7 +53,7 @@ router.post("/", (req, res, next) => {
   res.send(200)
 })
 
-router.post('/:htmlFilePath/images',(req,res)=>{
+router.post('/:htmlFilePath/images', (req, res) => {
   console.log('body', req.body);
   // console.log('files', req.files);
 

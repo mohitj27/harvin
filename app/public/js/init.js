@@ -73,7 +73,7 @@ function tap() {
 function scrollDown() {
   console.log('scroll')
   $('html, body').animate({
-    scrollTop: $("#content").offset().top
+    scrollTop: $("#features").offset().top
   }, 1000);
 
 }
