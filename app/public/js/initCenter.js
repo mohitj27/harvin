@@ -15,7 +15,9 @@ if(counter>4)counter=0
 
   }
   $('.chip').click(function(){
-
+    // $('image-side').forEach(function($img){
+    //   $img.attr('src',)
+    // })
     $('.chip').removeClass('z-depth-4 active-chip')
     $(this).addClass('z-depth-4 active-chip')
 
@@ -91,3 +93,13 @@ let sideimagesrc=["/images/1J5A2894.JPG",
 "/images/1J5A2945.JPG",
 "/images/1J5A2988.JPG",
 "/images/1J5A3009.JPG"]
+
+let sideimagespv=["/images/harvest1.jpg",
+"/images/harvest1.jpg",
+"/images/harvest1.jpg",
+"/images/harvest1.jpg"]
+
+let sideimagesmr=["/images/harvest1.jpg",
+"/images/harvest1.jpg",
+"/images/harvest1.jpg",
+"/images/harvest1.jpg"]

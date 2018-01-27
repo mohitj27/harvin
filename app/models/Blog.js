@@ -20,10 +20,13 @@ let BlogSchema = new Schema({
   },
   blogImages:[{
     type:String,
-    required:true
+    default:'avatar_01.jpg'
+  }],
+  author:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }
 
-
-  }]
 
 })
 

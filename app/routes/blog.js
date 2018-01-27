@@ -2,7 +2,7 @@ var express = require("express"),
   moment = require("moment-timezone"),
   Blog = require('../models/Blog'),
   errors = require("../error"),
-  middleware = require("../middleware"),
+  middleware = require("../middleware/index"),
   path = require('path'),
   fs = require('fs'),
   app = express(),
@@ -66,10 +66,21 @@ router.post('/:htmlFilePath/images', (req, res) => {
     htmlFilePath
   }, {
     $addToSet: {
-      blogImages: htmlFilePath
+      blogImages: req.body.filename
+    },
+    $set:{
+      author:req.user
     }
-  });
-  res.send(200)
+  },
+    {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    },
+    function(err, updatedBlog){
+      res.send(200)
+
+    })
 })
 
 function checkBlogDir() {
