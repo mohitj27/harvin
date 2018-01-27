@@ -14,7 +14,7 @@ var express = require("express"),
   compression = require('compression'),
   app = express(),
   mongoose = require("mongoose"),
-  mysql=require('mysql'),
+  mysql = require('mysql'),
 
   serveFavicon = require('serve-favicon'),
 
@@ -22,19 +22,62 @@ var express = require("express"),
 
   User = require("../app/models/User.js"),
   http = require('http').Server(app),
-   io = require('socket.io')(http)
+  io = require('socket.io')(http)
 
-   io.on('connection', function(socket){
-     console.log('a user connected');
-     socket.on('chat message', function(msg){
-       console.log('message: ' + msg);
-     });
-   });
+let files = {},
+  struct = {
+    name: null,
+    type: null,
+    size: 0,
+    data: [],
+    slice: 0,
+  };
+io.on('connection', function(socket) {
+  console.log('a user conn sadaected');
+  socket.on('chat message', function(msg) {
+    console.log('message: ' + msg);
+  });
+  socket.on('message', function(msg) {
+    console.log('message: ' + msg);
+  });
+
+  socket.on('slice upload', (data) => {
+    console.log('hello')
+    if (!files[data.name]) {
+      files[data.name] = Object.assign({}, struct, data)
+      files[data.name].data = []
+    }
+
+    //convert the ArrayBuffer to Buffer
+    data.data = new Buffer(new Uint8Array(data.data))
+    //save the data
+    files[data.name].data.push(data.data)
+    files[data.name].slice++
+      console.log('dasdsa', data.data.toString('utf8'))
+    if (files[data.name].slice * 100000 >= files[data.name].size) {
+      var fileBuffer = Buffer.concat(files[data.name].data)
+
+      fs.writeFile(data.name, fileBuffer, (err) => {
+        console.log('err', err)
+        delete files[data.name]
+        if (err) return socket.emit('upload error')
+        socket.emit('end upload')
+        files={}
+
+      });
+    } else {
+      socket.emit('request slice upload', {
+        currentSlice: files[data.name].slice
+      });
+    }
+
+  });
+});
 
 
 
 /*MYSQL*/
-var con=mysql.createConnection({
+var con = mysql.createConnection({
   host: "localhost",
   user: "harvin",
   password: "harvin"
@@ -107,7 +150,7 @@ app.use(function(err, req, res, next) {
     err.statusCode = err.statusCode || 500;
     res.status(err.statusCode);
     if ("development" === app.get("env")) {
-      res.send( {
+      res.send({
         name: err.name || "",
         message: err.message || "",
         statusCode: err.statusCode
@@ -123,7 +166,7 @@ app.use(function(err, req, res, next) {
 });
 
 var url = process.env.DATABASEURL ||
-  'mongodb://127.0.0.1:27017/harvin' ;
+  'mongodb://127.0.0.1:27017/harvin';
 mongoose.connect(url, {
   useMongoClient: true
 });
@@ -137,9 +180,9 @@ db.once('open', function(err) {
   } else {
 
 
-let listener;
-    listener=http.listen(process.env.PORT || "3001", function() {
-      console.log("Server has started!!! Listening at " +"3001");
+    let listener;
+    listener = http.listen(process.env.PORT || "3001", function() {
+      console.log("Server has started!!! Listening at " + "3001");
       console.log(listener.address().port);
 
     });
