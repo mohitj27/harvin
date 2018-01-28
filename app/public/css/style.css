@@ -1,4 +1,5 @@
 /* Custom Stylesheet */
+
 /**
  * Use this file to override Materialize files so you can update
  * the core Materialize files in the future
@@ -9,25 +10,29 @@
 @font-face {
   font-family: bebasneue;
   src: url(./../fonts/BebasNeue/BebasNeue.otf);
-  }
+}
 
-nav ul a,
-nav .brand-logo {
+@import url(https://fonts.googleapis.com/css?family=EB+Garamond|Cardo:400italic);
+nav ul a, nav .brand-logo {
   color: #13b38b;
 }
-.bold{
+
+.bold {
   font-weight: bold;
 }
+
 p {
   line-height: 2rem;
 }
-.no-padding{
-  padding:0;
+
+.no-padding {
+  padding: 0;
 }
 
-.no-margin{
-  margin:0;
+.no-margin {
+  margin: 0;
 }
+
 .button-collapse {
   color: #26a69a;
 }
@@ -36,13 +41,14 @@ p {
   min-height: 380px;
   line-height: 0;
   height: auto;
-  color: rgba(255,255,255,.9);
+  color: rgba(255, 255, 255, .9);
 }
-  .parallax-container .section {
-    width: 100%;
-  }
 
-@media only screen and (max-width : 992px) {
+.parallax-container .section {
+  width: 100%;
+}
+
+@media only screen and (max-width: 992px) {
   .parallax-container .section {
     position: absolute;
     top: 40%;
@@ -52,7 +58,7 @@ p {
   }
 }
 
-@media only screen and (max-width : 600px) {
+@media only screen and (max-width: 600px) {
   #index-banner .section {
     top: 0;
   }
@@ -61,6 +67,7 @@ p {
 .icon-block {
   padding: 0 15px;
 }
+
 .icon-block .material-icons {
   font-size: inherit;
 }
@@ -69,34 +76,30 @@ footer.page-footer {
   margin: 0;
 }
 
-
 nav ul a, nav .brand-logo {
-  color:#13b38b;
-
+  color: #13b38b;
 }
 
-  .nav-wrapper{
-    background-color:white;
-    color:#13b38b;
-  }
-
+.nav-wrapper {
+  background-color: white;
+  color: #13b38b;
+}
 
 .fa-facebook {
   margin: 4px;
 }
+
 @media only screen and (max-width:400px) {
-nav ul a, nav .brand-logo {
-  left:50%;
-}
-
-}
-
-@media only screen and (max-width:400px){
-
   nav ul a, nav .brand-logo {
-    color:#13b38b;
-  left:50%;
-  font-size: 10px;
+    left: 50%;
+  }
+}
+
+@media only screen and (max-width:400px) {
+  nav ul a, nav .brand-logo {
+    color: #13b38b;
+    left: 50%;
+    font-size: 10px;
   }
 }
 
@@ -116,22 +119,26 @@ html, body {
 .btn-floating {
   background-color: #13b38b !important;
 }
-/* Portrait and Landscape */
-@media only screen and (min-width: 950px) {
-    nav ul a, nav .brand-logo {
-      color:#13b38b;
-      left:10%;
 
-    }
+/* Portrait and Landscape */
+
+@media only screen and (min-width: 950px) {
+  nav ul a, nav .brand-logo {
+    color: #13b38b;
+    left: 10%;
+  }
 }
-blockquote{
+
+blockquote {
   border-left: 5px solid #13b38b;
 }
-.border-2{
-  border:2px solid #13b38b;
-  height:100px !important;
-  width:100px;
+
+.border-2 {
+  border: 2px solid #13b38b;
+  height: 100px !important;
+  width: 100px;
 }
+
 * {
   font-family: 'Open Sans', sans-serif;
 }
@@ -139,73 +146,73 @@ blockquote{
 /* ----------- iPhone 4 and 4S ----------- */
 
 /* Portrait and Landscape */
-@media only screen
-  and (min-device-width: 320px)
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-    nav ul a, nav .brand-logo {
-      font-size: 16px;
 
-    }
-
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+  nav ul a, nav .brand-logo {
+    font-size: 16px;
+  }
 }
 
-@media screen
-  and (min-device-width: 1200px)
-  and (max-device-width: 1600px)
-  and (-webkit-min-device-pixel-ratio: 1) {
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {}
 
+.white-material {
+  color: white;
+  margin-right: 20px;
 }
-.white-material{color:white;
-margin-right:20px;
-}
-.testimonial-card-image{padding: 20% 0% !important;}
-.testimonial-card-image-holder{padding: 5% 0% !important;}
-.bordered-list{
 
+.testimonial-card-image {
+  padding: 20% 0% !important;
+}
+
+.testimonial-card-image-holder {
+  padding: 5% 0% !important;
+}
+
+.bordered-list {
   border-bottom: 1px solid #e6e6e6;
   padding: 0px !important;
-  margin:5px 32px;
+  margin: 5px 32px;
   text-align: left;
   color: #13b38b !important;
 }
-.contact_box{
+
+.contact_box {
   position: absolute;
-  bottom:10%;
-}
-.page-footer{
-  background-color:#13b38b;
-  color:white;
-
+  bottom: 10%;
 }
 
-.active-chip{
-  background-color:#13b38b;
+.page-footer {
+  background-color: #13b38b;
+  color: white;
+}
+
+.active-chip {
+  background-color: #13b38b;
   color: white !important;
 }
 
-
-.active-chip:hover{
-  background-color:#13b38b;
-  color:white;
-}
-h2,h3,h4,h5{
-color: #13b38b;
-}
-
-.white-h3{
-  color:white;
-}
-
-.harvinTheme{
+.active-chip:hover {
   background-color: #13b38b;
+  color: white;
 }
 
-.harvinThemeText{
+h2, h3, h4, h5 {
   color: #13b38b;
 }
 
-.welcome{
+.white-h3 {
+  color: white;
+}
+
+.harvinTheme {
+  background-color: #13b38b;
+}
+
+.harvinThemeText {
+  color: #13b38b;
+}
+
+.welcome {
   margin-bottom: 0px;
 }
 
@@ -219,13 +226,12 @@ color: #13b38b;
   height: 120px;
 }
 
-
-.harvinFeature{
+.harvinFeature {
   background-color: white;
 }
 
-.footer-section{
-  margin-bottom:0;
+.footer-section {
+  margin-bottom: 0;
 }
 
 .scrollTop {
@@ -234,7 +240,7 @@ color: #13b38b;
   bottom: 10px;
   background-color: #13b38b;
   padding: 20px;
-  z-index:1000;
+  z-index: 1000;
   opacity: 0;
   transition: all 0.4s ease-in-out 0s;
 }
@@ -244,6 +250,6 @@ color: #13b38b;
   color: #fff;
 }
 
-.side-nav-main{
+.side-nav-main {
   z-index: 100000;
 }
