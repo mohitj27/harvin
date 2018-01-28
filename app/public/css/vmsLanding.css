@@ -28,11 +28,6 @@ a#menu {
   #explore {
     right: -18%;
   }
-  #svg-content-feature{
-
-    width:300px !important;
-
-  }
   .whyHarvinIcon{
     margin-left: -55px;
   }
@@ -55,6 +50,7 @@ a#menu {
 .landing-container {
   height: 100%;
   /*position: relative;*/
+
 }
 
 .advisory-card {
@@ -270,7 +266,7 @@ nav ul a, nav .brand-logo {
 .svg-content{
   position: relative;
   cursor: pointer;
-  width:inherit;
+
 
 }
 #layer1 {
@@ -390,3 +386,110 @@ height:64px !important;
   background: black;
   opacity: 0.6;
 }
+#first-section{
+  height:100%;
+  background: rgba(19,179,139,1);
+   background-image: linear-gradient(10deg, rgba(19,179,139,1) 0%, rgba(19,179,139,1)50%, white 51%);
+  /*background: -moz-linear-gradient(-45deg, rgba(19,179,139,1) 0%,rgba(19,179,139,1) 15%, rgba(255,255,255,1) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(19,179,139,1)), color-stop(100%, rgba(255,255,255,1)));
+  background: -webkit-linear-gradient(-45deg, rgba(19,179,139,1) 0%,rgba(19,179,139,1) 15%, rgba(255,255,255,1) 100%);
+  background: -o-linear-gradient(-45deg, rgba(19,179,139,1) 0%,rgba(19,179,139,1) 15%, rgba(255,255,255,1) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(19,179,139,1) 0%,rgba(19,179,139,1) 15%, rgba(255,255,255,1) 100%);
+  background: linear-gradient(135deg, rgba(19,179,139,1) 0%,rgba(19,179,139,1) 15%, rgba(255,255,255,1) 100%);*/
+}
+/***********/
+@import url(https://fonts.googleapis.com/css?family=EB+Garamond|Cardo:400italic);
+
+.sandbox-correct-pronounciation {
+  padding: 10em 0 10em 0;
+}
+.heading-correct-pronounciation {
+  margin: auto;
+
+  position: relative;
+}
+h1 {
+  color: white;
+  font-family: 'Cardo', serif;
+  font-size: 1.5em;
+  font-weight: normal;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  line-height: 2.2em;
+}
+em {
+  font-family: 'EB Garamond', serif;
+  font-size: 3.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  font-style: normal;
+  padding-top: 0.1em;
+  text-shadow: 0.07em 0.07em 0 rgba(255, 255, 255, 0.2  );
+}
+#premier{
+color:white;
+}
+em::before,
+em::after {
+  content: "§";
+  display: inline-block;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  opacity: 0.2;
+  margin: 0 0.6em;
+  font-size: 0.5em;
+}
+.bottom {
+  font-size: 1.5em;
+  letter-spacing: 0.07em;
+  font-size: 1em;
+  display: block;
+}
+/*****/
+
+
+.table {
+	display: table;   /* Allow the centering to work */
+
+
+}
+
+ul#horizontal-list {
+
+	min-width: 696px;
+	list-style: none;
+	padding-top: 20px;
+	}
+	ul#horizontal-list li {
+		display: inline;
+
+	}
+  ul#horizontal-list li a{
+    color:white;
+  }
+  .btn{
+
+  background-color: #13b38b;
+    /*font-weight: bold;*/
+    border-radius: 100px;
+    font-size:14px;
+  }
+  #harvin-card-panel{
+    background: url(./../images/hero01.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto;
+    height: 500px;
+    top:40%;
+
+  }
+  .headerDivider {
+
+    border-left: 6px solid green;
+    height: inherit;
+
+  }

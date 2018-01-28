@@ -1,12 +1,10 @@
 (function($) {
   $(function() {
-    $("#navbar").slideUp("slow",function(){})
+    $("#navbar").slideUp()
     $(window).scroll(function(){
 
-      if ($(window).scrollTop()>=$(window).height()/4) $("#navbar").slideDown("slow",function(){console.log('down')})
-      else     $("#navbar").slideUp("slow",function(){})
-
-
+      if ($(window).scrollTop()>=$(window).height()/2) $("#navbar").slideDown()
+      else     $("#navbar").slideUp()
     })
     let i = 0;
     // Next slide
