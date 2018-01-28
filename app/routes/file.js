@@ -41,7 +41,7 @@ function fileUploadSuccess(req, res) {
 }
 
 //Form for uploading a file
-router.get('/uploadFile', middleware.isLoggedIn, middleware.isAdmin, function (req, res, next) {
+router.get('/uploadFile', middleware.isLoggedIn,  (req, res, next) {
 	Class.find({}, function (err, classes) {
 			if (err) console.log(err);
 		})
