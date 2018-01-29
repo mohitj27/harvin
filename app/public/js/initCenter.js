@@ -1,4 +1,9 @@
 $(function() {
+
+  $("#button").click(function(){
+            var pageURL = $(location).attr("href");
+            alert(pageURL);
+        });
   let counter = 1
   sideimagesrc = sideimagesrc_j
   if (window.innerWidth < 450) {
