@@ -10,6 +10,10 @@ var chapterSchema = new Schema(
             unique:true,
             required:true
 		},
+		atCenter: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Center"
+		},
 		subject:{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Subject"

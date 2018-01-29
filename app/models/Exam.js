@@ -7,6 +7,10 @@ var examSchema = new Schema({
     type: String,
     required: true
   },
+  atCenter: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Center"
+	},
   examDate: {
     type: String,
     required: true
@@ -45,4 +49,3 @@ var examSchema = new Schema({
 
 //Exam model
 module.exports = mongoose.model("Exam", examSchema);
-

@@ -4,9 +4,6 @@ $(function () {
 	//=========================================
 	//content inside add button in selectpicker
 
-
-
-
 	$(".dropdown-button").dropdown({hover:true,belowOrigin:true});
 		$('.materialSelect').material_select();
 		if($('#summernote').length !== 0){
@@ -155,7 +152,7 @@ $(function () {
 		var $subjectsInBatch = $("#subjectsInBatch");
 		var $batchDesc = $("#batchDesc");
 		var o = $("option", $subjectsInBatch).not(".lastTwo");
-		$.get("/batches/" + this.value, function (res) {
+		$.get("/admin/batches/" + this.value, function (res) {
 			o.each(function (index) {
 				this.selected = false;
 			});
@@ -176,6 +173,7 @@ $(function () {
 				$(".selectpicker").selectpicker("refresh");
 
 			}
+			$batchDesc.val('');
 		});
 	});
 

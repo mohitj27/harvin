@@ -10,6 +10,10 @@ var topicSchema = new Schema(
 			unique:true,
 			required:true
 		},
+		atCenter: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Center"
+		},
 		topicDescription:{
 			type:String,
 			required:true,

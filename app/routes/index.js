@@ -14,6 +14,7 @@ var express = require("express"),
     qbRoutes = require("./questionBank"),
     resultsRoutes = require("./results"),
     vmsRoutes = require("./vms"),
+    centersRoutes = require("./center"),
     formRoutes = require('./form'),
     blogRoutes = require('./blog'),
     Topic = require("../models/Topic.js"),
@@ -34,6 +35,7 @@ router.use("/admin/questionBank", qbRoutes);
 router.use("/admin/results", resultsRoutes);
 router.use( vmsRoutes);
 router.use('/admin/blog', blogRoutes);
+router.use('/admin/centers', centersRoutes);
 
 //Home
 // router.get("/", function (req, res) {

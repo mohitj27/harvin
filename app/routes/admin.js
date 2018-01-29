@@ -13,7 +13,6 @@ router.get("/signup", function(req, res) {
 
 //ADMIN HOME
 router.get("/", function(req, res) {
-  console.log('admin home')
   res.render("home");
 });
 //Handle user registration-- for admin

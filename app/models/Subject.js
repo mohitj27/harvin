@@ -9,6 +9,10 @@ var subjectSchema = new Schema(
 			type:String,
 			required:true
 		},
+		atCenter: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Center"
+		},
 		className:{
 			type:String,
 			required:true

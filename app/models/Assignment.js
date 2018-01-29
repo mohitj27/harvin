@@ -7,7 +7,11 @@ var assignmentSchema = new Schema({
 		type: String,
 		required: true
 	},
-	uploadDate:{ 
+	atCenter: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Center"
+	},
+	uploadDate:{
 		type:String,
 		required:true
 	},
@@ -22,13 +26,12 @@ var assignmentSchema = new Schema({
         ref: "Batch"
     },
 
-	filePath: { 
-		type: String, 
-		required: true, 
-		trim: true 
+	filePath: {
+		type: String,
+		required: true,
+		trim: true
 	},
 });
 
 //Exam model
 module.exports = mongoose.model("Assignment", assignmentSchema);
-
