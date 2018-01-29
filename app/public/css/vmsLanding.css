@@ -488,6 +488,8 @@ ul#horizontal-list {
   }
   #harvin-card-panel2{
     background: url(./../images/10069.jpg);
+
+    background-color: white;
     background-position: center center;
     background-repeat: no-repeat;
     background-size:cover;
