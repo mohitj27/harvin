@@ -4,20 +4,20 @@ $(function() {
   // alert(pageURL.toString().split('#')[1]);
   $('.chip').removeClass('z-depth-4 active-chip')
   switch (pageURL.toString().split('#')[1]) {
-    case 'j':
+    case 'janakpuri':
       $('#j-chip').addClass('z-depth-4 active-chip')
       $('.map').attr('src', locations[0])
       $('.overview').html(overview[0])
       sideimagesrc = sideimagesrc_j
       break;
-    case 'p':
+    case 'preet-vihar':
       $('#p-chip').addClass('z-depth-4 active-chip')
       $('.map').attr('src', locations[1])
       $('.overview').html(overview[1])
       sideimagesrc = sideimagesrc_p
       break;
 
-    case 'm':
+    case 'meerut':
       $('#m-chip').addClass('z-depth-4 active-chip')
       $('.map').attr('src', locations[2])
       $('.overview').html(overview[2])
