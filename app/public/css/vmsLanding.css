@@ -34,6 +34,20 @@ a#menu {
   .container.carousel-container {
     width: 70% !important;
   }
+  #first-section{
+    height:100%;
+
+  }
+  #hero-section{
+    /*margin-top:6%;*/
+  }
+
+  .landing-container {
+
+width:80%;
+
+  }
+
 }
 
 #main-landing-section {
@@ -45,12 +59,6 @@ a#menu {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.landing-container {
-  height: 100%;
-  /*position: relative;*/
-
 }
 
 .advisory-card {
@@ -387,9 +395,9 @@ height:64px !important;
   opacity: 0.6;
 }
 #first-section{
-  height:100%;
+
   background: rgba(19,179,139,1);
-   background-image: linear-gradient(10deg, rgba(19,179,139,1) 0%, rgba(19,179,139,1)50%, white 51%);
+   background-image: linear-gradient(-30deg,  white 51%,rgba(19,179,139,1) 0%, rgba(19,179,139,1)50%);
   /*background: -moz-linear-gradient(-45deg, rgba(19,179,139,1) 0%,rgba(19,179,139,1) 15%, rgba(255,255,255,1) 100%);
   background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(19,179,139,1)), color-stop(100%, rgba(255,255,255,1)));
   background: -webkit-linear-gradient(-45deg, rgba(19,179,139,1) 0%,rgba(19,179,139,1) 15%, rgba(255,255,255,1) 100%);
@@ -406,7 +414,6 @@ height:64px !important;
 .heading-correct-pronounciation {
   margin: auto;
 
-  position: relative;
 }
 h1 {
   color: white;
@@ -415,7 +422,6 @@ h1 {
   font-weight: normal;
   font-style: italic;
   letter-spacing: 0.1em;
-  line-height: 2.2em;
 }
 em {
   font-family: 'EB Garamond', serif;
@@ -424,7 +430,7 @@ em {
   letter-spacing: 0.1em;
   display: block;
   font-style: normal;
-  padding-top: 0.1em;
+
   text-shadow: 0.07em 0.07em 0 rgba(255, 255, 255, 0.2  );
 }
 #premier{
@@ -440,23 +446,16 @@ em::after {
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
   opacity: 0.2;
-  margin: 0 0.6em;
   font-size: 0.5em;
 }
 .bottom {
   font-size: 1.5em;
   letter-spacing: 0.07em;
   font-size: 1em;
-  display: block;
 }
 /*****/
 
 
-.table {
-	display: table;   /* Allow the centering to work */
-
-
-}
 
 ul#horizontal-list {
 
@@ -482,8 +481,17 @@ ul#horizontal-list {
     background: url(./../images/hero01.jpg);
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: auto;
-    height: 500px;
+    min-height: 500px;
+    background-size: cover;
+    top:40%;
+
+  }
+  #harvin-card-panel2{
+    background: url(./../images/10069.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    min-height: 500px;
     top:40%;
 
   }
@@ -492,4 +500,7 @@ ul#horizontal-list {
     border-left: 6px solid green;
     height: inherit;
 
+  }
+  #menu-outer {
+    /*margin:0px;*/
   }
