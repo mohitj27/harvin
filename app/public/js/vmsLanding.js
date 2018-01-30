@@ -1,30 +1,13 @@
 (function($) {
   $(function() {
+    $('#harvin-card-panel2').css({'height':$('#harvin-card-panel').height().toString()})
     $("#navbar").slideUp()
     $(window).scroll(function(){
 
-      if ($(window).scrollTop()>=$(window).height()/2) $("#navbar").slideDown()
+      if ($(window).scrollTop()>=$(window).height()/3) $("#navbar").slideDown()
       else     $("#navbar").slideUp()
     })
-    let i = 0;
-    // Next slide
-    // setInterval(function() {
-    //   if (i >= 4)
-    //     i = 0
-    //   $('#main-landing-section').css({
-    //     "background-image": "url(" + items[i].src + ")",
-    //     "transition": "ease-in 1s",
-    //     "background":"cover",
-    //     "background-position": "center center"
-    //
-    //   })
-    //   console.log(i)
-    //   i++
-    // }, 4000);
-    $.get('/vms/gallery/student', function(students) {
-      console.log(students)
-      console.log('hi')
-    })
+
   });
 })(jQuery);
 

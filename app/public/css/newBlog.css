@@ -1,0 +1,55 @@
+
+    header, main, footer {
+      padding-left: 300px;
+    }
+
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
+.side-nav{
+
+  background: #43A047;
+  background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+  background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+}
+.side-nav li>a{color:white;
+
+}
+.gradient-45deg-green-teal {
+    background: #43A047;
+    background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+    background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+}
+#brand-name{
+  color:white
+}
+.side-nav > li:nth-child(1) > a:hover{
+  background-color: rgba(0,0,0,0);
+
+}
+.top-nav{
+  visibility: hidden;
+}
+.scrollTop {
+  position: fixed;
+  right: 10%;
+  bottom: 10px;
+  background-color: #13b38b;
+  padding: 20px;
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+.scrollTop a {
+  font-size: 18px;
+  color: #fff;
+}
+body{
+  overflow-x: hidden;
+}
+#slide-out{
+  background: white;
+}

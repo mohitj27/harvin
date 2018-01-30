@@ -58,7 +58,7 @@ app.use(flash());
 app.use(compression())
 
 //APP favicon
-app.use(serveFavicon(path.join(__dirname, 'public', 'output1.jpg')))
+app.use(serveFavicon(path.join(__dirname, 'public', 'images','harvin.png')))
 
 
 //view engine

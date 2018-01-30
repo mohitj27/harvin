@@ -2,56 +2,81 @@
 	<% include partials/includeBS.ejs%>
 
 		<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+		<link rel="stylesheet" href="/css/newBlog.css">
+		<main>
 
-		<div class="section">
+			<ul class="side-nav fixed z-depth-3">
 
-			<div class="container">
-				<div class="row">
-					<div class="col s8">
-						<form method="post" class="newBlogForm" action="/admin/blog" method="post">
-							<div class="input-field">
-								<input id="blog_title" type="text" name="title" class="validate">
-								<label for="first_name">Blog Title</label>
-							</div>
+				<li> <a class="brand-logo" href="/admin"><h3 id="brand-name">Harvin Academy</h3></a></li>
+				<li><a href="#!">Add a Blog</a></li>
+				<li><a href="#!">Second Sidebar Link</a></li>
+			</ul>
+			<ul id="slide-out" class="side-nav">
+    <li><div class="user-view">
+      <div class="background">
+        <img src="/images/user.png">
+      </div>
+      <a href="#!name"><span class="white-text name">Jagriti Kapoor</span></a>
+      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+  </ul>
+
+
+
+
+
+			<div class="section">
+				<div class="container">
+					<div class="row">
+						<div class="col s8">
+							<form method="post" class="newBlogForm" action="/admin/blog" method="post">
+								<div class="input-field">
+									<input id="blog_title" type="text" name="title" class="validate">
+									<label for="first_name">Blog Title</label>
+								</div>
+								<div class="file-field input-field">
+									<div class="btn">
+										<span>File</span>
+										<input type="file">
+									</div>
+									<div class="file-path-wrapper">
+										<input class="file-path validate" type="text">
+									</div>
+								</div>
+								<textarea id="summernote" name="editordata"></textarea>
+								<div class="center-align">
+									<button class="btn" type="submit">Submit</button>
+								</div>
+							</form>
+						</div>
+						<div class="col s4">
 							<div class="file-field input-field">
-								<div class="btn">
+								<div class="btn" id="file-input-btn">
 									<span>File</span>
-									<input type="file">
+									<input id="files" type="file" name="files[]" multiple />
 								</div>
 								<div class="file-path-wrapper">
 									<input class="file-path validate" type="text">
 								</div>
 							</div>
-
-							<textarea id="summernote" name="editordata"></textarea>
-							<div class="center-align">
-								<button class="btn" type="submit">Submit</button>
-							</div>
-						</form>
-					</div>
-					<div class="col s4">
-						<div class="file-field input-field">
-							<div class="btn" id="file-input-btn">
-								<span>File</span>
-								<input id="files" type="file" name="files[]" multiple />
-							</div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text">
-							</div>
+							<div id="img-to-upload"></div>
+							<img id='output'>
 						</div>
-
-						<div class="btn" id="file-input-btn">
-
-							<input id="" type="" name="files[]" multiple />
-						</div>
-						<div id="img-to-upload"></div>
-						<img id='output'>
-
 					</div>
-
 				</div>
 			</div>
-		</div>
+
+			<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+				<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">collections</i></a>
+			        </div>
+
+		</main>
+
 
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 
@@ -63,152 +88,7 @@
 			}
 		</style>
 		<script src="/socket.io/socket.io.js"></script>
+		<script src="/js/blogInsert.js"></script>
 
-		<script>
-			$(function() {
-				var socket = io("http://localhost:3001/")
-				socket.emit('message', 'Hello server');
-
-				socket.on('connect', function() {
-					socket.emit('message', 'Hello server12');
-
-				});
-
-				let imageTrackArr = []
-				let uploadCounter = 1
-				let span = document.createElement('span')
-
-
-				function checkBlogTitle(event) {
-					let blogTitle = $('#blog_title').val()
-					console.log('title1', blogTitle)
-					if (blogTitle == '') {
-						event.preventDefault();
-						event.stopPropagation();
-
-						alert('please specify the blog title')
-						return false
-					} else {
-						return true
-					}
-				}
-
-				function handleFileSelect(evt) {
-
-					/**/
-
-
-
-					    var files = evt.target.files; // FileList object
-
-					    // Loop through the FileList and render image files as thumbnails.
-					    for (var i = 0, f; f = files[i]; i++) {0
-
-					      // Only process image files.
-					      if (!f.type.match('image.*')) {
-					        continue;
-					      }
-
-					      var reader = new FileReader();
-
-					      // Closure to capture the file information.
-					      reader.onload = (function(theFile) {
-					        return function(e) {
-										//SDend image
-
-					          // Render thumbnail.
-					          var span = document.createElement('span');
-					          span.innerHTML = ['<img class="thumb" src="', e.target.result,
-					                            '" title="', escape(theFile.name), '"/>'].join('');
-					          document.getElementById('img-to-upload').insertBefore(span, null);
-					        };
-					      })(f);
-
-					      // Read in the image file as a data URL.
-					      reader.readAsDataURL(f);
-					    }
-					/*/*/
-					var fileReader = new FileReader()
-
-					console.log('state of reader', fileReader.readyState)
-					// if(fileReader.readyState!=0||fileReader.readyState!=1)
-					// return;
-					let blogTitle = $('#blog_title').val()
-
-					console.log('evt', evt)
-					var file = evt.target.files[0]; // FileList object
-					console.log('file name', file.name)
-					console.log('file name', evt.target.files)
-					$.post('/admin/blog/' + blogTitle + '/images', {
-						'filename': file.name
-					})
-					if (!file.type.match("image.*"))
-						return
-
-					console.log(file)
-					let slice = file.slice(0, 100000)
-
-					fileReader.readAsArrayBuffer(slice);
-					fileReader.onload = (evt) => {
-
-						console.log("reader", fileReader.result.toString())
-
-						var arrayBuffer = fileReader.result;
-						socket.emit('hello', 'hello')
-						socket.emit('slice upload', {
-							name: file.name,
-							type: file.type,
-							size: file.size,
-							data: arrayBuffer
-						});
-					}
-
-
-
-					socket.on('end upload', () => {
-						// console.log(fileReader.result.toString())
-						// fileReader.result = {}
-						fileReader.abort()
-
-						console.log('reader',fileReader)
-						console.log('end upload')
-
-					});
-					socket.on('upload error', () => {
-						console.log('aborting')
-						fileReader.abort()
-					});
-					// Render thumbnail.
-
-					
-
-					socket.on('request slice upload', (data) => {
-						var place = data.currentSlice * 100000,
-							slice = file.slice(place, place + Math.min(100000, file.size - place));
-
-							try{fileReader.readAsArrayBuffer(slice)}
-							catch(err){
-								console.log(err)
-								fileReader.abort()
-							}
-
-
-					});
-
-
-
-				}
-
-
-				document.getElementById('files').addEventListener('change', handleFileSelect, false);
-				document.getElementById('files').addEventListener('click', checkBlogTitle, false);
-				// setInterval(checkUpload, 2000)
-				//
-				// function checkUpload() {}
-			})
-		</script>
-
-		<script>
-		</script>
 
 		<% include partials/footer.ejs%>
