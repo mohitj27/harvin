@@ -8,9 +8,9 @@ var examSchema = new Schema({
     required: true
   },
   atCenter: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Center"
-	},
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Center"
+  },
   examDate: {
     type: String,
     required: true

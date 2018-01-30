@@ -6,7 +6,6 @@ var classSchema = new Schema(
 	{
 		className:{
 			type:String,
-			unique:true,
 			required:true
 		},
 		atCenter: {
