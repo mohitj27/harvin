@@ -2,18 +2,33 @@
 	<% include partials/includeBS.ejs%>
 
 		<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
-<link rel="stylesheet" href="/css/newBlog.css">
+		<link rel="stylesheet" href="/css/newBlog.css">
 		<main>
 
-    <ul id="slide-out" class="side-nav fixed z-depth-3">
+			<ul class="side-nav fixed z-depth-3">
 
-      <li>	<a class="brand-logo" href="/admin"><h3 id="brand-name">Harvin Academy</h3></a></li>
-      <li><a href="#!">Add a Blog</a></li>
-      <li><a href="#!">Second Sidebar Link</a></li>
-    </ul>
+				<li> <a class="brand-logo" href="/admin"><h3 id="brand-name">Harvin Academy</h3></a></li>
+				<li><a href="#!">Add a Blog</a></li>
+				<li><a href="#!">Second Sidebar Link</a></li>
+			</ul>
+			<ul id="slide-out" class="side-nav">
+    <li><div class="user-view">
+      <div class="background">
+        <img src="/images/user.png">
+      </div>
+      <a href="#!name"><span class="white-text name">Jagriti Kapoor</span></a>
+      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+  </ul>
 
 
-		  
+
+
 
 			<div class="section">
 				<div class="container">
@@ -55,6 +70,11 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+				<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">collections</i></a>
+			        </div>
+
 		</main>
 
 

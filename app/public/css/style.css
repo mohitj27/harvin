@@ -1,3 +1,5 @@
+
+
 /* Custom Stylesheet */
 
 /**
@@ -253,4 +255,25 @@ h2, h3, h4, h5 {
 
 .side-nav-main {
   z-index: 100000;
+}
+/*SCROLL BAR/
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #13b38b;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
