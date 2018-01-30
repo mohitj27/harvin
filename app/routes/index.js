@@ -37,19 +37,6 @@ router.use(vmsRoutes);
 router.use('/admin/blog', blogRoutes);
 router.use('/admin/centers', centersRoutes);
 
-//Home
-// router.get("/", function (req, res) {
-//   Gallery.find({category:"results"}, (err, foundStudents) => {
-//     if (!err && foundStudents) {
-//       res.render('vmsLanding', {
-//         students: foundStudents
-//       });
-//     } else {
-//       console.log(err);
-//       next(new errors.generic());
-//     }
-//   })
-// });
 router.delete('/users/:userId', (req, res, next) => {
   const userId = req.params.userId;
   User.findById(userId, (err, foundUser) => {
@@ -74,153 +61,178 @@ router.delete('/users/:userId', (req, res, next) => {
   });
 });
 
-//user login -- for admin
-router.get("/signup", function(req, res) {
-  res.render("signup", {
-    error: res.locals.msg_error[0]
-  });
-});
-
-router.post("/signup", function(req, res) {
-  var newUser = new User({
-    username: req.body.username,
-    role: req.body.role
-  });
-  User.register(newUser, req.body.password, function(err, user) {
-    if (err) {
-      console.log('err', err);
-      req.flash("error", err.message);
-      return res.redirect('/admin/signup');
-    }
-    passport.authenticate("local")(req, res, function() {
-      req.flash("success", "Welcome to Harvin Academy :)");
-      res.redirect("/admin");
-    });
-  });
-});
-
-//user login -- for admin
-router.get("/login", function(req, res) {
-  res.render("login", {
-    error: res.locals.msg_error[0]
-  });
-});
-
-//Handle user login -- for admin
-router.post("/login", passport.authenticate("local", {
-    successRedirect: "/admin",
-    failureRedirect: "/admin/login",
-    successFlash: "Welcome back",
-    failureFlash: true
-  }),
-  function(req, res) {
-
-  }
-);
-
-//User logout-
-router.get("/logout", function(req, res) {
-  req.logout();
-  req.flash({
-    "success": "You Logged out successfully"
-  });
-  res.redirect("/admin");
-});
-
 //helper- class
 router.get("/class/:className", function(req, res, next) {
-  Class.findOne({
-      className: req.params.className,
-    })
-    .populate({
-      path: "subjects",
-      model: "Subject"
+  if (req.user) {
+    Class.findOne({
+        className: req.params.className,
+        atCenter: req.user._id
+      })
+      .populate({
+        path: "subjects",
+        model: "Subject"
 
-    })
-    .exec(function(err, classs) {
-      if (err) {
-        console.log(err);
-        req.flash("error", "Couldn't find the details of chosen class");
-        res.redirect("/admin/files/uploadFile");
-      } else {
-        res.json({
-          classs: classs
-        });
-      }
-    });
+      })
+      .exec(function(err, classs) {
+        if (err) {
+          console.log(err);
+          req.flash("error", "Couldn't find the details of chosen class");
+          res.redirect("/admin/files/uploadFile");
+        } else {
+          res.json({
+            classs: classs
+          });
+        }
+      });
+  } else {
+
+    Class.findOne({
+        className: req.params.className
+      })
+      .populate({
+        path: "subjects",
+        model: "Subject"
+
+      })
+      .exec(function(err, classs) {
+        if (err) {
+          console.log(err);
+          req.flash("error", "Couldn't find the details of chosen class");
+          res.redirect("/admin/files/uploadFile");
+        } else {
+          res.json({
+            classs: classs
+          });
+        }
+      });
+  }
+
 });
 
 //helper- subject
 router.get("/class/:className/subject/:subjectName", function(req, res, next) {
-  Subject.findOne({
-      subjectName: req.params.subjectName,
-      className: req.params.className
-    }, function(err, subject) {
-      if (err) {
-        console.log(err);
-        next(new errors.generic);
-      }
-    })
-    .populate({
-      path: "chapters",
-      model: "Chapter"
+  if (req.user) {
+    Subject.findOne({
+        subjectName: req.params.subjectName,
+        atCenter: req.user._id,
+        className: req.params.className
+      })
+      .populate({
+        path: "chapters",
+        model: "Chapter"
 
-    })
-    .exec(function(err, subject) {
-      if (err) {
-        console.log(err);
-        req.flash("error", "Couldn't find the details of chosen subject");
-        res.redirect("/admin/files/uploadFile");
-      } else {
-        res.json({
-          subject: subject
-        });
-      }
-    });
+      })
+      .exec(function(err, subject) {
+        if (err) {
+          console.log(err);
+          req.flash("error", "Couldn't find the details of chosen subject");
+          res.redirect("/admin/files/uploadFile");
+        } else {
+          res.json({
+            subject: subject
+          });
+        }
+      });
+  } else {
+    Subject.findOne({
+        subjectName: req.params.subjectName,
+        className: req.params.className
+      })
+      .populate({
+        path: "chapters",
+        model: "Chapter"
+
+      })
+      .exec(function(err, subject) {
+        if (err) {
+          console.log(err);
+          req.flash("error", "Couldn't find the details of chosen subject");
+          res.redirect("/admin/files/uploadFile");
+        } else {
+          res.json({
+            subject: subject
+          });
+        }
+      });
+  }
 });
 
 //helper-chapter
 router.get("/chapter/:chapterName", function(req, res, next) {
-  Chapter.findOne({
-      chapterName: req.params.chapterName
-    }, function(err, chapter) {
-      if (err) {
-        console.log(err);
-        next(new errors.generic);
-      }
-    })
-    .populate({
-      path: "topics",
-      model: "Topic"
+  if (req.user) {
+    Chapter.findOne({
+        chapterName: req.params.chapterName,
+        atCenter: req.user._id
+      })
+      .populate({
+        path: "topics",
+        model: "Topic"
 
-    })
-    .exec(function(err, chapter) {
-      if (err) {
-        console.log(err);
-        req.flash("error", "Couldn't find the details of chosen chapter");
-        res.redirect("/admin/files/uploadFile");
-      } else {
-        res.json({
-          chapter: chapter
-        });
-      }
-    });
+      })
+      .exec(function(err, chapter) {
+        if (err) {
+          console.log(err);
+          req.flash("error", "Couldn't find the details of chosen chapter");
+          res.redirect("/admin/files/uploadFile");
+        } else {
+          res.json({
+            chapter: chapter
+          });
+        }
+      });
+  } else {
+    Chapter.findOne({
+        chapterName: req.params.chapterName
+      })
+      .populate({
+        path: "topics",
+        model: "Topic"
+
+      })
+      .exec(function(err, chapter) {
+        if (err) {
+          console.log(err);
+          req.flash("error", "Couldn't find the details of chosen chapter");
+          res.redirect("/admin/files/uploadFile");
+        } else {
+          res.json({
+            chapter: chapter
+          });
+        }
+      });
+  }
 });
 
 //helper- topic
 router.get("/topic/:topicName", function(req, res, next) {
-  Topic.findOne({
-    topicName: req.params.topicName
-  }, function(err, topic) {
-    if (err && !topic) {
-      console.log(err);
-      next(new errors.generic);
-    } else {
-      res.json({
-        topic: topic
-      });
-    }
-  });
+  if (req.user) {
+    Topic.findOne({
+      topicName: req.params.topicName,
+      atCenter: req.user._id
+    }, function(err, topic) {
+      if (err && !topic) {
+        console.log(err);
+        next(new errors.generic);
+      } else {
+        res.json({
+          topic: topic
+        });
+      }
+    });
+  } else {
+    Topic.findOne({
+      topicName: req.params.topicName
+    }, function(err, topic) {
+      if (err && !topic) {
+        console.log(err);
+        next(new errors.generic);
+      } else {
+        res.json({
+          topic: topic
+        });
+      }
+    });
+  }
 });
 
 //if not route mentioned in url

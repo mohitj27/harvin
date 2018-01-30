@@ -43,13 +43,14 @@ router.get("/login", function(req, res) {
 
 //Handle user login -- for admin
 router.post("/login", passport.authenticate("local", {
-    successRedirect: "/admin",
     failureRedirect: "/admin/login",
     successFlash: "Welcome back",
     failureFlash: true
   }),
   function(req, res) {
-
+    console.log('url', req.session.returnTo);
+    res.redirect(req.session.returnTo || '/');
+    delete req.session.returnTo;
   }
 );
 
