@@ -1,11 +1,11 @@
 (function($) {
   $(function() {
     $('#harvin-card-panel2').css({'height':$('#harvin-card-panel').height().toString()})
-    $("#navbar").slideUp()
+    // $("#navbar").slideUp()
     $(window).scroll(function(){
 
-      if ($(window).scrollTop()>=$(window).height()/3) $("#navbar").slideDown()
-      else     $("#navbar").slideUp()
+      // if ($(window).scrollTop()>=$(window).height()/3) $("#navbar").slideDown()
+      // else     $("#navbar").slideUp()
     })
 
   });
