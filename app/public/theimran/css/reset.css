@@ -1,0 +1,251 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #242424;
+}
+
+ul {
+    list-style: none;
+    margin-bottom: 0;
+}
+
+button,
+a,
+a:hover,
+a:focus,
+a:active {
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+select:focus,
+select:active {
+    box-shadow: 0;
+    border: 0;
+    outline: 0
+}
+
+.pdl0 {
+    padding-left: 0
+}
+
+.nav > li > a:focus,
+.nav > li > a:hover {
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.navbar {
+    margin-bottom: 0;
+    border: 0;
+}
+
+.section-padding {
+    padding-top: 90px;
+    padding-bottom: 90px;
+}
+
+input:focus,
+input:active {
+    outline: none;
+}
+
+.positionstat {
+    position: static;
+}
+
+.positionrel {
+    position: relative;
+}
+
+textarea:focus {
+    outline: none !important;
+    box-shadow: none !important
+}
+
+
+/* Remove Chrome Input Field's Unwanted Yellow Background Color */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+
+/*Remove bootstrap tab css*/
+
+.nav-tabs > li > a {
+    border: 0
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
+    border: 0;
+    outline: 0
+}
+
+.nav-tabs {
+    border: 0
+}
+
+.nav-tabs > li > a:hover {
+    border: 0
+}
+
+/*navbar close icon*/
+
+.navbar-toggle .icon-bar {
+    position: relative;
+    -webkit-transition: all 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
+    width: 28px;
+}
+
+.navbar-toggle.active .icon-bar:nth-of-type(2) {
+    background-color: transparent !important;
+}
+
+.navbar-toggle.active .icon-bar:nth-of-type(3) {
+    background: #fba919;
+    top: 0;
+    transform: rotate(-45deg);
+}
+
+.navbar-toggle.active span:nth-child(4) {
+    margin-top: -2.5px;
+    transform: rotateZ(45deg);
+}
+
+
+/*bootstrap collaps css*/
+
+.panel-heading {
+    border-bottom: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    padding: 0;
+    position: relative;
+}
+
+.panel-group .panel-heading + .panel-collapse > .list-group,
+.panel-group .panel-heading + .panel-collapse > .panel-body {
+    border-top: 0 none;
+}
+
+.panel-title {
+    background: #fff;
+}
+
+.panel-title a {
+    background: transparent;
+    display: block;
+    padding: 20px;
+    font-weight: 700;
+    font-size: 16px;
+    position: relative;
+    z-index: 4
+}
+
+.panel-group .panel {
+    border-radius: 0;
+    margin-bottom: 15px;
+}
+
+.panel {
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    box-shadow: none;
+    margin-bottom: 20px;
+}
+
+.panel-body {
+    line-height: 24px
+}
+
+.panel-heading {
+    position: relative;
+}
+
+.panel-heading::before {
+    content: "";
+    font-family: fontawesome;
+    height: 25px;
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    width: 25px;
+    background: #8dc12b;
+    color: #fff;
+    text-align: center;
+    line-height: 27px;
+    border-radius: 50%;
+    margin-top: -12.5px;
+    font-size: 14px
+}
+
+.slick-slide {
+    outline: none !important;
+}
+
+.newsfomr input::-webkit-input-placeholder {
+    /* Chrome */
+    color: #fff;
+    opacity: 1
+}
+
+.newsfomr input::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #fff;
+    opacity: 1;
+}
+
+.panel-heading.active::before {
+    content: "\f068";
+}
+
+.panel-heading.active a {
+    color: #8dc12b
+}
+
+
+/*js preloader*/
+
+.js div#preloader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 988899;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    background-image: url('../img/preloader.gif');
+    -webkit-background-size: 200px;
+    background-size: 200px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #fff;
+}
