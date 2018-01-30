@@ -35,19 +35,7 @@ router.use("/admin/results", resultsRoutes);
 router.use( vmsRoutes);
 router.use('/admin/blog', blogRoutes);
 
-//Home
-// router.get("/", function (req, res) {
-//   Gallery.find({category:"results"}, (err, foundStudents) => {
-//     if (!err && foundStudents) {
-//       res.render('vmsLanding', {
-//         students: foundStudents
-//       });
-//     } else {
-//       console.log(err);
-//       next(new errors.generic());
-//     }
-//   })
-// });
+
 router.delete('/users/:userId', (req, res, next) => {
   const userId = req.params.userId;
   User.findById(userId, (err, foundUser) => {
@@ -70,54 +58,6 @@ router.delete('/users/:userId', (req, res, next) => {
       }
     }
   });
-});
-
-//user login -- for admin
-router.get("/signup", function (req, res) {
-  res.render("signup", {
-    error: res.locals.msg_error[0]
-  });
-});
-
-router.post("/signup", function (req, res) {
-  var newUser = new User({username: req.body.username, role: req.body.role});
-  User.register(newUser, req.body.password, function (err, user) {
-    if (err) {
-      console.log('err', err);
-      req.flash("error", err.message);
-      return res.redirect('/admin/signup');
-    }
-    passport.authenticate("local")(req, res, function () {
-      req.flash("success", "Welcome to Harvin Academy :)");
-      res.redirect("/admin");
-    });
-  });
-});
-
-//user login -- for admin
-router.get("/login", function (req, res) {
-  res.render("login", {
-    error: res.locals.msg_error[0]
-  });
-});
-
-//Handle user login -- for admin
-router.post("/login", passport.authenticate("local", {
-      successRedirect: "/admin",
-      failureRedirect: "/admin/login",
-      successFlash: "Welcome back",
-      failureFlash: true
-    }),
-    function (req, res) {
-
-    }
-);
-
-//User logout-
-router.get("/logout", function (req, res) {
-  req.logout();
-  req.flash({"success": "You Logged out successfully"});
-  res.redirect("/admin");
 });
 
 //helper- class
