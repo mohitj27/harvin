@@ -1,5 +1,6 @@
 (function($) {
   $(function() {
+    $('#harvin-card-panel2').css({'height':$('#harvin-card-panel1').height()})
     $("#navbar").slideUp()
     $(window).scroll(function(){
 

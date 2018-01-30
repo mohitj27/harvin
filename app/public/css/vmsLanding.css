@@ -481,20 +481,17 @@ ul#horizontal-list {
     background: url(./../images/hero01.jpg);
     background-position: center center;
     background-repeat: no-repeat;
-    min-height: 500px;
     background-size: cover;
     top:40%;
 
   }
   #harvin-card-panel2{
-    background: url(./../images/10069.jpg);
+    background: url(./../images/banner_1.png);
 
-    background-color: white;
     background-position: center center;
     background-repeat: no-repeat;
     background-size:cover;
-    min-height: 500px;
-    top:40%;
+    /*padding:100px 0px;*/
 
   }
   .headerDivider {

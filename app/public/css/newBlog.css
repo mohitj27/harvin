@@ -1,0 +1,35 @@
+
+    header, main, footer {
+      padding-left: 300px;
+    }
+
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
+#slide-out{
+
+  background: #43A047;
+  background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+  background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+}
+.side-nav li>a{color:white;
+
+}
+.gradient-45deg-green-teal {
+    background: #43A047;
+    background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+    background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+}
+#brand-name{
+  color:white
+}
+
+#slide-out > li:nth-child(1) > a:hover{
+  background-color: rgba(0,0,0,0);
+
+}
+.top-nav{
+  visibility: hidden;
+}

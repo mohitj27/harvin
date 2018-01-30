@@ -35,16 +35,11 @@ let files = {},
 io.on('connection', function(socket) {
 
   console.log('a user conn sadaected');
-  socket.on('chat message', function(msg) {
-    console.log('message: ' + msg);
-  });
-  socket.on('message', function(msg) {
-    console.log('message: ' + msg);
-  });
 
+  socket.on('end upload',()=>{files={}})
   socket.on('slice upload', (data) => {
 
-    console.log('hello',data.name)
+    console.log('hello',data.data.length)
     if (!files[data.name]) {
       files[data.name] = Object.assign({}, struct, data)
       files[data.name].data = []
@@ -54,26 +49,19 @@ io.on('connection', function(socket) {
     //convert the ArrayBuffer to Buffer
     data.data = new Buffer(new Uint8Array(data.data))
     //save the data
-    files[data.name].data.push(data.data)
-    files[data.name].slice++
 
-    if (files[data.name].slice * 100000 >= files[data.name].size) {
-      let fileBuffer = Buffer.concat(files[data.name].data)
 
-      fs.writeFile(__dirname + "/../../HarvinDb/blogImage/"+data.name, fileBuffer, (err) => {
-        console.log('err', err)
-        delete files[data.name]
-        if (err) return socket.emit('upload error')
-        socket.emit('end upload')
-        files={}
-        console.log(files)
+    fs.writeFile(__dirname + "/../../HarvinDb/blogImage/"+data.name, data.data, (err) => {
+      console.log('err', err)
+      delete files[data.name]
+      if (err) return socket.emit('upload error')
+      socket.emit('end upload')
+      files={}
+      console.log(files)
 
-      });
-    } else {
-      socket.emit('request slice upload', {
-        currentSlice: files[data.name].slice
-      });
-    }
+
+    });
+
 
   });
 });
