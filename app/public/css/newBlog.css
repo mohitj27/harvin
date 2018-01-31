@@ -23,7 +23,8 @@
     background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
 }
 #brand-name{
-  color:white
+  color:white;
+  margin:0;
 }
 .side-nav > li:nth-child(1) > a:hover{
   background-color: rgba(0,0,0,0);

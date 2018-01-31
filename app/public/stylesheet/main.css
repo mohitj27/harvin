@@ -136,9 +136,8 @@ nav {
   background-color: #ffffff;
 }
 
- .brand-logo {
+.brand-logo {
   color: #13b38b !important;
-
 }
 
 .side-nav li>a {
@@ -164,104 +163,123 @@ nav ul a {
   nav .nav-wrapper {
     text-align: center;
   }
-  nav .brand-logo{
+  nav .brand-logo {
     font-size: 14px;
   }
-  .card-image{
+  .card-image {
     text-align: center;
-    display:block;
-    margin:auto;
+    display: block;
+    margin: auto;
   }
 }
 
 .container {
   height: inherit;
 }
-.carousel-slider{
+
+.carousel-slider {
   background-color: #13b38b;
 }
 
-.carousel .indicators .indicator-item.active{
+.carousel .indicators .indicator-item.active {
   background-color: #13b38b !important;
 }
 
-.carousel .indicators .indicator-item{
+.carousel .indicators .indicator-item {
   background: #13931b !important;
 }
 
-#navbarContainer{
+#navbarContainer {
   width: 85%;
 }
 
 /* for db collections */
-.dbImg{
+
+.dbImg {
   height: 310px;
 }
 
 /*FOR DROP DOWN
 */
-/* Dropdown Button */
-.dropbtn {
 
-    border: none;
-    cursor: pointer;
+/* Dropdown Button */
+
+.dropbtn {
+  border: none;
+  cursor: pointer;
 }
 
 /* The container <div> - needed to position the dropdown content */
+
 .dropdown12 {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 /* Dropdown Content (Hidden by Default) */
+
 .dropdown-content12 {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 3;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 3;
 }
 
 /* Links inside the dropdown */
+
 .dropdown-content12 a {
-
-
-    text-decoration: none;
-    display: block;
+  text-decoration: none;
+  display: block;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content12 a:hover {background-color: #f1f1f1}
 
-/* Show the dropdown menu on hover */
-.dropdown12:hover .dropdown-content12 {
-    display: block;
+.dropdown-content12 a:hover {
+  background-color: #f1f1f1
 }
 
-.newBlogForm{
+/* Show the dropdown menu on hover */
+
+.dropdown12:hover .dropdown-content12 {
+  display: block;
+}
+
+.newBlogForm {
   margin: 20px 0;
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
+
 /*.dropdown12:hover .dropbtn {
     background-color: #3e8e41;
 }
 */
-/*DROP DOWN END*/
-.side-nav li>a{color:white;
 
+/*DROP DOWN END*/
+
+#brand-name{
+  color:white;
+  font-size: large;
+  margin:0;
+}
+.side-nav li>a {
+  color: white;
+}
+#brand-logo{
+  padding:32px;
 }
 .gradient-45deg-green-teal {
-    background: #43A047;
-    background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
-    background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+  background: #43A047;
+  background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+  background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
 }
 
-header, main ,  footer {
+header, main, footer {
   padding-left: 300px;
 }
 
-#insert-db{
+#insert-db {
   padding-left: 30px;
 }
