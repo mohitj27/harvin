@@ -31,12 +31,12 @@
 
 	<link rel="stylesheet" type="text/css" href="/dist/DateTimePicker.min.css" />
 	<link rel="stylesheet" href="/stylesheet/main.css">
-	
+
 </head>
 
 <body>
 	<header>
-		<nav class="top-nav">
+		<!-- <nav class="top-nav">
 			<div id="navbarContainer" class="container">
 				<div class="nav-wrapper">
 					<a class="brand-logo" href="/admin">Harvin Academy</a>
@@ -141,7 +141,51 @@
 
 				</div>
 			</div>
-		</nav>
+		</nav> -->
+		<ul class="side-nav fixed z-depth-3 gradient-45deg-green-teal">
+			<li> <a class="brand-logo" href="/admin"><h3 id="brand-name">harvin academy</h3></a></li>
+			<li>
+				<a href="/">WEBSITE</a>
+			</li>
+
+			<li>
+				<a href="/admin/db">Database</a>
+			</li>
+			<li id="insert-db">
+				<div class="dropdown12">
+					<a class="dropbtn" id="select12">Insert DB
+										<span class="caret"></span>
+									</a>
+					<div class="dropdown-content12">
+						<a href="/admin/files/uploadFile">Upload File</a>
+						<a href="/admin/batches/updateBatch">Create Batch</a>
+						<a href="/admin/exams/new">Set an Exam</a>
+						<a href="/admin/questionBank">Question Bank</a>
+						<a href="/admin/assignment/uploadAssignment">New Assignment</a>
+						<a href="/admin/blog">New Post</a>
+						<a href="/admin/db/gallery/upload">Upload Image</a>
+					</div>
+				</div>
+			</li>
+			<% if(!currentUser){ %>
+
+				<li>
+					<a href="/admin/login">Login</a>
+				</li>
+				<li>
+					<a href="/admin/signup">Signup</a>
+				</li>
+				<% }else{ %>
+					<li>
+						<a href="#">Signed in as
+											<%= currentUser.username %>
+										</a>
+					</li>
+					<li>
+						<a href="/admin/logout">Logout</a>
+					</li>
+					<% } %>
+		</ul>
 	</header>
 	<div class="container">
 		<% if(msg_error && msg_error.length > 0){ %>

@@ -15,10 +15,6 @@ router.get('/test', (req, res, next) => {
   res.render('testGallery')
 });
 
-router.get('/blog', (req, res, next) => {
-  res.render("blogTheme")
-})
-
 router.get('/all', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   Visitor.find({}, (err, foundVisitors) => {
     if (!err && foundVisitors) {
@@ -205,7 +201,7 @@ router.get('/blog', (req, res, next) => {
       "blogTitle": req.query.title
     }, (err, foundBlog) => {
       if (err) console.log(err)
-      res.render('blog-template', {
+      res.render('standard_blog_detail', {
         foundBlog: foundBlog
       })
 

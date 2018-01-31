@@ -240,7 +240,7 @@ nav ul a {
 }
 
 .newBlogForm{
-  margin: 20px 0; 
+  margin: 20px 0;
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
@@ -249,3 +249,19 @@ nav ul a {
 }
 */
 /*DROP DOWN END*/
+.side-nav li>a{color:white;
+
+}
+.gradient-45deg-green-teal {
+    background: #43A047;
+    background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+    background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+}
+
+header, main ,  footer {
+  padding-left: 300px;
+}
+
+#insert-db{
+  padding-left: 30px;
+}
