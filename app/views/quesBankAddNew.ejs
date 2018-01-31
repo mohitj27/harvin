@@ -1,19 +1,19 @@
 <% include partials/header.ejs%>
-<% include partials/includeBS.ejs%>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-sm-12">
-            <h1><b> Add New Question </b></h1>
-        </div>
-    </div>
-    <form class="addNewQuestion" id="addNewQuestion" action="/admin/questionBank" method="post">
-
+  <% include partials/includeBS.ejs%>
+    <main>
+      <div class="container">
         <div class="row">
-            <div class="col-sm-4">
-                <h2>Class</h2><br>
+          <div class="col-md-10 col-sm-12">
+            <h1><b> Add New Question </b></h1>
+          </div>
+        </div>
+        <form class="addNewQuestion" id="addNewQuestion" action="/admin/questionBank" method="post">
 
-                <select required  name="className" class="selectpicker show-tick addbtn" id="qb_classs" >
+          <div class="row">
+            <div class="col-sm-4">
+              <h2>Class</h2><br>
+
+              <select required name="className" class="selectpicker show-tick addbtn" id="qb_classs">
                     <option selected value="" disabled>Class</option>
                      <%classes.forEach(function(classs){%>
                      <option value="<%=classs.className%>"><%=classs.className%></option>
@@ -22,54 +22,56 @@
             </div>
 
             <div class="col-sm-4">
-                <h2>Subject</h2> <br>
-                <select data-live-search="true" title="Choose the Subject" required  name="subjectName" class="selectpicker show-tick addbtn" id="qb_subject" >
+              <h2>Subject</h2> <br>
+              <select data-live-search="true" title="Choose the Subject" required name="subjectName" class="selectpicker show-tick addbtn" id="qb_subject">
                 </select>
             </div>
 
             <div class="col-sm-4">
-                <h2>Chapter</h2><br>
-                <select data-live-search="true" title="Choose the Chapter" required  name="chapterName"  class="selectpicker show-tick addbtn" id="qb_chapter" >
+              <h2>Chapter</h2><br>
+              <select data-live-search="true" title="Choose the Chapter" required name="chapterName" class="selectpicker show-tick addbtn" id="qb_chapter">
                 </select>
             </div>
 
-        </div>
+          </div>
 
-        <div class="row">
+          <div class="row">
             <div class="form-group">
-                <h2 style="text-align:left;float:left;"><label for="question" class="control-label">Question</label></h2>
-                <input style="text-align:right;float:right;" type="submit" value="Add this Question" class="btn  ">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <textarea required name="question" class="form-control" id="question" cols="30" rows="5" placeholder="e.g: Delhi is a..?"></textarea>
-                    </div>
+              <h2 style="text-align:left;float:left;"><label for="question" class="control-label">Question</label></h2>
+              <input style="text-align:right;float:right;" type="submit" value="Add this Question" class="btn  ">
+              <div class="row">
+                <div class="col-sm-12">
+                  <textarea required name="question" class="form-control" id="question" cols="30" rows="5" placeholder="e.g: Delhi is a..?"></textarea>
                 </div>
+              </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
-                    <h2><label for="options" class="">Options</label></h2>
-                    <div class="input-append col-sm-12">
-                        <div id="field">
-                            <input required name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text"/>
-                            <button id="b1" class="btn add-more" type="button">+</button>
-                        </div>
-                    </div>
+              <div class="col-sm-6">
+                <h2><label for="options" class="">Options</label></h2>
+                <div class="input-append col-sm-12">
+                  <div id="field">
+                    <input required name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text" />
+                    <button id="b1" class="btn add-more" type="button">+</button>
+                  </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <h2>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <h2>
                             <label for="answer" class="control-label">Answer</label>
                              <span class="btn btn-lg refresh glyphicon glyphicon-refresh" aria-hidden="true"></span>
                         </h2>
-                        <div class="col-sm-9" id="answers"></div>
+                  <div class="col-sm-9" id="answers"></div>
 
 
-                    </div>
                 </div>
+              </div>
             </div>
 
-        </div>
+          </div>
 
-</div>
+      </div>
 
-<% include partials/footer.ejs%>
+
+    </main>
+    <% include partials/footer.ejs%>

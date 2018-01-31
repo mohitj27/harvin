@@ -138,11 +138,20 @@ router.get("/:batchName", function (req, res, next) {
 
 // Providing list of batches
 router.get('/', (req, res, next) => {
-	Batch.find({}, (err, foundBatches) => {
-		if(!err && foundBatches) {
-			res.json({batches: foundBatches});
-		}
-	});
+	if(req.user){
+		Batch.find({atCenter: req.user._id}, (err, foundBatches) => {
+			if(!err && foundBatches) {
+				res.json({batches: foundBatches});
+			}
+		});
+	} else {
+		Batch.find({}, (err, foundBatches) => {
+			if(!err && foundBatches) {
+				res.json({batches: foundBatches});
+			}
+		});
+	}
+
 });
 
 module.exports = router;

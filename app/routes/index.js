@@ -158,6 +158,28 @@ router.get("/class/:className/subject/:subjectName", function(req, res, next) {
   }
 });
 
+router.get('/classes', (req, res, next) => {
+  if (req.user) {
+    Class.find({
+      atCenter: req.user._id
+    }, (err, foundClasses) => {
+      if (!err && foundClasses) {
+        res.json({
+          classes: foundClasses
+        });
+      }
+    });
+  } else {
+    Class.find({}, (err, foundClasses) => {
+      if (!err && foundClasses) {
+        res.json({
+          batches: foundClasses
+        });
+      }
+    });
+  }
+})
+
 //helper-chapter
 router.get("/chapter/:chapterName", function(req, res, next) {
   if (req.user) {

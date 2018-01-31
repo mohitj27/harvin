@@ -1,52 +1,53 @@
 <% include partials/header.ejs%>
-  <svg xmlns="http://www.w3.org/2000/svg" style="height:0px;"></svg>
-  <div class="container">
-    <div class="row">
-      <div class="col l2 "></div>
-      <div class="col s12 l8">
-        <div class="card horizontal z-depth-5 valign-wrapper">
-          <div class="card-image hide-on-med-and-down">
-            <img src="/img/card-main-background.png">
-          </div>
-          <div class="card-stacked">
-            <div class="card-content">
-              <h1>LOGIN</h1>
-              <form action="/admin/login" method="post">
-                <div class="row">
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col l2 "></div>
+        <div class="col s12 l8">
+          <div class="card horizontal z-depth-5 valign-wrapper">
+            <div class="card-image hide-on-med-and-down">
+              <img src="/img/card-main-background.png">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                <h1>LOGIN</h1>
+                <form action="/admin/login" method="post">
+                  <div class="row">
 
 
-                  <div class="input-field col l6 s6 m6 offset-l3 offset-s3 offset-m3">
+                    <div class="input-field col l6 s6 m6 offset-l3 offset-s3 offset-m3">
 
-                    <input required type="text" class="validte" name="username" id="username" style="border-bottom:1px solid white; color:white;">
-                    <label for="first_name">USERNAME</label>
+                      <input required type="text" class="validte" name="username" id="username" style="border-bottom:1px solid white; color:white;">
+                      <label for="first_name">USERNAME</label>
+
+                    </div>
+                    <div class="input-field col l6 s6 m6 offset-l3 offset-s3 offset-m3" type="password">
+
+                      <input required type="password" class="form-control" name="password" id="password" style="border-bottom:1px solid white;color:white;">
+                      <label for="first_name">Password</label>
+                    </div>
+                    <button type="submit" class="btn col l6 s6 m6 offset-l3 offset-s3 offset-m3">Login</button>
 
                   </div>
-                  <div class="input-field col l6 s6 m6 offset-l3 offset-s3 offset-m3" type="password">
-
-                    <input required type="password" class="form-control" name="password" id="password" style="border-bottom:1px solid white;color:white;">
-                    <label for="first_name">Password</label>
-                  </div>
-                  <button type="submit" class="btn col l6 s6 m6 offset-l3 offset-s3 offset-m3">Login</button>
-
-                </div>
 
 
-                <div class="row"></div>
-              </form>
+                  <div class="row"></div>
+                </form>
+
+              </div>
 
             </div>
-
           </div>
+
+
+
         </div>
 
-
-
+        <div class="col l2 "></div>
       </div>
-
-      <div class="col l2 "></div>
     </div>
-  </div>
-  <!--container div-->
+
+  </main>
   <style>
     h1 {
       text-align: center;
@@ -74,11 +75,14 @@
 
     .card-content {
       background-color: #13b38b;
-      background: -webkit-linear-gradient(-45deg, #10838b , #13b38b); /* For Safari 5.1 to 6.0 */
- background: -o-linear-gradient(-45deg,  #10b38b , #13b38b); /* For Opera 11.1 to 12.0 */
- background: -moz-linear-gradient(-45deg,  #10b38b , #13b38b); /* For Firefox 3.6 to 15 */
- background: linear-gradient(-45deg,  #00b38b , #13b38b); /* Standard syntax */
-
+      background: -webkit-linear-gradient(-45deg, #10838b, #13b38b);
+      /* For Safari 5.1 to 6.0 */
+      background: -o-linear-gradient(-45deg, #10b38b, #13b38b);
+      /* For Opera 11.1 to 12.0 */
+      background: -moz-linear-gradient(-45deg, #10b38b, #13b38b);
+      /* For Firefox 3.6 to 15 */
+      background: linear-gradient(-45deg, #00b38b, #13b38b);
+      /* Standard syntax */
     }
 
     img {
@@ -162,7 +166,9 @@
 
 
     }
-    body{  font-family: 'Montserrat', sans-serif;
+
+    body {
+      font-family: 'Montserrat', sans-serif;
       font-weight: bold;
 
     }

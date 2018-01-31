@@ -1,87 +1,87 @@
 <% include partials/header.ejs%>
-<main>
+	<main>
 
-<div class="section">
-		<div class="row">
-			<div class="col m9 s12">
-				<h3>
+		<div class="section">
+			<div class="row">
+				<div class="col m9 s12">
+					<h3>
 					List of exams
 				</h3>
-			</div>
-			<div class="col 3">
-				<a href="/admin/exams/new" class="waves-effect waves-light btn">Set New Exam</a>
+				</div>
+				<div class="col 3">
+					<a href="/admin/exams/new" class="waves-effect waves-light btn">Set New Exam</a>
 
+				</div>
 			</div>
-		</div>
-		<table class="responsive-table centered bordered highlight">
-			<thead>
-				<tr>
-					<th width="(100/11)%" height="50px" style="text-align: center">Serial no.</th>
-					<th width="(100/11)%" height="50px" style="text-align: center">Name</th>
-					<th width="(100/11)%" height="50px" style="text-align: center">Date</th>
-					<th width="(100/11)%" height="50px" style="text-align: center">Type</th>
-					<th width="(100/11)%" height="50px" style="text-align: center">For Batch</th>
-					<th width="(100/11)%" height="50px" style="text-align: center">Positive Marks</th>
-					<th width="(100/11)%" height="50px" style="text-align: center">Negative Marks</th>
-					<th width="(100/11)%" height="50px" style="text-align: center">Maximum Marks</th>
-					<th width="(100/11)%" height="50px" style="text-align: center">Total Time</th>
-					<th width="(100/11)%" height="50px" style="text-align: center">Edit</th>
-					<th width="(100/11)%" height="50px" style="text-align: center">Delete</th>
-				</tr>
-			</thead>
-			<tbody>
-				<% if(foundExams && foundExams.length > 0){ %>
-					<% foundExams.forEach(function(exam, i){ %>
-						<tr>
+			<table class="responsive-table centered bordered highlight">
+				<thead>
+					<tr>
+						<th width="(100/11)%" height="50px" style="text-align: center">Serial no.</th>
+						<th width="(100/11)%" height="50px" style="text-align: center">Name</th>
+						<th width="(100/11)%" height="50px" style="text-align: center">Date</th>
+						<th width="(100/11)%" height="50px" style="text-align: center">Type</th>
+						<th width="(100/11)%" height="50px" style="text-align: center">For Batch</th>
+						<th width="(100/11)%" height="50px" style="text-align: center">Positive Marks</th>
+						<th width="(100/11)%" height="50px" style="text-align: center">Negative Marks</th>
+						<th width="(100/11)%" height="50px" style="text-align: center">Maximum Marks</th>
+						<th width="(100/11)%" height="50px" style="text-align: center">Total Time</th>
+						<th width="(100/11)%" height="50px" style="text-align: center">Edit</th>
+						<th width="(100/11)%" height="50px" style="text-align: center">Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if(foundExams && foundExams.length > 0){ %>
+						<% foundExams.forEach(function(exam, i){ %>
+							<tr>
 								<th width="(100/11)%" height="50px" style="text-align: center">
 									<a href="/exams/<%=exam._id%>/question-paper/">
 										<%=i+1%>
 									</a>
 								</th>
-							<th width="(100/11)%" height="50px" style="text-align: center">
-								<a href="/exams/<%=exam._id%>/question-paper/">
-									<%=exam.examName%>
-								</a>
-							</th>
-							<th width="(100/11)%" height="50px" style="text-align: center">
-								<%=exam.examDate%>
-							</th>
-							<th width="(100/11)%" height="50px" style="text-align: center">
-								<%=exam.examType%>
-							</th>
-							<% if(exam.batch){ %>
 								<th width="(100/11)%" height="50px" style="text-align: center">
-									<%=exam.batch.batchName%>
+									<a href="/exams/<%=exam._id%>/question-paper/">
+										<%=exam.examName%>
+									</a>
 								</th>
-								<% }else{ %>
-									<th width="(100/11)%" height="50px" style="text-align: center">---</th>
-									<%}%>
-										<th width="(100/11)%" height="50px" style="text-align: center">
-											<%=exam.positiveMarks%>
-										</th>
-										<th width="(100/11)%" height="50px" style="text-align: center">
-											<%=exam.negativeMarks%>
-										</th>
-										<th width="(100/11)%" height="50px" style="text-align: center">
-											<%=exam.maximumMarks%>
-										</th>
-										<th width="(100/11)%" height="50px" style="text-align: center">
-											<%=exam.totalTime%>
-										</th>
-										<th width="(100/11)%" height="50px" style="text-align: center">
-											<a class="btn orange" href="/exams/<%=exam._id%>/edit">Edit</a>
-										</th>
-										<th width="(100/11)%" height="50px" style="text-align: center">
-											<form action="/exams/<%=exam._id%>?_method=delete" method="post">
-												<input type="submit" value="Delete" class="btn red">
-											</form>
-										</th>
-						</tr>
-						<% }) %>
-							<% } %>
-			</tbody>
-		</table>
-	</div>
-</main>
+								<th width="(100/11)%" height="50px" style="text-align: center">
+									<%=exam.examDate%>
+								</th>
+								<th width="(100/11)%" height="50px" style="text-align: center">
+									<%=exam.examType%>
+								</th>
+								<% if(exam.batch){ %>
+									<th width="(100/11)%" height="50px" style="text-align: center">
+										<%=exam.batch.batchName%>
+									</th>
+									<% }else{ %>
+										<th width="(100/11)%" height="50px" style="text-align: center">---</th>
+										<%}%>
+											<th width="(100/11)%" height="50px" style="text-align: center">
+												<%=exam.positiveMarks%>
+											</th>
+											<th width="(100/11)%" height="50px" style="text-align: center">
+												<%=exam.negativeMarks%>
+											</th>
+											<th width="(100/11)%" height="50px" style="text-align: center">
+												<%=exam.maximumMarks%>
+											</th>
+											<th width="(100/11)%" height="50px" style="text-align: center">
+												<%=exam.totalTime%>
+											</th>
+											<th width="(100/11)%" height="50px" style="text-align: center">
+												<a class="btn orange" href="/exams/<%=exam._id%>/edit">Edit</a>
+											</th>
+											<th width="(100/11)%" height="50px" style="text-align: center">
+												<form action="/exams/<%=exam._id%>?_method=delete" method="post">
+													<input type="submit" value="Delete" class="btn red">
+												</form>
+											</th>
+							</tr>
+							<% }) %>
+								<% } %>
+				</tbody>
+			</table>
+		</div>
+	</main>
 
-		<% include partials/footer.ejs%>
+	<% include partials/footer.ejs%>

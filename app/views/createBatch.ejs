@@ -1,14 +1,14 @@
 <% include partials/header.ejs%>
-<% include partials/includeBS.ejs%>
-
-<div class="container">
-    <h1><b> Update Batch </b></h1>
-    <form id="batchUpdateForm" method="post" action="/admin/batches/updateBatch">
-        <div class="row">
+  <% include partials/includeBS.ejs%>
+    <main>
+      <div class="container">
+        <h1><b> Update Batch </b></h1>
+        <form id="batchUpdateForm" method="post" action="/admin/batches/updateBatch">
+          <div class="row">
             <div class="col-sm-6">
-                <h2>Batch</h2> <br>
+              <h2>Batch</h2> <br>
 
-                <select autofocus required name="batchName" class="selectpicker show-tick addbtn" id="batch" >
+              <select autofocus required name="batchName" class="selectpicker show-tick addbtn" id="batch">
                     <option selected value="" disabled>Batch</option>
                     <%=batches%>
                     <%if(batches){%>
@@ -19,9 +19,9 @@
                 </select>
             </div>
             <div class="col-sm-6">
-                <h2>Subject</h2> <br>
+              <h2>Subject</h2> <br>
 
-                <select data-live-search="true" title="Choose one or more Subject" required  name="subjectId" class="selectpicker show-tick" id="subjectsInBatch" multiple >
+              <select data-live-search="true" title="Choose one or more Subject" required name="subjectId" class="selectpicker show-tick" id="subjectsInBatch" multiple>
                     <option value="" disabled>Subject</option>
                     <%if(subjects){%>
                         <%subjects.forEach(function(subject){%>
@@ -31,24 +31,20 @@
                 </select>
 
             </div>
-        </div>
-        <div class="row">
+          </div>
+          <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="batchDescription">Batch Description</label>
-                    <textarea
-                        name="batchDesc"
-                        id="batchDesc"
-                        rows="5"
-                        title="Batch Description"
-                        placeholder="Give Batch description here"
-                        class="form-control"></textarea>
-                </div>
+              <div class="form-group">
+                <label for="batchDescription">Batch Description</label>
+                <textarea name="batchDesc" id="batchDesc" rows="5" title="Batch Description" placeholder="Give Batch description here" class="form-control"></textarea>
+              </div>
             </div>
 
-        </div>
-        <button class="btn submit">Update selected subject</button>
-    </form>
-</div>
+          </div>
+          <button class="btn submit">Update selected subject</button>
+        </form>
+      </div>
 
-<% include partials/footer.ejs%>
+
+    </main>
+    <% include partials/footer.ejs%>

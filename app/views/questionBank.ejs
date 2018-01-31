@@ -1,99 +1,101 @@
 <% include partials/header.ejs%>
-<% include partials/includeBS.ejs%>
+  <% include partials/includeBS.ejs%>
+    <main>
 
-
-<div class="container">
-    <div class="row center">
-        <div class="center">
+      <div class="container">
+        <div class="row center">
+          <div class="center">
             <h1><b>Question Bank</b></h1>
 
+          </div>
+          <a href="/admin/questionBank/addNew" class="btn   new">Add new Question</a>
+          <h3 class="center">OR</h3>
         </div>
-        <a href="/admin/questionBank/addNew" class="btn   new">Add new Question</a>
-        <h3 class="center">OR</h3>
-    </div>
-    <hr>
-    <div class="row">
-    <form id="showQuestions" action="/admin/questionBank/qbData" method="get">
+        <hr>
+        <div class="row">
+          <form id="showQuestions" action="/admin/questionBank/qbData" method="get">
 
-        <div class="row text-center">
-            <div class="col s4 ">
+            <div class="row text-center">
+              <div class="col s4 ">
                 <h2>Class</h2><br>
 
-                <select required  name="className" class="selectpicker show-tick" id="qb_classs" >
+                <select required name="className" class="selectpicker show-tick" id="qb_classs">
                     <option selected value="" disabled>Class</option>
                      <%classes.forEach(function(classs){%>
                      <option value="<%=classs.className%>"><%=classs.className%></option>
                      <%})%>
                 </select>
-            </div>
+              </div>
 
-            <div class="col s4">
+              <div class="col s4">
                 <h2>Subject</h2> <br>
-                <select required  title="Choose the Subject" name="subjectName" class="selectpicker show-tick" id="qb_subject" >
+                <select required title="Choose the Subject" name="subjectName" class="selectpicker show-tick" id="qb_subject">
                 </select>
-            </div>
+              </div>
 
-            <div class="col s4">
+              <div class="col s4">
                 <h2>Chapter</h2><br>
-                <select required title="Choose the Chapter" name="chapterName"  class="selectpicker show-tick" id="qb_chapter" >
+                <select required title="Choose the Chapter" name="chapterName" class="selectpicker show-tick" id="qb_chapter">
 
                 </select>
-            </div>
-
-        </div>
-        <div class="row center">
-          <div class="center">
-            <input  type="submit" value="Show Questions" class="btn ">
-        </div>
-        </div>
-    </form>
-    </div>
-    <hr>
-    <% if(questions && questions.length > 0){ %>
-        <h1 style="text-align: center"><b>Questions available in</b> </h1>
-        <div class="row">
-            <div class="col s4">
-                    <h2><b>Class :</b> <i><%=className%></i></h2></b>
+              </div>
 
             </div>
+            <div class="row center">
+              <div class="center">
+                <input type="submit" value="Show Questions" class="btn ">
+              </div>
+            </div>
+          </form>
+        </div>
+        <hr>
+        <% if(questions && questions.length > 0){ %>
+          <h1 style="text-align: center"><b>Questions available in</b> </h1>
+          <div class="row">
             <div class="col s4">
-            <h2><b>Subject :</b> <i><%=subjectName%></i></h2></b>
+              <h2><b>Class :</b> <i><%=className%></i></h2></b>
 
             </div>
             <div class="col s4">
-            <h2><b>Chapter :</b> <i><%=chapterName%></i></h2></b>
+              <h2><b>Subject :</b> <i><%=subjectName%></i></h2></b>
+
+            </div>
+            <div class="col s4">
+              <h2><b>Chapter :</b> <i><%=chapterName%></i></h2></b>
 
             </div>
 
-        </div>
-        <% questions.forEach(function(question, i){ %>
+          </div>
+          <% questions.forEach(function(question, i){ %>
             <div class="card">
-                <div style="text-align:right;float:right;">
-                    <button type="button" class="btn btn-info">Edit</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                </div>
-                <h2><%=i+1%>. <%=question.question%></h2>
-                <div class="row">
-                    <div class="col s6">
-                        <h2><label class="">Options</label></h2>
-                        <% question.options.forEach(function(option){ %>
-                            <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label>
-                            </div>
-                        <% }) %>
+              <div style="text-align:right;float:right;">
+                <button type="button" class="btn btn-info">Edit</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+              </div>
+              <h2><%=i+1%>. <%=question.question%></h2>
+              <div class="row">
+                <div class="col s6">
+                  <h2><label class="">Options</label></h2>
+                  <% question.options.forEach(function(option){ %>
+                    <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label>
                     </div>
-                    <div class="col s6">
-                        <h2><label class="control-label">Answer</label></h2>
-                        <% question.answers.forEach(function(answer){ %>
-                            <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label>
-                            </div>
-                        <% }) %>
-                    </div>
+                    <% }) %>
                 </div>
+                <div class="col s6">
+                  <h2><label class="control-label">Answer</label></h2>
+                  <% question.answers.forEach(function(answer){ %>
+                    <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label>
+                    </div>
+                    <% }) %>
+                </div>
+              </div>
             </div>
-        <% }) %>
-    <% } %>
+            <% }) %>
+              <% } %>
 
 
-</div>
+      </div>
 
-<% include partials/footer.ejs%>
+
+    </main>
+    <% include partials/footer.ejs%>

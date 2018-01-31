@@ -1,11 +1,11 @@
 <% include partials/header.ejs %>
-
-	<div class="container">
-		<h3 style="text-align: center">List of all visitors</h3>
-		<hr>
-		<table class="responsive-table centered highlight bordered" width="100%">
-			<thead>
-				<tr>
+	<main>
+		<div class="container">
+			<h3 style="text-align: center">List of all visitors</h3>
+			<hr>
+			<table class="responsive-table centered highlight bordered" width="100%">
+				<thead>
+					<tr>
 						<th width="(100/7)%" height="50px" style="text-align: center">Serial no.</th>
 						<th width="(100/7)%" height="50px" style="text-align: center">Date</th>
 						<th width="(100/7)%" height="50px" style="text-align: center">Name</th>
@@ -13,31 +13,45 @@
 						<th width="(100/7)%" height="50px" style="text-align: center">Contact</th>
 						<th width="(100/7)%" height="50px" style="text-align: center">Email Id</th>
 						<th width="(100/7)%" height="50px" style="text-align: center"></th>
-				</tr>
-			</thead>
-			<tbody>
+					</tr>
+				</thead>
+				<tbody>
 					<% if (visitors){ %>
 						<% visitors.forEach((visitor, i) =>{ %>
 							<tr>
-									<td width="(100/7)%" height="50px" style="text-align: center"><%= i + 1 %></td>
-									<td width="(100/7)%" height="50px" style="text-align: center"><%= visitor.date %></td>
-									<td width="(100/7)%" height="50px" style="text-align: center"><%= visitor.name %></td>
-									<td width="(100/7)%" height="50px" style="text-align: center"><%= visitor.classs %></td>
-									<td width="(100/7)%" height="50px" style="text-align: center"><%= visitor.phone %></td>
-									<td width="(100/7)%" height="50px" style="text-align: center"><%= visitor.emailId %></td>
-									<td width="(100/7)%" height="50px" style="text-align: center">
-										<form method="post" action="/vms/<%=visitor._id%>?_method=delete">
-											<button class="btn btn-sm btn-danger">
+								<td width="(100/7)%" height="50px" style="text-align: center">
+									<%= i + 1 %>
+								</td>
+								<td width="(100/7)%" height="50px" style="text-align: center">
+									<%= visitor.date %>
+								</td>
+								<td width="(100/7)%" height="50px" style="text-align: center">
+									<%= visitor.name %>
+								</td>
+								<td width="(100/7)%" height="50px" style="text-align: center">
+									<%= visitor.classs %>
+								</td>
+								<td width="(100/7)%" height="50px" style="text-align: center">
+									<%= visitor.phone %>
+								</td>
+								<td width="(100/7)%" height="50px" style="text-align: center">
+									<%= visitor.emailId %>
+								</td>
+								<td width="(100/7)%" height="50px" style="text-align: center">
+									<form method="post" action="/vms/<%=visitor._id%>?_method=delete">
+										<button class="btn btn-sm btn-danger">
 												Delete
 											</button>
-										</form>
-									</td>
+									</form>
+								</td>
 							</tr>
 							<% }) %>
 								<% } %>
-			</tbody>
-		</table>
-		
-	</div>
+				</tbody>
+			</table>
 
+		</div>
+
+
+	</main>
 	<% include partials/footer.ejs %>
