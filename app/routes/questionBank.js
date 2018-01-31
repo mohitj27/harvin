@@ -22,7 +22,7 @@ router.get("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 		if (err) {
 			console.log(err);
 			req.flash("error", "Please try again");
-			res.redirect("/questionBank");
+			res.redirect("/admin/questionBank");
 		} else {
 			res.render('questionBank', {
 				classes: classes,
@@ -44,7 +44,7 @@ router.get("/addNew", middleware.isLoggedIn, middleware.isAdmin, (req, res, next
 		if (err) {
 			console.log(err);
 			req.flash("error", "Please try again");
-			res.redirect("/questionBank");
+			res.redirect("/admin/questionBank");
 		} else {
 			res.render('quesBankAddNew', {
 				classes: classes,
@@ -127,7 +127,7 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 
 	var optionString = req.body.options || "";
 	var answerString = req.body.answer || "";
-	
+
 	//check the data type of options, if string convert to array
 	if(typeof(req.body.options) == typeof("")){
 		optionString = [];
@@ -199,7 +199,7 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 							callback(null,createdQuestion, createdChapter);
 						} else {
 							console.log(err);
-							callback(err);								
+							callback(err);
 						}
 					}
 				);
@@ -225,7 +225,7 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 							callback(null,createdQuestion, createdChapter, createdSubject);
 
 						} else {
-							callback(err);							
+							callback(err);
 						}
 					}
 				);
@@ -249,9 +249,9 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 						if (!err && createdClass) {
 							callback(null);
 							req.flash("success", "Question added successfully");
-							res.redirect("/questionBank/addNew");
+							res.redirect("/admin/questionBank/addNew");
 						} else {
-							callback(err);	
+							callback(err);
 						}
 					}
 				);
@@ -287,7 +287,7 @@ router.get("/class/:className", function (req, res, next) {
 			if (err) {
 				console.log(err);
 				req.flash("error", "Couldn't find the details of chosen class");
-				res.redirect("/questionBank");
+				res.redirect("/admin/questionBank");
 			} else {
 
 				res.json({
@@ -317,7 +317,7 @@ router.get("/class/:className/subject/:subjectName", function (req, res, next) {
 			if (err) {
 				console.log(err);
 				req.flash("error", "Couldn't find the details of chosen subject");
-				res.redirect("/questionBank");
+				res.redirect("/admin/questionBank");
 			} else {
 				res.json({
 					subject: subject
@@ -345,7 +345,7 @@ router.get("/chapter/:chapterName", function (req, res, next) {
 			if (err) {
 				console.log(err);
 				req.flash("error", "Couldn't find the details of chosen chapter");
-				res.redirect("/questionBank");
+				res.redirect("/admin/questionBank");
 			} else {
 				res.json({
 					chapter: chapter
@@ -365,7 +365,7 @@ router.get('/refactor', (req, res, next) => {
 						if(answer === option){
 							answerIndex.push(optIndex);
 						}
-					}); 
+					});
 				});
 				Question.findByIdAndUpdate(question._id,
 					{
@@ -392,4 +392,3 @@ router.get('/refactor', (req, res, next) => {
 });
 
 module.exports = router;
-

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 150 130" style="enable-background:new 0 0 150 130;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.7;fill-rule:evenodd;clip-rule:evenodd;fill:#13b38b;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+	.st2{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#000000;stroke-miterlimit:10;}
+	.st3{fill-rule:evenodd;clip-rule:evenodd;}
+	.st4{fill:#606362;}
+	.st5{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;}
+	.st6{fill:none;stroke:#000000;stroke-miterlimit:10;}
+	.st7{fill:#FFFFFF;}
+	.st8{fill:none;stroke:#000000;}
+	.st9{fill:#FFFFFF;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st10{fill:#020202;}
+	.st11{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;stroke:#020202;stroke-width:0.5;stroke-miterlimit:10;}
+	.st12{opacity:0.5;fill:#3DA96C;}
+	.st13{fill-rule:evenodd;clip-rule:evenodd;fill:none;}
+	.st14{font-family:'CenturyGothic';}
+	.st15{font-size:11px;}
+	.st16{fill:#13B38B;}
+</style>
+<g>
+	<g>
+		<circle class="st0" cx="75" cy="57" r="53"/>
+		<g>
+			<g>
+				<path class="st9" d="M105.2,45.7v3.7c5.3,1.5,9.2,6.4,9.2,12.1c0,7-5.6,12.6-12.6,12.6c-1.2,0-2.3-0.2-3.4-0.5
+					c-1.7,0.7-3.6,1.1-5.6,1.1c-0.1,0-0.2,0-0.3,0c2.6,1.9,5.9,3,9.4,3c9,0,16.2-7.3,16.2-16.2C118,53.8,112.5,47.3,105.2,45.7z"/>
+				<rect x="87.5" y="71.8" class="st9" width="14.7" height="3.1"/>
+				<path class="st9" d="M91.5,80.4H113c1.8,0,2.3-2.4,0.7-3.2c-5.2-2.5-13.7-4.9-23,0C89.1,78,89.7,80.4,91.5,80.4z"/>
+				<circle class="st10" cx="102.2" cy="77.4" r="1.4"/>
+
+					<rect x="101.4" y="43.7" transform="matrix(0.9144 0.4049 -0.4049 0.9144 30.3024 -37.5657)" class="st9" width="5.1" height="18.3"/>
+
+					<rect x="105.6" y="43.1" transform="matrix(0.9144 0.4049 -0.4049 0.9144 26.8565 -40.0536)" class="st9" width="5.1" height="0.7"/>
+
+					<rect x="98.2" y="61.8" transform="matrix(0.9144 0.4049 -0.4049 0.9144 33.7235 -35.0957)" class="st9" width="3.3" height="0.6"/>
+			</g>
+			<g>
+				<polyline class="st2" points="60.3,27 41,27 41,81 				"/>
+				<rect x="41.6" y="77.8" class="st2" width="20.6" height="2.6"/>
+				<path class="st11" d="M52.7,24.8l0.8,0.8v1.1c0,1.7-0.7,3.2-1.9,4.4c-0.4,0.4-0.9,0.9-1.3,1.4c-3,3.8-0.1,9.3,4.7,9.3h1.3
+					c5.8,0,8.1-7.5,3.3-10.7c-0.1,0-0.1-0.1-0.2-0.1c-1.6-1-2.6-2.9-2.6-4.9v-0.5l0.8-0.8H52.7z"/>
+				<path class="st0" d="M50.3,36L50.3,36c0,0,5.5-3.9,11,0c0,0,0.6,2.6-3.5,5.1c0,0-3.3,1.3-6.1-1.3C49,37.3,50.3,36,50.3,36"/>
+				<circle class="st1" cx="55.8" cy="22.5" r="0.6"/>
+				<circle class="st1" cx="57.7" cy="20.6" r="1.3"/>
+				<circle class="st1" cx="54.5" cy="18.6" r="0.6"/>
+			</g>
+			<rect x="32" y="80" class="st3" width="86" height="3"/>
+			<g>
+				<path class="st9" d="M71.1,63.1v7.1l-3.9,7.2c-0.6,1.2,0.2,2.6,1.5,2.6h9.6c1.5,0,2.4-1.6,1.6-2.9l-4.4-6.9v-7.1H71.1z"/>
+				<polygon class="st12" points="68.5,78.5 72.5,71.5 74.5,71.5 78.5,78.5 				"/>
+			</g>
+		</g>
+	</g>
+	<rect x="23.1" y="115.9" class="st13" width="103.8" height="10.1"/>
+	
+</g>
+</svg>

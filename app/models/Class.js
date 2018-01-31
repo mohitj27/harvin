@@ -6,8 +6,11 @@ var classSchema = new Schema(
 	{
 		className:{
 			type:String,
-			unique:true,
 			required:true
+		},
+		atCenter: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Center"
 		},
 		subjects:[
 			{

@@ -1,0 +1,116 @@
+  <%include partials/website_header.ejs%>
+  <link rel="stylesheet" type="text/css" href="../../css/centers.css">
+  <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+
+  <main>
+    <div class="section">
+
+    <!-- <button id="button" type="button">click</button> -->
+      <div class="container center">
+        <div class="row">
+
+          <div id="j-chip" class="col l2 m2 s3 offset-l3 offset-m3 offset-s1 chip hoverable z-depth-4 active-chip">Janakpuri</div>
+          <div id="p-chip" class="col l2 m2 s3 chip hoverable">Preet Vihar</div>
+          <div id="m-chip" class="col l2 m2 s3 chip large hoverable">Meerut</div>
+        </div>
+      </div>
+      <div class="container">
+
+        <div class="row">
+          <div class="col l6 m6 s12">
+
+
+            <h4>Gallery</h3> <br>
+          <img src="/images/1J5A2924.JPG" alt="" class="responsive-img materialboxed z-depth-4 image-main">
+
+        </div>
+        <div class="col l6 m6 s12">
+          <h4>Overview</h3>
+
+        <p class="overview">Our newest centre is situated in West Delhi district of NCT i.e. Janak Puri, which is one of the
+      famous place for coaching centres in Delhi. We are placed amidst the busiest as well as the
+      place full of coaching centres for preparation of Medical entrance exams, IIT and many more.
+      Our centre is easily accessible by road and Delhi metro.
+      Harvin Academy is fully furnished and provides with a student-friendly environment. We, at
+      Harvin seek to provide the best quality education by getting placed in area which has a plethora
+      of coaching centres. We are passionate to create the most vigorous education system, that
+      proves to be the best among all the other education centres.</p>
+        </div>
+
+      </div>
+
+        <div class="row hide-on-small-only image-row">
+        <div class="col l3 m3 ">
+          <img src="/images/1J5A3010.JPG" alt="" class="responsive-img  z-depth-4 image-side">
+
+
+        </div>
+        <div class="col l3 m3 ">
+
+          <img src="/images/1J5A2939.JPG" alt="" class="responsive-img  z-depth-4 image-side">
+
+        </div>
+        <div class="col l3 m3 ">
+          <img src="/images/1J5A2951.JPG" alt="" class="responsive-img  z-depth-4 image-side">
+
+
+        </div>
+        <div class="col l3 m3 ">
+          <img src="/images/1J5A2965.JPG" alt="" class="responsive-img  z-depth-4 image-side">
+
+
+        </div>
+
+        </div>
+        <div class="row">
+  <div class="col l6 m6 s12">
+    <h4>Where to find us</h4>
+  <iframe height="350" style="width:100%;" class="map" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1866.513029811001!2d77.0729616649987!3d28.62788130498618!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x16b6ad9a405afd25!2sHarvin+Academy!5e0!3m2!1sen!2sin!4v1499683098899"
+    frameborder="2"  allowfullscreen=""></iframe>
+  </div>
+  <div class="col l6 m6 s12">
+    <h4>Contact Us!</h4>
+<br>
+    <form action="/centers" method="post">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="full_name" type="text" class="validate" required>
+          <label for="full_name">Full name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate" required>
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="phone" type="tel" class="validate" required>
+          <label for="email">Phone</label>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col s12 center-align">
+          <button class="btn waves-effect waves-light " type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+      </div>
+    </div>
+    </div>
+  </main>
+  <%include partials/website_footer.ejs%>
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../../js/materialize.js"></script>
+    <script src="../../js/init.js"></script>
+    <script src="../../js/initCenter.js"></script>

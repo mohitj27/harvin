@@ -4,7 +4,17 @@ $(function () {
 	//=========================================
 	//content inside add button in selectpicker
 
-
+	$(".dropdown-button").dropdown({hover:true,belowOrigin:true});
+		$('.materialSelect').material_select();
+		if($('#summernote').length !== 0){
+			$('#summernote').summernote({
+				placeholder: 'Write your content here!!!',
+				tabsize: 2,
+			  minHeight: 500,
+			  maxHeight: null,
+			  focus: true
+			});
+		}
 
 	///NAVBAR INIT
 	$('.button-collapse').sideNav({
@@ -34,6 +44,8 @@ $(function () {
 		.append(divider)
 		.append(addoption)
 		.selectpicker();
+		$(".selectpicker").selectpicker("refresh");
+
 
 	//populating subject option after class has been chosen
 	$('#classs').on('change', function () {
@@ -140,7 +152,7 @@ $(function () {
 		var $subjectsInBatch = $("#subjectsInBatch");
 		var $batchDesc = $("#batchDesc");
 		var o = $("option", $subjectsInBatch).not(".lastTwo");
-		$.get("/batches/" + this.value, function (res) {
+		$.get("/admin/batches/" + this.value, function (res) {
 			o.each(function (index) {
 				this.selected = false;
 			});
@@ -161,6 +173,7 @@ $(function () {
 				$(".selectpicker").selectpicker("refresh");
 
 			}
+			$batchDesc.val('');
 		});
 	});
 
@@ -382,7 +395,7 @@ function refreshAns(){
 	for (var j = 0; j < options.length; j++) {
 		var opt = options[j].replace(/"/g, '\&quot;');
 		opt = opt.replace(/'/g, '\&apos;');
-		var cbox = '<div class="wrapAns"><label><input class="answer" type="checkbox" name = "answer" value="'+opt+'">'+options[j]+'</lable></div><br>';
+		var cbox = '<div class="wrapAns"><p><input class="answer" type="checkbox" id="answ'+ j + '" name ="answer" value="'+opt+'"><label for="answ'+ j + '">'+options[j]+'</label></p></div><br>';
 		$answerCheckbox.append(cbox);
 	}
 
@@ -417,4 +430,14 @@ function addSelectInpKeyPress(t, ev) {
 		ev.preventDefault();
 		addSelectItem($(t).next(), ev);
 	}
+}
+
+function insertDB(){
+	console.log('insertDB clicked');
+}
+function selected12(){
+
+	var text=$('#value12').html();
+	console.log(text);
+	$('#select12').text(text);
 }

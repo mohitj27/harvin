@@ -1,0 +1,48 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <style>
+
+      .cls-2 {
+        fill: #74dde8;
+      }
+      .cls-3 {
+        fill: none;
+        stroke: #74dde8;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+
+          @keyframes  back-circle-rotation {
+            0% {
+              transform: rotate(0deg);
+            }
+        
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+
+          @-moz-keyframes  back-circle-rotation {
+            33.33% {
+              -moz-transform: rotate(0deg);
+            }
+            0% {
+              -moz-transform: rotate(360deg);
+            }
+            100% {
+              -moz-transform: rotate(360deg);
+            }
+          }
+
+      #back-circle{
+transform-origin: 50% 50% !important;
+-moz-transform-origin: 50% 50% !important;
+animation: back-circle-rotation 10s linear infinite;
+-moz-animation: back-circle-rotation 3s ease-in  infinite;
+      }
+    </style>
+  </defs>
+  <title>young_buds4</title>
+  <g id="back-circle" ><path class="cls-2" d="M133.65,189.48a53.27,53.27,0,1,1,2.3,7.89A53.56,53.56,0,0,1,133.65,189.48Z"/><path class="cls-2" d="M103.93,287.9a26.69,26.69,0,1,1,1.19,4.06A27,27,0,0,1,103.93,287.9Z"/><line class="cls-3" x1="142.71" y1="258.87" x2="160.63" y2="225.53"/></g>
+
+</svg>

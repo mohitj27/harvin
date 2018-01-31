@@ -1,0 +1,66 @@
+<%include partials/website_header%>
+
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/gallery.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css">
+
+  <main>
+    <div class="section">
+      <div class="container">
+        <div class="row h2-gallery">
+          <h2 class="center-align">Gallery</h2>
+          <div class="container center">
+            <div class="row">
+              <div class="col l2 m2 s5 offset-l2 offset-m2 offset-s1 chip hoverable z-depth-4 active-chip">All</div>
+              <div class="col l2 m2 s5 chip hoverable">Event</div>
+              <div class="col l2 m2 s5 chip large hoverable offset-s1">Centers</div>
+              <div class="col l2 m2 s5 chip hoverable">Results</div>
+
+    				</div>
+    				<div class="row">
+              <div class="col l2 m2 s5 offset-l2 offset-m2 offset-s1 chip hoverable ">Infrastructure</div>
+              <div class="col l2 m2 s5 chip hoverable">Classroom</div>
+              <div class="col l2 m2 s5 chip large hoverable offset-s1">Media</div>
+              <div class="col l2 m2 s5 chip hoverable">Labs</div>
+
+    				</div>
+        </div>
+        <div class="row gallery-container">
+
+        </div>
+
+      </div>
+      <div class="center-align">
+        <ul class="pagination">
+          <li class="waves-effect">
+            <a href="#!" class="prev-button" onClick="prevPage()">
+    					<i class="material-icons">chevron_left</i>
+    				</a>
+          </li>
+
+          <li class="waves-effect">
+            <a href="#!" class="next-button" onClick="nextPage()">
+    					<i class="material-icons">chevron_right</i>
+    				</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+  </main>
+
+
+
+  <%include partials/website_footer%>
+
+    <!-- GALLERY JAVASCRIPT -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js"></script>
+
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../js/materialize.js"></script>
+    <script src="../js/init.js"></script>
+    <script src="../js/initGallery.js"></script>

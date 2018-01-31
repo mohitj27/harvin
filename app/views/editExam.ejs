@@ -1,4 +1,6 @@
 <% include partials/header.ejs%>
+<% include partials/includeBS.ejs%>
+
 	<h1 style="text-align: center">Edit exam: <b> <i><%= exam.examName%></i> </b> </h1>
 
 	<div class="container">
@@ -88,7 +90,7 @@
                         <input autofocus required name="maxMarks" type="number" class="form-control" id="maxMarks" placeholder="Maximum marks allowed for this exam" value="<%=exam.maximumMarks%>">
                     </div>
                 </div>
-                <input type="submit" class="btn btn-primary">
+                <input type="submit" class="btn  ">
 			</form>
 		</div>
 	</div>

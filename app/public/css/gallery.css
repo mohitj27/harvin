@@ -1,0 +1,38 @@
+.gallery-image{
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+/* ----------- iPhone 4 and 4S ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+}
+
+@media screen
+  and (min-device-width: 1200px)
+  and (max-device-width: 1600px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+}
+.chip:hover{
+  background-color:#13b38b;
+  color:white;
+}
+*{
+  transition: all 1s ease-out;
+}
+
+.active-chip{
+  background-color:#13b38b;
+  color:white;
+}
+
+
+.active-chip:hover{
+  background-color:#13b38b;
+  color:white;
+}

@@ -1,0 +1,83 @@
+<title>Harvin Academy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="google-site-verification" content="eSPtYedDuFnn9GWxmT-OZJtAugNRnUJwuZ65y7JDPfE" />
+<!-- CSS  -->
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+<link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+<link href="../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-97403760-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-97403760-2');
+</script>
+<nav id="navbar">
+
+  <div class="nav-wrapper z-depth-2">
+    <a href="/" class="brand-logo">Harvin Academy</a>
+    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="/aboutus">About</a></li>
+      <li> <a href="/centers">Centers</a>
+      </li>
+      <li><a href="/courses">Courses</a></li>
+      <li><a href="/gallery">Gallery</a></li>
+      <li><a href="/results">Results</a></li>
+      <li><a href="/team">Our Team</a></li>
+    </ul>
+    <ul class="side-nav side-nav-main" id="mobile-demo">
+      <li>
+        <h3 href="" class="brand-logo">MENU</h3></li>
+      <br>
+      <li><a href="/aboutus" class="bordered-list">ABOUT</a></li>
+      <li><a href="/centers" class="bordered-list">CENTERS</a></li>
+      <li><a href="/courses" class="bordered-list">COURSES</a></li>
+      <li><a href="/gallery" class="bordered-list">GALLERY</a></li>
+      <li><a href="/results" class="bordered-list">RESULTS</a></li>
+      <li><a href="/team" class="bordered-list">OUR TEAM</a></li>
+      <div class="contact_box">
+        <div class="row">
+          <div class="col s12 left-align">
+            <a class="waves-effect waves-light" target="_blank" href="https://twitter.com/harvin_academy">
+            <i class="small material-icons ">email</i></a>
+            info@harvin.academy
+
+          </div>
+          <div class="col s12 left-align">
+            <a class="waves-effect waves-light" target="_blank" href="https://twitter.com/harvin_academy">
+            <i class="small material-icons ">local_phone</i></a>
+            011-42421480
+
+          </div>
+        </div>
+      </div>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <% if(msg_error && msg_error.length > 0){ %>
+    <div class="alert alert-danger" role="alert">
+      <p style="text-align:center">
+        <%= msg_error %>
+      </p>
+    </div>
+    <% } %>
+
+      <% if(msg_success && msg_success.length > 0){ %>
+        <div class="alert alert-success" role="alert">
+          <p style="text-align:center">
+            <%= msg_success %>
+          </p>
+        </div>
+        <% } %>
+</div>

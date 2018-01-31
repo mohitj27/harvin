@@ -1,0 +1,63 @@
+<% include partials/header.ejs%>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/gallery.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css">
+	<div class="container">
+		<div class="row">
+			<div class="col s3 offset-s9">
+
+			</div>
+		</div>
+		<div class="row h2-gallery">
+			<h2 class="center-align">Gallery</h2>
+    </div>
+    <div class="row center-align">
+      <a href="/admin/db/gallery/upload" class="btn ">Upload new image</a>
+    </div>
+			<div class="container center">
+				<div class="row">
+          <div class="col l2 m2 s5 offset-l2 offset-m2 offset-s1 chip hoverable z-depth-4 active-chip">All</div>
+          <div class="col l2 m2 s5 chip hoverable">Events</div>
+          <div class="col l2 m2 s5 chip large hoverable offset-s1">Centers</div>
+          <div class="col l2 m2 s5 chip hoverable">Results</div>
+
+
+
+          <div class="col l2 m2 s5 offset-l2 offset-m2 offset-s1 chip hoverable">Infrastructure</div>
+          <div class="col l2 m2 s5 chip hoverable">Classroom</div>
+          <div class="col l2 m2 s5 chip large hoverable offset-s1">Media</div>
+          <div class="col l2 m2 s5 chip hoverable">Labs</div>
+
+				</div>
+
+			</div>
+
+		<div class="row gallery-container" >
+
+		</div>
+
+	</div>
+	<div class="center-align">
+		<ul class="pagination">
+			<li class="waves-effect">
+				<a href="#!" class="prev-button" onClick="prevPage()">
+					<i class="material-icons">chevron_left</i>
+				</a>
+			</li>
+
+			<li class="waves-effect">
+				<a href="#!" class="next-button" onClick="nextPage()">
+					<i class="material-icons">chevron_right</i>
+				</a>
+			</li>
+		</ul>
+	</div><div class="container right-align">
+    <div class="row">
+      <a href="#!" id="category-delete" >
+        <i class="material-icons medium center-align" >delete</i><p>Delete this category</p>
+      </a>
+    </div>
+	</div>
+	<% include partials/footer.ejs%>
+
+    <script src="/js/galleryDb.js"></script>

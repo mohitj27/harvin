@@ -1,146 +1,655 @@
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<%include  partials/website_header.ejs%>
+	<link href="../css/vmsLanding.css" type="text/css" rel="stylesheet" />
+	<meta name="google-site-verification" content="eSPtYedDuFnn9GWxmT-OZJtAugNRnUJwuZ65y7JDPfE" />
 
 
-<!-- CSS  -->
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
-<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
-<link href="css/vmsLanding.css" type="text/css" rel="stylesheet" />
-</div>
-
-<div class="container float-btn landing-container">
-	<div class="container btn-text-container">
-	<div class="row">
-	<div id="explore" class="visitor-button col s4 offset-s1 ">Explore</div>
-	<div id="register" class="visitor-button  col s4 offset-s2">Register</div>
-</div>
-<div class="row">
-	<div class="col s4 offset-s1">
-	<a onClick="scrollDown();" class="btn-floating btn-large waves-effect waves-light grey">
-		<i class="material-icons">expand_more</i>
-	</a>
-	</div>
-	<div class="col s4 offset-s2">
-	<a href="/vms/new" class="btn-floating waves-effect btn-large teal black-text darken-text-2 visitor-button">
-		<i class="material-icons">receipt</i></a>
-	</a>
-	</div>
-	</div>
-</div>
-</div>
-
-<div id="carousel1" class="carousel carousel-slider center" data-indicators="true">
-	<div class="carousel-fixed-item center">
-
-	</div>
-	<a class="carousel-item" href="#one!">
-		<img class="img-responsive"src="cover.jpg">
-	</a>
-	<a class="carousel-item" href="#two!">
-		<img src="cover.jpg">
-	</a>
-	<a class="carousel-item" href="#three!">
-		<img src="cover.jpg">
-	</a>
-	<a class="carousel-item" href="#four!">
-		<img src="cover.jpg">
-	</a>
-</div>
+	<main>
 
 
-<div class="container">
-	<div class="section">
 
-		<div class="row">
-			<div class="col s12 center">
-				<h3>
-					<i class="mdi-content-send brown-text"></i>
-				</h3>
-				<h4>About Us</h4>
-				<p class="left-align light">Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by providing you Total Quality Management for your budding career plans. The academy will not only empower you with academic abilities but
-					also empower with other techniques which helps you to crack the NEET, AIIMS or IIT. We ensure to groom with utmost tenderness and we will be privileged to bring the best out of you and to be your partners in success.</p>
+		<div class="section no-pad " id="first-section">
+			<div class="section no-pad-bot">
+				<!-- <div id="menu-outer " class="row hide-on-small-only">
+					<div class="col l6 center">
+						<h1 class="">
+							<em>Harvin</em>
+						</h1>
+					</div>
+					<div class="col l6 m12 ">
+						<div class="col s2 l2 m2"><a class="z-depth-2 waves-effect waves-light btn" href="/courses">Courses</a></div>
+						<div class="col s2 l2 m2"><a class="z-depth-2 waves-effect waves-light btn" href="/aboutus">About</a></div>
+						<div class="col s2 l2 m2"><a class="z-depth-2 waves-effect waves-light btn" href="/centers">Centers</a></div>
+						<div class="col s2 l2 m2"><a class="z-depth-2 waves-effect waves-light btn" href="/gallery">Gallery</a></div>
+						<div class="col s2 l2 m2"><a class="z-depth-2 waves-effect waves-light btn" href="/results">Results</a></div>
+						<div class="col s2 l2 m2"><a class="z-depth-2 waves-effect waves-light btn" href="/team">Team</a></div>
+					</div>
+				</div> -->
+			</div>
+			<div class="section valign-wrapper " id="hero-section">
+				<div class="container landing-container">
+					<div class="row">
+						<div class="col s12 l8 m12">
+							<div class="card-panel z-depth-5 center" id="harvin-card-panel">
+
+
+
+								<div class="sandbox sandbox-correct-pronounciation">
+									<h1 class="heading heading-correct-pronounciation">
+												<em>Harvin Academy</em>
+											</h1>
+									<p id="premier">The Premier institue for PMT|IIT-JEE</p>
+								</div>
+							</div>
+
+						</div>
+						<a href="https://www.facebook.com/events/530090074037111/" target="_blank">
+							<div class="col s12 l4 m12">
+								<div class="card-panel z-depth-5 center " id="harvin-card-panel2">
+									<!--
+							<br><br><br><br><br>
+
+									<div class="center center-align vertical-align">
+										<h5 class="flow-text" style="color: #13b38b; ">
+									Harvin Academy<br>JanakPuri Inauguration<br>on <br>4<sup>th</sup>Feb, <br>All are cordially invited.
+										<h5> -->
+								</div>
+							</div>
+						</a>
+
+					</div>
+					<div class="row">
+
+						<div class="col s6 l3 m3 ">
+							<div class="card-panel z-depth-5 center bot-card materialboxed" id="bot-card1">
+							</div>
+						</div>
+						<div class="col s6 l3 m3 ">
+							<div class="card-panel z-depth-5 center bot-card materialboxed" id="bot-card2">
+							</div>
+						</div>
+						<div class="col s6 l3 m3 ">
+							<div class="card-panel z-depth-5 center bot-card materialboxed" id="bot-card3">
+							</div>
+						</div>
+						<div class="col s6 l3 m3 ">
+							<div class="card-panel z-depth-5 center bot-card materialboxed" id="bot-card4">
+							</div>
+						</div>
+
+					</div>
+					<!-- <div class="row hide-on-small-only">
+						<div class="col l3 m3"><div class="card-panel z-depth-5 center" id="harvin-card-panel2">
+						</div></div>
+						<div class="col l3 m3"><div class="card-panel z-depth-5 center" id="harvin-card-panel2">
+						</div></div>
+						<div class="col l3 m3"><div class="card-panel z-depth-5 center" id="harvin-card-panel2">
+						</div></div>
+						<div class="col l3 m3"><div class="card-panel z-depth-5 center" id="harvin-card-panel2">
+						</div></div>
+					</div> -->
+				</div>
+			</div>
+
+		</div>
+		<!-- <div class="section z-depth-4" style="padding:0px;" id="main-landing-section">
+			<div class="landing-container-tint">
+				<div class="container float-btn landing-container">
+					<div class="container btn-text-container">
+						<div class="row welcome-row">
+
+							<div class="row harvinLogoImg">
+								<div class="svg-content">
+									<div class="svg-img">
+
+										<object type="image/svg+xml" class="svg-image" data="../../images/wel_ha-01.svg">Your browser does not support SVGs</object>
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="row center" style="margin-bottom:0;margin-top:150px;">
+							<div id="explore" class="visitor-button col s12 white-h3">Explore</div>
+							<div id="register" style="visibility: hidden" class="visitor-button  col s6 ">Register</div>
+						</div>
+						<div class="row center">
+							<div class="col s12">
+								<a onClick="scrollDown();" class="btn-floating btn-large waves-effect waves-light grey">
+								<i class="material-icons">expand_more</i>
+							</a>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div> -->
+		<!-- Harvin Academy Features -->
+		<div class="section" id="features">
+
+			<div class="container whyharvincontainer center">
+				<br><br>
+				<h3 class="center bold harvinThemeText">WHY HARVIN?</h3>
+				<hr>
+				<br><br><br>
 				<br>
-				<p>Come and Feel the Difference.</p>
+				<div class="row svg-row">
+					<div class="col l2 offset-l2 s12 ">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
+							<div class="svg-img">
+
+								<object type="image/svg+xml" class="svg-image" data="../../images/wh-01.svg">Your browser does not support SVGs</object>
+
+							</div>
+							<h5 class="no-padding no-margin">HIGHLY QUALIFIED FACULTY</h5>
+						</div>
+					</div>
+					<div class="col l2 offset-l4 s12 ">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
+							<div class="svg-img">
+
+								<object type="image/svg+xml" class="svg-image" data="../../images/wh-02.svg">Your browser does not support SVGs</object>
+
+
+
+							</div>
+							<h5 class="no-pad no-margin">ADEQUATE LIBRARY FACILITY</h5>
+						</div>
+					</div>
+				</div>
+				<div class="row svg-row">
+					<div class="col l2 offset-l1 s12 ">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
+							<div class="svg-img">
+
+								<object type="image/svg+xml" class="svg-image" data="../../images/wh-03.svg">Your browser does not support SVGs</object>
+
+							</div>
+							<h5 class="no-padding no-margin">INTERACTIVE ACTIVITIES</h5>
+						</div>
+
+					</div>
+					<div class="col l2 offset-l6 s12 ">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
+							<div class="svg-img">
+
+								<object type="image/svg+xml" class="svg-image" data="../../images/wh-04.svg">Your browser does not support SVGs</object>
+
+								</div>
+							</div>
+							<h5 class="no-padding no-margin">SYSTEMATIC &amp; PLANNED TEACHING</h5>
+						</div>
+
+					</div>
+				</div>
+				<div class="row svg-row ">
+					<div class="col l2 offset-l2 s12 center">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
+							<div class="svg-img">
+
+								<object type="image/svg+xml" class="svg-image" data="../../images/wh-05.svg">Your browser does not support SVGs</object>
+
+							</div>
+							<h5 class="no-pad no-margin">PERSONAL PROBLEM SOLVING SESSION</h5>
+						</div>
+
+					</div>
+					<div class="col l2 offset-l4 s12 ">
+						<div class="svg-content whyHarvinIcon " id="svg-content-feature">
+							<div class="svg-img">
+
+								<object type="image/svg+xml" class="svg-image" data="../../images/wh-06.svg">Your browser does not support SVGs</object>
+
+								</div>
+							</div>
+							<h5 class="no-padding no-margin">PRACTICAL LAB TEACHING</h5>
+						</div>
+
+					</div>
+				</div>
+				<!-- <div class="tower">
+							<img src="../../images/wh-07.svg" alt="">
+						</div> -->
+
+			</div>
+
+		</div>
+		<!-- Parallax -->
+		<!-- <div class="parallax-container valign-wrapper">
+			<div class="parallax ">
+				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
+			</div>
+		</div> -->
+		<!-- Our Courses -->
+		<div class="section">
+			<div id="content">
+				<div class="container">
+					<div class="row">
+						<br>
+						<h3 class="center bold">OUR COURSES</h3>
+					</div>
+					<hr>
+					<div class="row courses-row">
+						<div class="col l4 s10 offset-s1 m4">
+							<div class="course-content">
+								<div class="svg-content courses-svg">
+									<div class="svg-img" id="layer1">
+
+										<object type="image/svg+xml" class="svg-image" data="../../images/young_buds4.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+									<div class="svg-img" id="layer2">
+										<object type="image/svg+xml" class="svg-image" data="../../images/young_buds2.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer3">
+										<object type="image/svg+xml" class="svg-image" data="../../images/young_buds3.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer4">
+										<object type="image/svg+xml" class="svg-image" data="../../images/young_buds1.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+
+
+								</div>
+								<div class="aboutCourse" onclick="location.href='/courses#youngBuds';">
+									<h4 class="no-padding no-margin center-align">YOUNG BUDS</h4>
+
+								</div>
+							</div>
+						</div>
+						<div class="col l4 s10 offset-s1 m4">
+							<div class="course-content">
+								<div class="svg-content courses-svg">
+									<div class="svg-img" id="layer1">
+
+										<object type="image/svg+xml" class="svg-image" data="../../images/b4-02.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+									<div class="svg-img" id="layer2">
+										<object type="image/svg+xml" class="svg-image" data="../../images/b3-02.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer3">
+										<object type="image/svg+xml" class="svg-image" data="../../images/b2-02.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer4">
+										<object type="image/svg+xml" class="svg-image" data="../../images/b1-02.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+
+
+
+
+								</div>
+								<div class="aboutCourse" onclick="location.href='/courses#blossom';">
+									<h4 class="no-padding no-margin center-align">BLOSSOM</h4>
+
+								</div>
+							</div>
+						</div>
+						<div class="col l4 s10 offset-s1 m4">
+							<div class="course-content">
+								<div class="svg-content courses-svg">
+									<div class="svg-img" id="layer1">
+
+										<object type="image/svg+xml" class="svg-image" data="../../images/p4-03.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+									<div class="svg-img" id="layer2">
+										<object type="image/svg+xml" class="svg-image" data="../../images/p3-03.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer3">
+										<object type="image/svg+xml" class="svg-image" data="../../images/p2-03.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer4">
+										<object type="image/svg+xml" class="svg-image" data="../../images/p1-03.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+
+
+
+								</div>
+								<div class="aboutCourse" onclick="location.href='/courses#prodigy';">
+									<h4 class="no-padding no-margin center-align">PRODIGY</h4>
+
+								</div>
+							</div>
+						</div>
+
+
+
+					</div>
+					<div class="row">
+						<div class="col l4 s10 offset-s1 m4">
+							<div class="course-content">
+								<div class="svg-content courses-svg">
+									<div class="svg-img" id="layer1">
+
+										<object type="image/svg+xml" class="svg-image" data="../../images/w4-04.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+									<div class="svg-img" id="layer2">
+										<object type="image/svg+xml" class="svg-image" data="../../images/w3-04.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer3">
+										<object type="image/svg+xml" class="svg-image" data="../../images/w2-04.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer4">
+										<object type="image/svg+xml" class="svg-image" data="../../images/w1-04.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+
+
+
+								</div>
+								<div class="aboutCourse" onclick="location.href='/courses#wizard';">
+									<h4 class="no-padding no-margin center-align">WIZARD</h4>
+
+								</div>
+							</div>
+						</div>
+						<div class="col l4 s10 offset-s1 m4">
+							<div class="course-content">
+								<div class="svg-content courses-svg">
+									<div class="svg-img" id="layer1">
+
+										<object type="image/svg+xml" class="svg-image" data="../../images/m4-05.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+									<div class="svg-img" id="layer2">
+										<object type="image/svg+xml" class="svg-image" data="../../images/m2-05.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer3">
+										<object type="image/svg+xml" class="svg-image" data="../../images/m3-05.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer4">
+										<object type="image/svg+xml" class="svg-image" data="../../images/m1-05.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+
+
+
+								</div>
+								<div class="aboutCourse" onclick="location.href='/courses#masterMind';">
+									<h4 class="no-padding no-margin center-align">MASTER MIND</h4>
+
+								</div>
+							</div>
+						</div>
+						<div class="col l4 s10 offset-s1 m4">
+							<div class="course-content">
+								<div class="svg-content courses-svg">
+									<div class="svg-img" id="layer1">
+
+										<object type="image/svg+xml" class="svg-image" data="../../images/c4-06.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+									<div class="svg-img" id="layer2">
+										<object type="image/svg+xml" class="svg-image" data="../../images/c3-06.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer3">
+										<object type="image/svg+xml" class="svg-image" data="../../images/c2-06.svg">Your browser does not support SVGs</object>
+
+
+									</div>
+
+									<div class="svg-img" id="layer4">
+										<object type="image/svg+xml" class="svg-image" data="../../images/c1-06.svg">Your browser does not support SVGs</object>
+
+									</div>
+
+
+
+
+								</div>
+								<div class="aboutCourse" onclick="location.href='/courses#crashCourse';">
+									<h4 class="no-padding no-margin center-align">CRASH COURSE</h4>
+
+								</div>
+							</div>
+						</div>
+
+
+
+					</div>
+
+					<br>
+				</div>
 			</div>
 		</div>
+		<!-- Parallax -->
+		<!-- <div class="parallax-container valign-wrapper">
 
-	</div>
-</div>
+			<div class="parallax ">
+				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
+			</div>
+		</div> -->
 
 
-<div class="parallax-container valign-wrapper">
-	<div class="section no-pad-bot">
-		<div class="container">
-			<div class="row center">
+		<!-- Our Results -->
+		<div class="section" id="content">
+			<div id="content">
+				<div class="container">
 
+					<div class="row">
+						<div class="col s12 center">
+							<br>
+							<h3 class="bold">OUR RESULTS</h3>
+							<hr>
+							<br>
+
+							<% if (students){ %>
+								<% students.forEach((student, i) =>{ %>
+									<%if(i<12){%>
+										<div class="col s4 l2 m2 results-col materialboxed">
+											<img class="responsive-img z-depth-4 " id="result-image" src="<%=student.src%>">
+											</img>
+										</div>
+										<%}%>
+											<% }) %>
+												<% } %>
+						</div>
+					</div>
+					<br>
+					<div class="row center-align">
+						<a href="/results" class="btn-floating btn-large waves-effect waves-light grey">
+							<i class="material-icons">chevron_right</i>
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="parallax">
-		<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
-	</div>
-</div>
+		<!-- Parallax -->
+		<!-- <div class="parallax-container valign-wrapper">
 
-
-<footer class="page-footer teal">
-	<div class="container">
-		<div class="row">
-			<div class="col l6 s12">
-				<h5 class="white-text">Company Bio</h5>
-				<p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
-
+			<div class="parallax ">
+				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
 			</div>
-			<div class="col l3 s12">
-				<h5 class="white-text">Settings</h5>
-				<ul>
-					<li>
-						<a class="white-text" href="#!">Link 1</a>
-					</li>
-					<li>
-						<a class="white-text" href="#!">Link 2</a>
-					</li>
-					<li>
-						<a class="white-text" href="#!">Link 3</a>
-					</li>
-					<li>
-						<a class="white-text" href="#!">Link 4</a>
-					</li>
-				</ul>
+		</div> -->
+
+		<!-- </div> -->
+		<!-- Parallax -->
+		<!-- <div class="parallax-container valign-wrapper ">
+			<div class="parallax">
+				<img src="/img/harvin-icon-01.png" alt="Unsplashed background img 3">
 			</div>
-			<div class="col l3 s12">
-				<h5 class="white-text">Connect</h5>
-				<ul>
-					<li>
-						<a class="white-text" href="#!">Link 1</a>
-					</li>
-					<li>
-						<a class="white-text" href="#!">Link 2</a>
-					</li>
-					<li>
-						<a class="white-text" href="#!">Link 3</a>
-					</li>
-					<li>
-						<a class="white-text" href="#!">Link 4</a>
-					</li>
-				</ul>
+		</div> -->
+		<!--management -->
+
+		<div class="section ">
+			<div class="container">
+
+				<div class="row center">
+					<div class="col l12 ">
+						<h4 class="bold">HARVIN MANAGEMENT</h4>
+						<hr>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col l4 m6 s12">
+						<div class="card ">
+							<div class="card-image waves-effect waves-block waves-light">
+								<img class="activator " src="/images/ravi_m.jpg">
+							</div>
+							<div class="card-content">
+								<span class="card-title activator grey-text text-darken-4">Dr. Ravi Malik <i class="material-icons right">more_vert</i></span>
+								<span><a href="https://www.facebook.com/DrRaviMalik/"><i class="fa fa-facebook" aria-hidden="true"></i></a></span>
+								<span><a href="https://twitter.com/drmalikravi"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
+								<span><a href="https://www.linkedin.com/in/dr-ravi-malik-55334733/"><i class="fa fa-linkedin" aria-hidden="true"></i></a></span>
+							</div>
+							<div class="card-reveal">
+								<span class="card-title grey-text text-darken-4">Dr. Ravi Malik<i class="material-icons right">close</i></span>
+								<p>Dr. Ravi Malik is the inspiration, mentor and guide behind the Harvin Academy. He believes that every child has an infinite inherent potential. Even an average child can achieve a tremendous result by opting out the most basic success principles
+									such as regular study, effective use of time, understanding the fundamnetals rather than mugging up. Harvin Academy not only empowers students' academic abilities but also with other techniques which help them to crack the competitive exams.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col l4 m6 s12">
+						<div class="card ">
+							<div class="card-image waves-effect waves-block waves-light">
+								<img class="activator responive-img" src="/images/nk_s.jpg">
+							</div>
+							<div class="card-content">
+								<span class="card-title activator grey-text text-darken-4">Dr. N.K. Sharma<i class="material-icons right">more_vert</i></span>
+								<span><a href="https://www.facebook.com/profile.php?id=100000039174476"><i class="fa fa-facebook" aria-hidden="true"></i></a></span>
+								<span><a href="https://twitter.com/nks00781581"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
+								<span><a href="https://www.linkedin.com/in/dr-n-k-sharma-a912b8124/"><i class="fa fa-linkedin" aria-hidden="true"></i></a></span>
+							</div>
+							<div class="card-reveal">
+								<span class="card-title grey-text text-darken-4">Dr. N.K. Sharma<i class="material-icons right">close</i></span>
+								<p>A well-known zoology and botany expert all over the country, Dr. N.K. Sharma is the managing director of Harvin Academy. He believes that the most important aspect of education is passionate teaching and his forte is to explain the concept using
+									visual aids. He has the deep understanding of student psychology and the pressures on them. Dr. N.K sharma helps students master the psychological doubts, pressures and mentors them for strategic planning.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col l4 m6 s12">
+						<div class="card ">
+							<div class="card-image waves-effect waves-block waves-light">
+								<img class="activator" src="/images/vipin_a.jpg">
+							</div>
+							<div class="card-content">
+								<span class="card-title activator grey-text text-darken-4">Dr. Vipin Aggarwal <i class="material-icons right">more_vert</i></span>
+								<span><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></span>
+								<span><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
+								<span><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></span>
+							</div>
+							<div class="card-reveal">
+								<span class="card-title grey-text text-darken-4">Dr. Vipin Aggarwal<i class="material-icons right">close</i></span>
+								<p> A veteran chemistry academician with 27 years of teaching experience, Dr. Vipin aggarwal is the director at Harvin Academy who has served as a professor at almost every educational service. His vision is to make Harvin academy a generator of top
+									rankers in engineering and medical entrance examinations. His meticulous and total quality management has established Harvin as the leading brand in Medical Entrance Coaching in India.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col l4 m6 s12">
+						<div class="card ">
+							<div class="card-image waves-effect waves-block waves-light">
+								<img class="activator" src="/images/ritesh_m.jpg">
+							</div>
+							<div class="card-content">
+								<span class="card-title activator grey-text text-darken-4">Dr. Ritesh Malik<i class="material-icons right">more_vert</i></span>
+								<span><a href="https://www.facebook.com/drriteshmalik"><i class="fa fa-facebook" aria-hidden="true"></i></a></span>
+								<span><a href="https://twitter.com/drriteshmalik"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
+								<span><a href="https://www.linkedin.com/in/dr-ritesh-malik-877a87a/"><i class="fa fa-linkedin" aria-hidden="true"></i></a></span>
+							</div>
+							<div class="card-reveal">
+								<span class="card-title grey-text text-darken-4">Dr. Ritesh Malik<i class="material-icons right">close</i></span>
+								<p> Dr. Ritesh Malik is a young and dynamic serial entrepreneur who has passed his medical school from Govt. Theni Medical College and has attended courses at prestigious institutions like London school of Economics and Harvard University. He is the
+									thinker and innovationist at Harvin Academy He believes that motivation and strategy are the most integral aspects of selection in any competitive exams. He stives to provide constant motivation and knowledge management strategies for his students
+									at Harvin academy.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col l4 m6 s12">
+						<div class="card ">
+							<div class="card-image waves-effect waves-block waves-light">
+								<img class="activator " src="/images/shruti_m.jpg">
+							</div>
+							<div class="card-content">
+								<span class="card-title activator grey-text text-darken-4">Dr. Shruti Malik<i class="material-icons right">more_vert</i></span>
+								<span><a href="https://www.facebook.com/shruti08malik"><i class="fa fa-facebook" aria-hidden="true"></i></a></span>
+								<span><a href="https://twitter.com/shruti08malik"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
+								<span><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></span>
+							</div>
+							<div class="card-reveal">
+								<span class="card-title grey-text text-darken-4">Dr. Shruti Malik<i class="material-icons right">close</i></span>
+								<p> She is a passionate endodontist, who has completed her medical education from Lucknow. Dr. Shruti Malik believes in letting students have a personal touch with Hravin Academy. She considers that knowledge should be transmitted through visual aids
+									which helps students to understand the subjects a far more better way and makes it more conceptual.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col l4 m6 s12">
+						<div class="card ">
+							<div class="card-image waves-effect waves-block waves-light">
+								<img class="activator " src="/images/renu_m.jpg">
+							</div>
+							<div class="card-content">
+								<span class="card-title activator grey-text text-darken-4">Dr. Renu Malik<i class="material-icons right">more_vert</i></span>
+								<span><a href="https://www.youtube.com/channel/UC5vxKxFoasx56ioIEXJjKhQ/featured"><i class="fa fa-facebook" aria-hidden="true"></i></a></span>
+								<span><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
+								<span><a href="https://www.instagram.com/renumalik/"><i class="fa fa-linkedin" aria-hidden="true"></i></a></span>
+							</div>
+							<div class="card-reveal">
+								<span class="card-title grey-text text-darken-4">Dr. Renu Malik<i class="material-icons right">close</i></span>
+								<p> Dr. Renu Malik, passed MBBS, MD (Obst. & Gynecology) from Maulana Azad Medical College, Delhi. There after worked in Deptt of Gynecology in Safdarjung Hospital from 1991-93. She is one of the leading Gynecologists of Delhi, practicing for last
+									25 years. She has conducted more than 20,000 deliveries till now. She is famous for conducting painless and complicated deliveries. She has performed a variety of gyanecological surgeries such as hysterectomy, cancer surgery, cryosurgery, tubal
+									surgeries, ovarian surgeries, etc.</p>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="footer-copyright" id="foid">
-		<div class="container">
-			Made by
-			<a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-		</div>
-	</div>
-</footer>
+	</main>
+	<%include partials/website_footer.ejs%>
 
 
-<!--  Scripts-->
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="js/materialize.js"></script>
-<script src="js/init.js"></script>
-<!-- <script src="js/pong.js"></script> -->
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="js/materialize.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/vmsLanding.js"></script>
+		<!-- <script src="js/pong.js"></script> -->

@@ -1,0 +1,93 @@
+<% include partials/header.ejs%>
+	<% include partials/includeBS.ejs%>
+
+		<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+		<link rel="stylesheet" href="/css/newBlog.css">
+		<main>
+
+			 <!-- <ul class="side-nav fixed z-depth-3">
+			 	<li> <a class="brand-logo" href="/admin"><h3 id="brand-name">harvin academy</h3></a></li>
+			 	<li><a href="#!">add a blog</a></li>
+			 	<li><a href="#!">second sidebar link</a></li>
+			 </ul> -->
+			<ul id="slide-out" class="side-nav">
+    <li><div class="user-view">
+      <div class="background">
+        <img src="/images/user.png">
+      </div>
+      <a href="#!name"><span class="white-text name">Jagriti Kapoor</span></a>
+      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+  </ul>
+
+
+
+
+
+			<div class="section">
+				<div class="container">
+					<div class="row">
+						<div class="col s8">
+							<form method="post" class="newBlogForm" action="/admin/blog" method="post">
+								<div class="input-field">
+									<input id="blog_title" type="text" name="title" class="validate">
+									<label for="first_name">Blog Title</label>
+								</div>
+								<div class="file-field input-field">
+									<div class="btn">
+										<span>File</span>
+										<input type="file">
+									</div>
+									<div class="file-path-wrapper">
+										<input class="file-path validate" type="text">
+									</div>
+								</div>
+								<textarea id="summernote" name="editordata"></textarea>
+								<div class="center-align">
+									<button class="btn" type="submit">Submit</button>
+								</div>
+							</form>
+						</div>
+						<div class="col s4">
+							<div class="file-field input-field">
+								<div class="btn" id="file-input-btn">
+									<span>File</span>
+									<input id="files" type="file" name="files[]" multiple />
+								</div>
+								<div class="file-path-wrapper">
+									<input class="file-path validate" type="text">
+								</div>
+							</div>
+							<div id="img-to-upload"></div>
+							<img id='output'>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+				<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">collections</i></a>
+			        </div>
+
+		</main>
+
+
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+
+		<style>
+			.thumb {
+				height: 75px;
+				border: 1px solid #000;
+				margin: 10px 5px 0 0;
+			}
+		</style>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/js/blogInsert.js"></script>
+
+
+		<% include partials/footer.ejs%>

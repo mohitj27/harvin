@@ -3,18 +3,19 @@ var express = require("express"),
 
 	Batch = require("../models/Batch"),
 	Subject = require("../models/Subject"),
+	Center = require("../models/Center"),
 	errors = require("../error"),
 	middleware = require("../middleware"),
 
 	router = express.Router();
 
-router.get("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function (req, res, next) {
-	Batch.find({}, function (err, foundBatches) {
+router.get("/updateBatch", middleware.isLoggedIn, middleware.isCentreOrAdmin, function (req, res, next) {
+	Batch.find({atCenter: req.user._id}, function (err, foundBatches) {
 		if (err) {
 			console.log(err);
 			next(new errors.notFound);
 		} else {
-			Subject.find({}, function (err, foundSubjects) {
+			Subject.find({atCenter: req.user._id}, function (err, foundSubjects) {
 				if (err) {
 					console.log(err);
 					next(new errors.notFound);
@@ -30,7 +31,7 @@ router.get("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function (
 });
 
 
-router.post("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function (req, res, next) {
+router.post("/updateBatch", middleware.isLoggedIn, middleware.isCentreOrAdmin, function (req, res, next) {
 	var subjectId = req.body.subjectId;
 	var batchName = req.body.batchName;
 	var batchDesc = req.body.batchDesc;
@@ -58,7 +59,8 @@ router.post("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function 
 						$set: {
 							batchName: batchName,
 							subjects: foundSubjects,
-							batchDesc: batchDesc
+							batchDesc: batchDesc,
+							atCenter: req.user._id
 						}
 					}, {
 						upsert: true,
@@ -67,11 +69,36 @@ router.post("/updateBatch", middleware.isLoggedIn, middleware.isAdmin, function 
 					},
 					function (err, createdBatch) {
 						if (!err && createdBatch) {
-							req.flash("success", "Batch updated successfully");
-							res.redirect("/batches/updateBatch");
+							callback(null, createdBatch)
+						}else{
+							console.log('err', err);
+							callback(err)
 						}
 					}
 				);
+			},
+			function (createdBatch, callback) {
+				Center.findOneAndUpdate(req.user.username, {
+					$addToSet:{
+						batches: createdBatch._id
+					},
+					$set: {
+						centerName: req.user.username
+					}
+				}, {
+					upsert: true,
+					new: true,
+					setDefaultsOnInsert: true
+				}, function (err, updatedCenter) {
+						if(!err && updatedCenter){
+							callback(null)
+							req.flash("success", "Batch updated successfully");
+							res.redirect("/admin/batches/updateBatch");
+						} else{
+							console.log(err);
+							callback(err);
+						}
+				})
 			}
 		],
 		function (err, result) {
@@ -100,7 +127,7 @@ router.get("/:batchName", function (req, res, next) {
 		.exec(function (err, batch) {
 			if (err) {
 				req.flash("error", "Couldn't find the chosen Batch");
-				res.redirect("/batch");
+				res.redirect("/admin/batch");
 			} else {
 				res.json({
 					batch: batch
@@ -119,4 +146,3 @@ router.get('/', (req, res, next) => {
 });
 
 module.exports = router;
-

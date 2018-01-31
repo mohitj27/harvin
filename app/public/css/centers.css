@@ -1,0 +1,19 @@
+@media only screen and (min-width: 993px)
+{
+.container {
+  width: 85% ;
+}
+}
+
+.image-side{
+  cursor: pointer;
+  /* max-height: 15%; */
+  /* min-height:100% */
+}
+.overview{
+  line-height: 2.0;
+  padding-top: 10px;
+}
+*{
+  transition: all 1s linear;
+}
