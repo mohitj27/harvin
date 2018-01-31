@@ -42,6 +42,14 @@ router.get("/login", function(req, res) {
   res.render("login");
 });
 
+router.get('/new', (req, res, next) => {
+  res.render('newVisitor')
+});
+
+router.get('/newVms', (req, res, next) => {
+  res.render('newVms')
+});
+
 //Handle user login -- for admin
 router.post("/login", passport.authenticate("local", {
     failureRedirect: "/admin/login",

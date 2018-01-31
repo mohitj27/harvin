@@ -11,9 +11,6 @@ var express = require("express"),
   Blog = require('./../models/Blog'),
   router = express.Router();
 
-router.get('/new', (req, res, next) => {
-  res.render('newVisitor')
-});
 router.get('/test', (req, res, next) => {
   res.render('testGallery')
 });

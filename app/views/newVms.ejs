@@ -1,0 +1,162 @@
+<DOCTYPE! html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Harvin Academy</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width">
+
+
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="/dist/DateTimePicker.min.js" type="text/javascript"></script>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+</head>
+<body>
+
+  <main>
+    <div class="section no-pad"><div class="container">
+      <div class="pop">
+        <nav>
+          <ul>
+            <li><a href="#">Harvin Academy</a></li>
+              </ul>
+        </nav>
+        <section>
+          <h2 id="name">Title</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, eligendi distinctio, inventore ipsa ea ipsam officia accusantium quod at dicta nulla omnis beatae natus vero exercitationem cum sapiente, sint cumque!</p>
+        </section>
+        <footer>
+          <a href="#"><i class="material-icons">keyboard_arrow_left</i></a>
+					<p id="counter">1/6</p>
+          <a href="#"><i class="material-icons">keyboard_arrow_right</i></a>
+        </footer>
+      </div>
+    </div></div>
+  </main>
+</body>
+
+<style>
+*{padding: 0; margin: 0; box-sizing: border-box; }
+
+.container{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+
+}
+.section{
+
+  background-image:linear-gradient(-25deg,rgba(125,194,66,0.7) 45%,rgba(19,179,139,1) 100%);
+
+}
+
+
+.pop{
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  border-radius: 20px 20px 5px 5px;
+  overflow: hidden;
+	margin:10px;
+}
+.pop nav ul{
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  background-color: #4ecdc4;
+  background-image: linear-gradient(75deg,rgba(19,179,139,1), #556270);
+  /*background-image: linear-gradient(to right, #1cd8d2, #93edc7);*/
+
+}
+
+.pop nav ul li{
+  list-style: none;
+  display: inline-block;
+  width: 100%;
+}
+
+.pop nav ul li a{
+  text-align: center;
+  text-decoration: none;
+  color: #FFF;
+	font-size: x-large;
+  font-family: 'Montserrat';
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .25s;
+  filter: grayscale(100%);
+}
+
+.pop nav ul li a:hover{
+  background-color: rgba(255, 255, 255, .2);
+  filter: grayscale(0%);
+}
+
+.pop section{
+  background: #def1f2;
+  width: 100%;
+  padding: 40px 20px;
+}
+
+.pop section h2{
+  font-weight: 400;
+  display: block;
+  width: 100%;
+  text-align: left;
+
+  margin: 0 0 20px 0;
+  color: #5bcccc;
+}
+
+.pop section p{
+    color: #6b9999;
+}
+
+.pop footer{
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #bed8d8;
+}
+
+.pop footer a{
+  text-decoration: none;
+  color: #333;
+  width: 80px;
+  text-align: center;
+  margin: 0 5px;
+  line-height: 30px;
+  border-radius: 5px;
+  transition: .25s;
+}
+
+.pop footer a{
+  background-color: #bed8d8;
+  color: white;
+  border: 1px solid #e8f2f2;
+}
+
+.pop footer a:hover{
+  background-color: #e8f2f2;
+}
+#counter{
+	color:white;
+	font-size: large;
+}
+
+</style>
+</html>
