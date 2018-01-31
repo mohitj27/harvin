@@ -209,7 +209,7 @@ router.get('/blog', (req, res, next) => {
   } else {
     Blog.find({}, (err, foundBlog) => {
       if (!err && foundBlog)
-        res.render('blog', {
+        res.render('blogTheme', {
           foundBlog: foundBlog
         })
       else {
