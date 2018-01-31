@@ -15,6 +15,7 @@ router.get("/signup", function(req, res) {
 router.get("/", function(req, res) {
   res.render("home");
 });
+
 //Handle user registration-- for admin
 router.post("/signup", function(req, res, next) {
   User.register(new User({
@@ -30,14 +31,25 @@ router.post("/signup", function(req, res, next) {
 
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Successfully signed you in as " + req.body.username);
-      res.redirect("/admin");
+      res.redirect(req.session.returnTo || '/');
+      delete req.session.returnTo;
     });
   });
 });
 
-
 //User login form-- admin
 router.get("/login", function(req, res) {
+  res.render("login", {error: res.locals.msg_error[0]});
+});
+
+router.get('/new', (req, res, next) => {
+  res.render('newVisitor')
+});
+
+router.get('/newVms', (req, res, next) => {
+  res.render('newVms')
+});
+
   res.render("login", {error: res.locals.msg_error[0]});
 });
 
@@ -48,7 +60,6 @@ router.post("/login", passport.authenticate("local", {
     failureFlash: true
   }),
   function(req, res) {
-    console.log('url', req.session.returnTo);
     res.redirect(req.session.returnTo || '/');
     delete req.session.returnTo;
   }

@@ -11,12 +11,13 @@ var express = require("express"),
   Blog = require('./../models/Blog'),
   router = express.Router();
 
-router.get('/new', (req, res, next) => {
-  res.render('newVisitor')
-});
 router.get('/test', (req, res, next) => {
   res.render('testGallery')
 });
+
+router.get('/blog', (req, res, next) => {
+  res.render("blogTheme")
+})
 
 router.get('/all', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   Visitor.find({}, (err, foundVisitors) => {
@@ -198,20 +199,23 @@ router.post('/careers', (req, res, next) => {
 //
 // })
 router.get('/blog', (req, res, next) => {
-  console.log('title',req.query.title)
-  if(req.query.title){
-    Blog.find({"blogTitle":req.query.title},(err,foundBlog)=>{
-      if(err) console.log(err)
-      res.render('blog-template',{foundBlog:foundBlog})
+  console.log('title', req.query.title)
+  if (req.query.title) {
+    Blog.find({
+      "blogTitle": req.query.title
+    }, (err, foundBlog) => {
+      if (err) console.log(err)
+      res.render('blog-template', {
+        foundBlog: foundBlog
+      })
 
     })
-  }
-  else{
-    Blog.find({},(err,foundBlog)=>{
-      if(!err && foundBlog)
-      res.render('blog',{
-        foundBlog:foundBlog
-      })
+  } else {
+    Blog.find({}, (err, foundBlog) => {
+      if (!err && foundBlog)
+        res.render('blog', {
+          foundBlog: foundBlog
+        })
       else {
         console.log(err)
         next(new errors.generic())

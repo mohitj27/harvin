@@ -5,7 +5,6 @@ var middleware = {
       return next();
     }
     req.flash("error", "login please");
-    console.log('req', req);
     req.session.returnTo = req.originalUrl;
     res.redirect("/admin/login");
     // next();

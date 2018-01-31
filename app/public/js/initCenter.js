@@ -1,4 +1,43 @@
 $(function() {
+
+  var pageURL = $(location).attr("href");
+  // alert(pageURL.toString().split('#')[1]);
+  $('.chip').removeClass('z-depth-4 active-chip')
+  switch (pageURL.toString().split('#')[1]) {
+    case 'janakpuri':
+      $('#j-chip').addClass('z-depth-4 active-chip')
+      $('.map').attr('src', locations[0])
+      $('.overview').html(overview[0])
+      sideimagesrc = sideimagesrc_j
+      break;
+    case 'preet-vihar':
+      $('#p-chip').addClass('z-depth-4 active-chip')
+      $('.map').attr('src', locations[1])
+      $('.overview').html(overview[1])
+      sideimagesrc = sideimagesrc_p
+      break;
+
+    case 'meerut':
+      $('#m-chip').addClass('z-depth-4 active-chip')
+      $('.map').attr('src', locations[2])
+      $('.overview').html(overview[2])
+      sideimagesrc = sideimagesrc_m
+
+      break;
+
+    default:
+      $('#j-chip').addClass('z-depth-4 active-chip')
+      $('.map').attr('src', locations[0])
+      $('.overview').html(overview[0])
+      sideimagesrc = sideimagesrc_j
+      break;
+  }
+
+  let $sideImages = $('.image-side').toArray();
+  $sideImages.forEach(function(img, i) {
+    $(img).attr('src', sideimagesrc[i])
+  })
+  $('.image-main').attr('src', sideimagesrc[0])
   let counter = 1
   sideimagesrc = sideimagesrc_j
   if (window.innerWidth < 450) {

@@ -37,6 +37,7 @@ router.use(vmsRoutes);
 router.use('/admin/blog', blogRoutes);
 router.use('/admin/centers', centersRoutes);
 
+
 router.delete('/users/:userId', (req, res, next) => {
   const userId = req.params.userId;
   User.findById(userId, (err, foundUser) => {

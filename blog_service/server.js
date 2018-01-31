@@ -33,43 +33,35 @@ let files = {},
     slice: 0,
   };
 io.on('connection', function(socket) {
-  console.log('a user conn sadaected');
-  socket.on('chat message', function(msg) {
-    console.log('message: ' + msg);
-  });
-  socket.on('message', function(msg) {
-    console.log('message: ' + msg);
-  });
 
+  console.log('a user conn sadaected');
+
+  socket.on('end upload',()=>{files={}})
   socket.on('slice upload', (data) => {
-    console.log('hello')
+
+    console.log('hello',data.data.length)
     if (!files[data.name]) {
       files[data.name] = Object.assign({}, struct, data)
       files[data.name].data = []
+      console.log('files',files)
     }
 
     //convert the ArrayBuffer to Buffer
     data.data = new Buffer(new Uint8Array(data.data))
     //save the data
-    files[data.name].data.push(data.data)
-    files[data.name].slice++
-      console.log('dasdsa', data.data.toString('utf8'))
-    if (files[data.name].slice * 100000 >= files[data.name].size) {
-      var fileBuffer = Buffer.concat(files[data.name].data)
 
-      fs.writeFile(data.name, fileBuffer, (err) => {
-        console.log('err', err)
-        delete files[data.name]
-        if (err) return socket.emit('upload error')
-        socket.emit('end upload')
-        files={}
 
-      });
-    } else {
-      socket.emit('request slice upload', {
-        currentSlice: files[data.name].slice
-      });
-    }
+    fs.writeFile(__dirname + "/../../HarvinDb/blogImage/"+data.name, data.data, (err) => {
+      console.log('err', err)
+      delete files[data.name]
+      if (err) return socket.emit('upload error')
+      socket.emit('end upload')
+      files={}
+      console.log(files)
+
+
+    });
+
 
   });
 });
