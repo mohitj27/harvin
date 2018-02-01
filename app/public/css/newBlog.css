@@ -48,9 +48,30 @@
   font-size: 18px;
   color: #fff;
 }
+.file-btn{
+  line-height: 1.5em !important;
+}
+.file-path-wrapper{
+  overflow: auto;
+}
 body{
   overflow-x: hidden;
 }
 #slide-out{
   background: white;
+  width:400px;
+}
+span{
+  color:white;
+}
+.subheader{
+  color:grey;
+}
+#slide-out > li > a{
+  color:grey;
+}
+.user-view{
+  height:20%;
+  margin:0 !important;
+  padding:0 !important;
 }
