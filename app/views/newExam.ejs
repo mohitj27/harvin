@@ -9,9 +9,9 @@
 						<input id="examName" type="text" name="examName"  class="validate">
 						<label for="examName">Exam Name</label>
 					</div>
-					<div class="input-field col s6">
-						<input id="examDate"name="examDate"  class="datepicker">
+					<div class="col s6">
 						<label for="examDate">Exam Date</label>
+						<input id="examDate" name="examDate" class="datepicker validate" placeholder="Choose date">
 					</div>
 				</div>
 				<div class="row">
@@ -65,31 +65,13 @@
 	<script>
 	$(function () {
 		$('.datepicker').pickadate({
-		selectMonths: true, // Creates a dropdown to control month
-		selectYears: 15, // Creates a dropdown of 15 years to control year,
-		today: 'Today',
-		clear: 'Clear',
-		close: 'Ok',
-		closeOnSelect: false // Close upon selecting a date,
-	});
-		// $.get('/admin/batches', function (res) {
-		// 	// console.log('batches', res.batches);
-		// 	batches = {};
-		// 	res.batches.forEach((batch) => {
-		// 		// console.log('batch', batch);
-		// 		batches[batch.batchName] = null
-		// 	})
-		// 	console.log('obj', batches);
-		// 	console.log($("#autocomplete-input"));
-		// 	$('#autocomplete-input').autocomplete({
-		// 	    data: batches,
-		// 	    limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-		// 	    onAutocomplete: function(val) {
-		// 	      // Callback function when value is autcompleted.
-		// 	    },
-		// 	    minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-		// 	  });
-		// })
+			selectMonths: true, // Creates a dropdown to control month
+			selectYears: 15, // Creates a dropdown of 15 years to control year,
+			today: 'Today',
+			clear: 'Clear',
+			close: 'Ok',
+			closeOnSelect: true // Close upon selecting a date,
+		});
 	})
 	</script>
 	<% include partials/footer.ejs%>
