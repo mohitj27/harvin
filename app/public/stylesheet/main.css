@@ -272,14 +272,10 @@ nav ul a {
 #brand-logo{
   padding:32px;
 }
-.gradient-45deg-green-teal {
+.gradient-45deg-green-teal, .collapsible-body{
   background: #43A047;
   background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
   background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
-}
-
-header, main, footer {
-  padding-left: 300px;
 }
 
 #insert-db {
@@ -309,4 +305,8 @@ header, main, footer {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+#menu-button{
+  font-size: 44px;
 }

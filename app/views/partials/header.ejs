@@ -36,31 +36,43 @@
 
 <body>
 	<header>
-		
-		<ul class="side-nav fixed z-depth-3 gradient-45deg-green-teal">
-			<li> <a id="brand-logo" href="/admin"><h3 id="brand-name">Harvin Academy</h3></a></li>
-			<li>
-				<a href="/">WEBSITE</a>
-			</li>
 
-			<li>
-				<a href="/admin/db">Database</a>
+		<a href="#" data-activates="slide-out" class="button-collapse"><i id="menu-button" class="material-icons">menu</i></a>
+		<!--  -->
+		<ul id="slide-out" class="side-nav z-depth-3 gradient-45deg-green-teal">
+			<li><a href="#!">First Sidebar Link</a></li>
+			<li><a href="#!">Second Sidebar Link</a></li>
+			<li class="no-padding">
+				<ul class="collapsible collapsible-accordion">
+					<li>
+						<a class="collapsible-header">Insert in DB<i class="material-icons">arrow_drop_down</i></a>
+						<div class="collapsible-body">
+							<ul>
+								<li><a href="/admin/files/uploadFile">Upload File</a></li>
+								<li><a href="/admin/batches/updateBatch">Create Batch</a></li>
+								<li><a href="/admin/exams/new">Set an Exam</a></li>
+								<li><a href="/admin/questionBank">Question Bank</a></li>
+								<li><a href="/admin/assignment/uploadAssignment">New Assignment</a></li>
+								<li><a href="/admin/batches/updateBatch">Create Batch</a></li>
+								<li><a href="/admin/blog">New Post</a></li>
+								<li><a href="/admin/db/gallery/upload">Upload Image</a></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
 			</li>
-			<li id="insert-db">
-				<div class="dropdown12">
-					<a class="dropbtn" id="select12">Insert DB
-										<span class="caret"></span>
-									</a>
-					<div class="dropdown-content12">
-						<a href="/admin/files/uploadFile">Upload File</a>
-						<a href="/admin/batches/updateBatch">Create Batch</a>
-						<a href="/admin/exams/new">Set an Exam</a>
-						<a href="/admin/questionBank">Question Bank</a>
-						<a href="/admin/assignment/uploadAssignment">New Assignment</a>
-						<a href="/admin/blog">New Post</a>
-						<a href="/admin/db/gallery/upload">Upload Image</a>
-					</div>
-				</div>
+			<li class="no-padding">
+				<ul class="collapsible collapsible-accordion">
+					<li>
+						<a class="collapsible-header">Blog<i class="material-icons">arrow_drop_down</i></a>
+						<div class="collapsible-body">
+							<ul>
+								<li><a href="/admin/blog">New Post</a></li>
+								<li><a href="/admin/db/gallery/upload">All Blogs</a></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
 			</li>
 			<% if(!currentUser){ %>
 
