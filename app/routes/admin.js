@@ -57,7 +57,7 @@ router.post("/login", passport.authenticate("local", {
     failureFlash: true
   }),
   function(req, res) {
-    res.redirect(req.session.returnTo || '/');
+    res.redirect(req.session.returnTo || '/admin');
     delete req.session.returnTo;
   }
 );

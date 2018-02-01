@@ -187,21 +187,21 @@
 					<% } %>
 		</ul>
 	</header>
-	<div class="container">
-		<% if(msg_error && msg_error.length > 0){ %>
-			<div class="alert alert-danger" role="alert">
-				<p style="text-align:center">
-					<%= msg_error %>
-				</p>
-			</div>
-			<% } %>
+	<main>
+		<div class="container center-align">
+			<% if(msg_error && msg_error.length > 0){ %>
+				<div class="card-panel orange darken-3 black-text">
+					<%=msg_error%>
+				</div>
+				<% } %>
 
-				<% if(msg_success && msg_success.length > 0){ %>
-					<div class="alert alert-success" role="alert">
-						<p style="text-align:center">
-							<%= msg_success %>
-						</p>
-					</div>
-					<% } %>
-	</div>
+					<% if(msg_success && msg_success.length > 0){ %>
+
+						<div class="card-panel light-green black-text">
+							<%=msg_success%>
+						</div>
+
+						<% } %>
+		</div>
+	</main>
 	<script src="/script/main.js"></script>

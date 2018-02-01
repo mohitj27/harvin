@@ -1,91 +1,93 @@
 <% include partials/header.ejs%>
 
-
-<div class="container">
-    <div class="row">
+  <main>
+    <div class="container">
+      <div class="row">
         <div class="col-md-10 col-sm-12">
-            <h1><b>Choose Questions to add in Question Bank</b></h1>
+          <h1><b>Choose Questions to add in Question Bank</b></h1>
         </div>
-    </div>
-    <form id="showQuestions" action="/exams/qbData" method="get">
+      </div>
+      <form id="showQuestions" action="/exams/qbData" method="get">
         <div class="row">
-            <div class="col-sm-4">
-                <h2>Class</h2><br>
-                
-                <select required  name="className" class="selectpicker show-tick" id="qb_classs" >
+          <div class="col-sm-4">
+            <h2>Class</h2><br>
+
+            <select required name="className" class="selectpicker show-tick" id="qb_classs">
                     <option selected value="" disabled>Class</option>
                      <%classes.forEach(function(classs){%>
-                     <option value="<%=classs.className%>"><%=classs.className%></option>   
+                     <option value="<%=classs.className%>"><%=classs.className%></option>
                      <%})%>
                 </select>
-            </div>
+          </div>
 
-            <div class="col-sm-4">
-                <h2>Subject</h2> <br>
-                <select data-live-search="true" title="Choose the Subject" required  name="subjectName" class="selectpicker show-tick" id="qb_subject" >
-                </select>   
-            </div>
+          <div class="col-sm-4">
+            <h2>Subject</h2> <br>
+            <select data-live-search="true" title="Choose the Subject" required name="subjectName" class="selectpicker show-tick" id="qb_subject">
+                </select>
+          </div>
 
-            <div class="col-sm-4">
-                <h2>Chapter</h2><br>
-                <select data-live-search="true" title="Choose the Chapter" required  name="chapterName"  class="selectpicker show-tick" id="qb_chapter" >
-                </select>    
-            </div>
+          <div class="col-sm-4">
+            <h2>Chapter</h2><br>
+            <select data-live-search="true" title="Choose the Chapter" required name="chapterName" class="selectpicker show-tick" id="qb_chapter">
+                </select>
+          </div>
 
         </div>
         <div style="margin: 100px auto 20px auto; width: 35%; align-self: center">
-            <input  type="submit" value="Show Questions" class="btn btn-lg btn-block  ">
+          <input type="submit" value="Show Questions" class="btn btn-lg btn-block  ">
         </div>
         <input type="hidden" name="examId" value="<%=examId%>">
-    </form>
-    <hr>
-    <% if(questions && questions.length > 0){ %>
+      </form>
+      <hr>
+      <% if(questions && questions.length > 0){ %>
         <h1 style="text-align: center"><b>Questions available in</b> </h1>
         <div class="row">
-            <div class="col-sm-4">
-                <h2><b>Class :</b> <i><%=className%></i></h2></b>
-            </div>
-            <div class="col-sm-4">
-                <h2><b>Subject :</b> <i><%=subjectName%></i></h2></b>
-            </div>
-            <div class="col-sm-4">
-                <h2><b>Chapter :</b> <i><%=chapterName%></i></h2></b>
-            </div>
+          <div class="col-sm-4">
+            <h2><b>Class :</b> <i><%=className%></i></h2></b>
+          </div>
+          <div class="col-sm-4">
+            <h2><b>Subject :</b> <i><%=subjectName%></i></h2></b>
+          </div>
+          <div class="col-sm-4">
+            <h2><b>Chapter :</b> <i><%=chapterName%></i></h2></b>
+          </div>
 
         </div>
         <form action="/exams/<%=examId%>/question-paper/chooseFromQB" method="POST">
-            <% questions.forEach(function(question, i){ %>
-                <div class="jumbotron">
-                    <div class="btn-group" data-toggle="buttons"> 
-                        <label class="btn btn-default" >
+          <% questions.forEach(function(question, i){ %>
+            <div class="jumbotron">
+              <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-default">
                             <input type="checkbox" value="<%=question._id%>" name="questions" autocomplete="off">
                             <span class="glyphicon glyphicon-ok"></span>
                         </label>
+              </div>
+              <h2><%=i+1%>. <%=question.question%></b></h2>
+              <div class="row">
+                <div class="col-sm-6">
+                  <h2><label class="">Options</label></h2>
+                  <% question.options.forEach(function(option){ %>
+                    <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label>
                     </div>
-                    <h2><%=i+1%>. <%=question.question%></b></h2>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2><label class="">Options</label></h2>
-                            <% question.options.forEach(function(option){ %>
-                                <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label> 
-                                </div>
-                            <% }) %>
-                        </div>
-                        <div class="col-sm-6">
-                            <h2><label class="control-label">Answer</label></h2>
-                            <% question.answers.forEach(function(answer){ %>
-                                <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label> 
-                                </div>
-                            <% }) %>
-                        </div>
-                    </div>
+                    <% }) %>
                 </div>
+                <div class="col-sm-6">
+                  <h2><label class="control-label">Answer</label></h2>
+                  <% question.answers.forEach(function(answer){ %>
+                    <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label>
+                    </div>
+                    <% }) %>
+                </div>
+              </div>
+            </div>
             <% }) %>
-            <input type="submit" class="btn   btn-lg" value="Add These Selected Questions">
+              <input type="submit" class="btn   btn-lg" value="Add These Selected Questions">
         </form>
-    <% } %>
-    
-        
-</div>
+        <% } %>
 
-<% include partials/footer.ejs%>
+
+    </div>
+
+  </main>
+
+  <% include partials/footer.ejs%>

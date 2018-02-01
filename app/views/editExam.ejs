@@ -1,6 +1,6 @@
 <% include partials/header.ejs%>
 <% include partials/includeBS.ejs%>
-
+<main>
 	<h1 style="text-align: center">Edit exam: <b> <i><%= exam.examName%></i> </b> </h1>
 
 	<div class="container">
@@ -23,7 +23,7 @@
                     <label for="examType" class="col-sm-3 control-label">Exam Type</label>
                     <div class="col-sm-1">
                         <select data-live-search="true" title="Choose the Type of exam" required class="selectpicker show-tick" name="examType" id="examType">
-                            
+
                             <option value="True - False"
                                 <%if(exam.examType == "True - False"){%>
                                     selected
@@ -95,5 +95,6 @@
 		</div>
 	</div>
 
-	<% include partials/footer.ejs%>
 
+</main>
+		<% include partials/footer.ejs%>

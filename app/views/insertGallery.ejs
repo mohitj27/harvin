@@ -1,25 +1,26 @@
 <% include partials/header.ejs%>
-	<div class="container">
-		<form action="/admin/db/gallery" enctype="multipart/form-data" method="post">
-			<div class="center-align">
-				<h4>Upload into gallery</h4>
-			</div>
-			<div class="row">
-				<div class="col s12 m6 offset-m3">
-					<div class="file-field input-field">
-						<div class="btn white">
-							<span>File</span>
-							<input name="userFile" required type="file">
-						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text">
+	<main>
+		<div class="container">
+			<form action="/admin/db/gallery" enctype="multipart/form-data" method="post">
+				<div class="center-align">
+					<h4>Upload into gallery</h4>
+				</div>
+				<div class="row">
+					<div class="col s12 m6 offset-m3">
+						<div class="file-field input-field">
+							<div class="btn white">
+								<span>File</span>
+								<input name="userFile" required type="file">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="input-field s12 col m6 offset-m3">
-					<select name="category" class="materialSelect">
+				<div class="row">
+					<div class="input-field s12 col m6 offset-m3">
+						<select name="category" class="materialSelect">
 						<option value="" disabled selected>Choose Category</option>
 						<option value="events">Events</option>
 						<option value="results">Results</option>
@@ -29,17 +30,19 @@
 						<option value="media">Media and VIP</option>
 						<option value="labs">Lab and Library</option>
 					</select>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 m6 offset-m3">
-					<textarea id="textarea1" name="description" class="materialize-textarea"></textarea>
-					<label for="textarea1">Description</label>
+				<div class="row">
+					<div class="input-field col s12 m6 offset-m3">
+						<textarea id="textarea1" name="description" class="materialize-textarea"></textarea>
+						<label for="textarea1">Description</label>
+					</div>
 				</div>
-			</div>
-			<div class="row center-align">
-				<input type="submit" value="Upload Image" name="submit" class="btn" />
-			</div>
-		</form>
-	</div>
+				<div class="row center-align">
+					<input type="submit" value="Upload Image" name="submit" class="btn" />
+				</div>
+			</form>
+		</div>
+
+	</main>
 	<% include partials/footer.ejs%>
