@@ -53,10 +53,10 @@ io.on('connection', function(socket) {
 
     fs.writeFile(__dirname + "/../../HarvinDb/blogImage/"+data.name, data.data, (err) => {
       console.log('err', err)
-      delete files[data.name]
       if (err) return socket.emit('upload error')
-      socket.emit('end upload')
+      socket.emit('end upload',files[data.name])
       files={}
+      delete files[data.name]
       console.log(files)
 
 

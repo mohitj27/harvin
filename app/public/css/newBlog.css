@@ -61,9 +61,7 @@ body{
   background: white;
   width:400px;
 }
-span{
-  color:white;
-}
+
 .subheader{
   color:grey;
   font-size: large !important;
@@ -78,7 +76,7 @@ span{
 }
 
 .media-item{
-  height:250px;
+  padding: 10px;
   overflow-y: scroll;
 }
 .thumb {

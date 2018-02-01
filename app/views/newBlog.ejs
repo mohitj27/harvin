@@ -6,14 +6,11 @@
 		<main>
 
 			<ul id="slide-out" class="side-nav">
-				<li>
-					<a href="#!name">John Doe</a>
-					<a href="#!email">jdandturk@gmail.com</a>
-				</li>
 
-				<li>
-					<div class="divider"></div>
-				</li>		
+
+				<li><a href="#!">John Doe</a></li>
+				<li><a href="#!">jdandturk@gmail.com</a></li>
+
 				<li class="media-item z-depth-3">
 					<div class="file-field input-field">
 						<div class="btn file-btn" id="file-input-btn">
@@ -25,8 +22,6 @@
 						</div>
 					</div>
 					<div id="img-to-upload"></div>
-					<li><a class="subheader">Uploaded Media</a></li>
-					<li id="media-item"><div id="uploaded-media"></div></li>
 			</ul>
 
 
@@ -68,6 +63,7 @@
 
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/js/blogInsert.js"></script>
+<script src="/dist/clipboard.min.js"></script>
 
 
 		<% include partials/footer.ejs%>
