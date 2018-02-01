@@ -5,7 +5,7 @@ $(function () {
 	//content inside add button in selectpicker
 
 	$(".dropdown-button").dropdown({hover:true,belowOrigin:true});
-		$('.materialSelect').material_select();
+		$('select').material_select();
 		if($('#summernote').length !== 0){
 			$('#summernote').summernote({
 				placeholder: 'Write your content here!!!',

@@ -10,26 +10,17 @@ var express = require("express"),
 	router = express.Router();
 
 router.get("/updateBatch", middleware.isLoggedIn, middleware.isCentreOrAdmin, function (req, res, next) {
-	Batch.find({atCenter: req.user._id}, function (err, foundBatches) {
-		if (err) {
-			console.log(err);
-			next(new errors.notFound);
-		} else {
-			Subject.find({atCenter: req.user._id}, function (err, foundSubjects) {
+	Subject.find({atCenter: req.user._id}, function (err, foundSubjects) {
 				if (err) {
 					console.log(err);
-					next(new errors.notFound);
+					next(new errors.generic());
 				} else {
 					res.render("createBatch", {
-						batches: foundBatches,
 						subjects: foundSubjects
 					});
 				}
 			});
-		}
-	});
 });
-
 
 router.post("/updateBatch", middleware.isLoggedIn, middleware.isCentreOrAdmin, function (req, res, next) {
 	var subjectId = req.body.subjectId;
@@ -112,13 +103,9 @@ router.post("/updateBatch", middleware.isLoggedIn, middleware.isCentreOrAdmin, f
 
 //finding batch with given batchName and populating the subject field in it
 router.get("/:batchName", function (req, res, next) {
+	// console.log('route');
 	Batch.findOne({
 			batchName: req.params.batchName
-		}, function (err, foundBatch) {
-			if (err) {
-				console.log(err);
-				next(new errors.generic);
-			}
 		})
 		.populate({
 			path: "subjects",
@@ -129,6 +116,7 @@ router.get("/:batchName", function (req, res, next) {
 				req.flash("error", "Couldn't find the chosen Batch");
 				res.redirect("/admin/batch");
 			} else {
+				// console.log('batch', batch);
 				res.json({
 					batch: batch
 				});
