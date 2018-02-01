@@ -260,7 +260,7 @@ h2, h3, h4, h5 {
 
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
 }
 
 /* Track */

@@ -8,11 +8,11 @@ var express = require("express"),
   app = express(),
   router = express.Router(),
   http = require('http').Server(app),
-     io = require('socket.io')(http)
+  io = require('socket.io')(http)
 
 
-io.on('connection', function(socket){
-console.log('connected')
+io.on('connection', function(socket) {
+  console.log('connected')
 });
 
 
@@ -21,6 +21,18 @@ const BLOG_IMAGE_DIR = path.normalize(__dirname + '/../../../HarvinDb/blogImage/
 
 router.get('/', (req, res, next) => {
   res.render("newBlog");
+});
+
+router.get('/:blogTitle', (req, res) => {
+  Blog.findOne({
+    blogTitle: req.params.blogTitle,
+    author: req.user._id
+  }, (err,foundBlog) => {
+if(err)console.log(err)
+else{
+  res.json(foundBlog)
+}
+  })
 });
 
 
@@ -63,21 +75,20 @@ router.post('/:htmlFilePath/images', (req, res) => {
   checkBlogDir()
   checkBlogImageDir()
   Blog.findOneAndUpdate({
-    htmlFilePath
-  }, {
-    $addToSet: {
-      blogImages: req.body.filename
-    },
-    $set:{
-      author:req.user
-    }
-  },
-    {
+      htmlFilePath
+    }, {
+      $addToSet: {
+        blogImages: req.body.filename
+      },
+      $set: {
+        author: req.user
+      }
+    }, {
       upsert: true,
       new: true,
       setDefaultsOnInsert: true
     },
-    function(err, updatedBlog){
+    function(err, updatedBlog) {
       res.send(200)
 
     })

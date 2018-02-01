@@ -66,6 +66,7 @@ span{
 }
 .subheader{
   color:grey;
+  font-size: large !important;
 }
 #slide-out > li > a{
   color:grey;
@@ -74,4 +75,14 @@ span{
   height:20%;
   margin:0 !important;
   padding:0 !important;
+}
+
+.media-item{
+  height:250px;
+  overflow-y: scroll;
+}
+.thumb {
+  height: 75px;
+  border: 1px solid #c3bcbc;
+  margin: 10px 5px 0 0;
 }

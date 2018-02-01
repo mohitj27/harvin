@@ -7,21 +7,17 @@
 
 			<ul id="slide-out" class="side-nav">
 				<li>
-					<div class="background">
-						<img src="/images/user.png">
-					</div>
 					<a href="#!name">John Doe</a>
 					<a href="#!email">jdandturk@gmail.com</a>
 				</li>
 
 				<li>
 					<div class="divider"></div>
-				</li>
-				<li><a class="subheader">Subheader</a></li>
-				<li>
+				</li>		
+				<li class="media-item z-depth-3">
 					<div class="file-field input-field">
 						<div class="btn file-btn" id="file-input-btn">
-							<span>File</span>
+							<span>Add Pictures</span>
 							<input id="files" type="file" name="files[]" multiple />
 						</div>
 						<div class="file-path-wrapper">
@@ -29,7 +25,8 @@
 						</div>
 					</div>
 					<div id="img-to-upload"></div>
-					<img id='output'></li>
+					<li><a class="subheader">Uploaded Media</a></li>
+					<li id="media-item"><div id="uploaded-media"></div></li>
 			</ul>
 
 
@@ -69,13 +66,6 @@
 
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 
-		<style>
-			.thumb {
-				height: 75px;
-				border: 1px solid #000;
-				margin: 10px 5px 0 0;
-			}
-		</style>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/js/blogInsert.js"></script>
 
