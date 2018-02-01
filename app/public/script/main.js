@@ -16,16 +16,32 @@ $(function () {
 			});
 		}
 
+
+
 	///NAVBAR INIT
 	$('.button-collapse').sideNav({
        menuWidth: 300, // Default is 300
        edge: 'left', // Choose the horizontal origin
        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
        draggable: true, // Choose whether you can drag to open on touch screens,
-       onOpen: function(el) {},
-       onClose: function(el) {}
+       onOpen: function(el) {
+				 // $('header').css('padding-left', '300px')
+				 $('body').css('padding-left', '300px')
+				 $('footer').css('padding-left', '300px')
+				 $('#sidenav-overlay').css('display', 'none')
+				 // alert('open')
+			 },
+       onClose: function(el) {
+				 // $('header').css('padding-left', '0')
+				 $('body').css('padding-left', '0')
+				 $('footer').css('padding-left', '0')
+				 // alert('close')
+			 }
      }
    );
+
+	 $('.collapsible').collapsible()
+	 $('.button-collapse').sideNav('show');
 
 	var content = "<input type=text onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
 
