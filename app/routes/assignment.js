@@ -56,7 +56,7 @@ router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, ne
     });
 });
 
-router.get('/uploadAssignment', (req, res, next) => {
+router.get('/uploadAssignment', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   Batch.find({atCenter: req.user._id}, (err, foundBatches) => {
     if (!err && foundBatches) {
       res.render("newAssignment", {
