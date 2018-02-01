@@ -9,7 +9,7 @@ var express = require("express"),
   Topic = require("../models/Topic.js"),
   Chapter = require("../models/Chapter.js"),
   Subject = require("../models/Subject.js"),
-	Class = require("../models/Class.js"),
+  Class = require("../models/Class.js"),
   Center = require("../models/Center.js"),
   middleware = require("../middleware"),
   errors = require("../error"),
@@ -42,25 +42,8 @@ function fileUploadSuccess(req, res) {
 }
 
 //Form for uploading a file
-router.get('/uploadFile',middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  Class.find({atCenter: req.user._id}, function(err, classes) {
-      if (err) console.log(err);
-    })
-    .populate({
-      path: "subjects",
-      model: "Subject",
-    })
-    .exec(function(err, classes) {
-      if (err) {
-        console.log(err);
-        req.flash("error", "Please try again");
-        res.redirect("/admin/files/uploadFile");
-      } else {
-        res.render('uploadFile', {
-          classes: classes
-        });
-      }
-    });
+router.get('/uploadFile', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+  res.render('uploadFile');
 });
 
 //Handle file upload
@@ -356,25 +339,25 @@ router.post('/uploadFile', middleware.isLoggedIn, middleware.isCentreOrAdmin, fu
         },
         function(createdClass, callback) {
           Center.findOneAndUpdate(req.user.username, {
-						$addToSet:{
-							classes: createdClass._id
-						},
-						$set: {
-							centerName: req.user.username
-						}
+            $addToSet: {
+              classes: createdClass._id
+            },
+            $set: {
+              centerName: req.user.username
+            }
           }, {
-						upsert: true,
-						new: true,
-						setDefaultsOnInsert: true
-					}, function (err, updatedCenter) {
-							if(!err && updatedCenter){
-								callback(null)
-								fileUploadSuccess(req, res);
-							} else{
-								console.log(err);
-								callback(err);
-							}
-					})
+            upsert: true,
+            new: true,
+            setDefaultsOnInsert: true
+          }, function(err, updatedCenter) {
+            if (!err && updatedCenter) {
+              callback(null)
+              fileUploadSuccess(req, res);
+            } else {
+              console.log(err);
+              callback(err);
+            }
+          })
         }
       ],
       function(err, result) {

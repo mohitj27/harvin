@@ -16,7 +16,7 @@
 				</div>
 				<div class="row">
 					<div class="input-field col s6">
-						<select required name="examType" class="materialSelect" id="examType">
+						<select required name="examType" id="examType">
                 <option value="" selected disabled>Choose the type of Exam</option>
                 <option value="True - False">True - False</option>
                 <option value="MCQ- Only 1 correct">MCQ- Only 1 correct</option>
@@ -25,7 +25,7 @@
             </select>
 					</div>
 					<div class="input-field col s6">
-						<select name="batchName" id="forBatch" class="materialSelect">
+						<select name="batchName" id="forBatch">
 								<option value="" disabled selected>For which Batch</option>
 								<%batches.forEach(function (batch) {%>
                     <option value="<%= batch._id %>"><%= batch.batchName %></option>
