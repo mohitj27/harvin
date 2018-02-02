@@ -46,10 +46,6 @@ router.get('/new', (req, res, next) => {
   res.render('newVisitor')
 });
 
-router.get('/newVms', (req, res, next) => {
-  res.render('newVms')
-});
-
 //Handle user login -- for admin
 router.post("/login", passport.authenticate("local", {
     failureRedirect: "/admin/login",
@@ -65,7 +61,6 @@ router.post("/login", passport.authenticate("local", {
 //User logout-- admin
 router.get("/logout", function(req, res) {
   req.logout();
-  req.flash({"success": "You Logged out successfully"});
   res.redirect("/admin");
 });
 

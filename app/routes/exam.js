@@ -176,7 +176,7 @@ router.get("/qbData", middleware.isLoggedIn, middleware.isAdmin, (req, res, next
 
 });
 
-router.get("/:examId/edit", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.get("/:examId/edit", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var examId = req.params.examId;
 
   Batch.find({}, (err, foundBatches) => {
@@ -203,7 +203,7 @@ router.get("/:examId/edit", middleware.isLoggedIn, middleware.isAdmin, (req, res
 
 });
 
-router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.put("/:examId", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var examId = req.params.examId;
   var examName = req.body.examName;
   var examDate = req.body.examDate;
@@ -242,7 +242,7 @@ router.put("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, nex
   );
 });
 
-router.delete("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.delete("/:examId", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var examId = req.params.examId;
   Exam.findByIdAndRemove(examId, (err, removedExam) => {
     if (!err && removedExam) {
@@ -255,7 +255,7 @@ router.delete("/:examId", middleware.isLoggedIn, middleware.isAdmin, (req, res, 
   });
 });
 
-router.get("/:examId/question-paper", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.get("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var examId = req.params.examId;
   Exam.findById(examId, (err, foundExam) => {
       if (!err && foundExam) {} else {
@@ -321,7 +321,7 @@ router.get("/:examId/question-paper", middleware.isLoggedIn, middleware.isAdmin,
 
 });
 
-router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var examId = req.params.examId;
   var optionString = req.body.options || "";
   var answerString = req.body.answer || "";
@@ -532,7 +532,7 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isAdmin
   );
 });
 
-router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var examId = req.params.examId;
   QB_Class.find({}, (err, foundClasses) => {
     if (!err && foundClasses) {
@@ -616,7 +616,7 @@ router.post('/:examId/question-paper/:username', (req, res, next) => {
 
 });
 
-router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var examId = req.params.examId;
   var questionsIdString = req.body.questions || "";
 

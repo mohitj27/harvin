@@ -76,13 +76,14 @@ router.post('/uploadAssignment', middleware.isLoggedIn, middleware.isCentreOrAdm
     .single('userFile');
 
   upload(req, res, function(err) {
+    console.log('body', req.body);
+    console.log('file', req.file);
 
     var assignmentName = req.body.assignmentName;
     var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
     var lastSubDate = req.body.lastSubDate;
     var filePath = req.file.path;
     var batchId = req.body.batchName;
-
 
     var newAssignment = {
       assignmentName,
@@ -129,10 +130,10 @@ router.post('/uploadAssignment', middleware.isLoggedIn, middleware.isCentreOrAdm
   });
 });
 
-router.get("/:assignmentId/edit", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.get("/:assignmentId/edit", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var assignmentId = req.params.assignmentId;
 
-  Batch.find({}, (err, foundBatches) => {
+  Batch.find({atCenter: req.user._id}, (err, foundBatches) => {
     if (!err && foundBatches) {
       Assignment.findById(assignmentId)
         .populate({
@@ -154,7 +155,7 @@ router.get("/:assignmentId/edit", middleware.isLoggedIn, middleware.isAdmin, (re
   });
 });
 
-router.put("/:assignmentId", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.put("/:assignmentId", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var assignmentId = req.params.assignmentId;
   var assignmentName = req.body.assignmentName;
   var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
