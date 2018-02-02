@@ -1,100 +1,93 @@
 <% include partials/header.ejs%>
-<% include partials/includeBS.ejs%>
-<main>
-	<h1 style="text-align: center">Edit exam: <b> <i><%= exam.examName%></i> </b> </h1>
+	<main>
 
-	<div class="container">
-		<div style="width: 50%; margin:25px auto;">
-			<form action="/exams/<%=exam._id%>?_method=put" method="post" class="form-horizontal">
-				<div class="form-group">
-					<label for="examName" class="col-sm-3 control-label">Exam Name</label>
-					<div class="col-sm-9">
-						<input required name="examName" type="text" class="form-control" id="examName" placeholder="Give Exam name" value="<%=exam.examName%>">
+		<div class="container">
+			<h3 class="center-align">Edit exam: <b> <i><%= exam.examName%></i> </b> </h3>
+			<hr>
+			<form action="/admin/exams/<%=exam._id%>?_method=put" method="post">
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="examName" type="text" name="examName" class="validate" value="<%=exam.examName%>">
+						<label for="examName">Exam Name</label>
+					</div>
+					<div class="col s6">
+						<label for="examDate">Exam Date</label>
+						<input id="examDate" name="examDate" class="datepicker validate" placeholder="Choose date" value="<%=exam.examDate%>">
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="examDate" class="col-sm-3 control-label">Exam Date</label>
-					<div class="col-sm-9">
-						<input required name="examDate" type="datetime" data-field="datetime" id="examDate" class="form-control" placeholder="Click to choose Date and Time" value="<%=exam.examDate%>">
-						<div id="dtBox"></div>
+				<div class="row">
+					<div class="input-field col s6">
+						<select required name="examType" id="examType">
+							<option value="" selected disabled>Choose Question Type</option>
+							<option value="True - False"
+                  <%if(exam.examType == "True - False"){%>
+                      selected
+                  <%}%>
+              >True - False</option>
+              <option value="MCQ- Only 1 correct"
+                  <%if(exam.examType == "MCQ- Only 1 correct"){%>
+                      selected
+                  <%}%>
+              >MCQ- Only 1 correct</option>
+              <option value="MCQ- More than 1 correct"
+                  <%if(exam.examType == "MCQ- More than 1 correct"){%>
+                      selected
+                  <%}%>
+              >MCQ- More than 1 correct</option>
+              <option value="Mixed"
+                  <%if(exam.examType == "Mixed"){%>
+                      selected
+                  <%}%>
+              >Mixed</option>
+			</select>
 					</div>
-                </div>
-                <div class="form-group">
-                    <label for="examType" class="col-sm-3 control-label">Exam Type</label>
-                    <div class="col-sm-1">
-                        <select data-live-search="true" title="Choose the Type of exam" required class="selectpicker show-tick" name="examType" id="examType">
+					<div class="input-field col s6">
+						<select name="batchName" id="forBatch">
+					<option value="" disabled selected>For which Batch</option>
+					<%batches.forEach(function (batch) {%>
+              <option value="<%=batch._id%>"
+                  <% if(exam.batch){ %>
+                          <%if(exam.batch._id.toString() == batch._id.toString()){%>
+                              selected
+                  <%}%>
+                  <% }else{ %>
 
-                            <option value="True - False"
-                                <%if(exam.examType == "True - False"){%>
-                                    selected
-                                <%}%>
-                            >True - False</option>
-                            <option value="MCQ- Only 1 correct"
-                                <%if(exam.examType == "MCQ- Only 1 correct"){%>
-                                    selected
-                                <%}%>
-                            >MCQ- Only 1 correct</option>
-                            <option value="MCQ- More than 1 correct"
-                                <%if(exam.examType == "MCQ- More than 1 correct"){%>
-                                    selected
-                                <%}%>
-                            >MCQ- More than 1 correct</option>
-                            <option value="Mixed"
-                                <%if(exam.examType == "Mixed"){%>
-                                    selected
-                                <%}%>
-                            >Mixed</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="forBatch" class="col-sm-3 control-label">For Batch</label>
-                    <div class="col-sm-1">
-                        <select data-live-search="true" title="Choose the Batch" required class="selectpicker show-tick"  name="batchName" id="forBatch">
-                            <%batches.forEach(function (batch) {%>
-                                <option value="<%=batch._id%>"
-                                    <% if(exam.batch){ %>
-                                            <%if(exam.batch._id.toString() == batch._id.toString()){%>
-                                                selected
-                                    <%}%>
-                                    <% }else{ %>
+                  <%}%>
 
-                                    <%}%>
+              ><%=batch.batchName%></option>
+          <%})%>
+				</select>
+					</div>
+				</div>
 
-                                ><%=batch.batchName%></option>
-                            <%})%>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="totalTime" class="col-sm-3 control-label">Total time (in Minutes) </label>
-                    <div class="col-sm-9">
-                        <input required name="totalTime" type="number" class="form-control" id="totalTime" placeholder="Total available time ( in Minutes ) for exam" value="<%=exam.totalTime%>">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="posMarks" class="col-sm-3 control-label">Positive Marks</label>
-                    <div class="col-sm-9">
-                        <input required name="posMarks" type="number" class="form-control" id="posMarks" placeholder="Positive marks ? If answered correctly" value="<%=exam.positiveMarks%>">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="negMarks" class="col-sm-3 control-label">Negative Marks</label>
-                    <div class="col-sm-9">
-                        <input required name="negMarks" type="number" class="form-control" id="negMarks" placeholder="Negative marks ? If answered incorrectly" value="<%=exam.negativeMarks%>">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="maxMarks" class="col-sm-3 control-label">Maximum Marks</label>
-                    <div class="col-sm-9">
-                        <input autofocus required name="maxMarks" type="number" class="form-control" id="maxMarks" placeholder="Maximum marks allowed for this exam" value="<%=exam.maximumMarks%>">
-                    </div>
-                </div>
-                <input type="submit" class="btn  ">
+
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="totalTime" type="number" name="totalTime" class="validate" value="<%=exam.totalTime%>">
+						<label for="totalTime">Total time (in Minutes)</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="posMarks" name="posMarks" type="number" class="validate" value="<%=exam.positiveMarks%>">
+						<label for="posMarks">Positive Marks</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="negMarks" name="negMarks" type="number" class="validate" value="<%=exam.negativeMarks%>">
+						<label for="negMarks">Negative Marks</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="maxMarks" name="maxMarks" type="number" class="validate" value="<%=exam.maximumMarks%>">
+						<label for="maxMarks">Maximum Marks</label>
+					</div>
+				</div>
+
+				<div class="row center-align">
+					<input type="submit" class="btn">
+				</div>
 			</form>
 		</div>
-	</div>
 
 
-</main>
-		<% include partials/footer.ejs%>
+	</main>
+	<% include partials/footer.ejs%>

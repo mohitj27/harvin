@@ -2,6 +2,7 @@ const _ = require('lodash');
 var middleware = {
   isLoggedIn: function(req, res, next) {
     if (req.isAuthenticated()) {
+      delete req.session.returnTo;
       return next();
     }
     req.flash("error", "login please");

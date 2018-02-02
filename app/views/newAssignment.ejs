@@ -3,15 +3,15 @@
 		<div class="container">
 			<h3 style="text-align: center">Upload A New Assignment</h1>
 				<hr>
-			<form action="/admin/assignment/uploadAssignment" method="post">
+			<form action="/admin/assignment/uploadAssignment" enctype="multipart/form-data" method="post">
 				<div class="row">
 					<div class="input-field col s6">
-						<input id="assignmentName" type="text" name="assignmentName"  class="validate">
+						<input required id="assignmentName" type="text" name="assignmentName"  class="validate">
 						<label for="assignmentName">Assignment Name</label>
 					</div>
 					<div class="col s6">
 						<label for="lastSubDate">Last Submission Date</label>
-						<input id="lastSubDate" name="lastSubDate" class="datepicker validate" placeholder="Choose date">
+						<input required id="lastSubDate" name="lastSubDate" class="datepicker validate" placeholder="Choose date">
 					</div>
 				</div>
 				<div class="row">
@@ -19,7 +19,7 @@
               <div class="file-field input-field">
                 <div class="btn white green-text">
                   <span>File</span>
-                  <input name="userFile" required type="file">
+                  <input required name="userFile" type="file">
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text">
@@ -27,7 +27,7 @@
               </div>
             </div>
 					<div class="input-field col s6">
-						<select name="batchName" id="forBatch">
+						<select required class="validate" name="batchName" id="forBatch">
 								<option value="" disabled selected>For which Batch</option>
 								<%batches.forEach(function (batch) {%>
                     <option value="<%= batch._id %>"><%= batch.batchName %></option>
@@ -41,16 +41,5 @@
 			</form>
 		</div>
 		</main>
-		<script>
-			$(function () {
-				$('.datepicker').pickadate({
-					selectMonths: true, // Creates a dropdown to control month
-					selectYears: 15, // Creates a dropdown of 15 years to control year,
-					today: 'Today',
-					clear: 'Clear',
-					close: 'Ok',
-					closeOnSelect: true // Close upon selecting a date,
-				});
-			})
-	</script>
+		
 		<% include partials/footer.ejs%>

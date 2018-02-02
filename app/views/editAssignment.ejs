@@ -4,45 +4,40 @@
 
 		<div class="container">
 			<div style="width: 50%; margin:25px auto;">
-				<form action="/assignment/<%=assignment._id%>?_method=put" method="post" class="form-horizontal">
-					<div class="form-group">
-						<label for="assignmentName" class="col-sm-3 control-label">Assignment Name</label>
-						<div class="col-sm-9">
-							<input autofocus required name="assignmentName" type="text" class="form-control" id="assignmentName" placeholder="Give Assignment name" value="<%=assignment.assignmentName%>">
+				<form action="/admin/assignment/<%=assignment._id%>?_method=put" method="post" class="form-horizontal">
+					<div class="row">
+						<div class="input-field col s6">
+							<input required id="assignmentName" type="text" name="assignmentName" class="validate" value="<%=assignment.assignmentName%>">
+							<label for="assignmentName">Assignment Name</label>
+						</div>
+						<div class="col s6">
+							<label for="lastSubDate">Last Submission Date</label>
+							<input id="lastSubDate" name="lastSubDate" class="datepicker validate" placeholder="Choose date" value="<%=assignment.lastSubDate%>">
 						</div>
 					</div>
-					<div class="form-group">
-						<label for="lastSubDate" class="col-sm-3 control-label">Last Submission Date</label>
-						<div class="col-sm-9">
-							<input autofocus required name="lastSubDate" type="datetime" data-field="datetime" id="lastSubDate" class="form-control" placeholder="Click to choose Last Submission Date and Time" value="<%=assignment.lastSubDate%>">
-							<div id="dtBox"></div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="forBatch" class="col-sm-3 control-label">For Batch</label>
-						<div class="col-sm-1">
-							<select data-live-search="true" title="Choose the Batch" required class="selectpicker show-tick" name="batchName" id="forBatch">
-													<%batches.forEach(function (batch) {%>
-						<option value="<%=batch._id%>"
-																	<% if(assignment.batch){ %>
-																	<%if(assignment.batch._id.toString() == batch._id.toString()){%>
-								selected
-																	<%}%>
-																	<% }else{ %>
+					<div class="row">
 
-																	<%}%>
-
-						><%=batch.batchName%></option>
-													<%})%>
-					</select>
+						<div class="input-field col s6">
+							<select name="batchName" id="forBatch">
+								<option value="" disabled selected>For which Batch</option>
+								<%batches.forEach(function (batch) {%>
+									<option value="<%=batch._id%>"
+											<% if(assignment.batch){ %>
+											<%if(assignment.batch._id.toString() == batch._id.toString()){%>
+												selected
+											<%}%>
+											<% }else{ %>
+											<%}%>
+													><%=batch.batchName%></option>
+											<%})%>
+							</select>
 						</div>
 					</div>
-					<hr>
-					<input type="submit" class="btn  ">
+					<div class="row center-align">
+						<input type="submit" class="btn">
+					</div>
 				</form>
 			</div>
 		</div>
-
-
 	</main>
 	<% include partials/footer.ejs%>

@@ -1,7 +1,7 @@
 <% include partials/header.ejs%>
 	<main>
 
-		<div class="section">
+		<div class="container">
 			<div class="row">
 				<div class="col m9 s12">
 					<h3>
@@ -69,10 +69,10 @@
 												<%=exam.totalTime%>
 											</th>
 											<th width="(100/11)%" height="50px" style="text-align: center">
-												<a class="btn orange" href="/exams/<%=exam._id%>/edit">Edit</a>
+												<a class="btn orange" href="/admin/exams/<%=exam._id%>/edit">Edit</a>
 											</th>
 											<th width="(100/11)%" height="50px" style="text-align: center">
-												<form action="/exams/<%=exam._id%>?_method=delete" method="post">
+												<form action="/admin/exams/<%=exam._id%>?_method=delete" method="post">
 													<input type="submit" value="Delete" class="btn red">
 												</form>
 											</th>
