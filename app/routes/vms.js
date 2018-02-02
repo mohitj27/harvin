@@ -61,7 +61,7 @@ router.post('/vms', middleware.isLoggedIn, (req, res, next) => {
   newVisitor.save((err, createdVisitor) => {
     if (!err && createdVisitor) {
       req.flash("success", 'Your response has been saved successfully')
-      res.redirect('/')
+      res.redirect('/admin/new')
     } else {
       console.log(err)
       next(new errors.generic())
@@ -74,7 +74,7 @@ router.delete('/:visitorId', (req, res, next) => {
   Visitor.findByIdAndRemove(req.params.visitorId, (err) => {
     if (!err) {
       req.flash('success', 'Entry deleted successfully')
-      res.redirect('/all')
+      res.redirect('/admin/all')
     } else {
       console.log(err)
       next(new errors.generic())

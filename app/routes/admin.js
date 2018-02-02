@@ -39,12 +39,15 @@ router.post("/signup", function(req, res, next) {
 
 //User login form-- admin
 router.get("/login", function(req, res) {
+  if(!req.user)
   res.render("login", {error: res.locals.msg_error[0]});
-});
+  else
+  res.redirect('/admin')
+})
 
-router.get('/new', (req, res, next) => {
+router.get('/new', middleware.isLoggedIn,(req, res, next) => {
   res.render('newVisitor')
-});
+})
 
 //Handle user login -- for admin
 router.post("/login", passport.authenticate("local", {
@@ -53,10 +56,10 @@ router.post("/login", passport.authenticate("local", {
     failureFlash: true
   }),
   function(req, res) {
-    res.redirect(req.session.returnTo || '/admin');
+    res.redirect(req.session.returnTo || '/admin')
     delete req.session.returnTo;
   }
-);
+)
 
 //User logout-- admin
 router.get("/logout", function(req, res) {
