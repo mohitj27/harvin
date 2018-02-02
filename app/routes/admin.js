@@ -31,7 +31,7 @@ router.post("/signup", function(req, res, next) {
 
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Successfully signed you in as " + req.body.username);
-      res.redirect(req.session.returnTo || '/');
+      res.redirect(req.session.returnTo || '/admin');
       delete req.session.returnTo;
     });
   });

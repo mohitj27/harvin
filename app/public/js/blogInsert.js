@@ -12,7 +12,7 @@ $(function() {
         onClose: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
       });
 
-      var socket = io("http://localhost:3001/")
+      var socket = io("http://45.55.154.27:3001/")
       socket.emit('message', 'Hello server');
 
       socket.on('connect', function() {
@@ -113,12 +113,12 @@ $(function() {
           fileReader.onloadend = () => {
             fileReader = null
             socket.emit('end upload', 'end')
-            $('.thumb:last').after('<span><i class="material-icons">check</i></span>')
           }
           socket.on('end upload', (data) => {
             // console.log(fileReader.result.toString())
             // fileReader.result = {}
 
+            $('.thumb:last').after('<span><i class="material-icons">check</i></span>')
 
             console.log('end upload',data)
 
