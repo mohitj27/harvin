@@ -3,6 +3,15 @@ $(function() {
 //For error and success toasts notification
 	$errorCard = $('#error-card');
 	$successCard= $('#success-card');
+	 $('.modal').modal();
+
+	$('.modal-trigger').on('click', function () {
+		// console.log('text', $(this).children('.comment-modal-trigger').text());
+		$modalContent = $('.modal-content')
+		$modalContent.children().remove()
+		$modalContent.append($('<h3>', {text: 'Visitor Comment'}))
+		$modalContent.append($('<p>', {text: $(this).children('.comment-modal-trigger').text()}))
+	})
 
   if ($errorCard.length > 0) {
 		 Materialize.toast($errorCard.text(), 4000)

@@ -1,6 +1,7 @@
-/* .material-icons, .fa{
-  color: white !important
-} */
+.comment-text{
+  display: none;
+}
+
 #error-card, #success-card{
   display: none
 }

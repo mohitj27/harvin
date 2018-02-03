@@ -7,6 +7,7 @@ var express = require("express"),
   sharp = require('sharp'),
   request = require('request'),
   Gallery = require('./../models/Gallery'),
+  Visitor= require('./../models/Visitor'),
   Blog = require('./../models/Blog'),
   router = express.Router();
 
@@ -39,13 +40,15 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res
   const emailId = req.body.emailId
   const classs = req.body.classs
   const date = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a')
+  const comments = req.body.comments
 
   const newVisitor = new Visitor({
     name,
     phone,
     emailId,
     classs,
-    date
+    date,
+    comments
   })
 
   newVisitor.save((err, createdVisitor) => {

@@ -6,38 +6,41 @@
 			<table class="responsive-table centered highlight bordered" width="100%">
 				<thead>
 					<tr>
-						<th width="(100/7)%" height="50px" style="text-align: center">Serial no.</th>
-						<th width="(100/7)%" height="50px" style="text-align: center">Date</th>
-						<th width="(100/7)%" height="50px" style="text-align: center">Name</th>
-						<th width="(100/7)%" height="50px" style="text-align: center">Class</th>
-						<th width="(100/7)%" height="50px" style="text-align: center">Contact</th>
-						<th width="(100/7)%" height="50px" style="text-align: center">Email Id</th>
-						<th width="(100/7)%" height="50px" style="text-align: center"></th>
+						<th style="text-align: center">Serial no.</th>
+						<th style="text-align: center">Date</th>
+						<th style="text-align: center">Name</th>
+						<th style="text-align: center">Class</th>
+						<th style="text-align: center">Contact</th>
+						<th style="text-align: center">Email Id</th>
+						<th style="text-align: center"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<% if (visitors){ %>
 						<% visitors.forEach((visitor, i) =>{ %>
-							<tr>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+							<tr href="#modal-comment" class="modal-trigger">
+								<td style="text-align: center">
 									<%= i + 1 %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td style="text-align: center">
 									<%= visitor.date %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td style="text-align: center">
 									<%= visitor.name %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td style="text-align: center">
 									<%= visitor.classs %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td style="text-align: center">
 									<%= visitor.phone %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td style="text-align: center">
 									<%= visitor.emailId %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td class="comment-modal-trigger" style="text-align: center">
+									<p class="comment-text"><%=visitor.comments%></p>
+								</td>
+								<td style="text-align: center">
 									<form method="post" action="/vms/<%=visitor._id%>?_method=delete">
 										<button class="btn btn-sm btn-danger">
 												Delete
@@ -49,7 +52,14 @@
 								<% } %>
 				</tbody>
 			</table>
-
+			<div id="modal-comment" class="modal center-align">
+				<div class="modal-content">
+					<h4>Visitor comments</h4>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+				</div>
+			</div>
 		</div>
 
 

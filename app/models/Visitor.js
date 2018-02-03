@@ -19,6 +19,11 @@ var visitorSchema = new Schema({
     required: true,
     default: ''
   },
+  comments: {
+    type: String,
+    required: true,
+    default: ''
+  },
   classs: {
     type: String,
     required: true,
