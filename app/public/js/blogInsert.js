@@ -7,6 +7,7 @@ $(function() {
       $('.button-collapse-image').sideNav({
         menuWidth: 300, // Default is 300
         edge: 'left', // Choose the horizontal origin
+        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor\
         draggable: true, // Choose whether you can drag to open on touch screens,
         onOpen: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
         onClose: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
@@ -66,8 +67,8 @@ $(function() {
                 // Render thumbnail.
                 var span = document.createElement('span');
 
-                span.innerHTML = ['<span><img class="thumb" src="', e.target.result,
-                  '" title="', escape(theFile.name), '"/></span >'].join('');
+                span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                  '" title="', escape(theFile.name), '"/><div class="progress"><div class="indeterminate"></div></div>'].join('');
                   document.getElementById('img-to-upload').insertBefore(span, null);
                 }
               })(f)
@@ -113,12 +114,12 @@ $(function() {
           fileReader.onloadend = () => {
             fileReader = null
             socket.emit('end upload', 'end')
-            $('.thumb:last').after('<span><i class="material-icons">check</i></span>')
           }
           socket.on('end upload', (data) => {
             // console.log(fileReader.result.toString())
             // fileReader.result = {}
 
+            $('.progress').hide(2000,"swing", function(){  $('.progress').remove(); });
 
             console.log('end upload',data)
 

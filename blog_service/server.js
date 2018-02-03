@@ -39,11 +39,10 @@ io.on('connection', function(socket) {
   socket.on('end upload',()=>{files={}})
   socket.on('slice upload', (data) => {
 
-    console.log('hello',data.data.length)
+    console.log('hello',data)
     if (!files[data.name]) {
       files[data.name] = Object.assign({}, struct, data)
       files[data.name].data = []
-      console.log('files',files)
     }
 
     //convert the ArrayBuffer to Buffer
@@ -53,11 +52,12 @@ io.on('connection', function(socket) {
 
     fs.writeFile(__dirname + "/../../HarvinDb/blogImage/"+data.name, data.data, (err) => {
       console.log('err', err)
+      console.log('files data',files[data.name])
+
       if (err) return socket.emit('upload error')
-      socket.emit('end upload',files[data.name])
+      socket.emit('end upload','done')
       files={}
       delete files[data.name]
-      console.log(files)
 
 
     });

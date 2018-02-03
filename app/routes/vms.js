@@ -43,7 +43,11 @@ router.get('/', (req, res, next) => {
   })
 })
 
+<<<<<<< HEAD
 router.post('/vms', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
+=======
+router.post('/vms', middleware.isLoggedIn, (req, res, next) => {
+>>>>>>> 1a35c9a4ff5f5de67b44e09038fec295893fe16b
   const name = req.body.name
   const phone = req.body.phone
   const emailId = req.body.emailId
@@ -61,7 +65,7 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentre, (req, res, next)
   newVisitor.save((err, createdVisitor) => {
     if (!err && createdVisitor) {
       req.flash("success", 'Your response has been saved successfully')
-      res.redirect('/')
+      res.redirect('/admin/new')
     } else {
       console.log(err)
       next(new errors.generic())
@@ -74,7 +78,7 @@ router.delete('/:visitorId', (req, res, next) => {
   Visitor.findByIdAndRemove(req.params.visitorId, (err) => {
     if (!err) {
       req.flash('success', 'Entry deleted successfully')
-      res.redirect('/all')
+      res.redirect('/admin/all')
     } else {
       console.log(err)
       next(new errors.generic())
