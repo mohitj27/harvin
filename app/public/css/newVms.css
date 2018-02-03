@@ -7,9 +7,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 
 
+}
+#error-card, #success-card{
+  display: none
 }
 body{
 
@@ -117,6 +119,10 @@ h2{
     color: white;
     margin: 20px;
     font-size: 50px !important;
+
+}
+main{
+  margin:40px 0px;
 }
 .dropdown-content{
   transform-origin: 100% 100% !important;
