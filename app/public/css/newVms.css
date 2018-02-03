@@ -131,7 +131,7 @@ main{
   color:white;
 
 }
-input{
+input,textarea{
   color:white !important;
   border-bottom-color:white !important;
 }
@@ -140,4 +140,30 @@ option{
 }
 span{
 
+}
+.main-row{
+  width:100%;
+  padding:20px 40px;
+}
+
+/*SCROLL BAR/
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #13b38b;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

@@ -20,82 +20,91 @@
 
 <body>
 	<nav class="no-pad z-depth-0">
-			<h2>HARVIN ACADEMY</h2>
+		<h2>HARVIN ACADEMY</h2>
 	</nav>
 	<main>
 		<div class="section no-pad">
 
-			<div class="container">
+			<div class="container center">
+				<div class="row center-align main-row">
+					<div class="col s12 m6 push-m3 push-l3">
 
-				<form action="/vms" method="post">
-					<div class="row input-field">
-						<input id="name" name="name" type="text" required autofocus />
-						<label for="name">
-								<span class="label-text">Full Name</span>
-								<span class="nav-dot"></span>
-							</label>
+						<form action="/vms" method="post">
+							<div class="row input-field">
+								<input id="name" name="name" type="text" required autofocus />
+								<label for="name">
+										<span class="label-text">Full Name</span>
+										<span class="nav-dot"></span>
+									</label>
+							</div>
+							<div class="row input-field">
+								<select id="classs" type="text" name="classs" data-alignment="right">
+									<option value="" disabled selected>Choose your option</option>
+										 <option value="IX">IX</option>
+										 <option value="X">X</option>
+										 <option value="XI">XI</option>
+										 <option value="XII">XII</option>
+										 <option value="XII-Pass">XII-Pass</option>
+									 </select>
+								<label for="classs">Class</label>
+							</div>
+							<div class="row input-field">
+								<input id="phone" name="phone" type="number" min="1111111111" max="9999999999" required />
+								<label for="phone">
+										<span class="label-text">Phone</span>
+										<span class="nav-dot"></span>
+									</label>
+							</div>
+							<div class="row input-field">
+								<input id="emailId" name="emailId" type="email" required />
+								<label for="emailId">
+										<span class="label-text">Email</span>
+										<span class="nav-dot"></span>
+									</label>
+							</div>
+
+							<div class="row input-field">
+								<textarea id="comments" name="comments" class="materialize-textarea"></textarea>
+
+								<label for="comments">
+										<span class="label-text">Comments</span>
+										<span class="nav-dot"></span>
+									</label>
+							</div>
+
+
+
+
+							<div class="row center">
+
+								<button class="btn">Submit</button>
+
+							</div>
+
+						</form>
 					</div>
-					<div class="row input-field">
-						<select id="classs" type="text" name="classs" data-alignment="right">
-							<option value="" disabled selected>Choose your option</option>
-								 <option value="IX">IX</option>
-								 <option value="X">X</option>
-								 <option value="XI">XI</option>
-								 <option value="XII">XII</option>
-								 <option value="XII-Pass">XII-Pass</option>
-							 </select>
-						<label for="classs">Class</label>
-					</div>
-					<div class="row input-field">
-						<input id="emailId" name="emailId" type="email" required />
-						<label for="emailId">
-								<span class="label-text">Email</span>
-								<span class="nav-dot"></span>
-							</label>
-					</div>
-					<div class="row input-field">
-						<input id="phone" name="phone" type="number" min="1111111111" max="9999999999" required />
-						<label for="phone">
-								<span class="label-text">Phone</span>
-								<span class="nav-dot"></span>
-							</label>
-					</div>
-
-
-
-
-<div class="row center">
-
-						<button class="btn">Submit</button>
-
-</div>
-
-				</form>
-				<!-- <footer>
-						<a href="#"><i class="material-icons">keyboard_arrow_left</i></a>
-						<p id="counter">1/6</p>
-						<a href="#"><i class="material-icons">keyboard_arrow_right</i></a>
-					</footer> -->
+				</div>
 			</div>
 		</div>
 
 		</div>
 
 	</main>
-<% if(msg_error && msg_error.length > 0){ %>
-			<span id="error-card">
+	<% if(msg_error && msg_error.length > 0){ %>
+		<span id="error-card">
 					<%=msg_error%>
 				</span>
-			<% } %>
+		<% } %>
 
-				<% if(msg_success && msg_success.length > 0){ %>
+			<% if(msg_success && msg_success.length > 0){ %>
 
-					<span id="success-card">
+				<span id="success-card">
 							<%=msg_success%>
 						</span>
 
-					<% } %>
+				<% } %>
 </body>
 
 <script src="/js/main.js" charset="utf-8"></script>
+
 </html>
