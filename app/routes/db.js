@@ -23,7 +23,6 @@ var express = require("express"),
   fs = require("fs"),
   middleware = require("../middleware");
 
-//TODO: This is where all the uploaded images are stored
 var currTime = Date.now().toString() + "__";
 var storage = multer.diskStorage({
   destination: __dirname + "/../../../HarvinDb/img",
@@ -39,7 +38,7 @@ router.get("/", (req, res, next) => {
 router.get(
   "/users",
   middleware.isLoggedIn,
-  middleware.isAdmin,
+  middleware.isCentreOrAdmin,
   (req, res, next) => {
     User.find({})
       .populate({
@@ -127,10 +126,12 @@ router.get("/gallery/upload", (req, res, next) => {
 
 router.get("/gallery/all/:category", (req, res, next) => {
   let categoryToDelete = req.params.category;
-  Gallery.find({ category: categoryToDelete }).exec((err, items) => {
+  Gallery.find({
+    category: categoryToDelete
+  }).exec((err, items) => {
     if (!err) {
       items.forEach(item => {
-        Gallery.findByIdAndRemove(item._id, (err)=>{});
+        Gallery.findByIdAndRemove(item._id, (err) => {});
       });
       req.flash(
         "success",
@@ -170,7 +171,9 @@ router.get("/gallery/:imageId/delete", (req, res, next) => {
 router.get("/gallery/all", (req, res, next) => {
   Gallery.find({}, (err, foundImages) => {
     if (!err && foundImages) {
-      res.json({ images: foundImages });
+      res.json({
+        images: foundImages
+      });
     } else {
       next(new errors.generic());
     }

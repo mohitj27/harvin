@@ -223,3 +223,8 @@ nav ul a {
 .harvinThemeText {
   color: #13b38b;
 }
+#newExamButton{
+  position: fixed;
+  bottom: 10%;
+  right: 10%;
+}
