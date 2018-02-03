@@ -47,7 +47,7 @@ router.get('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res)
   res.render('newVisitor')
 })
 
-router.post('/vms', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
+router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   const name = req.body.name
   const phone = req.body.phone
   const emailId = req.body.emailId
