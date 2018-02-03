@@ -45,10 +45,6 @@ router.get("/login", function(req, res) {
   res.redirect('/admin')
 })
 
-router.get('/new', middleware.isLoggedIn,(req, res, next) => {
-  res.render('newVisitor')
-})
-
 //Handle user login -- for admin
 router.post("/login", passport.authenticate("local", {
     failureRedirect: "/admin/login",

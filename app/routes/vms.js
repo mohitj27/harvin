@@ -43,11 +43,11 @@ router.get('/', (req, res, next) => {
   })
 })
 
-<<<<<<< HEAD
+router.get('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res) => {
+  res.render('newVisitor')
+})
+
 router.post('/vms', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
-=======
-router.post('/vms', middleware.isLoggedIn, (req, res, next) => {
->>>>>>> 1a35c9a4ff5f5de67b44e09038fec295893fe16b
   const name = req.body.name
   const phone = req.body.phone
   const emailId = req.body.emailId
@@ -65,7 +65,7 @@ router.post('/vms', middleware.isLoggedIn, (req, res, next) => {
   newVisitor.save((err, createdVisitor) => {
     if (!err && createdVisitor) {
       req.flash("success", 'Your response has been saved successfully')
-      res.redirect('/admin/new')
+      res.redirect('/vms')
     } else {
       console.log(err)
       next(new errors.generic())

@@ -55,7 +55,7 @@
 							</label>
 					</div>
 					<div class="row input-field">
-						<input id="phone" name="phone" type="tel" minlength="10" maxlength="10" required />
+						<input id="phone" name="phone" type="number" min="1111111111" max="9999999999" required />
 						<label for="phone">
 								<span class="label-text">Phone</span>
 								<span class="nav-dot"></span>
@@ -83,6 +83,19 @@
 		</div>
 
 	</main>
-</body>
+<% if(msg_error && msg_error.length > 0){ %>
+			<span id="error-card">
+					<%=msg_error%>
+				</span>
+			<% } %>
 
+				<% if(msg_success && msg_success.length > 0){ %>
+
+					<span id="success-card">
+							<%=msg_success%>
+						</span>
+
+					<% } %>
+</body>
+<script src="/js/main.js" charset="utf-8"></script>
 </html>
