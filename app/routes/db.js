@@ -17,6 +17,7 @@ var express = require("express"),
   Exam = require("../models/Exam.js"),
   Batch = require("../models/Batch.js"),
   Gallery = require("../models/Gallery"),
+  Visitor= require("../models/Visitor"),
   Profile = require("../models/Profile.js"),
   path = require("path"),
   multer = require("multer"),
@@ -119,6 +120,20 @@ router.get(
       });
   }
 );
+
+router.get('/visitors', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+  Visitor.find({}, (err, foundVisitors) => {
+    if (!err && foundVisitors) {
+      res.render('visitorDb', {
+        visitors: foundVisitors
+      })
+    } else {
+      console.log(err)
+      next(new errors.generic())
+    }
+  });
+});
+
 
 router.get("/gallery/upload", (req, res, next) => {
   res.render("insertGallery");

@@ -4,7 +4,6 @@ var express = require("express"),
   moment = require("moment-timezone"),
   errors = require("../error"),
   middleware = require("../middleware"),
-  Visitor = require('./../models/Visitor'),
   sharp = require('sharp'),
   request = require('request'),
   Gallery = require('./../models/Gallery'),
@@ -13,19 +12,6 @@ var express = require("express"),
 
 router.get('/test', (req, res, next) => {
   res.render('testGallery')
-});
-
-router.get('/all', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
-  Visitor.find({}, (err, foundVisitors) => {
-    if (!err && foundVisitors) {
-      res.render('visitorDb', {
-        visitors: foundVisitors
-      })
-    } else {
-      console.log(err)
-      next(new errors.generic())
-    }
-  });
 });
 
 router.get('/', (req, res, next) => {
