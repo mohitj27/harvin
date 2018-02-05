@@ -172,11 +172,38 @@ const invalidEmail = function(next) {
   );
 };
 
-const invalidComment = function(next) {
+const invalidAddress = function(next) {
   generatError(
     400,
-    "INVALID_COMMENT",
-    "Bad request! Invalid comments provided.",
+    "INVALID_ADDRESS",
+    "Bad request! Invalid address provided.",
+    next
+  );
+};
+
+const invalidReferral = function(next) {
+  generatError(
+    400,
+    "INVALID_REFERRAL",
+    "Bad request! Invalid referral provided.",
+    next
+  );
+};
+
+const invalidSchool = function(next) {
+  generatError(
+    400,
+    "INVALID_SCHOOL",
+    "Bad request! Invalid school provided.",
+    next
+  );
+};
+
+const invalidAim = function(next) {
+  generatError(
+    400,
+    "INVALID_AIM",
+    "Bad request! Invalid aim provided.",
     next
   );
 };
@@ -208,8 +235,17 @@ const errorResponse = function(name, next) {
     case "INVALID_EMAIL":
       invalidEmail(next);
       break;
-    case "INVALID_COMMENT":
-      invalidComment(next);
+    case "INVALID_ADDRESS":
+      invalidAddress(next);
+      break;
+    case "INVALID_REFERRAL":
+      invalidReferral(next);
+      break;
+    case "INVALID_SCHOOL":
+      invalidSchool(next);
+      break;
+    case "INVALID_AIM":
+      invalidAim(next);
       break;
     case "INVALID_FILE":
       invalidFile(next);

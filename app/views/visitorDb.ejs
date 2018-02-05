@@ -12,7 +12,7 @@
 						<th style="text-align: center">Class</th>
 						<th style="text-align: center">Contact</th>
 						<th style="text-align: center">Email Id</th>
-						<th style="text-align: center"></th>
+						<th style="text-align: center">Referral</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -37,8 +37,29 @@
 								<td style="text-align: center">
 									<%= visitor.emailId %>
 								</td>
-								<td class="comment-modal-trigger" style="text-align: center">
-									<p class="comment-text"><%=visitor.comments%></p>
+								</td>
+								<td id="referral" style="text-align: center">
+									<%= visitor.referral %>
+								</td>
+								<td id="comments" class="vms-table-text" style="text-align: center">
+									<p>
+										<%=visitor.comments%>
+									</p>
+								</td>
+								<td id="school" class="vms-table-text" style="text-align: center">
+									<p>
+										<%=visitor.school%>
+									</p>
+								</td>
+								<td id="address" class="vms-table-text" style="text-align: center">
+									<p >
+										<%=visitor.address%>
+									</p>
+								</td>
+								<td id="aim" class="vms-table-text" style="text-align: center">
+									<p >
+										<%=visitor.aim%>
+									</p>
 								</td>
 								<td style="text-align: center">
 									<form method="post" action="/vms/<%=visitor._id%>?_method=delete">
@@ -54,7 +75,7 @@
 			</table>
 			<div id="modal-comment" class="modal center-align">
 				<div class="modal-content">
-					<h4>Visitor comments</h4>
+					<h4>Visitor Info</h4>
 				</div>
 				<div class="modal-footer">
 					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>

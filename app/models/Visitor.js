@@ -23,12 +23,28 @@ var visitorSchema = new Schema({
   },
   comments: {
     type: String,
-    required: true
+    required: true,
+    default: ''
   },
-  classs: {
+  address: {
     type: String,
     required: true,
-    enum: [ 'IX', 'X', 'XI', 'XII', 'XII-Pass']
+    default: ''
+  },
+  referral: {
+    type: String,
+    required: true,
+    default: ''
+  },
+  school: {
+    type: String,
+    required: true,
+    default: ''
+  },
+  aim: {
+    type: String,
+    required: true,
+    default: ''
   },
   date: {
     type: String,

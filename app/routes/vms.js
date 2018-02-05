@@ -46,6 +46,10 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res
   const classs = req.body.classs || ''
   const date = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a') || ''
   const comments = req.body.comments || ''
+  const address = req.body.address || ''
+  const referral = req.body.referral || ''
+  const school = req.body.school || ''
+  const aim = req.body.aim || ''
 
   res.locals.flashUrl = '/vms'
 
@@ -57,7 +61,7 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res
     return errorHandler.errorResponse('INVALID_PHONE', next);
   }
 
-  if(!emailId || validator.isEmail(emailId)){
+  if(!emailId || !validator.isEmail(emailId)){
     return errorHandler.errorResponse('INVALID_EMAIL', next);
   }
 
@@ -65,8 +69,20 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res
     return errorHandler.errorResponse('INVALID_CLASS_NAME', next);
   }
 
-  if(!comments || validator.isEmpty(comments)){
-    return errorHandler.errorResponse('INVALID_COMMENT', next);
+  if(!address || validator.isEmpty(address)){
+    return errorHandler.errorResponse('INVALID_ADDRESS', next);
+  }
+
+  if(!referral || validator.isEmpty(referral)){
+    return errorHandler.errorResponse('INVALID_REFERRAL', next);
+  }
+
+  if(!school || validator.isEmpty(school)){
+    return errorHandler.errorResponse('INVALID_SCHOOL', next);
+  }
+
+  if(!aim || validator.isEmpty(aim)){
+    return errorHandler.errorResponse('INVALID_AIM', next);
   }
 
   const newVisitor = {
@@ -74,10 +90,17 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res
     phone,
     emailId,
     classs,
-    date
+    date,
+    comments,
+    address,
+    referral,
+    school,
+    aim
   }
 
-  var promise = addNewVisitor(newVisitor)
+  console.log('newVisitor', newVisitor);
+
+  var promise = vmsController.addNewVisitor(newVisitor)
   promise.then(function (createdVisitor) {
     req.flash("success", 'Your response has been saved successfully')
     res.redirect('/vms')
