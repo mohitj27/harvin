@@ -215,35 +215,25 @@ router.post('/careers', (req, res, next) => {
   req.flash('success', 'Response recoreded successfully, We will get back to you soon!')
   res.redirect('/careers')
 })
-//
-// router.get('/blog/:title', (req, res, next) => {
-//   console.log(req.query)
-//   console.log('thisone')
-//   // res.render('blog')
-//
-//   Blog.find({},(err,foundBlog)=>{
-//     if(!err && foundBlog)
-//     res.render('blog',{
-//       foundBlog:foundBlog
-//     })
-//     else {
-//       console.log(err)
-//       next(new errors.generic())
-//     }
-//   })
-//
-// })
+
 router.get('/blog', (req, res, next) => {
-  console.log('title', req.query.title)
+    console.log('title', req.query.title)
   if (req.query.title) {
-    Blog.find({
+    Blog.findOne({
       "blogTitle": req.query.title
     }, (err, foundBlog) => {
-      if (err) console.log(err)
-      res.render('standard_blog_detail', {
-        foundBlog: foundBlog
-      })
-
+      console.log('foundBlog', foundBlog);
+      if(err){
+        return console.log('err', err);
+      } else {
+        fs.readFile(__dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath, function(err, data) {
+          if (err) throw err;
+          res.render('standard_blog_detail', {
+            blogContent: data,
+            foundBlog: foundBlog
+          })
+        });
+      }
     })
   } else {
     Blog.find({}, (err, foundBlog) => {

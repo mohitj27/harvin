@@ -24,10 +24,15 @@
 
 
                   </h2>
-                  <h3 id="title"><%=foundBlog[0].blogTitle%></h3>
+                  <h3 id="title"><%=foundBlog.blogTitle%></h3>
+                  <h4>Cover img</h4>
+                  <img src="/blogImage/<%=foundBlog.coverImgName%>" alt="">
+
                   <p id="path">
-                    <%=foundBlog[0].htmlFilePath%>
+                    <%=foundBlog.htmlFilePath%>
                   </p>
+                  <%-blogContent%>
+
                   <div class="section">
                     <div id="content" class="container">
 

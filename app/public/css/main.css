@@ -203,6 +203,7 @@ nav ul a {
 #menu-button{
   font-size: 44px;
 }
+
 .button-collapse{
   margin:10px;
   position: fixed;
@@ -210,10 +211,6 @@ nav ul a {
 
 .collapsible-header{
   padding-left: 32px !important;
-}
-
-.collapsible-body{
-  padding-left: 70px !important;
 }
 
 .harvinTheme {
@@ -224,6 +221,7 @@ nav ul a {
 .harvinThemeText {
   color: #13b38b;
 }
+
 #newExamButton{
   position: fixed;
   bottom: 10%;

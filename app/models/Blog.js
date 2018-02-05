@@ -18,6 +18,9 @@ let BlogSchema = new Schema({
     type:String,
     required:true
   },
+  coverImgName:{
+    type:String
+  },
   blogImages:[{
     type:String,
     default:'avatar_01.jpg'
