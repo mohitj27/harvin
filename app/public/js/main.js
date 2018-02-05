@@ -14,12 +14,12 @@ $(function() {
 	})
 
   if ($errorCard.length > 0) {
-		 Materialize.toast($errorCard.text(), 4000)
+		 Materialize.toast($errorCard.text(), 5000)
 		 $('.toast').css('background-color', 'red')
   }
 
   if ($successCard.length > 0) {
-		 Materialize.toast($successCard.text(), 4000)
+		 Materialize.toast($successCard.text(), 5000)
 		 $('.toast').css('background-color', 'green')
   }
 

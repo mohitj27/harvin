@@ -105,21 +105,32 @@ app.use("/", indexRoutes);
 // Error handling middleware function
 app.use(function(err, req, res, next) {
   if (err) {
-    err.statusCode = err.statusCode || 500;
-    res.status(err.statusCode);
-    if ("development" === app.get("env")) {
-      res.render('error', {
-        name: err.name || "",
-        message: err.message || "",
-        statusCode: err.statusCode
-      });
-    } else {
-      res.render('error', {
-        name: "",
-        message: err.message || "",
-        statusCode: 0
-      });
-    }
+
+      console.error("err---------------: ", err.stack);
+     console.error("err_status: ", err.status);
+     console.error("err_msg: ", err.message);
+     console.error("err_name: ", err.name);
+     console.log('url', req.originalUrl);
+     const status = err.status || 400;
+     const flashUrl = res.locals.flashUrl || '/admin'
+     // res.status(status).json(err);
+     req.flash('error', err.message)
+     res.redirect(res.locals.flashUrl)
+    // err.statusCode = err.statusCode || 500;
+    // res.status(err.statusCode);
+    // if ("development" === app.get("env")) {
+    //   res.render('error', {
+    //     name: err.name || "",
+    //     message: err.message || "",
+    //     statusCode: err.statusCode
+    //   });
+    // } else {
+    //   res.render('error', {
+    //     name: "",
+    //     message: err.message || "",
+    //     statusCode: 0
+    //   });
+    // }
   }
 });
 

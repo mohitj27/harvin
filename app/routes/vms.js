@@ -3,13 +3,18 @@ var express = require("express"),
   fs = require('fs'),
   moment = require("moment-timezone"),
   errors = require("../error"),
+  errorHandler = require('../errorHandler'),
   middleware = require("../middleware"),
   sharp = require('sharp'),
   request = require('request'),
   Gallery = require('./../models/Gallery'),
   Visitor= require('./../models/Visitor'),
   Blog = require('./../models/Blog'),
+  vmsController = require('./../controllers/vms.controller'),
+  validator = require('validator')
   router = express.Router();
+  Promise = require('bluebird')
+  mongoose.Promise = Promise;
 
 router.get('/test', (req, res, next) => {
   res.render('testGallery')
@@ -35,32 +40,50 @@ router.get('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res)
 })
 
 router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  const name = req.body.name
-  const phone = req.body.phone
-  const emailId = req.body.emailId
-  const classs = req.body.classs
-  const date = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a')
-  const comments = req.body.comments
+  const name = req.body.name || ''
+  const phone = req.body.phone || ''
+  const emailId = req.body.emailId || ''
+  const classs = req.body.classs || ''
+  const date = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a') || ''
+  const comments = req.body.comments || ''
 
-  const newVisitor = new Visitor({
+  res.locals.flashUrl = '/vms'
+
+  if(!name || validator.isEmpty(name)){
+    return errorHandler.errorResponse('INVALID_NAME', next);
+  }
+
+  if(!phone || validator.isEmpty(phone) || !validator.isLength(phone, {min: 10, max: 10})){
+    return errorHandler.errorResponse('INVALID_PHONE', next);
+  }
+
+  if(!emailId || validator.isEmail(emailId)){
+    return errorHandler.errorResponse('INVALID_EMAIL', next);
+  }
+
+  if(!classs || validator.isEmpty(classs)){
+    return errorHandler.errorResponse('INVALID_CLASS_NAME', next);
+  }
+
+  if(!comments || validator.isEmpty(comments)){
+    return errorHandler.errorResponse('INVALID_COMMENT', next);
+  }
+
+  const newVisitor = {
     name,
     phone,
     emailId,
     classs,
-    date,
-    comments
+    date
+  }
+
+  var promise = addNewVisitor(newVisitor)
+  promise.then(function (createdVisitor) {
+    req.flash("success", 'Your response has been saved successfully')
+    res.redirect('/vms')
+  }, function (err) {
+    next(err || 'SERVER_ERROR')
   })
-
-  newVisitor.save((err, createdVisitor) => {
-    if (!err && createdVisitor) {
-      req.flash("success", 'Your response has been saved successfully')
-      res.redirect('/vms')
-    } else {
-      console.log(err)
-      next(new errors.generic())
-    }
-  });
-
 });
 
 router.delete('/:visitorId', (req, res, next) => {
