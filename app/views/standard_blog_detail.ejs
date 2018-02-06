@@ -19,21 +19,8 @@
             <div class="row">
                 <!-- ====================== Main .blog-area ====================== -->
                 <main class="col-xl-8 col-lg-8 col-md-7 blog-details-area">
-                  <h2>Blog
-                  </h2>
-                  <h3 id="title"><%=foundBlog.blogTitle%></h3>
-                  <h4>Cover img</h4>
-                  <img src="/blogImage/<%=foundBlog.coverImgName%>" alt="">
-
-                  <p id="path">
-                    <%=foundBlog.htmlFilePath%>
-                  </p>
-                  <%-blogContent%>
-
                   <div class="section">
                     <div id="content" class="container">
-
-
                     </div>
                   </div>
 
@@ -48,43 +35,13 @@
                         </div>
                         <!-- Card Body -->
                         <div class="card-body blog-texts p-0">
-                            <span class="posted-by mt-20 mb-20 d-block">Posted By <mark class="admin">Admin</mark></span>
-                            <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                            <p class="card-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo hello world architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores </p>
-                            <img src="/assets/img/blog-details/2.jpg" alt="Side Img" class="float-left mr-30 mt-10 mb-10">
-                            <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p>
-                            <p class="card-text">But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain</p>
-                            <p class="card-text">To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure</p>
-                        </div>
-                        <!--  Quotes  -->
-                        <div class="quotes">
-                            <p class="text-center mb-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi <i class="fa fa-quote-right"></i></p>
-                        </div>
-                        <p>ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur</p>
-                        <!-- Card List -->
-                        <div class="card card-list border-0">
-                            <h2 class="card-title">The standard Lorem Ipsum passage, used since the 1500s</h2>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item border-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</li>
-                                <li class="list-group-item border-0">Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,</li>
-                                <li class="list-group-item border-0">On the other hand, we denounce with righteous indignation and dislike men who are so beguiled</li>
-                            </ul>
-                            <p class="card-text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi</p>
-                            <!-- Card Footer -->
-                            <div class="align-items-center bg-white border-0 card-footer d-flex flex-column flex-lg-row justify-content-md-between p-0">
-                                <div class="share-icons w-50">
-                                    <span>Share:</span>
-                                    <a href="standard_blog_detail.html#"><i class="fa fa-facebook"></i></a>
-                                    <a href="standard_blog_detail.html#"><i class="fa fa-twitter"></i></a>
-                                    <a href="standard_blog_detail.html#"><i class="fa fa-google-plus"></i></a>
-                                    <a href="standard_blog_detail.html#"><i class="fa fa-pinterest"></i></a>
-                                </div>
-                                <div class="tags">
-                                    <a href="standard_blog_detail.html#">Life Style,</a>
-                                    <a href="standard_blog_detail.html#">Fashion</a>
-                                </div>
-                            </div>
-                        </div>
+                          <% if(foundBlog.author){ %>
+                            <span class="posted-by mt-20 mb-20 d-block">Posted By <mark class="admin"><%=foundBlog.author.username%></mark></span>
+
+                          <%}%>
+
+                          <%-blogContent%>
+
                     </article>
                     <!-- ================= /Full Post ================= -->
                     <!-- =============== //Recent Blog =============== -->
