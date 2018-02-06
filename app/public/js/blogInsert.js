@@ -5,6 +5,8 @@ $(function() {
   //   return dialogText;
   // };
 
+
+
   $('.modal').modal({
       dismissible: true
   });
@@ -18,7 +20,7 @@ $(function() {
     onClose: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
   })
 
-  var socket = io("http://localhost:3001/")
+  var socket = io(a())
   socket.emit('message', 'Hello server')
 
   socket.on('connect', function() {
