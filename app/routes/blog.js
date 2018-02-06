@@ -71,7 +71,10 @@ router.post("/", (req, res, next) => {
       blogTitle,
       htmlFilePath,
       hashName,
-      coverImgName
+      coverImgName,
+      author:req.user,
+      publish:req.body.publish,
+      draft:req.body.draft
     }
     Blog.create(blogObject, (err, createdBlog) => {
       if (err) console.log(err)

@@ -1,5 +1,9 @@
 $(function() {
-
+  window.onbeforeunload = function(e) {
+    var dialogText = 'Dialog text here';
+    e.returnValue = dialogText;
+    return dialogText;
+  };
 
   $('ul.tabs').tabs();
   $('.button-collapse-image').sideNav({
