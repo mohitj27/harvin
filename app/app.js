@@ -25,6 +25,51 @@ var express = require("express"),
   http = require('http').Server(app),
    io = require('socket.io')(http)
 
+   io = require('socket.io')(http)
+
+ let files = {},
+   struct = {
+     name: null,
+     type: null,
+     size: 0,
+     data: [],
+     slice: 0,
+   };
+ io.on('connection', function(socket) {
+
+   console.log('a user conn sadaected');
+
+   socket.on('end upload',()=>{files={}})
+   socket.on('slice upload', (data) => {
+
+     console.log('hello',data)
+     if (!files[data.name]) {
+       files[data.name] = Object.assign({}, struct, data)
+       files[data.name].data = []
+     }
+
+     //convert the ArrayBuffer to Buffer
+     data.data = new Buffer(new Uint8Array(data.data))
+     //save the data
+
+
+     fs.writeFile(__dirname + "/../../HarvinDb/blogImage/"+data.name, data.data, (err) => {
+       console.log('err', err)
+       console.log('files data',files[data.name])
+       console.log('twice problem')
+       if (err) return socket.emit('upload error')
+       socket.emit('end upload',data.name)
+       files={}
+       delete files[data.name]
+
+
+     });
+
+
+   });
+ });
+
+
    io.on('connection', function(socket){
      console.log('a user connected');
      socket.on('chat message', function(msg){
