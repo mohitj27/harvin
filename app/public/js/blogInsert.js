@@ -1,6 +1,18 @@
 $(function() {
 
+  // $('#submit-button').on('click', function (e) {
+  //   e.preventDefault()
+  //   console.log('submit clicked');
+  //   $blogContent = $('.note-editable').html()
+  //
+  //   $.post('/admin/blog', {blogContent: $blogContent}, function (data) {
+  //     console.log('returned', data);
+  //   })
+  // })
 
+  $('.modal').modal({
+      dismissible: true
+  });
   $('ul.tabs').tabs();
   $('.button-collapse-image').sideNav({
     menuWidth: 300, // Default is 300
@@ -23,6 +35,16 @@ $(function() {
       let currImageElement = $('<img>');
       currImageElement.attr('src', currImageElementSrc)
       $('.note-editable').append(currImageElement)
+  //     if ($('#summernote').length !== 0) {
+  //   $('#summernote').summernote({
+  //     placeholder: 'Write your content here!!!',
+  //     tabsize: 2,
+  //     minHeight: 500,
+  //     maxHeight: null,
+  //     focus: true
+  //   });
+  // }
+      $('.note-editable').append(" ")
     });
 
     socket.on('upload error', () => {

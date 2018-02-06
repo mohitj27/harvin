@@ -221,7 +221,12 @@ router.get('/blog', (req, res, next) => {
   if (req.query.title) {
     Blog.findOne({
       "blogTitle": req.query.title
-    }, (err, foundBlog) => {
+    })
+    .populate({
+      path: 'author',
+      modal: "User"
+    })
+    .exec( (err, foundBlog) => {
       console.log('foundBlog', foundBlog);
       if(err){
         return console.log('err', err);

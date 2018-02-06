@@ -20,7 +20,7 @@ io.on('connection', function(socket) {
 const BLOG_DIR = path.normalize(__dirname + '/../../../HarvinDb/blog/');
 const BLOG_IMAGE_DIR = path.normalize(__dirname + '/../../../HarvinDb/blogImage/');
 
-router.get('/', (req, res, next) => {
+router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   res.render("newBlog");
 });
 
@@ -43,40 +43,54 @@ var storage = multer.diskStorage({
   }
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
 
   var upload = multer({
     storage: storage
   }).single('userFile');
   upload(req, res, function(err) {
     var coverImgName = path.basename(req.file.path);
-    console.log('content', req.body)
-    console.log('files', req.file);
+    // console.log('content', req.body)
+    // console.log('files', req.file);
     // console.log('path', );
     let blog_name = req.body.title.toLowerCase().replace(/ /g, '_').concat('.html')
-    console.log(blog_name, 'blog_name1')
+    // console.log(blog_name, 'blog_name1')
     checkBlogDir()
     fs.writeFile(BLOG_DIR + blog_name, req.body.editordata, (err) => {
       if (err) throw err
     })
     const blogTitle = req.body.title
-    console.log(blogTitle)
+    // console.log(blogTitle)
     let hashName = ''
     blogTitle.split(' ').forEach(function(word) {
       hashName += word.charAt(0)
     })
-    console.log('hash', hashName)
+    // console.log('hash', hashName)
     const htmlFilePath = blog_name
-    let blogObject = {
-      blogTitle,
-      htmlFilePath,
-      hashName,
-      coverImgName
-    }
-    Blog.create(blogObject, (err, createdBlog) => {
-      if (err) console.log(err)
+    const uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY');
+
+    Blog.findOneAndUpdate({
+      blogTitle
+    }, {
+      $set: {
+        htmlFilePath: htmlFilePath,
+        hashName: hashName,
+        coverImgName: coverImgName
+      }
+    }, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    }, function(err, updatedBlog) {
+      if(!err){
+        console.log('updatedBlog', updatedBlog);
+        res.sendStatus(200)
+      }
+      else {
+        console.log('err', err);
+      }
+
     })
-    res.send(200)
   })
 
 })
@@ -86,18 +100,19 @@ router.post('/:htmlFilePath/images', (req, res) => {
   // console.log('files', req.files);
 
   let htmlFilePath = req.params.htmlFilePath
-  htmlFilePath.concat('_').concat(req.body.uploadCounter);
+  // htmlFilePath.concat('_').concat(req.body.uploadCounter);
 
   checkBlogDir()
   checkBlogImageDir()
   Blog.findOneAndUpdate({
-      htmlFilePath
+      blogTitle: htmlFilePath
     }, {
       $addToSet: {
         blogImages: req.body.filename
       },
       $set: {
-        author: req.user
+        author: req.user,
+        uploadDate: moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY')
       }
     }, {
       upsert: true,
@@ -105,7 +120,13 @@ router.post('/:htmlFilePath/images', (req, res) => {
       setDefaultsOnInsert: true
     },
     function(err, updatedBlog) {
-      res.send(200)
+      if(!err){
+        console.log('updatedBlog', updatedBlog);
+        res.sendStatus(200)
+      }
+      else {
+        console.log('err', err);
+      }
 
     })
 })

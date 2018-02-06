@@ -20,9 +20,6 @@
                 <!-- ====================== Main .blog-area ====================== -->
                 <main class="col-xl-8 col-lg-8 col-md-7 blog-details-area">
                   <h2>Blog
-
-
-
                   </h2>
                   <h3 id="title"><%=foundBlog.blogTitle%></h3>
                   <h4>Cover img</h4>
@@ -42,12 +39,12 @@
 
                     <!-- ================= Full Post ================= -->
                     <article class="card full-post border-0">
-                        <mark class="catagory text-center">Life Style</mark>
-                        <h2 class="card-title text-center h1">Young Blonde Walking Towards Union Square in SF</h2>
+                        <!-- <mark class="catagory text-center">Life Style</mark> -->
+                        <h2 class="card-title text-center h1"><%=foundBlog.blogTitle%></h2>
                         <!-- Blog Content-->
                         <div class="blgo-content">
-                            <a href="standard_blog_detail.html#"><img class="card-img rounded-0" src="/assets/img/blog-details/1.jpg" alt="Blog Image"></a>
-                            <span class="posted-date">26 Jan, 2016</span>
+                            <img class="card-img rounded-0" src="/blogImage/<%=foundBlog.coverImgName%>" alt="Blog Image">
+                            <span class="posted-date"><%=foundBlog.uploadDate%></span>
                         </div>
                         <!-- Card Body -->
                         <div class="card-body blog-texts p-0">
