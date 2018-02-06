@@ -27,6 +27,14 @@ let BlogSchema = new Schema({
   author:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
+  },
+  publish:{
+    type:String,
+    default:'off'
+  },
+  draft:{
+    type:String,
+    default:'on'
   }
 
 

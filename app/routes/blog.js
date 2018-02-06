@@ -75,7 +75,10 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
       $set: {
         htmlFilePath: htmlFilePath,
         hashName: hashName,
-        coverImgName: coverImgName
+        coverImgName: coverImgName,
+        author:req.user,
+        publish:req.body.publish,
+        draft:req.body.draft
       }
     }, {
       upsert: true,

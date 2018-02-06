@@ -1,14 +1,9 @@
 $(function() {
-
-  // $('#submit-button').on('click', function (e) {
-  //   e.preventDefault()
-  //   console.log('submit clicked');
-  //   $blogContent = $('.note-editable').html()
-  //
-  //   $.post('/admin/blog', {blogContent: $blogContent}, function (data) {
-  //     console.log('returned', data);
-  //   })
-  // })
+  window.onbeforeunload = function(e) {
+    var dialogText = 'Dialog text here';
+    e.returnValue = dialogText;
+    return dialogText;
+  };
 
   $('.modal').modal({
       dismissible: true
