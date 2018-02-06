@@ -54,10 +54,8 @@ router.post("/", (req, res, next) => {
     console.log('files', req.file);
     // console.log('path', );
     let blog_name = req.body.title.toLowerCase().replace(/ /g, '_').concat('.html')
-
     console.log(blog_name, 'blog_name1')
     checkBlogDir()
-
     fs.writeFile(BLOG_DIR + blog_name, req.body.editordata, (err) => {
       if (err) throw err
     })
