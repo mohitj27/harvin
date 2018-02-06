@@ -5,6 +5,7 @@ var express = require("express"),
   middleware = require("../middleware/index"),
   path = require('path'),
   fs = require('fs'),
+  multer = require('multer'),
   app = express(),
   router = express.Router(),
   http = require('http').Server(app),
@@ -27,42 +28,59 @@ router.get('/:blogTitle', (req, res) => {
   Blog.findOne({
     blogTitle: req.params.blogTitle,
     author: req.user._id
-  }, (err,foundBlog) => {
-if(err)console.log(err)
-else{
-  res.json(foundBlog)
-}
+  }, (err, foundBlog) => {
+    if (err) console.log(err)
+    else {
+      res.json(foundBlog)
+    }
   })
 });
 
+var storage = multer.diskStorage({
+  destination: __dirname + '/../../../HarvinDb/blogImage/',
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + "__" + file.originalname);
+  }
+});
 
 router.post("/", (req, res, next) => {
-  console.log('content', req.body)
-  let blog_name = req.body.title.toLowerCase().replace(/ /g, '_').concat('.html')
 
-  console.log(blog_name, 'blog_name')
-  checkBlogDir()
+  var upload = multer({
+    storage: storage
+  }).single('userFile');
+  upload(req, res, function(err) {
+    var coverImgName = path.basename(req.file.path);
+    console.log('content', req.body)
+    console.log('files', req.file);
+    // console.log('path', );
+    let blog_name = req.body.title.toLowerCase().replace(/ /g, '_').concat('.html')
 
-  fs.writeFile(BLOG_DIR + blog_name, req.body.editordata, (err) => {
-    if (err) throw err
+    console.log(blog_name, 'blog_name1')
+    checkBlogDir()
+
+    fs.writeFile(BLOG_DIR + blog_name, req.body.editordata, (err) => {
+      if (err) throw err
+    })
+    const blogTitle = req.body.title
+    console.log(blogTitle)
+    let hashName = ''
+    blogTitle.split(' ').forEach(function(word) {
+      hashName += word.charAt(0)
+    })
+    console.log('hash', hashName)
+    const htmlFilePath = blog_name
+    let blogObject = {
+      blogTitle,
+      htmlFilePath,
+      hashName,
+      coverImgName
+    }
+    Blog.create(blogObject, (err, createdBlog) => {
+      if (err) console.log(err)
+    })
+    res.send(200)
   })
-  const blogTitle = req.body.title
-  console.log(blogTitle)
-  let hashName = ''
-  blogTitle.split(' ').forEach(function(word) {
-    hashName += word.charAt(0)
-  })
-  console.log('hash', hashName)
-  const htmlFilePath = blog_name
-  let blogObject = {
-    blogTitle,
-    htmlFilePath,
-    hashName
-  }
-  Blog.create(blogObject, (err, createdBlog) => {
-    if (err) console.log(err)
-  })
-  res.send(200)
+
 })
 
 router.post('/:htmlFilePath/images', (req, res) => {

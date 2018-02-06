@@ -30,7 +30,7 @@
 
 			<div class="section">
 				<div class="container">
-					<form method="post" class="newBlogForm" action="/admin/blog" method="post">
+					<form method="post" class="newBlogForm" enctype="multipart/form-data" action="/admin/blog" method="post">
 						<div class="input-field">
 							<input id="blog_title" type="text" name="title" class="validate">
 							<label for="first_name">Blog Title</label>
@@ -38,7 +38,7 @@
 						<div class="file-field input-field">
 							<div class="btn file-btn">
 								<span>File</span>
-								<input type="file">
+								<input type="file" name="userFile" required>
 							</div>
 							<div class="file-path-wrapper">
 								<input class="file-path validate" type="text">
