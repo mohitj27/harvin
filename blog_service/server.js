@@ -53,9 +53,9 @@ io.on('connection', function(socket) {
     fs.writeFile(__dirname + "/../../HarvinDb/blogImage/"+data.name, data.data, (err) => {
       console.log('err', err)
       console.log('files data',files[data.name])
-
+      console.log('twice problem')
       if (err) return socket.emit('upload error')
-      socket.emit('end upload','done')
+      socket.emit('end upload',data.name)
       files={}
       delete files[data.name]
 
