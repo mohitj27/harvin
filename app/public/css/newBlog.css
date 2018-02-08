@@ -85,3 +85,6 @@ body{
   border: 1px solid #c3bcbc;
   margin: 10px 5px 0 0;
 }
+tr:hover{
+  background-color:white !important;
+}

@@ -88,7 +88,8 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
         coverImgName: coverImgName,
         author:req.user,
         publish:req.body.publish,
-        draft:req.body.draft
+        draft:req.body.draft,
+        uploadDate
       }
     }, {
       upsert: true,
