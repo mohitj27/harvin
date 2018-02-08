@@ -5,6 +5,7 @@ $(function() {
   //   return dialogText;
   // };
 
+  CKEDITOR.replace( 'editor1' );
 
 
   $('.modal').modal({
@@ -29,9 +30,17 @@ $(function() {
       $('.progress').fadeOut(2000, function() {
         $('.progress').remove()
       })
-      let currImageElement = $('<img>');
-      currImageElement.attr('src', currImageElementSrc)
-      $('.note-editable').append(currImageElement)
+      let currImageElement = $('<p><img></p>');
+      currImageElement.children().attr('src', currImageElementSrc)
+
+         var iframe = document.getElementsByTagName("iframe");
+         console.log('ifram', iframe);
+         var innerDoc = iframe[0].contentDocument ;
+         console.log(innerDoc.body);
+console.log('inner', innerDoc.getElementsByClassName('cke_editable'));
+      innerDoc.getElementsByClassName('cke_editable').innerHTML=`<p><img > hello world</p>`
+      console.log('inner', innerDoc.getElementsByClassName('cke_editable'));
+
   //     if ($('#summernote').length !== 0) {
   //   $('#summernote').summernote({
   //     placeholder: 'Write your content here!!!',
@@ -41,7 +50,6 @@ $(function() {
   //     focus: true
   //   });
   // }
-      $('.note-editable').append(" ")
     });
 
     socket.on('upload error', () => {
@@ -78,7 +86,7 @@ $(function() {
           var span = document.createElement('span');
 
           span.innerHTML = ['<img class="thumb" src="', e.target.result,
-            '" title="', escape(theFile.name), '"/><div class="progress"><div class="indeterminate"></div></div>'
+            '" title="', escape(theFile.name), '"/><div>http://45.55.154.27/blogImage/'+theFile.name+ '</div><div class="progress"><div class="indeterminate"></div></div>'
           ].join('')
           document.getElementById('img-to-upload').insertBefore(span, null)
         }

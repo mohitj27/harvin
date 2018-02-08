@@ -29,15 +29,16 @@ $(function() {
   $('select').material_select();
 
   //summernote init
-  if ($('#summernote').length !== 0) {
-    $('#summernote').summernote({
-      placeholder: 'Write your content here!!!',
-      tabsize: 2,
-      minHeight: 500,
-      maxHeight: null,
-      focus: true
-    });
-  }
+  // if ($('#summernote').length !== 0) {
+  //   $('#summernote').summernote({
+  //     placeholder: 'Write your content here!!!',
+  //     tabsize: 2,
+  //     minHeight: 500,
+  //     maxHeight: null,
+  //     focus: true
+  //   });
+  // }
+
 
   //Date picker initialization
   if ($('.datepicker').length !== 0) {
@@ -72,7 +73,7 @@ $(function() {
   });
 
   $('.collapsible').collapsible()
-  // $('.button-collapse').sideNav('show');
+  $('.button-collapse').sideNav('show');
 
   //=========================================
   //*****EXTRAS*******************

@@ -1,7 +1,7 @@
 <% include partials/header.ejs%>
 	<% include partials/includeBS.ejs%>
 
-		<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+		<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"> -->
 		<link rel="stylesheet" href="/css/newBlog.css">
 		<main>
 
@@ -58,7 +58,7 @@
 								<label for="auto-save">Auto-Save</label>
 							</div>
 						</div>
-						<textarea id="summernote" name="editordata"></textarea>
+						<textarea id="" name="editor1"></textarea>
 
 						<div class="center-align">
 							<button class="btn" id="submit-button">Submit</button>
@@ -74,8 +74,8 @@
 		</main>
 
 
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-
+		<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script> -->
+<script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/js/socket-config.js" charset="utf-8"></script>
 		<script src="/js/blogInsert.js"></script>
