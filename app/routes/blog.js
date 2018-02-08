@@ -20,8 +20,17 @@ io.on('connection', function(socket) {
 const BLOG_DIR = path.normalize(__dirname + '/../../../HarvinDb/blog/');
 const BLOG_IMAGE_DIR = path.normalize(__dirname + '/../../../HarvinDb/blogImage/');
 
-router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   res.render("newBlog");
+});
+
+router.get('/all', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+  Blog.find({},(err,foundBlog)=>{
+    if(err)console.log(err)
+    else{
+      res.render('blogList',{blogs:foundBlog})
+    }
+  })
 });
 
 router.get('/:blogTitle', (req, res) => {
