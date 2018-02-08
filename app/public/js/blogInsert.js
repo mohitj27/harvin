@@ -5,8 +5,20 @@ $(function() {
   //   return dialogText;
   // };
 
-  CKEDITOR.replace( 'editor1' );
+  // CKEDITOR.replace( 'editor1' );
 
+  $('#submit-button').on('click', function (e) {
+    // e.preventDefault()
+
+    console.log('cliked');
+    let editorData = $('#editor1').html()
+    $('#editordata').append(editordata)
+    console.log('editordata', editordata);
+    e.stopPropagation()
+    // $.post('/admin/blog', {})
+  })
+CKEDITOR.disableAutoInline = true;
+    // CKEDITOR.inline( 'editor1' );
 
   $('.modal').modal({
       dismissible: true
@@ -30,17 +42,10 @@ $(function() {
       $('.progress').fadeOut(2000, function() {
         $('.progress').remove()
       })
-      let currImageElement = $('<p><img></p>');
-      currImageElement.children().attr('src', currImageElementSrc)
+      let currImageElement = $('<img>');
+      currImageElement.attr('src', currImageElementSrc)
 
-         var iframe = document.getElementsByTagName("iframe");
-         console.log('ifram', iframe);
-         var innerDoc = iframe[0].contentDocument ;
-         console.log(innerDoc.body);
-console.log('inner', innerDoc.getElementsByClassName('cke_editable'));
-      innerDoc.getElementsByClassName('cke_editable').innerHTML=`<p><img > hello world</p>`
-      console.log('inner', innerDoc.getElementsByClassName('cke_editable'));
-
+      $('#editor1').append(currImageElement)
   //     if ($('#summernote').length !== 0) {
   //   $('#summernote').summernote({
   //     placeholder: 'Write your content here!!!',

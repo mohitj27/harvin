@@ -49,6 +49,7 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
     storage: storage
   }).single('userFile');
   upload(req, res, function(err) {
+    console.log('body', req.body);
     var coverImgName = path.basename(req.file.path);
     // console.log('content', req.body)
     // console.log('files', req.file);

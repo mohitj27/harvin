@@ -1,5 +1,12 @@
 
+#editor1{
+    min-height: 70vh;
+    width: 100%;
+    border: solid green 2px;
+    background-color: #cac1c15c;
+    padding: 10px;
 
+}
     @media only screen and (max-width : 992px) {
       header, main, footer {
         padding-left: 0;
@@ -44,9 +51,6 @@
 .scrollTop a {
   font-size: 18px;
   color: #fff;
-}
-.file-btn{
-  line-height: 1.5em !important;
 }
 .file-path-wrapper{
   overflow: auto;

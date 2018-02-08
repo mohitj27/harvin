@@ -1,5 +1,4 @@
 <% include partials/header.ejs%>
-	<% include partials/includeBS.ejs%>
 
 		<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"> -->
 		<link rel="stylesheet" href="/css/newBlog.css">
@@ -58,12 +57,22 @@
 								<label for="auto-save">Auto-Save</label>
 							</div>
 						</div>
-						<textarea id="" name="editor1"></textarea>
+						<input type="hidden" id="editordata" name="editordata">
 
-						<div class="center-align">
-							<button class="btn" id="submit-button">Submit</button>
+						<div class="row">
+							<div class="center-align">
+								<button class="btn" id="submit-button">Submit</button>
+							</div>
 						</div>
 					</form>
+
+					<div class="row">
+						<div class="col s12">
+							<div id="editor1" contenteditable="true">
+								<h4>Write your blog here...</h4>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
