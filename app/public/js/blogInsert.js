@@ -7,18 +7,13 @@ $(function() {
 
   // CKEDITOR.replace( 'editor1' );
 
-  $('#submit-button').on('click', function (e) {
-    // e.preventDefault()
-
-    console.log('cliked');
-    let editorData = $('#editor1').html()
-    $('#editordata').append(editordata)
-    console.log('editordata', editordata);
-    e.stopPropagation()
-    // $.post('/admin/blog', {})
+  $('.newBlogForm').submit(function () {
+    let editordata = $('#editor1').html()
+    $('#editordata').val(editordata)
+    console.log('editordata',$('#editordata').val());
   })
-CKEDITOR.disableAutoInline = true;
-    // CKEDITOR.inline( 'editor1' );
+
+  CKEDITOR.disableAutoInline = true;
 
   $('.modal').modal({
       dismissible: true
