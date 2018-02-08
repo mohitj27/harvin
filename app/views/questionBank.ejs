@@ -1,43 +1,39 @@
 <% include partials/header.ejs%>
-  <% include partials/includeBS.ejs%>
     <main>
 
+		<a href="/admin/questionBank/addNew" data-position="bottom" data-delay="50" data-tooltip="Add a new Question" class="new btn-floating tooltipped waves-effect waves-light red"><i class="material-icons">add</i></a>
       <div class="container">
-        <div class="row center">
-          <div class="center">
-            <h1><b>Question Bank</b></h1>
-
-          </div>
-          <a href="/admin/questionBank/addNew" class="btn   new">Add new Question</a>
-          <h3 class="center">OR</h3>
+        <div class="row center-align">
+            <h3>Question Bank</h3>
         </div>
         <hr>
+        <br>
+        <br>
         <div class="row">
           <form id="showQuestions" action="/admin/questionBank/qbData" method="get">
 
             <div class="row text-center">
-              <div class="col s4 ">
-                <h2>Class</h2><br>
-
-                <select required name="className" class="selectpicker show-tick" id="qb_classs">
+              <div class="col s12 m4 input-field">
+                <select required name="className" id="qb_classs">
                     <option selected value="" disabled>Class</option>
                      <%classes.forEach(function(classs){%>
-                     <option value="<%=classs.className%>"><%=classs.className%></option>
+                       <option value="<%=classs.className%>"><%=classs.className%></option>
                      <%})%>
                 </select>
+                <label>Select Class </label>
               </div>
 
-              <div class="col s4">
-                <h2>Subject</h2> <br>
-                <select required title="Choose the Subject" name="subjectName" class="selectpicker show-tick" id="qb_subject">
+              <div class="col s12 m4 input-field">
+                <select required name="subjectName" id="qb_subject">
                 </select>
+                <label>Select Subject </label>
               </div>
 
-              <div class="col s4">
-                <h2>Chapter</h2><br>
-                <select required title="Choose the Chapter" name="chapterName" class="selectpicker show-tick" id="qb_chapter">
+              <div class="col s12 m4 input-field">
+                <select required name="chapterName" id="qb_chapter">
 
                 </select>
+                <label>Select Chapter </label>
               </div>
 
             </div>

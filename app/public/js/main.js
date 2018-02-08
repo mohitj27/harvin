@@ -72,7 +72,7 @@ $(function() {
   });
 
   $('.collapsible').collapsible()
-  $('.button-collapse').sideNav('show');
+  // $('.button-collapse').sideNav('show');
 
   //=========================================
   //*****EXTRAS*******************

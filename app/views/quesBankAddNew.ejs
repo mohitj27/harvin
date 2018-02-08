@@ -1,39 +1,33 @@
 <% include partials/header.ejs%>
-  <% include partials/includeBS.ejs%>
     <main>
       <div class="container">
-        <div class="row">
-          <div class="col-md-10 col-sm-12">
-            <h1><b> Add New Question </b></h1>
-          </div>
-        </div>
+        <h3 class="center-align"> Add New Question</h3>
+        <hr>
         <form class="addNewQuestion" id="addNewQuestion" action="/admin/questionBank" method="post">
-
-          <div class="row">
-            <div class="col-sm-4">
-              <h2>Class</h2><br>
-
-              <select required name="className" class="selectpicker show-tick addbtn" id="qb_classs">
-                    <option selected value="" disabled>Class</option>
-                     <%classes.forEach(function(classs){%>
-                     <option value="<%=classs.className%>"><%=classs.className%></option>
-                     <%})%>
-                </select>
+<!--  -->
+        <div class="row">
+            <div class="col s12 m4">
+              <div class="input-field ">
+                <input name="className" required type="text" id="className" autocomplete="off" class="autocomplete validate">
+                <label for="className">Class Name</label>
+              </div>
             </div>
 
-            <div class="col-sm-4">
-              <h2>Subject</h2> <br>
-              <select data-live-search="true" title="Choose the Subject" required name="subjectName" class="selectpicker show-tick addbtn" id="qb_subject">
-                </select>
+            <div class="col s12 m4">
+              <div class="input-field ">
+                <input name="subjectName" required type="text" id="subjectName" autocomplete="off" class="autocomplete validate">
+                <label for="subjectName">Subject Name</label>
+              </div>
             </div>
 
-            <div class="col-sm-4">
-              <h2>Chapter</h2><br>
-              <select data-live-search="true" title="Choose the Chapter" required name="chapterName" class="selectpicker show-tick addbtn" id="qb_chapter">
-                </select>
+            <div class="col s12 m4">
+              <div class="input-field ">
+                <input name="chapterName" required type="text" id="chapterName" autocomplete="off" class="autocomplete validate">
+                <label for="chapterName">Chapter Name</label>
+              </div>
             </div>
-
           </div>
+<!--  -->
 
           <div class="row">
             <div class="form-group">
@@ -74,4 +68,5 @@
 
 
     </main>
+    <script src="/js/questionBank.js" charset="utf-8"></script>
     <% include partials/footer.ejs%>

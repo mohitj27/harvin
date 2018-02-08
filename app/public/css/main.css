@@ -222,7 +222,7 @@ nav ul a {
   color: #13b38b;
 }
 
-#newExamButton{
+.new{
   position: fixed;
   bottom: 10%;
   right: 10%;

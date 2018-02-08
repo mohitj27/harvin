@@ -18,10 +18,12 @@ var questionSchema = new Schema({
 	answers: [{
 		type: String,
 		required: true,
-	}]
-
+	}],
+	addedBy:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "User"
+	}
 });
 
 //Question model
 module.exports = mongoose.model("Question", questionSchema);
-

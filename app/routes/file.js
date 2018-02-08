@@ -42,12 +42,12 @@ function fileUploadSuccess(req, res) {
 }
 
 //Form for uploading a file
-router.get('/uploadFile', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+router.get('/uploadFile', (req, res, next) => {
   res.render('uploadFile');
 });
 
 //Handle file upload
-router.post('/uploadFile', middleware.isLoggedIn, middleware.isCentreOrAdmin, function(req, res) {
+router.post('/uploadFile', function(req, res) {
   var upload = multer({
     storage: storage
   }).single('userFile');

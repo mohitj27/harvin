@@ -10,7 +10,7 @@ var express = require("express"),
 
 	router = express.Router();
 
-router.get("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.get("/", (req, res, next) => {
 	QB_Class.find({}, function (err, classes) {
 		if (err) console.log(err);
 	})
@@ -32,28 +32,29 @@ router.get("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
 	});
 });
 
-router.get("/addNew", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
-	QB_Class.find({}, function (err, classes) {
-		if (err) console.log(err);
-	})
-	.populate({
-		path: "subjects",
-		model: "QB_Subject",
-	})
-	.exec(function (err, classes) {
-		if (err) {
-			console.log(err);
-			req.flash("error", "Please try again");
-			res.redirect("/admin/questionBank");
-		} else {
-			res.render('quesBankAddNew', {
-				classes: classes,
-			});
-		}
-	});
+router.get("/addNew", (req, res, next) => {
+	// QB_Class.find({}, function (err, classes) {
+	// 	if (err) console.log(err);
+	// })
+	// .populate({
+	// 	path: "subjects",
+	// 	model: "QB_Subject",
+	// })
+	// .exec(function (err, classes) {
+	// 	if (err) {
+	// 		console.log(err);
+	// 		req.flash("error", "Please try again");
+	// 		res.redirect("/admin/questionBank");
+	// 	} else {
+	// 		res.render('quesBankAddNew', {
+	// 			classes: classes,
+	// 		});
+	// 	}
+	// });
+	res.render('quesBankAddNew')
 });
 
-router.get("/qbData", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.get("/qbData", (req, res, next) => {
 	var className = req.query.className;
 	var subjectName = req.query.subjectName;
 	var chapterName = req.query.chapterName;
@@ -120,7 +121,7 @@ router.get("/qbData", middleware.isLoggedIn, middleware.isAdmin, (req, res, next
 });
 
 
-router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.post("/", (req, res, next) => {
 	var className = req.body.className;
 	var subjectName = req.body.subjectName;
 	var chapterName = req.body.chapterName;
@@ -270,13 +271,20 @@ router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => 
 
 //helpers
 //helper- class
+
+router.get('/classes', (req, res) =>  {
+	QB_Class.find({},(err, foundClasses) => {
+		if (!err && foundClasses) {
+			res.json({
+				classes: foundClasses
+			});
+		}
+	});
+})
+
 router.get("/class/:className", function (req, res, next) {
 	QB_Class.findOne({
 			className: req.params.className,
-		}, function (err, classs) {
-			if (err) {
-				console.log(err);
-			}
 		})
 		.populate({
 			path: "subjects",
@@ -302,11 +310,6 @@ router.get("/class/:className/subject/:subjectName", function (req, res, next) {
 	QB_Subject.findOne({
 			subjectName: req.params.subjectName,
 			className: req.params.className
-		}, function (err, subject) {
-			if (err) {
-				console.log(err);
-				next(new errors.generic);
-			}
 		})
 		.populate({
 			path: "chapters",
@@ -319,6 +322,7 @@ router.get("/class/:className/subject/:subjectName", function (req, res, next) {
 				req.flash("error", "Couldn't find the details of chosen subject");
 				res.redirect("/admin/questionBank");
 			} else {
+				// console.log('subject', subject);
 				res.json({
 					subject: subject
 				});
