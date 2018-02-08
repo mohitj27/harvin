@@ -83,13 +83,13 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
       blogTitle
     }, {
       $set: {
-        htmlFilePath: htmlFilePath,
-        hashName: hashName,
-        coverImgName: coverImgName,
-        author:req.user,
-        publish:req.body.publish,
-        draft:req.body.draft,
-        uploadDate
+          htmlFilePath,
+          hashName,
+          coverImgName,
+          author:req.user,
+          publish:req.body.publish,
+          draft:req.body.draft,
+          uploadDate
       }
     }, {
       upsert: true,
@@ -101,6 +101,7 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
         res.sendStatus(200)
       }
       else {
+        res.redirect('/admin/blog/new')
         console.log('err', err);
       }
 
