@@ -99,7 +99,7 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res
     aim
   }
 
-  console.log('newVisitor', newVisitor);
+  // console.log('newVisitor', newVisitor);
 
   var promise = vmsController.addNewVisitor(newVisitor)
   promise.then(function (createdVisitor) {

@@ -40,29 +40,40 @@ router.use('/admin/centers', centersRoutes);
 
 router.delete('/users/:userId', (req, res, next) => {
   const userId = req.params.userId;
-  User.findById(userId, (err, foundUser) => {
-    if (!err && foundUser) {
-      if (foundUser.profile) {
-        const profileId = foundUser.profile._id;
-        Profile.findByIdAndRemove(profileId, (err) => {
-          if (!err) {
-            foundUser.remove();
-            req.flash('success', 'User removed successfully');
-            res.redirect('/admin/db/users');
-          }
-          else {
-            console.log('err', err);
-          }
-        })
-
-      } else {
-        foundUser.remove();
-        req.flash('success', 'User removed successfully');
-        res.redirect('/admin/db/users');
-
+  User.findById(userId)
+    .populate({
+      path: 'profile',
+      modal: 'Profile'
+    })
+    .exec((err, foundUser) => {
+      // console.log('foundUser', foundUser);
+      if (!err && foundUser) {
+        foundUser.remove()
+        if(foundUser.profile){
+          const profileId = foundUser.profile._id;
+          // console.log('id', profileId);
+          Profile.findByIdAndRemove(profileId, (err) => {
+            if (!err) {
+              req.flash(
+                'success', "User account deleted successfully"
+              )
+              res.redirect('/admin/db/users')
+            }
+          })
+        }else {
+          req.flash(
+            'success', "User account deleted successfully"
+          )
+          res.redirect('/admin/db/users')
+        }
+      } else if (!foundUser || err) {
+        req.flash(
+          'error', "Error while deleting User account"
+        )
+        res.redirect('/admin/db/users')
       }
-    }
-  });
+    })
+
 });
 
 //helper- class

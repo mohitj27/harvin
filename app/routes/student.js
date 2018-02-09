@@ -12,24 +12,22 @@ var express = require("express"),
   errors = require("../error"),
   router = express.Router();
 mongoose = require("mongoose");
+const  errorHandler = require('../errorHandler');
+
 
 //Handle user detail update
 router.put("/:username", (req, res, next) => {
 	var username = req.body.username || "";
 	var batchName = req.body.batch || "";
 	var password = req.body.password || null;
-
+console.log('body', req.body);
 	Batch.findOne({
 		batchName: batchName
 	}, (err, foundBatch) => {
+    console.log('foundBatch', foundBatch);
 		if (!err && foundBatch) {
 			User.findOne({
 					username: username
-				}, (err, foundUser) => {
-					if (!err && foundUser) {} else {
-						res.sendStatus(400);
-						console.log(err);
-					}
 				})
 				.populate({
 					path: "profile",
@@ -37,7 +35,7 @@ router.put("/:username", (req, res, next) => {
 				})
 				.exec((err, foundUser) => {
 					if (!err && foundUser) {
-						//
+						console.log('foundUser', foundUser);
 						let subjectId = foundBatch.subjects;
 						Subject.find({
 								_id: {
@@ -45,6 +43,8 @@ router.put("/:username", (req, res, next) => {
 								}
 							},
 							function (err, foundSubjects) {
+
+						console.log('foundSubjects', foundSubjects);
 								if (!err && foundSubjects) {
 									var progresses = [];
 									var counter = 0;
@@ -70,6 +70,7 @@ router.put("/:username", (req, res, next) => {
 																new: true
 															},
 															(err, updatedProfile) => {
+                                console.log('updated profile', updatedProfile);
 																if (!err && updatedProfile) {
 																	var userDetail = {
 																		username,
@@ -79,25 +80,30 @@ router.put("/:username", (req, res, next) => {
 
 																	res.json(userDetail);
 																} else {
-																	res.sendStatus(400);
 																	console.log(err);
+                                  next(errorHandler.getErrorMessage(err))
 																}
 															}
 														);
 													}
 												} else {
 													console.log('err', err);
+
+                                  next(errorHandler.getErrorMessage(err))
+
 												}
 											});
 										});
 									});
 								} else {
 									console.log(err);
-									callback(err);
+                                  next(errorHandler.getErrorMessage(err))
+
 								}
 							}
 						);
 						//
+
 
 					}
 				});
