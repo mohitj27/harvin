@@ -50,6 +50,9 @@ router.delete('/users/:userId', (req, res, next) => {
             req.flash('success', 'User removed successfully');
             res.redirect('/admin/db/users');
           }
+          else {
+            console.log('err', err);
+          }
         })
 
       } else {

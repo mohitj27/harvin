@@ -38,8 +38,6 @@ router.get("/", (req, res, next) => {
 
 router.get(
   "/users",
-  middleware.isLoggedIn,
-  middleware.isCentreOrAdmin,
   (req, res, next) => {
     User.find({})
       .populate({

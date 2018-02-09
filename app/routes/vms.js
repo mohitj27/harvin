@@ -10,6 +10,7 @@ var express = require("express"),
   Gallery = require('./../models/Gallery'),
   Visitor= require('./../models/Visitor'),
   Blog = require('./../models/Blog'),
+  User = require('./../models/User'),
   vmsController = require('./../controllers/vms.controller'),
   validator = require('validator')
   router = express.Router();
@@ -226,7 +227,7 @@ router.get('/blog', (req, res, next) => {
       path: 'author',
       modal: "User"
     })
-    .exec( (err, foundBlog) => {
+    .exec((err, foundBlog) => {
       console.log('foundBlog', foundBlog);
       if(err){
         return console.log('err', err);
@@ -241,22 +242,20 @@ router.get('/blog', (req, res, next) => {
       }
     })
   } else {
-    Blog.find({}, (err, foundBlog) => {
-      if (!err && foundBlog)
-        res.render('blogTheme', {
-          foundBlog: foundBlog
-        })
-      else {
+    Blog.find({})
+    .populate({
+      path: "author",
+      modal: "User"
+    })
+    .exec(function (err, foundBlogs) {
+      if(err){
         console.log(err)
         next(new errors.generic())
+      } else {
+        res.render('blogTheme', {foundBlogs})
       }
     })
   }
-
-})
-
-
-//helper- class
-
+});
 
 module.exports = router
