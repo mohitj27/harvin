@@ -48,17 +48,24 @@ router.delete('/users/:userId', (req, res, next) => {
     .exec((err, foundUser) => {
       // console.log('foundUser', foundUser);
       if (!err && foundUser) {
-        const profileId = foundUser.profile._id;
-        // console.log('id', profileId);
-        Profile.findByIdAndRemove(profileId, (err) => {
-          if (!err) {
-            foundUser.remove()
-            req.flash(
-              'success', "User account deleted successfully"
-            )
-            res.redirect('/admin/db/users')
-          }
-        })
+        foundUser.remove()
+        if(foundUser.profile){
+          const profileId = foundUser.profile._id;
+          // console.log('id', profileId);
+          Profile.findByIdAndRemove(profileId, (err) => {
+            if (!err) {
+              req.flash(
+                'success', "User account deleted successfully"
+              )
+              res.redirect('/admin/db/users')
+            }
+          })
+        }else {
+          req.flash(
+            'success', "User account deleted successfully"
+          )
+          res.redirect('/admin/db/users')
+        }
       } else if (!foundUser || err) {
         req.flash(
           'error', "Error while deleting User account"
