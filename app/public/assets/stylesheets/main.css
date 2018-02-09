@@ -384,7 +384,7 @@ mark.admin {
       .quotes p {
         padding: 10px; } }
 
-.card-list .card-title {
+.card-list .card-title , .about-card-title{
   color: #111111;
   font-size: 20px;
   font-weight: bold; }
@@ -926,7 +926,6 @@ mark.admin {
 ==================================================*/
 .blog-area .single-blog {
   border: 0;
-  margin: 0 !important;
   padding: 25px 0;
   -webkit-transition: .3s ease;
   transition: .3s ease; }
