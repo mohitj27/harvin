@@ -28,18 +28,6 @@ $(function() {
 
   $('select').material_select();
 
-  //summernote init
-  // if ($('#summernote').length !== 0) {
-  //   $('#summernote').summernote({
-  //     placeholder: 'Write your content here!!!',
-  //     tabsize: 2,
-  //     minHeight: 500,
-  //     maxHeight: null,
-  //     focus: true
-  //   });
-  // }
-
-
   //Date picker initialization
   if ($('.datepicker').length !== 0) {
     $('.datepicker').pickadate({
@@ -124,62 +112,7 @@ $(function() {
   //*****QUESTION BANK*******************
   //=========================================
   //populating subject option after class has been chosen
-  $('#qb_classs').on('change', function() {
-    var $subject = $("#qb_subject");
-    var o = $("option", $subject).eq(-1);
-    $subject.children().not(":last").remove();
-    $.get("/questionBank/class/" + this.value, function(res) {
-      $(".selectpicker").selectpicker("refresh");
-
-      if (res.classs) {
-        var length = res.classs.subjects.length;
-        if (length > 0) {
-          for (var i = 0; i < length; i++) {
-            o.before($("<option>", {
-              "text": res.classs.subjects[i].subjectName,
-              "val": res.classs.subjects[i].subjectName
-            }));
-
-          }
-          $(".selectpicker").selectpicker("refresh");
-        }
-      }
-
-    });
-  });
-
-  //populating chapter option after subject has been chosen
-  $('#qb_subject').on('change', function() {
-    var className = $("#qb_classs option:selected").val();
-    var $chapter = $("#qb_chapter");
-    var o = $("option", $chapter).eq(-1);
-    $chapter.children().not(":last").remove();
-    $.get("/questionBank/class/" + className + "/subject/" + this.value, function(res) {
-      $(".selectpicker").selectpicker("refresh");
-
-      if (res.subject) {
-        var length = res.subject.chapters.length;
-        if (length > 0) {
-          for (var i = 0; i < length; i++) {
-            o.before($("<option>", {
-              "text": res.subject.chapters[i].chapterName,
-              "val": res.subject.chapters[i].chapterName
-            }));
-
-          }
-          $(".selectpicker").selectpicker("refresh");
-        }
-      }
-
-    });
-  });
-
-  //populating topic option after chapter has been chosen
-  $('#chapter').on('change', function() {
-    //fetch the questions and show them
-  });
-
-
+  
 
 });
 

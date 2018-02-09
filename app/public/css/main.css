@@ -56,127 +56,20 @@ nav {
 nav ul a {
   color: #13b38b;
 }
-/*
-@media only screen and (max-width: 700px) {
-  .top-nav {
-    color: red !important;
-  }
-  nav .nav-wrapper {
-    text-align: center;
-  }
-  nav .brand-logo {
-    font-size: 14px;
-  }
-  .card-image {
-    text-align: center;
-    display: block;
-    margin: auto;
-  }
-} */
-/*
-.container {
-  height: inherit;
-}
-
-.carousel-slider {
-  background-color: #13b38b;
-}
-
-.carousel .indicators .indicator-item.active {
-  background-color: #13b38b !important;
-}
-
-.carousel .indicators .indicator-item {
-  background: #13931b !important;
-}
-
-#navbarContainer {
-  width: 85%;
-}
- */
-/* for db collections */
 
 .dbImg {
   height: 310px;
 }
 
-/*FOR DROP DOWN
-*/
-
-/* Dropdown Button */
-
-/* .dropbtn {
-  border: none;
-  cursor: pointer;
-} */
-
-/* The container <div> - needed to position the dropdown content */
-/*
-.dropdown12 {
-  position: relative;
-  display: inline-block;
-}
- */
-/* Dropdown Content (Hidden by Default) */
-
-/* .dropdown-content12 {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 3;
-} */
-
-/* Links inside the dropdown */
-
-/* .dropdown-content12 a {
-  text-decoration: none;
-  display: block;
-}
- */
-/* Change color of dropdown links on hover */
-
-/* .dropdown-content12 a:hover {
-  background-color: #f1f1f1
-} */
-
-/* Show the dropdown menu on hover */
-
-/* .dropdown12:hover .dropdown-content12 {
-  display: block;
-} */
-
 .newBlogForm {
   margin: 20px 0;
 }
 
-/* #brand-name{
-  color:white;
-  font-size: large;
-  margin:0;
-  font-weight: bolder;
-} */
-
-/* .side-nav li>a {
-  color: white;
-  font-weight:bold;
-} */
-/* #brand-logo{
-  padding:32px;
-} */
 .gradient-45deg-green-teal, .collapsible-body{
   background: #43A047;
   background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
   background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
 }
-/*
-#insert-db {
-  padding-left: 30px;
-} */
-/* #select12{
-  color:white;
-} */
 
 /*SCROLL BAR/
 
@@ -225,5 +118,5 @@ nav ul a {
 .new{
   position: fixed;
   bottom: 10%;
-  right: 10%;
+  right: 5%;
 }
