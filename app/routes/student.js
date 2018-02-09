@@ -18,18 +18,14 @@ router.put("/:username", (req, res, next) => {
 	var username = req.body.username || "";
 	var batchName = req.body.batch || "";
 	var password = req.body.password || null;
-
+// console.log('body', req.body);
 	Batch.findOne({
 		batchName: batchName
 	}, (err, foundBatch) => {
+    // console.log('foundBatch', foundBatch);
 		if (!err && foundBatch) {
 			User.findOne({
 					username: username
-				}, (err, foundUser) => {
-					if (!err && foundUser) {} else {
-						res.sendStatus(400);
-						console.log(err);
-					}
 				})
 				.populate({
 					path: "profile",
