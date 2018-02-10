@@ -10,7 +10,7 @@ var express = require("express"),
 
   router = express.Router();
 
-router.get("/", (req, res, next) => {
+router.get("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   QB_Class.find({}, function(err, classes) {
       if (err) console.log(err);
     })
@@ -32,25 +32,7 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.get("/addNew", (req, res, next) => {
-  // QB_Class.find({}, function (err, classes) {
-  // 	if (err) console.log(err);
-  // })
-  // .populate({
-  // 	path: "subjects",
-  // 	model: "QB_Subject",
-  // })
-  // .exec(function (err, classes) {
-  // 	if (err) {
-  // 		console.log(err);
-  // 		req.flash("error", "Please try again");
-  // 		res.redirect("/admin/questionBank");
-  // 	} else {
-  // 		res.render('quesBankAddNew', {
-  // 			classes: classes,
-  // 		});
-  // 	}
-  // });
+router.get("/addNew", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   res.render('quesBankAddNew')
 });
 
@@ -64,7 +46,6 @@ router.get("/qbData", (req, res, next) => {
   } else if (!subjectName) {
     next(new errors.noContent('Please select subject name'));
   } else if (!chapterName) {
-    console.log('called');
     next(new errors.generic('Please select chapter name'));
   } else {
     QB_Class.findOne({
@@ -114,7 +95,7 @@ router.get("/qbData", (req, res, next) => {
 });
 
 
-router.post("/", (req, res, next) => {
+router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var className = req.body.className;
   var subjectName = req.body.subjectName;
   var chapterName = req.body.chapterName;
@@ -291,7 +272,6 @@ router.get("/class/:className", function(req, res, next) {
         req.flash("error", "Couldn't find the details of chosen class");
         res.redirect("/admin/questionBank");
       } else {
-				console.log('class', classs);
         res.json({
           classs: classs
         });

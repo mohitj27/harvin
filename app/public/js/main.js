@@ -112,7 +112,7 @@ $(function() {
   //*****QUESTION BANK*******************
   //=========================================
   //populating subject option after class has been chosen
-  
+
 
 });
 
@@ -120,11 +120,10 @@ function refreshAns() {
   var options = [];
 
   //selecting the not empty input
-  $opt = $('.addNewQuestion input[type=text]')
+  $opt = $('#addNewQuestion input[type=text]')
     .filter(function(index) {
       if (this.value.length > 0) {
         return $(this).val();
-
       }
     });
 
