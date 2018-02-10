@@ -59,7 +59,7 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res
   if (!address) return errorHandler.errorResponse('INVALID_FIELD', 'address', next);
   if (!referral) return errorHandler.errorResponse('INVALID_FIELD', 'referral', next);
   if (!school) return errorHandler.errorResponse('INVALID_FIELD', 'school', next);
-  if (!aim) return errorHandler.errorResponse('INVALID_AIM', 'aim', next);
+  if (!aim) return errorHandler.errorResponse('INVALID_FIELD', 'aim', next);
 
   if (!phone || validator.isEmpty(phone) || !validator.isLength(phone, {
       min: 10,
