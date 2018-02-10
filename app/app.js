@@ -160,12 +160,13 @@ app.use(function(err, req, res, next) {
     console.log('url', req.originalUrl);
     const status = err.status || 400;
     const flashUrl = res.locals.flashUrl
+    const errMsg = err.message || err
     // res.status(status).json(err);
     if (flashUrl) {
-      req.flash('error', err.message)
+      req.flash('error', errMsg)
       res.redirect(res.locals.flashUrl)
     } else {
-      res.status(status).json(err.message)
+      res.status(status).json(errMsg)
     }
     // err.statusCode = err.statusCode || 500;
     // res.status(err.statusCode);

@@ -18,6 +18,7 @@ var getUniqueErrorMessage = function(err) {
 };
 
 var getErrorMessage = function(err) {
+  console.log('errrrr', err.message);
   let message = "";
 
   if (err.code) {
@@ -29,12 +30,14 @@ var getErrorMessage = function(err) {
       default:
         message = "Something went wrong";
     }
-  } else {
+  } else if(err.errors) {
     for (const errName in err.errors) {
       if (err.errors.hasOwnProperty(errName) && err.errors[errName].message) {
         message = err.errors[errName].message;
       }
     }
+  } else {
+    message = err.message
   }
 
   return message;

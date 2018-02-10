@@ -492,29 +492,28 @@ router.get("/:username/progresses", (req, res, next) => {
 
 //create /update progress of particular chapter
 router.put("/:username/setprogress", (req, res, next) => {
+  console.log('this route');
   var username = req.params.username;
-  var chapterId = req.body.chapterId;
+  var chapterId = req.body.chapter;
   var completed = req.body.completed;
   var status = req.body.status || 'new';
-  var topics = req.body.topics;
+  var completedTopicsIds = req.body.completedTopicsIds;
+  let topics = []
+  completedTopicsIds.forEach(topicId => {
+    if (validator.isMongoId(topicId)) topics.push(topicId)
+  })
+
+  res.locals.flashUrl = ''
 
   User.findOne({
-        username: username
-      },
-      function(err, foundUser) {
-        if (!err && foundUser) {} else if (foundUser == null) {
-          res.sendStatus(400);
-        } else {
-          res.sendStatus(400);
-          console.log(err);
-        }
-      }
-    )
+      username: username
+    })
     .populate({
       path: "profile",
       model: "Profile"
     })
     .exec(function(err, foundUser) {
+      console.log('user', foundUser);
       if (!err && foundUser) {
         Progress.findOneAndUpdate({
             chapter: chapterId
@@ -543,25 +542,22 @@ router.put("/:username/setprogress", (req, res, next) => {
                 },
                 function(err, updatedProfile) {
                   if (!err && updatedProfile) {
-                    console.log("updatedProg", updatedProg);
+                    console.log("updatedPro", updatedProfile);
                     res.json({
                       updatedProg: updatedProg
                     });
                   } else {
-                    res.sendStatus(400);
-                    console.log(400);
+                    next(err)
                   }
                 }
               );
             } else {
-              res.sendStatus(400);
-              console.log(400);
+              next(err);
             }
           }
         );
       } else {
-        res.sendStatus(400);
-        console.log(400);
+        next(err);
       }
     });
 });
