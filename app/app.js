@@ -15,7 +15,7 @@ var express = require("express"),
   compression = require('compression'),
   app = express(),
   mongoose = require("mongoose"),
-  mysql=require('mysql'),
+  mysql = require('mysql'),
 
   serveFavicon = require('serve-favicon'),
 
@@ -23,64 +23,66 @@ var express = require("express"),
 
   User = require("./models/User.js"),
   http = require('http').Server(app),
-   io = require('socket.io')(http)
+  io = require('socket.io')(http)
 
-   io = require('socket.io')(http)
+io = require('socket.io')(http)
 
- let files = {},
-   struct = {
-     name: null,
-     type: null,
-     size: 0,
-     data: [],
-     slice: 0,
-   };
- io.on('connection', function(socket) {
+let files = {},
+  struct = {
+    name: null,
+    type: null,
+    size: 0,
+    data: [],
+    slice: 0,
+  };
+io.on('connection', function(socket) {
 
-   console.log('a user conn sadaected');
+  console.log('a user conn sadaected');
 
-   socket.on('end upload',()=>{files={}})
-   socket.on('slice upload', (data) => {
+  socket.on('end upload', () => {
+    files = {}
+  })
+  socket.on('slice upload', (data) => {
 
-     console.log('hello',data)
-     if (!files[data.name]) {
-       files[data.name] = Object.assign({}, struct, data)
-       files[data.name].data = []
-     }
+    console.log('hello', data)
+    if (!files[data.name]) {
+      files[data.name] = Object.assign({}, struct, data)
+      files[data.name].data = []
+    }
 
-     //convert the ArrayBuffer to Buffer
-     data.data = new Buffer(new Uint8Array(data.data))
-     //save the data
-
-
-     fs.writeFile(__dirname + "/../../HarvinDb/blogImage/"+data.name, data.data, (err) => {
-       console.log('err', err)
-       console.log('files data',files[data.name])
-       console.log('twice problem')
-       if (err) return socket.emit('upload error')
-       socket.emit('end upload',data.name)
-       files={}
-       delete files[data.name]
+    //convert the ArrayBuffer to Buffer
+    data.data = new Buffer(new Uint8Array(data.data))
+    //save the data
 
 
-     });
+    fs.writeFile(__dirname + "/../../HarvinDb/blogImage/" + data.name, data.data, (err) => {
+      console.log('err', err)
+      console.log('files data', files[data.name])
+      console.log('twice problem')
+      if (err) return socket.emit('upload error')
+      socket.emit('end upload', data.name)
+      files = {}
+      delete files[data.name]
 
 
-   });
- });
+    });
 
 
-   io.on('connection', function(socket){
-     console.log('a user connected');
-     socket.on('chat message', function(msg){
-       console.log('message: ' + msg);
-     });
-   });
+  });
+});
+
+
+io.on('connection', function(socket) {
+  console.log('a user connected');
+  socket.on('chat message', function(msg) {
+    console.log('message: ' + msg);
+  });
+});
 
 
 
 /*MYSQL*/
-var con=mysql.createConnection({
+var con = mysql.createConnection({
   host: "localhost",
   user: "harvin",
   password: "harvin"
@@ -103,7 +105,7 @@ app.use(flash());
 app.use(compression())
 
 //APP favicon
-app.use(serveFavicon(path.join(__dirname, 'public', 'images','harvin.png')))
+app.use(serveFavicon(path.join(__dirname, 'public', 'images', 'harvin.png')))
 
 
 //view engine
@@ -151,16 +153,20 @@ app.use("/", indexRoutes);
 app.use(function(err, req, res, next) {
   if (err) {
 
-      console.error("err---------------: ", err.stack);
-     console.error("err_status: ", err.status);
-     console.error("err_msg: ", err.message);
-     console.error("err_name: ", err.name);
-     console.log('url', req.originalUrl);
-     const status = err.status || 400;
-     const flashUrl = res.locals.flashUrl || '/admin'
-     // res.status(status).json(err);
-     req.flash('error', err.message)
-     res.redirect(res.locals.flashUrl)
+    console.error("err---------------: ", err.stack);
+    console.error("err_status: ", err.status);
+    console.error("err_msg: ", err.message);
+    console.error("err_name: ", err.name);
+    console.log('url', req.originalUrl);
+    const status = err.status || 400;
+    const flashUrl = res.locals.flashUrl
+    // res.status(status).json(err);
+    if (flashUrl) {
+      req.flash('error', err.message)
+      res.redirect(res.locals.flashUrl)
+    } else {
+      res.status(status).json(err.message)
+    }
     // err.statusCode = err.statusCode || 500;
     // res.status(err.statusCode);
     // if ("development" === app.get("env")) {
@@ -194,8 +200,8 @@ db.once('open', function(err) {
   } else {
 
 
-let listener;
-    listener=http.listen(process.env.PORT || config.port, function() {
+    let listener;
+    listener = http.listen(process.env.PORT || config.port, function() {
       console.log("Server has started!!! Listening at " + config.port);
       console.log(listener.address().port);
 

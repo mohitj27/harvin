@@ -8,14 +8,14 @@ var express = require("express"),
   sharp = require('sharp'),
   request = require('request'),
   Gallery = require('./../models/Gallery'),
-  Visitor= require('./../models/Visitor'),
+  Visitor = require('./../models/Visitor'),
   Blog = require('./../models/Blog'),
   User = require('./../models/User'),
   vmsController = require('./../controllers/vms.controller'),
   validator = require('validator')
-  router = express.Router();
-  Promise = require('bluebird')
-  mongoose.Promise = Promise;
+router = express.Router();
+Promise = require('bluebird')
+mongoose.Promise = Promise;
 
 router.get('/test', (req, res, next) => {
   res.render('testGallery')
@@ -41,51 +41,36 @@ router.get('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res)
 })
 
 router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  const name = req.body.name || ''
+  const name = req.body.name
   const phone = req.body.phone || ''
   const emailId = req.body.emailId || ''
-  const classs = req.body.classs || ''
-  const date = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a') || ''
-  const comments = req.body.comments || ''
-  const address = req.body.address || ''
-  const referral = req.body.referral || ''
-  const school = req.body.school || ''
-  const aim = req.body.aim || ''
+  const classs = req.body.classs
+  const date = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a')
+  const comments = req.body.comments
+  const address = req.body.address
+  const referral = req.body.referral
+  const school = req.body.school
+  const aim = req.body.aim
 
   res.locals.flashUrl = '/vms'
 
-  if(!name || validator.isEmpty(name)){
-    return errorHandler.errorResponse('INVALID_NAME', next);
+  if (!name) return errorHandler.errorResponse('INVALID_FIELD', "visitor name", next);
+  if (!classs) return errorHandler.errorResponse('INVALID_FIELD', 'class', next);
+  if (!address) return errorHandler.errorResponse('INVALID_FIELD', 'address', next);
+  if (!referral) return errorHandler.errorResponse('INVALID_FIELD', 'referral', next);
+  if (!school) return errorHandler.errorResponse('INVALID_FIELD', 'school', next);
+  if (!aim) return errorHandler.errorResponse('INVALID_AIM', 'aim', next);
+
+  if (!phone || validator.isEmpty(phone) || !validator.isLength(phone, {
+      min: 10,
+      max: 10
+    })) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'phone', next);
   }
 
-  if(!phone || validator.isEmpty(phone) || !validator.isLength(phone, {min: 10, max: 10})){
-    return errorHandler.errorResponse('INVALID_PHONE', next);
+  if (!emailId || !validator.isEmail(emailId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'email', next);
   }
-
-  if(!emailId || !validator.isEmail(emailId)){
-    return errorHandler.errorResponse('INVALID_EMAIL', next);
-  }
-
-  if(!classs || validator.isEmpty(classs)){
-    return errorHandler.errorResponse('INVALID_CLASS_NAME', next);
-  }
-
-  if(!address || validator.isEmpty(address)){
-    return errorHandler.errorResponse('INVALID_ADDRESS', next);
-  }
-
-  if(!referral || validator.isEmpty(referral)){
-    return errorHandler.errorResponse('INVALID_REFERRAL', next);
-  }
-
-  if(!school || validator.isEmpty(school)){
-    return errorHandler.errorResponse('INVALID_SCHOOL', next);
-  }
-
-  if(!aim || validator.isEmpty(aim)){
-    return errorHandler.errorResponse('INVALID_AIM', next);
-  }
-
   const newVisitor = {
     name,
     phone,
@@ -99,13 +84,11 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res
     aim
   }
 
-  // console.log('newVisitor', newVisitor);
-
   var promise = vmsController.addNewVisitor(newVisitor)
-  promise.then(function (createdVisitor) {
+  promise.then(function(createdVisitor) {
     req.flash("success", 'Your response has been saved successfully')
     res.redirect('/vms')
-  }, function (err) {
+  }, function(err) {
     next(err || 'SERVER_ERROR')
   })
 });
@@ -218,43 +201,45 @@ router.post('/careers', (req, res, next) => {
 })
 
 router.get('/blog', (req, res, next) => {
-    console.log('title', req.query.title)
+  console.log('title', req.query.title)
   if (req.query.title) {
     Blog.findOne({
-      "blogTitle": req.query.title
-    })
-    .populate({
-      path: 'author',
-      modal: "User"
-    })
-    .exec((err, foundBlog) => {
-      console.log('foundBlog', foundBlog);
-      if(err){
-        return console.log('err', err);
-      } else {
-        fs.readFile(__dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath, function(err, data) {
-          if (err) throw err;
-          res.render('standard_blog_detail', {
-            blogContent: data,
-            foundBlog: foundBlog
-          })
-        });
-      }
-    })
+        "blogTitle": req.query.title
+      })
+      .populate({
+        path: 'author',
+        modal: "User"
+      })
+      .exec((err, foundBlog) => {
+        console.log('foundBlog', foundBlog);
+        if (err) {
+          return console.log('err', err);
+        } else {
+          fs.readFile(__dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath, function(err, data) {
+            if (err) throw err;
+            res.render('standard_blog_detail', {
+              blogContent: data,
+              foundBlog: foundBlog
+            })
+          });
+        }
+      })
   } else {
     Blog.find({})
-    .populate({
-      path: "author",
-      modal: "User"
-    })
-    .exec(function (err, foundBlogs) {
-      if(err){
-        console.log(err)
-        next(new errors.generic())
-      } else {
-        res.render('blogTheme', {foundBlogs})
-      }
-    })
+      .populate({
+        path: "author",
+        modal: "User"
+      })
+      .exec(function(err, foundBlogs) {
+        if (err) {
+          console.log(err)
+          next(new errors.generic())
+        } else {
+          res.render('blogTheme', {
+            foundBlogs
+          })
+        }
+      })
   }
 });
 

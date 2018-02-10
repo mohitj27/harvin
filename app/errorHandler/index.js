@@ -55,155 +55,11 @@ const generatError = function(status, name, message, next) {
   next(err);
 };
 
-const invalidName = function(next) {
-  generatError(
-    400,
-    "INVALID_NAME",
-    "Bad request! Name not provided or Invalid name.",
-    next
-  );
-};
-
-const invalidFile = function(next) {
-  generatError(
-    400,
-    "INVALID_FILE",
-    "Bad request! File not provided or Invalid file.",
-    next
-  );
-};
-
-const invalidAssignmentName = function(next) {
-  generatError(
-    400,
-    "INVALID_ASSIGNMENT_NAME",
-    "Bad request! Invalid assignment name provided.",
-    next
-  );
-};
-
-const invalidLastSubDate = function(next) {
-  generatError(
-    400,
-    "INVALID_LAST_SUBMISSION_DATE",
-    "Bad request! Invalid last submission date provided.",
-    next
-  );
-};
-
-const invalidBatch = function(next) {
-  generatError(
-    400,
-    "INVALID_BATCH",
-    "Bad request! Invalid batch provided.",
-    next
-  );
-};
-
-const invalidClassName = function(next) {
-  generatError(
-    400,
-    "INVALID_CLASS_NAME",
-    "Bad request! Invalid class name provided.",
-    next
-  );
-};
-
-const invalidSubjectName = function(next) {
-  generatError(
-    400,
-    "INVALID_SUBJECT_NAME",
-    "Bad request! Invalid subject name provided.",
-    next
-  );
-};
-
-const invalidChapterName = function(next) {
-  generatError(
-    400,
-    "INVALID_CHAPTER_NAME",
-    "Bad request! Invalid chapter name provided.",
-    next
-  );
-};
-
-const invalidTopicName = function(next) {
-  generatError(
-    400,
-    "INVALID_TOPIC_NAME",
-    "Bad request! Invalid topic name provided.",
-    next
-  );
-};
-
-const invalidChapterDesc = function(next) {
-  generatError(
-    400,
-    "INVALID_CHAPTER_DESC",
-    "Bad request! Invalid chaptper description provided.",
-    next
-  );
-};
-
 const notLoggedIn = function(next) {
   generatError(
     401,
     "NOT_LOGGED_IN",
     "Unauthorized! You need to be logged in",
-    next
-  );
-};
-
-const invalidPhone = function(next) {
-  generatError(
-    400,
-    "INVALID_PHONE",
-    "Bad request! Invalid Phone number provided.",
-    next
-  );
-};
-
-const invalidEmail = function(next) {
-  generatError(
-    400,
-    "INVALID_EMAIL",
-    "Bad request! Invalid Email provided.",
-    next
-  );
-};
-
-const invalidAddress = function(next) {
-  generatError(
-    400,
-    "INVALID_ADDRESS",
-    "Bad request! Invalid address provided.",
-    next
-  );
-};
-
-const invalidReferral = function(next) {
-  generatError(
-    400,
-    "INVALID_REFERRAL",
-    "Bad request! Invalid referral provided.",
-    next
-  );
-};
-
-const invalidSchool = function(next) {
-  generatError(
-    400,
-    "INVALID_SCHOOL",
-    "Bad request! Invalid school provided.",
-    next
-  );
-};
-
-const invalidAim = function(next) {
-  generatError(
-    400,
-    "INVALID_AIM",
-    "Bad request! Invalid aim provided.",
     next
   );
 };
@@ -224,32 +80,16 @@ const defaultError = function(next) {
   generatError(500, "INTERNAL_SERVER_ERROR", "Something bad happened.", next);
 };
 
-const errorResponse = function(name, next) {
+const invalidField = function (fieldName, next) {
+  console.log('called');
+  generatError(400, "INVALID " + fieldName.toUpperCase(), "Bad request! " + fieldName + " not provided or invalid.", next);
+}
+
+
+const errorResponse = function(name, field, next) {
   switch (name) {
-    case "INVALID_NAME":
-      invalidName(next);
-      break;
-    case "INVALID_PHONE":
-      invalidPhone(next);
-      break;
-    case "INVALID_EMAIL":
-      invalidEmail(next);
-      break;
-    case "INVALID_ADDRESS":
-      invalidAddress(next);
-      break;
-    case "INVALID_REFERRAL":
-      invalidReferral(next);
-      break;
-    case "INVALID_SCHOOL":
-      invalidSchool(next);
-      break;
-    case "INVALID_AIM":
-      invalidAim(next);
-      break;
-    case "INVALID_FILE":
-      invalidFile(next);
-      break;
+    case "INVALID_FIELD":
+      invalidField(field, next)
     case "NOT_A_CENTER":
       notCenter(next);
       break;
@@ -261,30 +101,6 @@ const errorResponse = function(name, next) {
       break;
     case "NOT_LOGGED_IN":
       notLoggedIn(next);
-      break;
-    case "INVALID_ASSIGNMENT_NAME":
-      invalidAssignmentName(next);
-      break;
-    case "INVALID_LAST_SUBMISSION_DATE":
-      invalidLastSubDate(next);
-      break;
-    case "INVALID_BATCH":
-      invalidBatch(next);
-      break;
-    case "INVALID_CLASS_NAME":
-      invalidClassName(next);
-      break;
-    case "INVALID_SUBJECT_NAME":
-      invalidSubjectName(next);
-      break;
-    case "INVALID_CHAPTER_NAME":
-      invalidChapterName(next);
-      break;
-    case "INVALID_TOPIC_NAME":
-      invalidTopicName(next);
-      break;
-    case "INVALID_CHAPTER_DESC":
-      invalidChapterDesc(next);
       break;
     default:
       defaultError(next);
