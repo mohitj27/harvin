@@ -492,13 +492,13 @@ router.get("/:username/progresses", (req, res, next) => {
 
 //create /update progress of particular chapter
 router.put("/:username/setprogress", (req, res, next) => {
-  console.log('this route');
   var username = req.params.username;
   var chapterId = req.body.chapter;
   var completed = req.body.completed;
   var status = req.body.status || 'new';
   var completedTopicsIds = req.body.completedTopicsIds;
   let topics = []
+  
   completedTopicsIds.forEach(topicId => {
     if (validator.isMongoId(topicId)) topics.push(topicId)
   })
@@ -513,7 +513,6 @@ router.put("/:username/setprogress", (req, res, next) => {
       model: "Profile"
     })
     .exec(function(err, foundUser) {
-      console.log('user', foundUser);
       if (!err && foundUser) {
         Progress.findOneAndUpdate({
             chapter: chapterId
@@ -542,7 +541,6 @@ router.put("/:username/setprogress", (req, res, next) => {
                 },
                 function(err, updatedProfile) {
                   if (!err && updatedProfile) {
-                    console.log("updatedPro", updatedProfile);
                     res.json({
                       updatedProg: updatedProg
                     });
