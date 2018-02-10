@@ -10,7 +10,7 @@ var middleware = {
     req.session.returnTo = req.originalUrl;
     res.locals.flashUrl = '/admin/login'
 
-    return errorHandler.errorResponse('NOT_LOGGED_IN', next);
+    return errorHandler.errorResponse('NOT_LOGGED_IN', null, next);
   },
 
   isAdmin: function(req, res, next) {
@@ -20,7 +20,7 @@ var middleware = {
     req.session.returnTo = req.originalUrl;
     res.locals.flashUrl = '/admin/login'
 
-    return errorHandler.errorResponse('NOT_AN_ADMIN', next);
+    return errorHandler.errorResponse('NOT_AN_ADMIN', null, next);
   },
 
   isCentre: function(req, res, next) {
@@ -31,7 +31,7 @@ var middleware = {
     req.session.returnTo = req.originalUrl;
     res.locals.flashUrl = '/admin/login'
 
-    return errorHandler.errorResponse('NOT_A_CENTER', next);
+    return errorHandler.errorResponse('NOT_A_CENTER', null, next);
 
   },
 
@@ -43,7 +43,7 @@ var middleware = {
     req.session.returnTo = req.originalUrl;
     res.locals.flashUrl = '/admin/login'
 
-    return errorHandler.errorResponse('NOT_A_CENTER_OR_ADMIN', next);
+    return errorHandler.errorResponse('NOT_A_CENTER_OR_ADMIN', null, next);
   },
 
   // isStudent: function(req, res, next) {
