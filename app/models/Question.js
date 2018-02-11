@@ -7,6 +7,7 @@ var questionSchema = new Schema({
 		type: String,
 		required: true
 	},
+	newOptions:Object,
 	options: [{
 		type: String,
 		require: true

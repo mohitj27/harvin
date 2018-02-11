@@ -18,7 +18,6 @@ var getUniqueErrorMessage = function(err) {
 };
 
 var getErrorMessage = function(err) {
-  console.log('errrrr', err.message);
   let message = "";
 
   if (err.code) {

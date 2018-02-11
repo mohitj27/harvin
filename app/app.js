@@ -168,21 +168,6 @@ app.use(function(err, req, res, next) {
     } else {
       res.status(status).json(errMsg)
     }
-    // err.statusCode = err.statusCode || 500;
-    // res.status(err.statusCode);
-    // if ("development" === app.get("env")) {
-    //   res.render('error', {
-    //     name: err.name || "",
-    //     message: err.message || "",
-    //     statusCode: err.statusCode
-    //   });
-    // } else {
-    //   res.render('error', {
-    //     name: "",
-    //     message: err.message || "",
-    //     statusCode: 0
-    //   });
-    // }
   }
 });
 
@@ -204,14 +189,7 @@ db.once('open', function(err) {
     let listener;
     listener = http.listen(process.env.PORT || config.port, function() {
       console.log("Server has started!!! Listening at " + config.port);
-      console.log(listener.address().port);
-
     });
   }
 
 });
-
-//
-// server.listen(ser.address().port(), function(){
-//   console.log('Express server listening on port ' + router.get('port'));
-// });

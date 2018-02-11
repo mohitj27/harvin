@@ -6,6 +6,14 @@
   display: none
 }
 
+.success-toast{
+  background-color: green;
+}
+
+.error-toast{
+  background-color: red;
+}
+
 #field {
   margin-bottom: 20px;
 }

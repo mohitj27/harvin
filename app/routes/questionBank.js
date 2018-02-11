@@ -1,12 +1,16 @@
 var express = require("express"),
-  async = require("async"),
+  Async = require("async"),
 
   QB_Class = require("../models/QB_Class"),
   QB_Subject = require("../models/QB_Subject"),
   QB_Chapter = require("../models/QB_Chapter"),
   Question = require("../models/Question"),
   errors = require("../error"),
+  QbController = require('../controllers/QB.controller'),
+  errorHandler = require('../errorHandler/index'),
   middleware = require("../middleware"),
+  validator = require('validator'),
+  _ = require('lodash')
 
   router = express.Router();
 
@@ -94,8 +98,7 @@ router.get("/qbData", (req, res, next) => {
 
 });
 
-
-router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+router.post("/", (req, res, next) => {
   var className = req.body.className;
   var subjectName = req.body.subjectName;
   var chapterName = req.body.chapterName;
@@ -119,8 +122,8 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
     question: req.body.question,
     answers: [],
     options: [],
-    answersIndex: [],
-		addedBy: req.user._id
+    newOptions: [],
+    answersIndex: []
   };
 
   //pushing options in options array
@@ -143,7 +146,12 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
     });
   });
 
-  async.waterfall(
+  newQues.options.forEach((opt_j, j)=> {
+    if(_.indexOf(newQues.answersIndex, j) != -1) newQues.newOptions.push({opt: opt_j, isAns: true})
+    else newQues.newOptions.push({opt: opt_j, isAns: false})
+  })
+
+  Async.waterfall(
     [
       //creating new question
       function(callback) {
@@ -225,7 +233,7 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
             if (!err && createdClass) {
               callback(null);
               req.flash("success", "Question added successfully");
-              res.redirect("/admin/questionBank/addNew");
+              res.redirect("back");
             } else {
               callback(err);
             }
@@ -335,19 +343,17 @@ router.get("/chapter/:chapterName", function(req, res, next) {
 router.get('/refactor', (req, res, next) => {
   Question.find({}, (err, foundQuestions) => {
     if (!err && foundQuestions) {
-      var answerIndex = [];
       foundQuestions.forEach((question, quesIndex) => {
-        answerIndex = [];
-        question.answers.forEach((answer) => {
-          question.options.forEach((option, optIndex) => {
-            if (answer === option) {
-              answerIndex.push(optIndex);
-            }
-          });
-        });
+        let newOptions = [];
+        console.log('id', question._id);
+        question.options.forEach((opt_j, j)=> {
+          console.log('opt', j);
+          if(_.indexOf(question.answersIndex, j) != -1) newOptions.push({opt: opt_j, isAns: true})
+          else newOptions.push({opt: opt_j, isAns: false})
+        })
         Question.findByIdAndUpdate(question._id, {
             $set: {
-              answersIndex: answerIndex
+              newOptions: newOptions
             }
           }, {
             upsert: true,
@@ -365,5 +371,24 @@ router.get('/refactor', (req, res, next) => {
     }
   });
 });
+
+router.delete('/:questionId', async (req, res, next) => {
+
+  res.locals.flashUrl = ''
+
+  const questionId = req.params.questionId || ''
+  if(!validator.isMongoId(questionId)) return errorHandler.errorResponse('INVALID_FIELD', 'question-id', next)
+  try {
+    var deletedQuestion = await QbController.deleteQuestionById(req.params.questionId)
+  } catch (e) {
+    return next(e)
+  }
+
+  if(deletedQuestion)
+    res.json({success:true, msg:'Question has been deleted successfully'})
+  else
+    res.json({success:false, msg:'Question not found'})
+
+})
 
 module.exports = router;

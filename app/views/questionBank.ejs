@@ -1,7 +1,7 @@
 <% include partials/header.ejs%>
     <main>
 
-		<a href="/admin/questionBank/addNew" data-position="bottom" data-delay="50" data-tooltip="Add a new Question" class="new btn-floating tooltipped waves-effect waves-light red"><i class="material-icons">add</i></a>
+		<a href="/admin/questionBank/addNew" data-position="bottom" data-delay="50" data-tooltip="Add a new Question" class="new btn-floating tooltipped waves-effect waves-light red pulse"><i class="material-icons">add</i></a>
       <div class="container">
         <div class="row center-align">
             <h3>Question Bank</h3>
@@ -62,32 +62,37 @@
             </div>
 
           </div>
-          <% questions.forEach(function(question, i){ %>
-            <div class="card">
-              <div style="text-align:right;float:right;">
-                <a href="#!"><i class="material-icons">create</i></a>
-                <a href="#!"><i class="material-icons">delete_forever</i></a>
-              </div>
-              <h4><%=i+1%>. <%=question.question%></h4>
-              <div class="row">
-                <div class="col s6">
-                  <h4><label class="">Options</label></h4>
-                  <% question.options.forEach(function(option){ %>
-                    <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label>
-                    </div>
+          <div class="section responsive">
+            <% questions.forEach(function(question, i){ %>
+              <div class="card question-card hoverable">
+                <div class="card-content">
+                  <b><%=i+1%>. </b>
+                  <%=question.question%>
+                <br>
+                <div class="row">
+                  <div class="col s6">
+                    <hr>
+                    <% question.newOptions.forEach(function(option){ %>
+                      <p>
+                        <input type="checkbox" disabled id="opt<%=i+1%>"
+                        <%if(option.isAns){%>
+                         checked="checked"
+                         <%}%>
+                         />
+                        <label for="opt<%=i+1%>"><%=option.opt%></label>
+                      </p>
                     <% }) %>
-                </div>
-                <div class="col s6">
-                  <h4><label class="control-label">Answer</label></h4>
-                  <% question.answers.forEach(function(answer){ %>
-                    <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label>
-                    </div>
-                    <% }) %>
+                  </div>
                 </div>
               </div>
+              <div class="card-action right-align">
+              <!-- <a href="#!" class="blue-text "><i class="material-icons">create</i></a> -->
+              <a href="/admin/questionBank/<%=question._id%>?_method=delete" class="red-text question-delete-button"><i class="material-icons">delete_forever</i></a>
             </div>
-            <% }) %>
-              <% } %>
+              </div>
+              <% }) %>
+                <% } %>
+          </div>
 
 
       </div>
