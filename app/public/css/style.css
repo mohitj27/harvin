@@ -239,9 +239,9 @@ h2, h3, h4, h5 {
 
 .scrollTop {
   position: fixed;
-  right: 10%;
-  bottom: 10px;
-  background-color: #13b38b;
+  right: 15%;
+  bottom: 4%;
+  
   padding: 20px;
   z-index: 1000;
   opacity: 0;

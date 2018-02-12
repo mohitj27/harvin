@@ -1,4 +1,4 @@
-var express = require("express"),
+const express = require("express"),
   async = require("async"),
   fs = require('fs'),
   moment = require("moment-timezone"),
@@ -12,9 +12,9 @@ var express = require("express"),
   Blog = require('./../models/Blog'),
   User = require('./../models/User'),
   vmsController = require('./../controllers/vms.controller'),
-  validator = require('validator')
-router = express.Router();
-Promise = require('bluebird')
+  validator = require('validator'),
+router = express.Router(),
+Promise = require('bluebird');
 mongoose.Promise = Promise;
 
 router.get('/test', (req, res, next) => {
@@ -39,7 +39,6 @@ router.get('/', (req, res, next) => {
 router.get('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res) => {
   res.render('newVisitor')
 })
-
 router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   const name = req.body.name
   const phone = req.body.phone || ''
