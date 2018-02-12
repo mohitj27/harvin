@@ -1,6 +1,7 @@
 const errorHandler = require('../errorHandler');
 const User = require('./../models/User');
 const Profile = require('./../models/Profile');
+const Batch = require('./../models/Batch');
 Promise = require('bluebird')
 mongoose = require('mongoose')
 mongoose.Promise = Promise;
@@ -22,21 +23,6 @@ const registerUser = function (username, password) {
         else return resolve(registeredUser)
       }
     );
-  });
-}
-
-const createNewProfile = function (fullName, emailId, phone='0000000000') {
-  return new Promise(function(resolve, reject) {
-    let newProfile = {
-      fullName,
-      emailId,
-      phone
-    }
-
-    Profile.create(newProfile, function (err, createdProfile) {
-      if(err) return reject(errorHandler.getErrorMessage(err))
-      else return resolve(createdProfile)
-    })
   });
 }
 
@@ -64,6 +50,5 @@ const addProfileToUser = function (user, profile) {
 module.exports = {
   findUserByUsername,
   registerUser,
-  createNewProfile,
-  addProfileToUser
+  addProfileToUser,
 }

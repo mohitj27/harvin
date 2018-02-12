@@ -14,8 +14,9 @@ var express = require("express"),
   validator = require('validator'),
   mongoose = require("mongoose");
 const errorHandler = require('../errorHandler');
-const studentController = require('../controllers/student.controller')
-
+const userController = require('../controllers/user.controller')
+const batchController = require('../controllers/batch.controller')
+const profileController = require('../controllers/profile.controller')
 
 //Handle user detail update
 router.put("/:username", (req, res, next) => {
@@ -42,7 +43,7 @@ router.put("/:username", (req, res, next) => {
               _id: {
                 $in: subjectId
               }
-            }, function(err, foundSubjects) {
+            }, function (err, foundSubjects) {
               if (!err && foundSubjects) {
                 var counter = 0;
                 let chaptersArr = []
@@ -53,7 +54,7 @@ router.put("/:username", (req, res, next) => {
                     chaptersArr.push(chapter)
                   })
                 })
-                Async.each(chaptersArr, function(chapter, callback) {
+                Async.each(chaptersArr, function (chapter, callback) {
 
                     var newProg = {
                       chapter: chapter
@@ -71,7 +72,7 @@ router.put("/:username", (req, res, next) => {
 
 
                   },
-                  function(err) {
+                  function (err) {
                     if (err) {
                       next(errorHandler.getErrorMessage(err))
                     } else {
@@ -116,7 +117,7 @@ router.put("/:username", (req, res, next) => {
 })
 
 //Handle user login -- for student
-router.post("/login", passport.authenticate("local"), function(req, res) {
+router.post("/login", passport.authenticate("local"), function (req, res) {
   res.json(req.user);
 });
 
@@ -132,7 +133,7 @@ router.post("/loginWithEmail", async (req, res, next) => {
 
   //find user
   try {
-    var foundUser = await studentController.findUserByUsername(username)
+    var foundUser = await userController.findUserByUsername(username)
   } catch (e) {
     next(e)
   }
@@ -144,7 +145,7 @@ router.post("/loginWithEmail", async (req, res, next) => {
       polulate: {
         path: 'batch'
       }
-    }, function(err, foundUser) {
+    }, function (err, foundUser) {
       let userDetail = {
         username,
         password,
@@ -161,9 +162,9 @@ router.post("/loginWithEmail", async (req, res, next) => {
     })
   } else {
     try {
-      var registeredUser = await studentController.registerUser(username, password)
-      var createdProfile = await studentController.createNewProfile(username, emailId)
-      var updatedProfile = await studentController.addProfileToUser(registeredUser, createdProfile)
+      var registeredUser = await userController.registerUser(username, password)
+      var createdProfile = await userController.createNewProfile({username, emailId})
+      var updatedProfile = await userController.addProfileToUser(registeredUser, createdProfile)
       var userDetail = {
         username,
         password,
@@ -177,7 +178,7 @@ router.post("/loginWithEmail", async (req, res, next) => {
 });
 
 //Handle user registration-- for student->Mobile interface
-router.post("/signup", function(req, res) {
+router.post("/signup", function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
   var fullName = req.body.fullName;
@@ -190,11 +191,11 @@ router.post("/signup", function(req, res) {
     //find batch
     Async.waterfall(
       [
-        function(callback) {
+        function (callback) {
           Batch.findOne({
               batchName: batchName
             },
-            function(err, foundBatch) {
+            function (err, foundBatch) {
               if (!err && foundBatch) {
                 callback(null, foundBatch);
               } else {
@@ -203,13 +204,13 @@ router.post("/signup", function(req, res) {
             }
           );
         },
-        function(callback) {
+        function (callback) {
           User.register(
             new User({
               username: username
             }),
             password,
-            function(err, user) {
+            function (err, user) {
               if (err) {
                 console.log(err);
                 req.flash("error", err.message);
@@ -220,7 +221,7 @@ router.post("/signup", function(req, res) {
             }
           );
         },
-        function(user, callback) {
+        function (user, callback) {
           var newProfile = {
             fullName,
             emailId,
@@ -229,7 +230,7 @@ router.post("/signup", function(req, res) {
           };
 
           // if registered successfully create profile
-          Profile.create(newProfile, function(err, createdProfile) {
+          Profile.create(newProfile, function (err, createdProfile) {
             if (!err && createdProfile) {
               callback(null, user, createdProfile);
             } else {
@@ -237,7 +238,7 @@ router.post("/signup", function(req, res) {
             }
           });
         },
-        function(user, createdProfile, callback) {
+        function (user, createdProfile, callback) {
           User.findOneAndUpdate({
               _id: user._id
             }, {
@@ -249,7 +250,7 @@ router.post("/signup", function(req, res) {
               new: true,
               setDefaultsOnInsert: true
             },
-            function(err, updatedUser) {
+            function (err, updatedUser) {
               if (!err && updatedUser) {
                 callback(null, createdProfile, updatedUser);
               } else {
@@ -258,8 +259,8 @@ router.post("/signup", function(req, res) {
             }
           );
         },
-        function(createdProfile, updatedUser, callback) {
-          passport.authenticate("local")(req, res, function() {
+        function (createdProfile, updatedUser, callback) {
+          passport.authenticate("local")(req, res, function () {
             User.findOne({
                 _id: updatedUser._id
               })
@@ -271,7 +272,7 @@ router.post("/signup", function(req, res) {
                   model: "Batch"
                 }
               })
-              .exec(function(err, foundUser) {
+              .exec(function (err, foundUser) {
                 if (!err && foundUser) {
                   res.json(foundUser);
                 } else {
@@ -281,7 +282,7 @@ router.post("/signup", function(req, res) {
           });
         }
       ],
-      function(err, result) {
+      function (err, result) {
         if (err) {
           console.log(err);
           next(new errors.generic());
@@ -292,115 +293,55 @@ router.post("/signup", function(req, res) {
 });
 
 //User Register form-- student->from web interface
-router.get("/register", function(req, res) {
+router.get("/register", async function (req, res) {
+  req.locals.flashUrl = '/student/register'
+  try {
+    var foundBatches = await batchController.findAllBatch()
+  } catch (e) {
+    return next(e)
+  }
   res.render("studentRegister", {
-    error: res.locals.msg_error[0]
+    foundBatches
   });
 });
 
 //Handle User Register form-- student->from web interface
-router.post("/register", function(req, res) {
-  var username = req.body.username;
-  var password = req.body.password;
-  var fullName = req.body.fullName;
-  var emailId = req.body.emailId;
-  var phone = req.body.phone;
+router.post("/register", async function (req, res, next) {
+  res.locals.flashUrl = '/student/register'
+  var username = req.body.username || '';
+  var password = req.body.password || '';
+  var fullName = req.body.fullName || '';
+  var emailId = req.body.emailId || '';
+  var phone = req.body.phone || '';
   var batchName = req.body.batch || "";
 
-  Async.waterfall(
-    [
-      function(callback) {
-        User.register(
-          new User({
-            username: username
-          }),
-          password,
-          function(err, user) {
-            if (err) {
-              console.log(err);
-              req.flash("error", err.message);
-              return res.redirect("/student/register");
-            } else if (user && !err) {
-              callback(null, user);
-            }
-          }
-        );
-      },
-      function(user, callback) {
-        var newProfile = {
-          fullName,
-          emailId,
-          phone
-        };
+  if(!username || validator.isEmpty(username)) return errorHandler.errorResponse("INVALID_FIELD", 'username', next)
+  if(!password || validator.isEmpty(password)) return errorHandler.errorResponse("INVALID_FIELD", 'password', next)
+  if(!batchName || validator.isEmpty(batchName)) return errorHandler.errorResponse("INVALID_FIELD", 'batch name', next)
 
-        // if registered successfully create profile
-        Profile.create(newProfile, function(err, createdProfile) {
-          if (!err && createdProfile) {
-            callback(null, user, createdProfile);
-          } else {
-            callback(err);
-          }
-        });
-      },
-      function(user, createdProfile, callback) {
-        User.findOneAndUpdate({
-            _id: user._id
-          }, {
-            $set: {
-              profile: createdProfile
-            }
-          }, {
-            upsert: true,
-            new: true,
-            setDefaultsOnInsert: true
-          },
-          function(err, updatedUser) {
-            if (!err && updatedUser) {
-              callback(null, createdProfile, updatedUser);
-            } else {
-              callback(err);
-            }
-          }
-        );
-      },
-      function(createdProfile, updatedUser, callback) {
-        passport.authenticate("local")(req, res, function() {
-          User.findOne({
-              _id: updatedUser._id
-            })
-            .populate({
-              path: "profile",
-              model: "Profile"
-            })
-            .exec(function(err, foundUser) {
-              if (!err && foundUser) {
-                req.flash(
-                  "success",
-                  "Successfully signed you in as " + req.body.username
-                );
-                res.redirect("/");
-              } else {
-                console.log(err);
-              }
-            });
-        });
-      }
-    ],
-    function(err, result) {
-      if (err) {
-        console.log(err);
-        next(new errors.generic());
-      } else {}
-    }
-  );
+  try {
+    var registerdUser = await userController.registerUser(username, password)
+    var createdProfile = await profileController.createNewProfile({fullName, emailId, phone})
+    var foundBatch = await batchController.findBatchByBatchName(batchName)
+    var updatedProfile = await profileController.addBatchToProfile(foundBatch, createdProfile)
+    var updatedUser = await userController.addProfileToUser(registerdUser, createdProfile)
+
+    passport.authenticate("local")(req, res, function () {
+      req.flash('success', 'Successfully signed you in')
+      res.redirect('/admin')
+    });
+
+  } catch (e) {
+    next(e)
+  }
 });
 
-router.get("/:username/subjects", function(req, res) {
+router.get("/:username/subjects", function (req, res) {
   var subjects = {};
   User.findOne({
         username: req.params.username
       },
-      function(err, foundUser) {
+      function (err, foundUser) {
         if (!err && foundUser) {} else if (err) {
           console.log(err);
         }
@@ -430,7 +371,7 @@ router.get("/:username/subjects", function(req, res) {
         }
       }
     })
-    .exec(function(err, userDetail) {
+    .exec(function (err, userDetail) {
       if (!err && userDetail) {
         subjects = userDetail.profile.batch.subjects;
         res.json({
@@ -440,7 +381,7 @@ router.get("/:username/subjects", function(req, res) {
     });
 });
 
-router.get('/:username/results', function(req, res, next) {
+router.get('/:username/results', function (req, res, next) {
   let username = req.params.username;
   User.findOne({
       username: username
@@ -466,7 +407,7 @@ router.get("/:username/progresses", (req, res, next) => {
   User.findOne({
         username: req.params.username
       },
-      function(err, foundUser) {
+      function (err, foundUser) {
         if (!err && foundUser) {} else if (err) {
           console.log(err);
         }
@@ -480,7 +421,7 @@ router.get("/:username/progresses", (req, res, next) => {
         model: "Progress"
       }
     })
-    .exec(function(err, foundUser) {
+    .exec(function (err, foundUser) {
       if (!err && foundUser) {
         progresses = foundUser.profile.progresses;
         res.json({
@@ -498,7 +439,7 @@ router.put("/:username/setprogress", (req, res, next) => {
   var status = req.body.status || 'new';
   var completedTopicsIds = req.body.completedTopicsIds;
   let topics = []
-  
+
   completedTopicsIds.forEach(topicId => {
     if (validator.isMongoId(topicId)) topics.push(topicId)
   })
@@ -512,7 +453,7 @@ router.put("/:username/setprogress", (req, res, next) => {
       path: "profile",
       model: "Profile"
     })
-    .exec(function(err, foundUser) {
+    .exec(function (err, foundUser) {
       if (!err && foundUser) {
         Progress.findOneAndUpdate({
             chapter: chapterId
@@ -527,7 +468,7 @@ router.put("/:username/setprogress", (req, res, next) => {
             new: true,
             setDefaultsOnInsert: true
           },
-          function(err, updatedProg) {
+          function (err, updatedProg) {
             if (!err && updatedProg) {
               Profile.findByIdAndUpdate(
                 foundUser.profile, {
@@ -539,7 +480,7 @@ router.put("/:username/setprogress", (req, res, next) => {
                   new: true,
                   setDefaultsOnInsert: true
                 },
-                function(err, updatedProfile) {
+                function (err, updatedProfile) {
                   if (!err && updatedProfile) {
                     res.json({
                       updatedProg: updatedProg
@@ -561,8 +502,8 @@ router.put("/:username/setprogress", (req, res, next) => {
 });
 
 //sending classes list
-router.get("/classes", function(req, res, next) {
-  Class.find({}, function(err, classes) {
+router.get("/classes", function (req, res, next) {
+  Class.find({}, function (err, classes) {
       if (err) {
         console.log(err);
         next(new errors.notFound());
@@ -584,7 +525,7 @@ router.get("/classes", function(req, res, next) {
         }
       }
     })
-    .exec(function(err, classes) {
+    .exec(function (err, classes) {
       if (err) {
         console.log(err);
       } else {

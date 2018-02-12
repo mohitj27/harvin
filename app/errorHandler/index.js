@@ -83,15 +83,14 @@ const defaultError = function(next) {
 };
 
 const invalidField = function (fieldName, next) {
-  console.log('called');
   generatError(400, "INVALID " + fieldName.toUpperCase(), "Bad request! " + fieldName + " not provided or invalid.", next);
 }
-
 
 const errorResponse = function(name, field, next) {
   switch (name) {
     case "INVALID_FIELD":
-      invalidField(field, next)
+      invalidField(field, next);
+      break;
     case "NOT_A_CENTER":
       notCenter(next);
       break;

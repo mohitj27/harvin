@@ -98,7 +98,7 @@ router.get("/qbData", (req, res, next) => {
 
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var className = req.body.className;
   var subjectName = req.body.subjectName;
   var chapterName = req.body.chapterName;
@@ -123,7 +123,8 @@ router.post("/", (req, res, next) => {
     answers: [],
     options: [],
     newOptions: [],
-    answersIndex: []
+    answersIndex: [],
+    addedBy: req.user._id
   };
 
   //pushing options in options array

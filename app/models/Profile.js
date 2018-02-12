@@ -1,23 +1,19 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var Promise = require('bluebird');
+Promise.promisifyAll(mongoose);
 
 //====Profile Schmea====
 var profileSchema = new Schema(
 	{
 		fullName:{
-            type:String,
-            required:true,
-            default:"full name"
+            type:String
         },
         emailId:{
-            type:String,
-            required:true,
-            default:"abc@xyz.com"
+            type:String
         },
         phone:{
-            type:String,
-            required:true,
-            default:"0000000000"
+            type:String
         },
         results:[
             {
@@ -35,7 +31,7 @@ var profileSchema = new Schema(
                 ref: "Progress"
             }
         ]
-        
+
 	}
 );
 
