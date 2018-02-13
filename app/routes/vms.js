@@ -135,11 +135,12 @@ router.get('/gallery/category', function(req, res, next) {
   let limit = req.query.limit
   Gallery.find({category: {$in:category}})
   .sort({uploadDate: -1})
-  .limit(limit)
+  .limit(parseInt(limit))
   .exec(function(err, gallery) {
     if (err) {
       console.log(err)
     } else {
+      console.log('gallery', gallery)
       res.json({
         gallery: gallery
       });
