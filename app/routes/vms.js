@@ -97,7 +97,7 @@ router.delete('/:visitorId', (req, res, next) => {
   Visitor.findByIdAndRemove(req.params.visitorId, (err) => {
     if (!err) {
       req.flash('success', 'Entry deleted successfully')
-      res.redirect('/admin/all')
+      res.redirect('/admin/db/visitors')
     } else {
       console.log(err)
       next(new errors.generic())

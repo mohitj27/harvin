@@ -22,47 +22,47 @@
 								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= i + 1 %>
 								</td>
-								<td style="text-align: center">
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= visitor.date %>
 								</td>
-								<td style="text-align: center">
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= visitor.name %>
 								</td>
-								<td style="text-align: center">
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= visitor.classs %>
 								</td>
-								<td style="text-align: center">
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= visitor.phone %>
 								</td>
-								<td style="text-align: center">
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= visitor.emailId %>
 								</td>
 								</td>
 								<td id="referral" style="text-align: center">
 									<%= visitor.referral %>
 								</td>
-								<td id="comments" class="vms-table-text" style="text-align: center">
+								<td id="comments" class="vms-table-text" style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<p>
 										<%=visitor.comments%>
 									</p>
 								</td>
-								<td id="school" class="vms-table-text" style="text-align: center">
+								<td id="school" class="vms-table-text" style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<p>
 										<%=visitor.school%>
 									</p>
 								</td>
-								<td id="address" class="vms-table-text" style="text-align: center">
+								<td id="address" class="vms-table-text" style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<p >
 										<%=visitor.address%>
 									</p>
 								</td>
-								<td id="aim" class="vms-table-text" style="text-align: center">
+								<td id="aim" class="vms-table-text" style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<p >
 										<%=visitor.aim%>
 									</p>
 								</td>
 								<td style="text-align: center">
-									<form method="post" action="/vms/<%=visitor._id%>?_method=delete">
+									<form method="post" action="/<%=visitor._id%>?_method=delete">
 										<button class="btn btn-sm btn-danger">
 											Delete
 											</button>
