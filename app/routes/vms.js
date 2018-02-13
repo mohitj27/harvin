@@ -27,7 +27,6 @@ router.get('/', (req, res, next) => {
   })
   .exec((err, foundStudents) => {
     if (!err && foundStudents) {
-      console.log('found', foundStudents)
       res.render('vmsLanding', {
         students: foundStudents
       });
@@ -128,9 +127,6 @@ router.get('/courses', (req, res, next) => {
 //helper- class
 
 router.get('/gallery/category', function(req, res, next) {
-  console.log('body', req.body.category)
-  console.log('query', req.query.category)
-  console.log('limit', req.query.limit)
   let category = req.query.category;
   let limit = req.query.limit
   Gallery.find({category: {$in:category}})
@@ -140,7 +136,6 @@ router.get('/gallery/category', function(req, res, next) {
     if (err) {
       console.log(err)
     } else {
-      console.log('gallery', gallery)
       res.json({
         gallery: gallery
       });

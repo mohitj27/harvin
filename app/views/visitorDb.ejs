@@ -18,8 +18,8 @@
 				<tbody>
 					<% if (visitors){ %>
 						<% visitors.forEach((visitor, i) =>{ %>
-							<tr href="#modal-comment" class="modal-trigger">
-								<td style="text-align: center">
+							<tr  >
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= i + 1 %>
 								</td>
 								<td style="text-align: center">
@@ -64,7 +64,7 @@
 								<td style="text-align: center">
 									<form method="post" action="/vms/<%=visitor._id%>?_method=delete">
 										<button class="btn btn-sm btn-danger">
-												Delete
+											Delete
 											</button>
 									</form>
 								</td>
