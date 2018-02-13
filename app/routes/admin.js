@@ -39,10 +39,7 @@ router.post("/signup", function(req, res, next) {
 
 //User login form-- admin
 router.get("/login", function(req, res) {
-  if(!req.user)
   res.render("login", {error: res.locals.msg_error[0]});
-  else
-  res.redirect('/admin')
 })
 
 //Handle user login -- for admin

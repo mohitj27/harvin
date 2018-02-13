@@ -14,6 +14,7 @@ var express = require("express"),
   Center = require("../models/Center.js"),
   Exam = require("../models/Exam"),
   errors = require("../error"),
+  _ = require('lodash'),
   middleware = require("../middleware"),
 
   router = express.Router();
@@ -113,7 +114,7 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
 
 });
 
-router.get("/qbData", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
+router.get("/qbData", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var className = req.query.className;
   var subjectName = req.query.subjectName;
   var chapterName = req.query.chapterName;
@@ -346,7 +347,9 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
     question: req.body.question,
     answers: [],
     options: [],
-    answersIndex: []
+    newOptions: [],
+    answersIndex: [],
+    addedBy: req.user._id
   };
 
   //pushing options in options array
@@ -368,6 +371,11 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
       }
     });
   });
+
+  newQues.options.forEach((opt_j, j)=> {
+    if(_.indexOf(newQues.answersIndex, j) != -1) newQues.newOptions.push({opt: opt_j, isAns: true})
+    else newQues.newOptions.push({opt: opt_j, isAns: false})
+  })
 
   async.waterfall(
     [
@@ -617,6 +625,7 @@ router.post('/:examId/question-paper/:username', (req, res, next) => {
 });
 
 router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+  console.log('body', req.body);
   var examId = req.params.examId;
   var questionsIdString = req.body.questions || "";
 

@@ -164,7 +164,7 @@ app.use(function(err, req, res, next) {
     // res.status(status).json(err);
     if (flashUrl) {
       req.flash('error', errMsg)
-      res.redirect(res.locals.flashUrl)
+      res.redirect(flashUrl)
     } else {
       res.status(status).json(errMsg)
     }
