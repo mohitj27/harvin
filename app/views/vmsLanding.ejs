@@ -29,29 +29,28 @@
 						</div>
 						<a href="https://www.facebook.com/events/530090074037111/" target="_blank">
 							<div class="col s12 l4 m12">
-								<div class="card-panel z-depth-5 center " id="harvin-card-panel2">
+								<div class="card-panel z-depth-5 center vms-main-panel" id="harvin-card-panel2">
 								</div>
 							</div>
 						</a>
 
 					</div>
 					<div class="row">
-
 						<div class="col s6 l3 m3 ">
-							<div class="card-panel z-depth-5 center bot-card materialboxed" id="bot-card1">
+							<div class="card-panel z-depth-5 center bot-card materialboxed vms-events-panel" id="bot-card1">
 							</div>
 						</div>
 						<div class="col s6 l3 m3 ">
-							<div class="card-panel z-depth-5 center bot-card materialboxed" id="bot-card2">
+							<div class="card-panel z-depth-5 center bot-card materialboxed vms-events-panel" id="bot-card2">
 							</div>
 						</div>
 						<div class="col s6 l3 m3 ">
-							<div class="card-panel z-depth-5 center bot-card materialboxed" id="bot-card3">
+							<div class="card-panel z-depth-5 center bot-card materialboxed vms-events-panel" id="bot-card3">
 							</div>
 						</div>
 						<a href="http://harvin.academy/quiz">
 							<div class="col s6 l3 m3 ">
-								<div class="card-panel z-depth-5 center bot-card" id="bot-card4">
+								<div class="card-panel z-depth-5 center bot-card vms-events-panel" id="bot-card4">
 								</div>
 							</div>
 						</a>
@@ -422,14 +421,16 @@
 
 							<% if (students){ %>
 								<% students.forEach((student, i) =>{ %>
-									<%if(i<12){%>
-										<div class="col s4 l2 m2 results-col materialboxed">
-											<img class="responsive-img z-depth-4 " id="result-image" src="<%=student.src%>">
-											</img>
-										</div>
-										<%}%>
-											<% }) %>
-												<% } %>
+									<%if(student.category == 'results'){%>
+										<%if(i<12){%>
+												<div class="col s4 l2 m2 results-col materialboxed">
+													<img class="responsive-img z-depth-4 " id="result-image" src="<%=student.src%>">
+													</img>
+												</div>
+												<%}%>
+									<%}%>
+										<% }) %>
+											<% } %>
 						</div>
 					</div>
 					<br>

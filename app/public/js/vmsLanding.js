@@ -10,6 +10,24 @@
       // else     $("#navbar").slideUp()
     })
 
+    $vmsMainPanel = $('.vms-main-panel')
+    let vmsMainPanelLength =  $vmsMainPanel.size()
+
+    $vmsEventsPanel = $('.vms-events-panel')
+    let vmsEventPanelLength =  $vmsEventsPanel.size()
+
+    $.get('/gallery/category?category[]=vms-main-panel&limit='+vmsMainPanelLength, function(res){
+      if(res.gallery){
+
+      }
+    })
+    $.get('/gallery/category?category[]=vms-events-panel&limit='+vmsEventPanelLength, function(res){
+
+      if(res.gallery){
+        
+      }
+    })
+
   });
 })(jQuery);
 
