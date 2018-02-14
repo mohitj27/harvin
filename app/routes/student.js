@@ -163,7 +163,7 @@ router.post("/loginWithEmail", async (req, res, next) => {
   } else {
     try {
       var registeredUser = await userController.registerUser(username, password)
-      var createdProfile = await userController.createNewProfile({username, emailId})
+      var createdProfile = await profileController.createNewProfile({username, emailId})
       var updatedProfile = await userController.addProfileToUser(registeredUser, createdProfile)
       var userDetail = {
         username,

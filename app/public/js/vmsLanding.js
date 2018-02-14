@@ -10,6 +10,32 @@
       // else     $("#navbar").slideUp()
     })
 
+    $vmsMainPanel = $('.vms-main-panel')
+    let vmsMainPanelLength =  $vmsMainPanel.size()
+
+    $vmsEventsPanel = $('.vms-events-panel')
+    let vmsEventPanelLength =  $vmsEventsPanel.size()
+    $vmsEventsPanel = $('.vms-events-panel').toArray()
+
+    $.get('/gallery/category?category[]=vms-main-panel&limit='+vmsMainPanelLength, function(res){
+      if(res.gallery && res.gallery.length > 0){
+        let src = res.gallery[0].src
+        let urlString = 'url(' +src + ')'
+        $vmsMainPanel.css("background-image", urlString)
+      }
+    })
+    $.get('/gallery/category?category[]=vms-events-panel&limit='+vmsEventPanelLength, function(res){
+
+      if(res.gallery && res.gallery.length > 0){
+        $vmsEventsPanel.forEach((panel, i) => {
+          if(i < res.gallery.length){
+            let src = res.gallery[i].src
+            let urlString = 'url(' +src + ')'
+            $(panel).css("background-image", urlString)
+          }
+        })
+      }
+    })
   });
 })(jQuery);
 

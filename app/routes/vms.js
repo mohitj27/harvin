@@ -23,8 +23,9 @@ router.get('/test', (req, res, next) => {
 
 router.get('/', (req, res, next) => {
   Gallery.find({
-    category: "results"
-  }, (err, foundStudents) => {
+    category: {$in:['results']}
+  })
+  .exec((err, foundStudents) => {
     if (!err && foundStudents) {
       res.render('vmsLanding', {
         students: foundStudents
@@ -96,7 +97,7 @@ router.delete('/:visitorId', (req, res, next) => {
   Visitor.findByIdAndRemove(req.params.visitorId, (err) => {
     if (!err) {
       req.flash('success', 'Entry deleted successfully')
-      res.redirect('/admin/all')
+      res.redirect('/admin/db/visitors')
     } else {
       console.log(err)
       next(new errors.generic())
@@ -125,28 +126,21 @@ router.get('/courses', (req, res, next) => {
 
 //helper- class
 
-router.get('/gallery/:category', function(req, res, next) {
-
-  console.log(req.query)
-  categoryObject = (req.params.category === 'all') ? {} : {
-    category: req.params.category,
-  }
-  Gallery.find(categoryObject)
-    .exec(function(err, gallery) {
-
-      if (err) {
-        console.log(err)
-      } else {
-        wr = fs.WriteStream('output1.jpg')
-        const url = "cover.jpg"
-        const pipeline = sharp(url).rotate().resize(300, 300)
-        pipeline.pipe(wr)
-
-        res.json({
-          gallery: gallery
-        });
-      }
-    });
+router.get('/gallery/category', function(req, res, next) {
+  let category = req.query.category;
+  let limit = req.query.limit
+  Gallery.find({category: {$in:category}})
+  .sort({uploadDate: -1})
+  .limit(parseInt(limit))
+  .exec(function(err, gallery) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.json({
+        gallery: gallery
+      });
+    }
+  });
 });
 
 
