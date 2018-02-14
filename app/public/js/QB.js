@@ -70,7 +70,7 @@ $(function(){
         let $toastContent;
       if(res.success){
         $toastContent = $('<span>'+res.msg+'</span>', {class: 'success-toast'})
-        Materialize.toast($toastContent, 50000);
+        Materialize.toast($toastContent, 5000);
         $('.toast').css('background-color', 'green')
         $currentQues.fadeOut('fast', 'linear', function() {
           $currentQues.remove()
@@ -78,7 +78,7 @@ $(function(){
 
       }else{
         $toastContent = $('<span>'+res.msg+'</span>', {class: 'error-toast'})
-        Materialize.toast($toastContent, 50000);
+        Materialize.toast($toastContent, 5000);
         $('.toast').css('background-color', 'red')
       }
     })
