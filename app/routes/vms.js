@@ -216,7 +216,7 @@ router.get('/blog', (req, res, next) => {
             if (err) throw err;
             res.render('standard_blog_detail', {
               blogContent: data,
-              foundBlog: foundBlog
+              foundBlog: foundBlog.reverse()
             })
           });
         }
@@ -233,7 +233,7 @@ router.get('/blog', (req, res, next) => {
           next(new errors.generic())
         } else {
           res.render('blogTheme', {
-            foundBlogs
+            foundBlogs:foundBlogs.reverse()
           })
         }
       })

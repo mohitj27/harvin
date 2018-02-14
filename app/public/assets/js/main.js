@@ -22,7 +22,6 @@
   $(window).on('load', function() {
     preloaderSetup();
   });
-
   // Document Ready Function
   $(document).ready(function() {
     scrollUpSetup();

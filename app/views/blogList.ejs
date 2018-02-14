@@ -20,7 +20,7 @@
 			<tbody>
 				<% if (blogs){ %>
 					<% blogs.forEach((blog, i) =>{ %>
-						<tr class="hoverable">
+						<tr class="hoverable" id="<%=blog.blogTitle%>">
 							<td style="text-align: center">
 								<%= i + 1 %>
 							</td>
@@ -37,9 +37,9 @@
 								<%=blog.draft%>
 							</td>
 							<td style="text-align: center">
-							<a href="#" onClick="confirmDelete()"class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Post!"><i class="material-icons ">delete</i></a>
+							<a href="#" onClick="confirmDelete(this)"class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Post!"><i class="material-icons ">delete</i></a>
 							<br>
-							<a href="#"class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit This Post!"><i class="material-icons ">create</i></a>
+							<a href="/admin/blog/edit?blogTitle=<%=blog.blogTitle%>"class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit This Post!"><i class="material-icons ">create</i></a>
 							</td>
 
 						</tr>
@@ -55,20 +55,8 @@
 
 
 		<script src="/dist/clipboard.min.js"></script>
+		<script src="/js/blogList.js"></script>
 
 		<% include partials/footer.ejs%>
 		<script type="text/javascript">
-function confirmDelete(){
-
-			var $toastContent = $('<span>Are you sure you want to Delete this POST?</span>').add($('<button class="btn-flat toast-action" onClick="confirmed()">YES</button>')).add($('<button class="btn-flat toast-action" onClick="dismissed()">No</button>'));
-			Materialize.toast($toastContent);
-
-
-}
-function dismissed(){
-	Materialize.Toast.removeAll();
-}
-function confirmed(){
-	Materialize.Toast.removeAll();
-}
 		</script>
