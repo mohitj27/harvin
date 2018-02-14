@@ -553,79 +553,9 @@ router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middle
   });
 });
 
-router.post('/:examId/question-paper/:username', (req, res, next) => {
-  let examId = req.params.examId;
-  let username = req.params.username;
-  Exam.findById(examId, (err, foundExam) => {
-    if (!err && foundExam) {
-      let result = {
-        examTakenDate: moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
-        nQuestionsAnswered: req.body.nQuestionsAnswered,
-        nQuestionsUnanswered: req.body.nQuestionsUnanswered,
-        nCorrectAns: req.body.nCorrectAns,
-        nIncorrectAns: req.body.nIncorrectAns,
-        mTotal: req.body.mTotal,
-      };
 
-      User.findOne({
-          username: username
-        })
-        .populate({
-          path: 'profile',
-          model: 'Profile'
-        })
-        .exec((err, foundUser) => {
-          if (!err && foundUser) {
-            let newResult = new Result({
-              examTakenDate: result.examTakenDate,
-              nQuestionsAnswered: result.nQuestionsAnswered,
-              nQuestionsUnanswered: result.nQuestionsUnanswered,
-              nCorrectAns: result.nCorrectAns,
-              nIncorrectAns: result.nIncorrectAns,
-              mTotal: result.mTotal,
-              user: foundUser._id,
-              exam: foundExam._id
-            });
-            newResult.save(err => {
-              if (!err) {
-                Profile.findByIdAndUpdate(
-                  foundUser.profile._id, {
-                    $addToSet: {
-                      results: newResult._id
-                    }
-                  }, {
-                    upsert: true,
-                    new: true,
-                    setDefaultsOnInsert: true
-                  },
-                  (err, updatedProfile) => {
-                    if (!err && updatedProfile) {
-                      res.json({
-                        success: true,
-                        msg: "Your result has been saved successfully",
-                        result: newResult
-                      });
-                    }
-                  }
-                );
-              } else {
-                console.log('result', err);
-                next(new errors.generic);
-              }
-            });
-          }
-        });
-    } else {
-      console.log('exam', err);
-      next(new errors.generic);
-    }
-  });
-
-
-});
 
 router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  console.log('body', req.body);
   var examId = req.params.examId;
   var questionsIdString = req.body.questions || "";
 
@@ -741,6 +671,76 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
   );
 });
 
+router.post('/:examId/question-paper/:username', (req, res, next) => {
+  let examId = req.params.examId;
+  let username = req.params.username;
+  Exam.findById(examId, (err, foundExam) => {
+    if (!err && foundExam) {
+      let result = {
+        examTakenDate: moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
+        nQuestionsAnswered: req.body.nQuestionsAnswered,
+        nQuestionsUnanswered: req.body.nQuestionsUnanswered,
+        nCorrectAns: req.body.nCorrectAns,
+        nIncorrectAns: req.body.nIncorrectAns,
+        mTotal: req.body.mTotal,
+      };
+
+      User.findOne({
+          username: username
+        })
+        .populate({
+          path: 'profile',
+          model: 'Profile'
+        })
+        .exec((err, foundUser) => {
+          if (!err && foundUser) {
+            let newResult = new Result({
+              examTakenDate: result.examTakenDate,
+              nQuestionsAnswered: result.nQuestionsAnswered,
+              nQuestionsUnanswered: result.nQuestionsUnanswered,
+              nCorrectAns: result.nCorrectAns,
+              nIncorrectAns: result.nIncorrectAns,
+              mTotal: result.mTotal,
+              user: foundUser._id,
+              exam: foundExam._id
+            });
+            newResult.save(err => {
+              if (!err) {
+                Profile.findByIdAndUpdate(
+                  foundUser.profile._id, {
+                    $addToSet: {
+                      results: newResult._id
+                    }
+                  }, {
+                    upsert: true,
+                    new: true,
+                    setDefaultsOnInsert: true
+                  },
+                  (err, updatedProfile) => {
+                    if (!err && updatedProfile) {
+                      res.json({
+                        success: true,
+                        msg: "Your result has been saved successfully",
+                        result: newResult
+                      });
+                    }
+                  }
+                );
+              } else {
+                console.log('result', err);
+                next(new errors.generic);
+              }
+            });
+          }
+        });
+    } else {
+      console.log('exam', err);
+      next(new errors.generic);
+    }
+  });
+
+
+});
 
 //giving question paper of particular exam
 router.get("/:username/exams/:examId/questionPaper", (req, res, next) => {
