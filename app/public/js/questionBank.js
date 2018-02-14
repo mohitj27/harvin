@@ -18,46 +18,6 @@ $(function () {
           onSubjectSelect()
         })
 
-        // $('#chapterName').on('focusout', function (e) {
-        //   emptyInputField('#topicName')
-        //   onChapterSelect()
-        // })
-
-        // function onChapterSelect(selectedChapterName) {
-        //   let chapterName = selectedChapterName || $('#chapterName').val()
-        //   if( chapterName.length > 0){
-        //     $.get('/chapter/' + chapterName, function (res) {
-        //
-        //      	topics = {};
-        //      	if(res.chapter){
-        //         res.chapter.topics.forEach((topic) => {
-        //        		topics[topic.topicName] = null
-        //        	})
-        //
-        //         $('#chapterDescription').val(res.chapter.chapterDescription)
-        //         $('#chapterDescription').trigger('autoresize');
-        //       }
-        //
-        //      	$('#topicName').autocomplete({
-        //      	    data: topics,
-        //      	    onAutocomplete: onTopicChange
-        //    	  });
-        //  	  });
-        //   }
-        // }
-        //
-        // function onTopicChange(selectedTopicName) {
-        //   let topicName = selectedTopicName || $('#chapterName').val()
-        //   if( topicName.length > 0){
-        //     $.get('/topic/' + topicName, function (res) {
-        //
-        //      	if(res.topic){
-        //         $('#topicDescription').val(res.topic.topicDescription)
-        //         $('#topicDescription').trigger('autoresize');
-        //       }
-        //  	  });
-        //   }
-        // }
 
         function onSubjectSelect(selectedSubjectName) {
          	//     onAutocomplete: onSubjectSelect
