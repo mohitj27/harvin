@@ -3,6 +3,10 @@ var express = require("express"),
 
   User = require("../models/User.js"),
   middleware = require("../middleware"),
+  userController = require('../controllers/user.controller')
+  profileController = require('../controllers/profile.controller')
+  validator = require('validator');
+  const errorHandler = require('../errorHandler');
 
   router = express.Router();
 
@@ -17,24 +21,27 @@ router.get("/", function(req, res) {
 });
 
 //Handle user registration-- for admin
-router.post("/signup", function(req, res, next) {
-  User.register(new User({
-    username: req.body.username,
-    role: req.body.role
-  }), req.body.password, function(err, user) {
-    if (err) {
-      console.log(err);
-      req.flash("error", err.message);
-      return res.redirect("/admin/signup");
+router.post("/signup", async function(req, res, next) {
+  const username = req.body.username;
+  const password = req.body.password;
+  const role = req.body.role;
 
-    }
+  res.locals.flashUrl = '/admin/signup'
 
-    passport.authenticate("local")(req, res, function() {
-      req.flash("success", "Successfully signed you in as " + req.body.username);
+  if(!role || role.length <=0 ) return errorHandler.errorResponse("INVALID_FIELD", 'role', next)
+
+  try{
+    var registeredUser = await userController.registerUser({username, password, role})
+
+    passport.authenticate("local")(req, res, function () {
+      req.flash('success', "Successfully signed you in as " + req.body.username)
       res.redirect(req.session.returnTo || '/admin');
       delete req.session.returnTo;
     });
-  });
+  }catch (e) {
+    next(e)
+  }
+
 });
 
 //User login form-- admin

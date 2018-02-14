@@ -8,14 +8,17 @@ var express = require("express"),
 	Batch = require("../models/Batch"),
   Center = require("../models/Center"),
   errors = require("../error"),
-  middleware = require("../middleware"),
+  middleware = require("../middleware");
+  const errorHandler = require('../errorHandler');
+  const validator = require('validator');
+  const assignmentController = require('../controllers/assignment.controller');
 
   router = express.Router();
 
 //assignment uplaod helper
 //setting disk storage for uploaded assignment
 var storage = multer.diskStorage({
-  destination: __dirname + "/../../../assignments/",
+  destination: __dirname + "/../../../HarvinDb/assignments/",
   filename: function(req, file, callback) {
     callback(null, Date.now() + "__" + file.originalname);
   }
@@ -38,7 +41,18 @@ function assignmentUploadSuccess(req, res) {
   res.redirect("/admin/assignment/uploadAssignment");
 }
 
-router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+
+  res.locals.flashUrl = ''
+
+  try{
+    var foundAssignments = await assignmentController.findAssignmentsByUserId(req.user)
+    // foundAssignments
+    return res.json(foundAssignments)
+  } catch(e) {
+    return next(e)
+  }
+
   Assignment.find({atCenter: req.user._id})
     .populate({
       path: 'batch',
@@ -76,8 +90,6 @@ router.post('/uploadAssignment', middleware.isLoggedIn, middleware.isCentreOrAdm
     .single('userFile');
 
   upload(req, res, function(err) {
-    console.log('body', req.body);
-    console.log('file', req.file);
 
     var assignmentName = req.body.assignmentName;
     var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
@@ -95,7 +107,7 @@ router.post('/uploadAssignment', middleware.isLoggedIn, middleware.isCentreOrAdm
     Assignment.findOneAndUpdate(newAssignment, {
         $set: {
           batch: batchId,
-					atCenter: req.user._id
+					addedBy: req.user
         }
       }, {
         upsert: true,

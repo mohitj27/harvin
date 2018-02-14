@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var Promise = require('bluebird');
+Promise.promisifyAll(mongoose);
 
 //====examSchema====
 var assignmentSchema = new Schema({
@@ -7,9 +9,9 @@ var assignmentSchema = new Schema({
     type: String,
     required: true
   },
-  atCenter: {
+  addedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Center"
+    ref: "User"
   },
   uploadDate: {
     type: String,

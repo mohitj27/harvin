@@ -15,10 +15,10 @@ const findUserByUsername = function (username) {
   });
 }
 
-const registerUser = function (username, password) {
+const registerUser = function (newUser) {
   return new Promise(function(resolve, reject) {
     User.register(
-      new User({username}), password, function (err, registeredUser) {
+      new User({username: newUser.username, role: newUser.role}), newUser.password, function (err, registeredUser) {
         if (err) return reject(errorHandler.getErrorMessage(err))
         else return resolve(registeredUser)
       }

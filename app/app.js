@@ -163,7 +163,6 @@ app.use(function(err, req, res, next) {
     const status = err.status || 400;
     const flashUrl = res.locals.flashUrl
     const errMsg = err.message || err
-    // res.status(status).json(err);
     if (flashUrl) {
       req.flash('error', errMsg)
       res.redirect(flashUrl)

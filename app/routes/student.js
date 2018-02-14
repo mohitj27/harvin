@@ -131,6 +131,12 @@ router.post("/loginWithEmail", async (req, res, next) => {
   var username = emailId.substring(0, index);
   var password = Math.floor(Math.random() * 89999 + 10000) + "";
 
+  var userDetail = {
+    username,
+    password,
+    batch: ""
+  };
+
   //find user
   try {
     var foundUser = await userController.findUserByUsername(username)
@@ -146,12 +152,6 @@ router.post("/loginWithEmail", async (req, res, next) => {
         path: 'batch'
       }
     }, function (err, foundUser) {
-      let userDetail = {
-        username,
-        password,
-        batch: ''
-      };
-
       if (err) return next(errorHandler.getErrorMessage(err))
 
       else if (foundUser.profile && foundUser.profile.batch && foundUser.profile.batch.batchName) {
@@ -162,14 +162,10 @@ router.post("/loginWithEmail", async (req, res, next) => {
     })
   } else {
     try {
-      var registeredUser = await userController.registerUser(username, password)
+      var registeredUser = await userController.registerUser({username, password})
       var createdProfile = await profileController.createNewProfile({username, emailId})
       var updatedProfile = await userController.addProfileToUser(registeredUser, createdProfile)
-      var userDetail = {
-        username,
-        password,
-        batch: ""
-      };
+
       res.json(userDetail);
     } catch (e) {
       next(e)
@@ -320,7 +316,7 @@ router.post("/register", async function (req, res, next) {
   if(!batchName || validator.isEmpty(batchName)) return errorHandler.errorResponse("INVALID_FIELD", 'batch name', next)
 
   try {
-    var registerdUser = await userController.registerUser(username, password)
+    var registerdUser = await userController.registerUser({username, password})
     var createdProfile = await profileController.createNewProfile({fullName, emailId, phone})
     var foundBatch = await batchController.findBatchByBatchName(batchName)
     var updatedProfile = await profileController.addBatchToProfile(foundBatch, createdProfile)
