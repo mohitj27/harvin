@@ -71,8 +71,21 @@
 									</label>
 							</div>
 
+
+
 							<div class="row input-field">
-								<input id="referral" name="referral" type="text" required class="validate" />
+								<select name="referral" id="referral-select" required class="validate">
+									<option value="" disabled selected>Choose your option</option>
+									<option value="Friends">Friends</option>
+									<option value="Social media">Social media</option>
+									<option value="Direct">Direct</option>
+									<option value="Other">Other</option>
+								</select>
+								<label>Referral</label>
+							</div>
+
+							<div class="row input-field"  style="display: none;">
+								<input id="referral-text" type="text" class="validate" />
 								<label for="referral">
 										<span class="label-text">Referral</span>
 										<span class="nav-dot"></span>
