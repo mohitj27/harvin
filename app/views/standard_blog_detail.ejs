@@ -14,6 +14,15 @@
 
     <!-- =========================== //Main Header =========================== -->
     <!-- =========================== Middle Content =========================== -->
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=1054614874673150&autoLogAppEvents=1';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
     <div class="middle-content pt-50">
         <div class="container">
             <div class="row">
@@ -27,14 +36,14 @@
                     <!-- ================= Full Post ================= -->
                     <article class="card full-post border-0">
                         <!-- <mark class="catagory text-center">Life Style</mark> -->
-                        <h2 class="card-title text-center h1"><%=foundBlog.blogTitle%></h2>
+                        <h2 class="card-title text-center h1 p-5"><%=foundBlog.blogTitle%></h2>
                         <!-- Blog Content-->
                         <div class="blgo-content">
                             <img class="card-img rounded-0" src="/blogImage/<%=foundBlog.coverImgName%>" alt="Blog Image">
                             <span class="posted-date"><%=foundBlog.uploadDate%></span>
                         </div>
                         <!-- Card Body -->
-                        <div class="card-body blog-texts p-0">
+                        <div class="card-body blog-texts p-5">
                           <% if(foundBlog.author){ %>
                             <span class="posted-by mt-20 mb-20 d-block">Posted By <mark class="admin"><%=foundBlog.author.username%></mark></span>
 
@@ -46,49 +55,26 @@
                     <!-- ================= /Full Post ================= -->
                     <!-- =============== //Recent Blog =============== -->
                     <!-- =============== Blog Pagination =============== -->
-                    
+
                     <!-- //Pagination -->
                     <!-- Author Box -->
-                    <div class="author-box row">
-                        <div class="col-xl-2  col-lg-3 text-center">
-                            <img src="/assets/img/blog-details/3.png" alt="Image">
-                            <div class="icon-list">
-                                <a href="standard_blog_detail.html#"><i class="fa fa-facebook"></i></a>
-                                <a href="standard_blog_detail.html#"><i class="fa fa-twitter"></i></a>
-                                <a href="standard_blog_detail.html#"><i class="fa fa-google-plus"></i></a>
-                                <a href="standard_blog_detail.html#"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </div>
+                    <!-- <div class="author-box row">
+
                         <div class="col-xl-10 col-lg-9">
-                            <div class="card author-info border-0">
                                 <h2 class="card-title">John Moris</h2>
                                 <div class="card-body p-0">
                                     <p class="card-text">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard Mc Clintock</p>
                                 </div>
-                            </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- //Author Box -->
                     <!-- ================= Comment Area ================= -->
-                    <div class="comments-area">
-                        <div class="comments-title">
-                            <h5 class="h1">Comments</h5>
-                            <p class="disabled">There are no comment</p>
-                        </div>
-                        <div class="comments-from">
-                            <h2 class="widget-title">LEAVE A COMMENT</h2>
-                            <form action="standard_blog_detail.html#" method="post">
-                                <div class="form-group d-flex justify-content-between mb-20">
-                                    <input type="text" name="Name" class="form-control mr-30" id="comment-name" placeholder="Name *" required>
-                                    <input type="email" name="Email" class="form-control" id="comment-email" placeholder="Email *" required>
-                                </div>
-                                <div class="form-group">
-                                    <textarea name="Message" class="form-control w-100" id="comment-textarea" placeholder="Message *" required></textarea>
-                                </div>
-                                <button class="submit" type="submit">COMMENT</button>
-                            </form>
-                        </div>
+                  <div class="author-box row">
+                    <div class="col-xs-12 col-lg-12 col-md-12 center">
+                      <div class="fb-comments"></div>
                     </div>
+                  </div>
+
                     <!-- ================= //Comment Area ================= -->
                     <!-- ================= Releted post ================= -->
                     <div class="releted-post">
@@ -141,38 +127,7 @@
                 <!-- ====================== Aside .middle-sidebar ====================== -->
                 <aside class="col-xl-3 col-lg-4 col-md-5 middle-sidebar ml-xl-auto pl-lg-0 pl-md-0 mt-sm-5 mt-lg-0">
                     <div class="row">
-                        <!-- Sidebar Widget, About Me-->
-                        <!-- <div class="col-xl-12 col-md-11 col-sm-6 ml-lg-auto ml-md-auto sidebar-about-me sidebar-widget pl-xl-0">
-                            <h2 class="widget-title">ABOUT ME</h2>
-                            <div class="card about-me text-center border-0 rounded-0 p-15">
-                                <img class="card-img-top rounded-0" src="/assets/img/sidebar/1.jpg" alt="image cap">
-                                <div class="card-body p-0">
-                                    <h2 class="card-title mt-15 mb-15">John Moris</h2>
-                                    <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard</p>
-                                    <div class="icon-list">
-                                        <a href="standard_blog_detail.html#"><i class="fa fa-facebook"></i></a>
-                                        <a href="standard_blog_detail.html#"><i class="fa fa-twitter"></i></a>
-                                        <a href="standard_blog_detail.html#"><i class="fa fa-google-plus"></i></a>
-                                        <a href="standard_blog_detail.html#"><i class="fa fa-pinterest"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- Sidebar Widget, All Catagory-->
-                        <!-- <div class="col-xl-12 col-md-11 col-sm-6 ml-lg-auto ml-md-auto sidebar-catagory sidebar-widget pl-xl-0">
-                            <h2 class="widget-title">CATAGORY</h2>
-                            <div class="card all-catagory border-0 rounded-0 pt-30 pb-30">
-                                <div class="card-header font-weight-bold d-flex justify-content-between align-item-center border-0 py-2 px-3">
-                                    <span>All Catagory</span><span>100</span>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item border-0 py-2 px-3"><a class="d-flex justify-content-between align-item-center" href="standard_blog_detail.html#"><span>Travel</span><span>20</span></a></li>
-                                    <li class="list-group-item border-0 py-2 px-3"><a class="d-flex justify-content-between align-item-center" href="standard_blog_detail.html#"><span>Life Style</span><span>10</span></a></li>
-                                    <li class="list-group-item border-0 py-2 px-3"><a class="d-flex justify-content-between align-item-center" href="standard_blog_detail.html#"><span>Fashion </span><span>30</span></a></li>
-                                    <li class="list-group-item border-0 py-2 px-3"><a class="d-flex justify-content-between align-item-center" href="standard_blog_detail.html#"><span>Nature</span><span>40</span></a></li>
-                                </ul>
-                            </div>
-                        </div> -->
+
                         <!-- Sidebar Widget, Latest Post-->
                         <div class="col-xl-12 col-md-11 col-sm-6 ml-lg-auto ml-md-auto sidebar-latest-post sidebar-widget pl-xl-0">
                             <h2 class="widget-title">LATEST POST</h2>
@@ -266,9 +221,9 @@
                             <div class="card news-letter border-0 rounded-0 p-15">
                                 <div class="card-body p-0">
                                     <p class="card-text">If You Want to Know Our Update News Please Subscribe Us.</p>
-                                    <form class="form-inline" action="standard_blog_detail.html#" method="get">
+                                    <form class="form-inline"  >
                                         <input type="text" placeholder="Enter your mail id">
-                                        <button type="submit"><i class="fa fa-envelope"></i></button>
+                                        <button type="submit" disabled><i class="fa fa-envelope"></i></button>
                                     </form>
                                 </div>
                             </div>

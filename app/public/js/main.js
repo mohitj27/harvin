@@ -3,16 +3,17 @@ $(function() {
 //For error and success toasts notification
 	$errorCard = $('#error-card');
 	$successCard= $('#success-card');
-	 
+
 
   if ($errorCard.length > 0) {
 		 Materialize.toast($errorCard.text(), 5000)
-		 $('.toast').css('background-color', 'red')
+		 $('.toast').css('background-color', '#f44336')
   }
 
   if ($successCard.length > 0) {
 		 Materialize.toast($successCard.text(), 5000)
-		 $('.toast').css('background-color', 'green')
+	
+		 $('.toast').css('background-color', '#13b38b')
   }
 
   $('select').material_select();

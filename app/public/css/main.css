@@ -17,7 +17,11 @@
 #field {
   margin-bottom: 20px;
 }
-
+#brand-logo{
+  color: white;
+font-weight: 900;
+text-align: center;
+}
 .opt {
   width: 70%;
   border: 1px solid #dadada;
@@ -103,6 +107,7 @@ nav ul a {
 
 #menu-button{
   font-size: 44px;
+  color:#13b38b;
 }
 
 .button-collapse{

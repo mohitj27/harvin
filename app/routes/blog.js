@@ -9,7 +9,8 @@ var express = require("express"),
   app = express(),
   router = express.Router(),
   http = require('http').Server(app),
-  io = require('socket.io')(http)
+  io = require('socket.io')(http),
+  promise=require('bluebird')
 
 
 io.on('connection', function(socket) {
@@ -28,7 +29,7 @@ router.get('/all', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res,
   Blog.find({},(err,foundBlog)=>{
     if(err)console.log(err)
     else{
-      res.render('blogList',{blogs:foundBlog})
+      res.render('blogList',{blogs:foundBlog.reverse()})
     }
   })
 });
@@ -60,25 +61,18 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
   upload(req, res, function(err) {
     console.log('body', req.body);
     var coverImgName = path.basename(req.file.path);
-    // console.log('content', req.body)
-    // console.log('files', req.file);
-    // console.log('path', );
     let blog_name = req.body.title.toLowerCase().replace(/ /g, '_').concat('.html')
-    // console.log(blog_name, 'blog_name1')
     checkBlogDir()
     fs.writeFile(BLOG_DIR + blog_name, req.body.editordata, (err) => {
       if (err) throw err
     })
     const blogTitle = req.body.title
-    // console.log(blogTitle)
     let hashName = ''
     blogTitle.split(' ').forEach(function(word) {
       hashName += word.charAt(0)
     })
-    // console.log('hash', hashName)
     const htmlFilePath = blog_name
-    const uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY');
-
+    const uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY')
     Blog.findOneAndUpdate({
       blogTitle
     }, {
@@ -98,7 +92,7 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
     }, function(err, updatedBlog) {
       if(!err){
         console.log('updatedBlog', updatedBlog);
-        res.sendStatus(200)
+        res.redirect('/admin/blog/all')
       }
       else {
         res.redirect('/admin/blog/new')
@@ -145,7 +139,17 @@ router.post('/:htmlFilePath/images', (req, res) => {
 
     })
 })
-
+router.delete('/delete/:blogTitle',(req,res)=>{
+  let removeBlogPromise=new Promise((resolve,reject)=>{
+  Blog.remove({blogTitle:req.params.blogTitle},(err)=>{
+    if(err)reject(err)
+    else resolve()
+  })
+  })
+  removeBlogPromise.then(()=>{
+    res.send(200)
+  })
+})
 function checkBlogDir() {
   if (!fs.existsSync(BLOG_DIR)) {
     fs.mkdirSync(BLOG_DIR)
