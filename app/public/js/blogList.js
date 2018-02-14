@@ -10,13 +10,13 @@ elem=currElement
 }
 function dismissed(){
 
-Materialize.Toast.removeAll();
+Materialize.Toast.removeAll()
 }
 function confirmed(){
   $tr=$(elem).parent().parent()
   let blogname=$tr.attr('id')
-  $tr.fadeOut()
-  $tr.remove()
+  $tr.fadeOut(1000,()=>{$tr.remove()})
+
   $.ajax({
       url: `/admin/blog/delete/${blogname}`,
       method:'DELETE',

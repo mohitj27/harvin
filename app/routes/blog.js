@@ -10,7 +10,7 @@ var express = require("express"),
   router = express.Router(),
   http = require('http').Server(app),
   io = require('socket.io')(http),
-  promise=require('bluebird')
+  promise = require('bluebird')
 
 
 io.on('connection', function(socket) {
@@ -26,14 +26,47 @@ router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res,
 });
 
 router.get('/all', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  Blog.find({},(err,foundBlog)=>{
-    if(err)console.log(err)
-    else{
-      res.render('blogList',{blogs:foundBlog.reverse()})
+  Blog.find({}, (err, foundBlog) => {
+    if (err) console.log(err)
+    else {
+      res.render('blogList', {
+        blogs: foundBlog.reverse()
+      })
     }
   })
 });
 
+const editBlogPromise =  function editBlogPromise(blogTitle) {
+  return new Promise((resolve, reject) => {
+    Blog.findOne({
+      blogTitle
+    }, (err, foundBlog) => {
+      if (err) reject(err)
+      else {
+      resolve(foundBlog)}
+    })
+  })
+}
+
+const fileOpenPromise =  function fileOpenPromise(foundBlog) {
+
+  return new Promise((resolve, reject) => {
+
+    fs.readFile(__dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath, function(err, data) {
+      if (err) reject(err)
+      else resolve(data)
+    });
+  })
+}
+router.get('/edit', async (req, res,next) => {
+  const blogTitle = req.query.blogTitle
+  try{
+  const foundBlog = await editBlogPromise(blogTitle)
+  const data = await fileOpenPromise(foundBlog)
+  res.render('newBlog',{blogTitle:foundBlog.blogTitle,content:data})}
+  catch(err) {next(err)}
+
+})
 router.get('/:blogTitle', (req, res) => {
   Blog.findOne({
     blogTitle: req.params.blogTitle,
@@ -77,24 +110,23 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
       blogTitle
     }, {
       $set: {
-          htmlFilePath,
-          hashName,
-          coverImgName,
-          author:req.user,
-          publish:req.body.publish,
-          draft:req.body.draft,
-          uploadDate
+        htmlFilePath,
+        hashName,
+        coverImgName,
+        author: req.user,
+        publish: req.body.publish,
+        draft: req.body.draft,
+        uploadDate
       }
     }, {
       upsert: true,
       new: true,
       setDefaultsOnInsert: true
     }, function(err, updatedBlog) {
-      if(!err){
+      if (!err) {
         console.log('updatedBlog', updatedBlog);
         res.redirect('/admin/blog/all')
-      }
-      else {
+      } else {
         res.redirect('/admin/blog/new')
         console.log('err', err);
       }
@@ -129,27 +161,29 @@ router.post('/:htmlFilePath/images', (req, res) => {
       setDefaultsOnInsert: true
     },
     function(err, updatedBlog) {
-      if(!err){
+      if (!err) {
         console.log('updatedBlog', updatedBlog);
         res.sendStatus(200)
-      }
-      else {
+      } else {
         console.log('err', err);
       }
 
     })
 })
-router.delete('/delete/:blogTitle',(req,res)=>{
-  let removeBlogPromise=new Promise((resolve,reject)=>{
-  Blog.remove({blogTitle:req.params.blogTitle},(err)=>{
-    if(err)reject(err)
-    else resolve()
+router.delete('/delete/:blogTitle', (req, res) => {
+  let removeBlogPromise = new Promise((resolve, reject) => {
+    Blog.remove({
+      blogTitle: req.params.blogTitle
+    }, (err) => {
+      if (err) reject(err)
+      else resolve()
+    })
   })
-  })
-  removeBlogPromise.then(()=>{
+  removeBlogPromise.then(() => {
     res.send(200)
   })
 })
+
 function checkBlogDir() {
   if (!fs.existsSync(BLOG_DIR)) {
     fs.mkdirSync(BLOG_DIR)
