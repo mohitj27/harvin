@@ -124,6 +124,10 @@ router.get('/courses', (req, res, next) => {
   res.render('courses')
 })
 
+router.get('/courses-list', (req, res, next) => {
+  res.render('courses-list.ejs')
+})
+
 //helper- class
 
 router.get('/gallery/category', function(req, res, next) {

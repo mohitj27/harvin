@@ -3,7 +3,6 @@ $(function() {
 //For error and success toasts notification
 	$errorCard = $('#error-card');
 	$successCard= $('#success-card');
-	 
 
   if ($errorCard.length > 0) {
 		 Materialize.toast($errorCard.text(), 5000)
