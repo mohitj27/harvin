@@ -29,13 +29,21 @@ const addTopicChapterSubjectClassToFileById = function (createdFile, updatedTopi
         upsert: true,
         new: true,
         setDefaultsOnInsert: true
-      }, )
+      })
       .then(updatedFile => resolve(updatedFile))
       .catch(err => reject(err))
   });
 }
 
+const findFileById = function (fileId) {
+  return new Promise(function (resolve, reject) {
+    File.findByIdAsync(fileId)
+      .then(foundFile => resolve(foundFile))
+      .catch(err => reject(err))
+  });
+}
 module.exports = {
   createNewFile,
-  addTopicChapterSubjectClassToFileById
+  addTopicChapterSubjectClassToFileById,
+  findFileById
 }

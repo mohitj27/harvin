@@ -126,19 +126,20 @@ router.post('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, function 
   });
 });
 
-router.get("/:fileId", function (req, res, next) {
-  File.findById(req.params.fileId, function (err, foundFile) {
-    if (err) {
-      console.log(err);
-      res.sendStatus(404);
-    } else {
-      res.download(foundFile.filePath, foundFile.fileName, function (err) {
-        if (err) {
-          console.log(err);
-        }
-      });
-    }
-  });
+router.get("/:fileId", async function (req, res, next) {
+
+  const fileId = req.params.fileId || ''
+
+  if(!fileId || !validator.isMongoId(fileId)) return errorHandler.errorResponse('INVALID_FIELD', 'File id', next)
+
+  try{
+    const foundFile = await fileController.findFileById(fileId)
+    res.download(foundFile.filePath, foundFile.fileName, (err) => {
+      if(err) return next(err)
+    })
+  } catch(e) {
+    next(e)
+  }
 });
 
 module.exports = router;
