@@ -20,4 +20,28 @@ $(function(){
       $(this).attr('required', 'true')
     }
   })
+
+  $('.class-selector').on('click', function(){
+    $classs = $('#classs')
+    $classs.val($(this).text())
+    $classSelectorWrapperChildren = $('#class-selector-wrapper').children().toArray();
+    $classSelectorWrapperChildren.forEach(element => {
+      $(element).removeClass('active-class')
+      $(element).addClass('white')
+      $(element).children().removeClass('white-text', 'teal-text')
+      $(element).children().addClass('teal-text')
+    });
+    $(this).addClass('active-class')
+    $(this).children().addClass('white-text')
+
+  })
+
+  $('#new-vms-form').submit(function(){
+    const domain = $('#domain-select').val()
+    if(domain !== 'other'){
+      $('#emailId').val($('#emailId').val() + domain)
+    }
+
+  })
+
 })
