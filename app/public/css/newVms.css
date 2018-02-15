@@ -2,17 +2,26 @@
 
 *{padding: 0; margin: 0; box-sizing: border-box; }
 
+.class-selector {
+  margin: 0 10px;
+  border-radius: 100px;
+}
+
+.active-class{
+  background: #13b38b !important;
+}
+
 .container{
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-
-
 }
+
 #error-card, #success-card{
   display: none
 }
+
 body{
 
   background-image:linear-gradient(-25deg,rgba(125,194,66,0.7) 45%,rgba(19,179,139,1) 100%);
