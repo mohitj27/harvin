@@ -1,5 +1,4 @@
 const errorHandler = require('../errorHandler');
-const User = require('./../models/User');
 const Batch = require('./../models/Batch');
 Promise = require('bluebird')
 mongoose = require('mongoose')
