@@ -10,7 +10,7 @@ var express = require("express"),
 	router = express.Router();
 
 router.get("/updateBatch", middleware.isLoggedIn, middleware.isCentreOrAdmin, function (req, res, next) {
-	Subject.find({atCenter: req.user._id}, function (err, foundSubjects) {
+	Subject.find({addedBy: req.user._id}, function (err, foundSubjects) {
 				if (err) {
 					console.log(err);
 					next(new errors.generic());
@@ -51,7 +51,7 @@ router.post("/updateBatch", middleware.isLoggedIn, middleware.isCentreOrAdmin, f
 							batchName: batchName,
 							subjects: foundSubjects,
 							batchDesc: batchDesc,
-							atCenter: req.user._id
+							addedBy: req.user._id
 						}
 					}, {
 						upsert: true,
@@ -127,7 +127,7 @@ router.get("/:batchName", function (req, res, next) {
 // Providing list of batches
 router.get('/', (req, res, next) => {
 	if(req.user){
-		Batch.find({atCenter: req.user._id}, (err, foundBatches) => {
+		Batch.find({addedBy: req.user._id}, (err, foundBatches) => {
 			if(!err && foundBatches) {
 				res.json({batches: foundBatches});
 			}

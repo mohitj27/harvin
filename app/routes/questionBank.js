@@ -375,8 +375,6 @@ router.get('/refactor', (req, res, next) => {
 
 router.delete('/:questionId', async (req, res, next) => {
 
-  res.locals.flashUrl = ''
-
   const questionId = req.params.questionId || ''
   if(!validator.isMongoId(questionId)) return errorHandler.errorResponse('INVALID_FIELD', 'question-id', next)
   try {

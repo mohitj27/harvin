@@ -21,7 +21,7 @@ var express = require("express"),
 
 router.get("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   Exam.find({
-      atCenter: req.user._id
+      addedBy: req.user._id
     })
     .populate({
       path: 'batch',
@@ -41,7 +41,7 @@ router.get("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, ne
 
 router.get("/new", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   Batch.find({
-    atCenter: req.user._id
+    addedBy: req.user._id
   }, (err, foundBatches) => {
     if (!err && foundBatches) {
       res.render("newExam", {
@@ -78,7 +78,7 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
   Exam.findOneAndUpdate(newExam, {
       $set: {
         batch: batchId,
-        atCenter: req.user._id
+        addedBy: req.user._id
       }
     }, {
       upsert: true,

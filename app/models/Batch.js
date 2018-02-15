@@ -9,23 +9,24 @@ var batchSchema = new Schema({
     type: String,
     required: true
   },
-  atCenter: {
+
+  addedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Center"
+    ref: "User"
   },
+
   batchDesc: {
     type: String,
     default: "Default batch description"
   },
+
   subjects: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Subject"
-  }],
-  exams: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Exam"
   }]
 });
+
+batchSchema.index({ batchName: 1, addedBy: 1}, { unique: true });
 
 //subject model
 module.exports = mongoose.model("Batch", batchSchema);

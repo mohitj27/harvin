@@ -1,97 +1,24 @@
-var express = require("express"),
-  bodyParser = require("body-parser"),
-  passport = require("passport"),
-  localStrategy = require("passport-local"),
-  passportLocalMongoose = require("passport-local-mongoose"),
-  session = require("express-session"),
-  flash = require("connect-flash"),
-  indexRoutes = require("./routes/index.js"),
-  morgan = require("morgan"),
-  fs = require('fs'),
-  path = require("path"),
-  dotenv = require('dotenv').config(),
-  config = require('./config')(process.env.NODE_ENV),
-  methodOverride = require("method-override"),
-  compression = require('compression'),
-  app = express(),
-  mongoose = require("mongoose"),
-  mysql = require('mysql'),
-
-  serveFavicon = require('serve-favicon'),
-
-  Schema = mongoose.Schema,
-
-  User = require("./models/User.js"),
-  http = require('http').Server(app),
-  io = require('socket.io')(http)
-
-io = require('socket.io')(http)
-
-let files = {},
-  struct = {
-    name: null,
-    type: null,
-    size: 0,
-    data: [],
-    slice: 0,
-  };
-io.on('connection', function(socket) {
-
-  console.log('a user conn sadaected');
-
-  socket.on('end upload', () => {
-    files = {}
-  })
-  socket.on('slice upload', (data) => {
-
-    console.log('hello', data)
-    if (!files[data.name]) {
-      files[data.name] = Object.assign({}, struct, data)
-      files[data.name].data = []
-    }
-
-    //convert the ArrayBuffer to Buffer
-    data.data = new Buffer(new Uint8Array(data.data))
-    //save the data
-
-
-    fs.writeFile(__dirname + "/../../HarvinDb/blogImage/" + data.name, data.data, (err) => {
-      console.log('err', err)
-      console.log('files data', files[data.name])
-      console.log('twice problem')
-      if (err) return socket.emit('upload error')
-      socket.emit('end upload', data.name)
-      files = {}
-      delete files[data.name]
-
-
-    });
-
-
-  });
-});
-
-
-io.on('connection', function(socket) {
-  console.log('a user connected');
-  socket.on('chat message', function(msg) {
-    console.log('message: ' + msg);
-  });
-});
-
-
-
-/*MYSQL*/
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "harvin",
-  password: "harvin"
-})
-
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
+const express = require("express");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const passportLocalMongoose = require("passport-local-mongoose");
+const session = require("express-session");
+const flash = require("connect-flash");
+const indexRoutes = require("./routes/index.js");
+const morgan = require("morgan");
+const fs = require('fs');
+const path = require("path");
+const dotenv = require('dotenv').config();
+const config = require('./config')(process.env.NODE_ENV);
+const methodOverride = require("method-override");
+const compression = require('compression');
+const app = express();
+const mongoose = require("mongoose");
+const serveFavicon = require('serve-favicon');
+const User = require("./models/User.js");
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 //setting up body-parser
 app.use(bodyParser.urlencoded({
@@ -106,7 +33,6 @@ app.use(compression())
 
 //APP favicon
 app.use(serveFavicon(path.join(__dirname, 'public', 'images', 'harvin.png')))
-
 
 //view engine
 app.set('views', __dirname + '/views');
@@ -138,22 +64,55 @@ passport.deserializeUser(User.deserializeUser());
 
 // General middleware function
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.currentUser = req.user || null;
   res.locals.msg_error = req.flash("error") || {};
   res.locals.msg_success = req.flash("success") || {};
   next();
 });
 
+let files = {},
+  struct = {
+    name: null,
+    type: null,
+    size: 0,
+    data: [],
+    slice: 0,
+  };
+
+io.on('connection', function (socket) {
+  console.log('a user conn sadaected');
+  socket.on('end upload', () => {
+    files = {}
+  })
+  socket.on('slice upload', (data) => {
+    console.log('hello', data)
+    if (!files[data.name]) {
+      files[data.name] = Object.assign({}, struct, data)
+      files[data.name].data = []
+    }
+    //convert the ArrayBuffer to Buffer
+    data.data = new Buffer(new Uint8Array(data.data))
+    //save the data
+    fs.writeFile(__dirname + "/../../HarvinDb/blogImage/" + data.name, data.data, (err) => {
+      console.log('err', err)
+      console.log('files data', files[data.name])
+      if (err) return socket.emit('upload error')
+      socket.emit('end upload', data.name)
+      files = {}
+      delete files[data.name]
+    });
+  });
+});
 
 //index route
 app.use("/", indexRoutes);
 
 // Error handling middleware function
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   if (err) {
 
-    if(err.status !== 401 && err.status !== 403){
+    if (err.status !== 401 && err.status !== 403) {
       console.error("err---------------: ", err.stack);
       console.error("err_status: ", err.status);
       console.error("err_msg: ", err.message);
@@ -178,17 +137,16 @@ mongoose.connect(url, {
   useMongoClient: true
 });
 
-
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', function(err) {
+db.once('open', function (err) {
   if (err) {
     console.log(err);
   } else {
 
 
     let listener;
-    listener = http.listen(process.env.PORT || config.port, function() {
+    listener = http.listen(process.env.PORT || config.port, function () {
       console.log("Server has started!!! Listening at " + config.port);
     });
   }

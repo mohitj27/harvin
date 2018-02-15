@@ -441,7 +441,7 @@ var updateSwitch = {
 				if (err) {
 					console.log(err);
 					req.flash("error", "Please try again");
-					res.redirect("/admin/files/uploadFile");
+					res.redirect("/admin/files/new");
 				} else {
 					res.render('updateFile', {
 						classes: classes,

@@ -31,8 +31,19 @@ const findBatchByBatchName = function (batchName) {
   });
 }
 
+const findBatchByUserId = function (user) {
+  return new Promise(function(resolve, reject) {
+    Batch.findAsync({addedBy: user})
+    .then(foundBatch => {
+      resolve(foundBatch)
+    })
+    .catch(err => reject(err))
+  });
+}
+
 module.exports = {
   findAllBatch,
   findBatchById,
-  findBatchByBatchName
+  findBatchByBatchName,
+  findBatchByUserId
 }

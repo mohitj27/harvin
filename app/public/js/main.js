@@ -3,7 +3,7 @@ $(function() {
 //For error and success toasts notification
 	$errorCard = $('#error-card');
 	$successCard= $('#success-card');
-	 
+
 
   if ($errorCard.length > 0) {
 		 Materialize.toast($errorCard.text(), 5000)
@@ -84,25 +84,6 @@ $(function() {
       refreshAns();
     });
   });
-
-  $('.refresh').on('click', function() {
-    refreshAns();
-  });
-
-  //preventing submiting form on pressing enter
-  $(window).keydown(function(event) {
-    if (event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
-  });
-
-  //=========================================
-  //*****QUESTION BANK*******************
-  //=========================================
-  //populating subject option after class has been chosen
-
-
 });
 
 function refreshAns() {

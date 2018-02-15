@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-var Subject = require("./Subject");
+var Promise = require('bluebird');
+Promise.promisifyAll(mongoose);
 
 //====chapterSchema====
 var chapterSchema = new Schema({
@@ -8,24 +9,30 @@ var chapterSchema = new Schema({
     type: String,
     required: true
   },
-  atCenter: {
+
+  addedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Center"
+    ref: "User"
   },
+
   subject: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Subject"
   },
+
   chapterDescription: {
     type: String,
     required: true,
     default: "No description available yet"
   },
+
   topics: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Topic"
   }]
 });
+
+chapterSchema.index({ chapterName: 1, addedBy: 1}, { unique: true });
 
 //chapter model
 module.exports = mongoose.model("Chapter", chapterSchema);

@@ -7,20 +7,25 @@ var questionSchema = new Schema({
 		type: String,
 		required: true
 	},
-	newOptions:Object,
+
+	newOptions: Object,
+	
 	options: [{
 		type: String,
 		require: true
 	}],
-	answersIndex:[{
+
+	answersIndex: [{
 		type: Number,
 		require: true
 	}],
+
 	answers: [{
 		type: String,
 		required: true,
 	}],
-	addedBy:{
+
+	addedBy: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User"
 	}

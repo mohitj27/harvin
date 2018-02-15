@@ -7,20 +7,23 @@ var progressSchema = new Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Chapter"
 	},
-	topics:[{
+
+	topics: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Topic"
 	}],
+
 	completed: {
 		type: String,
 		default: "0",
 		required: true
-        },
-        status:{
-                type: String,
+	},
+
+	status: {
+		type: String,
 		default: "new",
 		required: true
-        }
+	}
 });
 
 //Progress model

@@ -9,10 +9,12 @@ var assignmentSchema = new Schema({
     type: String,
     required: true
   },
+  
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
+
   uploadDate: {
     type: String,
     required: true

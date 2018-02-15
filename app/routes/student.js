@@ -123,7 +123,6 @@ router.post("/login", passport.authenticate("local"), function (req, res) {
 
 //Handle login with email
 router.post("/loginWithEmail", async (req, res, next) => {
-  res.locals.flashUrl = ''
 
   var emailId = req.body.username || '';
   if (!emailId || !validator.isEmail(emailId)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
@@ -290,7 +289,6 @@ router.post("/signup", function (req, res) {
 
 //User Register form-- student->from web interface
 router.get("/register", async function (req, res) {
-  req.locals.flashUrl = '/student/register'
   try {
     var foundBatches = await batchController.findAllBatch()
   } catch (e) {
@@ -303,7 +301,9 @@ router.get("/register", async function (req, res) {
 
 //Handle User Register form-- student->from web interface
 router.post("/register", async function (req, res, next) {
-  res.locals.flashUrl = '/student/register'
+
+  res.locals.flashUrl = req.originalUrl;
+  
   var username = req.body.username || '';
   var password = req.body.password || '';
   var fullName = req.body.fullName || '';
@@ -439,8 +439,6 @@ router.put("/:username/setprogress", (req, res, next) => {
   completedTopicsIds.forEach(topicId => {
     if (validator.isMongoId(topicId)) topics.push(topicId)
   })
-
-  res.locals.flashUrl = ''
 
   User.findOne({
       username: username

@@ -9,6 +9,7 @@ var visitorSchema = new Schema({
     type: String,
     required: true
   },
+
   phone: {
     type: String,
     required: true,
@@ -16,36 +17,43 @@ var visitorSchema = new Schema({
     minlength: 10,
     maxLength: 10
   },
+
   emailId: {
     type: String,
     required: true,
     default: ''
   },
+
   comments: {
     type: String,
     required: true,
     default: ''
   },
+
   address: {
     type: String,
     required: true,
     default: ''
   },
+
   referral: {
     type: String,
     required: true,
     default: ''
   },
+
   school: {
     type: String,
     required: true,
     default: ''
   },
+
   aim: {
     type: String,
     required: true,
     default: ''
   },
+
   date: {
     type: String,
     required: true,

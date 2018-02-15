@@ -1,25 +1,24 @@
-var express = require("express"),
-  async = require("async"),
-  path = require('path'),
-  multer = require('multer'),
-  moment = require("moment-timezone"),
-  fs = require('fs'),
-  Assignment = require("../models/Assignment"),
-	Batch = require("../models/Batch"),
-  Center = require("../models/Center"),
-  errors = require("../error"),
-  middleware = require("../middleware");
-  const errorHandler = require('../errorHandler');
-  const validator = require('validator');
-  const assignmentController = require('../controllers/assignment.controller');
-
-  router = express.Router();
+const express = require("express");
+const path = require('path');
+const multer = require('multer');
+const moment = require("moment-timezone");
+const fs = require('fs');
+const Assignment = require("../models/Assignment");
+const Batch = require("../models/Batch");
+const Center = require("../models/Center");
+const errors = require("../error");
+const middleware = require("../middleware");
+const errorHandler = require('../errorHandler');
+const validator = require('validator');
+const assignmentController = require('../controllers/assignment.controller');
+const batchController = require('../controllers/batch.controller');
+const router = express.Router();
 
 //assignment uplaod helper
 //setting disk storage for uploaded assignment
 var storage = multer.diskStorage({
   destination: __dirname + "/../../../HarvinDb/assignments/",
-  filename: function(req, file, callback) {
+  filename: function (req, file, callback) {
     callback(null, Date.now() + "__" + file.originalname);
   }
 });
@@ -27,7 +26,7 @@ var storage = multer.diskStorage({
 //assignment uplaod helper
 function assignmentUploadError(req, res, next) {
   //deleting uploaded file from upload directory
-  fs.unlink(req.file.path, function(err) {
+  fs.unlink(req.file.path, function (err) {
     if (err) {
       console.log(err);
       next(new errors.generic);
@@ -38,58 +37,46 @@ function assignmentUploadError(req, res, next) {
 //file uplaod helper
 function assignmentUploadSuccess(req, res) {
   req.flash("success", req.file.originalname + " uploaded successfully");
-  res.redirect("/admin/assignment/uploadAssignment");
+  res.redirect("/admin/assignment/new");
 }
 
 router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
 
-  res.locals.flashUrl = ''
-
-  try{
+  try {
     var foundAssignments = await assignmentController.findAssignmentsByUserId(req.user)
-    // foundAssignments
-    return res.json(foundAssignments)
-  } catch(e) {
+    foundAssignments.populate('batch', (err, foundAssignments) => {
+      if (err) return next(err);
+      else return res.render('assignments', {
+        foundAssignments
+      })
+    })
+  } catch (e) {
     return next(e)
   }
 
-  Assignment.find({atCenter: req.user._id})
-    .populate({
-      path: 'batch',
-      model: 'Batch'
-    })
-    .exec((err, foundAssignments) => {
-      if (!err && foundAssignments) {
-        res.render("assignments", {
-          foundAssignments: foundAssignments
-        });
-      } else {
-        console.log(err);
-        next(new errors.generic);
-      }
-    });
 });
 
-router.get('/uploadAssignment', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  Batch.find({atCenter: req.user._id}, (err, foundBatches) => {
-    if (!err && foundBatches) {
-      res.render("newAssignment", {
-        batches: foundBatches
-      });
-    } else {
-      console.log('error', err);
-      next(new errors.generic());
-    }
-  });
+router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+
+  try{
+    const foundBatches = await batchController.findBatchByUserId(req.user)
+    return res.render('newAssignment', {batches: foundBatches})
+  } catch(e) {
+    next(e)
+  }
+
 });
 
-router.post('/uploadAssignment', middleware.isLoggedIn, middleware.isCentreOrAdmin, function(req, res, next) {
+router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, function (req, res, next) {
+
   var upload = multer({
       storage: storage
     })
     .single('userFile');
 
-  upload(req, res, function(err) {
+  upload(req, res, function (err) {
+
+    console.log('err', err);
 
     var assignmentName = req.body.assignmentName;
     var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
@@ -107,7 +94,7 @@ router.post('/uploadAssignment', middleware.isLoggedIn, middleware.isCentreOrAdm
     Assignment.findOneAndUpdate(newAssignment, {
         $set: {
           batch: batchId,
-					addedBy: req.user
+          addedBy: req.user
         }
       }, {
         upsert: true,
@@ -116,25 +103,25 @@ router.post('/uploadAssignment', middleware.isLoggedIn, middleware.isCentreOrAdm
       },
       (err, createdAsssignment) => {
         if (!err && createdAsssignment) {
-					Center.findOneAndUpdate(req.user.username, {
-						$addToSet:{
-							assignments: createdAsssignment._id
-						},
-						$set: {
-							centerName: req.user.username
-						}
-					}, {
-						upsert: true,
-						new: true,
-						setDefaultsOnInsert: true
-					}, function (err, updatedCenter) {
-							if(!err && updatedCenter){
-								assignmentUploadSuccess(req, res);
-							} else{
-								console.log(err);
-								assignmentUploadError(req, res, next);
-							}
-					})
+          Center.findOneAndUpdate(req.user.username, {
+            $addToSet: {
+              assignments: createdAsssignment._id
+            },
+            $set: {
+              centerName: req.user.username
+            }
+          }, {
+            upsert: true,
+            new: true,
+            setDefaultsOnInsert: true
+          }, function (err, updatedCenter) {
+            if (!err && updatedCenter) {
+              assignmentUploadSuccess(req, res);
+            } else {
+              console.log(err);
+              assignmentUploadError(req, res, next);
+            }
+          })
         } else {
           console.log(err);
         }
@@ -145,7 +132,9 @@ router.post('/uploadAssignment', middleware.isLoggedIn, middleware.isCentreOrAdm
 router.get("/:assignmentId/edit", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var assignmentId = req.params.assignmentId;
 
-  Batch.find({atCenter: req.user._id}, (err, foundBatches) => {
+  Batch.find({
+    addedBy: req.user._id
+  }, (err, foundBatches) => {
     if (!err && foundBatches) {
       Assignment.findById(assignmentId)
         .populate({
@@ -215,12 +204,12 @@ router.get('/:username/assignments', (req, res, next) => {
 
 router.get('/:assignmentId', (req, res, next) => {
   var assignmentId = req.params.assignmentId;
-  Assignment.findById(assignmentId, function(err, foundAssignment) {
+  Assignment.findById(assignmentId, function (err, foundAssignment) {
     if (err) {
       console.log(err);
       res.sendStatus(404);
     } else if (!err && foundAssignment) {
-      res.download(foundAssignment.filePath, foundAssignment.fileName, function(err) {
+      res.download(foundAssignment.filePath, foundAssignment.fileName, function (err) {
         if (err) {
           console.log(err);
         }
