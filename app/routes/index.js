@@ -17,6 +17,7 @@ var express = require("express"),
   centersRoutes = require("./center"),
   formRoutes = require('./form'),
   blogRoutes = require('./blog'),
+  coursesRoutes=require('./courses')
   Topic = require("../models/Topic.js"),
   Chapter = require("../models/Chapter.js"),
   Subject = require("../models/Subject.js"),
@@ -24,18 +25,19 @@ var express = require("express"),
   Gallery = require("../models/Gallery.js"),
   File = require("../models/File.js");
 
-router.use("/admin", adminRoutes);
-router.use("/student", studentRoutes);
-router.use("/admin/batches", batchRoutes);
-router.use("/admin/files", fileRoutes);
-router.use("/admin/db", dbRoutes);
-router.use("/admin/exams", examRoutes);
-router.use("/admin/assignment", assignmentRoutes);
-router.use("/admin/questionBank", qbRoutes);
-router.use("/admin/results", resultsRoutes);
-router.use(vmsRoutes);
-router.use('/admin/blog', blogRoutes);
-router.use('/admin/centers', centersRoutes);
+router.use("/admin", adminRoutes)
+router.use("/student", studentRoutes)
+router.use("/admin/batches", batchRoutes)
+router.use("/admin/files", fileRoutes)
+router.use("/admin/db", dbRoutes)
+router.use("/admin/exams", examRoutes)
+router.use("/admin/assignment", assignmentRoutes)
+router.use("/admin/questionBank", qbRoutes)
+router.use("/admin/results", resultsRoutes)
+router.use(vmsRoutes)
+router.use('/admin/blog', blogRoutes)
+router.use('/admin/centers', centersRoutes)
+router.use('/admin/courses',coursesRoutes)
 
 
 router.delete('/users/:userId', (req, res, next) => {
