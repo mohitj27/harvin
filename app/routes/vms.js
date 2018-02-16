@@ -12,9 +12,10 @@ const express = require("express"),
   Blog = require('./../models/Blog'),
   User = require('./../models/User'),
   vmsController = require('./../controllers/vms.controller'),
+  courseController = require('./../controllers/courses.controller'),
   validator = require('validator'),
-router = express.Router(),
-Promise = require('bluebird');
+  router = express.Router(),
+  Promise = require('bluebird');
 mongoose.Promise = Promise;
 
 router.get('/test', (req, res, next) => {
@@ -23,18 +24,20 @@ router.get('/test', (req, res, next) => {
 
 router.get('/', (req, res, next) => {
   Gallery.find({
-    category: {$in:['results']}
-  })
-  .exec((err, foundStudents) => {
-    if (!err && foundStudents) {
-      res.render('vmsLanding', {
-        students: foundStudents
-      });
-    } else {
-      console.log(err);
-      next(new errors.generic());
-    }
-  })
+      category: {
+        $in: ['results']
+      }
+    })
+    .exec((err, foundStudents) => {
+      if (!err && foundStudents) {
+        res.render('vmsLanding', {
+          students: foundStudents
+        });
+      } else {
+        console.log(err);
+        next(new errors.generic());
+      }
+    })
 })
 
 router.get('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res) => {
@@ -124,32 +127,52 @@ router.get('/courses', (req, res, next) => {
   res.render('courses')
 })
 
-router.get('/courses-list', (req, res, next) => {
-  res.render('courses-list.ejs')
+router.get('/courses-list', async (req, res, next) => {
+  if (!req.query.title) {
+    try {
+      const foundCourses =await courseController.findAllCourses()
+      res.render('courses-list',{foundCourses})
+    } catch (err) {
+      next(err)
+    }
+
+    return
+  } else {
+    try {
+        const foundCourse=await coursesCont.findOneCourseUsingName((req.query.title))
+        res.render('courses-desc',{foundCourse})
+    } catch (err) {
+      next(err)
+    }
+  }
 })
 
-//helper- class
+
 
 router.get('/gallery/category', function(req, res, next) {
   let category = req.query.category;
   let limit = req.query.limit
-  Gallery.find({category: {$in:category}})
-  .sort({uploadDate: -1})
-  .limit(parseInt(limit))
-  .exec(function(err, gallery) {
-    if (err) {
-      console.log(err)
-    } else {
-      res.json({
-        gallery: gallery
-      });
-    }
-  });
+  Gallery.find({
+      category: {
+        $in: category
+      }
+    })
+    .sort({
+      uploadDate: -1
+    })
+    .limit(parseInt(limit))
+    .exec(function(err, gallery) {
+      if (err) {
+        console.log(err)
+      } else {
+        res.json({
+          gallery: gallery
+        });
+      }
+    });
 });
 
 
-//TODO: ishank - uncomment the commented lines and remove line 83
-//TODO: ishank - Check all TODO and refer management.ejs && db.js
 router.get('/gallery', (req, res, next) => {
   Gallery.find({}, (err, foundImages) => {
     if (!err && foundImages) {
@@ -198,7 +221,6 @@ router.post('/careers', (req, res, next) => {
 })
 
 router.get('/blog', (req, res, next) => {
-  console.log('title', req.query.title)
   if (req.query.title) {
     Blog.findOne({
         "blogTitle": req.query.title
@@ -216,7 +238,7 @@ router.get('/blog', (req, res, next) => {
             if (err) throw err;
             res.render('standard_blog_detail', {
               blogContent: data,
-              foundBlog: foundBlog.reverse()
+              foundBlog
             })
           });
         }
@@ -233,7 +255,7 @@ router.get('/blog', (req, res, next) => {
           next(new errors.generic())
         } else {
           res.render('blogTheme', {
-            foundBlogs:foundBlogs.reverse()
+            foundBlogs: foundBlogs.reverse()
           })
         }
       })

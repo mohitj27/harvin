@@ -4,9 +4,17 @@ const errorHandler=require('../errorHandler/index'),
 
 const findAllCourses=()=>{
   return new Promise((resolve,reject)=>{
-    Course.find({},(err,foundBatches)=>{
+    Course.find({},(err,foundCourses)=>{
       if(err) reject(err)
-      else resolve(foundBatches)
+      else resolve(foundCourses)
+    })
+  })
+}
+const findOneCourseUsingName=(courseName)=>{
+  return new Promise((resolve,reject)=>{
+    Course.findOne({courseName},(err,foundCourse)=>{
+      if(err)reject(err)
+      else resolve(foundCourse)
     })
   })
 }
@@ -20,7 +28,14 @@ const insertInCourse=(course)=>{
     })
   })
 }
+const deleteOneCourse=(courseName)=>{
+  return new Promise((resolve,reject)=>{
+    resolve(courseName)
+  })
+}
 module.exports={
   findAllCourses,
-  insertInCourse
+  insertInCourse,
+  deleteOneCourse,
+  findOneCourseUsingName
 }

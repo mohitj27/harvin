@@ -1,0 +1,100 @@
+<%include partials/website_header.ejs%>
+  <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+  <!-- <link rel="stylesheet" type="text/css" href="../../css/courses-desc.css"> -->
+
+
+  <main>
+    <div class="container center">
+      <%if(foundCourse){%>
+
+        <div class="row ">
+            <h3><%=foundCourse.courseName%> <hr></h3>
+        </div>
+        <div class="row">
+          <div class="col s12 m6 l6">
+            <img src="/courseImages/<%=foundCourse.courseImage%>" height=250 width=250 class="responsive-img" alt="">
+          </div>
+          <div class="col s12 m5 l5 offset-l1 offset-m1">
+            <h5>Request a Callback</h5>
+            <form action="#!">
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="full_name" type="text" class="validate" required>
+                  <label for="full_name">Full name</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="email" type="email" class="validate" required>
+                  <label for="email">Email</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s12 center-align">
+                  <button class="btn waves-effect waves-light " type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s6 m6 l6">
+            <a href="#"><i class="material-icons grey-text">alarm</i>Timings</a>
+            <div>
+              <p>
+                <%=foundCourse.courseTimings%>
+              </p>
+            </div>
+          </div>
+          <div class="col s6 m6 l6">
+            <a href="#"><i class="material-icons grey-text">school</i>Frequency of class</a>
+            <div>
+              <p>
+                <%=foundCourse.courseFrequency%>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s6 m6 l6">
+            <a href="#"><i class="material-icons grey-text">event_note</i>Course Admission Through</a>
+            <div>
+              <p>
+                <%=foundCourse. courseAdmissionThrough%>
+              </p>
+            </div>
+          </div>
+          <div class="col s6 m6 l6">
+            <a href="#"><i class="material-icons grey-text " >people</i>Course For :</a>
+            <div>
+              <p>
+                <%=foundCourse. courseFor%>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <a href="#"><i class="material-icons grey-text">alarm</i>Course Description</a>
+          <div>
+            <p>
+              <%=foundCourse.courseDescription%>
+            </p>
+          </div>
+        </div>
+        <%}%>
+
+    </div>
+  </main>
+
+  <%include partials/website_footer.ejs%>
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../../js/materialize.js"></script>
