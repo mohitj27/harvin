@@ -63,7 +63,7 @@ router.get('/edit', async (req, res,next) => {
   try{
   const foundBlog = await editBlogPromise(blogTitle)
   const data = await fileOpenPromise(foundBlog)
-  res.render('newBlog',{blogTitle:foundBlog.blogTitle,content:data})}
+  res.render('editBlog',{blogTitle:foundBlog.blogTitle,content:data})}
   catch(err) {next(err)}
 
 })

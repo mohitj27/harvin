@@ -18,7 +18,7 @@ return new Promise((resolve,reject)=>{
     const storage = multer.diskStorage({
       destination: location,
       filename: function(req, file, callback) {
-        callback(null, Date.now() + "__" + file.originalname);
+        callback(null,  file.originalname);
       }
     })
     const upload = multer({
