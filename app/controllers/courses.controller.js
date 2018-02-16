@@ -10,6 +10,14 @@ const findAllCourses=()=>{
     })
   })
 }
+const findOneCourseUsingName=(courseName)=>{
+  return new Promise((resolve,reject)=>{
+    Course.findOne({courseName},(err,foundCourse)=>{
+      if(err)reject(err)
+      else resolve(foundCourse)
+    })
+  })
+}
 const insertInCourse=(course)=>{
   return new Promise((resolve,reject)=>{
     Course.updateOne({courseName : course.courseName}, course,{upsert : true},(err,result)=>{
@@ -28,5 +36,6 @@ const deleteOneCourse=(courseName)=>{
 module.exports={
   findAllCourses,
   insertInCourse,
-  deleteOneCourse
+  deleteOneCourse,
+  findOneCourseUsingName
 }

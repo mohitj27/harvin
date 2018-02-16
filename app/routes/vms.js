@@ -138,7 +138,12 @@ router.get('/courses-list', async (req, res, next) => {
 
     return
   } else {
-    res.render('courses-desc')
+    try {
+        const foundCourse=await coursesCont.findOneCourseUsingName((req.query.title))
+        res.render('courses-desc',{foundCourse})
+    } catch (err) {
+      next(err)
+    }
   }
 })
 
