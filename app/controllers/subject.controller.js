@@ -12,6 +12,14 @@ const findAllsubjects = function () {
   });
 }
 
+const findSubjectsByIds = function (subjectIds) {
+  return new Promise(function (resolve, reject) {
+    Subject.findAsync({_id: {$in: subjectIds}})
+      .then(foundSubjects => resolve(foundSubjects))
+      .catch(err => reject(err))
+  });
+}
+
 const findSubjectByName = function (subjectName) {
   return new Promise(function (resolve, reject) {
     Subject.findOneAsync({
@@ -86,5 +94,6 @@ module.exports = {
   findSubjectBySubjectClassAndUserId,
   findSubjectByUserId,
   addChapterToSubjectBySubjectClassAndUserId,
-  addClassToSubjectById
+  addClassToSubjectById,
+  findSubjectsByIds
 }
