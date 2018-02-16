@@ -7,6 +7,10 @@
   border-radius: 100px;
 }
 
+#passout{
+  margin-top: 0;
+}
+
 .active-class{
   background: #13b38b !important;
 }

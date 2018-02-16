@@ -42,6 +42,12 @@ $(function(){
       $('#emailId').val($('#emailId').val() + domain)
     }
 
+    const referralSelector = $('#referral-selector').val()
+    if(referralSelector == other){
+      $('#referral-select').removeAttr('name')
+      $('#referral-text').attr('name', 'referral')
+    }
+
   })
 
 })
