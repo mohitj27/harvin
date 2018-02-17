@@ -932,6 +932,7 @@ mark.admin {
   .blog-area .single-blog:hover {
     cursor: pointer; }
   .blog-area .single-blog .card-title {
+    font-family: 'Open sans',sans-serif;
     margin: 0 !important; }
   .blog-area .single-blog .blgo-content {
     position: relative;
