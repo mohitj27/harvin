@@ -1,19 +1,10 @@
 $(function() {
-  // window.onbeforeunload = function(e) {
-  //   var dialogText = 'Dialog text here';
-  //   e.returnValue = dialogText;
-  //   return dialogText;
-  // };
-
-  // CKEDITOR.replace( 'editor1' );
 
   $('.newBlogForm').submit(function () {
     let editordata = $('#editor1').html()
     $('#editordata').val(editordata)
     console.log('editordata',$('#editordata').val());
   })
-
-  CKEDITOR.disableAutoInline = true;
 
   $('.modal').modal({
       dismissible: true
