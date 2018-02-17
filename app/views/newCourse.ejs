@@ -1,11 +1,6 @@
 
 <% include partials/header.ejs%>
-
-		<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"> -->
-		<link rel="stylesheet" href="/css/newCourse.css">
 		<main>
-
-
 
 			<div class="section">
 				<div class="container">
@@ -14,8 +9,8 @@
 
 						<div class="row">
 							<div class="input-field">
-								<input id="blog_title" type="text" name="courseName" required class="validate">
-								<label for="first_name">Course Name</label>
+								<input id="courseName" type="text" name="courseName" required class="validate">
+								<label for="courseName">Course Name</label>
 							</div>
 						</div>
 						<div class="row">
@@ -32,38 +27,38 @@
 						</div>
 						<div class="row">
 							<div class="input-field">
-								<input id="blog_title" type="text" name="classTimings" required class="validate">
-								<label for="first_name">Class Timings</label>
+								<input id="courseTimings" type="text" name="classTimings" class="">
+								<label for="courseTimings">Class Timings</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field">
-								<input id="blog_title" type="text" name="courseStartingFrom" required class="datepicker">
-								<label for="first_name">Course Starting from</label>
+								<input id="startFrom" type="text" name="courseStartingFrom" class="datepicker">
+								<label for="startFrom">Course Starting from</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field">
-								<input id="blog_title" type="text" name="courseFrequency" required class="validate">
-								<label for="first_name">Course Frequency</label>
+								<input id="courseFrequency" type="text" name="courseFrequency" class="">
+								<label for="courseFrequency">Course Frequency</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field">
-								<input id="blog_title" type="text" name="courseDescription" required class="validate">
+								<textarea id="blog_title" class="materialize-textarea validate" required></textarea>
 								<label for="first_name">Course Description</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field">
-								<input id="blog_title" type="text" name="courseFor" required class="validate">
-								<label for="first_name">Course For</label>
+								<input id="courseFor" type="text" name="courseFor" required class="validate">
+								<label for="courseFor">Course For</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field">
-								<input id="blog_title" type="text" name="courseAdmissionThrough" required class="validate">
-								<label for="first_name">Course Admission Through</label>
+								<input id="courseAdmissionThrough" type="text" name="courseAdmissionThrough" required class="validate">
+								<label for="courseAdmissionThrough">Course Admission Through</label>
 							</div>
 						</div>
 
@@ -87,8 +82,5 @@
 
 
 		</main>
-
-
-		<script src="/js/courseInsert.js"></script>
 
 		<% include partials/footer.ejs%>
