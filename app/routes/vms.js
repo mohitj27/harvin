@@ -52,7 +52,7 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res
   const school = req.body.school
   const aim = req.body.aim
 
-  res.locals.flashUrl = '/vms'
+  res.locals.flashUrl = req.originalUrl;
 
   if (!name) return errorHandler.errorResponse('INVALID_FIELD', "visitor name", next);
   if (!classs) return errorHandler.errorResponse('INVALID_FIELD', 'class', next);

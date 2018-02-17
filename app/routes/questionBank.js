@@ -124,7 +124,7 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
     options: [],
     newOptions: [],
     answersIndex: [],
-    addedBy: req.user._id
+    addedBy: req.user
   };
 
   //pushing options in options array
@@ -173,6 +173,7 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
             },
             $set: {
               chapterName: chapterName,
+              addedBy: req.user
             }
           }, {
             upsert: true,
@@ -198,7 +199,8 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
               chapters: createdChapter
             },
             $set: {
-              subjectName: subjectName
+              subjectName: subjectName,
+              addedBy: req.user
             }
           }, {
             upsert: true,
@@ -223,7 +225,8 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
               subjects: createdSubject
             },
             $set: {
-              className: className
+              className: className,
+              addedBy: req.user
             }
           }, {
             upsert: true,
@@ -256,8 +259,8 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
 //helpers
 //helper- class
 
-router.get('/classes', (req, res) => {
-  QB_Class.find({}, (err, foundClasses) => {
+router.get('/classes', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res) => {
+  QB_Class.find({addedBy:req.user}, (err, foundClasses) => {
     if (!err && foundClasses) {
       res.json({
         classes: foundClasses

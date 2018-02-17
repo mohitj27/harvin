@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var Promise = require('bluebird');
+Promise.promisifyAll(mongoose);
 
 //====examSchema====
 var examSchema = new Schema({
@@ -54,6 +56,8 @@ var examSchema = new Schema({
     ref: "QuestionPaper"
   }
 });
+
+examSchema.index({ examName: 1, addedBy: 1}, { unique: true });
 
 //Exam model
 module.exports = mongoose.model("Exam", examSchema);

@@ -8,6 +8,11 @@ var qb_subjectSchema = new Schema({
 		required: true
 	},
 
+	addedBy: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "User"
+	},
+
 	className: {
 		type: String,
 		required: true
@@ -18,6 +23,8 @@ var qb_subjectSchema = new Schema({
 		ref: "QB_Chapter"
 	}]
 });
+
+qb_subjectSchema.index({ subjectName: 1, addedBy: 1}, { unique: true });
 
 //subject model
 module.exports = mongoose.model("QB_Subject", qb_subjectSchema);

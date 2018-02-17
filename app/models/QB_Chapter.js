@@ -5,8 +5,12 @@ var Schema = mongoose.Schema;
 var qb_chapterSchema = new Schema({
 	chapterName: {
 		type: String,
-		unique: true,
 		required: true
+	},
+
+	addedBy: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "User"
 	},
 
 	questions: [{
@@ -14,6 +18,8 @@ var qb_chapterSchema = new Schema({
 		ref: "Question"
 	}]
 });
+
+qb_chapterSchema.index({ chapterName: 1, addedBy: 1}, { unique: true });
 
 //chapter model
 module.exports = mongoose.model("QB_Chapter", qb_chapterSchema);

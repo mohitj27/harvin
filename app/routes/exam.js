@@ -1,73 +1,85 @@
-var express = require("express"),
-  async = require("async"),
-  moment = require("moment-timezone"),
+const express = require("express");
+const moment = require("moment-timezone");
+const Batch = require("../models/Batch");
+const QB_Class = require("../models/QB_Class");
+const QB_Subject = require("../models/QB_Subject");
+const QB_Chapter = require("../models/QB_Chapter");
+const Question = require("../models/Question");
+const QuestionPaper = require("../models/QuestionPaper");
+const User = require("../models/User.js");
+const Profile = require("../models/Profile.js");
+const Result = require("../models/Result.js");
+const Center = require("../models/Center.js");
+const Exam = require("../models/Exam");
+const errors = require("../error");
+const Async = require('async');
+const errorHandler = require("../errorHandler");
+const examController = require('../controllers/exam.controller.js');
+const batchController = require('../controllers/batch.controller.js');
+const QBController = require('../controllers/QB.controller.js');
+const _ = require('lodash');
+const middleware = require("../middleware");
+const validator = require('validator');
+const router = express.Router();
 
-  Batch = require("../models/Batch"),
-  QB_Class = require("../models/QB_Class"),
-  QB_Subject = require("../models/QB_Subject"),
-  QB_Chapter = require("../models/QB_Chapter"),
-  Question = require("../models/Question"),
-  QuestionPaper = require("../models/QuestionPaper"),
-  User = require("../models/User.js"),
-  Profile = require("../models/Profile.js"),
-  Result = require("../models/Result.js"),
-  Center = require("../models/Center.js"),
-  Exam = require("../models/Exam"),
-  errors = require("../error"),
-  _ = require('lodash'),
-  middleware = require("../middleware"),
+router.get("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
 
-  router = express.Router();
+  res.locals.flashUrl = req.originalUrl;
 
-router.get("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  Exam.find({
-      addedBy: req.user._id
-    })
-    .populate({
-      path: 'batch',
-      model: 'Batch'
-    })
-    .exec((err, foundExams) => {
-      if (!err && foundExams) {
-        res.render("exams", {
-          foundExams: foundExams
-        });
-      } else {
-        console.log('error', err);
-        next(new errors.generic);
-      }
+  try {
+    let foundExams = await examController.findExamsByUserId(req.user)
+
+    foundExams = await examController.populateFieldInExams(foundExams, 'batch')
+    res.render("exams", {
+      foundExams
     });
-});
-
-router.get("/new", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  Batch.find({
-    addedBy: req.user._id
-  }, (err, foundBatches) => {
-    if (!err && foundBatches) {
-      res.render("newExam", {
-        batches: foundBatches
-      });
-    } else {
-      console.log('error', err);
-      next(new errors.generic());
-    }
-  });
+  } catch (e) {
+    next(e);
+  }
 
 });
 
-router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  var examName = req.body.examName;
-  var examDate = req.body.examDate;
-  var examType = req.body.examType;
-  var batchId = req.body.batchName;
-  var positiveMarks = req.body.posMarks;
-  var negativeMarks = req.body.negMarks;
-  var maximumMarks = req.body.maxMarks;
-  var totalTime = req.body.totalTime;
+router.get("/new", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+
+  res.locals.flashUrl = req.originalUrl;
+
+  try {
+    const foundBatches = await batchController.findBatchByUserId(req.user)
+    res.render("newExam", {
+      batches: foundBatches
+    });
+  } catch (e) {
+    next(e)
+  }
+
+});
+
+router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+
+  res.locals.flashUrl = req.originalUrl;
+
+  var examName = req.body.examName || '';
+  var examDate = req.body.examDate || '';
+  var examType = req.body.examType || '';
+  var batchId = req.body.batchName || '';
+  var positiveMarks = req.body.posMarks || '';
+  var negativeMarks = req.body.negMarks || '';
+  var maximumMarks = req.body.maxMarks || '';
+  var totalTime = req.body.totalTime || '';
+
+  if (!examName || validator.isEmpty(examName)) return errorHandler.errorResponse('INVALID_FIELD', 'exam name', next)
+  if (!examDate || validator.isEmpty(examDate)) return errorHandler.errorResponse('INVALID_FIELD', 'exam date', next)
+  if (!examType || validator.isEmpty(examType)) return errorHandler.errorResponse('INVALID_FIELD', 'exam type', next)
+  if (!batchId || !validator.isMongoId(batchId)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
+  if (!positiveMarks || validator.isEmpty(positiveMarks)) return errorHandler.errorResponse('INVALID_FIELD', 'positive marks', next)
+  if (!negativeMarks || validator.isEmpty(negativeMarks)) return errorHandler.errorResponse('INVALID_FIELD', 'negative marks', next)
+  if (!maximumMarks || validator.isEmpty(maximumMarks)) return errorHandler.errorResponse('INVALID_FIELD', 'maximum marks', next)
+  if (!totalTime || validator.isEmpty(totalTime)) return errorHandler.errorResponse('INVALID_FIELD', 'total time', next)
 
   var newExam = {
     examName,
     examDate,
+    batchId,
     examType,
     positiveMarks,
     negativeMarks,
@@ -75,136 +87,71 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
     totalTime
   };
 
-  Exam.findOneAndUpdate(newExam, {
-      $set: {
-        batch: batchId,
-        addedBy: req.user._id
-      }
-    }, {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true
-    },
-    (err, createdExam) => {
-      if (!err && createdExam) {
-        Center.findOneAndUpdate(req.user.username, {
-          $addToSet: {
-            exams: createdExam._id
-          },
-          $set: {
-            centerName: req.user.username
-          }
-        }, {
-          upsert: true,
-          new: true,
-          setDefaultsOnInsert: true
-        }, function(err, updatedCenter) {
-          if (!err && updatedCenter) {
-            req.flash("success", examName + " created Successfully");
-            res.redirect("/admin/exams");
-          } else {
-            console.log(err);
-            next(new errors.generic);
-          }
-        })
-      } else {
-        console.log(err);
-      }
-    });
-
-});
-
-router.get("/qbData", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  var className = req.query.className;
-  var subjectName = req.query.subjectName;
-  var chapterName = req.query.chapterName;
-
-  if (!className) {
-    next(new errors.noContent('Please select class name'));
-  } else if (!subjectName) {
-    next(new errors.noContent('Please select subject name'));
-  } else if (!chapterName) {
-    console.log('called');
-    next(new errors.generic('Please select chapter name'));
-  } else {
-    var examId = req.query.examId;
-
-    QB_Class.findOne({
-        className: className
-      }, (err, foundClass) => {
-        if (!err && foundClass) {} else if (err) {
-          console.log("error", err);
-        }
-      })
-      .populate({
-        path: "subjects",
-        model: "QB_Subject",
-        populate: {
-          path: "chapters",
-          model: "QB_Chapter",
-          populate: {
-            path: "questions",
-            model: "Question"
-          }
-        }
-      })
-      .exec(function(err, qbData) {
-
-        if (!err && qbData) {
-          // questions = qbData[subjectName][chapterName][questions];
-          subject = qbData.subjects.find(item => item.subjectName == subjectName);
-          chapter = subject.chapters.find(item => item.chapterName == chapterName);
-          questions = chapter.questions;
-          QB_Class.find({}, (err, foundClasses) => {
-            if (!err && foundClasses) {
-              res.render("chooseFromQB", {
-                classes: foundClasses,
-                questions: questions,
-                className: className,
-                subjectName: subjectName,
-                chapterName: chapterName,
-                examId: examId
-              });
-            }
-          });
-
-        } else if (err) {
-          console.log("error", err);
-        }
-      });
+  try {
+    const updatedExam = await examController.createOrUpdateExamByExamNameAndUserId(newExam, req.user)
+    req.flash("success", examName + " created/updated Successfully");
+    res.redirect(req.header('Referer'));
+  } catch (e) {
+    next(e)
   }
-
-
 });
 
-router.get("/:examId/edit", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+router.get("/qbData", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+
+  res.locals.flashUrl = req.originalUrl;
+
+  const className = req.query.className || '';
+  const subjectName = req.query.subjectName || '';
+  const chapterName = req.query.chapterName || '';
+  const examId = req.query.examId || '';
+
+
+  if (!className || validator.isEmpty(className)) return errorHandler.errorResponse('INVALID_FIELD', 'class name', next)
+  if (!subjectName || validator.isEmpty(subjectName)) return errorHandler.errorResponse('INVALID_FIELD', 'subject name', next)
+  if (!chapterName || validator.isEmpty(chapterName)) return errorHandler.errorResponse('INVALID_FIELD', 'chapter name', next)
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
+
+  try {
+    const foundClasses = await QBController.findAllQbClassesByUserId(req.user)
+    let foundChapter = await QBController.findQbChapterByChapterNameAndUserId(chapterName, req.user)
+    foundChapter = await QBController.populateFieldInQbChapter(foundChapter, 'questions')
+
+    return res.render("chooseFromQB", {
+      classes: foundClasses,
+      questions: foundChapter.questions,
+      className: className,
+      subjectName: subjectName,
+      chapterName: chapterName,
+      examId: examId
+    });
+  } catch (err) {
+    return next(err)
+  }
+});
+
+router.get("/:examId/edit", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+
   var examId = req.params.examId;
+  //TODO: render not found page
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
 
-  Batch.find({}, (err, foundBatches) => {
-    if (!err && foundBatches) {
-      Exam.findById(examId)
-        .populate({
-          path: 'batch',
-          model: "Batch"
-        })
-        .exec((err, foundExam) => {
-          if (!err && foundExam) {
-            res.render("editExam", {
-              exam: foundExam,
-              batches: foundBatches
-            });
-          }
-        })
-    } else {
-      console.log('error', err);
-      next(new errors.generic());
-    }
-  });
-
-
+  try {
+    const foundBatches = await batchController.findBatchByUserId(req.user)
+    let foundExam = await examController.findExamById(examId)
+    foundExam = await examController.populateFieldInExams(foundExam, 'batch')
+    res.render("editExam", {
+      exam: foundExam,
+      batches: foundBatches
+    });
+  } catch (e) {
+    next(e)
+  }
 });
 
-router.put("/:examId", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+router.put("/:examId", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+
+  res.locals.flashUrl = req.headers.referer;
+
   var examId = req.params.examId;
   var examName = req.body.examName;
   var examDate = req.body.examDate;
@@ -215,111 +162,70 @@ router.put("/:examId", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, 
   var maximumMarks = req.body.maxMarks;
   var totalTime = req.body.totalTime;
 
-  Exam.findByIdAndUpdate(examId, {
-      $set: {
-        examName,
-        examDate,
-        examType,
-        batch: batchId,
-        positiveMarks,
-        negativeMarks,
-        maximumMarks,
-        totalTime
-      }
-    }, {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true
-    },
-    (err, updatedExam) => {
-      if (!err && updatedExam) {
-        req.flash("success", examName + " updated Successfully");
-        res.redirect("/admin/exams");
-      } else {
-        console.log(err);
-        next(new errors.generic);
-      }
-    }
-  );
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
+  if (!examName || validator.isEmpty(examName)) return errorHandler.errorResponse('INVALID_FIELD', 'exam name', next)
+  if (!examDate || validator.isEmpty(examDate)) return errorHandler.errorResponse('INVALID_FIELD', 'exam date', next)
+  if (!examType || validator.isEmpty(examType)) return errorHandler.errorResponse('INVALID_FIELD', 'exam type', next)
+  if (!batchId || !validator.isMongoId(batchId)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
+  if (!positiveMarks || validator.isEmpty(positiveMarks)) return errorHandler.errorResponse('INVALID_FIELD', 'positive marks', next)
+  if (!negativeMarks || validator.isEmpty(negativeMarks)) return errorHandler.errorResponse('INVALID_FIELD', 'negative marks', next)
+  if (!maximumMarks || validator.isEmpty(maximumMarks)) return errorHandler.errorResponse('INVALID_FIELD', 'maximum marks', next)
+  if (!totalTime || validator.isEmpty(totalTime)) return errorHandler.errorResponse('INVALID_FIELD', 'total time', next)
+
+  const newExam = {
+    examName,
+    examDate,
+    examType,
+    batchId,
+    positiveMarks,
+    negativeMarks,
+    maximumMarks,
+    totalTime
+  }
+
+  try {
+    const updatedExam = await examController.updateExamById(examId, newExam, req.user)
+    req.flash("success", examName + " updated Successfully");
+    res.redirect("/admin/exams");
+  } catch (e) {
+    next(e)
+  }
 });
 
-router.delete("/:examId", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  var examId = req.params.examId;
-  Exam.findByIdAndRemove(examId, (err, removedExam) => {
-    if (!err && removedExam) {
-      req.flash("success", removedExam.examName + " removed Successfully");
-      res.redirect("/admin/exams");
-    } else {
-      console.log(err);
-      next(new errors.generic);
-    }
-  });
+router.delete("/:examId", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  var examId = req.params.examId || '';
+
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
+
+  try {
+    const removedExam = await examController.deleteExamById(examId)
+    req.flash("success", removedExam.examName + " removed Successfully");
+    res.redirect(req.headers.referer);
+  } catch (err) {
+    next(err)
+  }
 });
 
-router.get("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  var examId = req.params.examId;
-  Exam.findById(examId, (err, foundExam) => {
-      if (!err && foundExam) {} else {
-        console.log(err);
-      }
-    })
-    .populate({
-      path: "questionPaper",
-      model: "QuestionPaper",
-    })
-    .exec((err, foundExam) => {
-      if (!err && foundExam) {
+//TODO: remove question functionality only remove question from question paper not from question bank
 
-        QB_Class.find({}, (err, foundClasses) => {
-          if (!err && foundClasses) {
-            if (foundExam.questionPaper && foundExam.questionPaper != null) {
-              Question.find({
-                    _id: {
-                      $in: foundExam.questionPaper.questions
-                    }
-                  },
-                  (err, foundQuestions) => {
-                    if (!err && foundQuestions) {
-                      res.render("editQuesPaper", {
-                        classes: foundClasses,
-                        exam: foundExam,
-                        questions: foundQuestions
-                      });
-                    } else {
-                      console.log(err);
-                    }
-                  }
-                )
-                .sort({
-                  '_id': -1
-                })
-                .exec((err, foundQuestions) => {
-                    if (!err && foundQuestions) {
+router.get("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  res.locals.flashUrl = req.headers.referer;
+  var examId = req.params.examId || '';
 
-                    } else {
-                      console.log(err);
-                    }
-                  }
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
 
-                );
-            } else {
-              res.render("editQuesPaper", {
-                classes: foundClasses,
-                exam: foundExam,
-              });
-            }
-
-          }
-        });
-
-
-
-      } else {
-        console.log(err);
-        next(new errors.generic);
-      }
+  try {
+    let foundExam = await examController.findExamById(examId)
+    foundExam = await examController.populateFieldInExams(foundExam, 'questionPaper')
+    let foundQuestions = await QBController.findAllQuestionsByIds(foundExam.questionPaper.questions)
+    return res.render("editQuesPaper", {
+      exam: foundExam,
+      questions: foundQuestions
     });
-
+  } catch(e) {
+    return next(e)
+  }
+  
 });
 
 router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
@@ -332,12 +238,12 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
   var chapterName = req.body.chapterName;
 
   //check the data type of options, if string convert to array
-  if (typeof(req.body.options) == typeof("")) {
+  if (typeof (req.body.options) == typeof ("")) {
     optionString = [];
     optionString.push(req.body.options || "");
   }
   //check the data type of answer, if string convert to array
-  if (typeof(req.body.answer) == typeof("")) {
+  if (typeof (req.body.answer) == typeof ("")) {
     answerString = [];
     answerString.push(req.body.answer || "");
   }
@@ -349,7 +255,7 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
     options: [],
     newOptions: [],
     answersIndex: [],
-    addedBy: req.user._id
+    addedBy: req.user
   };
 
   //pushing options in options array
@@ -372,15 +278,21 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
     });
   });
 
-  newQues.options.forEach((opt_j, j)=> {
-    if(_.indexOf(newQues.answersIndex, j) != -1) newQues.newOptions.push({opt: opt_j, isAns: true})
-    else newQues.newOptions.push({opt: opt_j, isAns: false})
+  newQues.options.forEach((opt_j, j) => {
+    if (_.indexOf(newQues.answersIndex, j) != -1) newQues.newOptions.push({
+      opt: opt_j,
+      isAns: true
+    })
+    else newQues.newOptions.push({
+      opt: opt_j,
+      isAns: false
+    })
   })
 
-  async.waterfall(
+  Async.waterfall(
     [
       //finding particular exam
-      function(callback) {
+      function (callback) {
         Exam.findById(examId, (err, foundExam) => {
           if (!err && foundExam) {
             callback(null, foundExam);
@@ -390,7 +302,7 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
         });
       },
       //creating new question
-      function(foundExam, callback) {
+      function (foundExam, callback) {
         Question.create(newQues, (err, createdQuestion) => {
           if (!err && createdQuestion) {
             callback(null, foundExam, createdQuestion);
@@ -400,7 +312,7 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
         });
       },
       //creating new question paper
-      function(foundExam, createdQuestion, callback) {
+      function (foundExam, createdQuestion, callback) {
         questionPaperId = foundExam.questionPaper;
         //if already a question paper available for this exam, update it
         if (questionPaperId) {
@@ -438,7 +350,7 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
       },
 
       //adding updated questionpaper to exam
-      function(foundExam, createdQuestion, updatedQuestionPaper, callback) {
+      function (foundExam, createdQuestion, updatedQuestionPaper, callback) {
         foundExam.questionPaper = updatedQuestionPaper._id;
         foundExam.save((err, updatedExam) => {
           if (!err && updatedExam) {
@@ -450,7 +362,7 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
       },
 
       //add this question to question Bank also
-      function(updatedExam, createdQuestion, callback) {
+      function (updatedExam, createdQuestion, callback) {
         QB_Chapter.findOneAndUpdate({
             chapterName: chapterName
           }, {
@@ -459,13 +371,14 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
             },
             $set: {
               chapterName: chapterName,
+              addedBy: req.user
             }
           }, {
             upsert: true,
             new: true,
             setDefaultsOnInsert: true
           },
-          function(err, createdChapter) {
+          function (err, createdChapter) {
             if (!err && createdChapter) {
               callback(null, updatedExam, createdQuestion, createdChapter);
             } else {
@@ -475,7 +388,7 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
           }
         );
       },
-      function(updatedExam, createdQuestion, createdChapter, callback) {
+      function (updatedExam, createdQuestion, createdChapter, callback) {
         QB_Subject.findOneAndUpdate({
             subjectName: subjectName,
             className: className
@@ -484,14 +397,15 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
               chapters: createdChapter
             },
             $set: {
-              subjectName: subjectName
+              subjectName: subjectName,
+              addedBy: req.user
             }
           }, {
             upsert: true,
             new: true,
             setDefaultsOnInsert: true
           },
-          function(err, createdSubject) {
+          function (err, createdSubject) {
             if (!err && createdSubject) {
               callback(null, updatedExam, createdQuestion, createdChapter, createdSubject);
 
@@ -501,7 +415,7 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
           }
         );
       },
-      function(updatedExam, createdQuestion, createdChapter, createdSubject, callback) {
+      function (updatedExam, createdQuestion, createdChapter, createdSubject, callback) {
         QB_Class.findOneAndUpdate({
             className: className
           }, {
@@ -509,14 +423,15 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
               subjects: createdSubject
             },
             $set: {
-              className: className
+              className: className,
+              addedBy: req.user
             }
           }, {
             upsert: true,
             new: true,
             setDefaultsOnInsert: true
           },
-          function(err, createdClass) {
+          function (err, createdClass) {
             if (!err && createdClass) {
               callback(null);
               req.flash("success", "Question has been added Successfully");
@@ -529,7 +444,7 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
       }
 
     ],
-    function(err, result) {
+    function (err, result) {
       if (err) {
         console.log(err);
         next(new errors.generic);
@@ -542,7 +457,9 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
 
 router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   var examId = req.params.examId;
-  QB_Class.find({}, (err, foundClasses) => {
+  QB_Class.find({
+    addedBy: req.user
+  }, (err, foundClasses) => {
     if (!err && foundClasses) {
       res.render("chooseFromQB", {
         classes: foundClasses,
@@ -559,7 +476,7 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
   var examId = req.params.examId;
   var questionsIdString = req.body.questions || "";
 
-  if (typeof(req.body.questions) == typeof("")) {
+  if (typeof (req.body.questions) == typeof ("")) {
     questionsIdString = [];
     questionsIdString.push(req.body.questions || "");
   }
@@ -570,15 +487,15 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
       questions.push(questionsIdString[i]);
   }
 
-  async.waterfall(
+  Async.waterfall(
     [
-      function(callback) {
+      function (callback) {
         Exam.findById(examId, (err, foundExam) => {
           if (!err && foundExam) {
             if (foundExam.questionPaper && foundExam.questionPaper != null) {
-              async.waterfall(
+              Async.waterfall(
                 [
-                  function(callback) {
+                  function (callback) {
                     QuestionPaper.findByIdAndUpdate(foundExam.questionPaper, {
                         $addToSet: {
                           questions: {
@@ -598,7 +515,7 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
                         }
                       });
                   },
-                  function(foundQuestionPaper, callback) {
+                  function (foundQuestionPaper, callback) {
                     foundExam.questionPaper = foundQuestionPaper._id;
                     foundExam.save((err, updatedExam) => {
                       if (!err && updatedExam) {
@@ -610,7 +527,7 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
                     });
                   }
                 ],
-                function(err, result) {
+                function (err, result) {
                   if (err) {
                     console.log(err);
                     next(new errors.generic);
@@ -620,9 +537,9 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
                 }
               );
             } else {
-              async.waterfall(
+              Async.waterfall(
                 [
-                  function(callback) {
+                  function (callback) {
                     var questionPaperData = {
                       questions: questions
                     };
@@ -634,7 +551,7 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
                       }
                     });
                   },
-                  function(createdQuestionPaper, callback) {
+                  function (createdQuestionPaper, callback) {
                     foundExam.questionPaper = createdQuestionPaper._id;
                     foundExam.save((err, updatedExam) => {
                       if (!err && updatedExam) {
@@ -646,7 +563,7 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
                     });
                   }
                 ],
-                function(err, result) {
+                function (err, result) {
                   if (err) {
                     console.log(err);
                     next(new errors.generic);
@@ -660,7 +577,7 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
         });
       }
     ],
-    function(err, result) {
+    function (err, result) {
       if (err) {
         console.log(err);
         next(new errors.generic);

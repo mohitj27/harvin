@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var Promise = require('bluebird');
+Promise.promisifyAll(mongoose);
 
 //====questionSchema====
 var questionSchema = new Schema({
@@ -9,7 +11,7 @@ var questionSchema = new Schema({
 	},
 
 	newOptions: Object,
-	
+
 	options: [{
 		type: String,
 		require: true
