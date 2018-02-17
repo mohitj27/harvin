@@ -2,7 +2,7 @@
   <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
-  <!-- <link rel="stylesheet" type="text/css" href="../../css/courses-desc.css"> -->
+  <link rel="stylesheet" type="text/css" href="../../css/courses-list.css">
 
 
   <main>
@@ -10,7 +10,7 @@
       <%if(foundCourse){%>
 
         <div class="row ">
-            <h3><%=foundCourse.courseName%> <hr></h3>
+          <h3><%=foundCourse.courseName%> <hr></h3>
         </div>
         <div class="row">
           <div class="col s12 m6 l6">
@@ -44,48 +44,70 @@
 
         <div class="row">
           <div class="col s6 m6 l6">
-            <a href="#"><i class="material-icons grey-text">alarm</i>Timings</a>
-            <div>
-              <p>
-                <%=foundCourse.courseTimings%>
-              </p>
+            <div class="card horizontal desc white z-depth-4">
+              <i class="material-icons huge grey-text">alarm</i>
+              <div class="card-desc-content">
+                <a href="#">Timings</a>
+                <div>
+                  <p>
+                    <%=foundCourse.courseTimings%>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col s6 m6 l6">
-            <a href="#"><i class="material-icons grey-text">school</i>Frequency of class</a>
-            <div>
-              <p>
-                <%=foundCourse.courseFrequency%>
-              </p>
+            <div class="card horizontal desc white z-depth-4">
+              <i class="material-icons huge grey-text">school</i>
+              <div class="card-desc-content">
+                <a href="#">Frequency of class</a>
+                  <p>
+                    <%=foundCourse.courseFrequency%>
+                  </p>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="row">
           <div class="col s6 m6 l6">
-            <a href="#"><i class="material-icons grey-text">event_note</i>Course Admission Through</a>
-            <div>
-              <p>
-                <%=foundCourse. courseAdmissionThrough%>
-              </p>
+            <div class="card horizontal desc white z-depth-4">
+              <i class="material-icons huge grey-text ">event_note</i>
+              <div class="card-desc-content">
+                <a href="#">Course Admission Through :</a>
+                  <p >
+                    <%=foundCourse.courseAdmissionThrough%>
+                  </p>
+              </div>
             </div>
           </div>
           <div class="col s6 m6 l6">
-            <a href="#"><i class="material-icons grey-text " >people</i>Course For :</a>
-            <div>
-              <p>
-                <%=foundCourse. courseFor%>
-              </p>
+            <div class="card horizontal desc white z-depth-4">
+              <i class="material-icons huge grey-text ">people</i>
+              <div class="card-desc-content center">
+                <a href="#">Course For :</a>
+                  <p >
+                    <%=foundCourse. courseFor%>
+                  </p>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="row">
-          <a href="#"><i class="material-icons grey-text">alarm</i>Course Description</a>
-          <div>
-            <p>
-              <%=foundCourse.courseDescription%>
-            </p>
+          <div class="col s12 m12 l12">
+            <div class="card horizontal desc white z-depth-4">
+              <i class="material-icons huge grey-text ">people</i>
+
+              <div class="card-desc-content">
+                <div class="card-desc-title">
+                  <a href="#!">Course Description</a>
+                </div>
+                  <p class="left">
+                    <%=foundCourse.courseDescription%>
+                  </p>
+              </div>
+            </div>
           </div>
         </div>
         <%}%>

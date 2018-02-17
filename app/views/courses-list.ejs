@@ -10,8 +10,8 @@
 <main>
   <div class="container">
     <div class="row">
-      <div class="col s3">
-        <h5 class="center-align">FILTERS</h5>
+      <div class="col s12 m3 l3">
+        <h5 >FILTERS</h5>
         <br>
         <form action="">
             <div class="input-field">
@@ -45,8 +45,8 @@
                 </div>
         </form>
       </div>
-      <div class="col s9">
-        <h5>List of Courses</h5>
+      <div class="col s12 m9 l9">
+        <h5>COURSES</h5>
         <%if(foundCourses){%>
 
         <%foundCourses.forEach((course,i)=>{%>
@@ -55,14 +55,14 @@
 
                 <div class="card horizontal" id="course-list-card">
                   <div class="card-image valign-wrapper">
-                    <img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
+                    <img src="/courseImages/<%=course.courseImage%>" height=300 width=400 class="responsive-img">
                   </div>
                   <div class="card-stacked">
 
 
                     <div class="card-content">
                       <div class="card-title"><%=course.courseName%></div>
-                      <p class="truncate"><%=course.courseName%></p>
+                      <p class="truncate "><%=course.courseName%></p>
                     </div>
                     <div class="card-action">
                       <a href="/courses-list/?title=<%=course.courseName%>">Read more...</a>
