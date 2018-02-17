@@ -2,7 +2,7 @@
     <!-- Title -->
     <title>Harvin Academy Blog</title>
     <!-- favicon Icon -->
-    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>
+    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon" />
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
 
@@ -16,40 +16,52 @@
     <!-- =========================== Middle Content =========================== -->
 
     <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=1054614874673150&autoLogAppEvents=1';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src =
+                'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=1054614874673150&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <div class="middle-content pt-50">
         <div class="container">
             <div class="row">
                 <!-- ====================== Main .blog-area ====================== -->
                 <main class="col-xl-8 col-lg-8 col-md-7 blog-details-area">
-                  <div class="section">
-                    <div id="content" class="container">
+                    <div class="section">
+                        <div id="content" class="container">
+                        </div>
                     </div>
-                  </div>
 
                     <!-- ================= Full Post ================= -->
                     <article class="card full-post border-0">
                         <!-- <mark class="catagory text-center">Life Style</mark> -->
-                        <h2 class="card-title text-center h1 p-5"><%=foundBlog.blogTitle%></h2>
+                        <h2 class="card-title text-center h1 p-5">
+                            <%=foundBlog.blogTitle%>
+                        </h2>
                         <!-- Blog Content-->
                         <div class="blgo-content">
                             <img class="card-img rounded-0" src="/blogImage/<%=foundBlog.coverImgName%>" alt="Blog Image">
-                            <span class="posted-date"><%=foundBlog.uploadDate%></span>
+                            <span class="posted-date">
+                                <%=foundBlog.uploadDate%>
+                            </span>
                         </div>
                         <!-- Card Body -->
                         <div class="card-body blog-texts p-5">
-                          <% if(foundBlog.author){ %>
-                            <span class="posted-by mt-20 mb-20 d-block">Posted By <mark class="admin"><%=foundBlog.author.username%></mark></span>
+                            <% if(foundBlog.author){ %>
+                                <span class="posted-by mt-20 mb-20 d-block">Posted By
+                                    <mark class="admin">
+                                        <%=foundBlog.author.username%>
+                                    </mark>
+                                </span>
 
-                          <%}%>
+                                <%}%>
 
-                          <%-blogContent%>
+                                    <%-blogContent%>
 
                     </article>
                     <!-- ================= /Full Post ================= -->
@@ -69,11 +81,18 @@
                     </div> -->
                     <!-- //Author Box -->
                     <!-- ================= Comment Area ================= -->
-                  <div class="author-box row">
-                    <div class="col-xs-12 col-lg-12 col-md-12 center">
-                      <div class="fb-comments"></div>
+                    <div class="author-box row">
+                        <div class="col-xs-12 col-lg-12 col-md-12 center">
+                            <div class="fb-comments"></div>
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({
+                                    google_ad_client: "ca-pub-7358139519857938",
+                                    enable_page_level_ads: true
+                                });
+                            </script>
+                        </div>
                     </div>
-                  </div>
 
                     <!-- ================= //Comment Area ================= -->
                     <!-- ================= Releted post ================= -->
@@ -135,7 +154,9 @@
                                 <!-- Sub Post Slide-Item -->
                                 <div class="sub-post slide-item">
                                     <div class="post-content hvr-rectangle-out">
-                                        <a href="standard_blog_detail.html#"><img src="/assets/img/sidebar/2.jpg" alt="Blog Post"></a>
+                                        <a href="standard_blog_detail.html#">
+                                            <img src="/assets/img/sidebar/2.jpg" alt="Blog Post">
+                                        </a>
                                         <!-- post text -->
                                         <div class="sub-post-text ">
                                             <div class="inner-wrap">
@@ -151,7 +172,9 @@
                                 <!-- Sub Post Slide-Item -->
                                 <div class="sub-post slide-item">
                                     <div class="post-content hvr-rectangle-out">
-                                        <a href="standard_blog_detail.html#"><img src="/assets/img/sidebar/2.jpg" alt="Blog Post"></a>
+                                        <a href="standard_blog_detail.html#">
+                                            <img src="/assets/img/sidebar/2.jpg" alt="Blog Post">
+                                        </a>
                                         <!-- post text -->
                                         <div class="sub-post-text ">
                                             <div class="inner-wrap">
@@ -167,7 +190,9 @@
                                 <!-- Sub Post Slide-Item -->
                                 <div class="sub-post slide-item">
                                     <div class="post-content hvr-rectangle-out">
-                                        <a href="standard_blog_detail.html#"><img src="/assets/img/sidebar/2.jpg" alt="Blog Post"></a>
+                                        <a href="standard_blog_detail.html#">
+                                            <img src="/assets/img/sidebar/2.jpg" alt="Blog Post">
+                                        </a>
                                         <!-- post text -->
                                         <div class="sub-post-text ">
                                             <div class="inner-wrap">
@@ -183,7 +208,9 @@
                                 <!-- Sub Post Slide-Item -->
                                 <div class="sub-post slide-item">
                                     <div class="post-content hvr-rectangle-out">
-                                        <a href="standard_blog_detail.html#"><img src="/assets/img/sidebar/2.jpg" alt="Blog Post"></a>
+                                        <a href="standard_blog_detail.html#">
+                                            <img src="/assets/img/sidebar/2.jpg" alt="Blog Post">
+                                        </a>
                                         <!-- post text -->
                                         <div class="sub-post-text ">
                                             <div class="inner-wrap">
@@ -199,7 +226,9 @@
                                 <!-- Sub Post Slide-Item -->
                                 <div class="sub-post slide-item">
                                     <div class="post-content hvr-rectangle-out">
-                                        <a href="standard_blog_detail.html#"><img src="/assets/img/sidebar/2.jpg" alt="Blog Post"></a>
+                                        <a href="standard_blog_detail.html#">
+                                            <img src="/assets/img/sidebar/2.jpg" alt="Blog Post">
+                                        </a>
                                         <!-- post text -->
                                         <div class="sub-post-text ">
                                             <div class="inner-wrap">
@@ -221,9 +250,11 @@
                             <div class="card news-letter border-0 rounded-0 p-15">
                                 <div class="card-body p-0">
                                     <p class="card-text">If You Want to Know Our Update News Please Subscribe Us.</p>
-                                    <form class="form-inline"  >
+                                    <form class="form-inline">
                                         <input type="text" placeholder="Enter your mail id">
-                                        <button type="submit" disabled><i class="fa fa-envelope"></i></button>
+                                        <button type="submit" disabled>
+                                            <i class="fa fa-envelope"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -296,33 +327,49 @@
                             <!-- ADVERTISE-->
                             <div class="card cloud-tag border-0 rounded-0">
                                 <ul class="tag-list d-flex flex-wrap">
-                                    <li><a href="standard_blog_detail.html#">life style</a></li>
-                                    <li><a href="standard_blog_detail.html#">travel</a></li>
-                                    <li><a href="standard_blog_detail.html#">fashion</a></li>
-                                    <li><a href="standard_blog_detail.html#">nature</a></li>
-                                    <li><a href="standard_blog_detail.html#">creative</a></li>
-                                    <li><a href="standard_blog_detail.html#">beautiful</a></li>
-                                    <li><a href="standard_blog_detail.html#">animal</a></li>
-                                    <li><a href="standard_blog_detail.html#">marketing</a></li>
+                                    <li>
+                                        <a href="standard_blog_detail.html#">life style</a>
+                                    </li>
+                                    <li>
+                                        <a href="standard_blog_detail.html#">travel</a>
+                                    </li>
+                                    <li>
+                                        <a href="standard_blog_detail.html#">fashion</a>
+                                    </li>
+                                    <li>
+                                        <a href="standard_blog_detail.html#">nature</a>
+                                    </li>
+                                    <li>
+                                        <a href="standard_blog_detail.html#">creative</a>
+                                    </li>
+                                    <li>
+                                        <a href="standard_blog_detail.html#">beautiful</a>
+                                    </li>
+                                    <li>
+                                        <a href="standard_blog_detail.html#">animal</a>
+                                    </li>
+                                    <li>
+                                        <a href="standard_blog_detail.html#">marketing</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </aside>
                 <!-- ====================== //Aside .middle-sidebar ====================== -->
+                </div>
             </div>
         </div>
-    </div>
-    <!-- =========================== //Middle Content =========================== -->
-    <!-- =========================== //Footer =========================== -->
+        <!-- =========================== //Middle Content =========================== -->
+        <!-- =========================== //Footer =========================== -->
 
-    <!-- =========================== //Footer =========================== -->
-    <!-- #preloader -->
-    <!-- <div id="preloader"></div> -->
-    <!-- ======================= Scripts ======================= -->
-    <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
-    <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
-    <script src="/assets/js/plugins.js"></script>
-    <script src="/assets/js/main.js"></script>
+        <!-- =========================== //Footer =========================== -->
+        <!-- #preloader -->
+        <!-- <div id="preloader"></div> -->
+        <!-- ======================= Scripts ======================= -->
+        <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+        <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
+        <script src="/assets/js/plugins.js"></script>
+        <script src="/assets/js/main.js"></script>
 
-<% include partials/website_footer.ejs%>
+        <% include partials/website_footer.ejs%>

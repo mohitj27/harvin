@@ -16,20 +16,21 @@
         <form action="">
             <div class="input-field">
               <select>
-                <option value="" disabled selected>Choose your option</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+                <option value="medical" selected>Medical</option>
+                <option value="engineering">Engineering</option>
+                <option value="foundation">Foundation</option>
               </select>
               <label>Select Stream</label>
             </div>
             <br>
             <div class="input-field">
                 <select>
-                  <option value="" disabled selected>Choose your option</option>
-                  <option value="1">Option 1</option>
-                  <option value="2">Option 2</option>
-                  <option value="3">Option 3</option>
+                  <option value="" disabled selected>Choose your class</option>
+                  <option value="IX">IX Studying</option>
+                  <option value="X">X Studying</option>
+                  <option value="XI">XI Studying</option>
+                  <option value="XII">XII Studying</option>
+                  <option value="XII Pass">XII Appeared/Passed</option>
                 </select>
                 <label>Select Class</label>
               </div>
@@ -37,9 +38,9 @@
               <div class="input-field">
                   <select>
                     <option value="" disabled selected>Choose your option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                    <option value="janakpuri">Janakpurit</option>
+                    <option value="preet-vihar">Preet Vihar</option>
+                    <option value="meerut">Meerut</option>
                   </select>
                   <label>Select Center</label>
                 </div>
@@ -62,7 +63,7 @@
 
                     <div class="card-content">
                       <div class="card-title"><%=course.courseName%></div>
-                      <p class="truncate "><%=course.courseName%></p>
+                      <p class="truncate "><%=course.courseDescription%></p>
                     </div>
                     <div class="card-action">
                       <a href="/courses-list/?title=<%=course.courseName%>">Read more...</a>
@@ -87,6 +88,8 @@
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="../../js/materialize.js"></script>
+		<script src="js/init.js"></script>
+
 <script>
   $(function(){
     $('select').material_select();

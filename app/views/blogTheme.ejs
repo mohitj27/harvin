@@ -5,6 +5,7 @@
     <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
+    <link rel="stylesheet" href="/css/blogTheme.css">
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
@@ -19,7 +20,7 @@
     <!-- =========================== //Catagory Area =========================== -->
     <!-- =========================== Middle Content =========================== -->
     <div class="middle-content">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <!-- ====================== Main .blog-area ====================== -->
                 <main class="col-xl-8 col-lg-8 col-md-7 blog-area">
@@ -28,15 +29,15 @@
                       <%if(i<4){%>
                       <article class="card single-blog text-center mt-5 mb-5 pt-0">
                           <mark class="catagory"><%=blog.category%></mark>
-                          <h2 class="card-title h1"><%=blog.blogTitle%></h2>
                           <!-- Blog Content-->
                           <div class="blgo-content">
-                              <a href="/blog/?title=<%=blog.blogTitle%>"><img class="card-img rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image"></a>
+                              <a href="/blog/?title=<%=blog.blogTitle%>"><img class="card-img img-fluid blog-cover rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image"></a>
                               <span class="posted-date"><%=blog.uploadDate%></span>
                           </div>
                           <!-- Card Body -->
                           <div class="card-body p-0">
                                 <!-- <%-blog.blogContent%> -->
+                                <h2 class="card-title h1 blog-title"><%=blog.blogTitle%></h2>
 
 
                               <a href="/blog/?title=<%=blog.blogTitle%>" class="read-more double-line">read more</a>
@@ -58,19 +59,20 @@
                       <%if(i>=4){%>
                       <article class="card single-blog text-center mt-5 mb-5 pt-0" style="display: none;">
                           <mark class="catagory"><%=blog.category%></mark>
-                          <h2 class="card-title h1"><%=blog.blogTitle%></h2>
                           <!-- Blog Content-->
                           <div class="blgo-content">
-                              <a href="/blog/?title=<%=blog.blogTitle%>"><img class="card-img rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image"></a>
+                              <a href="/blog/?title=<%=blog.blogTitle%>"><img class="card-img img-fluid blog-cover rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image"></a>
                               <span class="posted-date"><%=blog.uploadDate%></span>
                           </div>
                           <!-- Card Body -->
+
                           <div class="card-body p-0">
                               <%if(blog.author){%>
                                 <span class="posted-by">Posted By <mark class="admin"><%=blog.author.username%></mark></span>
                                 <%}%>
                                 <!-- <%-blog.blogContent%> -->
 
+                                <h2 class="card-title h1 blog-title"><%=blog.blogTitle%></h2>
 
                               <a href="/blog/?title=<%=blog.blogTitle%>" class="read-more double-line">read more</a>
                               <!-- Card Footer -->
