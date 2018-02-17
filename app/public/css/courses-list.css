@@ -1,5 +1,24 @@
 #course-list-card{
 }
 .card-image{
-  max-height:400px;
+max-height:300px !important;
+max-width:300px !important;
+}
+div >input {
+  color:#9e9e9e;
+}
+.card-title {
+  color:#616161;
+}
+.truncate{
+color:#616161 !important;
+}
+.material-icons.huge{
+font-size: 100px !important;
+}
+.card.horizontal.desc{
+  padding:15px !important;
+}
+.card-desc-content{
+  padding:10px;
 }
