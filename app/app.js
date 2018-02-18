@@ -116,7 +116,7 @@ app.use(function (err, req, res, next) {
     count += 1;
 
     if (err.status !== 401 && err.status !== 403) {
-      // console.error("err---------------: ", err.stack);
+      console.error("err---------------: ", err.stack);
       console.error("err_status: ", err.status);
       console.error("err_msg: ", err.message);
       console.error("err_name: ", err.name);

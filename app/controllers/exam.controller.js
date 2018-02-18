@@ -16,6 +16,16 @@ const findExamsByUserId = function (user) {
   });
 }
 
+const findExamsOfBatchByBatchId = function (batchId) {
+  return new Promise(function (resolve, reject) {
+    Exam.findAsync({
+        batch: batchId
+      })
+      .then(foundExams => resolve(foundExams))
+      .catch(err => reject(err))
+  });
+}
+
 const findExamById = function (examId) {
   return new Promise(function (resolve, reject) {
     Exam.findByIdAsync(examId)
@@ -97,5 +107,6 @@ module.exports = {
   populateFieldInExams,
   findExamById,
   updateExamById,
-  deleteExamById
+  deleteExamById,
+  findExamsOfBatchByBatchId
 }

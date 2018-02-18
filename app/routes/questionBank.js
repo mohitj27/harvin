@@ -308,7 +308,7 @@ router.get("/class/:className/subject/:subjectName", function(req, res, next) {
         req.flash("error", "Couldn't find the details of chosen subject");
         res.redirect("/admin/questionBank");
       } else {
-        // console.log('subject', subject);
+        console.log('subject', subject);
         res.json({
           subject: subject
         });

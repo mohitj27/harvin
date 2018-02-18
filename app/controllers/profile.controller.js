@@ -2,6 +2,7 @@ const errorHandler = require('../errorHandler');
 const User = require('./../models/User');
 const Profile = require('./../models/Profile');
 const Batch = require('./../models/Batch');
+const Result = require('./../models/Result');
 Promise = require('bluebird')
 mongoose = require('mongoose')
 mongoose.Promise = Promise;
@@ -29,7 +30,32 @@ const addBatchToProfile = function (batch, profile){
   })
 }
 
+const addResultInProfileById = function (profile, result){
+  return new Promise(function(resolve, reject){
+    Profile.findByIdAndUpdateAsync(profile._id,{
+      $addToSet:{results:result}
+    },{
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    })
+    .then(updatedProfile => resolve(updatedProfile))
+    .catch(err => reject(err))
+  })
+}
+
+const populateFieldInProfile = function (profile, field){
+  return new Promise(function(resolve, reject){
+    Profile
+    .populate(profile, field)
+    .then(populatedProfile => resolve(populatedProfile))
+    .catch(err => reject(err))
+  })
+}
+
 module.exports = {
   createNewProfile,
-  addBatchToProfile
+  addBatchToProfile,
+  addResultInProfileById,
+  populateFieldInProfile
 }

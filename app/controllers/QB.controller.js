@@ -1,10 +1,14 @@
 const errorHandler = require('../errorHandler');
 const Question = require('./../models/Question');
+const QuestionPaper = require('./../models/QuestionPaper');
 const QB_Class = require('./../models/QB_Class');
+const Exam = require('./../models/Exam');
 const QB_Subject = require('./../models/QB_Subject');
 const QB_Chapter = require('./../models/QB_Chapter');
-Promise = require('bluebird')
-mongoose = require('mongoose')
+const Result = require('./../models/Result');
+const _ = require('lodash');
+Promise = require('bluebird');
+mongoose = require('mongoose');
 mongoose.Promise = Promise;
 
 const deleteQuestionById = function (questionId) {
@@ -51,8 +55,17 @@ const findAllQbClassesByUserId = function (user) {
 const populateFieldInQbChapter = function (chapter, field) {
   return new Promise(function (resolve, reject) {
     QB_Chapter
-      .populate(chapter, 'questions')
+      .populate(chapter, field)
       .then(foundChapter => resolve(foundChapter))
+      .catch(err => resolve(err))
+  });
+}
+
+const populateFieldInQuestionPaper = function (questionPaper, field) {
+  return new Promise(function (resolve, reject) {
+    QuestionPaper
+      .populate(questionPaper, field)
+      .then(populatedQuestionPaper => resolve(populatedQuestionPaper))
       .catch(err => resolve(err))
   });
 }
@@ -70,11 +83,234 @@ const findAllQuestionsByIds = function (questionIds) {
   });
 }
 
+const createQuestion = function (newQues) {
+  return new Promise(function (resolve, reject) {
+    Question
+      .createAsync(newQues)
+      .then(createdQuestion => resolve(createdQuestion))
+      .catch(err => resolve(err))
+  });
+}
+
+const addQuestionToQuestionPaperById = function (questionPaperId, question) {
+
+  return new Promise(function (resolve, reject) {
+    QuestionPaper
+      .findByIdAndUpdateAsync(questionPaperId, {
+        $addToSet: {
+          questions: question
+        }
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+      .then(createdQuestionPaper => resolve(createdQuestion))
+      .catch(err => resolve(err))
+  });
+}
+
+const addQuestionsToQuestionPaperById = function (questionPaperId, questions) {
+
+  return new Promise(function (resolve, reject) {
+    QuestionPaper
+      .findByIdAndUpdateAsync(questionPaperId, {
+        $addToSet: {
+          questions: {
+            $each: questions
+          }
+        }
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+      .then(createdQuestionPaper => resolve(createdQuestion))
+      .catch(err => resolve(err))
+  });
+}
+
+const addQuestionPaperToExamById = function (examId, questionPaper) {
+  return new Promise(function (resolve, reject) {
+    Exam
+      .findByIdAndUpdateAsync(examId, {
+        $set: {
+          questionPaper
+        }
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+      .then(updatedExam => resolve(updatedExam))
+      .catch(err => resolve(err))
+  });
+}
+
+const createOrUpdateQuestionInQBChapterByName = function (chapterName, question, user) {
+  return new Promise(function (resolve, reject) {
+    QB_Chapter
+      .findOneAndUpdateAsync({
+        chapterName,
+        addedBy: user
+      }, {
+        $addToSet: {
+          questions: question
+        }
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+      .then(updatedChapter => resolve(updatedChapter))
+      .catch(err => resolve(err))
+  });
+}
+
+const createOrUpdateChapterInQBSubjectBySubjectAndClassName = function (subjectName, className, chapter, user) {
+  return new Promise(function (resolve, reject) {
+    QB_Subject
+      .findOneAndUpdateAsync({
+        subjectName,
+        className,
+        addedBy: user
+      }, {
+        $addToSet: {
+          chapters: chapter
+        }
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+      .then(updatedSubject => resolve(updatedSubject))
+      .catch(err => resolve(err))
+  });
+}
+
+const createOrUpdateSubjectInQBClassByName = function (className, subject, user) {
+  return new Promise(function (resolve, reject) {
+    QB_Class
+      .findOneAndUpdateAsync({
+        className,
+        addedBy: user
+      }, {
+        $addToSet: {
+          subjects: subject
+        }
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+      .then(updatedClass => resolve(updatedClass))
+      .catch(err => resolve(err))
+  });
+}
+
+const createQuestionPaper = function (newQuestionPaper) {
+  return new Promise(function (resolve, reject) {
+    QuestionPaper
+      .create(newQuestionPaper)
+      .then(createdQuestionPaper => resolve(createdQuestionPaper))
+      .catch(err => resolve(err))
+  });
+}
+
+const createNewQuestionObj = function (options, answers, question, user) {
+  return new Promise(function (resolve, reject) {
+    //check the data type of options, if string convert to array
+    var optionString = [];
+    var answerString = [];
+
+    if (typeof (options) == typeof ("")) {
+      optionString = [];
+      optionString.push(optionString || "");
+    } else {
+      optionString = options
+    }
+    //check the data type of answer, if string convert to array
+    if (typeof (answers) == typeof ("")) {
+      answerString = [];
+      answerString.push(answers || "");
+    } else {
+      answerString = answers
+    }
+
+    //data for new question
+    var newQues = {
+      question,
+      answers: [],
+      options: [],
+      newOptions: [],
+      answersIndex: [],
+      addedBy: user
+    };
+
+    //pushing options in options array
+    for (var i = 0; i < optionString.length; i++) {
+      if (optionString[i] != '')
+        newQues.options.push(optionString[i]);
+    }
+
+
+    //pushing answers in answer array
+    for (var j = 0; j < answerString.length; j++) {
+      if (answerString[j] != '')
+        newQues.answers.push(answerString[j]);
+    }
+
+    //populate answer index
+    newQues.answers.forEach((answer) => {
+      newQues.options.forEach((option, optIndex) => {
+        if (answer === option) {
+          newQues.answersIndex.push(optIndex);
+        }
+      });
+    });
+
+    //populate new options
+    newQues.options.forEach((opt_j, j) => {
+      if (_.indexOf(newQues.answersIndex, j) != -1) newQues.newOptions.push({
+        opt: opt_j,
+        isAns: true
+      })
+      else newQues.newOptions.push({
+        opt: opt_j,
+        isAns: false
+      })
+    })
+
+    resolve(newQues)
+
+  });
+}
+
+const createNewResult = function (newResult) {
+  return new Promise(function (resolve, reject) {
+  Result
+    .createAsync(newResult)
+    .then(createdResult => resolve(createdResult))
+    .catch(err => reject(err))
+
+  });
+}
+
 module.exports = {
   deleteQuestionById,
   findQbClassByClassNameAndUserId,
   findQbChapterByChapterNameAndUserId,
   findAllQbClassesByUserId,
   populateFieldInQbChapter,
-  findAllQuestionsByIds
+  findAllQuestionsByIds,
+  createQuestion,
+  addQuestionToQuestionPaperById,
+  createQuestionPaper,
+  addQuestionPaperToExamById,
+  createOrUpdateQuestionInQBChapterByName,
+  createOrUpdateChapterInQBSubjectBySubjectAndClassName,
+  createOrUpdateSubjectInQBClassByName,
+  createNewQuestionObj,
+  createNewResult,
+  populateFieldInQuestionPaper
 }

@@ -12,11 +12,12 @@ const Result = require("../models/Result.js");
 const Center = require("../models/Center.js");
 const Exam = require("../models/Exam");
 const errors = require("../error");
-const Async = require('async');
 const errorHandler = require("../errorHandler");
 const examController = require('../controllers/exam.controller.js');
+const userController = require('../controllers/user.controller.js');
 const batchController = require('../controllers/batch.controller.js');
 const QBController = require('../controllers/QB.controller.js');
+const profileController = require('../controllers/profile.controller.js');
 const _ = require('lodash');
 const middleware = require("../middleware");
 const validator = require('validator');
@@ -90,7 +91,7 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, 
   try {
     const updatedExam = await examController.createOrUpdateExamByExamNameAndUserId(newExam, req.user)
     req.flash("success", examName + " created/updated Successfully");
-    res.redirect(req.header('Referer'));
+    res.redirect(req.originalUrl);
   } catch (e) {
     next(e)
   }
@@ -217,263 +218,106 @@ router.get("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentre
   try {
     let foundExam = await examController.findExamById(examId)
     foundExam = await examController.populateFieldInExams(foundExam, 'questionPaper')
+    if (!foundExam.questionPaper) {
+
+      const newQuestionPaper = {
+        questions: []
+      }
+      let createdQuestionPaper = await QBController.createQuestionPaper(newQuestionPaper)
+      foundExam = await QBController.addQuestionPaperToExamById(foundExam._id, createdQuestionPaper)
+    }
     let foundQuestions = await QBController.findAllQuestionsByIds(foundExam.questionPaper.questions)
     return res.render("editQuesPaper", {
       exam: foundExam,
       questions: foundQuestions
     });
-  } catch(e) {
+  } catch (e) {
     return next(e)
   }
-  
+
 });
 
-router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  var examId = req.params.examId;
+router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  res.locals.flashUrl = req.headers.referer;
+
+  const examId = req.params.examId || '';
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next);
+
   var optionString = req.body.options || "";
   var answerString = req.body.answer || "";
+  var question = req.body.question || "";
 
-  var className = req.body.className;
-  var subjectName = req.body.subjectName;
-  var chapterName = req.body.chapterName;
+  const className = req.body.className || '';
+  const subjectName = req.body.subjectName || '';
+  const chapterName = req.body.chapterName || '';
 
-  //check the data type of options, if string convert to array
-  if (typeof (req.body.options) == typeof ("")) {
-    optionString = [];
-    optionString.push(req.body.options || "");
-  }
-  //check the data type of answer, if string convert to array
-  if (typeof (req.body.answer) == typeof ("")) {
-    answerString = [];
-    answerString.push(req.body.answer || "");
-  }
+  if (!className || validator.isEmpty(className)) return errorHandler.errorResponse('INVALID_FIELD', 'class name', next)
+  if (!subjectName || validator.isEmpty(subjectName)) return errorHandler.errorResponse('INVALID_FIELD', 'subject name', next)
+  if (!chapterName || validator.isEmpty(chapterName)) return errorHandler.errorResponse('INVALID_FIELD', 'chapter name', next)
+  if (!question || validator.isEmpty(question)) return errorHandler.errorResponse('INVALID_FIELD', 'question', next)
 
-  //data for new question
-  var newQues = {
-    question: req.body.question,
-    answers: [],
-    options: [],
-    newOptions: [],
-    answersIndex: [],
-    addedBy: req.user
-  };
+  let newQues = await QBController.createNewQuestionObj(optionString, answerString, question, req.user)
 
-  //pushing options in options array
-  for (var i = 0; i < optionString.length; i++) {
-    if (optionString[i] != '')
-      newQues.options.push(optionString[i]);
-  }
+  try {
+    //findExamById
+    let foundExam = await examController.findExamById(examId)
 
-  //pushing answers in answer array
-  for (var j = 0; j < answerString.length; j++) {
-    if (answerString[j] != '')
-      newQues.answers.push(answerString[j]);
-  }
+    //create new Question
+    let createdQuestion = await QBController.createQuestion(newQues)
 
-  newQues.answers.forEach((answer) => {
-    newQues.options.forEach((option, optIndex) => {
-      if (answer === option) {
-        newQues.answersIndex.push(optIndex);
+    //create or update new question paper
+    let createdQuestionPaper;
+    if (foundExam.questionPaper) {
+      createdQuestionPaper = await QBController.addQuestionToQuestionPaperById(foundExam.questionPaper, createdQuestion)
+    } else {
+      questions = [];
+      questions.push(createdQuestion._id);
+      const newQuestionPaper = {
+        questions: newQues
       }
+      createdQuestionPaper = await QBController.createQuestionPaper(newQuestionPaper)
+
+      //add question paper to exam
+      updatedExam = await QBController.addQuestionPaperToExamById(foundExam._id, createdQuestionPaper)
+    }
+
+    //add this question to question bank also
+    let updatedChapter = await QBController.createOrUpdateQuestionInQBChapterByName(chapterName, createdQuestion, req.user)
+    let updatedSubject = await QBController.createOrUpdateChapterInQBSubjectBySubjectAndClassName(subjectName, className, updatedChapter, req.user)
+    let updatedClass = await QBController.createOrUpdateSubjectInQBClassByName(className, updatedSubject, req.user)
+
+    req.flash("success", "Question has been added Successfully");
+    return res.redirect(req.headers.referer);
+
+  } catch (e) {
+    return next(e)
+  }
+
+});
+
+router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  var examId = req.params.examId || '';
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next);
+
+  try {
+    const foundClasses = await QBController.findAllQbClassesByUserId(req.user)
+    res.render("chooseFromQB", {
+      classes: foundClasses,
+      examId: examId,
+      questions: {}
     });
-  });
+  } catch (e) {
+    next(e)
+  }
 
-  newQues.options.forEach((opt_j, j) => {
-    if (_.indexOf(newQues.answersIndex, j) != -1) newQues.newOptions.push({
-      opt: opt_j,
-      isAns: true
-    })
-    else newQues.newOptions.push({
-      opt: opt_j,
-      isAns: false
-    })
-  })
-
-  Async.waterfall(
-    [
-      //finding particular exam
-      function (callback) {
-        Exam.findById(examId, (err, foundExam) => {
-          if (!err && foundExam) {
-            callback(null, foundExam);
-          } else {
-            callback(err);
-          }
-        });
-      },
-      //creating new question
-      function (foundExam, callback) {
-        Question.create(newQues, (err, createdQuestion) => {
-          if (!err && createdQuestion) {
-            callback(null, foundExam, createdQuestion);
-          } else {
-            callback(err);
-          }
-        });
-      },
-      //creating new question paper
-      function (foundExam, createdQuestion, callback) {
-        questionPaperId = foundExam.questionPaper;
-        //if already a question paper available for this exam, update it
-        if (questionPaperId) {
-          QuestionPaper.findByIdAndUpdate(questionPaperId, {
-              $addToSet: {
-                questions: createdQuestion._id
-              }
-            }, {
-              upsert: true,
-              new: true,
-              setDefaultsOnInsert: true
-            },
-            (err, updatedQuestionPaper) => {
-              if (!err && updatedQuestionPaper) {
-                callback(null, foundExam, createdQuestion, updatedQuestionPaper);
-              } else {
-                callback(err);
-              }
-            });
-        } else {
-          //else create new question paper
-          questions = [];
-          questions.push(createdQuestion._id);
-          var questionPaperData = {
-            questions
-          };
-          QuestionPaper.create(questionPaperData, (err, createdQuestionPaper) => {
-            if (!err && createdQuestionPaper) {
-              callback(null, foundExam, createdQuestion, createdQuestionPaper);
-            } else {
-              callback(err);
-            }
-          });
-        }
-      },
-
-      //adding updated questionpaper to exam
-      function (foundExam, createdQuestion, updatedQuestionPaper, callback) {
-        foundExam.questionPaper = updatedQuestionPaper._id;
-        foundExam.save((err, updatedExam) => {
-          if (!err && updatedExam) {
-            callback(null, updatedExam, createdQuestion);
-          } else {
-            callback(err);
-          }
-        });
-      },
-
-      //add this question to question Bank also
-      function (updatedExam, createdQuestion, callback) {
-        QB_Chapter.findOneAndUpdate({
-            chapterName: chapterName
-          }, {
-            $addToSet: {
-              questions: createdQuestion
-            },
-            $set: {
-              chapterName: chapterName,
-              addedBy: req.user
-            }
-          }, {
-            upsert: true,
-            new: true,
-            setDefaultsOnInsert: true
-          },
-          function (err, createdChapter) {
-            if (!err && createdChapter) {
-              callback(null, updatedExam, createdQuestion, createdChapter);
-            } else {
-              console.log(err);
-              callback(err);
-            }
-          }
-        );
-      },
-      function (updatedExam, createdQuestion, createdChapter, callback) {
-        QB_Subject.findOneAndUpdate({
-            subjectName: subjectName,
-            className: className
-          }, {
-            $addToSet: {
-              chapters: createdChapter
-            },
-            $set: {
-              subjectName: subjectName,
-              addedBy: req.user
-            }
-          }, {
-            upsert: true,
-            new: true,
-            setDefaultsOnInsert: true
-          },
-          function (err, createdSubject) {
-            if (!err && createdSubject) {
-              callback(null, updatedExam, createdQuestion, createdChapter, createdSubject);
-
-            } else {
-              callback(err);
-            }
-          }
-        );
-      },
-      function (updatedExam, createdQuestion, createdChapter, createdSubject, callback) {
-        QB_Class.findOneAndUpdate({
-            className: className
-          }, {
-            $addToSet: {
-              subjects: createdSubject
-            },
-            $set: {
-              className: className,
-              addedBy: req.user
-            }
-          }, {
-            upsert: true,
-            new: true,
-            setDefaultsOnInsert: true
-          },
-          function (err, createdClass) {
-            if (!err && createdClass) {
-              callback(null);
-              req.flash("success", "Question has been added Successfully");
-              res.redirect("/admin/exams/" + updatedExam._id + "/question-paper");
-            } else {
-              callback(err);
-            }
-          }
-        );
-      }
-
-    ],
-    function (err, result) {
-      if (err) {
-        console.log(err);
-        next(new errors.generic);
-      } else {
-
-      }
-    }
-  );
-});
-
-router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  var examId = req.params.examId;
-  QB_Class.find({
-    addedBy: req.user
-  }, (err, foundClasses) => {
-    if (!err && foundClasses) {
-      res.render("chooseFromQB", {
-        classes: foundClasses,
-        examId: examId,
-        questions: {}
-      });
-    }
-  });
 });
 
 
 
-router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  var examId = req.params.examId;
+router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  var examId = req.params.examId || '';
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next);
+
   var questionsIdString = req.body.questions || "";
 
   if (typeof (req.body.questions) == typeof ("")) {
@@ -487,223 +331,116 @@ router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middl
       questions.push(questionsIdString[i]);
   }
 
-  Async.waterfall(
-    [
-      function (callback) {
-        Exam.findById(examId, (err, foundExam) => {
-          if (!err && foundExam) {
-            if (foundExam.questionPaper && foundExam.questionPaper != null) {
-              Async.waterfall(
-                [
-                  function (callback) {
-                    QuestionPaper.findByIdAndUpdate(foundExam.questionPaper, {
-                        $addToSet: {
-                          questions: {
-                            $each: questions
-                          }
-                        }
-                      }, {
-                        upsert: true,
-                        new: true,
-                        setDefaultsOnInsert: true
-                      },
-                      (err, foundQuestionPaper) => {
-                        if (!err && foundQuestionPaper) {
-                          callback(null, foundQuestionPaper);
-                        } else {
-                          callback(err)
-                        }
-                      });
-                  },
-                  function (foundQuestionPaper, callback) {
-                    foundExam.questionPaper = foundQuestionPaper._id;
-                    foundExam.save((err, updatedExam) => {
-                      if (!err && updatedExam) {
-                        req.flash("success", "Questions added Successfully");
-                        res.redirect("/admin/exams/" + foundExam._id + "/question-paper");
-                      } else {
-                        callback(err);
-                      }
-                    });
-                  }
-                ],
-                function (err, result) {
-                  if (err) {
-                    console.log(err);
-                    next(new errors.generic);
-                  } else {
+  try {
+    //find exam by id
+    let foundExam = await examController.findExamById(examId)
 
-                  }
-                }
-              );
-            } else {
-              Async.waterfall(
-                [
-                  function (callback) {
-                    var questionPaperData = {
-                      questions: questions
-                    };
-                    QuestionPaper.create(questionPaperData, (err, createdQuestionPaper) => {
-                      if (!err && createdQuestionPaper) {
-                        callback(null, createdQuestionPaper);
-                      } else {
-                        callback(err);
-                      }
-                    });
-                  },
-                  function (createdQuestionPaper, callback) {
-                    foundExam.questionPaper = createdQuestionPaper._id;
-                    foundExam.save((err, updatedExam) => {
-                      if (!err && updatedExam) {
-                        req.flash("success", "Questions added Successfully");
-                        res.redirect("/admin/exams/" + foundExam._id + "/question-paper");
-                      } else {
-                        callback(err);
-                      }
-                    });
-                  }
-                ],
-                function (err, result) {
-                  if (err) {
-                    console.log(err);
-                    next(new errors.generic);
-                  } else {
-
-                  }
-                }
-              );
-            }
-          }
-        });
-      }
-    ],
-    function (err, result) {
-      if (err) {
-        console.log(err);
-        next(new errors.generic);
-      } else {
-
-      }
-    }
-  );
-});
-
-router.post('/:examId/question-paper/:username', (req, res, next) => {
-  let examId = req.params.examId;
-  let username = req.params.username;
-  Exam.findById(examId, (err, foundExam) => {
-    if (!err && foundExam) {
-      let result = {
-        examTakenDate: moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
-        nQuestionsAnswered: req.body.nQuestionsAnswered,
-        nQuestionsUnanswered: req.body.nQuestionsUnanswered,
-        nCorrectAns: req.body.nCorrectAns,
-        nIncorrectAns: req.body.nIncorrectAns,
-        mTotal: req.body.mTotal,
+    let createdQuestionPaper;
+    if (foundExam.questionPaper) {
+      createdQuestionPaper = await QBController.addQuestionsToQuestionPaperById(foundExam.questionPaper, questions)
+    } else {
+      var questionPaperData = {
+        questions: questions
       };
 
-      User.findOne({
-          username: username
-        })
-        .populate({
-          path: 'profile',
-          model: 'Profile'
-        })
-        .exec((err, foundUser) => {
-          if (!err && foundUser) {
-            let newResult = new Result({
-              examTakenDate: result.examTakenDate,
-              nQuestionsAnswered: result.nQuestionsAnswered,
-              nQuestionsUnanswered: result.nQuestionsUnanswered,
-              nCorrectAns: result.nCorrectAns,
-              nIncorrectAns: result.nIncorrectAns,
-              mTotal: result.mTotal,
-              user: foundUser._id,
-              exam: foundExam._id
-            });
-            newResult.save(err => {
-              if (!err) {
-                Profile.findByIdAndUpdate(
-                  foundUser.profile._id, {
-                    $addToSet: {
-                      results: newResult._id
-                    }
-                  }, {
-                    upsert: true,
-                    new: true,
-                    setDefaultsOnInsert: true
-                  },
-                  (err, updatedProfile) => {
-                    if (!err && updatedProfile) {
-                      res.json({
-                        success: true,
-                        msg: "Your result has been saved successfully",
-                        result: newResult
-                      });
-                    }
-                  }
-                );
-              } else {
-                console.log('result', err);
-                next(new errors.generic);
-              }
-            });
-          }
-        });
-    } else {
-      console.log('exam', err);
-      next(new errors.generic);
+      createdQuestionPaper = await QBController.createQuestionPaper(questionPaperData)
+      updatedExam = await QBController.addQuestionPaperToExamById(foundExam._id, createdQuestionPaper)
     }
-  });
 
+    req.flash("success", "Questions added Successfully");
+    res.redirect(req.headers.referer);
+  } catch (e) {
+    next(e)
+  }
+
+});
+
+router.post('/:examId/question-paper/:username', async (req, res, next) => {
+  const examId = req.params.examId || '';
+  let username = req.params.username || '';
+
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next);
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next);
+
+  try {
+    let foundExam = await examController.findExamById(examId)
+    let foundUser = await userController.findUserByUsername(username)
+    foundUser = await userController.populateFieldInUser(foundUser, 'profile')
+    let result = {
+      examTakenDate: moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
+      nQuestionsAnswered: req.body.nQuestionsAnswered,
+      nQuestionsUnanswered: req.body.nQuestionsUnanswered,
+      nCorrectAns: req.body.nCorrectAns,
+      nIncorrectAns: req.body.nIncorrectAns,
+      mTotal: req.body.mTotal,
+      user: foundUser,
+      exam: foundExam
+    };
+
+    let createdResult = await QBController.createNewResult(result)
+    let updatedProfile = await profileController.addResultInProfileById(foundUser.profile._id, createdResult)
+    console.log('created', createdResult)
+    res.json({
+      success: true,
+      msg: "Your result has been saved successfully",
+      result: createdResult
+    });
+
+  } catch (err) {
+    next(err)
+  }
 
 });
 
 //giving question paper of particular exam
-router.get("/:username/exams/:examId/questionPaper", (req, res, next) => {
+router.get("/:username/exams/:examId/questionPaper", async (req, res, next) => {
   //TODO: filter exams, provide only those exams of the batch in which user belongs
-  var examId = req.params.examId;
-  Exam
-    .findById(examId)
-    .populate({
-      path: "questionPaper",
-      model: "QuestionPaper",
-      populate: {
-        path: "questions",
-        model: "Question"
-      }
-    })
-    .exec((err, foundExam) => {
-      if (!err && foundExam) {
-        var questionPaper = {};
-        questionPaper._id = foundExam.questionPaper._id;
-        questionPaper.__v = foundExam.questionPaper.__v;
-        questionPaper.positiveMarks = foundExam.positiveMarks;
-        questionPaper.negativeMarks = foundExam.negativeMarks;
-        questionPaper.maximumMarks = foundExam.maximumMarks;
-        questionPaper.totalTime = foundExam.totalTime;
-        questionPaper.questions = foundExam.questionPaper.questions;
+  //TODO: register the user in batch at particular center
+  const username = req.params.username;
+  const examId = req.params.examId;
 
-        res.json({
-          questionPaper
-        });
-      } else {
-        console.log(err);
-      }
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next);
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next);
+
+  try {
+    // let userProfileBatch = await userController.findBatchOfUserByUsername(username)
+    let foundExam = await examController.findExamById(examId)
+    foundExam = await examController.populateFieldInExams(foundExam, 'questionPaper')
+    let populatedQuestionPaper = await QBController.populateFieldInQuestionPaper(foundExam.questionPaper, 'questions')
+
+    var questionPaper = {};
+    questionPaper._id = populatedQuestionPaper._id;
+    questionPaper.__v = populatedQuestionPaper.__v;
+    questionPaper.positiveMarks = foundExam.positiveMarks;
+    questionPaper.negativeMarks = foundExam.negativeMarks;
+    questionPaper.maximumMarks = foundExam.maximumMarks;
+    questionPaper.totalTime = foundExam.totalTime;
+    questionPaper.questions = populatedQuestionPaper.questions;
+
+    return res.json({
+      questionPaper
     });
+  } catch (err) {
+    next(err)
+  }
+
 });
 
 //Giving exam list
-router.get("/:username/exams", (req, res, next) => {
-  Exam.find({}, (err, foundExams) => {
-    if (!err && foundExams) {
-      res.json({
-        exams: foundExams
-      });
-    } else {
-      console.log(err);
-    }
-  });
+router.get("/:username/exams", async (req, res, next) => {
+  const username = req.params.username;
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next);
+
+  try {
+    let userBatch = await userController.findBatchOfUserByUsername(username, next)
+    let foundExams = await examController.findExamsOfBatchByBatchId(userBatch._id)
+    res.json({
+      exams: foundExams
+    });
+  } catch (e) {
+    next(e)
+  }
+
 });
 
 module.exports = router;
