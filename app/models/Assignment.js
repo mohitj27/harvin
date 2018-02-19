@@ -9,7 +9,7 @@ var assignmentSchema = new Schema({
     type: String,
     required: true
   },
-  
+
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
@@ -36,6 +36,8 @@ var assignmentSchema = new Schema({
     trim: true
   },
 });
+
+assignmentSchema.index({ assignmentName: 1, addedBy: 1}, { unique: true });
 
 //Exam model
 module.exports = mongoose.model("Assignment", assignmentSchema);

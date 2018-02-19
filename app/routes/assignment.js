@@ -12,6 +12,7 @@ const errorHandler = require('../errorHandler');
 const validator = require('validator');
 const assignmentController = require('../controllers/assignment.controller');
 const batchController = require('../controllers/batch.controller');
+const userController = require('../controllers/user.controller');
 const router = express.Router();
 
 //assignment uplaod helper
@@ -83,102 +84,97 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, function (re
       };
 
       let createdAsssignment = await assignmentController.createAssignment(newAssignment)
+      req.flash("success", assignmentName + " created Successfully");
+      return res.redirect('/admin/assignment');
     } catch (e) {
       next(e)
     }
   })
 });
 
-router.get("/:assignmentId/edit", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+router.get("/:assignmentId/edit", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   res.locals.flashUrl = req.headers.referer;
 
-  var assignmentId = req.params.assignmentId;
-  if (!req.file) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+  const assignmentId = req.params.assignmentId || '';
+  if (!assignmentId || !validator.isMongoId(assignmentId)) return errorHandler.errorResponse('INVALID_FIELD', 'assignment id', next)
 
-  Batch.find({
-    addedBy: req.user._id
-  }, (err, foundBatches) => {
-    if (!err && foundBatches) {
-      Assignment.findById(assignmentId)
-        .populate({
-          path: 'batch',
-          model: "Batch"
-        })
-        .exec((err, foundAssignment) => {
-          if (!err && foundAssignment) {
-            res.render("editAssignment", {
-              assignment: foundAssignment,
-              batches: foundBatches
-            });
-          }
-        })
-    } else {
-      console.log('error', err);
-      next(new errors.generic());
-    }
-  });
+  try {
+    const foundBatches = await batchController.findBatchByUserId(req.user)
+    let foundAssignment = await assignmentController.findAssignmentsId(assignmentId)
+    foundAssignment = await assignmentController.populateFieldOfAssignment(foundAssignment, 'batch')
+    res.render("editAssignment", {
+      assignment: foundAssignment,
+      batches: foundBatches
+    });
+  } catch (err) {
+    next(err)
+  }
+
+
 });
 
-router.put("/:assignmentId", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  var assignmentId = req.params.assignmentId;
-  var assignmentName = req.body.assignmentName;
-  var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
-  var lastSubDate = req.body.lastSubDate;
-  var batchId = req.body.batchName;
+router.put("/:assignmentId", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  const assignmentId = req.params.assignmentId || '';
+  if (!assignmentId || !validator.isMongoId(assignmentId)) return errorHandler.errorResponse('INVALID_FIELD', 'assignment id', next)
 
-  Assignment.findByIdAndUpdate(assignmentId, {
-      $set: {
-        assignmentName,
-        uploadDate,
-        lastSubDate,
-        batch: batchId,
-      }
-    }, {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true
-    },
-    (err, updatedAssignment) => {
-      if (!err && updatedAssignment) {
-        req.flash("success", assignmentName + " updated Successfully");
-        res.redirect("/admin/assignment");
-      } else {
-        console.log(err);
-        next(new errors.generic);
-      }
-    }
-  );
+  const assignmentName = req.body.assignmentName || '';
+  const uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
+  const lastSubDate = req.body.lastSubDate || '';
+  const batchId = req.body.batchName || '';
+
+  if (!assignmentName || validator.isEmpty(assignmentName)) return errorHandler.errorResponse('INVALID_FIELD', 'assignment name', next)
+  if (!lastSubDate || validator.isEmpty(lastSubDate)) return errorHandler.errorResponse('INVALID_FIELD', 'last submission date', next)
+  if (!batchId || validator.isEmpty(batchId)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
+
+  const newAssignment = {
+    assignmentName,
+    uploadDate,
+    lastSubDate,
+    batchId,
+  }
+
+  try {
+    const updatedAssignment = await assignmentController.updateAssignmentByAssignmentAndUserId(assignmentId, req.user, newAssignment)
+    req.flash("success", assignmentName + " updated Successfully");
+    return res.redirect("/admin/assignment");
+  } catch (err) {
+    next(err)
+  }
+
 });
 
 
-router.get('/:username/assignments', (req, res, next) => {
+router.get('/:username/assignments', async (req, res, next) => {
   //TODO: filter assignments, provide only those assignments of the batch in which user belongs
-  Assignment.find({}, (err, foundAssignments) => {
-    if (!err && foundAssignments) {
-      res.send({
-        assignments: foundAssignments
-      });
-    } else {
-      console.log(err);
-      res.sendStatus(400);
-    }
-  });
+
+  const username = req.params.username || '';
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+
+  try {
+    let userBatch = userController.findBatchOfUserByUsername(username)
+    let foundAssignments = assignmentController.findAssignments
+    res.send({
+      assignments: foundAssignments
+    });
+  } catch (err) {
+    next(err)
+  }
+
 });
 
-router.get('/:assignmentId', (req, res, next) => {
-  var assignmentId = req.params.assignmentId;
-  Assignment.findById(assignmentId, function (err, foundAssignment) {
-    if (err) {
-      console.log(err);
-      res.sendStatus(404);
-    } else if (!err && foundAssignment) {
-      res.download(foundAssignment.filePath, foundAssignment.fileName, function (err) {
-        if (err) {
-          console.log(err);
-        }
-      });
-    }
-  });
+router.get("/:assignmentId", async function (req, res, next) {
+
+  const assignmentId = req.params.assignmentId || ''
+  if (!assignmentId || !validator.isMongoId(assignmentId)) return errorHandler.errorResponse('INVALID_FIELD', 'Assignment id', next)
+
+  try {
+    const foundAssignment = await assignmentController.findAssignmentById(assignmentId)
+    res.download(foundAssignment.filePath, foundAssignment.assignmentName, (err) => {
+      if (err) return next(err)
+    })
+  } catch (e) {
+    next(e)
+  }
 });
 
 module.exports = router;

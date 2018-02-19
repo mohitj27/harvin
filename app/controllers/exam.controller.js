@@ -18,7 +18,8 @@ const findExamsByUserId = function (user) {
 
 const findExamsOfBatchByBatchId = function (batchId) {
   return new Promise(function (resolve, reject) {
-    Exam.findAsync({
+    Exam
+      .findAsync({
         batch: batchId
       })
       .then(foundExams => resolve(foundExams))
@@ -37,9 +38,9 @@ const findExamById = function (examId) {
 const populateFieldInExams = function (exams, field) {
   return new Promise(function (resolve, reject) {
     Exam
-    .populate(exams, field)
-    .then(exams => resolve(exams))
-    .catch(err => resolve(err))
+      .populate(exams, field)
+      .then(exams => resolve(exams))
+      .catch(err => resolve(err))
 
   });
 }
@@ -96,8 +97,8 @@ const updateExamById = function (examId, newExam, user) {
 const deleteExamById = function (examId) {
   return new Promise(function (resolve, reject) {
     Exam.findOneAndRemoveAsync(examId)
-    .then(removedExam => resolve(removedExam))
-    .catch(err => resolve(err))
+      .then(removedExam => resolve(removedExam))
+      .catch(err => resolve(err))
   });
 }
 
