@@ -203,9 +203,8 @@ function expandMore() {
   $('article').each(function(index) {
 
     if (index <( counter * 4)) {
-      console.log('index', index)
       $(this).css({
-        'display': 'block'
+        'display': ''
       })
     }
   })

@@ -7,10 +7,17 @@
   font-family: "Open Sans', sans-serif !important";
 }
 
-.blog-cover {
-  display: block;
-  max-width: 500px;
-  max-height: 500px;
-  width: auto;
-  height: auto;
+.blgo-content {
+  width: inherit;
+  height: 450px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.blog-title{
+  text-transform: uppercase;
+}
+
+aside{
+  margin-left: 60px !important;
 }

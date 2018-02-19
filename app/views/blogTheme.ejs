@@ -1,8 +1,8 @@
-    <!-- Title -->
+<!-- Title -->
 <% include partials/website_header.ejs%>
     <title>Home-2 | Hexa Personal Blog</title>
     <!-- favicon Icon -->
-    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>
+    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon" />
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
     <link rel="stylesheet" href="/css/blogTheme.css">
@@ -23,86 +23,115 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- ====================== Main .blog-area ====================== -->
-                <main class="col-xl-8 col-lg-8 col-md-7 blog-area">
+                <main class="col-xl-9 col-lg-8 col-md-7 blog-area">
                     <!-- Single Blog -->
                     <% foundBlogs.forEach((blog, i) => { %>
-                      <%if(i<4){%>
-                      <article class="card single-blog text-center mt-5 mb-5 pt-0">
-                          <mark class="catagory"><%=blog.category%></mark>
-                          <!-- Blog Content-->
-                          <div class="blgo-content">
-                              <a href="/blog/?title=<%=blog.blogTitle%>"><img class="card-img img-fluid blog-cover rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image"></a>
-                              <span class="posted-date"><%=blog.uploadDate%></span>
-                          </div>
-                          <!-- Card Body -->
-                          <div class="card-body p-0">
-                                <!-- <%-blog.blogContent%> -->
-                                <h2 class="card-title h1 blog-title"><%=blog.blogTitle%></h2>
+                        <%if(i<4){%>
+                            <article class="card single-blog text-center mt-5 mb-5 pt-0">
+                                <mark class="catagory">
+                                    <%=blog.category%>
+                                </mark>
+                                <!-- Blog Content-->
+                                <a href="/blog/?title=<%=blog.blogTitle%>">
+                                    <div class="blgo-content" style="background-image:url(/blogImage/<%=blog.coverImgName%>)">
+                                        <span class="posted-date">
+                                            <%=blog.uploadDate%>
+                                        </span>
+                                    </div>
+                                </a>
+                                <!-- Card Body -->
+                                <div class="card-body p-0">
+                                    <h2 class="card-title h1 blog-title">
+                                        <%=blog.blogTitle%>
+                                    </h2>
 
 
-                              <a href="/blog/?title=<%=blog.blogTitle%>" class="read-more double-line">read more</a>
-                              <!-- Card Footer -->
-                          </div>
-                          <div class="card-footer border-0 p-0 bg-white">
-                              <div class="share-icons">
-                                  <span>Share:</span>
-                                  <a href="index.html#"><i class="fa fa-facebook"></i></a>
-                                  <a href="index.html#"><i class="fa fa-twitter"></i></a>
-                                  <a href="index.html#"><i class="fa fa-google-plus"></i></a>
-                                  <a href="index.html#"><i class="fa fa-pinterest"></i></a>
-                              </div>
-                          </div>
-                      </article>
+                                    <a href="/blog/?title=<%=blog.blogTitle%>" class="read-more double-line">read more</a>
+                                    <!-- Card Footer -->
+                                </div>
+                                <div class="card-footer border-0 p-0 bg-white">
+                                    <div class="share-icons">
+                                        <span>Share:</span>
+                                        <a href="index.html#">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                        <a href="index.html#">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                        <a href="index.html#">
+                                            <i class="fa fa-google-plus"></i>
+                                        </a>
+                                        <a href="index.html#">
+                                            <i class="fa fa-pinterest"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
 
 
-                    <%}%>
-                      <%if(i>=4){%>
-                      <article class="card single-blog text-center mt-5 mb-5 pt-0" style="display: none;">
-                          <mark class="catagory"><%=blog.category%></mark>
-                          <!-- Blog Content-->
-                          <div class="blgo-content">
-                              <a href="/blog/?title=<%=blog.blogTitle%>"><img class="card-img img-fluid blog-cover rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image"></a>
-                              <span class="posted-date"><%=blog.uploadDate%></span>
-                          </div>
-                          <!-- Card Body -->
+                            <%}%>
+                                <%if(i>=4){%>
+                                    <article class="card single-blog text-center mt-5 mb-5 pt-0" style="display: none;">
+                                        <mark class="catagory">
+                                            <%=blog.category%>
+                                        </mark>
+                                        <!-- Blog Content-->
+                                        <a href="/blog/?title=<%=blog.blogTitle%>">
+                                            <div class="blgo-content" style="background-image:url(/blogImage/<%=blog.coverImgName%>)">
+                                                <span class="posted-date">
+                                                    <%=blog.uploadDate%>
+                                                </span>
+                                            </div>
+                                        </a>
+                                        <!-- Card Body -->
 
-                          <div class="card-body p-0">
-                              <%if(blog.author){%>
-                                <span class="posted-by">Posted By <mark class="admin"><%=blog.author.username%></mark></span>
-                                <%}%>
-                                <!-- <%-blog.blogContent%> -->
+                                        <div class="card-body p-0">
 
-                                <h2 class="card-title h1 blog-title"><%=blog.blogTitle%></h2>
+                                            <!-- <%-blog.blogContent%> -->
 
-                              <a href="/blog/?title=<%=blog.blogTitle%>" class="read-more double-line">read more</a>
-                              <!-- Card Footer -->
-                          </div>
-                          <div class="card-footer border-0 p-0 bg-white">
-                              <div class="share-icons">
-                                  <span>Share:</span>
-                                  <a href="index.html#"><i class="fa fa-facebook"></i></a>
-                                  <a href="index.html#"><i class="fa fa-twitter"></i></a>
-                                  <a href="index.html#"><i class="fa fa-google-plus"></i></a>
-                                  <a href="index.html#"><i class="fa fa-pinterest"></i></a>
-                              </div>
-                          </div>
-                      </article>
+                                            <h2 class="card-title h1 blog-title">
+                                                <%=blog.blogTitle%>
+                                            </h2>
+
+                                            <a href="/blog/?title=<%=blog.blogTitle%>" class="read-more double-line">read more</a>
+                                            <!-- Card Footer -->
+                                        </div>
+                                        <div class="card-footer border-0 p-0 bg-white">
+                                            <div class="share-icons">
+                                                <span>Share:</span>
+                                                <a href="index.html#">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                                <a href="index.html#">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                                <a href="index.html#">
+                                                    <i class="fa fa-google-plus"></i>
+                                                </a>
+                                                <a href="index.html#">
+                                                    <i class="fa fa-pinterest"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </article>
 
 
-                    <%}%>
-                    <% }) %>
-                    <!-- //Single Blog -->
+                                    <%}%>
+                                        <% }) %>
+                                            <!-- //Single Blog -->
 
-<div class="row" style="justify-content:center;">
+                                            <div class="row" style="justify-content:center;">
 
-        <a class="btn-floating btn-large waves-effect waves-light red" onClick="expandMore()"><i class="material-icons">keyboard_arrow_down</i></a>
+                                                <a class="btn-floating btn-large waves-effect waves-light red" onClick="expandMore()">
+                                                    <i class="material-icons">keyboard_arrow_down</i>
+                                                </a>
 
-</div>
-                    <!-- //Pagination -->
+                                            </div>
+                                            <!-- //Pagination -->
                 </main>
                 <!-- ====================== //Main .blog-area ====================== -->
                 <!-- ====================== Aside .middle-sidebar ====================== -->
-                <aside class="col-xl-3 col-lg-4 col-md-5 middle-sidebar ml-xl-auto pl-lg-0 pl-md-0 mt-sm-5 mt-lg-0">
+                <aside class="col-xl-2 col-lg-2 col-md-2 middle-sidebar ">
                     <div class="row">
                         <!-- Sidebar Widget, About Me-->
                         <div class="col-xl-12 col-md-11 col-sm-6 ml-md-auto sidebar-about-me sidebar-widget pl-xl-0">
@@ -113,10 +142,18 @@
                                     <h2 class="about-card-title mt-15 mb-20">Harvin Academy</h2>
                                     <p class="card-text">The trusted name for specialized tutoring.</p>
                                     <div class="icon-list">
-                                        <a href="index.html#"><i class="fa fa-facebook"></i></a>
-                                        <a href="index.html#"><i class="fa fa-twitter"></i></a>
-                                        <a href="index.html#"><i class="fa fa-google-plus"></i></a>
-                                        <a href="index.html#"><i class="fa fa-pinterest"></i></a>
+                                        <a href="index.html#">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                        <a href="index.html#">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                        <a href="index.html#">
+                                            <i class="fa fa-google-plus"></i>
+                                        </a>
+                                        <a href="index.html#">
+                                            <i class="fa fa-pinterest"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -130,9 +167,11 @@
                             <div class="card news-letter border-0 rounded-0 p-15">
                                 <div class="card-body p-0">
                                     <p class="card-text">If You Want to Know Our Update News Please Subscribe Us.</p>
-                                    <form class="form-inline"  >
+                                    <form class="form-inline">
                                         <input type="text" placeholder="Enter your mail id">
-                                        <button type="submit"><i class="fa fa-envelope disable"></i></button>
+                                        <button type="submit">
+                                            <i class="fa fa-envelope disable"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -156,10 +195,18 @@
                             <!-- ADVERTISE-->
                             <div class="card cloud-tag border-0 rounded-0">
                                 <ul class="tag-list d-flex flex-wrap">
-                                    <li><a href="#">Harvin Academy</a></li>
-                                    <li><a href="#">Medical</a></li>
-                                    <li><a href="#">AIIMS</a></li>
-                                    <li><a href="#">MEDICAL ENTERANCE</a></li>
+                                    <li>
+                                        <a href="#">Harvin Academy</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Medical</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">AIIMS</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">MEDICAL ENTERANCE</a>
+                                    </li>
 
                                 </ul>
                             </div>
@@ -172,7 +219,7 @@
     </div>
     <!-- =========================== //Middle Content =========================== -->
     <!-- =========================== //Footer =========================== -->
-        <!-- =========================== //Footer =========================== -->
+    <!-- =========================== //Footer =========================== -->
     <!-- #preloader -->
     <!-- <div id="preloader"></div> -->
     <!-- ======================= Scripts ======================= -->
@@ -181,4 +228,4 @@
     <script src="/assets/js/plugins.js"></script>
     <script src="/assets/js/main.js"></script>
 
-<% include partials/website_footer.ejs%>
+    <% include partials/website_footer.ejs%>
