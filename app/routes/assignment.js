@@ -59,19 +59,19 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, function (re
 
   upload(req, res, async function (err) {
 
-    if(!req.file) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+    if (!req.file) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
 
-    const filePath = req.file.path ;
+    const filePath = req.file.path;
     const assignmentName = req.body.assignmentName || '';
     const uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
     const lastSubDate = req.body.lastSubDate || '';
     const batchId = req.body.batchName || '';
 
-    if(!assignmentName || validator.isEmpty(assignmentName)) return errorHandler.errorResponse('INVALID_FIELD', 'assignment name', next)
-    if(!lastSubDate || validator.isEmpty(lastSubDate)) return errorHandler.errorResponse('INVALID_FIELD', 'last submission date', next)
-    if(!batchId || validator.isEmpty(batchId)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
+    if (!assignmentName || validator.isEmpty(assignmentName)) return errorHandler.errorResponse('INVALID_FIELD', 'assignment name', next)
+    if (!lastSubDate || validator.isEmpty(lastSubDate)) return errorHandler.errorResponse('INVALID_FIELD', 'last submission date', next)
+    if (!batchId || validator.isEmpty(batchId)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
 
-    try{
+    try {
       let foundBatch = await batchController.findBatchById(batchId)
       var newAssignment = {
         assignmentName,
@@ -83,14 +83,17 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, function (re
       };
 
       let createdAsssignment = await assignmentController.createAssignment(newAssignment)
-    } catch(e){
+    } catch (e) {
       next(e)
     }
-
+  })
 });
 
 router.get("/:assignmentId/edit", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+  res.locals.flashUrl = req.headers.referer;
+
   var assignmentId = req.params.assignmentId;
+  if (!req.file) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
 
   Batch.find({
     addedBy: req.user._id
