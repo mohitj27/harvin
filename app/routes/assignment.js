@@ -23,32 +23,13 @@ var storage = multer.diskStorage({
   }
 });
 
-//assignment uplaod helper
-function assignmentUploadError(req, res, next) {
-  //deleting uploaded file from upload directory
-  fs.unlink(req.file.path, function (err) {
-    if (err) {
-      console.log(err);
-      next(new errors.generic);
-    } else console.log("assignment deleted from assignment directory");
-  });
-}
-
-//file uplaod helper
-function assignmentUploadSuccess(req, res) {
-  req.flash("success", req.file.originalname + " uploaded successfully");
-  res.redirect("/admin/assignment/new");
-}
-
 router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
 
   try {
     var foundAssignments = await assignmentController.findAssignmentsByUserId(req.user)
-    foundAssignments.populate('batch', (err, foundAssignments) => {
-      if (err) return next(err);
-      else return res.render('assignments', {
-        foundAssignments
-      })
+    foundAssignments = await assignmentController.populateFieldOfAssignment(foundAssignments, 'batch')
+    return res.render('assignments', {
+      foundAssignments
     })
   } catch (e) {
     return next(e)
@@ -58,10 +39,12 @@ router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, r
 
 router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
 
-  try{
+  try {
     const foundBatches = await batchController.findBatchByUserId(req.user)
-    return res.render('newAssignment', {batches: foundBatches})
-  } catch(e) {
+    return res.render('newAssignment', {
+      batches: foundBatches
+    })
+  } catch (e) {
     next(e)
   }
 
@@ -74,59 +57,36 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, function (re
     })
     .single('userFile');
 
-  upload(req, res, function (err) {
+  upload(req, res, async function (err) {
 
-    console.log('err', err);
+    if(!req.file) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
 
-    var assignmentName = req.body.assignmentName;
-    var uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
-    var lastSubDate = req.body.lastSubDate;
-    var filePath = req.file.path;
-    var batchId = req.body.batchName;
+    const filePath = req.file.path ;
+    const assignmentName = req.body.assignmentName || '';
+    const uploadDate = moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a');
+    const lastSubDate = req.body.lastSubDate || '';
+    const batchId = req.body.batchName || '';
 
-    var newAssignment = {
-      assignmentName,
-      uploadDate,
-      lastSubDate,
-      filePath
-    };
+    if(!assignmentName || validator.isEmpty(assignmentName)) return errorHandler.errorResponse('INVALID_FIELD', 'assignment name', next)
+    if(!lastSubDate || validator.isEmpty(lastSubDate)) return errorHandler.errorResponse('INVALID_FIELD', 'last submission date', next)
+    if(!batchId || validator.isEmpty(batchId)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
 
-    Assignment.findOneAndUpdate(newAssignment, {
-        $set: {
-          batch: batchId,
-          addedBy: req.user
-        }
-      }, {
-        upsert: true,
-        new: true,
-        setDefaultsOnInsert: true
-      },
-      (err, createdAsssignment) => {
-        if (!err && createdAsssignment) {
-          Center.findOneAndUpdate(req.user.username, {
-            $addToSet: {
-              assignments: createdAsssignment._id
-            },
-            $set: {
-              centerName: req.user.username
-            }
-          }, {
-            upsert: true,
-            new: true,
-            setDefaultsOnInsert: true
-          }, function (err, updatedCenter) {
-            if (!err && updatedCenter) {
-              assignmentUploadSuccess(req, res);
-            } else {
-              console.log(err);
-              assignmentUploadError(req, res, next);
-            }
-          })
-        } else {
-          console.log(err);
-        }
-      });
-  });
+    try{
+      let foundBatch = await batchController.findBatchById(batchId)
+      var newAssignment = {
+        assignmentName,
+        uploadDate,
+        lastSubDate,
+        filePath,
+        batch: foundBatch,
+        addedBy: req.user
+      };
+
+      let createdAsssignment = await assignmentController.createAssignment(newAssignment)
+    } catch(e){
+      next(e)
+    }
+
 });
 
 router.get("/:assignmentId/edit", middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {

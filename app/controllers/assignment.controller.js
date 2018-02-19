@@ -14,6 +14,26 @@ const findAssignmentsByUserId = function (user) {
   });
 }
 
+const populateFieldOfAssignment = function (assignment, field) {
+  return new Promise(function(resolve, reject) {
+    Assignment
+    .populate(assignment, field)
+    .then(populatedAssignment => resolve(populatedAssignment))
+    .catch(err => reject(err))
+  });
+}
+
+const createAssignment = function (newAssignment) {
+  return new Promise(function(resolve, reject) {
+    Assignment
+    .create(newAssignment)
+    .then(createdAssignment => resolve(createdAssignment))
+    .catch(err => reject(err))
+  });
+}
+
 module.exports = {
-  findAssignmentsByUserId
+  findAssignmentsByUserId,
+  populateFieldOfAssignment,
+  createAssignment
 }
