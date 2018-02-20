@@ -12,7 +12,7 @@ $(function() {
 
   if ($successCard.length > 0) {
 		 Materialize.toast($successCard.text(), 5000)
-	
+
 		 $('.toast').css('background-color', '#13b38b')
   }
 
@@ -88,14 +88,6 @@ $(function() {
 
   $('.refresh').on('click', function() {
     refreshAns();
-  });
-
-  //preventing submiting form on pressing enter
-  $(window).keydown(function(event) {
-    if (event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
   });
 
   //=========================================

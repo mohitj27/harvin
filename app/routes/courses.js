@@ -1,6 +1,8 @@
 const express = require('express'),
   router = express.Router(),
-  FIOCont = require('../controllers/fileRW.controller')
+  FIOCont = require('../controllers/fileRW.controller'),
+  validator = require('validator'),
+  errorHandler = require('../errorHandler')
 coursesCont = require('../controllers/courses.controller'),
   path = require('path')
 COURSEIMAGE_SAVE_LOCATION = path.normalize(__dirname + '/../../../HarvinDb/courseImages/');
@@ -13,10 +15,32 @@ router.get('/new', (req, res) => {
 })
 
 router.get('/all', async (req, res) => {
-  try{
-    const foundCourses= await coursesCont.findAllCourses()
-    res.render('coursesList',{foundCourses})
-  }catch(err){next(err)}
+  try {
+    const foundCourses = await coursesCont.findAllCourses()
+    res.render('coursesList', {
+      foundCourses
+    })
+  } catch (err) {
+    next(err)
+  }
+
+})
+
+router.get('/:courseId/edit', async (req, res, next) => {
+
+  res.locals.flashUrl = req.header.referer;
+
+  const courseId = req.params.courseId || '';
+  if (!courseId || !validator.isMongoId(courseId)) return errorHandler.errorResponse('INVALID_FIELD', 'course id', next)
+
+    try {
+      const foundCourse = await coursesCont.findCourseById(courseId)
+      res.render('editCourse', {
+        foundCourse
+      })
+    } catch (err) {
+      next(err)
+    }
 
 })
 
@@ -27,8 +51,7 @@ router.post('/', (req, res, next) => {
       if (err) next(err)
       console.log(req.file)
       const courseName = req.body.courseName,
-        courseImage = req.file.originalname,
-        courseTimings = req.body.classTimings,
+        courseTimings = req.body.courseTimings,
         courseStartingFrom = req.body.courseStartingFrom,
         courseDescription = req.body.courseDescription,
         courseFor = req.body.courseFor,
@@ -36,13 +59,17 @@ router.post('/', (req, res, next) => {
         courseFrequency = req.body.courseFrequency
       const course = {
         courseName,
-        courseImage,
         courseTimings,
         courseStartingFrom,
         courseDescription,
         courseFor,
         courseAdmissionThrough,
         courseFrequency
+      }
+
+      if(req.file) {
+        courseImage = req.file.originalname,
+        course.courseImage = courseImage
       }
       coursesCont.insertInCourse(course).then((result) => {
         if (result) {
@@ -58,10 +85,10 @@ router.post('/', (req, res, next) => {
 
 
 })
-router.delete('/delete/:courseName',(req,res,next)=>{
+router.delete('/delete/:courseName', (req, res, next) => {
   try {
-const courseName=coursesCont.deleteOneCourse(req.params.courseName)
-res.sendStatus(200)
+    const courseName = coursesCont.deleteOneCourse(req.params.courseName)
+    res.sendStatus(200)
   } catch (err) {
     next(err)
   }
