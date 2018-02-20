@@ -1,19 +1,16 @@
-const errorHandler = require('../errorHandler');
-const User = require('./../models/User');
-const Batch = require('./../models/Batch');
-const Assignment = require('./../models/Assignment');
+const Assignment = require('./../models/Assignment')
 Promise = require('bluebird')
-mongoose = require('mongoose')
-mongoose.Promise = Promise;
+const mongoose = require('mongoose')
+mongoose.Promise = Promise
 
 const findAssignmentsByUserId = function (user) {
   return new Promise(function (resolve, reject) {
     Assignment.findAsync({
-        addedBy: user._id
-      })
+      addedBy: user._id
+    })
       .then(foundAssignments => resolve(foundAssignments))
       .catch(err => reject(err))
-  });
+  })
 }
 
 const findAssignmentsId = function (assignmentId) {
@@ -21,7 +18,7 @@ const findAssignmentsId = function (assignmentId) {
     Assignment.findByIdAsync(assignmentId)
       .then(foundAssignment => resolve(foundAssignment))
       .catch(err => reject(err))
-  });
+  })
 }
 
 const populateFieldOfAssignment = function (assignment, field) {
@@ -30,7 +27,7 @@ const populateFieldOfAssignment = function (assignment, field) {
       .populate(assignment, field)
       .then(populatedAssignment => resolve(populatedAssignment))
       .catch(err => reject(err))
-  });
+  })
 }
 
 const createAssignment = function (newAssignment) {
@@ -39,7 +36,7 @@ const createAssignment = function (newAssignment) {
       .create(newAssignment)
       .then(createdAssignment => resolve(createdAssignment))
       .catch(err => reject(err))
-  });
+  })
 }
 
 const findAssignmentsOfBatchByBatchId = function (batchId) {
@@ -50,7 +47,7 @@ const findAssignmentsOfBatchByBatchId = function (batchId) {
       })
       .then(foundAssignments => resolve(foundAssignments))
       .catch(err => reject(err))
-  });
+  })
 }
 
 const updateAssignmentByAssignmentAndUserId = function (assignmentId, user, newAssignment) {
@@ -73,7 +70,7 @@ const updateAssignmentByAssignmentAndUserId = function (assignmentId, user, newA
       })
       .then(createdAssignment => resolve(createdAssignment))
       .catch(err => reject(err))
-  });
+  })
 }
 
 const findAssignmentById = function (assignmentId) {
@@ -81,7 +78,7 @@ const findAssignmentById = function (assignmentId) {
     Assignment.findByIdAsync(assignmentId)
       .then(foundAssignment => resolve(foundAssignment))
       .catch(err => reject(err))
-  });
+  })
 }
 
 module.exports = {

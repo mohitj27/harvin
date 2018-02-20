@@ -1,10 +1,11 @@
-var mongoose = require("mongoose");
-var passportLocalMongoose = require("passport-local-mongoose");
-var Schema = mongoose.Schema;
-var Promise = require('bluebird');
-Promise.promisifyAll(mongoose);
+const mongoose = require('mongoose')
+const passportLocalMongoose = require('passport-local-mongoose')
+const Schema = mongoose.Schema
+Promise = require('bluebird')
+Promise.promisifyAll(mongoose)
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
-//User schema
+// User schema
 var userSchema = new Schema({
   username: {
     type: String,
@@ -26,10 +27,11 @@ var userSchema = new Schema({
 
   profile: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Profile"
+    ref: 'Profile'
   }
-});
+})
 
-//passport local mongoose
-userSchema.plugin(passportLocalMongoose);
-module.exports = mongoose.model("User", userSchema);
+// passport local mongoose
+userSchema.plugin(passportLocalMongoose)
+userSchema.plugin(deepPopulate)
+module.exports = mongoose.model('User', userSchema)

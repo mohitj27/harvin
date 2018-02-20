@@ -1,11 +1,8 @@
-const errorHandler = require('../errorHandler');
-const User = require('./../models/User');
-const Profile = require('./../models/Profile');
-const Batch = require('./../models/Batch');
-const profileController = require('../controllers/profile.controller.js');
+const errorHandler = require('../errorHandler')
+const User = require('./../models/User')
 Promise = require('bluebird')
-mongoose = require('mongoose')
-mongoose.Promise = Promise;
+const mongoose = require('mongoose')
+mongoose.Promise = Promise
 
 const findUserByUsername = function (username) {
   return new Promise(function (resolve, reject) {
@@ -15,7 +12,16 @@ const findUserByUsername = function (username) {
       if (err) return reject(errorHandler.getErrorMessage(err))
       else return resolve(foundUser)
     })
-  });
+  })
+}
+
+const findAllUsers = function () {
+  return new Promise(function (resolve, reject) {
+    User
+      .findAsync()
+      .then(foundUsers => resolve(foundUsers))
+      .catch(err => reject(err))
+  })
 }
 
 const populateFieldInUser = function (user, field) {
@@ -24,7 +30,16 @@ const populateFieldInUser = function (user, field) {
       .populate(user, field)
       .then(populatedUser => resolve(populatedUser))
       .catch(err => reject(err))
-  });
+  })
+}
+
+const populateFieldsInUser = function (user, path) {
+  return new Promise(function (resolve, reject) {
+    User
+      .deepPopulate(user, path)
+      .then(populatedUser => resolve(populatedUser))
+      .catch(err => reject(err))
+  })
 }
 
 const registerUser = function (newUser) {
@@ -38,44 +53,48 @@ const registerUser = function (newUser) {
         if (err) return reject(errorHandler.getErrorMessage(err))
         else return resolve(registeredUser)
       }
-    );
-  });
+    )
+  })
 }
 
 const addProfileToUser = function (user, profile) {
   return new Promise(function (resolve, reject) {
     User.findOneAndUpdate({
-        _id: user._id
-      }, {
-        $set: {
-          profile: profile
-        }
-      }, {
-        upsert: true,
-        new: true,
-        setDefaultsOnInsert: true
-      },
-      function (err, updatedUser) {
-        if (err) return reject(errorHandler.getErrorMessage(err))
-        else return resolve(updatedUser)
+      _id: user._id
+    }, {
+      $set: {
+        profile: profile
       }
-    );
-  });
+    }, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    },
+    function (err, updatedUser) {
+      if (err) return reject(errorHandler.getErrorMessage(err))
+      else return resolve(updatedUser)
+    }
+    )
+  })
 }
 
 const findBatchOfUserByUsername = async function (username, next) {
+  // TODO: why profile is populated not user
   let foundUser = await findUserByUsername(username)
-  if(!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next);
-  
-  foundUser = await populateFieldInUser(foundUser, 'profile')
+  if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
 
-  let populatedProfile
-  if (foundUser.profile) {
-    populatedProfile = await profileController.populateFieldInProfile(foundUser.profile, 'batch')
-  } else {
-    return errorHandler.errorResponse('NOT_FOUND', 'user profile', next);
+  try {
+    foundUser = await populateFieldsInUser(foundUser, ['profile.batch'])
+    console.log('founduser', foundUser)
+  } catch (err) {
+    next(err)
   }
-  return foundUser.profile.batch;
+
+  if (!foundUser.profile) {
+    return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+  }
+
+  return foundUser.profile.batch
 }
 
 module.exports = {
@@ -83,5 +102,7 @@ module.exports = {
   registerUser,
   addProfileToUser,
   populateFieldInUser,
-  findBatchOfUserByUsername
+  findBatchOfUserByUsername,
+  findAllUsers,
+  populateFieldsInUser
 }

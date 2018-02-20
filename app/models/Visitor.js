@@ -1,9 +1,9 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-var Promise = require("bluebird");
-Promise.promisifyAll(require("mongoose"));
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var Promise = require('bluebird')
+Promise.promisifyAll(require('mongoose'))
 
-//====examSchema====
+// ===examSchema====
 var visitorSchema = new Schema({
   name: {
     type: String,
@@ -59,7 +59,7 @@ var visitorSchema = new Schema({
     required: true,
     default: Date.now()
   }
-});
+})
 
-//Query model
-module.exports = mongoose.model("Visitor", visitorSchema);
+// Query model
+module.exports = mongoose.model('Visitor', visitorSchema)

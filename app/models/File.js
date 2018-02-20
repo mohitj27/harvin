@@ -1,9 +1,10 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-var Promise = require('bluebird');
-Promise.promisifyAll(mongoose);
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+Promise = require('bluebird')
+Promise.promisifyAll(mongoose)
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
-//file schema
+// file schema
 var fileSchema = new Schema({
   fileName: {
     type: String,
@@ -33,29 +34,31 @@ var fileSchema = new Schema({
 
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+    ref: 'User'
   },
 
   class: {
     type: mongoose.Schema.Types.ObjectId,
-      ref: "Class"
+    ref: 'Class'
   },
 
   subject: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Subject"
+    ref: 'Subject'
   },
 
   chapter: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Chapter"
+    ref: 'Chapter'
   },
 
   topic: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Topic"
+    ref: 'Topic'
   }
-});
+})
 
-//file model
-module.exports = mongoose.model("File", fileSchema);
+fileSchema.plugin(deepPopulate)
+
+// file model
+module.exports = mongoose.model('File', fileSchema)

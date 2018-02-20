@@ -1,72 +1,54 @@
-const express = require("express");
-const moment = require("moment-timezone");
-const Batch = require("../models/Batch");
-const QB_Class = require("../models/QB_Class");
-const QB_Subject = require("../models/QB_Subject");
-const QB_Chapter = require("../models/QB_Chapter");
-const Question = require("../models/Question");
-const QuestionPaper = require("../models/QuestionPaper");
-const User = require("../models/User.js");
-const Profile = require("../models/Profile.js");
-const Result = require("../models/Result.js");
-const Center = require("../models/Center.js");
-const Exam = require("../models/Exam");
-const errors = require("../error");
-const errorHandler = require("../errorHandler");
-const examController = require('../controllers/exam.controller.js');
-const userController = require('../controllers/user.controller.js');
-const batchController = require('../controllers/batch.controller.js');
-const QBController = require('../controllers/QB.controller.js');
-const profileController = require('../controllers/profile.controller.js');
-const _ = require('lodash');
-const middleware = require("../middleware");
-const validator = require('validator');
-const router = express.Router();
+const express = require('express')
+const moment = require('moment-timezone')
+const errorHandler = require('../errorHandler')
+const examController = require('../controllers/exam.controller.js')
+const userController = require('../controllers/user.controller.js')
+const batchController = require('../controllers/batch.controller.js')
+const QBController = require('../controllers/QB.controller.js')
+const profileController = require('../controllers/profile.controller.js')
+const middleware = require('../middleware')
+const validator = require('validator')
+const router = express.Router()
 
-router.get("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-
-  res.locals.flashUrl = req.originalUrl;
+router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  res.locals.flashUrl = req.originalUrl
 
   try {
     let foundExams = await examController.findExamsByUserId(req.user)
 
     foundExams = await examController.populateFieldInExams(foundExams, 'batch')
-    res.render("exams", {
+    res.render('exams', {
       foundExams
-    });
-  } catch (e) {
-    next(e);
-  }
-
-});
-
-router.get("/new", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-
-  res.locals.flashUrl = req.originalUrl;
-
-  try {
-    const foundBatches = await batchController.findBatchByUserId(req.user)
-    res.render("newExam", {
-      batches: foundBatches
-    });
+    })
   } catch (e) {
     next(e)
   }
+})
 
-});
+router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  res.locals.flashUrl = req.originalUrl
 
-router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  try {
+    const foundBatches = await batchController.findBatchByUserId(req.user)
+    res.render('newExam', {
+      batches: foundBatches
+    })
+  } catch (e) {
+    next(e)
+  }
+})
 
-  res.locals.flashUrl = req.originalUrl;
+router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  res.locals.flashUrl = req.originalUrl
 
-  var examName = req.body.examName || '';
-  var examDate = req.body.examDate || '';
-  var examType = req.body.examType || '';
-  var batchId = req.body.batchName || '';
-  var positiveMarks = req.body.posMarks || '';
-  var negativeMarks = req.body.negMarks || '';
-  var maximumMarks = req.body.maxMarks || '';
-  var totalTime = req.body.totalTime || '';
+  var examName = req.body.examName || ''
+  var examDate = req.body.examDate || ''
+  var examType = req.body.examType || ''
+  var batchId = req.body.batchName || ''
+  var positiveMarks = req.body.posMarks || ''
+  var negativeMarks = req.body.negMarks || ''
+  var maximumMarks = req.body.maxMarks || ''
+  var totalTime = req.body.totalTime || ''
 
   if (!examName || validator.isEmpty(examName)) return errorHandler.errorResponse('INVALID_FIELD', 'exam name', next)
   if (!examDate || validator.isEmpty(examDate)) return errorHandler.errorResponse('INVALID_FIELD', 'exam date', next)
@@ -86,26 +68,24 @@ router.post("/", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, 
     negativeMarks,
     maximumMarks,
     totalTime
-  };
+  }
 
   try {
     const updatedExam = await examController.createOrUpdateExamByExamNameAndUserId(newExam, req.user)
-    req.flash("success", examName + " created/updated Successfully");
-    res.redirect(req.originalUrl);
+    req.flash('success', updatedExam.examName + ' created/updated Successfully')
+    res.redirect(req.originalUrl)
   } catch (e) {
     next(e)
   }
-});
+})
 
-router.get("/qbData", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+router.get('/qbData', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  res.locals.flashUrl = req.originalUrl
 
-  res.locals.flashUrl = req.originalUrl;
-
-  const className = req.query.className || '';
-  const subjectName = req.query.subjectName || '';
-  const chapterName = req.query.chapterName || '';
-  const examId = req.query.examId || '';
-
+  const className = req.query.className || ''
+  const subjectName = req.query.subjectName || ''
+  const chapterName = req.query.chapterName || ''
+  const examId = req.query.examId || ''
 
   if (!className || validator.isEmpty(className)) return errorHandler.errorResponse('INVALID_FIELD', 'class name', next)
   if (!subjectName || validator.isEmpty(subjectName)) return errorHandler.errorResponse('INVALID_FIELD', 'subject name', next)
@@ -117,51 +97,49 @@ router.get("/qbData", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (
     let foundChapter = await QBController.findQbChapterByChapterNameAndUserId(chapterName, req.user)
     foundChapter = await QBController.populateFieldInQbChapter(foundChapter, 'questions')
 
-    return res.render("chooseFromQB", {
+    return res.render('chooseFromQB', {
       classes: foundClasses,
       questions: foundChapter.questions,
       className: className,
       subjectName: subjectName,
       chapterName: chapterName,
       examId: examId
-    });
+    })
   } catch (err) {
     return next(err)
   }
-});
+})
 
-router.get("/:examId/edit", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-
-  var examId = req.params.examId;
-  //TODO: render not found page
+router.get('/:examId/edit', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  var examId = req.params.examId
+  // TODO: render not found page
   if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
 
   try {
     const foundBatches = await batchController.findBatchByUserId(req.user)
     let foundExam = await examController.findExamById(examId)
     foundExam = await examController.populateFieldInExams(foundExam, 'batch')
-    res.render("editExam", {
+    res.render('editExam', {
       exam: foundExam,
       batches: foundBatches
-    });
+    })
   } catch (e) {
     next(e)
   }
-});
+})
 
-router.put("/:examId", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+router.put('/:examId', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  res.locals.flashUrl = req.headers.referer
 
-  res.locals.flashUrl = req.headers.referer;
-
-  var examId = req.params.examId;
-  var examName = req.body.examName;
-  var examDate = req.body.examDate;
-  var examType = req.body.examType;
-  var batchId = req.body.batchName;
-  var positiveMarks = req.body.posMarks;
-  var negativeMarks = req.body.negMarks;
-  var maximumMarks = req.body.maxMarks;
-  var totalTime = req.body.totalTime;
+  var examId = req.params.examId
+  var examName = req.body.examName
+  var examDate = req.body.examDate
+  var examType = req.body.examType
+  var batchId = req.body.batchName
+  var positiveMarks = req.body.posMarks
+  var negativeMarks = req.body.negMarks
+  var maximumMarks = req.body.maxMarks
+  var totalTime = req.body.totalTime
 
   if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
   if (!examName || validator.isEmpty(examName)) return errorHandler.errorResponse('INVALID_FIELD', 'exam name', next)
@@ -186,32 +164,32 @@ router.put("/:examId", middleware.isLoggedIn, middleware.isCentreOrAdmin, async 
 
   try {
     const updatedExam = await examController.updateExamById(examId, newExam, req.user)
-    req.flash("success", examName + " updated Successfully");
-    res.redirect("/admin/exams");
+    req.flash('success', updatedExam.examName + ' updated Successfully')
+    res.redirect('/admin/exams')
   } catch (e) {
     next(e)
   }
-});
+})
 
-router.delete("/:examId", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-  var examId = req.params.examId || '';
+router.delete('/:examId', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  var examId = req.params.examId || ''
 
   if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
 
   try {
     const removedExam = await examController.deleteExamById(examId)
-    req.flash("success", removedExam.examName + " removed Successfully");
-    res.redirect(req.headers.referer);
+    req.flash('success', removedExam.examName + ' removed Successfully')
+    res.redirect(req.headers.referer)
   } catch (err) {
     next(err)
   }
-});
+})
 
-//TODO: remove question functionality only remove question from question paper not from question bank
+// TODO: remove question functionality only remove question from question paper not from question bank
 
-router.get("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-  res.locals.flashUrl = req.headers.referer;
-  var examId = req.params.examId || '';
+router.get('/:examId/question-paper', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  res.locals.flashUrl = req.headers.referer
+  var examId = req.params.examId || ''
 
   if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
 
@@ -219,7 +197,6 @@ router.get("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentre
     let foundExam = await examController.findExamById(examId)
     foundExam = await examController.populateFieldInExams(foundExam, 'questionPaper')
     if (!foundExam.questionPaper) {
-
       const newQuestionPaper = {
         questions: []
       }
@@ -227,29 +204,28 @@ router.get("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentre
       foundExam = await QBController.addQuestionPaperToExamById(foundExam._id, createdQuestionPaper)
     }
     let foundQuestions = await QBController.findAllQuestionsByIds(foundExam.questionPaper.questions)
-    return res.render("editQuesPaper", {
+    return res.render('editQuesPaper', {
       exam: foundExam,
       questions: foundQuestions
-    });
+    })
   } catch (e) {
     return next(e)
   }
+})
 
-});
+router.post('/:examId/question-paper', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  res.locals.flashUrl = req.headers.referer
 
-router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-  res.locals.flashUrl = req.headers.referer;
+  const examId = req.params.examId || ''
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
 
-  const examId = req.params.examId || '';
-  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next);
+  var optionString = req.body.options || ''
+  var answerString = req.body.answer || ''
+  var question = req.body.question || ''
 
-  var optionString = req.body.options || "";
-  var answerString = req.body.answer || "";
-  var question = req.body.question || "";
-
-  const className = req.body.className || '';
-  const subjectName = req.body.subjectName || '';
-  const chapterName = req.body.chapterName || '';
+  const className = req.body.className || ''
+  const subjectName = req.body.subjectName || ''
+  const chapterName = req.body.chapterName || ''
 
   if (!className || validator.isEmpty(className)) return errorHandler.errorResponse('INVALID_FIELD', 'class name', next)
   if (!subjectName || validator.isEmpty(subjectName)) return errorHandler.errorResponse('INVALID_FIELD', 'subject name', next)
@@ -259,115 +235,110 @@ router.post("/:examId/question-paper", middleware.isLoggedIn, middleware.isCentr
   let newQues = await QBController.createNewQuestionObj(optionString, answerString, question, req.user)
 
   try {
-    //findExamById
+    // findExamById
     let foundExam = await examController.findExamById(examId)
 
-    //create new Question
+    // create new Question
     let createdQuestion = await QBController.createQuestion(newQues)
 
-    //create or update new question paper
-    let createdQuestionPaper;
+    // create or update new question paper
+    let createdQuestionPaper
     if (foundExam.questionPaper) {
       createdQuestionPaper = await QBController.addQuestionToQuestionPaperById(foundExam.questionPaper, createdQuestion)
     } else {
-      questions = [];
-      questions.push(createdQuestion._id);
+      let questions = []
+      questions.push(createdQuestion._id)
       const newQuestionPaper = {
         questions: newQues
       }
       createdQuestionPaper = await QBController.createQuestionPaper(newQuestionPaper)
 
-      //add question paper to exam
-      updatedExam = await QBController.addQuestionPaperToExamById(foundExam._id, createdQuestionPaper)
+      // add question paper to exam
+      await QBController.addQuestionPaperToExamById(foundExam._id, createdQuestionPaper)
     }
 
-    //add this question to question bank also
+    // add this question to question bank also
     let updatedChapter = await QBController.createOrUpdateQuestionInQBChapterByName(chapterName, createdQuestion, req.user)
     let updatedSubject = await QBController.createOrUpdateChapterInQBSubjectBySubjectAndClassName(subjectName, className, updatedChapter, req.user)
-    let updatedClass = await QBController.createOrUpdateSubjectInQBClassByName(className, updatedSubject, req.user)
+    await QBController.createOrUpdateSubjectInQBClassByName(className, updatedSubject, req.user)
 
-    req.flash("success", "Question has been added Successfully");
-    return res.redirect(req.headers.referer);
-
+    req.flash('success', 'Question has been added Successfully')
+    return res.redirect(req.headers.referer)
   } catch (e) {
     return next(e)
   }
+})
 
-});
-
-router.get("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-  var examId = req.params.examId || '';
-  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next);
+router.get('/:examId/question-paper/chooseFromQB', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  var examId = req.params.examId || ''
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
 
   try {
     const foundClasses = await QBController.findAllQbClassesByUserId(req.user)
-    res.render("chooseFromQB", {
+    res.render('chooseFromQB', {
       classes: foundClasses,
       examId: examId,
       questions: {}
-    });
+    })
   } catch (e) {
     next(e)
   }
+})
 
-});
+router.post('/:examId/question-paper/chooseFromQB', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  var examId = req.params.examId || ''
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
 
+  var questionsIdString = req.body.questions || ''
 
-
-router.post("/:examId/question-paper/chooseFromQB", middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-  var examId = req.params.examId || '';
-  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next);
-
-  var questionsIdString = req.body.questions || "";
-
-  if (typeof (req.body.questions) == typeof ("")) {
-    questionsIdString = [];
-    questionsIdString.push(req.body.questions || "");
+  if (typeof (req.body.questions) === typeof ('')) {
+    questionsIdString = []
+    questionsIdString.push(req.body.questions || '')
   }
 
   var questions = []
   for (var i = 0; i < questionsIdString.length; i++) {
-    if (questionsIdString[i] != '')
-      questions.push(questionsIdString[i]);
+    if (questionsIdString[i] !== '') {
+      questions.push(questionsIdString[i])
+    }
   }
 
   try {
-    //find exam by id
+    // find exam by id
     let foundExam = await examController.findExamById(examId)
 
-    let createdQuestionPaper;
+    let createdQuestionPaper
     if (foundExam.questionPaper) {
       createdQuestionPaper = await QBController.addQuestionsToQuestionPaperById(foundExam.questionPaper, questions)
     } else {
       var questionPaperData = {
         questions: questions
-      };
+      }
 
       createdQuestionPaper = await QBController.createQuestionPaper(questionPaperData)
-      updatedExam = await QBController.addQuestionPaperToExamById(foundExam._id, createdQuestionPaper)
+      await QBController.addQuestionPaperToExamById(foundExam._id, createdQuestionPaper)
     }
 
-    req.flash("success", "Questions added Successfully");
-    res.redirect(req.headers.referer);
+    req.flash('success', 'Questions added Successfully')
+    res.redirect(req.headers.referer)
   } catch (e) {
     next(e)
   }
-
-});
+})
 
 router.post('/:examId/question-paper/:username', async (req, res, next) => {
-  const examId = req.params.examId || '';
-  let username = req.params.username || '';
+  const examId = req.params.examId || ''
+  let username = req.params.username || ''
 
-  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next);
-  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next);
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
 
   try {
     let foundExam = await examController.findExamById(examId)
     let foundUser = await userController.findUserByUsername(username)
     foundUser = await userController.populateFieldInUser(foundUser, 'profile')
     let result = {
-      examTakenDate: moment(Date.now()).tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm:ss a'),
+      examTakenDate: moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a'),
       nQuestionsAnswered: req.body.nQuestionsAnswered,
       nQuestionsUnanswered: req.body.nQuestionsUnanswered,
       nCorrectAns: req.body.nCorrectAns,
@@ -375,72 +346,67 @@ router.post('/:examId/question-paper/:username', async (req, res, next) => {
       mTotal: req.body.mTotal,
       user: foundUser,
       exam: foundExam
-    };
+    }
 
     let createdResult = await QBController.createNewResult(result)
-    let updatedProfile = await profileController.addResultInProfileById(foundUser.profile._id, createdResult)
-    console.log('created', createdResult)
+    await profileController.addResultInProfileById(foundUser.profile._id, createdResult)
     res.json({
       success: true,
-      msg: "Your result has been saved successfully",
+      msg: 'Your result has been saved successfully',
       result: createdResult
-    });
-
+    })
   } catch (err) {
     next(err)
   }
+})
 
-});
+// giving question paper of particular exam
+router.get('/:username/exams/:examId/questionPaper', async (req, res, next) => {
+  // TODO: filter exams, provide only those exams of the batch in which user belongs
+  // TODO: register the user in batch at particular center
+  const username = req.params.username
+  const examId = req.params.examId
 
-//giving question paper of particular exam
-router.get("/:username/exams/:examId/questionPaper", async (req, res, next) => {
-  //TODO: filter exams, provide only those exams of the batch in which user belongs
-  //TODO: register the user in batch at particular center
-  const username = req.params.username;
-  const examId = req.params.examId;
-
-  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next);
-  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next);
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+  if (!examId || !validator.isMongoId(examId)) return errorHandler.errorResponse('INVALID_FIELD', 'exam id', next)
 
   try {
-    // let userProfileBatch = await userController.findBatchOfUserByUsername(username)
+    // let userProfileBatch = await userController.findBatchOfUserByUsername(username, next)
     let foundExam = await examController.findExamById(examId)
     foundExam = await examController.populateFieldInExams(foundExam, 'questionPaper')
     let populatedQuestionPaper = await QBController.populateFieldInQuestionPaper(foundExam.questionPaper, 'questions')
 
-    var questionPaper = {};
-    questionPaper._id = populatedQuestionPaper._id;
-    questionPaper.__v = populatedQuestionPaper.__v;
-    questionPaper.positiveMarks = foundExam.positiveMarks;
-    questionPaper.negativeMarks = foundExam.negativeMarks;
-    questionPaper.maximumMarks = foundExam.maximumMarks;
-    questionPaper.totalTime = foundExam.totalTime;
-    questionPaper.questions = populatedQuestionPaper.questions;
+    var questionPaper = {}
+    questionPaper._id = populatedQuestionPaper._id
+    questionPaper.__v = populatedQuestionPaper.__v
+    questionPaper.positiveMarks = foundExam.positiveMarks
+    questionPaper.negativeMarks = foundExam.negativeMarks
+    questionPaper.maximumMarks = foundExam.maximumMarks
+    questionPaper.totalTime = foundExam.totalTime
+    questionPaper.questions = populatedQuestionPaper.questions
 
     return res.json({
       questionPaper
-    });
+    })
   } catch (err) {
     next(err)
   }
+})
 
-});
-
-//Giving exam list
-router.get("/:username/exams", async (req, res, next) => {
-  const username = req.params.username;
-  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next);
+// Giving exam list
+router.get('/:username/exams', async (req, res, next) => {
+  const username = req.params.username
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
 
   try {
     let userBatch = await userController.findBatchOfUserByUsername(username, next)
     let foundExams = await examController.findExamsOfBatchByBatchId(userBatch._id)
     res.json({
       exams: foundExams
-    });
+    })
   } catch (e) {
     next(e)
   }
+})
 
-});
-
-module.exports = router;
+module.exports = router
