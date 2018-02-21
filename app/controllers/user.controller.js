@@ -15,6 +15,15 @@ const findUserByUsername = function (username) {
   })
 }
 
+const findUserByUserId = function (userId) {
+  return new Promise(function (resolve, reject) {
+    User
+      .findById(userId)
+      .then(foundUser => resolve(foundUser))
+      .catch(err => reject(err))
+  })
+}
+
 const findAllUsers = function () {
   return new Promise(function (resolve, reject) {
     User
@@ -104,5 +113,6 @@ module.exports = {
   populateFieldInUser,
   findBatchOfUserByUsername,
   findAllUsers,
-  populateFieldsInUser
+  populateFieldsInUser,
+  findUserByUserId
 }

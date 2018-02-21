@@ -2,9 +2,8 @@ const express = require('express')
 const router = express.Router()
 const errorHandler = require('../errorHandler')
 const moment = require('moment-timezone')
-
+const _ = require('lodash')
 const validator = require('validator')
-const Gallery = require('../models/Gallery')
 const userController = require('../controllers/user.controller')
 const fileController = require('../controllers/file.controller')
 const visitorController = require('../controllers/visitor.controller')
@@ -32,6 +31,32 @@ router.get('/users', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (r
     return res.render('userProfileDb', {
       users: populatedUsers
     })
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/users/:userId', async (req, res, next) => {
+  const userId = req.params.userId || ''
+  if (!userId || !validator.isMongoId(userId)) return errorHandler.errorResponse('INVALID_FIELD', 'user Id', next)
+
+  try {
+    let foundUser = await userController.findUserByUserId(userId)
+    foundUser = await userController.populateFieldsInUser(foundUser, ['profile', 'profile.results', 'profile.progresses'])
+
+    const profile = foundUser.profile
+    if (profile) {
+      const results = foundUser.profile.results
+      const progresses = foundUser.profile.progresses
+      if (results) _.forEach(results, (result) => result.remove())
+      if (progresses) _.forEach(progresses, (progress) => progress.remove())
+      profile.remove()
+    }
+
+    foundUser.remove()
+
+    req.flash('success', 'User account deleted successfully')
+    res.redirect('/admin/db/users')
   } catch (err) {
     next(err)
   }
