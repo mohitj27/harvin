@@ -1,56 +1,56 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-var Promise = require('bluebird');
-Promise.promisifyAll(mongoose);
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const Promise = require('bluebird')
+Promise.promisifyAll(mongoose)
 
-//====Result Schmea====
+//= ===Result Schmea====
 var resultSchema = new Schema({
   examTakenDate: {
     type: String,
-    required: true,
+    required: true
   },
 
   mTotal: {
     type: String,
     required: true,
-    default: "-1"
+    default: '-1'
   },
 
   nCorrectAns: {
     type: String,
     required: true,
-    default: "-1"
+    default: '-1'
   },
 
   nIncorrectAns: {
     type: String,
     required: true,
-    default: "-1"
+    default: '-1'
   },
 
   nQuestionsAnswered: {
     type: String,
     required: true,
-    default: "-1"
+    default: '-1'
   },
 
   nQuestionsUnanswered: {
     type: String,
     required: true,
-    default: "-1"
+    default: '-1'
   },
 
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: 'User'
   },
 
   exam: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Exam"
-  },
+    ref: 'Exam'
+  }
 
-});
+})
 
-//Result model
-module.exports = mongoose.model("Result", resultSchema);
+// Result model
+module.exports = mongoose.model('Result', resultSchema)

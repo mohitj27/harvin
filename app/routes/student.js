@@ -8,21 +8,64 @@ const Batch = require('../models/Batch.js')
 const Progress = require('../models/Progress.js')
 const Profile = require('../models/Profile.js')
 const errors = require('../error')
+const _ = require('lodash')
 const router = express.Router()
 const validator = require('validator')
 const errorHandler = require('../errorHandler')
 const userController = require('../controllers/user.controller')
 const batchController = require('../controllers/batch.controller')
 const profileController = require('../controllers/profile.controller')
+const progressController = require('../controllers/progress.controller')
 
 // TODO: progress of student
+// TODO: pluralise populate method
+// TODO: await inside await
 
 // Handle user detail update
-router.put('/:username', (req, res, next) => {
-  var username = req.body.username || ''
-  var batchName = req.body.batch || ''
-  var password = req.body.password || null
+router.put('/:username', async (req, res, next) => {
+  const username = req.body.username || ''
+  const batchName = req.body.batch || ''
+  const password = req.body.password || ''
+
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+  if (!batchName || validator.isEmpty(batchName)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
+  if (!password || validator.isEmpty(password)) return errorHandler.errorResponse('INVALID_FIELD', 'password', next)
+
   let progresses = []
+
+  try {
+    // get chapters in batch
+    let foundBatch = await batchController.findBatchByBatchName(batchName)
+    foundBatch = await batchController.populateFieldsInBatches(foundBatch, ['subjects'])
+    let foundUser = await userController.findUserByUsername(username)
+    // foundUser = await userController.populateFieldsInUser(foundUser, ['profile'])
+    let subjects = foundBatch.subjects
+    let chapterIds = []
+    _.forEach(subjects, subject => {
+      chapterIds = _.concat(chapterIds, subject.chapters)
+    })
+    let progresses = []
+
+    for (let chapter of chapterIds) {
+      let createdProgress = await progressController.createProgress({
+        chapter
+      })
+      progresses = _.concat(progresses, createdProgress)
+    }
+    // progresses = await progressController.createProgressesOfChapterIds(chapterIds)
+    console.log('progresses', progresses)
+
+    if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+
+    let updatedProfile = await profileController.updateFieldsInProfileById(foundUser.profile, {}, {
+      batch: foundBatch,
+      progresses
+    })
+    console.log('updaeprof', updatedProfile)
+    return res.sendStatus(200)
+  } catch (err) {
+    next(err)
+  }
 
   Batch.findOne({
     batchName: batchName
