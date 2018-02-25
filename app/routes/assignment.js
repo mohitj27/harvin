@@ -124,7 +124,7 @@ router.put('/:assignmentId', middleware.isLoggedIn, middleware.isCentreOrAdmin, 
   }
 
   try {
-    const updatedAssignment = await assignmentController.updateAssignmentByAssignmentAndUserId(assignmentId, req.user, newAssignment)
+    await assignmentController.updateAssignmentByAssignmentAndUserId(assignmentId, req.user, newAssignment)
     req.flash('success', assignmentName + ' updated Successfully')
     return res.redirect('/admin/assignment')
   } catch (err) {

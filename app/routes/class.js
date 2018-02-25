@@ -1,4 +1,3 @@
-
 const express = require('express')
 const classController = require('../controllers/class.controller')
 const router = express.Router()
