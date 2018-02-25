@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 var Promise = require('bluebird')
 Promise.promisifyAll(mongoose)
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
 //= ===Profile Schmea====
 var profileSchema = new Schema({
@@ -33,6 +34,8 @@ var profileSchema = new Schema({
   }]
 
 })
+
+profileSchema.plugin(deepPopulate)
 
 // profile model
 module.exports = mongoose.model('Profile', profileSchema)

@@ -55,6 +55,15 @@ const populateFieldInProfile = function (profile, field) {
   })
 }
 
+const populateFieldsInProfiles = function (profiles, path) {
+  return new Promise(function (resolve, reject) {
+    Profile
+      .deepPopulate(profiles, path)
+      .then(populatedProfiles => resolve(populatedProfiles))
+      .catch(err => reject(err))
+  })
+}
+
 const updateFieldsInProfileById = function (profile, addToSetFields, setFields) {
   if (_.isEmpty(addToSetFields)) {
     return new Promise(function (resolve, reject) {
@@ -101,5 +110,6 @@ module.exports = {
   addBatchToProfile,
   addResultInProfileById,
   populateFieldInProfile,
-  updateFieldsInProfileById
+  updateFieldsInProfileById,
+  populateFieldsInProfiles
 }

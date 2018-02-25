@@ -216,26 +216,7 @@ router.get('/:username/progresses', async (req, res, next) => {
     let foundBatch = await userController.findBatchOfUserByUsername(username)
     if (!foundBatch) return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
 
-    // let progressesToAdd = await batchController.updateProgressOfUserOfBatch(foundUser, foundBatch)
-    // let progressesToAdd = []
-    let progresses = []
-    progresses = await progressController.createProgressesForBatch(foundBatch)
-
-    foundUser = await userController.populateFieldsInUser(foundUser, ['profile.progresses'])
-
-    let usrPro = foundUser.profile.progresses
-    const isSameChapter = function (objVal, othVal) {
-      if (objVal.chapter.toString() === othVal.chapter.toString()) return true
-      else return false
-    }
-
-    let progressesToAdd = _.differenceWith(progresses, usrPro, isSameChapter)
-    let progressToDelete = _.difference(progresses, progressesToAdd)
-    for (let prog of progressToDelete) {
-      prog.remove()
-    }
-
-    // return progressesToAdd
+    let progressesToAdd = await progressController.updateProgressOfUserOfBatch(foundUser, foundBatch)
 
     let updatedProfile = await profileController.updateFieldsInProfileById(foundUser.profile, {
       progresses: {
@@ -243,6 +224,7 @@ router.get('/:username/progresses', async (req, res, next) => {
       }
     }, {})
 
+    updatedProfile = await profileController.populateFieldsInProfiles(updatedProfile, ['progresses'])
     return res.json({
       progresses: updatedProfile.progresses
     })
@@ -252,107 +234,41 @@ router.get('/:username/progresses', async (req, res, next) => {
 })
 
 // create /update progress of particular chapter
-router.put('/:username/setprogress', (req, res, next) => {
-  var username = req.params.username
-  var chapterId = req.body.chapter
-  var completed = req.body.completed
-  var status = req.body.status || 'new'
-  var completedTopicsIds = req.body.completedTopicsIds
-  let topics = []
+router.put('/:username/setprogress', async (req, res, next) => {
+  const username = req.params.username
+  const completed = req.body.completed
+  const status = req.body.status
+  let completedTopicsIds = req.body.completedTopicsIds
+  const chapterId = req.body.chapter || ''
+  if (!chapterId || validator.isEmpty(chapterId)) return errorHandler.errorResponse('INVALID_FIELD', 'chapter', next)
 
+  let topics = []
+  completedTopicsIds = _.castArray(completedTopicsIds)
   completedTopicsIds.forEach(topicId => {
     if (validator.isMongoId(topicId)) topics.push(topicId)
   })
 
-  User.findOne({
-    username: username
-  })
-    .populate({
-      path: 'profile',
-      model: 'Profile'
-    })
-    .exec(function (err, foundUser) {
-      if (!err && foundUser) {
-        Progress.findOneAndUpdate({
-          chapter: chapterId
-        }, {
-          $set: {
-            completed: completed,
-            status: status,
-            topics: topics
-          }
-        }, {
-          upsert: true,
-          new: true,
-          setDefaultsOnInsert: true
-        },
-        function (err, updatedProg) {
-          if (!err && updatedProg) {
-            Profile.findByIdAndUpdate(
-              foundUser.profile, {
-                $addToSet: {
-                  progresses: updatedProg
-                }
-              }, {
-                upsert: true,
-                new: true,
-                setDefaultsOnInsert: true
-              },
-              function (err, updatedProfile) {
-                if (!err && updatedProfile) {
-                  res.json({
-                    updatedProg: updatedProg
-                  })
-                } else {
-                  next(err)
-                }
-              }
-            )
-          } else {
-            next(err)
-          }
-        }
-        )
-      } else {
-        next(err)
-      }
-    })
-})
+  try {
+    let foundUser = await userController.findUserByUsername(username)
+    if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
 
-// sending classes list
-router.get('/classes', function (req, res, next) {
-  Class.find({}, function (err, classes) {
-    if (err) {
-      console.log(err)
-      next(new errors.notFound())
+    foundUser = await userController.populateFieldsInUser(foundUser, ['profile'])
+    if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+
+    let progObj = {
+      topics
     }
-  })
-    .populate({
-      path: 'subjects',
-      model: 'Subject',
-      populate: {
-        path: 'chapters',
-        model: 'Chapter',
-        populate: {
-          path: 'topics',
-          model: 'Topic',
-          populate: {
-            path: 'files',
-            model: 'File'
-          }
-        }
-      }
+    if (completed) progObj.completed = completed
+    if (status) progObj.status = status
+    if (status) progObj.status = status
+
+    let updatedProg = await progressController.updateProgressByChapterId(chapterId, progObj)
+    return res.json({
+      updatedProg: updatedProg
     })
-    .exec(function (err, classes) {
-      if (err) {
-        console.log(err)
-      } else {
-        res.type('application/json')
-        res.json({
-          classes: classes
-        })
-      }
-    })
+  } catch (err) {
+    next(err)
+  }
 })
 
 module.exports = router
