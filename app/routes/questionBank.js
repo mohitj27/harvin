@@ -59,6 +59,7 @@ router.get('/qbData', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (
 })
 
 router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  // TODO: use cast array lodah
   res.locals.flashUrl = req.headers.referer
 
   var optionString = req.body.options || ''

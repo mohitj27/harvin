@@ -1,5 +1,6 @@
 const errorHandler = require('../errorHandler')
 const User = require('./../models/User')
+const _ = require('lodash')
 Promise = require('bluebird')
 const mongoose = require('mongoose')
 mongoose.Promise = Promise
@@ -94,7 +95,6 @@ const findBatchOfUserByUsername = async function (username, next) {
 
   try {
     foundUser = await populateFieldsInUser(foundUser, ['profile.batch'])
-    console.log('founduser', foundUser)
   } catch (err) {
     next(err)
   }
@@ -106,6 +106,47 @@ const findBatchOfUserByUsername = async function (username, next) {
   return foundUser.profile.batch
 }
 
+const updateFieldsInUserById = function (user, addToSetFields, setFields) {
+  if (_.isEmpty(addToSetFields)) {
+    return new Promise(function (resolve, reject) {
+      User.findByIdAndUpdateAsync(user.id, {
+        $set: setFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedProfile => resolve(updatedProfile))
+        .catch(err => reject(err))
+    })
+  } else if (_.isEmpty(setFields)) {
+    return new Promise(function (resolve, reject) {
+      User.findByIdAndUpdateAsync(user.id, {
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedProfile => resolve(updatedProfile))
+        .catch(err => reject(err))
+    })
+  } else {
+    return new Promise(function (resolve, reject) {
+      User.findByIdAndUpdateAsync(user.id, {
+        $set: setFields,
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedProfile => resolve(updatedProfile))
+        .catch(err => reject(err))
+    })
+  }
+}
+
 module.exports = {
   findUserByUsername,
   registerUser,
@@ -114,5 +155,6 @@ module.exports = {
   findBatchOfUserByUsername,
   findAllUsers,
   populateFieldsInUser,
-  findUserByUserId
+  findUserByUserId,
+  updateFieldsInUserById
 }

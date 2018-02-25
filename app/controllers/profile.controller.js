@@ -1,5 +1,6 @@
 const errorHandler = require('../errorHandler')
 const Profile = require('./../models/Profile')
+const _ = require('lodash')
 Promise = require('bluebird')
 const mongoose = require('mongoose')
 mongoose.Promise = Promise
@@ -15,7 +16,7 @@ const createNewProfile = function (newProfile) {
 
 const addBatchToProfile = function (batch, profile) {
   return new Promise(function (resolve, reject) {
-    Profile.findByIdAndUpdateAsync(profile._id, {
+    Profile.findByIdAndUpdateAsync(profile.id, {
       $set: {
         batch: batch
       }
@@ -31,7 +32,7 @@ const addBatchToProfile = function (batch, profile) {
 
 const addResultInProfileById = function (profile, result) {
   return new Promise(function (resolve, reject) {
-    Profile.findByIdAndUpdateAsync(profile._id, {
+    Profile.findByIdAndUpdateAsync(profile.id, {
       $addToSet: {
         results: result
       }
@@ -55,23 +56,44 @@ const populateFieldInProfile = function (profile, field) {
 }
 
 const updateFieldsInProfileById = function (profile, addToSetFields, setFields) {
-  console.log('addtoset', typeof addToSetFields)
-  // addToSetFields = addToSetFields.toObject({})
-  // setFields = setFields.toObject()
-
-  // addToSetFields = JSON.stringify(addToSetFields)
-  return new Promise(function (resolve, reject) {
-    Profile.findByIdAndUpdateAsync(profile._id, {
-      $addToSet: {results: setFields},
-      $set: setFields
-    }, {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true
+  if (_.isEmpty(addToSetFields)) {
+    return new Promise(function (resolve, reject) {
+      Profile.findByIdAndUpdateAsync(profile.id, {
+        $set: setFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedProfile => resolve(updatedProfile))
+        .catch(err => reject(err))
     })
-      .then(updatedProfile => resolve(updatedProfile))
-      .catch(err => reject(err))
-  })
+  } else if (_.isEmpty(setFields)) {
+    return new Promise(function (resolve, reject) {
+      Profile.findByIdAndUpdateAsync(profile._id, {
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedProfile => resolve(updatedProfile))
+        .catch(err => reject(err))
+    })
+  } else {
+    return new Promise(function (resolve, reject) {
+      Profile.findByIdAndUpdateAsync(profile._id, {
+        $set: setFields,
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedProfile => resolve(updatedProfile))
+        .catch(err => reject(err))
+    })
+  }
 }
 
 module.exports = {

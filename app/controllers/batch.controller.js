@@ -1,6 +1,9 @@
 const Batch = require('./../models/Batch')
 Promise = require('bluebird')
 const mongoose = require('mongoose')
+const _ = require('lodash')
+const progressController = require('../controllers/progress.controller')
+const userController = require('../controllers/user.controller')
 mongoose.Promise = Promise
 
 const findAllBatch = function () {
@@ -60,6 +63,27 @@ const findBatchByBatchName = function (batchName) {
   })
 }
 
+const updateProgressOfUserOfBatch = async (user, batch) => {
+  let progresses = []
+  progresses = await progressController.createProgressesForBatch(batch)
+
+  user = await userController.populateFieldsInUser(user, ['profile.progresses'])
+
+  let usrPro = user.profile.progresses
+  const isSameChapter = function (objVal, othVal) {
+    if (objVal.chapter.toString() === othVal.chapter.toString()) return true
+    else return false
+  }
+
+  let progressesToAdd = _.differenceWith(progresses, usrPro, isSameChapter)
+  let progressToDelete = _.difference(progresses, progressesToAdd)
+  for (let prog of progressToDelete) {
+    prog.remove()
+  }
+
+  return progressesToAdd
+}
+
 const findBatchByUserId = function (user) {
   return new Promise(function (resolve, reject) {
     Batch.findAsync({
@@ -78,5 +102,6 @@ module.exports = {
   findBatchByBatchName,
   findBatchByUserId,
   createOrUpdateSubjectsToBatchByBatchNameAndUserId,
-  populateFieldsInBatches
+  populateFieldsInBatches,
+  updateProgressOfUserOfBatch
 }

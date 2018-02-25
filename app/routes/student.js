@@ -1,16 +1,13 @@
 const express = require('express')
 const passport = require('passport')
-const Async = require('async')
 const User = require('../models/User.js')
 const Class = require('../models/Class.js')
-const Subject = require('../models/Subject')
-const Batch = require('../models/Batch.js')
 const Progress = require('../models/Progress.js')
 const Profile = require('../models/Profile.js')
 const errors = require('../error')
-const _ = require('lodash')
 const router = express.Router()
 const validator = require('validator')
+const _ = require('lodash')
 const errorHandler = require('../errorHandler')
 const userController = require('../controllers/user.controller')
 const batchController = require('../controllers/batch.controller')
@@ -31,128 +28,27 @@ router.put('/:username', async (req, res, next) => {
   if (!batchName || validator.isEmpty(batchName)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
   if (!password || validator.isEmpty(password)) return errorHandler.errorResponse('INVALID_FIELD', 'password', next)
 
-  let progresses = []
-
   try {
     // get chapters in batch
     let foundBatch = await batchController.findBatchByBatchName(batchName)
     foundBatch = await batchController.populateFieldsInBatches(foundBatch, ['subjects'])
     let foundUser = await userController.findUserByUsername(username)
-    // foundUser = await userController.populateFieldsInUser(foundUser, ['profile'])
-    let subjects = foundBatch.subjects
-    let chapterIds = []
-    _.forEach(subjects, subject => {
-      chapterIds = _.concat(chapterIds, subject.chapters)
-    })
-    let progresses = []
-
-    for (let chapter of chapterIds) {
-      let createdProgress = await progressController.createProgress({
-        chapter
-      })
-      progresses = _.concat(progresses, createdProgress)
-    }
-    // progresses = await progressController.createProgressesOfChapterIds(chapterIds)
-    console.log('progresses', progresses)
+    foundUser = await userController.populateFieldsInUser(foundUser, ['profile'])
 
     if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
 
-    let updatedProfile = await profileController.updateFieldsInProfileById(foundUser.profile, {}, {
+    let progresses = []
+    progresses = await progressController.createProgressesForBatch(foundBatch)
+
+    await profileController.updateFieldsInProfileById(foundUser.profile, {}, {
       batch: foundBatch,
       progresses
     })
-    console.log('updaeprof', updatedProfile)
-    return res.sendStatus(200)
+
+    return res.json(req.body)
   } catch (err) {
     next(err)
   }
-
-  Batch.findOne({
-    batchName: batchName
-  }, (err, foundBatch) => {
-    if (!err && foundBatch) {
-      User.findOne({
-        username: username
-      })
-        .populate({
-          path: 'profile',
-          model: 'Profile'
-        })
-        .exec((err, foundUser) => {
-          if (!err && foundUser) {
-            let subjectId = foundBatch.subjects
-            Subject.find({
-              _id: {
-                $in: subjectId
-              }
-            }, function (err, foundSubjects) {
-              if (!err && foundSubjects) {
-                var counter = 0
-                let chaptersArr = []
-                foundSubjects.forEach((subject, subjectIndex) => {
-                  var chapters = subject.chapters
-                  counter += chapters.length
-                  chapters.forEach((chapter, chapterIndex) => {
-                    chaptersArr.push(chapter)
-                  })
-                })
-                Async.each(chaptersArr, function (chapter, callback) {
-                  var newProg = {
-                    chapter: chapter
-                  }
-
-                  Progress.create(newProg, (err, createdProgress) => {
-                    if (!err && createdProgress) {
-                      progresses.push(createdProgress)
-                      callback()
-                    } else {
-                      console.log('err', err)
-                      callback(err)
-                    }
-                  })
-                },
-                function (err) {
-                  if (err) {
-                    next(errorHandler.getErrorMessage(err))
-                  } else {
-                    Profile.findByIdAndUpdate(
-                      foundUser.profile._id, {
-                        $set: {
-                          batch: foundBatch._id,
-                          progresses: progresses
-                        }
-                      }, {
-                        upsert: false,
-                        new: true
-                      },
-                      (err, updatedProfile) => {
-                        console.log('updated profile', updatedProfile)
-                        if (!err && updatedProfile) {
-                          var userDetail = {
-                            username,
-                            password,
-                            batch: batchName
-                          }
-
-                          res.json(userDetail)
-                        } else {
-                          console.log(err)
-                          next(errorHandler.getErrorMessage(err))
-                        }
-                      }
-                    )
-                  }
-                })
-              } else {
-                next(errorHandler.getErrorMessage(err))
-              }
-            })
-          } else {
-            next(errorHandler.getErrorMessage(err))
-          }
-        })
-    }
-  })
 })
 
 // Handle user login -- for student
@@ -162,11 +58,11 @@ router.post('/login', passport.authenticate('local'), function (req, res) {
 
 // Handle login with email
 router.post('/loginWithEmail', async (req, res, next) => {
-  var emailId = req.body.username || ''
+  const emailId = req.body.username || ''
   if (!emailId || !validator.isEmail(emailId)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
-  var index = emailId.indexOf('@')
-  var username = emailId.substring(0, index)
-  var password = Math.floor(Math.random() * 89999 + 10000) + ''
+  const index = emailId.indexOf('@')
+  const username = emailId.substring(0, index)
+  const password = Math.floor(Math.random() * 89999 + 10000) + ''
 
   var userDetail = {
     username,
@@ -182,32 +78,25 @@ router.post('/loginWithEmail', async (req, res, next) => {
   }
 
   if (foundUser) {
-    // populate profile and batch
-    foundUser.populate({
-      path: 'profile',
-      polulate: {
-        path: 'batch'
-      }
-    }, function (err, foundUser) {
-      if (err) return next(errorHandler.getErrorMessage(err))
+    foundUser = await userController.populateFieldsInUser(foundUser, ['profile.batch'])
+    if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+    if (!foundUser.profile.batch) return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
+    if (foundUser.profile && foundUser.profile.batch && foundUser.profile.batch.batchName) {
+      userDetail.batch = foundUser.profile.batch.batchName
+    }
 
-      else if (foundUser.profile && foundUser.profile.batch && foundUser.profile.batch.batchName) {
-        userDetail.batch = foundUser.profile.batch.batchName
-      }
-
-      res.json(userDetail)
-    })
+    return res.json(userDetail)
   } else {
     try {
-      var registeredUser = await userController.registerUser({
+      const registeredUser = await userController.registerUser({
         username,
         password
       })
-      var createdProfile = await profileController.createNewProfile({
+      const createdProfile = await profileController.createNewProfile({
         username,
         emailId
       })
-      var updatedProfile = await userController.addProfileToUser(registeredUser, createdProfile)
+      await userController.addProfileToUser(registeredUser, createdProfile)
 
       res.json(userDetail)
     } catch (e) {
@@ -217,263 +106,149 @@ router.post('/loginWithEmail', async (req, res, next) => {
 })
 
 // Handle user registration-- for student->Mobile interface
-router.post('/signup', function (req, res) {
-  var username = req.body.username
-  var password = req.body.password
-  var fullName = req.body.fullName
-  var emailId = req.body.emailId
-  var phone = req.body.phone
-  var batchName = req.body.batch || ''
+router.post('/signup', async (req, res, next) => {
+  res.locals.flashUrl = req.headers.referer
 
-  // for the student who are enrolled in any batch
-  if (batchName && batchName.length > 0) {
-    // find batch
-    Async.waterfall(
-      [
-        function (callback) {
-          Batch.findOne({
-            batchName: batchName
-          },
-          function (err, foundBatch) {
-            if (!err && foundBatch) {
-              callback(null, foundBatch)
-            } else {
-              callback(err)
-            }
-          }
-          )
-        },
-        function (callback) {
-          User.register(
-            new User({
-              username: username
-            }),
-            password,
-            function (err, user) {
-              if (err) {
-                console.log(err)
-                req.flash('error', err.message)
-                return res.redirect('/student/signup')
-              } else if (user && !err) {
-                callback(null, user)
-              }
-            }
-          )
-        },
-        function (user, callback) {
-          var newProfile = {
-            fullName,
-            emailId,
-            phone,
-            batch: foundBatch._id
-          }
+  const username = req.body.username || ''
+  const password = req.body.password || ''
+  const fullName = req.body.fullName || ''
+  const emailId = req.body.emailId || ''
+  const phone = req.body.phone || ''
+  const batchName = req.body.batch || ''
 
-          // if registered successfully create profile
-          Profile.create(newProfile, function (err, createdProfile) {
-            if (!err && createdProfile) {
-              callback(null, user, createdProfile)
-            } else {
-              callback(err)
-            }
-          })
-        },
-        function (user, createdProfile, callback) {
-          User.findOneAndUpdate({
-            _id: user._id
-          }, {
-            $set: {
-              profile: createdProfile
-            }
-          }, {
-            upsert: true,
-            new: true,
-            setDefaultsOnInsert: true
-          },
-          function (err, updatedUser) {
-            if (!err && updatedUser) {
-              callback(null, createdProfile, updatedUser)
-            } else {
-              callback(err)
-            }
-          }
-          )
-        },
-        function (createdProfile, updatedUser, callback) {
-          passport.authenticate('local')(req, res, function () {
-            User.findOne({
-              _id: updatedUser._id
-            })
-              .populate({
-                path: 'profile',
-                model: 'Profile',
-                populate: {
-                  path: 'batch',
-                  model: 'Batch'
-                }
-              })
-              .exec(function (err, foundUser) {
-                if (!err && foundUser) {
-                  res.json(foundUser)
-                } else {
-                  console.log(err)
-                }
-              })
-          })
-        }
-      ],
-      function (err, result) {
-        if (err) {
-          console.log(err)
-          next(new errors.generic())
-        } else {}
-      }
-    )
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+  if (!password || validator.isEmpty(password)) return errorHandler.errorResponse('INVALID_FIELD', 'password', next)
+  if (!fullName || validator.isEmpty(fullName)) return errorHandler.errorResponse('INVALID_FIELD', 'full name', next)
+  if (!emailId || validator.isEmpty(emailId)) return errorHandler.errorResponse('INVALID_FIELD', 'email id', next)
+  if (!batchName || validator.isEmpty(batchName)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
+
+  try {
+    const foundBatch = await batchController.findBatchByBatchName(batchName)
+    const registerdUser = await userController.registerUser({
+      username,
+      password
+    })
+    let progresses = []
+    progresses = await progressController.createProgressesForBatch(foundBatch)
+
+    const newProfile = {
+      fullName,
+      emailId,
+      phone,
+      batch: foundBatch.id,
+      progresses
+    }
+    const createdProfile = await profileController.createNewProfile(newProfile)
+    await userController.updateFieldsInUserById(registerdUser, {}, {
+      profile: createdProfile
+    })
+
+    req.flash('success', 'Account created successfully')
+    return res.redirect(req.headers.referer)
+  } catch (err) {
+    next(err)
   }
 })
 
 // User Register form-- student->from web interface
-router.get('/register', async function (req, res) {
+router.get('/register', async function (req, res, next) {
   try {
-    var foundBatches = await batchController.findAllBatch()
+    const foundBatches = await batchController.findAllBatch()
+    return res.render('studentRegister', {
+      foundBatches
+    })
   } catch (e) {
     return next(e)
   }
-  res.render('studentRegister', {
-    foundBatches
-  })
 })
 
-// Handle User Register form-- student->from web interface
-router.post('/register', async function (req, res, next) {
-  res.locals.flashUrl = req.originalUrl
-
-  var username = req.body.username || ''
-  var password = req.body.password || ''
-  var fullName = req.body.fullName || ''
-  var emailId = req.body.emailId || ''
-  var phone = req.body.phone || ''
-  var batchName = req.body.batch || ''
-
+router.get('/:username/subjects', async (req, res, next) => {
+  const username = req.params.username || ''
   if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
-  if (!password || validator.isEmpty(password)) return errorHandler.errorResponse('INVALID_FIELD', 'password', next)
-  if (!batchName || validator.isEmpty(batchName)) return errorHandler.errorResponse('INVALID_FIELD', 'batch name', next)
 
   try {
-    var registerdUser = await userController.registerUser({
-      username,
-      password
-    })
-    var createdProfile = await profileController.createNewProfile({
-      fullName,
-      emailId,
-      phone
-    })
-    var foundBatch = await batchController.findBatchByBatchName(batchName)
-    var updatedProfile = await profileController.addBatchToProfile(foundBatch, createdProfile)
-    var updatedUser = await userController.addProfileToUser(registerdUser, createdProfile)
+    const foundUser = await userController.findUserByUsername(username)
+    if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+    if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
 
-    passport.authenticate('local')(req, res, function () {
-      req.flash('success', 'Successfully signed you in')
-      res.redirect('/admin')
+    let foundBatch = await userController.findBatchOfUserByUsername(username)
+    if (!foundBatch) return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
+
+    foundBatch = await batchController.populateFieldsInBatches(foundBatch, ['subjects.chapters.topics.files'])
+    return res.json({
+      subjects: foundBatch.subjects
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err)
   }
 })
 
-router.get('/:username/subjects', function (req, res) {
-  var subjects = {}
-  User.findOne({
-    username: req.params.username
-  },
-  function (err, foundUser) {
-    if (!err && foundUser) {} else if (err) {
-      console.log(err)
+router.get('/:username/results', async (req, res, next) => {
+  const username = req.params.username || ''
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+
+  try {
+    let foundUser = await userController.findUserByUsername(username)
+    if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+    if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+
+    foundUser = await userController.populateFieldsInUser(foundUser, ['profile.results'])
+
+    return res.json({
+      results: foundUser.profile.results
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:username/progresses', async (req, res, next) => {
+  const username = req.params.username || ''
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+
+  try {
+    let foundUser = await userController.findUserByUsername(username)
+    if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+
+    foundUser = await userController.populateFieldsInUser(foundUser, ['profile'])
+    if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+
+    let foundBatch = await userController.findBatchOfUserByUsername(username)
+    if (!foundBatch) return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
+
+    // let progressesToAdd = await batchController.updateProgressOfUserOfBatch(foundUser, foundBatch)
+    // let progressesToAdd = []
+    let progresses = []
+    progresses = await progressController.createProgressesForBatch(foundBatch)
+
+    foundUser = await userController.populateFieldsInUser(foundUser, ['profile.progresses'])
+
+    let usrPro = foundUser.profile.progresses
+    const isSameChapter = function (objVal, othVal) {
+      if (objVal.chapter.toString() === othVal.chapter.toString()) return true
+      else return false
     }
-  }
-  )
-    .populate({
-      path: 'profile',
-      model: 'Profile',
-      populate: {
-        path: 'batch',
-        model: 'Batch',
-        populate: {
-          path: 'subjects',
-          model: 'Subject',
-          populate: {
-            path: 'chapters',
-            model: 'Chapter',
-            populate: {
-              path: 'topics',
-              model: 'Topic',
-              populate: {
-                path: 'files',
-                model: 'File'
-              }
-            }
-          }
-        }
-      }
-    })
-    .exec(function (err, userDetail) {
-      if (!err && userDetail) {
-        subjects = userDetail.profile.batch.subjects
-        res.json({
-          subjects: subjects
-        })
-      } else {}
-    })
-})
 
-router.get('/:username/results', function (req, res, next) {
-  let username = req.params.username
-  User.findOne({
-    username: username
-  })
-    .populate({
-      path: 'profile',
-      model: 'Profile',
-      populate: {
-        path: 'results',
-        model: 'Result'
-      }
-    })
-    .exec((err, foundUser) => {
-      if (!err && foundUser) {
-        res.json({
-          results: foundUser.profile.results
-        })
-      }
-    })
-})
-
-router.get('/:username/progresses', (req, res, next) => {
-  User.findOne({
-    username: req.params.username
-  },
-  function (err, foundUser) {
-    if (!err && foundUser) {} else if (err) {
-      console.log(err)
+    let progressesToAdd = _.differenceWith(progresses, usrPro, isSameChapter)
+    let progressToDelete = _.difference(progresses, progressesToAdd)
+    for (let prog of progressToDelete) {
+      prog.remove()
     }
+
+    // return progressesToAdd
+
+    let updatedProfile = await profileController.updateFieldsInProfileById(foundUser.profile, {
+      progresses: {
+        $each: progressesToAdd
+      }
+    }, {})
+
+    return res.json({
+      progresses: updatedProfile.progresses
+    })
+  } catch (err) {
+    next(err)
   }
-  )
-    .populate({
-      path: 'profile',
-      model: 'Profile',
-      populate: {
-        path: 'progresses',
-        model: 'Progress'
-      }
-    })
-    .exec(function (err, foundUser) {
-      if (!err && foundUser) {
-        progresses = foundUser.profile.progresses
-        res.json({
-          progresses: progresses
-        })
-      }
-    })
 })
 
 // create /update progress of particular chapter
