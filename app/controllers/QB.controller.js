@@ -73,20 +73,11 @@ const findAllQbClassesByUserId = function (user) {
   })
 }
 
-const populateFieldInQbChapter = function (chapter, field) {
-  return new Promise(function (resolve, reject) {
-    QB_Chapter
-      .populate(chapter, field)
-      .then(foundChapter => resolve(foundChapter))
-      .catch(err => resolve(err))
-  })
-}
-
-const populateFieldInQuestionPaper = function (questionPaper, field) {
+const populateFieldsInQuestionPapers = function (questionPapers, field) {
   return new Promise(function (resolve, reject) {
     QuestionPaper
-      .populate(questionPaper, field)
-      .then(populatedQuestionPaper => resolve(populatedQuestionPaper))
+      .deepPopulate(questionPapers, field)
+      .then(populatedQuestionPapers => resolve(populatedQuestionPapers))
       .catch(err => resolve(err))
   })
 }
@@ -268,14 +259,14 @@ const createNewQuestionObj = function (options, answers, question, user) {
 
     // pushing options in options array
     for (var i = 0; i < optionString.length; i++) {
-      if (optionString[i] != '') {
+      if (optionString[i] !== '') {
         newQues.options.push(optionString[i])
       }
     }
 
     // pushing answers in answer array
     for (var j = 0; j < answerString.length; j++) {
-      if (answerString[j] != '') {
+      if (answerString[j] !== '') {
         newQues.answers.push(answerString[j])
       }
     }
@@ -288,10 +279,10 @@ const createNewQuestionObj = function (options, answers, question, user) {
         }
       })
     })
-    QB_Class
+
     // populate new options
     newQues.options.forEach((opt_j, j) => {
-      if (_.indexOf(newQues.answersIndex, j) != -1) {
+      if (_.indexOf(newQues.answersIndex, j) !== -1) {
         newQues.newOptions.push({
           opt: opt_j,
           isAns: true
@@ -340,7 +331,6 @@ module.exports = {
   findQbClassByClassNameAndUserId,
   findQbChapterByChapterNameAndUserId,
   findAllQbClassesByUserId,
-  populateFieldInQbChapter,
   findAllQuestionsByIds,
   createQuestion,
   createQuestionPaper,
@@ -350,11 +340,11 @@ module.exports = {
   createOrUpdateSubjectInQBClassByName,
   createNewQuestionObj,
   createNewResult,
-  populateFieldInQuestionPaper,
   populateFieldsInQbClasses,
   findSubjectBySubjectClassAndUserId,
   addQuestionsToQuestionPaperById,
   addQuestionToQuestionPaperById,
   populateFieldsInQbSubjects,
-  populateFieldsInQbChapters
+  populateFieldsInQbChapters,
+  populateFieldsInQuestionPapers
 }

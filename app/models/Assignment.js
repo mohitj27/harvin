@@ -3,6 +3,7 @@ var Schema = mongoose.Schema
 var Promise = require('bluebird')
 Promise.promisifyAll(mongoose)
 const beautifyUnique = require('mongoose-beautiful-unique-validation')
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
 //= ===examSchema====
 var assignmentSchema = new Schema({
@@ -45,6 +46,7 @@ assignmentSchema.index({
   unique: 'Duplicate assignment name!!!'
 })
 assignmentSchema.plugin(beautifyUnique)
+assignmentSchema.plugin(deepPopulate)
 
 // Exam model
 module.exports = mongoose.model('Assignment', assignmentSchema)

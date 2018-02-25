@@ -32,10 +32,10 @@ const findExamById = function (examId) {
   })
 }
 
-const populateFieldInExams = function (exams, field) {
+const populateFieldsInExams = function (exams, path) {
   return new Promise(function (resolve, reject) {
     Exam
-      .populate(exams, field)
+      .deepPopulate(exams, path)
       .then(exams => resolve(exams))
       .catch(err => resolve(err))
   })
@@ -101,9 +101,9 @@ const deleteExamById = function (examId) {
 module.exports = {
   findExamsByUserId,
   createOrUpdateExamByExamNameAndUserId,
-  populateFieldInExams,
   findExamById,
   updateExamById,
   deleteExamById,
-  findExamsOfBatchByBatchId
+  findExamsOfBatchByBatchId,
+  populateFieldsInExams
 }

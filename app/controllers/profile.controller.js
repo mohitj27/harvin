@@ -46,15 +46,6 @@ const addResultInProfileById = function (profile, result) {
   })
 }
 
-const populateFieldInProfile = function (profile, field) {
-  return new Promise(function (resolve, reject) {
-    Profile
-      .populate(profile, field)
-      .then(populatedProfile => resolve(populatedProfile))
-      .catch(err => reject(err))
-  })
-}
-
 const populateFieldsInProfiles = function (profiles, path) {
   return new Promise(function (resolve, reject) {
     Profile
@@ -109,7 +100,6 @@ module.exports = {
   createNewProfile,
   addBatchToProfile,
   addResultInProfileById,
-  populateFieldInProfile,
   updateFieldsInProfileById,
   populateFieldsInProfiles
 }

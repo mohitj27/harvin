@@ -56,7 +56,7 @@ const updateProgressOfUserOfBatch = async (user, batch) => {
   let progresses = []
   progresses = await createProgressesForBatch(batch)
 
-  user = await userController.populateFieldsInUser(user, ['profile.progresses'])
+  user = await userController.populateFieldsInUsers(user, ['profile.progresses'])
 
   let usrPro = user.profile.progresses
   const isSameChapter = function (objVal, othVal) {

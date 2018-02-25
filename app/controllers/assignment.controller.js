@@ -21,11 +21,11 @@ const findAssignmentsId = function (assignmentId) {
   })
 }
 
-const populateFieldOfAssignment = function (assignment, field) {
+const populateFieldsOfAssignments = function (assignments, path) {
   return new Promise(function (resolve, reject) {
     Assignment
-      .populate(assignment, field)
-      .then(populatedAssignment => resolve(populatedAssignment))
+      .deepPopulate(assignments, path)
+      .then(populatedAssignments => resolve(populatedAssignments))
       .catch(err => reject(err))
   })
 }
@@ -83,10 +83,10 @@ const findAssignmentById = function (assignmentId) {
 
 module.exports = {
   findAssignmentsByUserId,
-  populateFieldOfAssignment,
   createAssignment,
   findAssignmentsId,
   updateAssignmentByAssignmentAndUserId,
   findAssignmentsOfBatchByBatchId,
-  findAssignmentById
+  findAssignmentById,
+  populateFieldsOfAssignments
 }

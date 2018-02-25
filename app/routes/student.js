@@ -9,9 +9,7 @@ const batchController = require('../controllers/batch.controller')
 const profileController = require('../controllers/profile.controller')
 const progressController = require('../controllers/progress.controller')
 
-// TODO: progress of student
 // TODO: pluralise populate method
-// TODO: await inside await
 
 // Handle user detail update
 router.put('/:username', async (req, res, next) => {

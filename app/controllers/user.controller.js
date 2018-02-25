@@ -34,20 +34,11 @@ const findAllUsers = function () {
   })
 }
 
-const populateFieldInUser = function (user, field) {
+const populateFieldsInUsers = function (users, path) {
   return new Promise(function (resolve, reject) {
     User
-      .populate(user, field)
-      .then(populatedUser => resolve(populatedUser))
-      .catch(err => reject(err))
-  })
-}
-
-const populateFieldsInUser = function (user, path) {
-  return new Promise(function (resolve, reject) {
-    User
-      .deepPopulate(user, path)
-      .then(populatedUser => resolve(populatedUser))
+      .deepPopulate(users, path)
+      .then(populatedUsers => resolve(populatedUsers))
       .catch(err => reject(err))
   })
 }
@@ -94,7 +85,7 @@ const findBatchOfUserByUsername = async function (username, next) {
   if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
 
   try {
-    foundUser = await populateFieldsInUser(foundUser, ['profile.batch'])
+    foundUser = await populateFieldsInUsers(foundUser, ['profile.batch'])
   } catch (err) {
     next(err)
   }
@@ -151,10 +142,9 @@ module.exports = {
   findUserByUsername,
   registerUser,
   addProfileToUser,
-  populateFieldInUser,
   findBatchOfUserByUsername,
   findAllUsers,
-  populateFieldsInUser,
+  populateFieldsInUsers,
   findUserByUserId,
   updateFieldsInUserById
 }

@@ -149,8 +149,6 @@ router.get('/gallery/category', function (req, res, next) {
     })
 })
 
-// TODO: ishank - uncomment the commented lines and remove line 83
-// TODO: ishank - Check all TODO and refer management.ejs && db.js
 router.get('/gallery', (req, res, next) => {
   Gallery.find({}, (err, foundImages) => {
     if (!err && foundImages) {

@@ -16,7 +16,7 @@ router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, r
   try {
     let foundExams = await examController.findExamsByUserId(req.user)
 
-    foundExams = await examController.populateFieldInExams(foundExams, 'batch')
+    foundExams = await examController.populateFieldInExams(foundExams, ['batch'])
     res.render('exams', {
       foundExams
     })
@@ -95,7 +95,7 @@ router.get('/qbData', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (
   try {
     const foundClasses = await QBController.findAllQbClassesByUserId(req.user)
     let foundChapter = await QBController.findQbChapterByChapterNameAndUserId(chapterName, req.user)
-    foundChapter = await QBController.populateFieldInQbChapter(foundChapter, 'questions')
+    foundChapter = await QBController.populateFieldInQbChapter(foundChapter, ['questions'])
 
     return res.render('chooseFromQB', {
       classes: foundClasses,
@@ -118,7 +118,7 @@ router.get('/:examId/edit', middleware.isLoggedIn, middleware.isCentreOrAdmin, a
   try {
     const foundBatches = await batchController.findBatchByUserId(req.user)
     let foundExam = await examController.findExamById(examId)
-    foundExam = await examController.populateFieldInExams(foundExam, 'batch')
+    foundExam = await examController.populateFieldInExams(foundExam, ['batch'])
     res.render('editExam', {
       exam: foundExam,
       batches: foundBatches
@@ -195,7 +195,7 @@ router.get('/:examId/question-paper', middleware.isLoggedIn, middleware.isCentre
 
   try {
     let foundExam = await examController.findExamById(examId)
-    foundExam = await examController.populateFieldInExams(foundExam, 'questionPaper')
+    foundExam = await examController.populateFieldInExams(foundExam, ['questionPaper'])
     if (!foundExam.questionPaper) {
       const newQuestionPaper = {
         questions: []
@@ -336,7 +336,7 @@ router.post('/:examId/question-paper/:username', async (req, res, next) => {
   try {
     let foundExam = await examController.findExamById(examId)
     let foundUser = await userController.findUserByUsername(username)
-    foundUser = await userController.populateFieldInUser(foundUser, 'profile')
+    foundUser = await userController.populateFieldInUser(foundUser, ['profile'])
     let result = {
       examTakenDate: moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a'),
       nQuestionsAnswered: req.body.nQuestionsAnswered,
@@ -373,8 +373,8 @@ router.get('/:username/exams/:examId/questionPaper', async (req, res, next) => {
   try {
     // let userProfileBatch = await userController.findBatchOfUserByUsername(username, next)
     let foundExam = await examController.findExamById(examId)
-    foundExam = await examController.populateFieldInExams(foundExam, 'questionPaper')
-    let populatedQuestionPaper = await QBController.populateFieldInQuestionPaper(foundExam.questionPaper, 'questions')
+    foundExam = await examController.populateFieldInExams(foundExam, ['questionPaper'])
+    let populatedQuestionPaper = await QBController.populateFieldInQuestionPaper(foundExam.questionPaper, ['questions'])
 
     var questionPaper = {}
     questionPaper._id = populatedQuestionPaper._id
