@@ -64,18 +64,22 @@ $(function () {
     $.post(url, function (res) {
       if (!res.msg) {
         res.msg = res
-        let $toastContent;
-      if(res.success){
-        $toastContent = $('<span>'+res.msg+'</span>', {class: 'success-toast'})
-        Materialize.toast($toastContent, 5000);
+      }
+      let $toastContent
+      if (res.success) {
+        $toastContent = $('<span>' + res.msg + '</span>', {
+          class: 'success-toast'
+        })
+        Materialize.toast($toastContent, 5000)
         $('.toast').css('background-color', 'green')
         $currentQues.fadeOut('fast', 'linear', function () {
           $currentQues.remove()
         })
-
-      }else{
-        $toastContent = $('<span>'+res.msg+'</span>', {class: 'error-toast'})
-        Materialize.toast($toastContent, 5000);
+      } else {
+        $toastContent = $('<span>' + res.msg + '</span>', {
+          class: 'error-toast'
+        })
+        Materialize.toast($toastContent, 5000)
         $('.toast').css('background-color', 'red')
       }
     })
