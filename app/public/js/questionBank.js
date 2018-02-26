@@ -17,32 +17,18 @@ $(function () {
     onSubjectSelect()
   })
 
-  // $('#chapterName').on('focusout', function (e) {
-  //   emptyInputField('#topicName')
-  //   onChapterSelect()
-  // })
+  function onSubjectSelect (selectedSubjectName) {
+    //     onAutocomplete: onSubjectSelect
+    let className = $('#className').val()
+    let subjectName = selectedSubjectName || $('#subjectName').val()
+    if (subjectName.length > 0 && className.length > 0) {
+      $.get('/admin/questionBank/subject/' + subjectName + '?className=' + className, function (res) {
+        chapters = {}
 
-
-        function onSubjectSelect(selectedSubjectName) {
-         	//     onAutocomplete: onSubjectSelect
-          let className = $('#className').val()
-          let subjectName = selectedSubjectName || $('#subjectName').val()
-          if(subjectName.length > 0 && className.length > 0){
-            $.get('/admin/questionBank/class/' + className + '/subject/' + subjectName, function (res) {
-
-             	chapters = {};
-
-             	if(res.subject){
-                res.subject.chapters.forEach((chapter) => {
-               		chapters[chapter.chapterName] = null
-               	})
-              }
-
-             	$('#chapterName').autocomplete({
-             	    data: chapters
-           	  });
-         	  });
-          }
+        if (res.subject) {
+          res.subject.chapters.forEach((chapter) => {
+            chapters[chapter.chapterName] = null
+          })
         }
 
         $('#chapterName').autocomplete({
