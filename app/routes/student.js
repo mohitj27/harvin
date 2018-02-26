@@ -26,7 +26,7 @@ router.put('/:username', async (req, res, next) => {
     let foundBatch = await batchController.findBatchByBatchName(batchName)
     foundBatch = await batchController.populateFieldsInBatches(foundBatch, ['subjects'])
     let foundUser = await userController.findUserByUsername(username)
-    foundUser = await userController.populateFieldsInUser(foundUser, ['profile'])
+    foundUser = await userController.populateFieldsInUsers(foundUser, ['profile'])
 
     if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
 
@@ -71,7 +71,7 @@ router.post('/loginWithEmail', async (req, res, next) => {
   }
 
   if (foundUser) {
-    foundUser = await userController.populateFieldsInUser(foundUser, ['profile.batch'])
+    foundUser = await userController.populateFieldsInUsers(foundUser, ['profile.batch'])
     if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
     if (!foundUser.profile.batch) return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
     if (foundUser.profile && foundUser.profile.batch && foundUser.profile.batch.batchName) {
@@ -185,7 +185,7 @@ router.get('/:username/results', async (req, res, next) => {
     if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
     if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
 
-    foundUser = await userController.populateFieldsInUser(foundUser, ['profile.results'])
+    foundUser = await userController.populateFieldsInUsers(foundUser, ['profile.results'])
 
     return res.json({
       results: foundUser.profile.results
@@ -203,7 +203,7 @@ router.get('/:username/progresses', async (req, res, next) => {
     let foundUser = await userController.findUserByUsername(username)
     if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
 
-    foundUser = await userController.populateFieldsInUser(foundUser, ['profile'])
+    foundUser = await userController.populateFieldsInUsers(foundUser, ['profile'])
     if (!foundUser.profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
 
     let foundBatch = await userController.findBatchOfUserByUsername(username)

@@ -27,7 +27,7 @@ router.get('/', (req, res, next) => {
 router.get('/users', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   try {
     const foundUsers = await userController.findAllUsers()
-    const populatedUsers = await userController.populateFieldsInUser(foundUsers, ['profile.batch'])
+    const populatedUsers = await userController.populateFieldsInUsers(foundUsers, ['profile.batch'])
     return res.render('userProfileDb', {
       users: populatedUsers
     })
@@ -42,7 +42,7 @@ router.delete('/users/:userId', async (req, res, next) => {
 
   try {
     let foundUser = await userController.findUserByUserId(userId)
-    foundUser = await userController.populateFieldsInUser(foundUser, ['profile', 'profile.results', 'profile.progresses'])
+    foundUser = await userController.populateFieldsInUsers(foundUser, ['profile', 'profile.results', 'profile.progresses'])
 
     const profile = foundUser.profile
     if (profile) {

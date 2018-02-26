@@ -22,7 +22,7 @@ var storage = multer.diskStorage({
 router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   try {
     var foundAssignments = await assignmentController.findAssignmentsByUserId(req.user)
-    foundAssignments = await assignmentController.populateFieldOfAssignment(foundAssignments, ['batch'])
+    foundAssignments = await assignmentController.populateFieldsOfAssignments(foundAssignments, ['batch'])
     return res.render('assignments', {
       foundAssignments
     })
@@ -93,7 +93,7 @@ router.get('/:assignmentId/edit', middleware.isLoggedIn, middleware.isCentreOrAd
   try {
     const foundBatches = await batchController.findBatchByUserId(req.user)
     let foundAssignment = await assignmentController.findAssignmentsId(assignmentId)
-    foundAssignment = await assignmentController.populateFieldOfAssignment(foundAssignment, ['batch'])
+    foundAssignment = await assignmentController.populateFieldsOfAssignments(foundAssignment, ['batch'])
     res.render('editAssignment', {
       assignment: foundAssignment,
       batches: foundBatches
