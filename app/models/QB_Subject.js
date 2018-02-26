@@ -29,6 +29,7 @@ var qb_subjectSchema = new Schema({
 
 qb_subjectSchema.index({
   subjectName: 1,
+  className: 1,
   addedBy: 1
 }, {
   unique: true

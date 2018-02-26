@@ -1,38 +1,43 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-var Promise = require('bluebird');
-Promise.promisifyAll(mongoose);
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var Promise = require('bluebird')
+Promise.promisifyAll(mongoose)
 
-//====subjectSchema====
+//= ===subjectSchema====
 var subjectSchema = new Schema({
-	subjectName: {
-		type: String,
-		required: true
-	},
+  subjectName: {
+    type: String,
+    required: true
+  },
 
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: 'User'
   },
 
-	className: {
-		type: String,
-		required: true
-	},
+  className: {
+    type: String,
+    required: true
+  },
 
-	class: {
-		type: mongoose.Schema.Types.ObjectId,
-			ref: "Class"
-	},
+  class: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Class'
+  },
 
-	chapters: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Chapter"
-	}]
-});
+  chapters: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Chapter'
+  }]
+})
 
-subjectSchema.index({ subjectName: 1, addedBy: 1}, { unique: true });
+subjectSchema.index({
+  subjectName: 1,
+  className: 1,
+  addedBy: 1
+}, {
+  unique: true
+})
 
-
-//subject model
-module.exports = mongoose.model("Subject", subjectSchema);
+// subject model
+module.exports = mongoose.model('Subject', subjectSchema)
