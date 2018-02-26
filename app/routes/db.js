@@ -1,236 +1,158 @@
-var express = require("express"),
-  router = express.Router(),
-  mongoose = require("mongoose"),
-  errors = require("../error"),
-  pluralize = require("pluralize"),
-  moment = require("moment-timezone"),
-  async = require("async"),
-  fs = require("fs"),
-  sharp = require("sharp"),
-  File = require("../models/File.js"),
-  Topic = require("../models/Topic.js"),
-  Chapter = require("../models/Chapter.js"),
-  Subject = require("../models/Subject.js"),
-  Class = require("../models/Class.js"),
-  User = require("../models/User.js"),
-  Assignment = require("../models/Assignment.js"),
-  Exam = require("../models/Exam.js"),
-  Batch = require("../models/Batch.js"),
-  Gallery = require("../models/Gallery"),
-  Visitor= require("../models/Visitor"),
-  Profile = require("../models/Profile.js"),
-  path = require("path"),
-  multer = require("multer"),
-  fs = require("fs"),
-  middleware = require("../middleware");
+const express = require('express')
+const router = express.Router()
+const errorHandler = require('../errorHandler')
+const moment = require('moment-timezone')
+const _ = require('lodash')
+const validator = require('validator')
+const userController = require('../controllers/user.controller')
+const fileController = require('../controllers/file.controller')
+const visitorController = require('../controllers/visitor.controller')
+const galleryController = require('../controllers/gallery.controller')
+const path = require('path')
+const multer = require('multer')
+const middleware = require('../middleware')
 
-var currTime = Date.now().toString() + "__";
+var currTime = Date.now().toString() + '__'
 var storage = multer.diskStorage({
-  destination: __dirname + "/../../../HarvinDb/img",
-  filename: function(req, file, callback) {
-    callback(null, currTime + file.originalname);
+  destination: path.join(__dirname, '/../../../', 'HarvinDb/img'),
+  filename: function (req, file, callback) {
+    callback(null, currTime + file.originalname)
   }
-});
+})
 
-router.get("/", (req, res, next) => {
-  res.render("dbCollection");
-});
+router.get('/', (req, res, next) => {
+  res.render('dbCollection')
+})
 
-router.get(
-  "/users",
-  (req, res, next) => {
-    User.find({})
-      .populate({
-        path: "profile",
-        model: "Profile",
-        populate: {
-          path: "batch",
-          model: "Batch"
-        }
-      })
-      .exec((err, foundUsers) => {
-        if (!err && foundUsers) {
-          res.render("userProfileDb", {
-            users: foundUsers
-          });
-        } else {
-          console.log(err);
-          next(new errors.generic());
-        }
-      });
+router.get('/users', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  try {
+    const foundUsers = await userController.findAllUsers()
+    const populatedUsers = await userController.populateFieldsInUser(foundUsers, ['profile.batch'])
+    return res.render('userProfileDb', {
+      users: populatedUsers
+    })
+  } catch (err) {
+    next(err)
   }
-);
+})
 
-router.get(
-  "/exams",
-  middleware.isLoggedIn,
-  middleware.isAdmin,
-  (req, res, next) => {
-    Exam.find({})
-      .populate({
-        path: "batch",
-        model: "Batch"
-      })
-      .exec((err, foundExams) => {
-        if (!err && foundExams) {
-          res.render("examDb", {
-            exams: foundExams
-          });
-        } else {
-          console.log(err);
-          next(new errors.generic());
-        }
-      });
-  }
-);
+router.delete('/users/:userId', async (req, res, next) => {
+  const userId = req.params.userId || ''
+  if (!userId || !validator.isMongoId(userId)) return errorHandler.errorResponse('INVALID_FIELD', 'user Id', next)
 
-router.get(
-  "/files",
-  middleware.isLoggedIn,
-  middleware.isAdmin,
-  (req, res, next) => {
-    File.find({})
-      .populate({
-        path: "class",
-        model: "Class"
-      })
-      .populate({
-        path: "subject",
-        model: "Subject"
-      })
-      .populate({
-        path: "chapter",
-        model: "Chapter"
-      })
-      .populate({
-        path: "topic",
-        model: "Topic"
-      })
-      .exec((err, foundFiles) => {
-        if (!err && foundFiles) {
-          res.render("fileDb", {
-            files: foundFiles
-          });
-        } else {
-          console.log(err);
-          next(new errors.generic());
-        }
-      });
-  }
-);
+  try {
+    let foundUser = await userController.findUserByUserId(userId)
+    foundUser = await userController.populateFieldsInUser(foundUser, ['profile', 'profile.results', 'profile.progresses'])
 
-router.get('/visitors', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  Visitor.find({}, (err, foundVisitors) => {
-    if (!err && foundVisitors) {
-      res.render('visitorDb', {
-        visitors: foundVisitors
-      })
-    } else {
-      console.log(err)
-      next(new errors.generic())
+    const profile = foundUser.profile
+    if (profile) {
+      const results = foundUser.profile.results
+      const progresses = foundUser.profile.progresses
+      if (results) _.forEach(results, (result) => result.remove())
+      if (progresses) _.forEach(progresses, (progress) => progress.remove())
+      profile.remove()
     }
-  });
-});
 
+    foundUser.remove()
 
-router.get("/gallery/upload", (req, res, next) => {
-  res.render("insertGallery");
-});
-
-router.get("/gallery/all/:category", (req, res, next) => {
-  let categoryToDelete = req.params.category;
-  Gallery.find({
-    category: categoryToDelete
-  }).exec((err, items) => {
-    if (!err) {
-      items.forEach(item => {
-        Gallery.findByIdAndRemove(item._id, (err) => {});
-      });
-      req.flash(
-        "success",
-        "successfully deleted all items from current category"
-      );
-      return res.redirect("/admin/db/gallery");
-    } else {
-      console.log("err", err);
-      return next(new errors.generic());
-    }
-  });
-});
-
-router.get("/gallery/:imageId/delete", (req, res, next) => {
-  let imageIdToDelete = req.params.imageId;
-  if (mongoose.Types.ObjectId.isValid(imageIdToDelete)) {
-    Gallery.findByIdAndRemove(imageIdToDelete).exec((err, item) => {
-      if (err) {
-        console.log("err", err);
-        return next(new errors.generic());
-      }
-      if (!item) {
-        req.flash("error", "Item not found");
-        return res.redirect("/admin/db/gallery");
-      }
-      req.flash("success", "Image deleted successfully");
-      res.redirect("/admin/db/gallery");
-    });
-  } else {
-    req.flash("error", "Invalid ObjectId provided");
-    res.redirect("/admin/db/gallery");
+    req.flash('success', 'User account deleted successfully')
+    res.redirect('/admin/db/users')
+  } catch (err) {
+    next(err)
   }
-});
+})
 
+router.get('/files', async (req, res, next) => {
+  try {
+    const foundFiles = await fileController.findAllFiles()
+    const populatedFiles = await fileController.populateFieldsInFiles(foundFiles, ['class', 'subject', 'chapter', 'topic'])
+    return res.json(populatedFiles)
+  } catch (err) {
+    next(err)
+  }
+})
 
+router.get('/visitors', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  try {
+    const foundVisitors = await visitorController.findAllVisitors()
+    res.render('visitorDb', {
+      visitors: foundVisitors
+    })
+  } catch (err) {
+    next(err)
+  }
+})
 
-router.get("/gallery/all", (req, res, next) => {
-  Gallery.find({}, (err, foundImages) => {
-    if (!err && foundImages) {
-      res.json({
-        images: foundImages
-      });
-    } else {
-      next(new errors.generic());
+router.get('/gallery/upload', (req, res, next) => {
+  res.render('insertGallery')
+})
+
+router.get('/gallery/all/:category', async (req, res, next) => {
+  let categoryToDelete = req.params.category
+
+  try {
+    await galleryController.deleteCategory(categoryToDelete)
+    req.flash('success', 'successfully deleted all items from current category')
+    return res.redirect('/admin/db/gallery')
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/gallery/:imageId/delete', async (req, res, next) => {
+  let imageIdToDelete = req.params.imageId
+  if (!imageIdToDelete || !validator.isMongoId(imageIdToDelete)) return errorHandler.errorResponse('INVALID_FIELD', 'Image id', next)
+
+  try {
+    const deletedImage = galleryController.deleteImageById(imageIdToDelete)
+    if (!deletedImage) {
+      req.flash('error', 'Item not found')
+      return res.redirect('/admin/db/gallery')
     }
-  });
-});
+    req.flash('success', 'Image deleted successfully')
+    res.redirect('/admin/db/gallery')
+  } catch (err) {
+    next(err)
+  }
+})
 
+router.get('/gallery/all', async (req, res, next) => {
+  try {
+    const foundImages = await galleryController.findAllImages()
+    res.json({
+      images: foundImages
+    })
+  } catch (err) {
+    next(err)
+  }
+})
 
+router.get('/gallery', (req, res, next) => {
+  res.render('galleryDb')
+})
 
-router.get("/gallery", (req, res, next) => {
-  res.render("galleryDb");
-});
-
-router.post("/gallery", (req, res, next) => {
+router.post('/gallery', (req, res, next) => {
   var upload = multer({
     storage: storage
-  }).single("userFile");
+  }).single('userFile')
 
-  upload(req, res, function(err) {
-    var fileName = req.file.originalname;
+  upload(req, res, async function (err) {
+    if (err) return next(err)
+    var fileName = req.file.originalname
 
-    //absolute file path
-    var filePath = req.file.path;
-    var srcList = filePath.split(path.sep);
+    // absolute file path
+    var filePath = req.file.path
+    var srcList = filePath.split(path.sep)
 
-    //relative file path (required by ejs file)
-
-    var src = path.join(
-      "/",
-      srcList[srcList.length - 2],
-      srcList[srcList.length - 1]
-    );
+    // relative file path (required by ejs file)
+    var src = path.join('/', srcList[srcList.length - 2], srcList[srcList.length - 1])
 
     var uploadDate = moment(Date.now())
-      .tz("Asia/Kolkata")
-      .format("MMMM Do YYYY, h:mm:ss a");
-    var description = req.body.description;
-    var category = req.body.category;
-    var parsedPath = path.parse(filePath);
-    var thumbPath = path.join(
-      "/",
-      srcList[srcList.length - 2],
-      "thumb",
-      srcList[srcList.length - 1]
-    );
+      .tz('Asia/Kolkata')
+      .format('MMMM Do YYYY, h:mm:ss a')
+    var description = req.body.description
+    var category = req.body.category
+    var thumbPath = path.join('/', srcList[srcList.length - 2], 'thumb', srcList[srcList.length - 1])
 
     var newFile = {
       fileName,
@@ -240,34 +162,17 @@ router.post("/gallery", (req, res, next) => {
       category,
       thumbPath,
       filePath
-    };
+    }
 
-    Gallery.create(newFile, (err, createdFile) => {
-      if (!err && createdFile) {
-        src = fs.createReadStream(createdFile.filePath);
-        var thumbDir = path.join(parsedPath.dir, "thumb");
-        if (!fs.existsSync(thumbDir)) {
-          fs.mkdirSync(thumbDir);
-          console.log("making thumb");
-        } else {
-          console.log("not making thumb");
-        }
+    try {
+      const createdImage = await galleryController.createNewImage(newFile)
+      galleryController.createThumbImg(createdImage)
+      req.flash('success', fileName + ' uploaded successfully')
+      res.redirect('/admin/db/gallery/upload')
+    } catch (err) {
+      next(err)
+    }
+  })
+})
 
-        var thumbPath = path.join(parsedPath.dir, "thumb", currTime + fileName);
-
-        ws = fs.createWriteStream(thumbPath);
-        var sharpStream = sharp().resize(300, 200);
-        src.pipe(sharpStream).pipe(ws);
-
-        req.flash("success", fileName + " uploaded successfully");
-        res.redirect("/admin/db/gallery/upload");
-      } else {
-        console.log("err:", err);
-        req.flash("error", "Couldn't upload the image");
-        res.redirect("/admin/db/gallery/upload");
-      }
-    });
-  });
-});
-
-module.exports = router;
+module.exports = router

@@ -1,42 +1,19 @@
-var express = require("express"),
-    Result = require("../models/Result.js"),
-    errors = require("../error"),
-    middleware = require("../middleware"),
+const express = require('express')
+const resultController = require('../controllers/result.controller')
+const middleware = require('../middleware')
 
-    router = express.Router();
+const router = express.Router()
 
-router.get("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
-  Result.find({})
-      .populate(
-          {
-            path: 'user',
-            model: "User",
-            populate:{
-              path: 'profile',
-              model: 'Profile',
-              populate: {
-                path: 'batch',
-                model: 'Batch'
-              }
-            }
-          }
-      )
-      .populate(
-          {
-            path: 'exam',
-            model: "Exam",
-          }
-      )
-      .exec((err, foundResults) => {
-        if( !err && foundResults) {
+router.get('/', middleware.isLoggedIn, middleware.isAdmin, async (req, res, next) => {
+  try {
+    let foundResults = await resultController.findAllResults()
+    foundResults = await resultController.populateFieldsInResults(foundResults, ['user.profile.batch', 'exam'])
+    res.render('resultDb', {
+      results: foundResults
+    })
+  } catch (err) {
+    next(err)
+  }
+})
 
-          res.render('resultDb', {results: foundResults});
-        }else{
-          console.log('err', err);
-          next(new errors.generic());
-        }
-      });
-});
-
-module.exports = router;
-
+module.exports = router

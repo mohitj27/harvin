@@ -1,145 +1,84 @@
-var express = require("express"),
-	async = require("async"),
+const express = require('express')
+const batchController = require('../controllers/batch.controller')
+const subjectController = require('../controllers/subject.controller')
+const errorHandler = require('../errorHandler')
+const middleware = require('../middleware')
+const router = express.Router()
+const validator = require('validator')
 
-	Batch = require("../models/Batch"),
-	Subject = require("../models/Subject"),
-	Center = require("../models/Center"),
-	errors = require("../error"),
-	middleware = require("../middleware"),
+router.get('/updateBatch', middleware.isLoggedIn, middleware.isCentreOrAdmin, async function (req, res, next) {
+  try {
+    const foundSubjects = await subjectController.findSubjectByUserId(req.user)
+    res.render('createBatch', {
+      subjects: foundSubjects
+    })
+  } catch (e) {
+    next(e)
+  }
+})
 
-	router = express.Router();
+router.post('/updateBatch', middleware.isLoggedIn, middleware.isCentreOrAdmin, async function (req, res, next) {
+  res.locals.flashUrl = req.originalUrl
 
-router.get("/updateBatch", middleware.isLoggedIn, middleware.isCentreOrAdmin, function (req, res, next) {
-	Subject.find({atCenter: req.user._id}, function (err, foundSubjects) {
-				if (err) {
-					console.log(err);
-					next(new errors.generic());
-				} else {
-					res.render("createBatch", {
-						subjects: foundSubjects
-					});
-				}
-			});
-});
+  var subjectId = req.body.subjectId
+  var batchName = req.body.batchName || ''
+  var batchDesc = req.body.batchDesc
 
-router.post("/updateBatch", middleware.isLoggedIn, middleware.isCentreOrAdmin, function (req, res, next) {
-	var subjectId = req.body.subjectId;
-	var batchName = req.body.batchName;
-	var batchDesc = req.body.batchDesc;
+  if (!batchName || validator.isEmpty(batchName)) return errorHandler.errorResponse('INVALID_FIELD', 'batch name', next)
 
-	async.waterfall(
-		[
-			function (callback) {
-				Subject.find({
-					_id:{$in:subjectId}
-				}, function (err, foundSubjects) {
-					if (!err && foundSubjects) {
-						callback(null, foundSubjects);
+  const newBatch = {
+    batchName,
+    batchDesc
+  }
 
-					} else {
-						console.log(err);
-						callback(err);
-					}
-				});
-			},
+  try {
+    const foundSubjects = await subjectController.findSubjectsByIds(subjectId)
+    await batchController.createOrUpdateSubjectsToBatchByBatchNameAndUserId(newBatch, req.user, foundSubjects)
+    req.flash('success', 'Batch updated successfully')
+    res.redirect(req.originalUrl)
+  } catch (e) {
+    next(e)
+  }
+})
 
-			function (foundSubjects, callback) {
-				Batch.findOneAndUpdate({
-						batchName: batchName
-					}, {
-						$set: {
-							batchName: batchName,
-							subjects: foundSubjects,
-							batchDesc: batchDesc,
-							atCenter: req.user._id
-						}
-					}, {
-						upsert: true,
-						new: true,
-						setDefaultsOnInsert: true
-					},
-					function (err, createdBatch) {
-						if (!err && createdBatch) {
-							callback(null, createdBatch)
-						}else{
-							console.log('err', err);
-							callback(err)
-						}
-					}
-				);
-			},
-			function (createdBatch, callback) {
-				Center.findOneAndUpdate(req.user.username, {
-					$addToSet:{
-						batches: createdBatch._id
-					},
-					$set: {
-						centerName: req.user.username
-					}
-				}, {
-					upsert: true,
-					new: true,
-					setDefaultsOnInsert: true
-				}, function (err, updatedCenter) {
-						if(!err && updatedCenter){
-							callback(null)
-							req.flash("success", "Batch updated successfully");
-							res.redirect("/admin/batches/updateBatch");
-						} else{
-							console.log(err);
-							callback(err);
-						}
-				})
-			}
-		],
-		function (err, result) {
-			if (err) {
-				console.log(err);
-				next(new errors.generic);
-			}
-		}
-	);
-});
-
-//finding batch with given batchName and populating the subject field in it
-router.get("/:batchName", function (req, res, next) {
-	// console.log('route');
-	Batch.findOne({
-			batchName: req.params.batchName
-		})
-		.populate({
-			path: "subjects",
-			model: "Subject"
-		})
-		.exec(function (err, batch) {
-			if (err) {
-				req.flash("error", "Couldn't find the chosen Batch");
-				res.redirect("/admin/batch");
-			} else {
-				// console.log('batch', batch);
-				res.json({
-					batch: batch
-				});
-			}
-		});
-});
+// finding batch with given batchName and populating the subject field in it
+router.get('/:batchName', async function (req, res, next) {
+  try {
+    const foundBatch = await batchController.findBatchByBatchName(req.params.batchName)
+    foundBatch.populate('subjects', (err, foundBatch) => {
+      if (err) return next(err)
+      else {
+        return res.json({
+          batch: foundBatch
+        })
+      }
+    })
+  } catch (e) {
+    next(e)
+  }
+})
 
 // Providing list of batches
-router.get('/', (req, res, next) => {
-	if(req.user){
-		Batch.find({atCenter: req.user._id}, (err, foundBatches) => {
-			if(!err && foundBatches) {
-				res.json({batches: foundBatches});
-			}
-		});
-	} else {
-		Batch.find({}, (err, foundBatches) => {
-			if(!err && foundBatches) {
-				res.json({batches: foundBatches});
-			}
-		});
-	}
+router.get('/', async (req, res, next) => {
+  let foundBatches
 
-});
+  if (req.user) {
+    try {
+      foundBatches = await batchController.findBatchByUserId(req.user)
+    } catch (e) {
+      next(e)
+    }
+  } else {
+    try {
+      foundBatches = await batchController.findAllBatch()
+    } catch (e) {
+      next(e)
+    }
+  }
 
-module.exports = router;
+  res.json({
+    batches: foundBatches
+  })
+})
+
+module.exports = router

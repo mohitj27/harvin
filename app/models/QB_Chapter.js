@@ -1,22 +1,35 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const Promise = require('bluebird')
+Promise.promisifyAll(mongoose)
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
-//====chapterSchema====
-var qb_chapterSchema = new Schema(
-	{
-		chapterName:{
-			type: String,
-            unique:true,
-            required:true
-		},
-		questions:[
-			{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Question"
-            }
-		]
-	}
-);
+//= ===chapterSchema====
+var qb_chapterSchema = new Schema({
+  chapterName: {
+    type: String,
+    required: true
+  },
 
-//chapter model
-module.exports = mongoose.model("QB_Chapter", qb_chapterSchema);
+  addedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+
+  questions: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Question'
+  }]
+})
+
+qb_chapterSchema.index({
+  chapterName: 1,
+  addedBy: 1
+}, {
+  unique: true
+})
+
+qb_chapterSchema.plugin(deepPopulate)
+
+// chapter model
+module.exports = mongoose.model('QB_Chapter', qb_chapterSchema)

@@ -86,10 +86,17 @@ const invalidField = function (fieldName, next) {
   generatError(400, "INVALID " + fieldName.toUpperCase(), "Bad request! " + fieldName + " not provided or invalid.", next);
 }
 
+const notFound = function (fieldName, next) {
+  generatError(404, "NOT FOUND " + fieldName.toUpperCase(), fieldName + " not found or undefined.", next);
+}
+
 const errorResponse = function(name, field, next) {
   switch (name) {
     case "INVALID_FIELD":
       invalidField(field, next);
+      break;
+    case "NOT_FOUND":
+      notFound(field, next);
       break;
     case "NOT_A_CENTER":
       notCenter(next);

@@ -3,7 +3,7 @@
 		<div class="container">
 			<h3 style="text-align: center">Upload A New Assignment</h1>
 				<hr>
-			<form action="/admin/assignment/uploadAssignment" enctype="multipart/form-data" method="post">
+			<form action="/admin/assignment" enctype="multipart/form-data" method="post">
 				<div class="row">
 					<div class="input-field col s6">
 						<input required id="assignmentName" type="text" name="assignmentName"  class="validate">
@@ -19,7 +19,7 @@
               <div class="file-field input-field">
                 <div class="btn white green-text">
                   <span>File</span>
-                  <input required name="userFile" type="file">
+                  <input name="userFile" required type="file">
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text">
@@ -41,5 +41,5 @@
 			</form>
 		</div>
 		</main>
-		
+
 		<% include partials/footer.ejs%>

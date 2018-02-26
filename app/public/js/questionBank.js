@@ -1,22 +1,26 @@
 $(function () {
+  function emptyInputField (toEmpty) {
+    $(toEmpty).val('')
+    $(toEmpty).autocomplete({
+      data: {},
+      onAutocomplete: onSubjectSelect
+    })
+  }
 
-        function emptyInputField(toEmpty){
-          $(toEmpty).val('')
-          $(toEmpty).autocomplete({
-         	    data: {},
-         	    onAutocomplete: onSubjectSelect
-       	  });
-        }
+  $('#className').on('focusout', function (e) {
+    emptyInputField('#subjectName')
+    onClassSelect()
+  })
 
-        $('#className').on('focusout', function (e) {
-          emptyInputField('#subjectName')
-          onClassSelect()
-        })
+  $('#subjectName').on('focusout', function (e) {
+    emptyInputField('#chapterName')
+    onSubjectSelect()
+  })
 
-        $('#subjectName').on('focusout', function (e) {
-          emptyInputField('#chapterName')
-          onSubjectSelect()
-        })
+  // $('#chapterName').on('focusout', function (e) {
+  //   emptyInputField('#topicName')
+  //   onChapterSelect()
+  // })
 
 
         function onSubjectSelect(selectedSubjectName) {
@@ -41,39 +45,44 @@ $(function () {
           }
         }
 
-        function onClassSelect(selectedClassName) {
-          let className = selectedClassName || $('#className').val()
-          if(className.length > 0 ){
-            $.get('/admin/questionBank/class/' + className, function (res) {
+        $('#chapterName').autocomplete({
+          data: chapters
+        })
+      })
+    }
+  }
 
-             	subjects = {};
-             	if(res.classs){
-                res.classs.subjects.forEach((subject) => {
-               		subjects[subject.subjectName] = null
-               	})
-              }
-
-             	$('#subjectName').autocomplete({
-             	    data: subjects,
-             	    onAutocomplete: onSubjectSelect
-           	  });
-         	  });
-          }
+  function onClassSelect (selectedClassName) {
+    let className = selectedClassName || $('#className').val()
+    if (className.length > 0) {
+      $.get('/admin/questionBank/class/' + className, function (res) {
+        subjects = {}
+        if (res.classs) {
+          res.classs.subjects.forEach((subject) => {
+            subjects[subject.subjectName] = null
+          })
         }
 
-        $.get('/admin/questionBank/classes', function (res) {
-
-         	classes = {};
-
-         	if(res.classes){
-            res.classes.forEach((classs) => {
-           		classes[classs.className] = null
-           	})
-          }
-
-         	$('#className').autocomplete({
-         	    data: classes,
-         	    onAutocomplete: onClassSelect
-         	  });
-         })
+        $('#subjectName').autocomplete({
+          data: subjects,
+          onAutocomplete: onSubjectSelect
+        })
       })
+    }
+  }
+
+  $.get('/admin/questionBank/classes', function (res) {
+    classes = {}
+
+    if (res.classes) {
+      res.classes.forEach((classs) => {
+        classes[classs.className] = null
+      })
+    }
+
+    $('#className').autocomplete({
+      data: classes,
+      onAutocomplete: onClassSelect
+    })
+  })
+})

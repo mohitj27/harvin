@@ -85,17 +85,6 @@ $(function() {
       refreshAns();
     });
   });
-
-  $('.refresh').on('click', function() {
-    refreshAns();
-  });
-
-  //=========================================
-  //*****QUESTION BANK*******************
-  //=========================================
-  //populating subject option after class has been chosen
-
-
 });
 
 function refreshAns() {
