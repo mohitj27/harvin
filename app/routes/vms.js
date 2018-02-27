@@ -1,22 +1,22 @@
-const express = require('express'),
-  async = require('async'),
-  fs = require('fs'),
-  moment = require('moment-timezone'),
-  errors = require('../error'),
-  errorHandler = require('../errorHandler'),
-  middleware = require('../middleware'),
-  sharp = require('sharp'),
-  request = require('request'),
-  Gallery = require('./../models/Gallery'),
-  Visitor = require('./../models/Visitor'),
-  Blog = require('./../models/Blog'),
-  User = require('./../models/User'),
-  vmsController = require('./../controllers/vms.controller'),
-  courseController = require('./../controllers/courses.controller'),
-  validator = require('validator'),
-  router = express.Router(),
-  Promise = require('bluebird');
-mongoose.Promise = Promise;
+const express = require('express')
+const async = require('async')
+const fs = require('fs')
+const moment = require('moment-timezone')
+const errors = require('../error')
+const errorHandler = require('../errorHandler')
+const middleware = require('../middleware')
+const sharp = require('sharp')
+const request = require('request')
+const Gallery = require('./../models/Gallery')
+const Visitor = require('./../models/Visitor')
+const Blog = require('./../models/Blog')
+const User = require('./../models/User')
+const vmsController = require('./../controllers/vms.controller')
+const courseController = require('./../controllers/courses.controller')
+const validator = require('validator')
+const router = express.Router()
+Promise = require('bluebird')
+mongoose.Promise = Promis
 
 router.get('/test', (req, res, next) => {
   res.render('testGallery')
@@ -24,18 +24,18 @@ router.get('/test', (req, res, next) => {
 
 router.get('/', (req, res, next) => {
   Gallery.find({
-      category: {
-        $in: ['results']
-      }
-    })
+    category: {
+      $in: ['results']
+    }
+  })
     .exec((err, foundStudents) => {
       if (!err && foundStudents) {
         res.render('vmsLanding', {
           students: foundStudents
-        });
+        })
       } else {
-        console.log(err);
-        next(new errors.generic());
+        console.log(err)
+        next(new errors.generic())
       }
     })
 })
@@ -43,6 +43,7 @@ router.get('/', (req, res, next) => {
 router.get('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res) => {
   res.render('newVisitor')
 })
+
 router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   const name = req.body.name
   const phone = req.body.phone || ''
@@ -128,48 +129,47 @@ router.get('/courses', (req, res, next) => {
 router.get('/courses-list', async (req, res, next) => {
   if (!req.query.title) {
     try {
-      const foundCourses =await courseController.findAllCourses()
-      res.render('courses-list',{foundCourses})
+      const foundCourses = await courseController.findAllCourses()
+      res.render('courses-list', {
+        foundCourses
+      })
     } catch (err) {
       next(err)
     }
-
-    return
   } else {
     try {
-        const foundCourse=await coursesCont.findOneCourseUsingName((req.query.title))
-        res.render('courses-desc',{foundCourse})
+      const foundCourse = await courseController.findOneCourseUsingName((req.query.title))
+      res.render('courses-desc', {
+        foundCourse
+      })
     } catch (err) {
       next(err)
     }
   }
 })
 
-
-
-router.get('/gallery/category', function(req, res, next) {
-  let category = req.query.category;
+router.get('/gallery/category', function (req, res, next) {
+  let category = req.query.category
   let limit = req.query.limit
   Gallery.find({
-      category: {
-        $in: category
-      }
-    })
+    category: {
+      $in: category
+    }
+  })
     .sort({
       uploadDate: -1
     })
     .limit(parseInt(limit))
-    .exec(function(err, gallery) {
+    .exec(function (err, gallery) {
       if (err) {
         console.log(err)
       } else {
         res.json({
           gallery: gallery
-        });
+        })
       }
-    });
-});
-
+    })
+})
 
 router.get('/gallery', (req, res, next) => {
   Gallery.find({}, (err, foundImages) => {
