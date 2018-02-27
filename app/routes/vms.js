@@ -1,22 +1,19 @@
 const express = require('express')
-const async = require('async')
 const fs = require('fs')
 const moment = require('moment-timezone')
 const errors = require('../error')
 const errorHandler = require('../errorHandler')
 const middleware = require('../middleware')
-const sharp = require('sharp')
-const request = require('request')
+const mongoose = require('mongoose')
 const Gallery = require('./../models/Gallery')
 const Visitor = require('./../models/Visitor')
 const Blog = require('./../models/Blog')
-const User = require('./../models/User')
 const vmsController = require('./../controllers/vms.controller')
 const courseController = require('./../controllers/courses.controller')
 const validator = require('validator')
 const router = express.Router()
 Promise = require('bluebird')
-mongoose.Promise = Promis
+mongoose.Promise = Promise
 
 router.get('/test', (req, res, next) => {
   res.render('testGallery')
