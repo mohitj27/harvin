@@ -123,7 +123,7 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
       setDefaultsOnInsert: true
     }, function (err, updatedBlog) {
       if (!err) {
-        console.log('updatedBlog', updatedBlog)
+        // console.log('updatedBlog', updatedBlog)
         res.redirect('/admin/blog/all')
       } else {
         res.redirect('/admin/blog/new')
@@ -158,7 +158,7 @@ router.post('/:htmlFilePath/images', (req, res) => {
   },
   function (err, updatedBlog) {
     if (!err) {
-      console.log('updatedBlog', updatedBlog)
+      // console.log('updatedBlog', updatedBlog)
       res.sendStatus(200)
     } else {
       console.log('err', err)
@@ -182,18 +182,18 @@ router.delete('/delete/:blogTitle', (req, res) => {
 function checkBlogDir () {
   if (!fs.existsSync(BLOG_DIR)) {
     fs.mkdirSync(BLOG_DIR)
-    console.log('making blog dir')
+    // console.log('making blog dir')
   } else {
-    console.log('not making blog dir')
+    // console.log('not making blog dir')
   }
 }
 
 function checkBlogImageDir () {
   if (!fs.existsSync(BLOG_IMAGE_DIR)) {
     fs.mkdirSync(BLOG_IMAGE_DIR)
-    console.log('making blog dir')
+    // console.log('making blog dir')
   } else {
-    console.log('not making blog dir')
+    // console.log('not making blog dir')
   }
 }
 module.exports = router

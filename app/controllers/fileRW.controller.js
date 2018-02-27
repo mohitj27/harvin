@@ -40,9 +40,9 @@ const fileWritePromise=(location,fileName,data)=>{
 function checkAndCreateLocation(location) {
   if (!fs.existsSync(location)) {
     fs.mkdirSync(location)
-    console.log("making dir",location)
+    // console.log("making dir",location)
   } else {
-    console.log("not making dir",location)
+    // console.log("not making dir",location)
   }
 }
 module.exports={fileWritePromise,

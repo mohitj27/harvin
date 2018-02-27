@@ -225,7 +225,7 @@ router.get('/blog', (req, res, next) => {
         modal: 'User'
       })
       .exec((err, foundBlog) => {
-        console.log('foundBlog', foundBlog)
+        // console.log('foundBlog', foundBlog)
         if (err) {
           return console.log('err', err)
         } else {
