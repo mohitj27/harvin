@@ -1,37 +1,40 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-var Promise = require('bluebird');
-Promise.promisifyAll(mongoose);
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var Promise = require('bluebird')
+Promise.promisifyAll(mongoose)
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
-//====questionSchema====
+//= ===questionSchema====
 var questionSchema = new Schema({
-	question: {
-		type: String,
-		required: true
-	},
+  question: {
+    type: String,
+    required: true
+  },
 
-	newOptions: Object,
+  newOptions: Object,
 
-	options: [{
-		type: String,
-		require: true
-	}],
+  options: [{
+    type: String,
+    require: true
+  }],
 
-	answersIndex: [{
-		type: Number,
-		require: true
-	}],
+  answersIndex: [{
+    type: Number,
+    require: true
+  }],
 
-	answers: [{
-		type: String,
-		required: true,
-	}],
+  answers: [{
+    type: String,
+    required: true
+  }],
 
-	addedBy: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "User"
-	}
-});
+  addedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
+})
 
-//Question model
-module.exports = mongoose.model("Question", questionSchema);
+questionSchema.plugin(deepPopulate)
+
+// Question model
+module.exports = mongoose.model('Question', questionSchema)

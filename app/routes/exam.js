@@ -186,6 +186,7 @@ router.delete('/:examId', middleware.isLoggedIn, middleware.isCentreOrAdmin, asy
 })
 
 // TODO: remove question functionality only remove question from question paper not from question bank
+// TODO: do not update existing exam, instead give erro
 
 router.get('/:examId/question-paper', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   res.locals.flashUrl = req.headers.referer

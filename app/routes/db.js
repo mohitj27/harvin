@@ -66,7 +66,9 @@ router.get('/files', async (req, res, next) => {
   try {
     const foundFiles = await fileController.findAllFiles()
     const populatedFiles = await fileController.populateFieldsInFiles(foundFiles, ['class', 'subject', 'chapter', 'topic'])
-    return res.json(populatedFiles)
+    return res.render('fileDb', {
+      files: populatedFiles
+    })
   } catch (err) {
     next(err)
   }

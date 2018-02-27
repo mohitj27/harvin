@@ -1,5 +1,8 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
+var Promise = require('bluebird')
+Promise.promisifyAll(mongoose)
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
 //= ===progressSchema====
 var progressSchema = new Schema({
@@ -25,6 +28,8 @@ var progressSchema = new Schema({
     required: true
   }
 })
+
+progressSchema.plugin(deepPopulate)
 
 // Progress model
 module.exports = mongoose.model('Progress', progressSchema)

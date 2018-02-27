@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 var Promise = require('bluebird')
 Promise.promisifyAll(mongoose)
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
 //= ===subjectSchema====
 var classSchema = new Schema({
@@ -20,6 +21,8 @@ var classSchema = new Schema({
     ref: 'Subject'
   }]
 })
+
+classSchema.plugin(deepPopulate)
 
 classSchema.index({
   className: 1,
