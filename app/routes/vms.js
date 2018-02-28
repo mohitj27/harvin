@@ -227,7 +227,7 @@ router.get('/blog', (req, res, next) => {
       .exec((err, foundBlog) => {
         // console.log('foundBlog', foundBlog)
         if (err) {
-          return console.log('err', err)
+          return next(err)
         } else {
           Blog.find()
             .sort({

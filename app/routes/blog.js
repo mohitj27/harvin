@@ -13,7 +13,7 @@ var express = require('express'),
   promise = require('bluebird')
 
 io.on('connection', function (socket) {
-  console.log('connected')
+  // console.log('connected')
 })
 
 const BLOG_DIR = path.normalize(__dirname + '/../../../HarvinDb/blog/')
@@ -119,7 +119,8 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
         author: req.user,
         publish: req.body.publish,
         draft: req.body.draft,
-        uploadDate
+        uploadDate,
+        uploadDateUnix: Date.now()
       }
     }, {
       upsert: true,
@@ -138,10 +139,11 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
 })
 
 router.post('/:htmlFilePath/images', (req, res) => {
-  console.log('body', req.body)
+  // console.log('body', req.body)
   // console.log('files', req.files);
 
   let htmlFilePath = req.params.htmlFilePath
+  let uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY')
 
   checkBlogDir()
   checkBlogImageDir()
@@ -153,7 +155,8 @@ router.post('/:htmlFilePath/images', (req, res) => {
     },
     $set: {
       author: req.user,
-      uploadDate: moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY')
+      uploadDate,
+      uploadDateUnix: Date.now()
     }
   }, {
     upsert: true,

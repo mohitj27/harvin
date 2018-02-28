@@ -33,9 +33,6 @@ let files = {},
     slice: 0,
   };
 io.on('connection', function(socket) {
-
-  console.log('a user conn sadaected');
-
   socket.on('end upload',()=>{files={}})
   socket.on('slice upload', (data) => {
 

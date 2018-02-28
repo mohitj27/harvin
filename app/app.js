@@ -80,7 +80,6 @@ let struct = {
 }
 
 io.on('connection', function (socket) {
-  console.log('a user conn sadaected')
   socket.on('end upload', () => {
     files = {}
   })
