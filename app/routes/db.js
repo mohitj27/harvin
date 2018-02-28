@@ -49,7 +49,7 @@ router.get('/users', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (r
 
 //   try {
 //     let foundUser = await userController.findUserByUserId(userId)
-//     if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+//     if (!foufndUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
 
 //     foundUser = await userController.populateFieldsInUsers(foundUser, ['profile'])
 //     let profile = foundUser.profile

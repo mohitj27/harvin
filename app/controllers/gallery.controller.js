@@ -45,7 +45,6 @@ const createNewImage = function (newImage) {
 }
 
 const createThumbImg = function (createdImage) {
-  console.log('img', createdImage)
   let src = fs.createReadStream(createdImage.filePath)
   let parsedPath = path.parse(createdImage.filePath)
   var thumbDir = path.join(parsedPath.dir, 'thumb')

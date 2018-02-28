@@ -7,7 +7,7 @@
   font-family: "Open Sans', sans-serif !important";
 }
 
-.blgo-content {
+.content {
   width: inherit;
   height: 450px;
   background-repeat: no-repeat;
@@ -20,4 +20,8 @@
 
 aside{
   margin-left: 60px !important;
+}
+
+#related-post-card{
+  min-height: 380px;
 }
