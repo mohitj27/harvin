@@ -5,6 +5,7 @@
     <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon" />
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
+    <link rel="stylesheet" href="/css/blogTheme.css">
 
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
@@ -28,10 +29,10 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
     <div class="middle-content pt-50">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <!-- ====================== Main .blog-area ====================== -->
-                <main class="col-xl-8 col-lg-8 col-md-7 blog-details-area">
+                <main class="col-xl-9 col-lg-8 col-md-7 blog-details-area blog-area">
                     <div class="section">
                         <div id="content" class="container">
                         </div>
@@ -99,52 +100,27 @@
                     <div class="releted-post">
                         <h2 class="widget-title">RELATED POST</h2>
                         <div class="row align-items-end">
-                            <!-- Single Blog -->
-                            <article class="card single-blog text-center border-0 mb-4 mb-lg-0 col-lg-4 col-sm-6">
-                                <a href="standard_blog_detail.html#">
-                                    <mark class="catagory">Life Style</mark>
-                                    <h3 class="card-title">Rusted Wagon with Grafitti Art Alone in The</h3>
-                                    <!-- Blog Content-->
-                                    <div class="blgo-content">
-                                        <img class="card-img rounded-0" src="/assets/img/blog-details/3.jpg" alt="Blog Image">
-                                        <span class="posted-date">26 Jan, 2016</span>
-                                    </div>
-                                </a>
-                            </article>
+                            <%foundBlogs.forEach(function(blog){%>
+                                <!-- Single Blog -->
+                                <article class="card single-blog text-center border-0 mb-3 mb-lg-0 col l3 offset-l1 col s6" id="related-post-card">
+                                    <a href="/blog/?title=<%=blog.blogTitle%>">
+                                        <h3 class="card-title"><%=blog.blogTitle%></h3>
+                                        <!-- Blog Content-->
+                                        <div class="blgo-content">
+                                            <img class="card-img rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image">
+                                            <span class="posted-date"><%=blog.uploadDate%></span>
+                                        </div>
+                                    </a>
+                                </article>
                             <!-- //Single Blog -->
-                            <!-- Single Blog -->
-                            <article class="card single-blog text-center border-0 mb-4 mb-lg-0 col-lg-4 col-sm-6">
-                                <a href="standard_blog_detail.html#">
-                                    <mark class="catagory">Life Style</mark>
-                                    <h3 class="card-title">Young Woman Walking Alone in The Park in Weather</h3>
-                                    <!-- Blog Content-->
-                                    <div class="blgo-content">
-                                        <img class="card-img rounded-0" src="/assets/img/blog-details/4.jpg" alt="Blog Image">
-                                        <span class="posted-date">26 Jan, 2016</span>
-                                    </div>
-                                </a>
-                            </article>
-                            <!-- //Single Blog -->
-                            <!-- Single Blog -->
-                            <article class="card single-blog text-center border-0 mb-4 mb-lg-0 col-lg-4 col-sm-6">
-                                <a href="standard_blog_detail.html#">
-                                    <mark class="catagory">Life Style</mark>
-                                    <h3 class="card-title">Iguluna Showing her face in a Forest</h3>
-                                    <!-- Blog Content-->
-                                    <div class="blgo-content">
-                                        <img class="card-img rounded-0" src="/assets/img/blog-details/5.jpg" alt="Blog Image">
-                                        <span class="posted-date">26 Jan, 2016</span>
-                                    </div>
-                                </a>
-                            </article>
-                            <!-- //Single Blog -->
+                            <%})%>
                         </div>
                     </div>
                     <!-- ================= //Releted post ================= -->
                 </main>
                 <!-- ====================== //Main .blog-area ====================== -->
                 <!-- ====================== Aside .middle-sidebar ====================== -->
-                <aside class="col-xl-3 col-lg-4 col-md-5 middle-sidebar ml-xl-auto pl-lg-0 pl-md-0 mt-sm-5 mt-lg-0">
+                <aside class="col-xl-2 col-lg-2 col-md-2 middle-sidebar ml-xl-auto pl-lg-0 pl-md-0 mt-sm-5 mt-lg-0">
                     <div class="row">
 
                         <!-- Sidebar Widget, Latest Post-->

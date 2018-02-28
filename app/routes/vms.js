@@ -229,17 +229,31 @@ router.get('/blog', (req, res, next) => {
         if (err) {
           return console.log('err', err)
         } else {
-          fs.readFile(__dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath, function (err, data) {
-            if (err) throw err
-            res.render('standard_blog_detail', {
-              blogContent: data,
-              foundBlog
+          Blog.find()
+            .sort({
+              'uploadDateUnix': -1
             })
-          })
+            .limit(3)
+            .exec((err, foundBlogs) => {
+              if (err) return next(err)
+              else {
+                fs.readFile(__dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath, function (err, data) {
+                  if (err) throw err
+                  res.render('standard_blog_detail', {
+                    blogContent: data,
+                    foundBlog,
+                    foundBlogs
+                  })
+                })
+              }
+            })
         }
       })
   } else {
     Blog.find({})
+      .sort({
+        'uploadDateUnix': -1
+      })
       .populate({
         path: 'author',
         modal: 'User'
@@ -250,7 +264,7 @@ router.get('/blog', (req, res, next) => {
           next(new errors.generic())
         } else {
           res.render('blogTheme', {
-            foundBlogs: foundBlogs.reverse()
+            foundBlogs: foundBlogs
           })
         }
       })

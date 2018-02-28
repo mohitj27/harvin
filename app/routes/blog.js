@@ -24,14 +24,18 @@ router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res,
 })
 
 router.get('/all', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  Blog.find({}, (err, foundBlog) => {
-    if (err) console.log(err)
-    else {
-      res.render('blogList', {
-        blogs: foundBlog.reverse()
-      })
-    }
-  })
+  Blog.find({})
+    .sort({
+      'uploadDateUnix': -1
+    })
+    .exec((err, foundBlog) => {
+      if (err) console.log(err)
+      else {
+        res.render('blogList', {
+          blogs: foundBlog
+        })
+      }
+    })
 })
 
 const editBlogPromise = function editBlogPromise (blogTitle) {
