@@ -5,6 +5,7 @@ const moment = require('moment-timezone')
 const _ = require('lodash')
 const validator = require('validator')
 const userController = require('../controllers/user.controller')
+const profileController = require('../controllers/profile.controller')
 const fileController = require('../controllers/file.controller')
 const visitorController = require('../controllers/visitor.controller')
 const galleryController = require('../controllers/gallery.controller')
@@ -36,12 +37,41 @@ router.get('/users', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (r
   }
 })
 
+// router.get('/users/:userId/edit', async (req, res, next) => {
+//   const userId = req.params.userId || ''
+//   const fullName = req.body.fullName || ''
+//   const emailId = req.body.emailId || ''
+//   const phone = req.body.phone || ''
+//   const batchName = req.body.batch || ''
+//   const role = req.body.role
+
+//   if (!userId || !validator.isMongoId(userId)) return errorHandler.errorResponse('INVALID_FIELD', 'user Id', next)
+
+//   try {
+//     let foundUser = await userController.findUserByUserId(userId)
+//     if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+
+//     foundUser = await userController.populateFieldsInUsers(foundUser, ['profile'])
+//     let profile = foundUser.profile
+//     if (!profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+
+//     profile = await profileController.populateFieldsInProfiles(profile, ['batch'])
+
+
+//     return res.render(200)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
+
 router.delete('/users/:userId', async (req, res, next) => {
   const userId = req.params.userId || ''
   if (!userId || !validator.isMongoId(userId)) return errorHandler.errorResponse('INVALID_FIELD', 'user Id', next)
 
   try {
     let foundUser = await userController.findUserByUserId(userId)
+    if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+
     foundUser = await userController.populateFieldsInUsers(foundUser, ['profile', 'profile.results', 'profile.progresses'])
 
     const profile = foundUser.profile
@@ -55,8 +85,7 @@ router.delete('/users/:userId', async (req, res, next) => {
 
     foundUser.remove()
 
-    req.flash('success', 'User account deleted successfully')
-    res.redirect('/admin/db/users')
+    return res.sendStatus(200)
   } catch (err) {
     next(err)
   }

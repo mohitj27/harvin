@@ -3,21 +3,19 @@ $(function () {
   $errorCard = $('#error-card')
   $successCard = $('#success-card')
 
-
   if ($errorCard.length > 0) {
     Materialize.toast($errorCard.text(), 5000)
-    $('.toast').css('background-color', '#f44336')
+    $('.toast:last').css('background-color', '#f44336')
   }
 
   if ($successCard.length > 0) {
     Materialize.toast($successCard.text(), 5000)
-
-    $('.toast').css('background-color', '#13b38b')
+    $('.toast:last').css('background-color', '#13b38b')
   }
 
   $('select').material_select()
 
-  //Date picker initialization
+  // Date picker initialization
   if ($('.datepicker').length !== 0) {
     $('.datepicker').pickadate({
       selectMonths: true, // Creates a dropdown to control month
@@ -52,11 +50,11 @@ $(function () {
   $('.collapsible').collapsible()
   $('.button-collapse').sideNav('show')
 
-  //=========================================
-  //*****EXTRAS*******************
-  //=========================================
+  //= ========================================
+  //* ****EXTRAS*******************
+  //= ========================================
   // setting options for question
-  //add options handler
+  // add options handler
   var next = 1
   $('.add-more').off().click(function (e) {
     // e.preventDefault();
@@ -73,7 +71,7 @@ $(function () {
     $('#count').val(next)
     refreshAns()
 
-    //remove option click handler
+    // remove option click handler
     $('.remove-me').off().click(function (e) {
       e.preventDefault()
       console.log('remove', e)
@@ -89,7 +87,7 @@ $(function () {
 function refreshAns () {
   var options = []
 
-  //selecting the not empty input
+  // selecting the not empty input
   $opt = $('#addNewQuestion input[type=text]')
     .filter(function (index) {
       if (this.value.length > 0) {
@@ -97,7 +95,7 @@ function refreshAns () {
       }
     })
 
-  //setting up options string
+  // setting up options string
   for (var i = 0; i < $opt.length; i++) {
     options.push($opt[i].value)
   }
