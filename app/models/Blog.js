@@ -13,6 +13,10 @@ let BlogSchema = new Schema({
     type: String,
     default:Date.now().toString()
   },
+  uploadDateUnix: {
+    type: String,
+    default:Date.now().toString()
+  },
   hashName:{
     type:String,
     required:true

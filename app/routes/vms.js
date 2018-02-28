@@ -240,6 +240,9 @@ router.get('/blog', (req, res, next) => {
       })
   } else {
     Blog.find({})
+      .sort({
+        'uploadDateUnix': -1
+      })
       .populate({
         path: 'author',
         modal: 'User'
@@ -250,7 +253,7 @@ router.get('/blog', (req, res, next) => {
           next(new errors.generic())
         } else {
           res.render('blogTheme', {
-            foundBlogs: foundBlogs.reverse()
+            foundBlogs: foundBlogs
           })
         }
       })
