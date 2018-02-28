@@ -69,11 +69,24 @@ nav ul a {
   margin: 20px 0;
 }
 
-.gradient-45deg-green-teal, .side-nav-collapsible-body{
+.side-nav{
+
+background: #43A047;
+background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+}
+
+.side-nav li>a{color:white;
+
+}
+.gradient-45deg-green-teal{
   background: #43A047;
   background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
   background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
 }
+ .collapsible-body{
+   background-color:transparent !important;
+ }
 
 /*SCROLL BAR/
 

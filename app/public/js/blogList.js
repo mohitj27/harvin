@@ -4,12 +4,14 @@ $(function () {
 let elem
 
 function confirmDelete (currElement) {
+  dismissed()
   elem = currElement
   var $toastContent = $('<span>Are you sure you want to Delete this POST?</span>').add($('<button class="btn-flat toast-action" onClick="confirmed()">YES</button>')).add($('<button class="btn-flat toast-action" onClick="dismissed()">No</button>'))
   Materialize.toast($toastContent)
 }
 
 function dismissed () {
+  elem=null
   Materialize.Toast.removeAll()
 }
 
