@@ -216,6 +216,7 @@ router.post('/careers', (req, res, next) => {
 })
 
 router.get('/blog', (req, res, next) => {
+  console.log('blog title', req.query.title)
   if (req.query.title) {
     Blog.findOne({
       'blogTitle': req.query.title
@@ -225,7 +226,7 @@ router.get('/blog', (req, res, next) => {
         modal: 'User'
       })
       .exec((err, foundBlog) => {
-        // console.log('foundBlog', foundBlog)
+        console.log('foundBlog', foundBlog)
         if (err) {
           return next(err)
         } else {
@@ -236,7 +237,7 @@ router.get('/blog', (req, res, next) => {
             .limit(3)
             .exec((err, foundBlogs) => {
               if (err) return next(err)
-              else {
+              else if (foundBlog) {
                 fs.readFile(__dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath, function (err, data) {
                   if (err) throw err
                   res.render('standard_blog_detail', {
@@ -245,7 +246,7 @@ router.get('/blog', (req, res, next) => {
                     foundBlogs
                   })
                 })
-              }
+              } else return errorHandler.errorResponse('NOT_FOUND', 'blog', next)
             })
         }
       })
