@@ -38,7 +38,7 @@ let BlogSchema = new Schema({
   },
   draft:{
     type:String,
-    default:'on'
+    default:'off'
   }
 
 

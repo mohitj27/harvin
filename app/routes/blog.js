@@ -1,16 +1,17 @@
-const express = require('express')
-const moment = require('moment-timezone')
-const Blog = require('../models/Blog')
-const middleware = require('../middleware/index')
-const errorHandler = require('../errorHandler')
-const path = require('path')
-const fs = require('fs')
-const multer = require('multer')
-const _ = require('lodash')
-const app = express()
-const router = express.Router()
-const http = require('http').Server(app)
-const io = require('socket.io')(http)
+const express = require('express'),
+  moment = require('moment-timezone'),
+  Blog = require('../models/Blog'),
+  errors = require('../error'),
+  middleware = require('../middleware/index'),
+  path = require('path'),
+  fs = require('fs'),
+  multer = require('multer'),
+  app = express(),
+  router = express.Router(),
+  http = require('http').Server(app),
+  io = require('socket.io')(http),
+  promise = require('bluebird'),
+  blogCont=require('../controllers/blog.controller')
 
 io.on('connection', function (socket) {
   // console.log('connected')
@@ -23,7 +24,7 @@ router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res,
   res.render('newBlog')
 })
 
-router.get('/all', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+router.get('/all', (req, res, next) => {
   Blog.find({})
     .sort({
       'uploadDateUnix': -1
@@ -209,4 +210,12 @@ function checkBlogImageDir () {
     // console.log('not making blog dir')
   }
 }
+router.post('/editmode/:blogTitle/:mode/:check',async (req,res)=>{
+  let result= await blogCont.updateBlogMode(
+                                req.params.blogTitle,
+                                req.params.mode,
+                                req.params.check)
+res.send(result)
+
+})
 module.exports = router
