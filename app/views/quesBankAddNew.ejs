@@ -5,8 +5,9 @@
       <hr>
       <br>
       <br>
-      <form action="/admin/questionBank" method="post">
+      <form method="post">
         <!--  -->
+
         <div class="row">
           <div class="col s12 m4">
             <div class="input-field ">
@@ -41,7 +42,7 @@
             <p class="center-align">Options</p>
             <div class="input-append">
               <div id="field">
-                <input required name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text" />
+                <input required name="options" autocomplete="off" class="input opt quesOptions" id="field1" type="text" />
                 <button id="b1" class="btn add-more" type="button">+</button>
               </div>
             </div>
@@ -57,7 +58,7 @@
       <br>
       <br>
       <div class="center-align">
-        <button type="submit" class="btn">Add this question</button>
+        <button id="submitQuesBtn" class="btn">Add this question</button>
       </div>
 
     </div>

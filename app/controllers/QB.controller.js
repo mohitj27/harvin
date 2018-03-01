@@ -229,46 +229,17 @@ const createQuestionPaper = function (newQuestionPaper) {
 
 const createNewQuestionObj = function (options, answers, question, user) {
   return new Promise(function (resolve, reject) {
-    // check the data type of options, if string convert to array
-    var optionString = []
-    var answerString = []
-
-    if (typeof (options) === typeof ('')) {
-      optionString = []
-      optionString.push(optionString || '')
-    } else {
-      optionString = options
-    }
-    // check the data type of answer, if string convert to array
-    if (typeof (answers) === typeof ('')) {
-      answerString = []
-      answerString.push(answers || '')
-    } else {
-      answerString = answers
-    }
+    options = _.compact(_.castArray(options))
+    answers = _.compact(_.castArray(answers))
 
     // data for new question
     var newQues = {
       question,
-      answers: [],
-      options: [],
+      answers,
+      options,
       newOptions: [],
       answersIndex: [],
       addedBy: user
-    }
-
-    // pushing options in options array
-    for (var i = 0; i < optionString.length; i++) {
-      if (optionString[i] !== '') {
-        newQues.options.push(optionString[i])
-      }
-    }
-
-    // pushing answers in answer array
-    for (var j = 0; j < answerString.length; j++) {
-      if (answerString[j] !== '') {
-        newQues.answers.push(answerString[j])
-      }
     }
 
     // populate answer index
