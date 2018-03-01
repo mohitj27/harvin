@@ -9,6 +9,7 @@ const profileController = require('../controllers/profile.controller')
 const fileController = require('../controllers/file.controller')
 const visitorController = require('../controllers/visitor.controller')
 const galleryController = require('../controllers/gallery.controller')
+const batchController = require('../controllers/batch.controller')
 const path = require('path')
 const multer = require('multer')
 const middleware = require('../middleware')
@@ -37,32 +38,36 @@ router.get('/users', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (r
   }
 })
 
-// router.get('/users/:userId/edit', async (req, res, next) => {
-//   const userId = req.params.userId || ''
-//   const fullName = req.body.fullName || ''
-//   const emailId = req.body.emailId || ''
-//   const phone = req.body.phone || ''
-//   const batchName = req.body.batch || ''
-//   const role = req.body.role
+router.get('/users/:userId/edit', async (req, res, next) => {
+  const userId = req.params.userId || ''
+  // const fullName = req.body.fullName || ''
+  // const emailId = req.body.emailId || ''
+  // const phone = req.body.phone || ''
+  // const batchName = req.body.batch || ''
+  // const role = req.body.role
 
-//   if (!userId || !validator.isMongoId(userId)) return errorHandler.errorResponse('INVALID_FIELD', 'user Id', next)
+  if (!userId || !validator.isMongoId(userId)) return errorHandler.errorResponse('INVALID_FIELD', 'user Id', next)
 
-//   try {
-//     let foundUser = await userController.findUserByUserId(userId)
-//     if (!foufndUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+  try {
+    let foundUser = await userController.findUserByUserId(userId)
+    if (!foundUser) return errorHandler.errorResponse('NOT_FOUND', 'user', next)
 
-//     foundUser = await userController.populateFieldsInUsers(foundUser, ['profile'])
-//     let profile = foundUser.profile
-//     if (!profile) return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+    foundUser = await userController.populateFieldsInUsers(foundUser, ['profile'])
+    let profile = foundUser.profile
+    let userBatch
+    if (profile) {
+      profile = await profileController.populateFieldsInProfiles(profile, ['batch'])
+      userBatch = profile.batch
+    }
 
-//     profile = await profileController.populateFieldsInProfiles(profile, ['batch'])
+    let foundBatches = await batchController.findAllBatch()
+    foundBatches = await batchController.populateFieldsInBatches(foundBatches, ['addedBy'])
 
-
-//     return res.render(200)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+    return res.render('editUser', {foundUser, profile, userBatch, foundBatches})
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.delete('/users/:userId', async (req, res, next) => {
   const userId = req.params.userId || ''
