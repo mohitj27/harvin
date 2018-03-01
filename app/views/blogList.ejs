@@ -33,17 +33,29 @@
 										</a>
 									</td>
 									<td style="text-align: center">
-										<p>
-											<input type="checkbox" <%if(blog.publish){%>checked="checked"<%}%> class="filled-in" id="publish-check" />
-											<label for="publish-check"><%if(blog.publish){%>publish<%}%></label>
-										</p>
+										<div class="switch">
+											<label>
+												Off
+													<input type="checkbox" class="publish-lever" <%if(blog.publish==='on'){%>checked="checked"
+													<%}%>>
+													<span class="lever"></span>
+												On
+											</label>
+										</div>
+
 
 									</td>
 									<td style="text-align: center">
-										<p>
-											<input type="checkbox" class="filled-in" <%if(blog.publish){%>checked="checked"<%}%> id="draft-check" />
-											<label for="draft-check"><%if(blog.publish){%>draft<%}%></label>
-										</p>
+										<div class="switch">
+											<label>
+												Off
+													<input type="checkbox" class="draft-lever" <%if(blog.draft==='on'){%>checked="checked"
+													<%}%>>
+													<span class="lever"></span>
+												On
+											</label>
+										</div>
+
 
 									</td>
 									<td style="text-align: center">
