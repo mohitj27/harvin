@@ -225,9 +225,8 @@ router.get('/blog', (req, res, next) => {
         modal: 'User'
       })
       .exec((err, foundBlog) => {
-        // console.log('foundBlog', foundBlog)
         if (err) {
-          return console.log('err', err)
+          return next(err)
         } else {
           Blog.find()
             .sort({
@@ -236,7 +235,7 @@ router.get('/blog', (req, res, next) => {
             .limit(3)
             .exec((err, foundBlogs) => {
               if (err) return next(err)
-              else {
+              else if (foundBlog) {
                 fs.readFile(__dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath, function (err, data) {
                   if (err) throw err
                   res.render('standard_blog_detail', {
@@ -245,7 +244,7 @@ router.get('/blog', (req, res, next) => {
                     foundBlogs
                   })
                 })
-              }
+              } else return errorHandler.errorResponse('NOT_FOUND', 'blog', next)
             })
         }
       })

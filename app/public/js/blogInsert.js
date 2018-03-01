@@ -19,7 +19,7 @@ $(function() {
     onClose: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
   })
 
-  var socket = io('http://45.55.154.27/')
+  var socket = io('https://harvin.academy/')
   socket.emit('message', 'Hello server')
 
   socket.on('connect', function() {
@@ -77,7 +77,7 @@ $(function() {
           var span = document.createElement('span');
 
           span.innerHTML = ['<img class="thumb" src="', e.target.result,
-            '" title="', escape(theFile.name), '"/><div>http://45.55.154.27/blogImage/'+theFile.name+ '</div><div class="progress"><div class="indeterminate"></div></div>'
+            '" title="', escape(theFile.name), '"/><div>https://harvin.academy/blogImage/'+theFile.name+ '</div><div class="progress"><div class="indeterminate"></div></div>'
           ].join('')
           document.getElementById('img-to-upload').insertBefore(span, null)
         }

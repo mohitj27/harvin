@@ -80,12 +80,11 @@ let struct = {
 }
 
 io.on('connection', function (socket) {
-  console.log('a user conn sadaected')
   socket.on('end upload', () => {
     files = {}
   })
   socket.on('slice upload', (data) => {
-    console.log('hello', data)
+    // console.log('hello', data)
     if (!files[data.name]) {
       files[data.name] = Object.assign({}, struct, data)
       files[data.name].data = []
@@ -95,7 +94,7 @@ io.on('connection', function (socket) {
     // save the data
     fs.writeFile(path.join(__dirname, '/../../HarvinDb/blogImage/') + data.name, data.data, (err) => {
       console.log('err', err)
-      console.log('files data', files[data.name])
+      // console.log('files data', files[data.name])
       if (err) return socket.emit('upload error')
       socket.emit('end upload', data.name)
       files = {}

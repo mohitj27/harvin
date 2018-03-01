@@ -1,4 +1,4 @@
-var express = require('express'),
+const express = require('express'),
   moment = require('moment-timezone'),
   Blog = require('../models/Blog'),
   errors = require('../error'),
@@ -14,7 +14,7 @@ var express = require('express'),
   blogCont=require('../controllers/blog.controller')
 
 io.on('connection', function (socket) {
-  console.log('connected')
+  // console.log('connected')
 })
 
 const BLOG_DIR = path.normalize(__dirname + '/../../../HarvinDb/blog/')
@@ -97,13 +97,17 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
     storage: storage
   }).single('userFile')
   upload(req, res, function (err) {
+    if (err) return next(err)
+
+    let blogTitle = req.body.title || ''
+    if (!blogTitle) return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
+    blogTitle = _.trim(blogTitle)
     var coverImgName = path.basename(req.file.path)
-    let blog_name = req.body.title.toLowerCase().replace(/ /g, '_').concat('.html')
+    let blog_name = blogTitle.toLowerCase().replace(/ /g, '_').concat('.html')
     checkBlogDir()
     fs.writeFile(BLOG_DIR + blog_name, req.body.editordata, (err) => {
       if (err) throw err
     })
-    const blogTitle = req.body.title
     let hashName = ''
     blogTitle.split(' ').forEach(function (word) {
       hashName += word.charAt(0)
@@ -120,7 +124,8 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
         author: req.user,
         publish: req.body.publish,
         draft: req.body.draft,
-        uploadDate
+        uploadDate,
+        uploadDateUnix: Date.now()
       }
     }, {
       upsert: true,
@@ -138,11 +143,14 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
   })
 })
 
-router.post('/:htmlFilePath/images', (req, res) => {
-  console.log('body', req.body)
+router.post('/:htmlFilePath/images', (req, res, next) => {
+  // console.log('body', req.body)
   // console.log('files', req.files);
 
-  let htmlFilePath = req.params.htmlFilePath
+  let htmlFilePath = req.params.htmlFilePath || ''
+  if (!htmlFilePath) return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
+  htmlFilePath = _.trim(htmlFilePath)
+  let uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY')
 
   checkBlogDir()
   checkBlogImageDir()
@@ -154,7 +162,8 @@ router.post('/:htmlFilePath/images', (req, res) => {
     },
     $set: {
       author: req.user,
-      uploadDate: moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY')
+      uploadDate,
+      uploadDateUnix: Date.now()
     }
   }, {
     upsert: true,
