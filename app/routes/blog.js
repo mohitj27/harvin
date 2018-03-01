@@ -1,16 +1,16 @@
-var express = require('express'),
-  moment = require('moment-timezone'),
-  Blog = require('../models/Blog'),
-  errors = require('../error'),
-  middleware = require('../middleware/index'),
-  path = require('path'),
-  fs = require('fs'),
-  multer = require('multer'),
-  app = express(),
-  router = express.Router(),
-  http = require('http').Server(app),
-  io = require('socket.io')(http),
-  promise = require('bluebird')
+const express = require('express')
+const moment = require('moment-timezone')
+const Blog = require('../models/Blog')
+const middleware = require('../middleware/index')
+const errorHandler = require('../errorHandler')
+const path = require('path')
+const fs = require('fs')
+const multer = require('multer')
+const _ = require('lodash')
+const app = express()
+const router = express.Router()
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
 
 io.on('connection', function (socket) {
   // console.log('connected')
@@ -96,13 +96,17 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
     storage: storage
   }).single('userFile')
   upload(req, res, function (err) {
+    if (err) return next(err)
+
+    let blogTitle = req.body.title || ''
+    if (!blogTitle) return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
+    blogTitle = _.trim(blogTitle)
     var coverImgName = path.basename(req.file.path)
-    let blog_name = req.body.title.toLowerCase().replace(/ /g, '_').concat('.html')
+    let blog_name = blogTitle.toLowerCase().replace(/ /g, '_').concat('.html')
     checkBlogDir()
     fs.writeFile(BLOG_DIR + blog_name, req.body.editordata, (err) => {
       if (err) throw err
     })
-    const blogTitle = req.body.title
     let hashName = ''
     blogTitle.split(' ').forEach(function (word) {
       hashName += word.charAt(0)
@@ -138,11 +142,13 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
   })
 })
 
-router.post('/:htmlFilePath/images', (req, res) => {
+router.post('/:htmlFilePath/images', (req, res, next) => {
   // console.log('body', req.body)
   // console.log('files', req.files);
 
-  let htmlFilePath = req.params.htmlFilePath
+  let htmlFilePath = req.params.htmlFilePath || ''
+  if (!htmlFilePath) return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
+  htmlFilePath = _.trim(htmlFilePath)
   let uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY')
 
   checkBlogDir()

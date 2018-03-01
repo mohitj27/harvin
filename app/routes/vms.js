@@ -216,7 +216,6 @@ router.post('/careers', (req, res, next) => {
 })
 
 router.get('/blog', (req, res, next) => {
-  console.log('blog title', req.query.title)
   if (req.query.title) {
     Blog.findOne({
       'blogTitle': req.query.title
@@ -226,7 +225,6 @@ router.get('/blog', (req, res, next) => {
         modal: 'User'
       })
       .exec((err, foundBlog) => {
-        console.log('foundBlog', foundBlog)
         if (err) {
           return next(err)
         } else {
