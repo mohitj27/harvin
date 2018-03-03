@@ -59,11 +59,9 @@ router.get('/qbData', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (
 })
 
 router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-  // TODO: use cast array lodah
-  res.locals.flashUrl = req.headers.referer
 
-  var optionString = req.body.options || ''
-  var answerString = req.body.answer || ''
+  var optionString = req.body['option[]'] || ''
+  var answerString = req.body['answer[]'] || ''
   var question = req.body.question || ''
 
   const className = req.body.className || ''
@@ -86,8 +84,9 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, 
     let updatedSubject = await QbController.createOrUpdateChapterInQBSubjectBySubjectAndClassName(subjectName, className, updatedChapter, req.user)
     await QbController.createOrUpdateSubjectInQBClassByName(className, updatedSubject, req.user)
 
-    req.flash('success', 'Question has been added Successfully')
-    return res.redirect(req.headers.referer)
+    // req.flash('success', 'Question has been added Successfully')
+    // return res.redirect(req.headers.referer)
+    return res.sendStatus(200)
   } catch (e) {
     return next(e)
   }
