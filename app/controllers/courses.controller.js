@@ -48,7 +48,11 @@ const insertInCourse = (course) => {
 }
 const deleteOneCourse = (courseName) => {
   return new Promise((resolve, reject) => {
-    resolve(courseName)
+    Course.remove({courseName},(err)=>{
+      if(err)reject(err)
+      resolve(courseName)
+    })
+
   })
 }
 module.exports = {
