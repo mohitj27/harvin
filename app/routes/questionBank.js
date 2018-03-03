@@ -59,7 +59,7 @@ router.get('/qbData', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (
 })
 
 router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-
+  console.log('body', req.body)
   var optionString = req.body['option[]'] || ''
   var answerString = req.body['answer[]'] || ''
   var question = req.body.question || ''
@@ -72,8 +72,13 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, 
   if (!subjectName || validator.isEmpty(subjectName)) return errorHandler.errorResponse('INVALID_FIELD', 'subject name', next)
   if (!chapterName || validator.isEmpty(chapterName)) return errorHandler.errorResponse('INVALID_FIELD', 'chapter name', next)
   if (!question || validator.isEmpty(question)) return errorHandler.errorResponse('INVALID_FIELD', 'question', next)
+  // if (!optionString || validator.isEmpty(optionString.toString())) return errorHandler.errorResponse('INVALID_FIELD', 'options', next)
+  // if (!answerString || validator.isEmpty(answerString.toString())) return errorHandler.errorResponse('INVALID_FIELD', 'answers', next)
 
   let newQues = await QbController.createNewQuestionObj(optionString, answerString, question, req.user)
+  console.log('neQu', newQues)
+  if (newQues.options.length < 1) return errorHandler.errorResponse('INVALID_FIELD', 'options', next)
+  if (newQues.answers.length < 1) return errorHandler.errorResponse('INVALID_FIELD', 'answers', next)
 
   try {
     // create new Question

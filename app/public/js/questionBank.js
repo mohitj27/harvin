@@ -98,6 +98,10 @@ $(function () {
     })
   })
 
+  $('#addNewQuestion').on('keyup', "input[name='options']", function () {
+    refreshAns()
+  })
+
   $('#submitQuesBtn').on('click', function (e) {
     e.preventDefault()
     const className = $('#className').val()
@@ -109,7 +113,7 @@ $(function () {
       option.push($(this).val())
     })
     const answer = []
-    $("input[name='answer']").each(function () {
+    $("input[name='answer']:checked").each(function () {
       answer.push($(this).val())
     })
     const newQues = {
