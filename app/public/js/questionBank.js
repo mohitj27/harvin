@@ -109,7 +109,7 @@ $(function () {
       option.push($(this).val())
     })
     const answer = []
-    $("input[name='answer']").each(function () {
+    $("input[name='answer']:checked").each(function () {
       answer.push($(this).val())
     })
     const newQues = {
