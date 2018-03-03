@@ -98,6 +98,10 @@ $(function () {
     })
   })
 
+  $('#addNewQuestion').on('keyup', "input[name='options']", function () {
+    refreshAns()
+  })
+
   $('#submitQuesBtn').on('click', function (e) {
     e.preventDefault()
     const className = $('#className').val()
