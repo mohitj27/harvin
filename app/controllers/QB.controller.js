@@ -73,6 +73,14 @@ const findAllQbClassesByUserId = function (user) {
   })
 }
 
+const findAllQbClasses = function () {
+  return new Promise(function (resolve, reject) {
+    QB_Class.findAsync()
+      .then(foundClasses => resolve(foundClasses))
+      .catch(err => reject(err))
+  })
+}
+
 const populateFieldsInQuestionPapers = function (questionPapers, field) {
   return new Promise(function (resolve, reject) {
     QuestionPaper
@@ -297,11 +305,207 @@ const createNewResult = function (newResult) {
   })
 }
 
+const findAllQbSubjectsByUserId = function (user) {
+  return new Promise(function (resolve, reject) {
+    QB_Subject
+      .findAsync({
+        addedBy: user
+      })
+      .then(foundSubjects => resolve(foundSubjects))
+      .catch(err => reject(err))
+  })
+}
+
+const findAllQbSubjects = function () {
+  return new Promise(function (resolve, reject) {
+    QB_Subject
+      .findAsync()
+      .then(foundSubjects => resolve(foundSubjects))
+      .catch(err => reject(err))
+  })
+}
+
+const findAllQbChaptersByUserId = function (user) {
+  return new Promise(function (resolve, reject) {
+    QB_Chapter
+      .findAsync({
+        addedBy: user
+      })
+      .then(foundChapters => resolve(foundChapters))
+      .catch(err => reject(err))
+  })
+}
+
+const findAllQbChapters = function () {
+  return new Promise(function (resolve, reject) {
+    QB_Chapter
+      .findAsync()
+      .then(foundChapters => resolve(foundChapters))
+      .catch(err => reject(err))
+  })
+}
+
+const findSubjectById = function (subjectId) {
+  return new Promise(function (resolve, reject) {
+    QB_Subject
+      .findByIdAsync(subjectId)
+      .then(foundSubject => resolve(foundSubject))
+      .catch(err => reject(err))
+  })
+}
+
+const findClassById = function (classsId) {
+  return new Promise(function (resolve, reject) {
+    QB_Class
+      .findByIdAsync(classsId)
+      .then(foundClass => resolve(foundClass))
+      .catch(err => reject(err))
+  })
+}
+
+const removeSubjectFromClassById = (classs, subject) => {
+  return new Promise((resolve, reject) => {
+    QB_Class.findByIdAndUpdateAsync(classs.id, {
+      $pull: {subjects: {_id: subject._id}}
+    }, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    })
+      .then(updatedClass => resolve(updatedClass))
+      .catch(err => reject(err))
+  })
+}
+
+const updateSubjectById = (subject, addToSetFields, setFields) => {
+  if (_.isEmpty(addToSetFields)) {
+    return new Promise((resolve, reject) => {
+      QB_Subject.findByIdAndUpdateAsync(subject.id, {
+        $set: setFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedSubject => resolve(updatedSubject))
+        .catch(err => reject(err))
+    })
+  } else if (_.isEmpty(setFields)) {
+    return new Promise((resolve, reject) => {
+      QB_Subject.findByIdAndUpdateAsync(subject.id, {
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedSubject => resolve(updatedSubject))
+        .catch(err => reject(err))
+    })
+  } else {
+    return new Promise((resolve, reject) => {
+      QB_Subject.findByIdAndUpdateAsync(subject.id, {
+        $set: setFields,
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedSubject => resolve(updatedSubject))
+        .catch(err => reject(err))
+    })
+  }
+}
+
+const updateChapterById = (chapter, addToSetFields, setFields) => {
+  if (_.isEmpty(addToSetFields)) {
+    return new Promise((resolve, reject) => {
+      QB_Chapter.findByIdAndUpdateAsync(chapter.id, {
+        $set: setFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedChapter => resolve(updatedChapter))
+        .catch(err => reject(err))
+    })
+  } else if (_.isEmpty(setFields)) {
+    return new Promise((resolve, reject) => {
+      QB_Chapter.findByIdAndUpdateAsync(chapter.id, {
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedChapter => resolve(updatedChapter))
+        .catch(err => reject(err))
+    })
+  } else {
+    return new Promise((resolve, reject) => {
+      QB_Chapter.findByIdAndUpdateAsync(chapter.id, {
+        $set: setFields,
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedChapter => resolve(updatedChapter))
+        .catch(err => reject(err))
+    })
+  }
+}
+
+const updateQuestionById = (question, addToSetFields, setFields) => {
+  if (_.isEmpty(addToSetFields)) {
+    return new Promise((resolve, reject) => {
+      Question.findByIdAndUpdateAsync(question.id, {
+        $set: setFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedQuestion => resolve(updatedQuestion))
+        .catch(err => reject(err))
+    })
+  } else if (_.isEmpty(setFields)) {
+    return new Promise((resolve, reject) => {
+      Question.findByIdAndUpdateAsync(question.id, {
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedQuestion => resolve(updatedQuestion))
+        .catch(err => reject(err))
+    })
+  } else {
+    return new Promise((resolve, reject) => {
+      Question.findByIdAndUpdateAsync(question.id, {
+        $set: setFields,
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedQuestion => resolve(updatedQuestion))
+        .catch(err => reject(err))
+    })
+  }
+}
+
 module.exports = {
   deleteQuestionById,
   findQbClassByClassNameAndUserId,
   findQbChapterByChapterNameAndUserId,
   findAllQbClassesByUserId,
+  findAllQbClasses,
   findAllQuestionsByIds,
   createQuestion,
   createQuestionPaper,
@@ -317,5 +521,15 @@ module.exports = {
   addQuestionToQuestionPaperById,
   populateFieldsInQbSubjects,
   populateFieldsInQbChapters,
-  populateFieldsInQuestionPapers
+  populateFieldsInQuestionPapers,
+  findAllQbSubjectsByUserId,
+  findAllQbSubjects,
+  findAllQbChaptersByUserId,
+  findAllQbChapters,
+  updateQuestionById,
+  updateChapterById,
+  updateSubjectById,
+  findSubjectById,
+  findClassById,
+  removeSubjectFromClassById
 }

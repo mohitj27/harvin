@@ -58,8 +58,99 @@ router.get('/qbData', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (
   }
 })
 
+router.get('/update', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  res.render('qbUpdate')
+})
+
+const updateSubject = async function (subId, classId) {
+  try {
+    let foundSubject = await QbController.findSubjectById(subId)
+    let foundClass = await QbController.findClassById(classId)
+    let updateSubject = await QbController.updateSubjectById(foundSubject, {}, {
+      class: foundClass
+    })
+    let updatedClass = await QbController.removeSubjectFromClassById(foundClass, foundSubject)
+    // refactor
+    foundSubject = await QbController.populateFieldsInQbSubjects(foundSubject, ['chapters.questions'])
+    let chapters = foundSubject.chapters
+    for (let chapter of chapters) {
+      await QbController.updateChapterById(chapter, {}, {
+        foundSubject
+      })
+      let questions = chapter.questions
+      for (let ques of questions) {
+        await QbController.updateQuestionById(ques, {}, {
+          class: updatedClass,
+          foundSubject,
+          chapter
+        })
+      }
+    }
+
+    return updateSubject
+  } catch (err) {
+    return err
+  }
+}
+
+router.post('/update', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+  let {
+    subId,
+    chapterId,
+    classId,
+    toUpdate
+  } = req.body
+  if (!toUpdate || validator.isEmpty(toUpdate)) return errorHandler.errorResponse('INVALID_FIELD', 'field to update', next)
+  if (toUpdate === 'subject') {
+    if (!subId || !validator.isMongoId(subId)) return errorHandler.errorResponse('INVALID_FIELD', 'subject id', next)
+    if (!classId || !validator.isMongoId(classId)) return errorHandler.errorResponse('INVALID_FIELD', 'class id', next)
+  } else {
+    if (!subId || !validator.isMongoId(subId)) return errorHandler.errorResponse('INVALID_FIELD', 'subject id', next)
+    if (!chapterId || !validator.isMongoId(chapterId)) return errorHandler.errorResponse('INVALID_FIELD', 'chapter id', next)
+  }
+
+  switch (toUpdate) {
+    case 'subject':
+      updateSubject(subId, classId)
+      break
+  }
+
+  res.sendStatus(200)
+})
+
+router.get('/refactor', async (req, res, next) => {
+  try {
+    let foundClasses = await QbController.findAllQbClasses()
+    foundClasses = await QbController.populateFieldsInQbClasses(foundClasses, ['subjects.chapters.questions'])
+    for (let classs of foundClasses) {
+      let subjects = classs.subjects
+      for (let subject of subjects) {
+        await QbController.updateSubjectById(subject, {}, {
+          class: classs
+        })
+        let chapters = subject.chapters
+        for (let chapter of chapters) {
+          await QbController.updateChapterById(chapter, {}, {
+            subject
+          })
+          let questions = chapter.questions
+          for (let ques of questions) {
+            await QbController.updateQuestionById(ques, {}, {
+              class: classs,
+              subject,
+              chapter
+            })
+          }
+        }
+      }
+    }
+    res.sendStatus(200)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-  console.log('body', req.body)
   var optionString = req.body['option[]'] || ''
   var answerString = req.body['answer[]'] || ''
   var question = req.body.question || ''
@@ -72,11 +163,8 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, 
   if (!subjectName || validator.isEmpty(subjectName)) return errorHandler.errorResponse('INVALID_FIELD', 'subject name', next)
   if (!chapterName || validator.isEmpty(chapterName)) return errorHandler.errorResponse('INVALID_FIELD', 'chapter name', next)
   if (!question || validator.isEmpty(question)) return errorHandler.errorResponse('INVALID_FIELD', 'question', next)
-  // if (!optionString || validator.isEmpty(optionString.toString())) return errorHandler.errorResponse('INVALID_FIELD', 'options', next)
-  // if (!answerString || validator.isEmpty(answerString.toString())) return errorHandler.errorResponse('INVALID_FIELD', 'answers', next)
 
   let newQues = await QbController.createNewQuestionObj(optionString, answerString, question, req.user)
-  console.log('neQu', newQues)
   if (newQues.options.length < 1) return errorHandler.errorResponse('INVALID_FIELD', 'options', next)
   if (newQues.answers.length < 1) return errorHandler.errorResponse('INVALID_FIELD', 'answers', next)
 
@@ -87,13 +175,45 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, 
     // add this question to question bank also
     let updatedChapter = await QbController.createOrUpdateQuestionInQBChapterByName(chapterName, createdQuestion, req.user)
     let updatedSubject = await QbController.createOrUpdateChapterInQBSubjectBySubjectAndClassName(subjectName, className, updatedChapter, req.user)
-    await QbController.createOrUpdateSubjectInQBClassByName(className, updatedSubject, req.user)
+    let updatedClass = await QbController.createOrUpdateSubjectInQBClassByName(className, updatedSubject, req.user)
+    updatedChapter = await QbController.updateChapterById(updatedChapter, {}, {
+      subject: updatedSubject
+    })
+    updatedSubject = await QbController.updateSubjectById(updatedSubject, {}, {
+      class: updatedClass
+    })
 
-    // req.flash('success', 'Question has been added Successfully')
-    // return res.redirect(req.headers.referer)
     return res.sendStatus(200)
   } catch (e) {
     return next(e)
+  }
+})
+
+router.get('/subjectId/:subId', async (req, res, next) => {
+  let subId = req.params.subId || ''
+  if (!subId || !validator.isMongoId(subId)) return errorHandler.errorResponse('INVALID_FIELD', 'subject id', next)
+  try {
+    let foundSubject = await QbController.findSubjectById(subId)
+    foundSubject = await QbController.populateFieldsInQbSubjects(foundSubject, ['class'])
+    let foundClass = foundSubject.class
+    let foundClasses = await QbController.findAllQbClasses()
+    res.json({
+      classs: foundClass,
+      classes: foundClasses
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/subjects', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  try {
+    let foundSubjects = await QbController.findAllQbSubjectsByUserId(req.user)
+    res.json({
+      subjects: foundSubjects
+    })
+  } catch (err) {
+    next(err)
   }
 })
 

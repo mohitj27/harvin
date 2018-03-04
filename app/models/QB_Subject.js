@@ -24,7 +24,12 @@ var qb_subjectSchema = new Schema({
   chapters: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'QB_Chapter'
-  }]
+  }],
+
+  class: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'QB_Class'
+  }
 })
 
 qb_subjectSchema.index({

@@ -261,7 +261,9 @@ router.post('/:examId/question-paper', middleware.isLoggedIn, middleware.isCentr
     // add this question to question bank also
     let updatedChapter = await QBController.createOrUpdateQuestionInQBChapterByName(chapterName, createdQuestion, req.user)
     let updatedSubject = await QBController.createOrUpdateChapterInQBSubjectBySubjectAndClassName(subjectName, className, updatedChapter, req.user)
-    await QBController.createOrUpdateSubjectInQBClassByName(className, updatedSubject, req.user)
+    let updatedClass = await QBController.createOrUpdateSubjectInQBClassByName(className, updatedSubject, req.user)
+    updatedChapter = await QBController.updateChapterById(updatedChapter, {}, {subject: updatedSubject})
+    updatedSubject = await QBController.updateSubjectById(updatedSubject, {}, {class: updatedClass})
 
     req.flash('success', 'Question has been added Successfully')
     return res.redirect(req.headers.referer)
