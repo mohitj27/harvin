@@ -260,15 +260,15 @@ const createNewQuestionObj = function (options, answers, question, user) {
     })
 
     // populate new options
-    newQues.options.forEach((opt_j, j) => {
+    newQues.options.forEach((optJ, j) => {
       if (_.indexOf(newQues.answersIndex, j) !== -1) {
         newQues.newOptions.push({
-          opt: opt_j,
+          opt: optJ,
           isAns: true
         })
       } else {
         newQues.newOptions.push({
-          opt: opt_j,
+          opt: optJ,
           isAns: false
         })
       }
@@ -354,6 +354,15 @@ const findSubjectById = function (subjectId) {
   })
 }
 
+const findChapterById = function (chapterId) {
+  return new Promise(function (resolve, reject) {
+    QB_Chapter
+      .findByIdAsync(chapterId)
+      .then(foundChapter => resolve(foundChapter))
+      .catch(err => reject(err))
+  })
+}
+
 const findClassById = function (classsId) {
   return new Promise(function (resolve, reject) {
     QB_Class
@@ -373,6 +382,20 @@ const removeSubjectFromClassById = (classs, subject) => {
       setDefaultsOnInsert: true
     })
       .then(updatedClass => resolve(updatedClass))
+      .catch(err => reject(err))
+  })
+}
+
+const removeChapterFromSubjectById = (subject, chapter) => {
+  return new Promise((resolve, reject) => {
+    QB_Subject.findByIdAndUpdateAsync(subject.id, {
+      $pull: {chapters: {_id: chapter._id}}
+    }, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    })
+      .then(updatedSubject => resolve(updatedSubject))
       .catch(err => reject(err))
   })
 }
@@ -530,6 +553,8 @@ module.exports = {
   updateChapterById,
   updateSubjectById,
   findSubjectById,
+  findChapterById,
   findClassById,
-  removeSubjectFromClassById
+  removeSubjectFromClassById,
+  removeChapterFromSubjectById
 }

@@ -62,38 +62,67 @@ router.get('/update', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (
   res.render('qbUpdate')
 })
 
-const updateSubject = async function (subId, classId) {
-  try {
-    let foundSubject = await QbController.findSubjectById(subId)
-    let foundClass = await QbController.findClassById(classId)
-    let updateSubject = await QbController.updateSubjectById(foundSubject, {}, {
-      class: foundClass
-    })
-    let updatedClass = await QbController.removeSubjectFromClassById(foundClass, foundSubject)
-    // refactor
-    foundSubject = await QbController.populateFieldsInQbSubjects(foundSubject, ['chapters.questions'])
-    let chapters = foundSubject.chapters
-    for (let chapter of chapters) {
-      await QbController.updateChapterById(chapter, {}, {
-        foundSubject
+const updateSubject = function (subId, classId) {
+  return new Promise(async function (resolve, reject) {
+    try {
+      let foundSubject = await QbController.findSubjectById(subId)
+      let foundClass = await QbController.findClassById(classId)
+      let updatedSubject = await QbController.updateSubjectById(foundSubject, {}, {
+        class: foundClass
       })
-      let questions = chapter.questions
-      for (let ques of questions) {
-        await QbController.updateQuestionById(ques, {}, {
-          class: updatedClass,
-          foundSubject,
-          chapter
+      let updatedClass = await QbController.removeSubjectFromClassById(foundClass, foundSubject)
+      // refactor
+      foundSubject = await QbController.populateFieldsInQbSubjects(foundSubject, ['chapters.questions'])
+      let chapters = foundSubject.chapters
+      for (let chapter of chapters) {
+        await QbController.updateChapterById(chapter, {}, {
+          foundSubject
         })
+        let questions = chapter.questions
+        for (let ques of questions) {
+          await QbController.updateQuestionById(ques, {}, {
+            class: updatedClass,
+            subject: updatedSubject,
+            chapter
+          })
+        }
       }
-    }
 
-    return updateSubject
-  } catch (err) {
-    return err
-  }
+      resolve(updatedSubject)
+    } catch (err) {
+      reject(err)
+    }
+  })
 }
 
-router.post('/update', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
+const updateChapter = function (chapterId, subId) {
+  return new Promise(async function (resolve, reject) {
+    try {
+      let foundChapter = await QbController.findChapterById(chapterId)
+      let foundSubject = await QbController.findSubjectById(subId)
+      let updatedChapter = await QbController.updateChapterById(foundChapter, {}, {
+        subject: foundSubject
+      })
+      let updatedSubject = await QbController.removeChapterFromSubjectById(foundSubject, foundChapter)
+      // refactor
+      foundChapter = await QbController.populateFieldsInQbChapters(foundChapter, ['questions'])
+      let questions = foundChapter.questions
+
+      for (let ques of questions) {
+        let upQ = await QbController.updateQuestionById(ques, {}, {
+          chapter: updatedChapter,
+          subject: updatedSubject
+        })
+      }
+
+      resolve(updatedChapter)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+router.post('/update', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   let {
     subId,
     chapterId,
@@ -109,13 +138,21 @@ router.post('/update', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, 
     if (!chapterId || !validator.isMongoId(chapterId)) return errorHandler.errorResponse('INVALID_FIELD', 'chapter id', next)
   }
 
-  switch (toUpdate) {
-    case 'subject':
-      updateSubject(subId, classId)
-      break
+  try {
+    switch (toUpdate) {
+      case 'subject':
+        await updateSubject(subId, classId)
+        break
+      case 'chapter':
+        await updateChapter(chapterId, subId)
+        break
+      default:
+        return errorHandler.errorResponse('INVALID_FIELD', 'field to update', next)
+    }
+    res.sendStatus(200)
+  } catch (err) {
+    next(err)
   }
-
-  res.sendStatus(200)
 })
 
 router.get('/refactor', async (req, res, next) => {
@@ -206,11 +243,39 @@ router.get('/subjectId/:subId', async (req, res, next) => {
   }
 })
 
+router.get('/chapterId/:chapId', async (req, res, next) => {
+  let chapId = req.params.chapId || ''
+  if (!chapId || !validator.isMongoId(chapId)) return errorHandler.errorResponse('INVALID_FIELD', 'chapter id', next)
+  try {
+    let foundChapter = await QbController.findChapterById(chapId)
+    foundChapter = await QbController.populateFieldsInQbChapters(foundChapter, ['subject'])
+    let foundSubject = foundChapter.subject
+    let foundSubjects = await QbController.findAllQbSubjects()
+    res.json({
+      subject: foundSubject,
+      subjects: foundSubjects
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/subjects', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   try {
     let foundSubjects = await QbController.findAllQbSubjectsByUserId(req.user)
     res.json({
       subjects: foundSubjects
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/chapters', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  try {
+    let foundChapters = await QbController.findAllQbChaptersByUserId(req.user)
+    res.json({
+      chapters: foundChapters
     })
   } catch (err) {
     next(err)

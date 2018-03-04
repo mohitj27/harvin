@@ -16,7 +16,7 @@
 
             </div>
             <div class="card-action">
-              <a class="waves-effect waves-light btn modal-trigger" href="#updateSubject">Update Subject</a>
+              <a class="waves-effect waves-light btn modal-trigger" href="#updateSubjectModal">Update Subject</a>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
 
             </div>
             <div class="card-action">
-              <a class="waves-effect waves-light btn modal-trigger" href="#updateChapter">Update Chapter</a>
+              <a class="waves-effect waves-light btn modal-trigger" href="#updateChapterModal">Update Chapter</a>
             </div>
           </div>
         </div>
@@ -35,15 +35,15 @@
     </div>
 
     <!-- Modal Structure -->
-    <div id="updateSubject" class="modal modal-fixed-footer">
+    <div id="updateSubjectModal" class="modal modal-fixed-footer">
       <div class="modal-content">
         <div class="row">
           <div class="col s6">
-              <select id="updateSubjectSelect">
-                <option value="" disabled selected>Select subject</option>
+            <select id="updateSubjectSelect">
+              <option value="" disabled selected>Select subject</option>
 
-              </select>
-              <label>Select Subject</label>
+            </select>
+            <label>Select Subject</label>
           </div>
           <div class="col s6">
             <select id="updateSubjectClassSelect">
@@ -51,7 +51,7 @@
 
             </select>
             <label>Select Class</label>
-        </div>
+          </div>
         </div>
 
       </div>
@@ -60,17 +60,24 @@
       </div>
     </div>
 
-    <div id="updateChapter" class="modal modal-fixed-footer">
+    <div id="updateChapterModal" class="modal modal-fixed-footer">
       <div class="modal-content">
-          <div class="row">
-              <div class="col s6">
-                  <select id="updateChapterSelect">
-                    <option value="" disabled selected>Select Chapter</option>
+        <div class="row">
+          <div class="col s6">
+            <select id="updateChapterSelect">
+              <option value="" disabled selected>Select Chapter</option>
 
-                  </select>
-                  <label>Select Chapter</label>
-              </div>
-            </div>
+            </select>
+            <label>Select Chapter</label>
+          </div>
+          <div class="col s6">
+            <select id="updateChapterSubjectSelect">
+              <option value="" disabled selected>Select Subject</option>
+
+            </select>
+            <label>Select Subject</label>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <a id="updateChapter" class="modal-action modal-close waves-effect waves-green btn-flat">Update</a>
@@ -81,4 +88,5 @@
   </main>
   <% include partials/footer.ejs%>
     <script src="/js/updateQb.js" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js" integrity="sha256-YFhaeQSVBgAFNN5z4I9YRB2jCuqc2nvypz0Q2eQzcx8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js" integrity="sha256-YFhaeQSVBgAFNN5z4I9YRB2jCuqc2nvypz0Q2eQzcx8="
+      crossorigin="anonymous"></script>
