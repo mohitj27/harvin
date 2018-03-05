@@ -33,7 +33,7 @@ const fillClasses = function (classes) {
     }))
   }
   $('#updateClassSelect').val($('#updateClassSelect').children().eq(0).val())
-  $('#updateClassSubjectSelect').val($('#updateClassSubjectSelect').children().eq(0).val())
+  $('#updateClassSubjectsSelect').val($('#updateClassSubjectsSelect').children().eq(0).val())
   $('select').material_select()
 }
 
@@ -149,14 +149,33 @@ $(function () {
     }
   })
 
+  $('#updateSubjectClassSelect').on('change', function (e) {
+    if ($(this).val() !== '') {
+      $('#updateSubjectNewClassSpan').prop('hidden', false)
+      $('#updateSubjectNewClass').text($('#updateSubjectClassSelect option:selected').text())
+    }
+  })
+
+  $('#updateChapterSubjectSelect').on('change', function (e) {
+    if ($(this).val() !== '') {
+      $('#updateChapterNewSubjectSpan').prop('hidden', false)
+      $('#updateChapterNewSubject').text($('#updateChapterSubjectSelect option:selected').text())
+    }
+  })
+
   $('#updateSubjectSelect').on('change', function (e) {
     if ($(this).val() !== '') {
+      $('#updateSubjectSelectedSubjectSpan').prop('hidden', false)
+      $('#updateSubjectSubjectName').text($('#updateSubjectSelect option:selected').text())
+
       $.ajax({
         url: '/admin/questionBank/subjectId/' + $(this).val(),
         method: 'get',
         success: function (response) {
           fillClassesForSubjectUpdate(response.classes)
           selectClassOfSubject(response.classs, response.classes)
+          $('#updateSubjectCurrentClassSpan').prop('hidden', false)
+          $('#updateSubjectCurrentClass').text($('#updateSubjectClassSelect option:selected').text())
         },
         error: function (error) {}
       })
@@ -165,12 +184,17 @@ $(function () {
 
   $('#updateChapterSelect').on('change', function (e) {
     if ($(this).val() !== '') {
+      $('#updateChapterSelectedChapterSpan').prop('hidden', false)
+      $('#updateChapterChapterName').text($('#updateChapterSelect option:selected').text())
+
       $.ajax({
         url: '/admin/questionBank/chapterId/' + $(this).val(),
         method: 'get',
         success: function (response) {
           fillSubjectsForChapterUpdate(response.subjects)
           selectSubjectOfChapter(response.subject, response.subjects)
+          $('#updateChapterCurrentSubjectSpan').prop('hidden', false)
+          $('#updateChapterCurrentSubject').text($('#updateChapterSubjectSelect option:selected').text())
         },
         error: function (error) {}
       })
@@ -201,6 +225,9 @@ $(function () {
       startingTop: '4%', // Starting top style attribute
       endingTop: '10%', // Ending top style attribute
       ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+        $('#updateSubjectSelectedSubjectSpan').prop('hidden', true)
+        $('#updateSubjectCurrentClassSpan').prop('hidden', true)
+        $('#updateSubjectNewClassSpan').prop('hidden', true)
         $.ajax({
           url: '/admin/questionBank/subjects',
           method: 'get',
@@ -226,6 +253,10 @@ $(function () {
       startingTop: '4%', // Starting top style attribute
       endingTop: '10%', // Ending top style attribute
       ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+        $('#updateChapterSelectedChapterSpan').prop('hidden', true)
+        $('#updateChapterCurrentSubjectSpan').prop('hidden', true)
+        $('#updateChapterNewSubjectSpan').prop('hidden', true)
+
         $.ajax({
           url: '/admin/questionBank/chapters',
           method: 'get',

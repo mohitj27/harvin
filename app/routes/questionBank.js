@@ -104,7 +104,8 @@ const updateChapter = function (chapterId, subId) {
   return new Promise(async function (resolve, reject) {
     try {
       let foundChapter = await QbController.findChapterById(chapterId)
-      let prevSubject = await QbController.findClassById(foundChapter.subject)
+      let prevSubject = await QbController.findSubjectById(foundChapter.subject)
+
       let foundSubject = await QbController.findSubjectById(subId)
       let updatedChapter = await QbController.updateChapterById(foundChapter, {}, {
         subject: foundSubject
