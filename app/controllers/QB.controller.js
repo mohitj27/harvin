@@ -375,7 +375,7 @@ const findClassById = function (classsId) {
 const removeSubjectFromClassById = (classs, subject) => {
   return new Promise((resolve, reject) => {
     QB_Class.findByIdAndUpdateAsync(classs.id, {
-      $pull: {subjects: {_id: subject._id}}
+      $pull: {subjects: subject.id}
     }, {
       upsert: true,
       new: true,
@@ -389,7 +389,7 @@ const removeSubjectFromClassById = (classs, subject) => {
 const removeChapterFromSubjectById = (subject, chapter) => {
   return new Promise((resolve, reject) => {
     QB_Subject.findByIdAndUpdateAsync(subject.id, {
-      $pull: {chapters: {_id: chapter._id}}
+      $pull: {chapters: chapter.id}
     }, {
       upsert: true,
       new: true,
@@ -436,6 +436,47 @@ const updateSubjectById = (subject, addToSetFields, setFields) => {
         setDefaultsOnInsert: true
       })
         .then(updatedSubject => resolve(updatedSubject))
+        .catch(err => reject(err))
+    })
+  }
+}
+
+const updateClassById = (classs, addToSetFields, setFields) => {
+  if (_.isEmpty(addToSetFields)) {
+    return new Promise((resolve, reject) => {
+      QB_Class.findByIdAndUpdateAsync(classs.id, {
+        $set: setFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedClass => resolve(updatedClass))
+        .catch(err => reject(err))
+    })
+  } else if (_.isEmpty(setFields)) {
+    return new Promise((resolve, reject) => {
+      QB_Class.findByIdAndUpdateAsync(classs.id, {
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedClass => resolve(updatedClass))
+        .catch(err => reject(err))
+    })
+  } else {
+    return new Promise((resolve, reject) => {
+      QB_Class.findByIdAndUpdateAsync(classs.id, {
+        $set: setFields,
+        $addToSet: addToSetFields
+      }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      })
+        .then(updatedClass => resolve(updatedClass))
         .catch(err => reject(err))
     })
   }
@@ -552,6 +593,7 @@ module.exports = {
   updateQuestionById,
   updateChapterById,
   updateSubjectById,
+  updateClassById,
   findSubjectById,
   findChapterById,
   findClassById,
