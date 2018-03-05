@@ -31,6 +31,21 @@ var questionSchema = new Schema({
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  },
+
+  class: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'QB_Class'
+  },
+
+  subject: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'QB_Subject'
+  },
+
+  chapter: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'QB_Chpater'
   }
 })
 

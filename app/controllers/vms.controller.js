@@ -1,19 +1,19 @@
-const  errorHandler = require('../errorHandler');
-const  Visitor = require('./../models/Visitor');
+const errorHandler = require('../errorHandler')
+const Visitor = require('./../models/Visitor')
 Promise = require('bluebird')
 mongoose = require('mongoose')
-mongoose.Promise = Promise;
+mongoose.Promise = Promise
 
-const addNewVisitor = function addNewVisitor(newVisitor) {
-  return new Promise(function(resolve, reject) {
+const addNewVisitor = function addNewVisitor (newVisitor) {
+  return new Promise(function (resolve, reject) {
     Visitor.create(newVisitor, function (err, createdVisitor) {
-      if (err){
+      if (err) {
         return reject(errorHandler.getErrorMessage(err))
       } else {
         return resolve(createdVisitor)
       }
     })
-  });
+  })
 }
 
 module.exports = {
