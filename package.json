@@ -41,6 +41,7 @@
     "express-session": "^1.15.3",
     "file-system": "^2.2.2",
     "lodash": "^4.17.4",
+    "material-ui": "^0.20.0",
     "materialize-css": "^0.100.2",
     "materialize-social": "^1.0.3",
     "method-override": "^2.3.9",
