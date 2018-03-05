@@ -24,6 +24,19 @@ const fillChapters = function (chapters) {
   $('select').material_select()
 }
 
+const fillClasses = function (classes) {
+  $('#updateClassSelect').children().not(':first').remove()
+  for (let classs of classes) {
+    $('#updateClassSelect').append($('<option>', {
+      text: classs.className,
+      value: classs._id
+    }))
+  }
+  $('#updateClassSelect').val($('#updateClassSelect').children().eq(0).val())
+  $('#updateClassSubjectSelect').val($('#updateClassSubjectSelect').children().eq(0).val())
+  $('select').material_select()
+}
+
 const fillClassesForSubjectUpdate = function (classes) {
   $('#updateSubjectClassSelect').children().not(':first').remove()
   for (let classs of classes) {
@@ -46,6 +59,17 @@ const fillSubjectsForChapterUpdate = function (subjects) {
   }
 }
 
+const fillSubjectsForClassUpdate = function (allSubjects) {
+  $('#updateClassSubjectsSelect').children().not(':first').remove()
+  for (let subject of allSubjects) {
+    $('#updateClassSubjectsSelect').append($('<option>', {
+      text: subject.subjectName,
+      value: subject._id
+    }))
+    $('select').material_select()
+  }
+}
+
 const selectClassOfSubject = function (classs, classes) {
   let i = _.findIndex(classes, ['_id', classs._id])
   $('#updateSubjectClassSelect').children().eq(i + 1).attr('selected', true)
@@ -55,6 +79,16 @@ const selectClassOfSubject = function (classs, classes) {
 const selectSubjectOfChapter = function (subject, subjects) {
   let i = _.findIndex(subjects, ['_id', subject._id])
   $('#updateChapterSubjectSelect').children().eq(i + 1).attr('selected', true)
+  $('select').material_select()
+}
+
+const selectSubjectsOfClass = function (subjects, allSubjects) {
+  let indexes = []
+  for (let sub of subjects) {
+    indexes.push(_.findIndex(allSubjects, ['_id', sub._id]))
+  }
+  indexes.forEach(i => $('#updateClassSubjectsSelect').children().eq(i + 1).attr('selected', true))
+
   $('select').material_select()
 }
 
@@ -143,6 +177,21 @@ $(function () {
     }
   })
 
+  $('#updateClassSelect').on('change', function (e) {
+    if ($(this).val() !== '') {
+      $.ajax({
+        url: '/admin/questionBank/classId/' + $(this).val(),
+        method: 'get',
+        success: function (response) {
+          console.log('res', response)
+          fillSubjectsForClassUpdate(response.allSubjects)
+          selectSubjectsOfClass(response.subjects, response.allSubjects)
+        },
+        error: function (error) {}
+      })
+    }
+  })
+
   if ($('.modal').length > 0) {
     $('#updateSubjectModal').modal({
       dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -182,6 +231,31 @@ $(function () {
           method: 'get',
           success: function (response) {
             fillChapters(response.chapters)
+          },
+          error: function (error) {
+            if (error) {
+              Materialize.toast($('<span>' + error.responseText + '</span>'), 4000)
+              $('.toast:last').css('background-color', '#f44336')
+            }
+          }
+        })
+      },
+      complete: function () {} // Callback for Modal close
+    })
+
+    $('#updateClassModal').modal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: 0.5, // Opacity of modal background
+      inDuration: 300, // Transition in duration
+      outDuration: 200, // Transition out duration
+      startingTop: '4%', // Starting top style attribute
+      endingTop: '10%', // Ending top style attribute
+      ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+        $.ajax({
+          url: '/admin/questionBank/classes',
+          method: 'get',
+          success: function (response) {
+            fillClasses(response.classes)
           },
           error: function (error) {
             if (error) {

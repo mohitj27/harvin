@@ -66,11 +66,16 @@ const updateSubject = function (subId, classId) {
   return new Promise(async function (resolve, reject) {
     try {
       let foundSubject = await QbController.findSubjectById(subId)
+      let prevClass = await QbController.findClassById(foundSubject.class)
       let foundClass = await QbController.findClassById(classId)
       let updatedSubject = await QbController.updateSubjectById(foundSubject, {}, {
-        class: foundClass
+        class: foundClass,
+        className: foundClass.className
       })
-      let updatedClass = await QbController.removeSubjectFromClassById(foundClass, foundSubject)
+      await QbController.removeSubjectFromClassById(prevClass, foundSubject)
+      foundClass = await QbController.updateClassById(foundClass, {
+        subjects: foundSubject
+      }, {})
       // refactor
       foundSubject = await QbController.populateFieldsInQbSubjects(foundSubject, ['chapters.questions'])
       let chapters = foundSubject.chapters
@@ -81,7 +86,7 @@ const updateSubject = function (subId, classId) {
         let questions = chapter.questions
         for (let ques of questions) {
           await QbController.updateQuestionById(ques, {}, {
-            class: updatedClass,
+            class: foundClass,
             subject: updatedSubject,
             chapter
           })
@@ -99,19 +104,23 @@ const updateChapter = function (chapterId, subId) {
   return new Promise(async function (resolve, reject) {
     try {
       let foundChapter = await QbController.findChapterById(chapterId)
+      let prevSubject = await QbController.findClassById(foundChapter.subject)
       let foundSubject = await QbController.findSubjectById(subId)
       let updatedChapter = await QbController.updateChapterById(foundChapter, {}, {
         subject: foundSubject
       })
-      let updatedSubject = await QbController.removeChapterFromSubjectById(foundSubject, foundChapter)
+      await QbController.removeChapterFromSubjectById(prevSubject, foundChapter)
+      foundSubject = await QbController.updateSubjectById(foundSubject, {
+        chapters: foundChapter
+      }, {})
       // refactor
       foundChapter = await QbController.populateFieldsInQbChapters(foundChapter, ['questions'])
       let questions = foundChapter.questions
 
       for (let ques of questions) {
-        let upQ = await QbController.updateQuestionById(ques, {}, {
+        await QbController.updateQuestionById(ques, {}, {
           chapter: updatedChapter,
-          subject: updatedSubject
+          subject: foundSubject
         })
       }
 
@@ -254,6 +263,23 @@ router.get('/chapterId/:chapId', async (req, res, next) => {
     res.json({
       subject: foundSubject,
       subjects: foundSubjects
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/classId/:classId', async (req, res, next) => {
+  let classId = req.params.classId || ''
+  if (!classId || !validator.isMongoId(classId)) return errorHandler.errorResponse('INVALID_FIELD', 'class id', next)
+  try {
+    let foundClass = await QbController.findClassById(classId)
+    foundClass = await QbController.populateFieldsInQbClasses(foundClass, ['subjects'])
+    let foundSubjects = foundClass.subjects
+    let foundAllSubjects = await QbController.findAllQbSubjects()
+    res.json({
+      subjects: foundSubjects,
+      allSubjects: foundAllSubjects
     })
   } catch (err) {
     next(err)

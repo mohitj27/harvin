@@ -9,7 +9,18 @@
       <br>
       <br>
       <div class="row">
-        <div class="col s6">
+        <div class="col s4">
+          <div class="card ">
+            <div class="card-content ">
+              <span class="card-title">Update Class</span>
+
+            </div>
+            <div class="card-action">
+              <a class="waves-effect waves-light btn modal-trigger" href="#updateClassModal">Update Class</a>
+            </div>
+          </div>
+        </div>
+        <div class="col s4">
           <div class="card ">
             <div class="card-content ">
               <span class="card-title">Move Subject to another Class</span>
@@ -20,7 +31,7 @@
             </div>
           </div>
         </div>
-        <div class="col s6">
+        <div class="col s4">
           <div class="card ">
             <div class="card-content ">
               <span class="card-title">Move Chapter to another Subject</span>
@@ -76,6 +87,30 @@
 
             </select>
             <label>Select Subject</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a id="updateChapter" class="modal-action modal-close waves-effect waves-green btn-flat">Update</a>
+      </div>
+    </div>
+
+    <div id="updateClassModal" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <div class="row">
+          <div class="col s6">
+            <select id="updateClassSelect">
+              <option value="" disabled selected>Select Class</option>
+
+            </select>
+            <label>Select Class</label>
+          </div>
+          <div class="col s6">
+            <select id="updateClassSubjectsSelect" multiple>
+              <option value="" disabled selected>Select Subjects</option>
+
+            </select>
+            <label>Select Subjects</label>
           </div>
         </div>
       </div>
