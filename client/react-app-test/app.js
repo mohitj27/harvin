@@ -1,35 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Axios from 'axios'
+import RegisterComponent from './components/RegisterComponent'
+import LoginComponent from './components/LoginComponent'
+import MyAwesomeReactComponent from './components/MyAwesomeReactComponent'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-class ResultList extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      error: null,
-      isLoaded: false,
-      subjects: [{_id:1,className:"test"}]
-    }
-  }
-  componentDidMount() {
-    Axios.get("/student/ishankstudent/subjects2").then(res => {
-      console.log( res.data.subjects[0]._id)
-      this.setState({isLoaded: true, subjects: res.data.subjects})
-    }).catch(err => console.log(err))
-  }
-  render() {
-    const {error, isLoaded, subjects} = this.state;
+const App = () => (
+  <MuiThemeProvider>
+    <MyAwesomeReactComponent />
+  </MuiThemeProvider>
+);
 
-    return <div>
-      <ul className="collection">
-         {subjects.map(subject => (
-           <li key={subject._id} className="collection-item">
-             {subject.subjectName} {subject.className}
-           </li>
-         ))}
-       </ul>
-    </div>
-  }
+try{
+ReactDOM.render(<App/>, document.getElementById('app-root'));}
+catch(err){console.log('apperr',err)}
+
+try{
+ReactDOM.render(<LoginComponent/>, document.getElementById('LoginComponent'));}
+catch(err){}
+
+try {
+  ReactDOM.render(<RegisterComponent/>,document.getElementById('RegisterComponent'))
+
+} catch (e) {
+
 }
-
-ReactDOM.render(<ResultList/>, document.getElementById('react-element'));

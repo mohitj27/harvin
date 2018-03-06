@@ -155,6 +155,39 @@ router.get('/register', async function (req, res, next) {
   }
 })
 
+router.get('/home/:username',async (req,res ,next)=>{
+  try {
+    const user=userController.findUserByUserId(req.user)
+
+  } catch (e) {
+
+  } finally {
+
+  }
+})
+router.get('/home',async (req,res ,next)=>{
+res.render('studentHome')
+})
+
+// User Register form-- student->from web interface
+router.get('/login', async function (req, res, next) {
+  try {
+    const foundBatches = await batchController.findAllBatch()
+    return res.render('studentLogin')
+  } catch (e) {
+    return next(e)
+  }
+})
+// User Register form-- student->from web interface
+router.post('/login', async function (req, res, next) {
+  try {
+    const foundUser = await userController.findOneUser()
+    return res.render('studentLogin')
+  } catch (e) {
+    return next(e)
+  }
+})
+
 router.get('/:username/subjects', async (req, res, next) => {
   const username = req.params.username || ''
   if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
