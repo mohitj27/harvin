@@ -16,6 +16,7 @@ const errorHandler = require('./errorHandler')
 const mongoose = require('mongoose')
 const serveFavicon = require('serve-favicon')
 const User = require('./models/User.js')
+const userController = require('./controllers/user.controller')
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 
@@ -63,7 +64,9 @@ passport.deserializeUser(User.deserializeUser())
 
 // General middleware function
 
-app.use(function (req, res, next) {
+app.use(async function (req, res, next) {
+  let allCenters = await userController.findAllCenters()
+  res.locals.centers = allCenters
   res.locals.currentUser = req.user || null
   res.locals.msg_error = req.flash('error') || {}
   res.locals.msg_success = req.flash('success') || {}

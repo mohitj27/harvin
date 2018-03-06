@@ -49,7 +49,6 @@
 				</ul>
 			</li>
 			<li class="no-padding">
-			<li class="no-padding">
 				<ul class="collapsible collapsible-accordion">
 					<li>
 						<a class="collapsible-header">Students<i class="material-icons white-text">arrow_drop_down</i></a>
@@ -88,6 +87,25 @@
 					</li>
 				</ul>
 			</li>
+
+			<%if(currentUser){%>
+				<li class="no-padding">
+						<ul class="collapsible collapsible-accordion">
+							<li>
+								<a class="collapsible-header">Centers<i class="material-icons white-text">arrow_drop_down</i></a>
+								<div class="collapsible-body center-align side-nav-collapsible-body">
+									<ul>
+										<% if(centers){ %>
+											<%centers.forEach(function(center){%>
+												<li><a href="/admin/centers/<%=center.username%>"><%=center.username%></a></li>
+											<%})%>
+										<%}%>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</li>
+				<%}%>
 			<% if(!currentUser){ %>
 
 				<li>

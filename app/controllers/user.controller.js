@@ -34,6 +34,15 @@ const findAllUsers = function () {
   })
 }
 
+const findAllCenters = function () {
+  return new Promise(function (resolve, reject) {
+    User
+      .findAsync({role: 'centre'})
+      .then(foundUsers => resolve(foundUsers))
+      .catch(err => reject(err))
+  })
+}
+
 const populateFieldsInUsers = function (users, path) {
   return new Promise(function (resolve, reject) {
     User
@@ -156,5 +165,6 @@ module.exports = {
   findAllUsers,
   populateFieldsInUsers,
   findUserByUserId,
-  updateFieldsInUserById
+  updateFieldsInUserById,
+  findAllCenters
 }

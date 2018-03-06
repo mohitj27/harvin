@@ -2,8 +2,9 @@ const express = require('express')
 const passport = require('passport')
 const userController = require('../controllers/user.controller')
 const errorHandler = require('../errorHandler')
-const jsonwebtoken = require('jsonwebtoken')
+// const jsonwebtoken = require('jsonwebtoken')
 const _ = require('lodash')
+const validator = require('validator')
 const jwtConfig = require('../config/jwt')
 const jwt = require('express-jwt')
 // const User = require('../models/User')
@@ -24,19 +25,20 @@ router.get('/', function (req, res) {
 
 // Handle user registration-- for admin
 router.post('/signup', async function (req, res, next) {
-  const username = req.body.username
-  const password = req.body.password
+  const username = req.body.username || ''
+  const password = req.body.password || ''
   const role = req.body.role
 
   res.locals.flashUrl = '/admin/signup'
 
-  if (!role || role.length <= 0) return errorHandler.errorResponse('INVALID_FIELD', 'role', next)
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+  if (!password || validator.isEmpty(password)) return errorHandler.errorResponse('INVALID_FIELD', 'role', next)
+  // if (!role || role.length <= 0) return errorHandler.errorResponse('INVALID_FIELD', 'role', next)
 
   try {
     await userController.registerUser({
       username,
-      password,
-      role
+      password
     })
 
     passport.authenticate('local')(req, res, function () {
@@ -45,6 +47,8 @@ router.post('/signup', async function (req, res, next) {
       delete req.session.returnTo
     })
   } catch (e) {
+    e = e.toString()
+    if (e.indexOf('registered')) return next('A center with same name is already registered')
     next(e)
   }
 })
