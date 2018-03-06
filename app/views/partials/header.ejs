@@ -97,7 +97,11 @@
 									<ul>
 										<% if(centers){ %>
 											<%centers.forEach(function(center){%>
-												<li><a href="/admin/centers/<%=center.username%>"><%=center.username%></a></li>
+												<li><a href="/admin/centers/<%=center.username%>"
+													<%if(currentUser.username == center.username){%>
+														class="z-depth-5"
+														<%}%>
+													><%=center.username%></a></li>
 											<%})%>
 										<%}%>
 									</ul>
@@ -116,9 +120,11 @@
 				</li>
 				<% }else{ %>
 					<li>
-						<a href="#"><i class="material-icons white-text">account_circle</i>
-											<%= currentUser.username %>
-										</a>
+						<%if(institute){%>
+							<a ><i class="material-icons white-text">account_circle</i>
+								<%= institute.instituteName %>
+							</a>
+							<%}%>
 					</li>
 					<li>
 						<a href="/admin/logout"><i class="material-icons white-text">exit_to_app</i>Logout</a>

@@ -31,8 +31,12 @@ var profileSchema = new Schema({
   progresses: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Progress'
-  }]
+  }],
 
+  isCenterOfInstitute: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Institute'
+  }
 })
 
 profileSchema.plugin(deepPopulate)

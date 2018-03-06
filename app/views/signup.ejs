@@ -1,29 +1,38 @@
 <% include partials/header.ejs %>
   <main>
     <div class="container">
-      <h2 class="center-align">Center sign up</h2>
+      <h2 class="center-align">Institute sign up</h2>
       <hr>
       <br>
       <div>
         <form action="/admin/signup" method="post" class="center-align">
           <div class="row">
-            <div class="input-field col s4 offset-s4">
+            <div class="input-field col s4 offset-s2">
+              <input required id="instituteName" name="instituteName" type="text" class="validate">
+              <label for="instituteName">Name of your Institute</label>
+            </div>
+
+            <div class="input-field col s4 ">
               <input required id="username" name="username" type="text" class="validate">
-              <label for="username">Name of Center / Branch</label>
+              <label for="username">Name of Center (Unique)</label>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s4 offset-s4">
+            <div class="input-field col s4 offset-s2">
+              <input required id="centerName" name="centerName" type="text" class="validate">
+              <label for="centerName">Display Name of Center</label>
+            </div>
+            <div class="input-field col s4 ">
               <input required type="password" name="password" id="password">
               <label for="password">Password</label>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s4 offset-s4">
-              <select  multiple name="role" id="role">
-                <option value="" disabled selected>Choose Your Role</option>
-                <option value="admin">Admin</option>
-                <option value="centre">Centre</option>
+            <div class="input-field col s6 offset-s3 ">
+              <select multiple name="role" id="role">
+                <option value="" disabled >Access Rights for this center</option>
+                <option value="admin" selected>Admin</option>
+                <option value="centre" selected>Centre</option>
               </select>
               <label>Role / Access Rights for this center</label>
             </div>
