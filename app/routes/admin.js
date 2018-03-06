@@ -1,9 +1,11 @@
 const express = require('express')
 const passport = require('passport')
 const userController = require('../controllers/user.controller')
+const instituteController = require('../controllers/institute.controller')
 const errorHandler = require('../errorHandler')
 const jsonwebtoken = require('jsonwebtoken')
 const _ = require('lodash')
+const validator = require('validator')
 const jwtConfig = require('../config/jwt')
 const jwt = require('express-jwt')
 // const User = require('../models/User')
@@ -24,20 +26,34 @@ router.get('/', function (req, res) {
 
 // Handle user registration-- for admin
 router.post('/signup', async function (req, res, next) {
-  const username = req.body.username
-  const password = req.body.password
+  const instituteName = req.body.instituteName || ''
+  const username = req.body.username || ''
+  const password = req.body.password || ''
   const role = req.body.role
+
+  if (!instituteName || validator.isEmpty(instituteName)) return errorHandler.errorResponse('INVALID_FIELD', 'Institute name', next)
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'center name', next)
+  if (!password || validator.isEmpty(password)) return errorHandler.errorResponse('INVALID_FIELD', 'password', next)
+  if (!role || role.length <= 0) return errorHandler.errorResponse('INVALID_FIELD', 'role', next)
 
   res.locals.flashUrl = '/admin/signup'
 
-  if (!role || role.length <= 0) return errorHandler.errorResponse('INVALID_FIELD', 'role', next)
-
   try {
-    await userController.registerUser({
+    let registerdUser = await userController.registerUser({
       username,
       password,
       role
     })
+
+    registerdUser = _.castArray(registerdUser)
+    console.log('center', registerdUser)
+
+    let createdInstitute = await instituteController.createInstitute({
+      instituteName,
+      centers: registerdUser
+    })
+
+    console.log('createdIns', createdInstitute)
 
     passport.authenticate('local')(req, res, function () {
       req.flash('success', 'Successfully signed you in as ' + req.body.username)

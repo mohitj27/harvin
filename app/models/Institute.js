@@ -12,11 +12,6 @@ var instituteSchema = new Schema({
     unique: true
   },
 
-  displayName: {
-    type: String,
-    required: true
-  },
-
   centers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
