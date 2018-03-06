@@ -1,31 +1,47 @@
 <% include partials/header.ejs %>
   <main>
-    <h1 style="text-align:center">Sign up</h1>
-    <div style="width: 30%; margin:25px auto">
-      <form action="/admin/signup" method="post">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input required type="text" class="form-control" name="username" id="username" placeholder="User name">
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input required type="password" class="form-control" name="password" id="password" placeholder="password">
-        </div>
-        <div class="form-group">
-          <label for="role">Signup as</label>
-          <div>
-            <select data-live-search="true" multiple required title="Choose your role" name="role" id="role">
-                <option value="" disabled selected>Choose Your Role</option>
-              <option value="admin">Admin</option>
-              <option value="centre">Centre</option>
-            </select>
+    <div class="container">
+      <h2 class="center-align">Institute sign up</h2>
+      <hr>
+      <br>
+      <div>
+        <form action="/admin/signup" method="post" style="">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="uniqueInstituteName" type="text" class="validate">
+              <label for="uniqueInstituteName">Unique Institute Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="displayNameInstitute" type="text" class="validate">
+              <label for="displayNameInstitute">Display name for Institute</label>
+            </div>
           </div>
-        </div>
-        <div class="center-align">
-          <button type="submit" class="btn">Sign Up <i class="material-icons right">send</i></button>
-        </div>
-      </form>
-    </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input required type="text" class="form-control" name="username" id="username" placeholder="User name">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input required type="password" class="form-control" name="password" id="password" placeholder="password">
+          </div>
+          <div class="form-group">
+            <label for="role">Signup as</label>
+            <div>
+              <select data-live-search="true" multiple required title="Choose your role" name="role" id="role">
+                <option value="" disabled selected>Choose Your Role</option>
+                <option value="admin">Admin</option>
+                <option value="centre">Centre</option>
+              </select>
+            </div>
+          </div>
+          <div class="center-align">
+            <button type="submit" class="btn">Sign Up
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+        </form>
+      </div>
 
+    </div>
   </main>
   <% include partials/footer.ejs %>

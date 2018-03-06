@@ -58,6 +58,15 @@ const registerUser = function (newUser) {
   })
 }
 
+const saveUser = function (newUser) {
+  return new Promise(function (resolve, reject) {
+    newUser.save((err, createdUser) => {
+      if (err) return reject(err)
+      else resolve(createdUser)
+    })
+  })
+}
+
 const addProfileToUser = function (user, profile) {
   return new Promise(function (resolve, reject) {
     User.findOneAndUpdate({
@@ -141,6 +150,7 @@ const updateFieldsInUserById = function (user, addToSetFields, setFields) {
 module.exports = {
   findUserByUsername,
   registerUser,
+  saveUser,
   addProfileToUser,
   findBatchOfUserByUsername,
   findAllUsers,

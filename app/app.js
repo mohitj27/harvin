@@ -112,11 +112,12 @@ app.use(function (err, req, res, next) {
     if (err.status !== 401 && err.status !== 403) {
       console.error('err---------------: ', err.stack)
       console.error('err_status: ', err.status)
-      console.error('err_msg: ', err.message)
       console.error('err_name: ', err.name)
       console.error('errros: ', err.errors)
-      console.log('url', req.originalUrl)
     }
+    console.error('err_code: ', err.code)
+    console.error('err_msg: ', err.message)
+    console.log('url', req.originalUrl)
     const status = err.status || 400
     const flashUrl = res.locals.flashUrl
     const errMsg = errorHandler.getErrorMessage(err) || err.message || err

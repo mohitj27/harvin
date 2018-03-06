@@ -23,8 +23,15 @@ var getErrorMessage = function (err) {
   if (err.code) {
     switch (err.code) {
       case 11000:
+        break
       case 11001:
         message = getUniqueErrorMessage(err)
+        break
+      case 'invalid_token':
+        message = err.message
+        break
+      case 'credentials_required':
+        message = err.message
         break
       default:
         message = 'Something went wrong'
