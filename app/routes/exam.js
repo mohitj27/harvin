@@ -377,7 +377,7 @@ router.get('/:username/exams/:examId/questionPaper', async (req, res, next) => {
     // let userProfileBatch = await userController.findBatchOfUserByUsername(username, next)
     let foundExam = await examController.findExamById(examId)
     foundExam = await examController.populateFieldsInExams(foundExam, ['questionPaper'])
-    let populatedQuestionPaper = await QBController.populateFieldInQuestionPapers(foundExam.questionPaper, ['questions'])
+    let populatedQuestionPaper = await QBController.populateFieldsInQuestionPapers(foundExam.questionPaper, ['questions'])
 
     var questionPaper = {}
     questionPaper._id = populatedQuestionPaper._id
