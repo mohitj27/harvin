@@ -1,9 +1,12 @@
 const express = require('express')
 const passport = require('passport')
 const userController = require('../controllers/user.controller')
+const profileController = require('../controllers/profile.controller')
+const instituteController = require('../controllers/institute.controller')
 const errorHandler = require('../errorHandler')
-const jsonwebtoken = require('jsonwebtoken')
+// const jsonwebtoken = require('jsonwebtoken')
 const _ = require('lodash')
+const validator = require('validator')
 const jwtConfig = require('../config/jwt')
 const jwt = require('express-jwt')
 // const User = require('../models/User')
@@ -24,20 +27,50 @@ router.get('/', function (req, res) {
 
 // Handle user registration-- for admin
 router.post('/signup', async function (req, res, next) {
-  const username = req.body.username
-  const password = req.body.password
+  console.log('body', req.body)
+  const instituteName = req.body.instituteName || ''
+  const centerName = req.body.centerName || ''
+  const username = req.body.username || ''
+  const password = req.body.password || ''
   const role = req.body.role
 
   res.locals.flashUrl = '/admin/signup'
 
+  if (!instituteName || validator.isEmpty(instituteName)) return errorHandler.errorResponse('INVALID_FIELD', 'Institute name', next)
+  if (!centerName || validator.isEmpty(centerName)) return errorHandler.errorResponse('INVALID_FIELD', 'Center name', next)
+  if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'center name', next)
+  if (!password || validator.isEmpty(password)) return errorHandler.errorResponse('INVALID_FIELD', 'password', next)
   if (!role || role.length <= 0) return errorHandler.errorResponse('INVALID_FIELD', 'role', next)
 
   try {
-    await userController.registerUser({
+    let registerdUser = await userController.registerUser({
       username,
       password,
       role
     })
+    let createdInstitute
+
+    createdInstitute = await instituteController.findInstituteByName(instituteName)
+    if (!createdInstitute) {
+      createdInstitute = await instituteController.createInstitute({
+        instituteName
+      })
+    }
+
+    let updatedInstitute = await instituteController.updateFieldsInInstituteById(createdInstitute, {
+      centers: registerdUser
+    })
+
+    let createdProfile = await profileController.createNewProfile({
+      fullName: centerName,
+      isCenterOfInstitute: updatedInstitute
+    })
+    let updatedProfile = await userController.updateFieldsInUserById(registerdUser, {}, {
+      profile: createdProfile
+    })
+
+    console.log('createdIns', updatedInstitute)
+    console.log('prof', updatedProfile)
 
     passport.authenticate('local')(req, res, function () {
       req.flash('success', 'Successfully signed you in as ' + req.body.username)
@@ -45,6 +78,8 @@ router.post('/signup', async function (req, res, next) {
       delete req.session.returnTo
     })
   } catch (e) {
+    e = e.toString()
+    if (e.indexOf('registered') !== -1) return next('A center with same name is already registered')
     next(e)
   }
 })

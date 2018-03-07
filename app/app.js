@@ -14,8 +14,12 @@ const compression = require('compression')
 const app = express()
 const errorHandler = require('./errorHandler')
 const mongoose = require('mongoose')
+const _ = require('lodash')
 const serveFavicon = require('serve-favicon')
 const User = require('./models/User.js')
+const userController = require('./controllers/user.controller')
+const instituteController = require('./controllers/institute.controller')
+const profileController = require('./controllers/profile.controller')
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 
@@ -63,11 +67,34 @@ passport.deserializeUser(User.deserializeUser())
 
 // General middleware function
 
-app.use(function (req, res, next) {
-  res.locals.currentUser = req.user || null
-  res.locals.msg_error = req.flash('error') || {}
-  res.locals.msg_success = req.flash('success') || {}
-  next()
+app.use(async function (req, res, next) {
+  try {
+    // res.locals.centers = await userController.findAllCenters()
+    let allCenters = await userController.findAllCenters()
+    allCenters = await userController.populateFieldsInUsers(allCenters, ['profile'])
+
+    res.locals.currentUser = req.user || null
+    if (req.user) {
+      let user = await userController.populateFieldsInUsers(req.user, ['profile'])
+      res.locals.centerProfile = user.profile || null
+      if (user.profile) {
+        res.locals.institute = await instituteController.findInstituteById(user.profile.isCenterOfInstitute)
+        allCenters = _.filter(allCenters, function (center) {
+          if (center.profile) {
+            if (center.profile.isCenterOfInstitute.toString() == user.profile.isCenterOfInstitute.toString()) {
+              return center
+            }
+          }
+        })
+        res.locals.centers = allCenters
+      }
+    }
+    res.locals.msg_error = req.flash('error') || {}
+    res.locals.msg_success = req.flash('success') || {}
+    next()
+  } catch (err) {
+    next(err)
+  }
 })
 
 let files = {}

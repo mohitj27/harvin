@@ -8,12 +8,6 @@ const deepPopulate = require('mongoose-deep-populate')(mongoose)
 var instituteSchema = new Schema({
   instituteName: {
     type: String,
-    required: true,
-    unique: true
-  },
-
-  displayName: {
-    type: String,
     required: true
   },
 
