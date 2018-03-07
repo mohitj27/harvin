@@ -29,20 +29,15 @@ const mainStyle={
   marginTop: '40px',
 }
 const styles = theme => ({
-  PublishingApp:{
-zIndex: theme.zIndex.drawer + 100,
-    margin:40},
+
   root: {
     flexGrow: 1,
-
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
     display: 'flex',
   },
-  appBarBottomIcons:{
-    bottom:'-100px'
-  },
+
   appBar: {
 
     zIndex: theme.zIndex.drawer +1,
@@ -50,6 +45,8 @@ zIndex: theme.zIndex.drawer + 100,
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    [theme.breakpoints.up('md')]: {
+    },
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -192,8 +189,8 @@ this.handleDrawerClose=this.handleDrawerClose.bind(this)
         </Drawer>
         <main style={mainStyle}className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography noWrap>{'You think water moves fast? You should see ice.'}</Typography>
-          <PublishingApp className={classes.PublishingApp}></PublishingApp>
+
+  {  /*    <PublishingApp className={classes.PublishingApp}></PublishingApp>*/}
           <Route path='/student/home/'  exact render={()=>(<Home/>)}/>
           <Route path='/student/home/createTest'  render={()=>(<CreateTest/>)}/>
           <Route path='/student/home/listTest' exact render={()=>(<ListTest/>)}/>
