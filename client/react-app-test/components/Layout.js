@@ -1,24 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import classNames from 'classnames';
-import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import List , { ListItem, ListItemIcon, ListItemText }from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
-import InboxIcon from 'material-ui-icons/Inbox';
-import DraftsIcon from 'material-ui-icons/Drafts';
-import TrashIcon from 'material-ui-icons/Delete';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
-import ChevronRightIcon from 'material-ui-icons/ChevronRight';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import classNames from 'classnames'
+import Drawer from 'material-ui/Drawer'
+import AppBar from 'material-ui/AppBar'
+import Toolbar from 'material-ui/Toolbar'
+import List , { ListItem, ListItemIcon, ListItemText }from 'material-ui/List'
+import Typography from 'material-ui/Typography'
+import Divider from 'material-ui/Divider'
+import {Face,LibraryBooks} from 'material-ui-icons'
+import CreateTestIcon from 'material-ui-icons/Create'
+import TrashIcon from 'material-ui-icons/Delete'
+import IconButton from 'material-ui/IconButton'
+import MenuIcon from 'material-ui-icons/Menu'
+import ChevronLeftIcon from 'material-ui-icons/ChevronLeft'
+import ChevronRightIcon from 'material-ui-icons/ChevronRight'
 import PublishingApp from './master-fs/PublishingApp'
+import Home from './home-component/Home'
+import CreateTest from './create-test/CreateTest'
+import ListTest from './list-test/ListTest'
+import {BrowserRouter,Link,Route} from 'react-router-dom'
 
 
-const drawerWidth = 240;
+
+
+const drawerWidth = 240
 const mainStyle={
   marginTop: '40px',
 }
@@ -33,6 +39,9 @@ zIndex: theme.zIndex.drawer + 100,
     overflow: 'hidden',
     position: 'relative',
     display: 'flex',
+  },
+  appBarBottomIcons:{
+    bottom:'-100px'
   },
   appBar: {
 
@@ -87,29 +96,30 @@ zIndex: theme.zIndex.drawer + 100,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
   },
-});
+})
 
 class Layout extends React.Component {
   constructor(props){
 super(props)
     this.state = {
       open: false,
-    };
+    }
 this.handleDrawerOpen=this.handleDrawerOpen.bind(this)
 this.handleDrawerClose=this.handleDrawerClose.bind(this)
   }
   handleDrawerOpen () {
-    this.setState({ open: true });
-  };
+    this.setState({ open: true })
+  }
 
   handleDrawerClose () {
-    this.setState({ open: false });
-  };
+    this.setState({ open: false })
+  }
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme } = this.props
 
     return (
+      <BrowserRouter>
       <div className={classes.root}>
         <AppBar
           position="absolute"
@@ -143,24 +153,39 @@ this.handleDrawerClose=this.handleDrawerClose.bind(this)
           </div>
           <Divider />
             <List component="nav">
+              <Link to='/student/home/'>
           <ListItem button>
             <ListItemIcon>
-              <InboxIcon />
+              <Face />
             </ListItemIcon>
-            <ListItemText primary="Inbox" />
+            <ListItemText primary="Profile" />
           </ListItem>
+        </Link>
+          <Link to='/student/home/createTest'>
           <ListItem button>
             <ListItemIcon>
-              <DraftsIcon />
+              <CreateTestIcon />
             </ListItemIcon>
-            <ListItemText primary="Drafts" />
+            <ListItemText primary="Create Test" />
           </ListItem>
+        </Link>
+          <Link to='/student/home/listTest'>
           <ListItem button>
+            <ListItemIcon>
+              <LibraryBooks />
+            </ListItemIcon>
+            <ListItemText primary="Take Tests" />
+          </ListItem>
+        </Link>
+<Link to='/student/home/performance'>
+          <ListItem button  className="appBarBottomIcons">
             <ListItemIcon>
               <TrashIcon />
             </ListItemIcon>
             <ListItemText primary="Delete" />
           </ListItem>
+          </Link>
+
         </List>
         <Divider/>
           <List>{}</List>
@@ -169,15 +194,23 @@ this.handleDrawerClose=this.handleDrawerClose.bind(this)
           <div className={classes.toolbar} />
           <Typography noWrap>{'You think water moves fast? You should see ice.'}</Typography>
           <PublishingApp className={classes.PublishingApp}></PublishingApp>
+          <Route path='/student/home/'  exact render={()=>(<Home/>)}/>
+          <Route path='/student/home/createTest'  render={()=>(<CreateTest/>)}/>
+          <Route path='/student/home/listTest' exact render={()=>(<ListTest/>)}/>
+
+
+
+
         </main>
       </div>
-    );
+    </BrowserRouter>
+    )
   }
 }
 
 Layout.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles, { withTheme: true })(Layout);
+export default withStyles(styles, { withTheme: true })(Layout)
