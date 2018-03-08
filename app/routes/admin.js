@@ -74,8 +74,8 @@ router.post('/signup', async function (req, res, next) {
       delete req.session.returnTo
     })
   } catch (err) {
-    e = e.toString()
-    if (e.indexOf('registered') !== -1) return next('A center with same name is already registered')
+    err = err.toString()
+    if (err.indexOf('registered') !== -1) return next('A center with same name is already registered')
     next(err || 'Internal Server Error')
   }
 })
