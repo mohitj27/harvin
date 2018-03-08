@@ -27,7 +27,6 @@ router.get('/', function (req, res) {
 
 // Handle user registration-- for admin
 router.post('/signup', async function (req, res, next) {
-  console.log('body', req.body)
   const instituteName = req.body.instituteName || ''
   const centerName = req.body.centerName || ''
   const username = req.body.username || ''
@@ -65,12 +64,9 @@ router.post('/signup', async function (req, res, next) {
       fullName: centerName,
       isCenterOfInstitute: updatedInstitute
     })
-    let updatedProfile = await userController.updateFieldsInUserById(registerdUser, {}, {
+    await userController.updateFieldsInUserById(registerdUser, {}, {
       profile: createdProfile
     })
-
-    console.log('createdIns', updatedInstitute)
-    console.log('prof', updatedProfile)
 
     passport.authenticate('local')(req, res, function () {
       req.flash('success', 'Successfully signed you in as ' + req.body.username)
@@ -80,7 +76,7 @@ router.post('/signup', async function (req, res, next) {
   } catch (e) {
     e = e.toString()
     if (e.indexOf('registered') !== -1) return next('A center with same name is already registered')
-    next(e)
+    next(e || 'Internal Server Error')
   }
 })
 

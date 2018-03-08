@@ -17,12 +17,32 @@ var getUniqueErrorMessage = function (err) {
   return output
 }
 
+var getDuplicateErrorMsg = function (err) {
+  let output
+
+  try {
+    const fieldName = err.errmsg.substring(
+      err.errmsg.lastIndexOf('index') + 7,
+      err.errmsg.lastIndexOf('_1')
+    )
+    output =
+      fieldName.charAt(0).toUpperCase() +
+      fieldName.slice(1) +
+      ' already exists'
+  } catch (ex) {
+    output = 'Unique field already exists'
+  }
+  return output
+}
+
 var getErrorMessage = function (err) {
   let message = ''
 
   if (err.code) {
+    console.error('err_code: ', err.code)
     switch (err.code) {
       case 11000:
+        message = getDuplicateErrorMsg(err)
         break
       case 11001:
         message = getUniqueErrorMessage(err)
@@ -68,7 +88,7 @@ const notLoggedIn = function (next) {
   )
 }
 
-function jsUcfirst (string) {
+function jsUcfirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 

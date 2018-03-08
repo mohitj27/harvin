@@ -97,11 +97,13 @@
 									<ul>
 										<% if(centers){ %>
 											<%centers.forEach(function(center){%>
-												<li><a href="/admin/centers/<%=center.username%>"
-													<%if(currentUser.username == center.username){%>
-														class="z-depth-5"
-														<%}%>
-													><%=center.username%></a></li>
+												<%if(center.profile){%>
+													<li><a href="/admin/centers/<%=center.username%>"
+														<%if(currentUser.username == center.username){%>
+															class="z-depth-5"
+															<%}%>
+														><%=center.profile.fullName%></a></li>
+													<%}%>
 											<%})%>
 										<%}%>
 									</ul>
