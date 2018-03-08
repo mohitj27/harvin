@@ -32,7 +32,7 @@ class LoginComponent extends Component {
                     </div>
                     <div className="row">
                     <p className="col s12 l12 m12 center harvinThemeText">--OR--</p>
-                    <div className="center"><a href="/student/home" className="col s12 l12 m12 harvinThemeText">Register</a></div>
+                    <div className="center"><a href="/student/register" className="col s12 l12 m12 harvinThemeText">Register</a></div>
                     </div>
                   </form>
 

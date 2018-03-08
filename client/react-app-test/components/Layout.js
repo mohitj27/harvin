@@ -26,7 +26,11 @@ import {BrowserRouter, Link, Route} from 'react-router-dom'
 import Menu, {MenuItem} from 'material-ui/Menu';
 
 const drawerWidth = 240
-const mainStyle = {}
+const mainStyle = {
+  backgroundColor:'#f7f7f7',
+  width:'100%',
+  padding:'0 20px 20px 20px'
+}
 const styles = theme => ({
 
   root: {
@@ -34,7 +38,8 @@ const styles = theme => ({
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
-    display: 'flex'
+    display: 'flex',
+
   },
   flex: {
     flex: 1
@@ -94,16 +99,16 @@ const styles = theme => ({
     }
   },
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
     height: 56
   },
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3
+  },
+  divider:{
+    marginTop:0,
+    marginBottom:0
   }
 })
 
@@ -141,7 +146,7 @@ class Layout extends React.Component {
     return (<BrowserRouter>
       <div className={classes.root}>
         <AppBar position="absolute" className={classNames(classes.appBar, this.state.open && classes.appBarShift)}>
-          <Toolbar disableGutters={!this.state.open}>
+          <Toolbar disableGutters={!this.state.open} className={classNames(classes.toolbar)}>
             <IconButton color="inherit" aria-label="open drawer" onClick={this.handleDrawerOpen} className={classNames(classes.menuButton, this.state.open && classes.hide)}>
               <MenuIcon/>
             </IconButton>
@@ -182,7 +187,7 @@ class Layout extends React.Component {
               }
             </IconButton>
           </div>
-          <Divider/>
+          <Divider className={classes.divider}/>
           <List component="nav">
             <Link to='/student/home/'>
               <ListItem button="button">
@@ -218,7 +223,7 @@ class Layout extends React.Component {
             </Link>
 
           </List>
-          <Divider/>
+          <Divider className={classes.divider}/>
           <List>{}</List>
         </Drawer>
         <main style={mainStyle}>className={classes.content}>
