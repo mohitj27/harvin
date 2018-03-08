@@ -34,7 +34,7 @@ router.get('/users', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (r
       users: populatedUsers
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -65,7 +65,7 @@ router.get('/users/:userId/edit', async (req, res, next) => {
 
     return res.render('editUser', {foundUser, profile, userBatch, foundBatches})
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -92,7 +92,7 @@ router.delete('/users/:userId', async (req, res, next) => {
 
     return res.sendStatus(200)
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -104,7 +104,7 @@ router.get('/files', async (req, res, next) => {
       files: populatedFiles
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -115,7 +115,7 @@ router.get('/visitors', middleware.isLoggedIn, middleware.isCentreOrAdmin, async
       visitors: foundVisitors
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -131,7 +131,7 @@ router.get('/gallery/all/:category', async (req, res, next) => {
     req.flash('success', 'successfully deleted all items from current category')
     return res.redirect('/admin/db/gallery')
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -148,7 +148,7 @@ router.get('/gallery/:imageId/delete', async (req, res, next) => {
     req.flash('success', 'Image deleted successfully')
     res.redirect('/admin/db/gallery')
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -159,7 +159,7 @@ router.get('/gallery/all', async (req, res, next) => {
       images: foundImages
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -173,7 +173,7 @@ router.post('/gallery', (req, res, next) => {
   }).single('userFile')
 
   upload(req, res, async function (err) {
-    if (err) return next(err)
+    if (err) return next(err || 'Internal Server Error')
     var fileName = req.file.originalname
 
     // absolute file path
@@ -206,7 +206,7 @@ router.post('/gallery', (req, res, next) => {
       req.flash('success', fileName + ' uploaded successfully')
       res.redirect('/admin/db/gallery/upload')
     } catch (err) {
-      next(err)
+      next(err || 'Internal Server Error')
     }
   })
 })

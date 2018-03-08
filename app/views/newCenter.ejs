@@ -1,0 +1,37 @@
+<% include partials/header.ejs %>
+  <main>
+    <div class="container">
+      <h2 class="center-align">Add a new Center</h2>
+      <hr>
+      <br>
+      <div>
+        <form action="/admin/centers" method="post" class="center-align">
+          <div class="row">
+            <div class="input-field col s6 offset-s3">
+              <input required id="username" name="username" type="text" class="validate">
+              <label for="username">Name of Center (Unique)</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6 offset-s3">
+              <input required id="centerName" name="centerName" type="text" class="validate">
+              <label for="centerName">Display Name of Center</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6 offset-s3">
+              <input required type="password" name="password" id="password">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="center-align">
+            <button type="submit" class="btn">Sign Up
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </main>
+  <% include partials/footer.ejs %>

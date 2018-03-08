@@ -7,12 +7,13 @@ const express = require('express'),
   fs = require('fs'),
   multer = require('multer'),
   app = express(),
-  _=require('lodash'),
+  _ = require('lodash'),
+  errorHandler = require('../errorHandler'),
   router = express.Router(),
   http = require('http').Server(app),
   io = require('socket.io')(http),
   promise = require('bluebird'),
-  blogCont=require('../controllers/blog.controller')
+  blogCont = require('../controllers/blog.controller')
 
 io.on('connection', function (socket) {
   // console.log('connected')
@@ -71,7 +72,7 @@ router.get('/edit', async (req, res, next) => {
       content: data
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 router.get('/:blogTitle', (req, res) => {
@@ -98,7 +99,7 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, n
     storage: storage
   }).single('userFile')
   upload(req, res, function (err) {
-    if (err) return next(err)
+    if (err) return next(err || 'Internal Server Error')
 
     let blogTitle = req.body.title || ''
     if (!blogTitle) return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
@@ -190,7 +191,7 @@ router.delete('/delete/:blogTitle', (req, res) => {
     })
   })
   removeBlogPromise.then(() => {
-    res.send(200)
+    res.sendStatus(200)
   })
 })
 
@@ -211,12 +212,11 @@ function checkBlogImageDir () {
     // console.log('not making blog dir')
   }
 }
-router.post('/editmode/:blogTitle/:mode/:check',async (req,res)=>{
-  let result= await blogCont.updateBlogMode(
-                                req.params.blogTitle,
-                                req.params.mode,
-                                req.params.check)
-res.send(result)
-
+router.post('/editmode/:blogTitle/:mode/:check', async (req, res) => {
+  let result = await blogCont.updateBlogMode(
+    req.params.blogTitle,
+    req.params.mode,
+    req.params.check)
+  res.send(result)
 })
 module.exports = router

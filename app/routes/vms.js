@@ -90,7 +90,7 @@ router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res
     req.flash('success', 'Your response has been saved successfully')
     res.redirect('/vms')
   }, function (err) {
-    next(err || 'SERVER_ERROR')
+    next(err || 'Internal Server Error')
   })
 })
 
@@ -131,7 +131,7 @@ router.get('/courses-list', async (req, res, next) => {
         foundCourses
       })
     } catch (err) {
-      next(err)
+      next(err || 'Internal Server Error')
     }
   } else {
     try {
@@ -140,7 +140,7 @@ router.get('/courses-list', async (req, res, next) => {
         foundCourse
       })
     } catch (err) {
-      next(err)
+      next(err || 'Internal Server Error')
     }
   }
 })
@@ -226,7 +226,7 @@ router.get('/blog', (req, res, next) => {
       })
       .exec((err, foundBlog) => {
         if (err) {
-          return next(err)
+          return next(err || 'Internal Server Error')
         } else {
           Blog.find()
             .sort({
@@ -234,7 +234,7 @@ router.get('/blog', (req, res, next) => {
             })
             .limit(3)
             .exec((err, foundBlogs) => {
-              if (err) return next(err)
+              if (err) return next(err || 'Internal Server Error')
               else if (foundBlog) {
                 fs.readFile(__dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath, function (err, data) {
                   if (err) throw err

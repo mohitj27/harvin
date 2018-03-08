@@ -76,7 +76,7 @@ const generatError = function (status, name, message, next) {
   err.message =
     message || 'Bad request! Please modify request to suitable format'
 
-  next(err)
+  next(err || 'Internal Server Error')
 }
 
 const notLoggedIn = function (next) {

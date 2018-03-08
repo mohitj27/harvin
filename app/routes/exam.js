@@ -20,8 +20,8 @@ router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, r
     res.render('exams', {
       foundExams
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -33,8 +33,8 @@ router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req
     res.render('newExam', {
       batches: foundBatches
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -74,8 +74,8 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, 
     const updatedExam = await examController.createOrUpdateExamByExamNameAndUserId(newExam, req.user)
     req.flash('success', updatedExam.examName + ' created/updated Successfully')
     res.redirect(req.originalUrl)
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -106,7 +106,7 @@ router.get('/qbData', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (
       examId: examId
     })
   } catch (err) {
-    return next(err)
+    return next(err || 'Internal Server Error')
   }
 })
 
@@ -123,8 +123,8 @@ router.get('/:examId/edit', middleware.isLoggedIn, middleware.isCentreOrAdmin, a
       exam: foundExam,
       batches: foundBatches
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -166,8 +166,8 @@ router.put('/:examId', middleware.isLoggedIn, middleware.isCentreOrAdmin, async 
     const updatedExam = await examController.updateExamById(examId, newExam, req.user)
     req.flash('success', updatedExam.examName + ' updated Successfully')
     res.redirect('/admin/exams')
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -181,7 +181,7 @@ router.delete('/:examId', middleware.isLoggedIn, middleware.isCentreOrAdmin, asy
     req.flash('success', removedExam.examName + ' removed Successfully')
     res.redirect(req.headers.referer)
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -209,8 +209,8 @@ router.get('/:examId/question-paper', middleware.isLoggedIn, middleware.isCentre
       exam: foundExam,
       questions: foundQuestions
     })
-  } catch (e) {
-    return next(e)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
   }
 })
 
@@ -267,8 +267,8 @@ router.post('/:examId/question-paper', middleware.isLoggedIn, middleware.isCentr
 
     req.flash('success', 'Question has been added Successfully')
     return res.redirect(req.headers.referer)
-  } catch (e) {
-    return next(e)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
   }
 })
 
@@ -283,8 +283,8 @@ router.get('/:examId/question-paper/chooseFromQB', middleware.isLoggedIn, middle
       examId: examId,
       questions: {}
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -324,8 +324,8 @@ router.post('/:examId/question-paper/chooseFromQB', middleware.isLoggedIn, middl
 
     req.flash('success', 'Questions added Successfully')
     res.redirect(req.headers.referer)
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -359,7 +359,7 @@ router.post('/:examId/question-paper/:username', async (req, res, next) => {
       result: createdResult
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -392,7 +392,7 @@ router.get('/:username/exams/:examId/questionPaper', async (req, res, next) => {
       questionPaper
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -407,8 +407,8 @@ router.get('/:username/exams', async (req, res, next) => {
     res.json({
       exams: foundExams
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 

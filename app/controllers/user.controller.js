@@ -37,7 +37,9 @@ const findAllUsers = function () {
 const findAllCenters = function () {
   return new Promise(function (resolve, reject) {
     User
-      .findAsync({role: 'centre'})
+      .findAsync({
+        role: 'centre'
+      })
       .then(foundUsers => resolve(foundUsers))
       .catch(err => reject(err))
   })
@@ -76,6 +78,24 @@ const saveUser = function (newUser) {
   })
 }
 
+const instituteOfCurrentCenter = async function (center, next) {
+  let currentCenter = await populateFieldsInUsers(center, ['profile.isCenterOfInstitute'])
+  let currentCenterProfile = currentCenter.profile
+  if (!currentCenterProfile) return errorHandler.errorResponse('NOT_FOUND', 'center profile', next)
+  let curretnCenterInstitute = currentCenterProfile.isCenterOfInstitute
+  if (!curretnCenterInstitute) return errorHandler.errorResponse('NOT_FOUND', 'center institute', next)
+  return curretnCenterInstitute
+}
+
+const centersOfInstituteOfCenter = async function (center, next) {
+  let currentCenter = await populateFieldsInUsers(center, ['profile.isCenterOfInstitute.centers.profile'])
+  let currentCenterProfile = currentCenter.profile
+  if (!currentCenterProfile) return errorHandler.errorResponse('NOT_FOUND', 'center profile', next)
+  let curretnCenterInstitute = currentCenterProfile.isCenterOfInstitute
+  if (!curretnCenterInstitute) return errorHandler.errorResponse('NOT_FOUND', 'center institute', next)
+  return curretnCenterInstitute.centers
+}
+
 const addProfileToUser = function (user, profile) {
   return new Promise(function (resolve, reject) {
     User.findOneAndUpdate({
@@ -105,7 +125,7 @@ const findBatchOfUserByUsername = async function (username, next) {
   try {
     foundUser = await populateFieldsInUsers(foundUser, ['profile.batch'])
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 
   if (!foundUser.profile) {
@@ -166,5 +186,7 @@ module.exports = {
   populateFieldsInUsers,
   findUserByUserId,
   updateFieldsInUserById,
-  findAllCenters
+  findAllCenters,
+  instituteOfCurrentCenter,
+  centersOfInstituteOfCenter
 }

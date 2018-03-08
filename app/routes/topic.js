@@ -10,8 +10,8 @@ router.get('/:topicName', async function (req, res, next) {
     return res.json({
       topic: foundTopic
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 

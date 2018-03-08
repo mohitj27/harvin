@@ -88,12 +88,17 @@ app.use(async function (req, res, next) {
         })
         res.locals.centers = allCenters
       }
+
+      if (!res.locals.institute) return errorHandler.errorResponse('NOT_FOUND', 'institute', next)
+      if (!res.locals.centers) return errorHandler.errorResponse('NOT_FOUND', 'centers', next)
     }
+    res.locals.centers = res.locals.centers || []
+    res.locals.institute = res.locals.institute || {}
     res.locals.msg_error = req.flash('error') || {}
     res.locals.msg_success = req.flash('success') || {}
     next()
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 

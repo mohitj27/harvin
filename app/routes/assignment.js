@@ -26,8 +26,8 @@ router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, r
     return res.render('assignments', {
       foundAssignments
     })
-  } catch (e) {
-    return next(e)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
   }
 })
 
@@ -37,8 +37,8 @@ router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req
     return res.render('newAssignment', {
       batches: foundBatches
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -51,7 +51,7 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, function (re
     .single('userFile')
 
   upload(req, res, async function (err) {
-    if (err) return next(err)
+    if (err) return next(err || 'Internal Server Error')
     if (!req.file) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
 
     const filePath = req.file.path
@@ -78,8 +78,8 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, function (re
       let createdAsssignment = await assignmentController.createAssignment(newAssignment)
       req.flash('success', createdAsssignment.assignmentName + ' created Successfully')
       return res.redirect('/admin/assignment')
-    } catch (e) {
-      next(e)
+    } catch (err) {
+      next(err || 'Internal Server Error')
     }
   })
 })
@@ -99,7 +99,7 @@ router.get('/:assignmentId/edit', middleware.isLoggedIn, middleware.isCentreOrAd
       batches: foundBatches
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -128,7 +128,7 @@ router.put('/:assignmentId', middleware.isLoggedIn, middleware.isCentreOrAdmin, 
     req.flash('success', assignmentName + ' updated Successfully')
     return res.redirect('/admin/assignment')
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -148,7 +148,7 @@ router.get('/:username/assignments', async (req, res, next) => {
       assignments: foundAssignments
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -159,10 +159,10 @@ router.get('/:assignmentId', async function (req, res, next) {
   try {
     const foundAssignment = await assignmentController.findAssignmentById(assignmentId)
     res.download(foundAssignment.filePath, foundAssignment.assignmentName, (err) => {
-      if (err) return next(err)
+      if (err) return next(err || 'Internal Server Error')
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
