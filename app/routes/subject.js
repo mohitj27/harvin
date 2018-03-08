@@ -10,15 +10,15 @@ router.get('/:subjectName', async function (req, res, next) {
   try {
     const foundSubject = await subjectController.findSubjectBySubjectClassAndUserId(subjectName, className, req.user)
     foundSubject.populate('chapters', (err, foundSubject) => {
-      if (err) return next(err)
+      if (err) return next(err || 'Internal Server Error')
       else {
         return res.json({
           subject: foundSubject
         })
       }
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 

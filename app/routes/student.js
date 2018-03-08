@@ -40,7 +40,7 @@ router.put('/:username', async (req, res, next) => {
 
     return res.json(req.body)
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -66,8 +66,8 @@ router.post('/loginWithEmail', async (req, res, next) => {
   // find user
   try {
     var foundUser = await userController.findUserByUsername(username)
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 
   if (foundUser) {
@@ -92,8 +92,8 @@ router.post('/loginWithEmail', async (req, res, next) => {
       await userController.addProfileToUser(registeredUser, createdProfile)
 
       res.json(userDetail)
-    } catch (e) {
-      next(e)
+    } catch (err) {
+      next(err || 'Internal Server Error')
     }
   }
 })
@@ -139,7 +139,7 @@ router.post('/signup', async (req, res, next) => {
     req.flash('success', 'Account created successfully')
     return res.redirect(req.headers.referer)
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -150,8 +150,8 @@ router.get('/register', async function (req, res, next) {
     return res.render('studentRegister', {
       foundBatches
     })
-  } catch (e) {
-    return next(e)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
   }
 })
 
@@ -174,8 +174,8 @@ router.get('/login', async function (req, res, next) {
   try {
     const foundBatches = await batchController.findAllBatch()
     return res.render('studentLogin')
-  } catch (e) {
-    return next(e)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
   }
 })
 // User Register form-- student->from web interface
@@ -183,8 +183,8 @@ router.post('/login', async function (req, res, next) {
   try {
     const foundUser = await userController.findOneUser()
     return res.render('studentLogin')
-  } catch (e) {
-    return next(e)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
   }
 })
 
@@ -205,7 +205,7 @@ router.get('/:username/subjects', async (req, res, next) => {
       subjects: foundBatch.subjects
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -224,7 +224,7 @@ router.get('/:username/results', async (req, res, next) => {
       results: foundUser.profile.results
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -255,7 +255,7 @@ router.get('/:username/progresses', async (req, res, next) => {
       progresses: updatedProfile.progresses
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -293,7 +293,7 @@ router.put('/:username/setprogress', async (req, res, next) => {
       updatedProg: updatedProg
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 

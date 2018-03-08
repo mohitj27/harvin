@@ -36,11 +36,11 @@ var userSchema = new Schema({
 //   if (this.isModified('password') || this.isNew) {
 //     bcrypt.genSalt(10, function (err, salt) {
 //       if (err) {
-//         return next(err)
+//         return next(err || 'Internal Server Error')
 //       }
 //       bcrypt.hash(user.password, salt, function (err, hash) {
 //         if (err) {
-//           return next(err)
+//           return next(err || 'Internal Server Error')
 //         }
 //         user.password = hash
 //         next()

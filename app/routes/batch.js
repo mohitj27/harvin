@@ -12,8 +12,8 @@ router.get('/updateBatch', middleware.isLoggedIn, middleware.isCentreOrAdmin, as
     res.render('createBatch', {
       subjects: foundSubjects
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -36,8 +36,8 @@ router.post('/updateBatch', middleware.isLoggedIn, middleware.isCentreOrAdmin, a
     await batchController.createOrUpdateSubjectsToBatchByBatchNameAndUserId(newBatch, req.user, foundSubjects)
     req.flash('success', 'Batch updated successfully')
     res.redirect(req.originalUrl)
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -46,15 +46,15 @@ router.get('/:batchName', async function (req, res, next) {
   try {
     const foundBatch = await batchController.findBatchByBatchName(req.params.batchName)
     foundBatch.populate('subjects', (err, foundBatch) => {
-      if (err) return next(err)
+      if (err) return next(err || 'Internal Server Error')
       else {
         return res.json({
           batch: foundBatch
         })
       }
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -65,14 +65,14 @@ router.get('/', async (req, res, next) => {
   if (req.user) {
     try {
       foundBatches = await batchController.findBatchByUserId(req.user)
-    } catch (e) {
-      next(e)
+    } catch (err) {
+      next(err || 'Internal Server Error')
     }
   } else {
     try {
       foundBatches = await batchController.findAllBatch()
-    } catch (e) {
-      next(e)
+    } catch (err) {
+      next(err || 'Internal Server Error')
     }
   }
 

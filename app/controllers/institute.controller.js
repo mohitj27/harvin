@@ -21,7 +21,6 @@ const findAllInstitutes = function () {
   })
 }
 
-
 const findInstituteById = function (instituteId) {
   return new Promise(function (resolve, reject) {
     Institute.findByIdAsync(instituteId)
@@ -32,12 +31,29 @@ const findInstituteById = function (instituteId) {
 
 const findInstituteByName = function (instituteName) {
   return new Promise(function (resolve, reject) {
-    Institute.findOneAsync({instituteName})
+    Institute.findOneAsync({
+      instituteName
+    })
       .then(foundInstitute => resolve(foundInstitute))
       .catch(err => reject(err))
   })
 }
 
+const removeCenterFromInstituteById = (institute, center) => {
+  return new Promise((resolve, reject) => {
+    Institute.findByIdAndUpdateAsync(institute.id, {
+      $pull: {
+        centers: center.id
+      }
+    }, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    })
+      .then(updatedInstitute => resolve(updatedInstitute))
+      .catch(err => reject(err))
+  })
+}
 
 const updateFieldsInInstituteById = function (institute, addToSetFields, setFields) {
   if (_.isEmpty(addToSetFields)) {
@@ -85,5 +101,6 @@ module.exports = {
   updateFieldsInInstituteById,
   findAllInstitutes,
   findInstituteById,
-  findInstituteByName
+  findInstituteByName,
+  removeCenterFromInstituteById
 }

@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
       results: foundResults
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -26,7 +26,7 @@ router.get('/allresults', async (req, res, next) => {
       results: foundResults
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 

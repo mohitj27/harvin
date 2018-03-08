@@ -11,14 +11,14 @@ router.get('/new', (req, res) => {
   res.render('newCourse')
 })
 
-router.get('/all', async (req, res) => {
+router.get('/all', async (req, res, next) => {
   try {
     const foundCourses = await coursesCont.findAllCourses()
     res.render('coursesList', {
       foundCourses
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -34,14 +34,14 @@ router.get('/:courseId/edit', async (req, res, next) => {
       foundCourse
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
 router.post('/', (req, res, next) => {
   FIOCont.fileWriteMulterPromise(COURSEIMAGE_SAVE_LOCATION, 'courseImage').then((upload) => {
     upload(req, res, (err) => {
-      if (err) next(err)
+      if (err) next(err || 'Internal Server Error')
       console.log(req.file)
       const courseName = req.body.courseName,
         courseTimings = req.body.courseTimings,
@@ -69,16 +69,16 @@ router.post('/', (req, res, next) => {
           req.flash('success', 'Course Inserted Successfully')
           res.redirect('/admin/courses/all')
         }
-      }).catch(err => next(err))
+      }).catch(err => next(err || 'Internal Server Error'))
     })
-  }).catch(err => next(err))
+  }).catch(err => next(err || 'Internal Server Error'))
 })
 router.delete('/delete/:courseName', (req, res, next) => {
   try {
     const courseName = coursesCont.deleteOneCourse(req.params.courseName)
     res.sendStatus(200)
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 module.exports = router

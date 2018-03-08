@@ -13,7 +13,7 @@ router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, r
       questions: {}
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -54,7 +54,7 @@ router.get('/qbData', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (
       chapterName: chapterName
     })
   } catch (err) {
-    return next(err)
+    return next(err || 'Internal Server Error')
   }
 })
 
@@ -161,7 +161,7 @@ router.post('/update', middleware.isLoggedIn, middleware.isCentreOrAdmin, async 
     }
     res.sendStatus(200)
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -193,7 +193,7 @@ router.get('/refactor', async (req, res, next) => {
     }
     res.sendStatus(200)
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -231,8 +231,8 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, 
     })
 
     return res.sendStatus(200)
-  } catch (e) {
-    return next(e)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
   }
 })
 
@@ -249,7 +249,7 @@ router.get('/subjectId/:subId', async (req, res, next) => {
       classes: foundClasses
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -266,7 +266,7 @@ router.get('/chapterId/:chapId', async (req, res, next) => {
       subjects: foundSubjects
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -283,7 +283,7 @@ router.get('/classId/:classId', async (req, res, next) => {
       allSubjects: foundAllSubjects
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -294,7 +294,7 @@ router.get('/subjects', middleware.isLoggedIn, middleware.isCentreOrAdmin, async
       subjects: foundSubjects
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -305,7 +305,7 @@ router.get('/chapters', middleware.isLoggedIn, middleware.isCentreOrAdmin, async
       chapters: foundChapters
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -316,7 +316,7 @@ router.get('/classes', middleware.isLoggedIn, middleware.isCentreOrAdmin, async 
       classes: foundClasses
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -331,7 +331,7 @@ router.get('/class/:className', async (req, res, next) => {
       classs: foundClass
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -349,8 +349,8 @@ router.get('/subject/:subjectName', async (req, res, next) => {
     return res.json({
       subject: foundSubject
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -366,7 +366,7 @@ router.get('/chapter/:chapterName', async (req, res, next) => {
       chapter: foundChapter
     })
   } catch (err) {
-    next(err)
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -375,8 +375,8 @@ router.delete('/:questionId', async (req, res, next) => {
   if (!validator.isMongoId(questionId)) return errorHandler.errorResponse('INVALID_FIELD', 'question id', next)
   try {
     var deletedQuestion = await QbController.deleteQuestionById(req.params.questionId)
-  } catch (e) {
-    return next(e)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
   }
 
   if (deletedQuestion) {

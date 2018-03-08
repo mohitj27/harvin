@@ -73,10 +73,10 @@ router.post('/signup', async function (req, res, next) {
       res.redirect(req.session.returnTo || '/admin')
       delete req.session.returnTo
     })
-  } catch (e) {
+  } catch (err) {
     e = e.toString()
     if (e.indexOf('registered') !== -1) return next('A center with same name is already registered')
-    next(e || 'Internal Server Error')
+    next(err || 'Internal Server Error')
   }
 })
 
@@ -108,7 +108,7 @@ router.post('/signup', async function (req, res, next) {
 //     } catch (err) {
 //       let errMsg = errorHandler.getErrorMessage(err)
 //       if (errMsg.indexOf('duplicate')) return next(new Error('This username is already taken.'))
-//       else return next(err)
+//       else return next(err || 'Internal Server Error')
 //     }
 //   }
 // })
@@ -144,7 +144,7 @@ function (req, res) {
 //     User.findOne({
 //       username: username
 //     }, function (err, user) {
-//       if (err) next(err)
+//       if (err) next(err || 'Internal Server Error')
 
 //       if (!user) {
 //         res.json({

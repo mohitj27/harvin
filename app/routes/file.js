@@ -33,7 +33,7 @@ router.post('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, function 
   }).single('userFile')
 
   upload(req, res, async function (err) {
-    if (err) return next(err)
+    if (err) return next(err || 'Internal Server Error')
     res.locals.flashUrl = req.originalUrl
 
     const uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a')
@@ -110,8 +110,8 @@ router.post('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, function 
 
       req.flash('success', 'Successfully created new entries')
       res.redirect('/admin/files/new')
-    } catch (e) {
-      next(e)
+    } catch (err) {
+      next(err || 'Internal Server Error')
     }
   })
 })
@@ -124,10 +124,10 @@ router.get('/:fileId', async function (req, res, next) {
   try {
     const foundFile = await fileController.findFileById(fileId)
     res.download(foundFile.filePath, foundFile.fileName, (err) => {
-      if (err) return next(err)
+      if (err) return next(err || 'Internal Server Error')
     })
-  } catch (e) {
-    next(e)
+  } catch (err) {
+    next(err || 'Internal Server Error')
   }
 })
 
