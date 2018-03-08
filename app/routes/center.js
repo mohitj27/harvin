@@ -1,14 +1,10 @@
 const express = require('express')
 const validator = require('validator')
 const errorHandler = require('../errorHandler')
-const errors = require('../error')
 const middleware = require('../middleware')
-const Center = require('./../models/Center')
-const Assignment = require('./../models/Assignment')
 const userController = require('../controllers/user.controller')
 const profileController = require('../controllers/profile.controller')
 const instituteController = require('../controllers/institute.controller')
-const Exam = require('./../models/Exam')
 const router = express.Router()
 
 router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
@@ -88,91 +84,10 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, 
 
 router.get('/:centerName', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   let centerName = req.params.centerName
-  Center.findOne({
-    centerName
-  })
-    .exec((err, foundCenter) => {
-      if (err) {
-        console.log('err', err)
-        next(new errors.generic())
-      } else if (!foundCenter) {
-        res.render('notFound')
-      } else {
-        res.render('centerView', {
-          foundCenter
-        })
-      }
-    })
-})
-
-router.get('/:centerName/exams', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  let centerName = req.params.centerName
-  Center.findOne({
-    centerName
-  }, (err, foundCenter) => {
-    if (err) {
-      console.log('err', err)
-      next(new errors.generic())
-    } else if (!foundCenter) {
-      res.render('notFound')
-    } else {
-      Exam.find({
-        atCenter: foundCenter._id
-      }, (err, foundExams) => {
-        if (err) {
-          console.log('err', err)
-          return next(new errors.generic())
-        } else {
-          res.render('exams', {
-            foundExams
-          })
-        }
-      })
-    }
-  })
-})
-
-router.get('/:centerName/assignments', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  let centerName = req.params.centerName
-  Center.findOne({
-    centerName
-  }, (err, foundCenter) => {
-    if (err) {
-      console.log('err', err)
-      next(new errors.generic())
-    } else if (!foundCenter) {
-      res.render('notFound')
-    } else {
-      Assignment.find({
-        atCenter: foundCenter._id
-      }, (err, foundExams) => {
-        if (err) {
-          console.log('err', err)
-          return next(new errors.generic())
-        } else {
-          res.render('exams', {
-            foundExams
-          })
-        }
-      })
-    }
-  })
-})
-
-router.get('/:centerName/batches', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  let centerName = req.params.centerName
-  Assignment.find({
-    atCenter: req.user._id
-  }, (err, foundAssignments) => {
-    if (err) {
-      console.log('err', err)
-      return next(new errors.generic())
-    } else {
-      res.render('assignments', {
-        foundAssignments
-      })
-    }
-  })
+  if (!centerName || validator.isEmpty(centerName)) return errorHandler.errorResponse('INVALID_FIELD', 'center name', next)
+  if (centerName !== req.user.username) {
+    res.redirect('/admin/login')
+  }
 })
 
 module.exports = router
