@@ -25,3 +25,11 @@ aside{
 #related-post-card{
   min-height: 380px;
 }
+
+/* .share-box{
+  margin-left: 0px;
+  margin-right: 0px;
+} */
+iframe[id^='twitter'] {
+  margin-top: -12px;
+}

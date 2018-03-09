@@ -7,37 +7,29 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 
 const styles = {
 
-  row: {
+  root: {
+    flexGrow:1,
     display: 'flex',
     justifyContent: 'center',
+    padding:10,
+
   },
 }
 const UserCard= props=>{
   const {classes}=props
   return(
-<Fragment>
+<Card className={classes.root}>
 
-  <Card className={classes.card}>
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
+
           <Avatar className={classes.avatar}>
             IS
           </Avatar>
-          <Typography variant="display2" >
+          <Typography variant="display1" >
             Lizard
           </Typography>
-          <Typography component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species,this is a BIO
-          </Typography>
-        </CardContent>
+        <Button href="/student/login" >Logout</Button>
 
-      </Card>
-
-</Fragment>)
+</Card>)
 
 }
 UserCard.propTypes = {

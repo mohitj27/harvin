@@ -7,7 +7,7 @@
   "description": "",
   "main": "./app/app.js",
   "scripts": {
-    "nodemon": "nodemon --watch .env --watch ./app/app.js --watch routes --watch models --watch middleware --watch config --watch bin ./app/app.js ",
+    "nodemon": "nodemon --watch .env --watch ./app/app.js --watch routes --watch models --watch middleware --watch config --watch bin ./app/app.js && webpack-cli --watch",
     "test": "./node_modules/.bin/mocha app/tests --reporter spec --color --timeout 10000 --require app/tests/helper/chai.js",
     "start": "node ./app/app.js",
     "start-blog": "nodemon ./blog_service/server.js",
@@ -71,6 +71,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "^1.1.1",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "request": "^2.83.0",
     "serve-favicon": "^2.4.5",
     "sharp": "^0.18.4",
