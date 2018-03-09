@@ -14,12 +14,12 @@ const compression = require('compression')
 const app = express()
 const errorHandler = require('./errorHandler')
 const mongoose = require('mongoose')
+const fileUpload = require('express-fileupload')
 const _ = require('lodash')
 const serveFavicon = require('serve-favicon')
 const User = require('./models/User.js')
 const userController = require('./controllers/user.controller')
 const instituteController = require('./controllers/institute.controller')
-const profileController = require('./controllers/profile.controller')
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 
@@ -64,6 +64,13 @@ app.use(passport.session())
 passport.use(new localStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
+
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
+  safeFileNames: true,
+  preserveExtension: true,
+  abortOnLimit: true
+}))
 
 // General middleware function
 

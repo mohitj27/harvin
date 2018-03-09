@@ -1,23 +1,16 @@
 const express = require('express')
-const multer = require('multer')
 const moment = require('moment-timezone')
 const middleware = require('../middleware')
 const errorHandler = require('../errorHandler')
 const path = require('path')
 const validator = require('validator')
 const assignmentController = require('../controllers/assignment.controller')
+const fileController = require('../controllers/file.controller')
 const batchController = require('../controllers/batch.controller')
 const userController = require('../controllers/user.controller')
 const router = express.Router()
 
-// assignment uplaod helper
-// setting disk storage for uploaded assignment
-var storage = multer.diskStorage({
-  destination: path.join(__dirname, '/../../../HarvinDb/assignments/'),
-  filename: function (req, file, callback) {
-    callback(null, Date.now() + '__' + file.originalname)
-  }
-})
+const ASSIGNMENT_DIR = path.join(__dirname, '/../../../HarvinDb/assignments/')
 
 router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   try {
@@ -42,46 +35,38 @@ router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req
   }
 })
 
-router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, function (req, res, next) {
+router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async function (req, res, next) {
   res.locals.flashUrl = req.headers.referer
 
-  var upload = multer({
-    storage: storage
-  })
-    .single('userFile')
+  if (!req.files) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+  const filePath = path.join(ASSIGNMENT_DIR, req.files.assignment.name)
+  const assignmentName = req.body.assignmentName || ''
+  const uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a')
+  const lastSubDate = req.body.lastSubDate || ''
+  const batchId = req.body.batchName || ''
 
-  upload(req, res, async function (err) {
-    if (err) return next(err || 'Internal Server Error')
-    if (!req.file) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+  if (!assignmentName || validator.isEmpty(assignmentName)) return errorHandler.errorResponse('INVALID_FIELD', 'assignment name', next)
+  if (!lastSubDate || validator.isEmpty(lastSubDate)) return errorHandler.errorResponse('INVALID_FIELD', 'last submission date', next)
+  if (!batchId || validator.isEmpty(batchId)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
 
-    const filePath = req.file.path
-    const assignmentName = req.body.assignmentName || ''
-    const uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a')
-    const lastSubDate = req.body.lastSubDate || ''
-    const batchId = req.body.batchName || ''
-
-    if (!assignmentName || validator.isEmpty(assignmentName)) return errorHandler.errorResponse('INVALID_FIELD', 'assignment name', next)
-    if (!lastSubDate || validator.isEmpty(lastSubDate)) return errorHandler.errorResponse('INVALID_FIELD', 'last submission date', next)
-    if (!batchId || validator.isEmpty(batchId)) return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
-
-    try {
-      let foundBatch = await batchController.findBatchById(batchId)
-      var newAssignment = {
-        assignmentName,
-        uploadDate,
-        lastSubDate,
-        filePath,
-        batch: foundBatch,
-        addedBy: req.user
-      }
-
-      let createdAsssignment = await assignmentController.createAssignment(newAssignment)
-      req.flash('success', createdAsssignment.assignmentName + ' created Successfully')
-      return res.redirect('/admin/assignment')
-    } catch (err) {
-      next(err || 'Internal Server Error')
+  try {
+    await fileController.uploadFileToDirectory(filePath, req.files.assignment)
+    let foundBatch = await batchController.findBatchById(batchId)
+    var newAssignment = {
+      assignmentName,
+      uploadDate,
+      lastSubDate,
+      filePath,
+      batch: foundBatch,
+      addedBy: req.user
     }
-  })
+
+    let createdAsssignment = await assignmentController.createAssignment(newAssignment)
+    req.flash('success', createdAsssignment.assignmentName + ' created Successfully')
+    return res.redirect('/admin/assignment')
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
 })
 
 router.get('/:assignmentId/edit', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
