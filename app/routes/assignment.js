@@ -39,7 +39,7 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async functi
   res.locals.flashUrl = req.headers.referer
 
   if (!req.files) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
-  const filePath = path.join(ASSIGNMENT_DIR, req.files.assignment.name)
+  const filePath = path.join(ASSIGNMENT_DIR, Date.now() + '__' + req.files.assignment.name)
   const assignmentName = req.body.assignmentName || ''
   const uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a')
   const lastSubDate = req.body.lastSubDate || ''
