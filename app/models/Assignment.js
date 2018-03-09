@@ -17,6 +17,11 @@ var assignmentSchema = new Schema({
     ref: 'User'
   },
 
+  visibleTo: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+
   uploadDate: {
     type: String,
     required: true

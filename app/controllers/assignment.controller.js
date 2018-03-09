@@ -6,7 +6,13 @@ mongoose.Promise = Promise
 const findAssignmentsByUserId = function (user) {
   return new Promise(function (resolve, reject) {
     Assignment.findAsync({
-      addedBy: user._id
+      $or: [{
+        addedBy: user._id
+      },
+      {
+        visibleTo: user._id
+      }
+      ]
     })
       .then(foundAssignments => resolve(foundAssignments))
       .catch(err => reject(err))

@@ -3,6 +3,7 @@ const moment = require('moment-timezone')
 const middleware = require('../middleware')
 const errorHandler = require('../errorHandler')
 const path = require('path')
+const _ = require('lodash')
 const validator = require('validator')
 const assignmentController = require('../controllers/assignment.controller')
 const fileController = require('../controllers/file.controller')
@@ -44,6 +45,7 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async functi
   const uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a')
   const lastSubDate = req.body.lastSubDate || ''
   const batchId = req.body.batchName || ''
+  const centerIds = _.castArray(req.body.centerIds)
 
   if (!assignmentName || validator.isEmpty(assignmentName)) return errorHandler.errorResponse('INVALID_FIELD', 'assignment name', next)
   if (!lastSubDate || validator.isEmpty(lastSubDate)) return errorHandler.errorResponse('INVALID_FIELD', 'last submission date', next)
@@ -58,7 +60,8 @@ router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async functi
       lastSubDate,
       filePath,
       batch: foundBatch,
-      addedBy: req.user
+      addedBy: req.user,
+      visibleTo: centerIds
     }
 
     let createdAsssignment = await assignmentController.createAssignment(newAssignment)
