@@ -5,7 +5,6 @@ const express = require('express'),
   middleware = require('../middleware/index'),
   path = require('path'),
   fs = require('fs'),
-  multer = require('multer'),
   app = express(),
   _ = require('lodash'),
   errorHandler = require('../errorHandler'),
@@ -13,7 +12,8 @@ const express = require('express'),
   http = require('http').Server(app),
   io = require('socket.io')(http),
   promise = require('bluebird'),
-  blogCont = require('../controllers/blog.controller')
+  blogCont = require('../controllers/blog.controller'),
+  fileController = require('../controllers/file.controller')
 
 io.on('connection', function (socket) {
   // console.log('connected')
@@ -87,62 +87,56 @@ router.get('/:blogTitle', (req, res) => {
   })
 })
 
-var storage = multer.diskStorage({
-  destination: __dirname + '/../../../HarvinDb/blogImage/',
-  filename: function (req, file, callback) {
-    callback(null, Date.now() + '__' + file.originalname)
+router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+  if (!req.files) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+  const filePath = path.join(BLOG_IMAGE_DIR, Date.now() + '__' + req.files.userFile.name)
+  try {
+    await fileController.uploadFileToDirectory(filePath, req.files.userFile)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
   }
-})
-
-router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  var upload = multer({
-    storage: storage
-  }).single('userFile')
-  upload(req, res, function (err) {
-    if (err) return next(err || 'Internal Server Error')
-
-    let blogTitle = req.body.title || ''
-    if (!blogTitle) return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
-    blogTitle = _.trim(blogTitle)
-    var coverImgName = path.basename(req.file.path)
-    let blog_name = blogTitle.toLowerCase().replace(/ /g, '_').concat('.html')
-    checkBlogDir()
-    fs.writeFile(BLOG_DIR + blog_name, req.body.editordata, (err) => {
-      if (err) throw err
-    })
-    let hashName = ''
-    blogTitle.split(' ').forEach(function (word) {
-      hashName += word.charAt(0)
-    })
-    const htmlFilePath = blog_name
-    const uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY')
-    Blog.findOneAndUpdate({
-      blogTitle
-    }, {
-      $set: {
-        htmlFilePath,
-        hashName,
-        coverImgName,
-        author: req.user,
-        publish: req.body.publish,
-        draft: req.body.draft,
-        uploadDate,
-        uploadDateUnix: Date.now()
-      }
-    }, {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true
-    }, function (err, updatedBlog) {
-      if (!err) {
-        // console.log('updatedBlog', updatedBlog)
-        res.redirect('/admin/blog/all')
-      } else {
-        res.redirect('/admin/blog/new')
-        console.log('err', err)
-      }
-    })
+  let blogTitle = req.body.title || ''
+  if (!blogTitle) return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
+  blogTitle = _.trim(blogTitle)
+  var coverImgName = path.basename(filePath)
+  let blog_name = blogTitle.toLowerCase().replace(/ /g, '_').concat('.html')
+  checkBlogDir()
+  fs.writeFile(BLOG_DIR + blog_name, req.body.editordata, (err) => {
+    if (err) throw err
   })
+  let hashName = ''
+  blogTitle.split(' ').forEach(function (word) {
+    hashName += word.charAt(0)
+  })
+  const htmlFilePath = blog_name
+  const uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY')
+  Blog.findOneAndUpdate({
+    blogTitle
+  }, {
+    $set: {
+      htmlFilePath,
+      hashName,
+      coverImgName,
+      author: req.user,
+      publish: req.body.publish,
+      draft: req.body.draft,
+      uploadDate,
+      uploadDateUnix: Date.now()
+    }
+  }, {
+    upsert: true,
+    new: true,
+    setDefaultsOnInsert: true
+  }, function (err, updatedBlog) {
+    if (!err) {
+      // console.log('updatedBlog', updatedBlog)
+      res.redirect('/admin/blog/all')
+    } else {
+      res.redirect('/admin/blog/new')
+      console.log('err', err)
+    }
+  })
+  // })
 })
 
 router.post('/:htmlFilePath/images', (req, res, next) => {

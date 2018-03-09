@@ -11,16 +11,9 @@ const visitorController = require('../controllers/visitor.controller')
 const galleryController = require('../controllers/gallery.controller')
 const batchController = require('../controllers/batch.controller')
 const path = require('path')
-const multer = require('multer')
 const middleware = require('../middleware')
 
-var currTime = Date.now().toString() + '__'
-var storage = multer.diskStorage({
-  destination: path.join(__dirname, '/../../../', 'HarvinDb/img'),
-  filename: function (req, file, callback) {
-    callback(null, currTime + file.originalname)
-  }
-})
+const GALLERY_DIR = path.normalize(__dirname + '/../../../HarvinDb/img/')
 
 router.get('/', (req, res, next) => {
   res.render('dbCollection')
@@ -63,7 +56,12 @@ router.get('/users/:userId/edit', async (req, res, next) => {
     let foundBatches = await batchController.findAllBatch()
     foundBatches = await batchController.populateFieldsInBatches(foundBatches, ['addedBy'])
 
-    return res.render('editUser', {foundUser, profile, userBatch, foundBatches})
+    return res.render('editUser', {
+      foundUser,
+      profile,
+      userBatch,
+      foundBatches
+    })
   } catch (err) {
     next(err || 'Internal Server Error')
   }
@@ -167,48 +165,47 @@ router.get('/gallery', (req, res, next) => {
   res.render('galleryDb')
 })
 
-router.post('/gallery', (req, res, next) => {
-  var upload = multer({
-    storage: storage
-  }).single('userFile')
+router.post('/gallery', async (req, res, next) => {
+  if (!req.files) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+  const filePath = path.join(GALLERY_DIR, Date.now() + '__' + req.files.userFile.name)
+  try {
+    await fileController.uploadFileToDirectory(filePath, req.files.userFile)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
+  }
+  var fileName = req.files.userFile.name
 
-  upload(req, res, async function (err) {
-    if (err) return next(err || 'Internal Server Error')
-    var fileName = req.file.originalname
+  // absolute file path
+  var srcList = filePath.split(path.sep)
 
-    // absolute file path
-    var filePath = req.file.path
-    var srcList = filePath.split(path.sep)
+  // relative file path (required by ejs file)
+  var src = path.join('/', srcList[srcList.length - 2], srcList[srcList.length - 1])
 
-    // relative file path (required by ejs file)
-    var src = path.join('/', srcList[srcList.length - 2], srcList[srcList.length - 1])
+  var uploadDate = moment(Date.now())
+    .tz('Asia/Kolkata')
+    .format('MMMM Do YYYY, h:mm:ss a')
+  var description = req.body.description
+  var category = req.body.category
+  var thumbPath = path.join('/', srcList[srcList.length - 2], 'thumb', srcList[srcList.length - 1])
 
-    var uploadDate = moment(Date.now())
-      .tz('Asia/Kolkata')
-      .format('MMMM Do YYYY, h:mm:ss a')
-    var description = req.body.description
-    var category = req.body.category
-    var thumbPath = path.join('/', srcList[srcList.length - 2], 'thumb', srcList[srcList.length - 1])
+  var newFile = {
+    fileName,
+    src,
+    uploadDate,
+    description,
+    category,
+    thumbPath,
+    filePath
+  }
 
-    var newFile = {
-      fileName,
-      src,
-      uploadDate,
-      description,
-      category,
-      thumbPath,
-      filePath
-    }
-
-    try {
-      const createdImage = await galleryController.createNewImage(newFile)
-      galleryController.createThumbImg(createdImage)
-      req.flash('success', fileName + ' uploaded successfully')
-      res.redirect('/admin/db/gallery/upload')
-    } catch (err) {
-      next(err || 'Internal Server Error')
-    }
-  })
+  try {
+    const createdImage = await galleryController.createNewImage(newFile)
+    galleryController.createThumbImg(createdImage)
+    req.flash('success', fileName + ' uploaded successfully')
+    res.redirect('/admin/db/gallery/upload')
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
 })
 
 module.exports = router

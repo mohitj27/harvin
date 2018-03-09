@@ -53,6 +53,9 @@ var getErrorMessage = function (err) {
       case 'credentials_required':
         message = err.message
         break
+      case 'ENOENT':
+        message = err.message
+        break
       default:
         message = 'Something went wrong'
     }

@@ -19,7 +19,7 @@
               <div class="file-field input-field">
                 <div class="btn white green-text">
                   <span>File</span>
-                  <input name="userFile" required type="file">
+                  <input name="assignment" required type="file">
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text">
@@ -34,6 +34,21 @@
                 <%})%>
 							</select>
 					</div>
+
+					<div class="input-field col s6 offset-s3">
+							<select multiple required class="validate" name="centerIds" id="visibleTo">
+									<option value="" disabled selected>Accessible To</option>
+									<% if(centers){ %>
+										<%centers.forEach(function(center){%>
+											<%if(center.profile){%>
+												<%if(currentUser.username !== center.username){%>
+													<option selected value="<%= center._id %>"><%= center.profile.fullName%></option>
+													<%}%>
+												<%}%>
+										<%})%>
+									<%}%>
+								</select>
+						</div>
 				</div>
 				<div class="row center-align">
 					<input type="submit" class="btn">
