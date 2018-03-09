@@ -7,6 +7,10 @@ import InboxIcon from 'material-ui-icons/Inbox'
 import DraftsIcon from 'material-ui-icons/Drafts'
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
+import Grid from 'material-ui/Grid'
+import axios from 'axios'
+import { CircularProgress } from 'material-ui/Progress';
+
 
 const styles = theme => ({
   root: {
@@ -17,33 +21,50 @@ const styles = theme => ({
 })
 
 class ListTest extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      testList:null
+    }
+  }
+  getListOfTests(){
+    console.log('getTests')
+  axios.get('https://harvin.academy/admin/exams/user402/exams').then((res)=>{
+    console.log(res)
+    this.setState({'testList':res.data.exams})
+  })
+  }
+  getListElements(){
+    const listItems = this.state.testList.map((item) =>
+  {console.log('item', item)
+    return <a href={`/quiz/exams/${item._id}`}>
+      <ListItem button key={item._id} >
+        <ListItemText primary={item.examName}/>
+      </ListItem>
+    </a>}
+     )
+     return listItems
+  }
+
+  componentDidMount(){this.getListOfTests()}
   render() {
+
     const {classes} = this.props
+    const {state}=this.state
+    if(!this.state.testList)
+    return (
+    <Grid container justify="center" fullWidth>
+      <Grid item >
+          <CircularProgress className={classes.progress} />
+      </Grid>
+    </Grid>
+    )
     return (<Paper className={classes.root} elevation={10}>
       <Typography variant="display2">
         List of Created Tests.
       </Typography>
       <List component="nav">
-        <ListItem button="button">
-          <ListItemIcon>
-            <InboxIcon/>
-          </ListItemIcon>
-          <ListItemText primary="Inbox"/>
-        </ListItem>
-        <ListItem button="button">
-          <ListItemIcon>
-            <DraftsIcon/>
-          </ListItemIcon>
-          <ListItemText primary="Drafts"/>
-        </ListItem>
-      </List>
-      <List component="nav">
-        <ListItem button="button">
-          <ListItemText primary="Trash"/>
-        </ListItem>
-        <ListItem button="button" component="a" href="#simple-list">
-          <ListItemText primary="Spam"/>
-        </ListItem>
+      {this.getListElements()}
       </List>
     </Paper>)
   }

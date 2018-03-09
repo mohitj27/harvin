@@ -150,7 +150,7 @@ class Layout extends React.Component {
             <IconButton color="inherit" aria-label="open drawer" onClick={this.handleDrawerOpen} className={classNames(classes.menuButton, this.state.open && classes.hide)}>
               <MenuIcon/>
             </IconButton>
-            <Typography variant="title" className="flex" color="inherit" noWrap="noWrap">
+            <Typography variant="title" className="flex" color="inherit" noWrap>
               Harvin Academy
             </Typography>
             <Fragment>
@@ -190,7 +190,7 @@ class Layout extends React.Component {
           <Divider className={classes.divider}/>
           <List component="nav">
             <Link to='/student/home/'>
-              <ListItem button="button">
+              <ListItem button>
                 <ListItemIcon>
                   <HomeIcon/>
                 </ListItemIcon>
@@ -198,7 +198,7 @@ class Layout extends React.Component {
               </ListItem>
             </Link>
             <Link to='/student/home/createTest'>
-              <ListItem button="button">
+              <ListItem button>
                 <ListItemIcon>
                   <CreateTestIcon/>
                 </ListItemIcon>
@@ -206,7 +206,7 @@ class Layout extends React.Component {
               </ListItem>
             </Link>
             <Link to='/student/home/listTest'>
-              <ListItem button="button">
+              <ListItem button>
                 <ListItemIcon>
                   <LibraryBooks/>
                 </ListItemIcon>
@@ -214,7 +214,7 @@ class Layout extends React.Component {
               </ListItem>
             </Link>
             <Link to='/student/home/performance'>
-              <ListItem button="button" className="appBarBottomIcons">
+              <ListItem button className="appBarBottomIcons">
                 <ListItemIcon>
                   <TrashIcon/>
                 </ListItemIcon>
@@ -228,9 +228,9 @@ class Layout extends React.Component {
         </Drawer>
         <main style={mainStyle}>className={classes.content}>
             <div className={classes.toolbar}/> {/* <PublishingApp className={classes.PublishingApp}></PublishingApp> */}
-            <Route path='/student/home/' exact="exact" render={() => (<Home/>)}/>
-            <Route path='/student/home/createTest' render={() => (<CreateTest/>)}/>
-            <Route path='/student/home/listTest' exact="exact" render={() => (<ListTest/>)}/>
+            <Route path='/student/home/' exact render={() => (<Home/>)}/>
+            <Route path='/student/home/createTest' exact render={() => (<CreateTest/>)}/>
+            <Route path='/student/home/listTest' exact render={() => (<ListTest/>)}/>
 
           </main>
         </div>
