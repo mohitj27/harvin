@@ -45,8 +45,8 @@ router.put('/:username', async (req, res, next) => {
 })
 
 // Handle user login -- for student
-router.post('/login', passport.authenticate('local'), function (req, res) {
-  res.json(req.user)
+router.post('/login', function (req, res) {
+  res.redirect('/student/home/')
 })
 
 // Handle login with email
@@ -164,6 +164,8 @@ router.get('/home/:username',async (req,res ,next)=>{
   } finally {
 
   }
+next()
+
 })
 router.get('/home',async (req,res ,next)=>{
 res.render('studentHome')
@@ -295,6 +297,10 @@ router.put('/:username/setprogress', async (req, res, next) => {
   } catch (err) {
     next(err || 'Internal Server Error')
   }
+})
+//CATCH ALL
+router.get('/home/:catch',(req,res,next)=>{
+  res.render('studentHome')
 })
 
 module.exports = router

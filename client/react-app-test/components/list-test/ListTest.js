@@ -16,7 +16,8 @@ const styles = theme => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
-    padding:20
+    padding:20,
+
   },
 })
 
@@ -53,20 +54,27 @@ class ListTest extends Component {
     const {state}=this.state
     if(!this.state.testList)
     return (
-    <Grid container justify="center" fullWidth>
+    <Grid container justify="center">
       <Grid item >
           <CircularProgress className={classes.progress} />
       </Grid>
     </Grid>
     )
-    return (<Paper className={classes.root} elevation={10}>
+    return (
+<Grid container justify="center">
+  <Grid item >
+    <Paper className={classes.root} elevation={10}>
       <Typography variant="display2">
         List of Created Tests.
       </Typography>
       <List component="nav">
       {this.getListElements()}
       </List>
-    </Paper>)
+    </Paper>
+  </Grid>
+</Grid>
+
+    )
   }
 }
 
