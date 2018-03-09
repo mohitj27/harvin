@@ -37,7 +37,7 @@ class ListTest extends Component {
   getListElements(){
     const listItems = this.state.testList.map((item) =>
   {console.log('item', item)
-    return <a href={`/quiz/exams/${item._id}`}>
+    return <a href={`https://harvin.academy/quiz/exams/${item._id}/questionPaper`}>
       <ListItem button key={item._id} >
         <ListItemText primary={item.examName}/>
       </ListItem>
