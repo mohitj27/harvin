@@ -187,7 +187,6 @@ class Layout extends React.Component {
               }
             </IconButton>
           </div>
-          <Divider className={classes.divider}/>
           <List component="nav">
             <Link to='/student/home/'>
               <ListItem button>
@@ -223,7 +222,6 @@ class Layout extends React.Component {
             </Link>
 
           </List>
-          <Divider className={classes.divider}/>
           <List>{}</List>
         </Drawer>
         <main style={mainStyle}>className={classes.content}>
