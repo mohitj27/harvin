@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const FIOCont = require('../controllers/fileRW.controller')
 const validator = require('validator')
 const errorHandler = require('../errorHandler')
 const coursesCont = require('../controllers/courses.controller')
+const fileController = require('../controllers/file.controller')
 const path = require('path')
 const COURSEIMAGE_SAVE_LOCATION = path.normalize(__dirname + '/../../../HarvinDb/courseImages/')
 
@@ -38,39 +38,42 @@ router.get('/:courseId/edit', async (req, res, next) => {
   }
 })
 
-router.post('/', (req, res, next) => {
-  FIOCont.fileWriteMulterPromise(COURSEIMAGE_SAVE_LOCATION, 'courseImage').then((upload) => {
-    upload(req, res, (err) => {
-      if (err) next(err || 'Internal Server Error')
-      console.log(req.file)
-      const courseName = req.body.courseName,
-        courseTimings = req.body.courseTimings,
-        courseStartingFrom = req.body.courseStartingFrom,
-        courseDescription = req.body.courseDescription,
-        courseFor = req.body.courseFor,
-        courseAdmissionThrough = req.body.courseAdmissionThrough,
-        courseFrequency = req.body.courseFrequency
-      const course = {
-        courseName,
-        courseTimings,
-        courseStartingFrom,
-        courseDescription,
-        courseFor,
-        courseAdmissionThrough,
-        courseFrequency
-      }
+router.post('/', async (req, res, next) => {
+  if (!req.files) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+  let courseImage = req.files.courseImage
+  const filePath = path.join(COURSEIMAGE_SAVE_LOCATION, courseImage.name)
+  try {
+    await fileController.uploadFileToDirectory(filePath, courseImage)
+  } catch (err) {
+    return next(err || 'Internal Server Error')
+  }
+  console.log(req.files)
+  const courseName = req.body.courseName,
+    courseTimings = req.body.courseTimings,
+    courseStartingFrom = req.body.courseStartingFrom,
+    courseDescription = req.body.courseDescription,
+    courseFor = req.body.courseFor,
+    courseAdmissionThrough = req.body.courseAdmissionThrough,
+    courseFrequency = req.body.courseFrequency
+  const course = {
+    courseName,
+    courseTimings,
+    courseStartingFrom,
+    courseDescription,
+    courseFor,
+    courseAdmissionThrough,
+    courseFrequency
+  }
 
-      if (req.file) {
-        courseImage = req.file.originalname,
-          course.courseImage = courseImage
-      }
-      coursesCont.insertInCourse(course).then((result) => {
-        if (result) {
-          req.flash('success', 'Course Inserted Successfully')
-          res.redirect('/admin/courses/all')
-        }
-      }).catch(err => next(err || 'Internal Server Error'))
-    })
+  if (req.files) {
+    courseImage = courseImage.name,
+    course.courseImage = courseImage
+  }
+  coursesCont.insertInCourse(course).then((result) => {
+    if (result) {
+      req.flash('success', 'Course Inserted Successfully')
+      res.redirect('/admin/courses/all')
+    }
   }).catch(err => next(err || 'Internal Server Error'))
 })
 router.delete('/delete/:courseName', (req, res, next) => {

@@ -20,6 +20,14 @@ const findAllFiles = function () {
   })
 }
 
+const uploadFileToDirectory = function (path, file) {
+  return new Promise(function (resolve, reject) {
+    file.mv(path)
+      .then(resolve())
+      .catch(err => reject(err))
+  })
+}
+
 const addTopicChapterSubjectClassToFileById = function (createdFile, updatedTopic, updatedChapter, updatedSubject, updatedClass) {
   return new Promise(function (resolve, reject) {
     File.findByIdAndUpdateAsync(createdFile._id, {
@@ -61,5 +69,6 @@ module.exports = {
   addTopicChapterSubjectClassToFileById,
   findFileById,
   findAllFiles,
-  populateFieldsInFiles
+  populateFieldsInFiles,
+  uploadFileToDirectory
 }

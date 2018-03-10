@@ -28,6 +28,27 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+
+    <!-- twitter scripts -->
+    <script>
+        window.twttr = (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            };
+
+            return t;
+        }(document, "script", "twitter-wjs"));
+    </script>
+
     <div class="middle-content pt-50">
         <div class="container-fluid">
             <div class="row">
@@ -64,6 +85,15 @@
 
                                     <%-blogContent%>
 
+                                    <br><br>
+                                    <div class="col-xs-12 col-lg-12 col-md-12 center">
+                                            <h3>Liked this blog? Share with your friends</h3>
+                                            <span class="fb-share-button" data-href="https://harvin.academy/blog/?title=WHY%20CHOOSE%20HARVIN?" data-layout="button_count">
+                                            </span>
+                                            <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
+                                                Tweet</a>
+                                        </div>
+
                     </article>
                     <!-- ================= /Full Post ================= -->
                     <!-- =============== //Recent Blog =============== -->
@@ -80,6 +110,17 @@
                                 </div>
                         </div>
                     </div> -->
+                    <!-- share buttons -->
+                    <!-- <div class="row share-box z-depth-2">
+                        <div class="col-xs-12 col-lg-12 col-md-12 center">
+                            <h3>Liked this blog? Share with your friends</h3>
+                            <span class="fb-share-button" data-href="https://harvin.academy/blog/?title=WHY%20CHOOSE%20HARVIN?" data-layout="button_count">
+                            </span>
+                            <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
+                                Tweet</a>
+                        </div>
+                    </div> -->
+                    <!-- share button end -->
                     <!-- //Author Box -->
                     <!-- ================= Comment Area ================= -->
                     <div class="author-box row">
@@ -104,16 +145,20 @@
                                 <!-- Single Blog -->
                                 <article class="card single-blog text-center border-0 mb-3 mb-lg-0 col l3 offset-l1 col s6" id="related-post-card">
                                     <a href="/blog/?title=<%=blog.blogTitle%>">
-                                        <h3 class="card-title"><%=blog.blogTitle%></h3>
+                                        <h3 class="card-title">
+                                            <%=blog.blogTitle%>
+                                        </h3>
                                         <!-- Blog Content-->
                                         <div class="blgo-content">
                                             <img class="card-img rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image">
-                                            <span class="posted-date"><%=blog.uploadDate%></span>
+                                            <span class="posted-date">
+                                                <%=blog.uploadDate%>
+                                            </span>
                                         </div>
                                     </a>
                                 </article>
-                            <!-- //Single Blog -->
-                            <%})%>
+                                <!-- //Single Blog -->
+                                <%})%>
                         </div>
                     </div>
                     <!-- ================= //Releted post ================= -->
@@ -162,10 +207,18 @@
                             <!-- ADVERTISE-->
                             <div class="card cloud-tag border-0 rounded-0">
                                 <ul class="tag-list d-flex flex-wrap">
-                                    <li><a href="#">Harvin Academy</a></li>
-                                    <li><a href="#">Medical</a></li>
-                                    <li><a href="#">AIIMS</a></li>
-                                    <li><a href="#">MEDICAL ENTERANCE</a></li>
+                                    <li>
+                                        <a href="#">Harvin Academy</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Medical</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">AIIMS</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">MEDICAL ENTERANCE</a>
+                                    </li>
 
                                 </ul>
                             </div>
@@ -187,5 +240,15 @@
         <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
         <script src="/assets/js/plugins.js"></script>
         <script src="/assets/js/main.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                var pageURL = $(location).attr("href");
+                $('head').append('<meta property="og:url" content="' + pageURL + '" />')
+                $('head').append('<meta property="og:type" content="article" />')
+                $('head').append('<meta property="og:title content="Harvin academy" />')
+
+            });
+        </script>
 
         <% include partials/website_footer.ejs%>

@@ -19,6 +19,41 @@
 
     <!-- =========================== //Catagory Area =========================== -->
     <!-- =========================== Middle Content =========================== -->
+
+    <!-- share buttons -->
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src =
+                'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=1054614874673150&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- twitter scripts -->
+    <script>
+        window.twttr = (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            };
+
+            return t;
+        }(document, "script", "twitter-wjs"));
+    </script>
+
     <div class="middle-content">
         <div class="container-fluid">
             <div class="row">
@@ -52,18 +87,12 @@
                                 <div class="card-footer border-0 p-0 bg-white">
                                     <div class="share-icons">
                                         <span>Share:</span>
-                                        <a href="index.html#">
-                                            <i class="fa fa-facebook"></i>
+                                        <a class="fb-share-button" data-href="https://harvin.academy/blog/?title=<%=blog.blogTitle%>" data-layout="button_count">
+
                                         </a>
-                                        <a href="index.html#">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                        <a href="index.html#">
-                                            <i class="fa fa-google-plus"></i>
-                                        </a>
-                                        <a href="index.html#">
-                                            <i class="fa fa-pinterest"></i>
-                                        </a>
+                                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
+                                            Tweet</a>
+
                                     </div>
                                 </div>
                             </article>
