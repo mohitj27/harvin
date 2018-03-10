@@ -39,7 +39,7 @@ router.get('/:courseId/edit', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  if (!req.files) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+  if (!req.files.length > 0) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
   let courseImage = req.files.courseImage
   const filePath = path.join(COURSEIMAGE_SAVE_LOCATION, courseImage.name)
   try {
@@ -65,7 +65,7 @@ router.post('/', async (req, res, next) => {
     courseFrequency
   }
 
-  if (req.files) {
+  if (req.files.length > 0) {
     courseImage = courseImage.name,
     course.courseImage = courseImage
   }
