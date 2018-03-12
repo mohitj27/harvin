@@ -56,7 +56,7 @@ router.post('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async fun
   }
 
   try {
-    if (req.files) {
+    if (req.files.length > 0) {
       const userFile = req.files.userFile
       const fileName = userFile.name
       const fileType = path.extname(userFile.name)
