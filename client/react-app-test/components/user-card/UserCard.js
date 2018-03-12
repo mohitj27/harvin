@@ -2,6 +2,9 @@ import React,{Component,Fragment} from 'react'
 import {Avatar,Paper,Typography,Button} from 'material-ui'
 import {withStyles} from 'material-ui/styles'
 import PropTypes from 'prop-types'
+import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List'
+
+import {BrowserRouter, Link, Route} from 'react-router-dom'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 
 
@@ -27,7 +30,8 @@ const UserCard= props=>{
           <Typography variant="display1" >
             Lizard
           </Typography>
-        <Button href="/student/login" >Logout</Button>
+
+      
 
 </Card>)
 

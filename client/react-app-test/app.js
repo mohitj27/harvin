@@ -1,11 +1,12 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import App from './components/app'
+import ReactDOM from 'react-dom'
 import LoginComponent from './components/login/LoginComponent'
 import RegisterComponent from './components/login/RegisterComponent'
-
+import {BrowserRouter} from 'react-router-dom'
 
 try{
+
 ReactDOM.render(<App/>, document.getElementById('app-root'));}
 catch(err){console.log('apperr',err)}
 

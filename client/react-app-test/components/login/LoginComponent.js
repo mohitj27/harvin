@@ -1,49 +1,101 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import {withStyles} from 'material-ui/styles'
+import Card, {CardContent, CardMedia} from 'material-ui/Card'
+import IconButton from 'material-ui/IconButton'
+import Typography from 'material-ui/Typography'
+import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
+import PlayArrowIcon from 'material-ui-icons/PlayArrow'
+import SkipNextIcon from 'material-ui-icons/SkipNext'
+import {Grid, Paper, TextField, Button} from 'material-ui'
+import {FormControl, FormHelperText} from 'material-ui/Form'
+
+const styles = theme => ({
+  root:{
+    flexGrow:1,
+    margin:0,
+    padding:0,
+
+  },
+  card: {
+    display: 'flex',
+  },
+  details: {
+    display: 'flex',
+  },
+  cover: {
+    width: 450,
+    height: 450,
+  },
+  controls: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+  },
+
+})
 
 class LoginComponent extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      username:'',
+      password:'',
+    }
+  }
   render() {
-    return <div className="container">
-      <div className="section">
-        <div className="row">
-          <div className="col s12 m8 offset-m2">
-            <div className="card horizontal z-depth-5 valign-wrapper">
-              <div className="card-image ">
-                <img src="/img/card-main-background.png"/>
-              </div>
-              <div className="card-stacked">
-                <div className="card-content">
-                  <h3 className=" center-align">LOGIN</h3>
-                  <form action="/student/login" method="post">
-                    <div className="row">
-                      <div className="input-field col s8 offset-s2">
-                        <input required="required" type="text" className="validte" name="username" id="username" />
-                        <label htmlFor="first_name">USERNAME</label>
-                      </div>
+    const {classes, theme} = this.props
 
-                    </div>
-                    <div className="row">
-                      <div className="input-field col s8 offset-s2 " type="password">
-                        <input required="required" type="password" className="form-control" name="password" id="password" />
-                        <label htmlFor="first_name">Password</label>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <button type="submit" className="btn col s8 offset-s2 white harvinThemeText">Login</button>
-                    </div>
-                    <div className="row">
-                    <p className="col s12 l12 m12 center harvinThemeText">--OR--</p>
-                    <div className="center"><a href="/student/register" className="col s12 l12 m12 harvinThemeText">Register</a></div>
-                    </div>
-                  </form>
+    return ( <div className={classes.root}>
+      <Grid container justify="center" spacing={0}>
 
-                </div>
+        <Card className={classes.card} elevation={20}>
+          <Grid item xs={6}  hidden={{smDown:true}}>
+            <CardMedia
+              className={classes.cover}
+              image="/img/card-main-background.png"
+            />
+          </Grid>
 
-              </div>
+          <Grid item xs={12} sm={12} md={6}>
+            <div className={classes.details}>
+              <CardContent className={classes.content} justify="center">
+                <Grid container justify="center">
+                  <Grid item xs={12} justify="center">
+                    <Typography variant="display3">Harvin Login
+                    </Typography>
+
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField id="full-width" label="User Name" fullWidth value={this.state.username}  name="username" onChange={this.onChange}  margin="normal"/>
+
+
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField id="full-width" label="Password" fullWidth  value={this.state.username}  name="password" onChange={this.onChange}  margin="normal"/>
+
+
+                  </Grid>
+                </Grid>
+              </CardContent>
+
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
+          </Grid>
+
+
+        </Card>
+
+      </Grid>
+
+    </div>)
   }
 }
-export default LoginComponent
+
+LoginComponent.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
+}
+
+export default withStyles(styles, {withTheme: true})(LoginComponent)

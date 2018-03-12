@@ -47,6 +47,7 @@
     "lodash": "^4.17.4",
     "material-ui": "^1.0.0-beta.36",
     "material-ui-icons": "^1.0.0-beta.36",
+    "material-ui-image": "^2.1.1",
     "materialize-css": "^0.100.2",
     "materialize-social": "^1.0.3",
     "method-override": "^2.3.9",

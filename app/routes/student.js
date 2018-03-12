@@ -101,7 +101,6 @@ router.post('/loginWithEmail', async (req, res, next) => {
 // Handle user registration-- for student->Mobile interface
 router.post('/signup', async (req, res, next) => {
   res.locals.flashUrl = req.headers.referer
-
   const username = req.body.username || ''
   const password = req.body.password || ''
   const fullName = req.body.fullName || ''
@@ -137,7 +136,7 @@ router.post('/signup', async (req, res, next) => {
     })
 
     req.flash('success', 'Account created successfully')
-    return res.redirect(req.headers.referer)
+    return res.redirect('/student/login')
   } catch (err) {
     next(err || 'Internal Server Error')
   }
@@ -301,6 +300,7 @@ router.put('/:username/setprogress', async (req, res, next) => {
 //CATCH ALL
 router.get('/home/:catch',(req,res,next)=>{
   res.render('studentHome')
+
 })
 
 module.exports = router

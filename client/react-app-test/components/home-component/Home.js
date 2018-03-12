@@ -5,7 +5,7 @@ import {withStyles} from 'material-ui/styles'
 
 const styles={
   root:{
-    flexGrow:1
+    flexGrow:1,
   },
   paper:{
     textAlign: 'center',
@@ -23,7 +23,7 @@ class Home extends Component {
     return  (
       <Fragment>
         <Grid container>
-          <Grid item xs={4}>
+          <Grid item xs={12}>
             <UserCard />
           </Grid>
         </Grid>
