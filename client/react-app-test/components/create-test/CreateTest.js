@@ -71,6 +71,15 @@ class CreateTest extends Component {
             <Grid item xs={6} >
               <TextField id="full-width" label="Test Name" value={this.state.testName}  name="testName" onChange={this.onChange} fullWidth margin="normal"/>
             </Grid>
+            <Grid item xs={6} >
+              <TextField id="full-width" label="Test Name" value={this.state.testName}  name="testName" onChange={this.onChange} fullWidth margin="normal"/>
+            </Grid>
+            <Grid item xs={6} >
+              <TextField id="full-width" label="Test Name" value={this.state.testName}  name="testName" onChange={this.onChange} fullWidth margin="normal"/>
+            </Grid>
+            <Grid item xs={6} >
+              <TextField id="full-width" label="Test Name" value={this.state.testName}  name="testName" onChange={this.onChange} fullWidth margin="normal"/>
+            </Grid>
             <Grid item xs={12}>
               <TextField id="full-width" label="Label" placeholder="Placeholder" helperText="Full width!" fullWidth margin="normal"/>
             </Grid>

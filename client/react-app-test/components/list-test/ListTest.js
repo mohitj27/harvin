@@ -9,7 +9,7 @@ import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import axios from 'axios'
-import { CircularProgress } from 'material-ui/Progress';
+import { CircularProgress } from 'material-ui/Progress'
 
 
 const styles = theme => ({

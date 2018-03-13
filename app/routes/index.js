@@ -18,6 +18,7 @@ const subjectRoutes = require('./subject')
 const chapterRoutes = require('./chapter')
 const topicRoutes = require('./topic')
 const admissionRoutes = require('./admission')
+const studentAppRoutes = require('./studentApp')
 
 router.use('/student', studentRoutes)
 router.use('/admin/batches', batchRoutes)
@@ -36,6 +37,7 @@ router.use('/admin/topics', topicRoutes)
 router.use('/admin/courses', coursesRoutes)
 router.use('/admin/admission', admissionRoutes)
 router.use('/admin', adminRoutes)
+router.use('/studentApp/home', studentAppRoutes)
 router.use(vmsRoutes)
 
 // if not route mentioned in url
