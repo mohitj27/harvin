@@ -38,13 +38,11 @@ router.get('/', (req, res, next) => {
 
 router.get('/vms/phone/:phone', async (req, res, next) => {
   const phone = req.params.phone || ''
-  console.log('handled', phone)
   if (!phone || validator.isEmpty(phone)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'phone', next)
   }
   try {
     const foundVisitor = await vmsController.findVisitorByPhone(phone)
-    console.log('visitor', foundVisitor)
     res.json(foundVisitor)
   } catch (err) {
     next(err || 'Internal Server Error')

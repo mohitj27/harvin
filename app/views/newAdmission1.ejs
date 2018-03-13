@@ -22,152 +22,155 @@
 	</nav>
 	<h4 class="center-align white-text">ADMISSION FORM</h4>
 	<main>
-		<div id="wizard">
+		<form enctype="multipart/form-data" id="admission-form" method="post" action="/admin/admission">
+			<div id="wizard">
 
-			<h1>Student phone no.</h1>
-			<section>
-				<div class="row">
-					<div class="input-field col s6 offset-s3">
-						<input id="phone" type="text" type="text" min="1111111111" max="9999999999" required class="validate">
-						<label for="phone">Student phone no.</label>
-					</div>
-				</div>
-
-			</section>
-
-			<h1>Fetched Info</h1>
-			<section></section>
-			<h1>Additional Info</h1>
-			<section>
-				<!-- <button class="btn" id="check">check</button> -->
-				<div class="container">
+				<h1>Student phone no.</h1>
+				<section>
 					<div class="row">
-						<div class="col s4 file-field input-field">
-							<div class="btn">
-								<span>Photo</span>
-								<input type="file" id="imgInp">
-							</div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text">
-							</div>
-						</div>
-
-						<div class="input-field col s3 offset-s5">
-							<select name="course" id="course">
-								<option value="" selected disabled>Course Applied For</option>
-								<%courses.forEach( function ( course ) { %>
-									<option value="<%=course.courseName%>"><%=course.courseName%></option>
-									<%})%>
-							</select>
+						<div class="input-field col s6 offset-s3">
+							<input id="phone" type="text" type="text" minlength="10" maxlength="12" required class="validate">
+							<label for="phone">Student phone no.</label>
 						</div>
 					</div>
 
-					<br>
-					<div class="row">
-						<div class="col s4">
-							<div class="row">
-								<div class="col s6">
-									<p>
-										<input name="gender" value="male" type="radio" id="male" />
-										<label for="male">Male</label>
-									</p>
+				</section>
+
+				<h1>Fetched Info</h1>
+				<section></section>
+				<h1>Additional Info</h1>
+				<section>
+					<!-- <button class="btn" id="check">check</button> -->
+					<div class="container">
+						<div class="row">
+							<div class="col s4 file-field input-field">
+								<div class="btn">
+									<span>Photo</span>
+									<input type="file" name="profileImg" id="imgInp">
 								</div>
-								<div class="col s6">
-									<p>
-										<input name="gender" value="female" type="radio" id="female" />
-										<label for="female">Female</label>
-									</p>
+								<div class="file-path-wrapper">
+									<input class="file-path validate" type="text">
 								</div>
 							</div>
-						</div>
-						<div class="col s4 input-field">
-							<label for="dob">D.O.B</label>
-							<input type="text" id="dob" class="datepicker">
-						</div>
-						<div class="col s4 input-field">
-							<select required name="category" id="category">
-								<option value="" selected disabled>Choose the category</option>
-								<option value="General">General</option>
-								<option value="O.B.C.">O.B.C</option>
-								<option value="S.C.">S.C</option>
-								<option value="S.T.">S.T.</option>
-								<option value="Others">Others</option>
-							</select>
-						</div>
-					</div>
 
-					<br>
-					<h5>Parent's/ Guardian's</h5>
-					<div class="row">
-						<div class="col s4 input-field">
-							<input id="guardiansName" name="guardiansName" type="text" required class="validate" />
-							<label for="guardiansName">
-								<span class="label-text">Name</span>
-								<span class="nav-dot"></span>
-							</label>
-						</div>
-						<div class="col s4 input-field">
-							<input id="guardiansPhone" name="gaurdiansPhone" type="text" min="1111111111" max="9999999999" required class="validate">
-							<label for="guardiansPhone">Contact no.</label>
-						</div>
-						<div class="col s4 input-field">
-							<input id="guardiansOccupation" name="gaurdiansOccupation" type="text" required class="validate">
-							<label for="guardiansOccupation">Occupation</label>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col s12 input-field">
-							<input id="perma-address" name="perma-address" type="text" required class="validate" />
-							<label for="perma-address">
-								<span class="label-text">Permanent Address (If it is different from correspondence one)</span>
-								<span class="nav-dot"></span>
-							</label>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col s9 white-text">
-							Marks Obtained (X/XII Science & athematics- Aggregate) - in %
-							<div class="input-field inline">
-								<input id="marks" name="marks" type="text" class="validate">
-								<label for="marks">Marks in %</label>
+							<div class="input-field col s3 offset-s5">
+								<select name="course" id="course">
+									<option value="" selected disabled>Course Applied For</option>
+									<%courses.forEach( function ( course ) { %>
+										<option value="<%=course.courseName%>">
+											<%=course.courseName%>
+										</option>
+										<%})%>
+								</select>
 							</div>
 						</div>
-						<div class="col s3 input-field">
-							<input id="board" name="board" type="text" required class="validate" />
-							<label for="board">
-								<span class="label-text">Examination Board</span>
-								<span class="nav-dot"></span>
-							</label>
+
+						<br>
+						<div class="row">
+							<div class="col s4">
+								<div class="row">
+									<div class="col s6">
+										<p>
+											<input name="gender" value="male" type="radio" id="male" />
+											<label for="male">Male</label>
+										</p>
+									</div>
+									<div class="col s6">
+										<p>
+											<input name="gender" value="female" type="radio" id="female" />
+											<label for="female">Female</label>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col s4 input-field">
+								<label for="dob">D.O.B</label>
+								<input type="text" id="dob" class="datepicker">
+							</div>
+							<div class="col s4 input-field">
+								<select required name="category" id="category">
+									<option value="" selected disabled>Choose the category</option>
+									<option value="General">General</option>
+									<option value="O.B.C.">O.B.C</option>
+									<option value="S.C.">S.C</option>
+									<option value="S.T.">S.T.</option>
+									<option value="Others">Others</option>
+								</select>
+							</div>
 						</div>
+
+						<br>
+						<h5>Parent's/ Guardian's</h5>
+						<div class="row">
+							<div class="col s4 input-field">
+								<input id="guardiansName" name="guardiansName" type="text" required class="validate" />
+								<label for="guardiansName">
+									<span class="label-text">Name</span>
+									<span class="nav-dot"></span>
+								</label>
+							</div>
+							<div class="col s4 input-field">
+								<input id="guardiansPhone" name="guardiansPhone" type="text" min="1111111111" max="9999999999" required class="validate">
+								<label for="guardiansPhone">Contact no.</label>
+							</div>
+							<div class="col s4 input-field">
+								<input id="guardiansOccupation" name="guardiansOccupation" type="text" required class="validate">
+								<label for="guardiansOccupation">Occupation</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col s12 input-field">
+								<input id="perma-address" name="perma-address" type="text" required class="validate" />
+								<label for="perma-address">
+									<span class="label-text">Permanent Address (If it is different from correspondence one)</span>
+									<span class="nav-dot"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col s9 white-text">
+								Marks Obtained (X/XII Science & athematics- Aggregate) - in %
+								<div class="input-field inline">
+									<input id="marks" name="marks" type="text" class="validate">
+									<label for="marks">Marks in %</label>
+								</div>
+							</div>
+							<div class="col s3 input-field">
+								<input id="board" name="board" type="text" required class="validate" />
+								<label for="board">
+									<span class="label-text">Examination Board</span>
+									<span class="nav-dot"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<span>
+								<input type="checkbox" id="terms" />
+								<label for="terms">I have read and agree all the
+									<a class="waves-effect waves-light  modal-trigger" href="#terms-modal">terms and conditions</a>
+								</label>
+							</span>
+						</div>
+
+						<br>
+						<div class="row center-align">
+							<a class="waves-effect waves-light btn modal-trigger" href="#previewModal">
+								<i class="material-icons right">assignment</i>Final Form Preview</a>
+
+						</div>
+
 					</div>
 
-					<div class="row">
-						<span>
-							<input type="checkbox" id="terms" />
-							<label for="terms">I have read and agree all the
-								<a class="waves-effect waves-light  modal-trigger" href="#terms-modal">terms and conditions</a>
-							</label>
-						</span>
-					</div>
-
-					<br>
-					<div class="row center-align">
-						<a class="waves-effect waves-light btn modal-trigger" href="#previewModal">
-							<i class="material-icons right">assignment</i>Final Form Preview</a>
-
-					</div>
-
-				</div>
 
 
+				</section>
 
-			</section>
 
+			</div>
 
-		</div>
-	</main>
 
 	<div class="updatedInfos">
 		<input type="hidden" id="name" name="name">
@@ -230,10 +233,13 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<a href="#!" id="fetchedFieldsModalCancel" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-			<a href="#!" id="fetchedFieldsModalAgree" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+			<a href="#!" id="fetchedFieldsModalCancel" class="modal-action waves-effect waves-green btn-flat">Cancel</a>
+			<a href="#!" id="fetchedFieldsModalAgree" class="modal-action  waves-effect waves-green btn-flat">Agree</a>
 		</div>
 	</div>
+
+</form>
+</main>
 
 	<!-- previewModal Structure -->
 	<div id="previewModal" class="modal">
@@ -416,5 +422,6 @@
 
 <script src="/js/main.js" charset="utf-8"></script>
 <script src="/js/newAdmissionForm.js" charset="utf-8"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script> -->
 
 </html>

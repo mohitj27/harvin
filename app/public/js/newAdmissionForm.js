@@ -111,7 +111,7 @@ $(function () {
       cancel: 'Cancel?',
       current: 'current step:',
       pagination: 'Pagination',
-      finish: 'Finish!!',
+      finish: 'Submit!!',
       next: 'Next >',
       previous: '< Previous',
       loading: 'Loading ...'
@@ -121,15 +121,10 @@ $(function () {
       console.log('curr0', currentIndex)
       console.log('new0', newIndex)
       if (currentIndex === 0 && newIndex === 1) {
-        console.log('length', $('#phone').val().length)
-        if ($('#phone').val().length < 10) {
-          alert('Please enter a valid 10 digit phone number')
+        if ($('#phone').val().length > 12 || $('#phone').val().length < 10) {
           return false
-        } else return true
+        }
       }
-      // else if (currentIndex === 1 && newIndex === 0) {
-      //   return true
-      // }
       return true
     },
     onStepChanged: function (event, currentIndex, priorIndex) {
@@ -168,9 +163,7 @@ $(function () {
     onFinishing: function (event, currentIndex) {
       return true
     },
-    onFinished: function (event, currentIndex) {
-      alert('Submitted!')
-    }
+    onFinished: function (event, currentIndex) {}
   })
 
   $('select').material_select()
@@ -181,8 +174,25 @@ $(function () {
   })
 
   $('#fetchedFieldsModalAgree').on('click', function () {
-    $('#fetchedFieldsModal').modal('close')
-    $('#wizard').steps('next')
+    if (
+      $('#auto-name').val().length < 1 ||
+      $('#auto-address').val().length < 1 ||
+      $('#auto-emailId').val().length < 1 ||
+      $('#auto-school').val().length < 1 ||
+      $('#auto-referral').val().length < 1
+    ) {
+    } else {
+      //
+      $('#name').val($('#auto-name').val())
+      $('#address').val($('#auto-address').val())
+      $('#emailId').val($('#auto-emailId').val())
+      $('#school').val($('#auto-school').val())
+      $('#referral').val($('#auto-referral').val())
+      //
+
+      $('#fetchedFieldsModal').modal('close')
+      $('#wizard').steps('next')
+    }
   })
 
   $('.datepicker').pickadate({
@@ -219,7 +229,30 @@ $(function () {
     }
   }
 
-  $('#showprev').on('click', function () {
-    readURL($('#imgInp')[0].files['0'])
+  $('a[href="#finish"]').on('click', function () {
+    if ($('#terms').prop('checked') === false) {
+      return alert('Please check the terms and conditions')
+    } else {
+      $('#admission-form').submit()
+    }
+    // if ($('#terms').prop('checked') === false) { return alert('Please check the terms and conditions')} else {
+    //   let newAdmission = {}
+    //   newAdmission.name = $('#name').val()
+    //   newAdmission.phone = $('#phone').val()
+    //   newAdmission.emailId = $('#emailId').val()
+    //   newAdmission.gender = $('#gender').val()
+    //   newAdmission.category = $('#category').val()
+    //   newAdmission.course = $('#course').val()
+    //   newAdmission.guardiansName = $('#guardiansName').val()
+    //   newAdmission.guardiansPhone = $('#guardiansPhone').val()
+    //   newAdmission.guardiansOccupation = $('#guardiansOccupation').val()
+    //   newAdmission.address = $('#address').val()
+    //   newAdmission.permaAddress = $('#perma-address').val()
+    //   newAdmission.school = $('#school').val()
+    //   newAdmission.marks = $('#marks').val()
+    //   newAdmission.board = $('#board').val()
+    //   newAdmission.referral = $('#referral').val()
+
+    // }
   })
 })
