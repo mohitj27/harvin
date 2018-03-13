@@ -57,8 +57,7 @@
 								<select name="course" id="course">
 									<option value="" selected disabled>Course Applied For</option>
 									<%courses.forEach( function ( course ) { %>
-										<option value="<%=course.courseName%>">
-											<%=course.courseName%>
+										<option value="<%=course.courseName%>"><%=course.courseName%>
 										</option>
 										<%})%>
 								</select>
