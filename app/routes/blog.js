@@ -33,7 +33,7 @@ router.get(
   }
 )
 
-router.get('/all', (req, res, next) => {
+router.get('/all', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
   Blog.find({})
     .sort({
       uploadDateUnix: -1
@@ -75,7 +75,7 @@ const fileOpenPromise = function fileOpenPromise (foundBlog) {
     )
   })
 }
-router.get('/edit', async (req, res, next) => {
+router.get('/edit', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   const blogTitle = req.query.blogTitle
   try {
     const foundBlog = await editBlogPromise(blogTitle)

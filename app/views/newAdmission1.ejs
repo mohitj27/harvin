@@ -1,0 +1,296 @@
+<meta charset="UTF-8">
+<title>Harvin Academy</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width">
+
+
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<script src="https://cdn.rawgit.com/rstaib/jquery-steps/master/build/jquery.steps.min.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="/css/newAdmissionForm.css" type="text/css" rel="stylesheet"></link>
+
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+<body>
+	<nav class="no-pad z-depth-0">
+		<h2>HARVIN ACADEMY</h2>
+	</nav>
+	<h4 class="center-align white-text">ADMISSION FORM</h4>
+	<main>
+		<div id="wizard">
+
+			<h1>Student phone no.</h1>
+			<section>
+				<div class="row">
+					<div class="input-field col s6 offset-s3">
+						<input id="phone" type="text" type="text" min="1111111111" max="9999999999" required class="validate">
+						<label for="phone">Student phone no.</label>
+					</div>
+				</div>
+
+				<!-- <button class="btn" id="showprev">show prev</button>
+
+				<img id="imgPrev" src="#" alt="your image" /> -->
+
+				<!-- <div class="row">
+						<div class="col s4 file-field input-field">
+							<div class="btn">
+								<span>Photo</span>
+								<input type="file" id="imgInp">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+						</div>
+
+						<div class="input-field col s3 offset-s5">
+							<select required name="course" id="course">
+								<option value="" selected disabled>Course Applied For</option>
+								<%courses.forEach(function(course){%>
+									<option value="<%=course.courseName%>">
+										<%=course.courseName%>
+									</option>
+									<%})%>
+							</select>
+						</div>
+					</div> -->
+			</section>
+
+			<h1>Fetched Info</h1>
+			<section></section>
+			<h1>Additional Info</h1>
+			<section>
+				<!-- <button class="btn" id="check">check</button> -->
+				<div class="container">
+					<div class="row">
+						<div class="col s4 file-field input-field">
+							<div class="btn">
+								<span>Photo</span>
+								<input type="file" id="imgInp">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+						</div>
+
+						<div class="input-field col s3 offset-s5">
+							<select required name="course" id="course">
+								<option value="" selected disabled>Course Applied For</option>
+								<%courses.forEach(function(course){%>
+									<option value="<%=course.courseName%>">
+										<%=course.courseName%>
+									</option>
+									<%})%>
+							</select>
+						</div>
+					</div>
+
+					<br>
+					<div class="row">
+						<div class="col s4">
+							<div class="row">
+								<div class="col s6">
+									<p>
+										<input name="gender" type="radio" id="male" />
+										<label for="male">Male</label>
+									</p>
+								</div>
+								<div class="col s6">
+									<p>
+										<input name="gender" type="radio" id="female" />
+										<label for="female">Female</label>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col s4 input-field">
+							<label for="examDate">D.O.B</label>
+							<input type="text" class="datepicker">
+						</div>
+						<div class="col s4 input-field">
+							<select required name="category" id="category">
+								<option value="" selected disabled>Choose the category</option>
+								<option value="General">General</option>
+								<option value="O.B.C.">O.B.C</option>
+								<option value="S.C.">S.C</option>
+								<option value="S.T.">S.T.</option>
+								<option value="Others">Others</option>
+							</select>
+						</div>
+					</div>
+
+					<br>
+					<h5>Parent's/ Guardian's</h5>
+					<div class="row">
+						<div class="col s4 input-field">
+							<input id="guardiansName" name="guardiansName" type="text" required class="validate" />
+							<label for="guardiansName">
+								<span class="label-text">Name</span>
+								<span class="nav-dot"></span>
+							</label>
+						</div>
+						<div class="col s4 input-field">
+							<input id="guardiansPhone" type="text" type="text" min="1111111111" max="9999999999" required class="validate">
+							<label for="guardiansPhone">Contact no.</label>
+						</div>
+						<div class="col s4 input-field">
+							<input id="guardiansOccupation" type="text" type="text" min="1111111111" max="9999999999" required class="validate">
+							<label for="guardiansOccupation">Occupation</label>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col s12 input-field">
+							<input id="address" name="address" type="text" required class="validate" />
+							<label for="address">
+								<span class="label-text">Permanent Address (If it is different from correspondence one)</span>
+								<span class="nav-dot"></span>
+							</label>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col s9 white-text">
+							Marks Obtained (X/XII Science & athematics- Aggregate) - in %
+							<div class="input-field inline">
+								<input id="marks" type="email" class="validate">
+								<label for="marks" data-error="wrong" data-success="right">Marks in %</label>
+							</div>
+						</div>
+						<div class="col s3 input-field">
+							<input id="board" name="address" type="text" required class="validate" />
+							<label for="board">
+								<span class="label-text">Examination Board</span>
+								<span class="nav-dot"></span>
+							</label>
+						</div>
+					</div>
+
+					<div class="row">
+						<span>
+							<input type="checkbox" id="terms" />
+							<label for="terms">I have read and agree all the
+								<a class="waves-effect waves-light  modal-trigger" href="#terms-modal">terms and conditions</a>
+							</label>
+						</span>
+					</div>
+
+					<br>
+					<div class="row center-align">
+						<a class="waves-effect waves-light btn modal-trigger" href="#previewModal">
+							<i class="material-icons right">assignment</i>Final Form Preview</a>
+
+					</div>
+
+				</div>
+
+
+
+			</section>
+
+
+		</div>
+	</main>
+
+	<div class="updatedInfos">
+		<input type="hidden" id="address" name="address">
+		<input type="hidden" id="emailId" name="address">
+		<input type="hidden" id="school" name="address">
+		<input type="hidden" id="referral" name="address">
+	</div>
+
+	<div id="fetchedFieldsModal" class="modal">
+		<div class="modal-content">
+			<h4>Update your info</h4>
+			<div class="row">
+				<div class="col s12 input-field">
+					<input id="auto-address" name="auto-address" type="text" value="Type your address here" required class="validate" />
+					<label for="auto-address">
+						<span class="label-text">Address</span>
+						<span class="nav-dot"></span>
+					</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s12 input-field">
+					<input id="auto-emailId" name="auto-emailId" type="email" value="example@gmail.com" required class="validate" />
+					<label for="auto-emailId">
+						<span class="label-text">Email Id</span>
+						<span class="nav-dot"></span>
+					</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s12 input-field">
+					<input id="auto-school" name="auto-school" type="text" value="Your school name" required class="validate" />
+					<label for="auto-school">
+						<span class="label-text">School</span>
+						<span class="nav-dot"></span>
+					</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s12 input-field">
+					<input id="auto-referral" name="auto-referral" type="text" value="Referral" required class="validate" />
+					<label for="auto-referral">
+						<span class="label-text">Referral</span>
+						<span class="nav-dot"></span>
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+		</div>
+	</div>
+
+	<!-- previewModal Structure -->
+	<div id="previewModal" class="modal">
+		<div class="modal-content">
+			<h4>Modal Header</h4>
+			<p>A bunch of text</p>
+			<img id="imgPrev" src="#" alt="your image" />
+
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+		</div>
+	</div>
+
+
+	<div id="terms-modal" class="modal">
+		<div class="modal-content">
+			<h4>Harvin Academy Terms & conditions</h4>
+			<p>A bunch of text</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+		</div>
+	</div>
+	<% if(msg_error && msg_error.length > 0){ %>
+		<span id="error-card">
+			<%=msg_error%>
+		</span>
+		<% } %>
+
+			<% if(msg_success && msg_success.length > 0){ %>
+
+				<span id="success-card">
+					<%=msg_success%>
+				</span>
+
+				<% } %>
+</body>
+
+<script src="/js/main.js" charset="utf-8"></script>
+<script src="/js/newAdmissionForm.js" charset="utf-8"></script>
+
+</html>
