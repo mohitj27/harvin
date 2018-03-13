@@ -168,7 +168,8 @@
 
 /*  */
 
-.modal-content { min-height: 55% !important ; }
+.modal { min-width: 80% !important ; min-height: 90% !important ; }
+/* .modal { min-height: 70% !important ; } */
 #wizard > .actions {
   margin-bottom: 50px;
 }
@@ -243,9 +244,14 @@ section {
 }
 
 #imgPrev{
-  max-width: 50px;
-  max-height: 50px;
+  max-width: 100px;
+  max-height: 100px;
 }
+
+/* .tabs-page{
+  min-height: 200px;
+  min-width: 100%;
+} */
 
 
 /*SCROLL BAR/

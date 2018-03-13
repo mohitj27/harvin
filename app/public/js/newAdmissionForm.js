@@ -2,11 +2,12 @@ const dateFromId = function (id) {
   let timestamp = id.toString().substring(0, 8)
   let date = new Date(parseInt(timestamp, 16) * 1000).getTime()
   return date
-};
+}
 
 const fillData = function (data) {
   console.log('data', data)
   if (data) {
+    $('#auto-name').val(data.name)
     $('#auto-address').val(data.address)
     $('#auto-emailId').val(data.emailId)
     $('#auto-school').val(data.school)
@@ -14,23 +15,46 @@ const fillData = function (data) {
   }
 }
 
+const fillPrevData = function (data) {
+  $('#prev-course').val($('#course').val())
+  if ($("input[name='gender']:checked").val() === 'male') {
+    $('input:radio[name=prev-gender]:nth(0)').attr('checked', true)
+  } else {
+    $('input:radio[name=prev-gender]:nth(1)').attr('checked', true)
+  }
+  $('#prev-dob').val($('#dob').val())
+  $('#prev-emailId').val(data.emailId)
+  $('#prev-category').val($('#category').val())
+  $('#prev-name').val(data.name)
+  $('#prev-school').val(data.school)
+  $('#prev-phone').val($('#phone').val())
+  $('#prev-guardiansPhone').val($('#guardiansPhone').val())
+  $('#prev-guardiansName').val($('#guardiansName').val())
+  $('#prev-guardiansOccupation').val($('#guardiansOccupation').val())
+  $('#prev-address').val(data.address)
+  $('#prev-perma-address').val($('#perma-address').val())
+  $('#prev-marks').val($('#marks').val())
+  $('#prev-board').val($('#board').val())
+}
+
 const updateData = function () {
   let data = {}
+  data.name = $('#auto-name').val()
   data.address = $('#auto-address').val()
   data.emailId = $('#auto-emailId').val()
   data.school = $('#auto-school').val()
   data.referral = $('#auto-referral').val()
   return data
-};
+}
 
 $(function () {
   let data
 
   $('#fetchedFieldsModal').modal({
-    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+    dismissible: false, // Modal can be dismissed by clicking outside of the modal
     opacity: 0.5, // Opacity of modal background
     inDuration: 300, // Transition in duration
-    endingTop: '20%',
+    endingTop: '5%',
     outDuration: 200, // Transition out duration
     ready: function (modal, trigger) {
       // Callback for Modal open. Modal and trigger parameters available.
@@ -41,7 +65,7 @@ $(function () {
     complete: function () {
       // alert('Closed')
       data = updateData()
-      $('#wizard').steps('next')
+      // $('#wizard').steps('next')
     } // Callback for Modal close
   })
 
@@ -49,17 +73,33 @@ $(function () {
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
     opacity: 0.5, // Opacity of modal background
     inDuration: 300, // Transition in duration
-    endingTop: '20%',
+    endingTop: '5%',
     outDuration: 200, // Transition out duration
     ready: function (modal, trigger) {
       // Callback for Modal open. Modal and trigger parameters available.
       // alert('Ready')
       console.log('preview', $('#imgInp')[0].files['0'])
+      fillPrevData(data)
       readURL($('#imgInp')[0].files['0'])
     },
     complete: function () {
       // alert('Closed')
       console.log('preview closed')
+    } // Callback for Modal close
+  })
+
+  $('#terms-modal').modal({
+    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+    opacity: 0.5, // Opacity of modal background
+    inDuration: 300, // Transition in duration
+    endingTop: '5%',
+    outDuration: 200, // Transition out duration
+    ready: function (modal, trigger) {
+      // Callback for Modal open. Modal and trigger parameters available.
+      // alert('Ready')
+    },
+    complete: function () {
+      // alert('Closed')
     } // Callback for Modal close
   })
   $('select').material_select()
@@ -85,8 +125,11 @@ $(function () {
         if ($('#phone').val().length < 10) {
           alert('Please enter a valid 10 digit phone number')
           return false
-        }
+        } else return true
       }
+      // else if (currentIndex === 1 && newIndex === 0) {
+      //   return true
+      // }
       return true
     },
     onStepChanged: function (event, currentIndex, priorIndex) {
@@ -108,8 +151,8 @@ $(function () {
                 dateFromId(res[res.length - 1]._id)
               )
               data = res[res.length - 1]
-              $('#fetchedFieldsModal').modal('open')
             }
+            $('#fetchedFieldsModal').modal('open')
           },
           error: function (err) {
             console.log('err', err)
@@ -131,6 +174,16 @@ $(function () {
   })
 
   $('select').material_select()
+
+  $('#fetchedFieldsModalCancel').on('click', function () {
+    $('#fetchedFieldsModal').modal('close')
+    $('#wizard').steps('previous')
+  })
+
+  $('#fetchedFieldsModalAgree').on('click', function () {
+    $('#fetchedFieldsModal').modal('close')
+    $('#wizard').steps('next')
+  })
 
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
@@ -160,7 +213,7 @@ $(function () {
 
       reader.onload = function (e) {
         $('#imgPrev').attr('src', e.target.result)
-      };
+      }
 
       reader.readAsDataURL(file)
     }
@@ -169,5 +222,4 @@ $(function () {
   $('#showprev').on('click', function () {
     readURL($('#imgInp')[0].files['0'])
   })
-
 })
