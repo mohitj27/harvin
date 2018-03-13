@@ -4,12 +4,12 @@ const userController = require('../controllers/user.controller')
 const profileController = require('../controllers/profile.controller')
 const instituteController = require('../controllers/institute.controller')
 const errorHandler = require('../errorHandler')
-// const jsonwebtoken = require('jsonwebtoken')
+const jsonwebtoken=require('jsonwebtoken')
 const _ = require('lodash')
 const validator = require('validator')
 const jwtConfig = require('../config/jwt')
 const jwt = require('express-jwt')
-// const User = require('../models/User')
+const User = require('../models/User')
 const middleware = require('../middleware')
 // const passportConfig = require('../config/passport')(passport)
 
@@ -120,63 +120,63 @@ router.get('/login', function (req, res) {
   })
 })
 
-// Handle user login -- for admin
-router.post('/login', passport.authenticate('local', {
-  failureRedirect: '/admin/login',
-  successFlash: 'Welcome back',
-  failureFlash: true
-}),
-function (req, res) {
-  res.redirect(req.session.returnTo || '/admin')
-  delete req.session.returnTo
-})
+// // Handle user login -- for admin
+// router.post('/login', passport.authenticate('local', {
+//   failureRedirect: '/admin/login',
+//   successFlash: 'Welcome back',
+//   failureFlash: true
+// }),
+// function (req, res) {
+//   res.redirect(req.session.returnTo || '/admin')
+//   delete req.session.returnTo
+// })
 
 // Handle user login JWT
-// router.post('/login', function (req, res, next) {
-//   let username = req.body.username
-//   let password = req.body.password
-//   if (!username || !password) {
-//     return res.json({
-//       success: false,
-//       msg: 'Please enter username and password.'
-//     })
-//   } else {
-//     User.findOne({
-//       username: username
-//     }, function (err, user) {
-//       if (err) next(err || 'Internal Server Error')
+router.post('/login', function (req, res, next) {
+  let username = req.body.username
+  let password = req.body.password
+  if (!username || !password) {
+    return res.json({
+      success: false,
+      msg: 'Please enter username and password.'
+    })
+  } else {
+    User.findOne({
+      username: username
+    }, function (err, user) {
+      if (err) next(err || 'Internal Server Error')
 
-//       if (!user) {
-//         res.json({
-//           success: false,
-//           msg: 'Authentication failed. User not found.'
-//         })
-//       } else {
-//         // Check if password matches
-//         user.comparePassword(req.body.password, function (err, isMatch) {
-//           if (isMatch && !err) {
-//             // Create token if the password matched and no error was thrown
-//             const token = jsonwebtoken.sign(user.toObject(), jwtConfig.jwtSecret, {
-//               expiresIn: '24h' // 1 day
-//             })
+      if (!user) {
+        res.json({
+          success: false,
+          msg: 'Authentication failed. User not found.'
+        })
+      } else {
+        // Check if password matches
+        user.comparePassword(req.body.password, function (err, isMatch) {
+          if (isMatch && !err) {
+            // Create token if the password matched and no error was thrown
+            const token = jsonwebtoken.sign(user.toObject(), jwtConfig.jwtSecret, {
+              expiresIn: '24h' // 1 day
+            })
 
-//             res.json({
-//               success: true,
-//               msg: 'Successfully logged you in as ' + username,
-//               token: token,
-//               user
-//             })
-//           } else {
-//             res.json({
-//               success: false,
-//               msg: 'Authentication failed. Username or Password did not match.'
-//             })
-//           }
-//         })
-//       }
-//     })
-//   }
-// })
+            res.json({
+              success: true,
+              msg: 'Successfully logged you in as ' + username,
+              token: token,
+              user
+            })
+          } else {
+            res.json({
+              success: false,
+              msg: 'Authentication failed. Username or Password did not match.'
+            })
+          }
+        })
+      }
+    })
+  }
+})
 
 // User logout-- admin
 router.get('/logout', function (req, res) {

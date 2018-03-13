@@ -53,7 +53,7 @@ const populateFieldsInUsers = function (users, path) {
       .catch(err => reject(err))
   })
 }
-
+//Passport
 const registerUser = function (newUser) {
   return new Promise(function (resolve, reject) {
     User.register(
@@ -68,8 +68,8 @@ const registerUser = function (newUser) {
     )
   })
 }
-
-const saveUser = function (newUser) {
+//JWT
+const saveUser = async function (newUser) {
   return new Promise(function (resolve, reject) {
     newUser.save((err, createdUser) => {
       if (err) return reject(err)

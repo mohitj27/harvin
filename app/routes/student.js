@@ -3,8 +3,10 @@ const passport = require('passport')
 const router = express.Router()
 const validator = require('validator')
 const _ = require('lodash')
+const User = require('../models/User')
 const errorHandler = require('../errorHandler')
 const userController = require('../controllers/user.controller')
+const studentController = require('../controllers/student.controller')
 const batchController = require('../controllers/batch.controller')
 const profileController = require('../controllers/profile.controller')
 const progressController = require('../controllers/progress.controller')
@@ -38,15 +40,27 @@ router.put('/:username', async (req, res, next) => {
       progresses
     })
 
-    return res.json(req.body)
+      return res.json(req.body)
   } catch (err) {
     next(err || 'Internal Server Error')
   }
 })
 
 // Handle user login -- for student
-router.post('/login', function (req, res) {
-  res.redirect('/student/home/')
+router.post('/login',async function (req, res,next) {
+  console.log('login',req.body)
+  try {
+    const studentToken= await studentController.loginWithJWT(req.body)
+    console.log(studentToken)
+    res.send(studentToken)
+  } catch (e) {
+    console.log(e)
+  next(e)
+  } finally {
+
+  }
+
+
 })
 
 // Handle login with email
@@ -116,10 +130,13 @@ router.post('/signup', async (req, res, next) => {
 
   try {
     const foundBatch = await batchController.findBatchByBatchName(batchName)
-    const registerdUser = await userController.registerUser({
+
+    let newUser = new User({
       username,
       password
     })
+    const registerdUser = await userController.saveUser(newUser)
+    console.log('resig', registerdUser)
     let progresses = []
     progresses = await progressController.createProgressesForBatch(foundBatch)
 
@@ -131,6 +148,8 @@ router.post('/signup', async (req, res, next) => {
       progresses
     }
     const createdProfile = await profileController.createNewProfile(newProfile)
+    console.log('prop', createdProfile)
+
     await userController.updateFieldsInUserById(registerdUser, {}, {
       profile: createdProfile
     })
