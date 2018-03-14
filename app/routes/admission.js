@@ -8,24 +8,39 @@ const errorHandler = require('../errorHandler')
 
 const PROFILE_IMG_DIR = path.join(__dirname, '/../../../HarvinDb/profileImg/')
 
+router.get('/new', async (req, res, next) => {
+  try {
+    let allCourses = await courseController.findAllCourses()
+    res.render('newAdmission', { courses: allCourses })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
 
 router.get('/', async (req, res, next) => {
   try {
-    let allCourses = await courseController.findAllCourses()
-    res.render('newAdmission1', { courses: allCourses })
+    let foundAdmissons = await admissionController.findAllAdmissions()
+    res.render('admissionsDb', { admissions: foundAdmissons })
   } catch (err) {
     next(err || 'Internal Server Error')
   }
 })
 
 router.post('/', async (req, res, next) => {
-  // console.log('boyd', req.body)
-  res.locals.flashUrl = req.header.referer || '/admin/admission'
-  const filePath = path.join(PROFILE_IMG_DIR, Date.now() + '__' + req.files.profileImg.name)
+  if (!req.files.profileImg) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'profile image', next)
+  }
+  res.locals.flashUrl = req.header.referer || '/admin/admissions/new'
+  const date = Date.now()
+  const filePath = path.join(
+    PROFILE_IMG_DIR,
+    date + '__' + req.files.profileImg.name
+  )
   const profileImg = path.basename(filePath)
   try {
     await fileController.uploadFileToDirectory(filePath, req.files.profileImg)
     req.body.profileImg = profileImg
+    req.body.date = date
     await admissionController.newAdmission(req.body)
     req.flash('success', 'Form has been successfully submitted!!!')
     res.redirect(res.locals.flashUrl)

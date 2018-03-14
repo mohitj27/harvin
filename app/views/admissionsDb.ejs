@@ -1,0 +1,83 @@
+<% include partials/header.ejs%>
+
+	<link rel="stylesheet" href="/css/admissionsDb.css">
+	<main>
+		<div class="section">
+			<div class="container">
+				<h3 style="text-align: center">List of all blogs</h3>
+				<hr>
+				<table class="responsive-table centered highlight bordered" width="100%">
+					<thead>
+						<tr>
+							<th style="text-align: center">Serial no.</th>
+							<th style="text-align: center">Date</th>
+							<th style="text-align: center">Title</th>
+							<th style="text-align: center">Publish Mode</th>
+							<th style="text-align: center">Draft Mode</th>
+							<th style="text-align: center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% if (admissions){ %>
+							<% admissions.forEach((admission, i) =>{ %>
+								<tr class="hoverable" id="<%=admission._id%>">
+									<td style="text-align: center">
+										<%= i + 1 %>
+									</td>
+									<td style="text-align: center">
+										<%=admission.uploadDate%>
+									</td>
+									<td style="text-align: center">
+										<a href="/blog/?title=<%=blog.blogTitle%>">
+											<%=blog.blogTitle%>
+										</a>
+									</td>
+									<td style="text-align: center">
+										<div class="switch">
+											<label>
+												Off
+													<input type="checkbox" class="publish-lever" <%if(blog.publish==='on'){%>checked="checked"
+													<%}%>>
+													<span class="lever"></span>
+												On
+											</label>
+										</div>
+
+
+									</td>
+									<td style="text-align: center">
+										<div class="switch">
+											<label>
+												Off
+													<input type="checkbox" class="draft-lever" <%if(blog.draft==='on'){%>checked="checked"
+													<%}%>>
+													<span class="lever"></span>
+												On
+											</label>
+										</div>
+
+
+									</td>
+									<td style="text-align: center">
+										<a style="cursor:pointer" onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Post!"><i class="material-icons ">delete</i></a>
+										<br>
+										<a href="/admin/blog/edit?blogTitle=<%=blog.blogTitle%>" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit This Post!"><i class="material-icons ">create</i></a>
+									</td>
+
+								</tr>
+								<% }) %>
+									<% } %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</main>
+
+
+
+	<script src="/js/admissionsDb.js"></script>
+
+	<% include partials/footer.ejs%>
+		<script type="text/javascript">
+		</script>

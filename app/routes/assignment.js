@@ -39,7 +39,7 @@ router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req
 router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async function (req, res, next) {
   res.locals.flashUrl = req.headers.referer
 
-  if (!req.files.length > 0) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+  if (!req.files.assignment) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
   const filePath = path.join(ASSIGNMENT_DIR, Date.now() + '__' + req.files.assignment.name)
   const assignmentName = req.body.assignmentName || ''
   const uploadDate = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a')

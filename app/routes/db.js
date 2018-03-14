@@ -166,7 +166,7 @@ router.get('/gallery', (req, res, next) => {
 })
 
 router.post('/gallery', async (req, res, next) => {
-  if (!req.files.length > 0) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+  if (!req.files.userFile) return errorHandler.errorResponse('INVALID_FIELD', 'image', next)
   const filePath = path.join(GALLERY_DIR, Date.now() + '__' + req.files.userFile.name)
   try {
     await fileController.uploadFileToDirectory(filePath, req.files.userFile)

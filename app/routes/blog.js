@@ -108,7 +108,7 @@ router.post(
   middleware.isLoggedIn,
   middleware.isCentreOrAdmin,
   async (req, res, next) => {
-    if (!req.files.length > 0) { return errorHandler.errorResponse('INVALID_FIELD', 'file', next)}
+    if (!req.files.userFile) { return errorHandler.errorResponse('INVALID_FIELD', 'file', next)}
     const filePath = path.join(
       BLOG_IMAGE_DIR,
       Date.now() + '__' + req.files.userFile.name
