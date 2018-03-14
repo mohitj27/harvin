@@ -288,19 +288,27 @@ router.get('/blog', (req, res, next) => {
             .exec((err, foundBlogs) => {
               if (err) return next(err || 'Internal Server Error')
               else if (foundBlog) {
-                fs.readFile(
-                  __dirname +
-                    '/../../../HarvinDb/blog/' +
-                    foundBlog.htmlFilePath,
-                  function (err, data) {
-                    if (err) throw err
-                    res.render('standard_blog_detail', {
-                      blogContent: data,
-                      foundBlog,
-                      foundBlogs
-                    })
-                  }
-                )
+                if (foundBlog.htmlFilePath) {
+                  fs.readFile(
+                    __dirname +
+                      '/../../../HarvinDb/blog/' +
+                      foundBlog.htmlFilePath,
+                    function (err, data) {
+                      if (err) return next(err || 'Internal Server Error')
+                      res.render('standard_blog_detail', {
+                        blogContent: data,
+                        foundBlog,
+                        foundBlogs
+                      })
+                    }
+                  )
+                } else {
+                  return errorHandler.errorResponse(
+                    'NOT_FOUND',
+                    'blog html',
+                    next
+                  )
+                }
               } else {
                 return errorHandler.errorResponse('NOT_FOUND', 'blog', next)
               }
