@@ -5,6 +5,7 @@ const middleware = require('../middleware')
 const errorHandler = require('../errorHandler')
 const validator = require('validator')
 const fileController = require('../controllers/file.controller')
+const linkController = require('../controllers/link.controller')
 const topicController = require('../controllers/topic.controller')
 const chapterController = require('../controllers/chapter.controller')
 const subjectController = require('../controllers/subject.controller')
@@ -12,6 +13,7 @@ const classController = require('../controllers/class.controller')
 const router = express.Router()
 
 const FILE_DIR = path.normalize(__dirname + '/../../../HarvinDb/FileUploads/')
+const LINK_GEN = path.normalize(__dirname + '/../../../HarvinDb/LinkUploads/')
 
 // Form for uploading a file
 router.get('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
@@ -103,6 +105,32 @@ router.post('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async fun
   }
 })
 
+router.get('/genlink',async (req,res,next)=>{
+try {
+  const foundLinks = await linkController.getAllLinks()
+  console.log(foundLinks)
+  res.render('genlink',foundLinks)
+} catch (e) {
+  next(e)
+} })
+
+router.post('/genlink',async (req,res,next)=>{
+  const link={linkTitle:req.body.linkTitle,
+              addedBy:req.user,
+              uploadDate:moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a'),
+              filePath:LINK_GEN}
+
+try {
+  const createdLink = await linkController.insertLink(link)
+  await fileController.uploadFileToDirectory(LINK_GEN,req.files.linkFile)
+  const foundLinks= await linkController.getAllLinks()
+  res.render('genlink',foundLinks)
+
+} catch (e) {
+next(e)
+}
+
+})
 router.get('/:fileId', async function (req, res, next) {
   const fileId = req.params.fileId || ''
 
@@ -117,5 +145,6 @@ router.get('/:fileId', async function (req, res, next) {
     next(err || 'Internal Server Error')
   }
 })
+
 
 module.exports = router

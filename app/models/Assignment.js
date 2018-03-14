@@ -29,7 +29,6 @@ var assignmentSchema = new Schema({
 
   lastSubDate: {
     type: String,
-    required: true
   },
 
   batch: {

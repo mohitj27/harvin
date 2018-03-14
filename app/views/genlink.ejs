@@ -1,0 +1,35 @@
+<% include partials/header.ejs%>
+
+	<main>
+		<div class="container">
+			<div class="row">
+				<h3>Upload A File to generate a link</h3>
+
+				  <form action="/admin/files/genlink" method="POST" enctype="multipart/form-data">
+						<div class="input-field">
+		          <input name="linkTitle" id="linkTitle" type="text" class="validate">
+		          <label for="linkTitle">Link Name</label>
+		        </div>
+				    <div class="file-field input-field">
+				      <div class="btn">
+				        <span>File</span>
+				        <input type="file" name="linkFile">
+				      </div>
+				      <div class="file-path-wrapper">
+				        <input class="file-path validate" type="text">
+				      </div>
+				    </div>
+						<input class="btn col push-l6" type="submit"/>
+				  </form>
+			</div>
+			<div class="row">
+				<h3>All Uploaded links</h3>
+
+
+			</div>
+		</div>
+	</main>
+
+	<% include partials/footer.ejs%>
+		<script type="text/javascript" src="/js/genlink.js">
+		</script>
