@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const validator = require('validator')
 const router = express.Router()
 const courseController = require('./../controllers/courses.controller')
 const admissionController = require('./../controllers/admission.controller')
@@ -26,7 +27,22 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/view/:admissionId', async (req, res, next) => {
+  const admissionId = req.params.admissionId || ''
+  if (!admissionId || !validator.isMongoId(admissionId)) { return errorHandler.errorResponse('INVALID_FIELD', 'admission id', next) }
+
+  try {
+    let foundAdmisson = await admissionController.findAdmissionById(
+      admissionId
+    )
+    res.render('viewAdmissionForm', { admission: foundAdmisson })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
+
 router.post('/', async (req, res, next) => {
+  console.log('body', req.body)
   if (!req.files.profileImg) {
     return errorHandler.errorResponse('INVALID_FIELD', 'profile image', next)
   }

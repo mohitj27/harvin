@@ -5,8 +5,9 @@ Promise.promisifyAll(require('mongoose'))
 
 // ===admissionSchema====
 var admissionSchema = new Schema({
-  date: String,
+  date: Date,
   name: String,
+  dob: String,
   profileImg: String,
   phone: String,
   emailId: String,

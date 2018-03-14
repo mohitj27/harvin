@@ -244,15 +244,9 @@ section {
 }
 
 #imgPrev{
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 200px;
+  max-height: 200px;
 }
-
-/* .tabs-page{
-  min-height: 200px;
-  min-width: 100%;
-} */
-
 
 /*SCROLL BAR/
 

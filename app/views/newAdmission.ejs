@@ -29,7 +29,7 @@
 				<section>
 					<div class="row">
 						<div class="input-field col s6 offset-s3">
-							<input id="phone" type="text" type="text" minlength="10" maxlength="12" required class="validate">
+							<input id="phone" type="text" name="phone" type="text" minlength="10" maxlength="12" required class="validate">
 							<label for="phone">Student phone no.</label>
 						</div>
 					</div>
@@ -84,7 +84,7 @@
 							</div>
 							<div class="col s4 input-field">
 								<label for="dob">D.O.B</label>
-								<input type="text" id="dob" class="datepicker">
+								<input type="text" id="dob" name="dob" class="datepicker">
 							</div>
 							<div class="col s4 input-field">
 								<select required name="category" id="category">
@@ -120,7 +120,7 @@
 
 						<div class="row">
 							<div class="col s12 input-field">
-								<input id="perma-address" name="perma-address" type="text" required class="validate" />
+								<input id="perma-address" name="permaAddress" type="text" required class="validate" />
 								<label for="perma-address">
 									<span class="label-text">Permanent Address (If it is different from correspondence one)</span>
 									<span class="nav-dot"></span>
@@ -421,6 +421,5 @@
 
 <script src="/js/main.js" charset="utf-8"></script>
 <script src="/js/newAdmissionForm.js" charset="utf-8"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script> -->
 
 </html>

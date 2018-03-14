@@ -4,7 +4,7 @@ Promise = require('bluebird')
 mongoose = require('mongoose')
 mongoose.Promise = Promise
 
-const newAdmission = function newAdmission (newAdmissionObj) {
+const newAdmission = function (newAdmissionObj) {
   return new Promise(function (resolve, reject) {
     Admission.createAsync(newAdmissionObj)
       .then(createdAdmission => resolve(createdAdmission))
@@ -12,7 +12,7 @@ const newAdmission = function newAdmission (newAdmissionObj) {
   })
 }
 
-const findAllAdmissions = function newAdmission () {
+const findAllAdmissions = function () {
   return new Promise(function (resolve, reject) {
     Admission.findAsync()
       .then(foundAdmissions => resolve(foundAdmissions))
@@ -20,7 +20,16 @@ const findAllAdmissions = function newAdmission () {
   })
 }
 
+const findAdmissionById = function (admissionId) {
+  return new Promise(function (resolve, reject) {
+    Admission.findByIdAsync(admissionId)
+      .then(foundAdmission => resolve(foundAdmission))
+      .catch(err => reject(err))
+  })
+}
+
 module.exports = {
   newAdmission,
-  findAllAdmissions
+  findAllAdmissions,
+  findAdmissionById
 }

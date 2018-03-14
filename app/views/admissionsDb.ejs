@@ -12,6 +12,10 @@
 							<th style="text-align: center">Serial no.</th>
 							<th style="text-align: center">Date</th>
 							<th style="text-align: center">Name</th>
+							<th style="text-align: center">Email</th>
+							<th style="text-align: center">Phone</th>
+							<th style="text-align: center">Action</th>
+
 						</tr>
 					</thead>
 					<tbody>
@@ -22,13 +26,26 @@
 										<%= i + 1 %>
 									</td>
 									<td style="text-align: center">
-										<%=admission.date.toLocaleDateString()%>
+										<%=admission.date.toLocaleDateString("en-GB")%>
 									</td>
 									<td style="text-align: center">
-											<%=admission.name%>
-										</a>
+										<%=admission.name%>
+											</a>
+									</td>
+									<td style="text-align: center">
+										<%=admission.emailId%>
+											</a>
+									</td>
+									<td style="text-align: center">
+										<%=admission.phone%>
+											</a>
 									</td>
 
+									<td style="text-align: center">
+											<a href="/admin/admissions/view/<%=admission._id%>" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="View this form"><i class="material-icons ">assignment</i></a>
+										<br>
+										<a style="cursor:pointer" onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This form!"><i class="material-icons ">delete</i></a>
+									</td>
 
 								</tr>
 								<% }) %>
