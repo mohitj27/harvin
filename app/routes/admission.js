@@ -27,9 +27,33 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.delete('/:admissionId', async (req, res, next) => {
+  const admissionId = req.params.admissionId || ''
+  if (!admissionId || !validator.isMongoId(admissionId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'admission id', next)
+  }
+
+  try {
+    let foundAdmisson = await admissionController.findAdmissionById(
+      admissionId
+    )
+
+    if (!foundAdmisson) {
+      return errorHandler.errorResponse('NOT_FOUND', 'admission form', next)
+    } else {
+      foundAdmisson.remove()
+    }
+    res.sendStatus(200)
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
+
 router.get('/view/:admissionId', async (req, res, next) => {
   const admissionId = req.params.admissionId || ''
-  if (!admissionId || !validator.isMongoId(admissionId)) { return errorHandler.errorResponse('INVALID_FIELD', 'admission id', next) }
+  if (!admissionId || !validator.isMongoId(admissionId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'admission id', next)
+  }
 
   try {
     let foundAdmisson = await admissionController.findAdmissionById(
