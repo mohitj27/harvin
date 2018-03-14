@@ -24,78 +24,119 @@ router.get('/', (req, res, next) => {
     category: {
       $in: ['results']
     }
+  }).exec((err, foundStudents) => {
+    if (!err && foundStudents) {
+      res.render('vmsLanding', {
+        students: foundStudents
+      })
+    } else {
+      console.log(err)
+      next(new errors.generic())
+    }
   })
-    .exec((err, foundStudents) => {
-      if (!err && foundStudents) {
-        res.render('vmsLanding', {
-          students: foundStudents
-        })
-      } else {
-        console.log(err)
-        next(new errors.generic())
-      }
-    })
 })
 
-router.get('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res) => {
-  res.render('newVisitor')
-})
-
-router.post('/vms', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  const name = req.body.name
-  const phone = req.body.phone || ''
-  const emailId = req.body.emailId || ''
-  const classs = req.body.classs
-  const date = moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a')
-  const comments = req.body.comments
-  const address = req.body.address
-  const referral = req.body.referral
-  const school = req.body.school
-  const aim = req.body.aim
-
-  res.locals.flashUrl = req.originalUrl
-
-  if (!name) return errorHandler.errorResponse('INVALID_FIELD', 'visitor name', next)
-  if (!classs) return errorHandler.errorResponse('INVALID_FIELD', 'class', next)
-  if (!address) return errorHandler.errorResponse('INVALID_FIELD', 'address', next)
-  if (!referral) return errorHandler.errorResponse('INVALID_FIELD', 'referral', next)
-  if (!school) return errorHandler.errorResponse('INVALID_FIELD', 'school', next)
-  if (!aim) return errorHandler.errorResponse('INVALID_FIELD', 'aim', next)
-
-  if (!phone || validator.isEmpty(phone) || !validator.isLength(phone, {
-    min: 10,
-    max: 10
-  })) {
+router.get('/vms/phone/:phone', async (req, res, next) => {
+  const phone = req.params.phone || ''
+  if (!phone || validator.isEmpty(phone)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'phone', next)
   }
-
-  if (!emailId || !validator.isEmail(emailId)) {
-    return errorHandler.errorResponse('INVALID_FIELD', 'email', next)
-  }
-  const newVisitor = {
-    name,
-    phone,
-    emailId,
-    classs,
-    date,
-    comments,
-    address,
-    referral,
-    school,
-    aim
-  }
-
-  var promise = vmsController.addNewVisitor(newVisitor)
-  promise.then(function (createdVisitor) {
-    req.flash('success', 'Your response has been saved successfully')
-    res.redirect('/vms')
-  }, function (err) {
+  try {
+    const foundVisitor = await vmsController.findVisitorByPhone(phone)
+    res.json(foundVisitor)
+  } catch (err) {
     next(err || 'Internal Server Error')
-  })
+  }
 })
 
+router.get(
+  '/vms',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  (req, res) => {
+    res.render('newVisitor')
+  }
+)
+
+router.post(
+  '/vms',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  (req, res, next) => {
+    const name = req.body.name
+    const phone = req.body.phone || ''
+    const emailId = req.body.emailId || ''
+    const classs = req.body.classs
+    const date = moment(Date.now())
+      .tz('Asia/Kolkata')
+      .format('MMMM Do YYYY, h:mm:ss a')
+    const comments = req.body.comments
+    const address = req.body.address
+    const referral = req.body.referral
+    const school = req.body.school
+    const aim = req.body.aim
+
+    res.locals.flashUrl = req.originalUrl
+
+    if (!name) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'visitor name', next)
+    }
+    if (!classs) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'class', next)
+    }
+    if (!address) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'address', next)
+    }
+    if (!referral) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'referral', next)
+    }
+    if (!school) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'school', next)
+    }
+    if (!aim) return errorHandler.errorResponse('INVALID_FIELD', 'aim', next)
+
+    if (
+      !phone ||
+      validator.isEmpty(phone) ||
+      !validator.isLength(phone, {
+        min: 10,
+        max: 10
+      })
+    ) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'phone', next)
+    }
+
+    if (!emailId || !validator.isEmail(emailId)) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'email', next)
+    }
+    const newVisitor = {
+      name,
+      phone,
+      emailId,
+      classs,
+      date,
+      comments,
+      address,
+      referral,
+      school,
+      aim
+    }
+
+    var promise = vmsController.addNewVisitor(newVisitor)
+    promise.then(
+      function (createdVisitor) {
+        req.flash('success', 'Your response has been saved successfully')
+        res.redirect('/vms')
+      },
+      function (err) {
+        next(err || 'Internal Server Error')
+      }
+    )
+  }
+)
+
 router.delete('/:visitorId', (req, res, next) => {
-  Visitor.findByIdAndRemove(req.params.visitorId, (err) => {
+  Visitor.findByIdAndRemove(req.params.visitorId, err => {
     if (!err) {
       req.flash('success', 'Entry deleted successfully')
       res.redirect('/admin/db/visitors')
@@ -115,7 +156,10 @@ router.get('/centers', (req, res, next) => {
 })
 
 router.post('/centers', (req, res, next) => {
-  req.flash('success', 'Response recoreded successfully, We will get back to you soon!')
+  req.flash(
+    'success',
+    'Response recoreded successfully, We will get back to you soon!'
+  )
   res.redirect('/centers')
 })
 
@@ -135,7 +179,9 @@ router.get('/courses-list', async (req, res, next) => {
     }
   } else {
     try {
-      const foundCourse = await courseController.findOneCourseUsingName((req.query.title))
+      const foundCourse = await courseController.findOneCourseUsingName(
+        req.query.title
+      )
       res.render('courses-desc', {
         foundCourse
       })
@@ -179,19 +225,22 @@ router.get('/gallery', (req, res, next) => {
 })
 
 router.get('/results', (req, res, next) => {
-  Gallery.find({
-    category: 'results'
-  }, (err, foundStudents) => {
-    if (!err && foundStudents) {
-      res.render('results', {
-        students: foundStudents,
-        testimonials: foundStudents
-      })
-    } else {
-      console.log(err)
-      next(new errors.generic())
+  Gallery.find(
+    {
+      category: 'results'
+    },
+    (err, foundStudents) => {
+      if (!err && foundStudents) {
+        res.render('results', {
+          students: foundStudents,
+          testimonials: foundStudents
+        })
+      } else {
+        console.log(err)
+        next(new errors.generic())
+      }
     }
-  })
+  )
 })
 
 router.get('/team', (req, res, next) => {
@@ -211,14 +260,17 @@ router.get('/careers', (req, res, next) => {
 })
 
 router.post('/careers', (req, res, next) => {
-  req.flash('success', 'Response recoreded successfully, We will get back to you soon!')
+  req.flash(
+    'success',
+    'Response recoreded successfully, We will get back to you soon!'
+  )
   res.redirect('/careers')
 })
 
 router.get('/blog', (req, res, next) => {
   if (req.query.title) {
     Blog.findOne({
-      'blogTitle': req.query.title
+      blogTitle: req.query.title
     })
       .populate({
         path: 'author',
@@ -230,28 +282,43 @@ router.get('/blog', (req, res, next) => {
         } else {
           Blog.find()
             .sort({
-              'uploadDateUnix': -1
+              uploadDateUnix: -1
             })
             .limit(3)
             .exec((err, foundBlogs) => {
               if (err) return next(err || 'Internal Server Error')
               else if (foundBlog) {
-                fs.readFile(__dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath, function (err, data) {
-                  if (err) throw err
-                  res.render('standard_blog_detail', {
-                    blogContent: data,
-                    foundBlog,
-                    foundBlogs
-                  })
-                })
-              } else return errorHandler.errorResponse('NOT_FOUND', 'blog', next)
+                if (foundBlog.htmlFilePath) {
+                  fs.readFile(
+                    __dirname +
+                      '/../../../HarvinDb/blog/' +
+                      foundBlog.htmlFilePath,
+                    function (err, data) {
+                      if (err) return next(err || 'Internal Server Error')
+                      res.render('standard_blog_detail', {
+                        blogContent: data,
+                        foundBlog,
+                        foundBlogs
+                      })
+                    }
+                  )
+                } else {
+                  return errorHandler.errorResponse(
+                    'NOT_FOUND',
+                    'blog html',
+                    next
+                  )
+                }
+              } else {
+                return errorHandler.errorResponse('NOT_FOUND', 'blog', next)
+              }
             })
         }
       })
   } else {
     Blog.find({})
       .sort({
-        'uploadDateUnix': -1
+        uploadDateUnix: -1
       })
       .populate({
         path: 'author',

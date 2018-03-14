@@ -1,5 +1,7 @@
 const File = require('./../models/File')
 Promise = require('bluebird')
+const fs = require('fs')
+const path = require('path')
 const mongoose = require('mongoose')
 mongoose.Promise = Promise
 
@@ -13,35 +15,47 @@ const createNewFile = function (newFile) {
 
 const findAllFiles = function () {
   return new Promise(function (resolve, reject) {
-    File
-      .findAsync()
+    File.findAsync()
       .then(createdFile => resolve(createdFile))
       .catch(err => reject(err))
   })
 }
 
-const uploadFileToDirectory = function (path, file) {
+const uploadFileToDirectory = function (filePath, file) {
+  let parsedPath = path.parse(filePath)
+  checkAndCreateLocation(parsedPath.dir)
   return new Promise(function (resolve, reject) {
-    file.mv(path)
+    file
+      .mv(filePath)
       .then(resolve())
       .catch(err => reject(err))
   })
 }
 
-const addTopicChapterSubjectClassToFileById = function (createdFile, updatedTopic, updatedChapter, updatedSubject, updatedClass) {
+const addTopicChapterSubjectClassToFileById = function (
+  createdFile,
+  updatedTopic,
+  updatedChapter,
+  updatedSubject,
+  updatedClass
+) {
   return new Promise(function (resolve, reject) {
-    File.findByIdAndUpdateAsync(createdFile._id, {
-      $set: {
-        topic: updatedTopic,
-        chapter: updatedChapter,
-        subject: updatedSubject,
-        class: updatedClass
+    File.findByIdAndUpdateAsync(
+      createdFile._id,
+      {
+        $set: {
+          topic: updatedTopic,
+          chapter: updatedChapter,
+          subject: updatedSubject,
+          class: updatedClass
+        }
+      },
+      {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
       }
-    }, {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true
-    })
+    )
       .then(updatedFile => resolve(updatedFile))
       .catch(err => reject(err))
   })
@@ -57,11 +71,16 @@ const findFileById = function (fileId) {
 
 const populateFieldsInFiles = function (files, path) {
   return new Promise(function (resolve, reject) {
-    File
-      .deepPopulate(files, path)
+    File.deepPopulate(files, path)
       .then(populatedFiles => resolve(populatedFiles))
       .catch(err => reject(err))
   })
+}
+
+const checkAndCreateLocation = function (location) {
+  if (!fs.existsSync(location)) {
+    fs.mkdirSync(location)
+  }
 }
 
 module.exports = {
@@ -70,5 +89,6 @@ module.exports = {
   findFileById,
   findAllFiles,
   populateFieldsInFiles,
-  uploadFileToDirectory
+  uploadFileToDirectory,
+  checkAndCreateLocation
 }

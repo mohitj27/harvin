@@ -26,7 +26,6 @@ var visitorSchema = new Schema({
 
   comments: {
     type: String,
-    required: true,
     default: ''
   },
 
