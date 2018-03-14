@@ -272,6 +272,7 @@ router.put('/:username/setprogress', async (req, res, next) => {
   let topics = []
   completedTopicsIds = _.castArray(completedTopicsIds)
   completedTopicsIds.forEach(topicId => {
+    topicId = topicId.toString()
     if (validator.isMongoId(topicId)) topics.push(topicId)
   })
 
