@@ -56,17 +56,38 @@ router.get('/view/:admissionId', async (req, res, next) => {
   }
 
   try {
+    let allCourses = await courseController.findAllCourses()
+
     let foundAdmisson = await admissionController.findAdmissionById(
       admissionId
     )
-    res.render('viewAdmissionForm', { admission: foundAdmisson })
+    res.render('viewAdmissionForm', {
+      admission: foundAdmisson,
+      courses: allCourses
+    })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
+
+router.post('/edit/:admissionId', async (req, res, next) => {
+  const admissionId = req.params.admissionId || ''
+  if (!admissionId || !validator.isMongoId(admissionId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'admission id', next)
+  }
+  res.locals.flashUrl = req.header.referer || '/admin/admissions'
+  const date = Date.now()
+  try {
+    req.body.date = date
+    await admissionController.updateAdmissionById(admissionId, req.body)
+    req.flash('success', 'Form has been successfully updated!!!')
+    res.redirect(res.locals.flashUrl)
   } catch (err) {
     next(err || 'Internal Server Error')
   }
 })
 
 router.post('/', async (req, res, next) => {
-  console.log('body', req.body)
   if (!req.files.profileImg) {
     return errorHandler.errorResponse('INVALID_FIELD', 'profile image', next)
   }
