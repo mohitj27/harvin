@@ -108,8 +108,7 @@ router.post('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async fun
 router.get('/genlink',async (req,res,next)=>{
 try {
   const foundLinks = await linkController.getAllLinks()
-  console.log(foundLinks)
-  res.render('genlink',foundLinks)
+  res.render('genlink',{foundLinks})
 } catch (e) {
   next(e)
 } })
@@ -118,19 +117,37 @@ router.post('/genlink',async (req,res,next)=>{
   const link={linkTitle:req.body.linkTitle,
               addedBy:req.user,
               uploadDate:moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a'),
-              filePath:LINK_GEN}
+              filePath:LINK_GEN+'/'+req.files.linkFile.name}
 
 try {
   const createdLink = await linkController.insertLink(link)
-  await fileController.uploadFileToDirectory(LINK_GEN,req.files.linkFile)
+  await fileController.uploadFileToDirectory(LINK_GEN + '/'+req.files.linkFile.name,req.files.linkFile)
   const foundLinks= await linkController.getAllLinks()
-  res.render('genlink',foundLinks)
+  res.render('genlink',{foundLinks})
 
 } catch (e) {
 next(e)
 }
 
 })
+
+router.get('/download/:linkTitle', async function (req, res, next) {
+  const linkTitle = req.params.linkTitle || ''
+  console.log("link title",linkTitle)
+
+  if (!linkTitle )
+  return errorHandler.errorResponse('INVALID_FIELD', 'Link Title', next)
+  try {
+    const foundLink = await linkController.getDownloadFileByTitle(linkTitle)
+    console.log(foundLink)
+    res.download(foundLink.filePath, path.parse(foundLink.filePath).base, (err) => {
+      if (err) return next(err || 'Internal Server Error')
+    })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
+
 router.get('/:fileId', async function (req, res, next) {
   const fileId = req.params.fileId || ''
 

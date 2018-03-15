@@ -19,7 +19,16 @@ const getAllLinks=()=>{
     })
   })
 }
+const getDownloadFileByTitle=(linkTitle)=>{
+  return new Promise((resolve,reject)=>{
+    Link.findOne({linkTitle},(err,foundLink)=>{
+      if(err)reject(err)
+      resolve(foundLink)
+    })
+  })
+}
 module.exports = {
 insertLink,
-getAllLinks
+getAllLinks,
+getDownloadFileByTitle
 }

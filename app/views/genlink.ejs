@@ -24,7 +24,44 @@
 			</div>
 			<div class="row">
 				<h3>All Uploaded links</h3>
+				<table class="responsive-table centered highlight bordered" width="100%">
+				  <thead>
+				    <tr>
+				      <th style="text-align: center">Serial no.</th>
+				      <th style="text-align: center">Date</th>
+				      <th style="text-align: center">Title</th>
+				      <th style="text-align: center">Download Link</th>
+				      <th style="text-align: center">Action</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <% if (foundLinks){ %>
+				      <% foundLinks.forEach((link, i) =>{ %>
+				        <tr class="hoverable" id="<%=link.linkTitle%>">
+				          <td style="text-align: center">
+				            <%= i + 1 %>
+				          </td>
+				          <td style="text-align: center">
+				            <%=link.uploadDate%>
+				          </td>
+				          <td style="text-align: center">
+				            <%=link.linkTitle%>
+				          </td>
+				          <td style="text-align: center">
+				            <a href="/admin/files/download/<%=link.linkTitle%>">
+				              <%=link.linkTitle%>
+				            </a>
+				          </td>
 
+				          <td style="text-align: center">
+				            <a style="cursor:pointer" onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Link!"><i class="material-icons ">delete</i></a>
+				            <br>
+				          </td>
+				        </tr>
+				        <% }) %>
+				          <% } %>
+				  </tbody>
+				</table>
 
 			</div>
 		</div>
