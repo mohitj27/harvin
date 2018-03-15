@@ -56,11 +56,11 @@
 									</td>
 
 									<td style="text-align: center">
-										<input id="target_<%=link.linkTitle%>"  hidden value="https://harvin.academy/admin/files/download/<%=link.linkTitle%>">
+										<span><input id="target_<%=link.linkTitle%>"   style="height:0;width:0;visibility:hidden;" value="https://harvin.academy/admin/files/download/<%=link.linkTitle%>"></span>
 
-										<div class="clipboard tooltipped" style="cursor:pointer;"  data-position="bottom" data-delay="50"  data-tooltip="Copy This Link!" data-clipboard-target="#target_<%=link.linkTitle%>">
+										<span class="clipboard tooltipped" style="cursor:pointer;"  data-position="bottom" data-delay="50"  data-tooltip="Copy This Link!" data-clipboard-target="#target_<%=link.linkTitle%>">
 											<i class="small material-icons">content_copy</i>
-										</div>
+										</span>
 										<a style="cursor:pointer" onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Link!"><i class="material-icons ">delete</i></a>
 										<br>
 									</td>
