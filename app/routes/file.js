@@ -114,7 +114,7 @@ try {
 } })
 
 router.post('/genlink',middleware.isLoggedIn,middleware.isCentreOrAdmin,async (req,res,next)=>{
-  const link={linkTitle:req.body.linkTitle,
+  const link={linkTitle:req.body.linkTitle.replace(/\s/g,''),
               addedBy:req.user,
               uploadDate:moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a'),
               filePath:LINK_GEN+'/'+req.files.linkFile.name}
