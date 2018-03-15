@@ -27,8 +27,18 @@ const getDownloadFileByTitle=(linkTitle)=>{
     })
   })
 }
+
+const delteLinkUsingTitle=(linkTitle)=>{
+  return new Promise((resolve,reject)=>{
+    Link.remove({linkTitle},(err,deletedLink)=>{
+      if(err)reject(err)
+      resolve(deletedLink)
+    })
+  })
+}
 module.exports = {
 insertLink,
 getAllLinks,
-getDownloadFileByTitle
+getDownloadFileByTitle,
+delteLinkUsingTitle
 }

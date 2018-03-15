@@ -145,6 +145,18 @@ router.get('/download/:linkTitle', async function (req, res, next) {
     next(err || 'Internal Server Error')
   }
 })
+router.delete('/deletelink/:linkTitle', async function (req, res, next) {
+  const linkTitle = req.params.linkTitle || ''
+
+  if (!linkTitle )
+  return errorHandler.errorResponse('INVALID_FIELD', 'Link Title', next)
+  try {
+    const deletedLink= await linkController.delteLinkUsingTitle(linkTitle)
+  res.send(deletedLink)
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
 
 router.get('/:fileId', async function (req, res, next) {
   const fileId = req.params.fileId || ''
