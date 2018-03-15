@@ -108,7 +108,7 @@ router.post('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async fun
 router.get('/genlink',middleware.isLoggedIn,middleware.isCentreOrAdmin,async (req,res,next)=>{
 try {
   const foundLinks = await linkController.getAllLinks()
-  res.render('genlink',{foundLinks})
+  res.render('genlink',{foundLinks.reverse()})
 } catch (e) {
   next(e)
 } })
