@@ -24,8 +24,7 @@ const findAllFiles = function () {
 const uploadFileToDirectory = function (filePath, file) {
   let parsedPath = path.parse(filePath)
   checkAndCreateLocation(parsedPath.dir)
-  console.log('path',parsedPath.dir)
-  console.log('file',file)
+
   return new Promise(function (resolve, reject) {
     file
       .mv(filePath)
@@ -82,10 +81,8 @@ const populateFieldsInFiles = function (files, path) {
 const checkAndCreateLocation = function (location) {
   if (!fs.existsSync(location)) {
     fs.mkdirSync(location)
-    console.log(' making')
   }
-  else
-  console.log('not making')
+
 }
 
 module.exports = {

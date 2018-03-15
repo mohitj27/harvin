@@ -133,13 +133,11 @@ next(e)
 
 router.get('/download/:linkTitle', async function (req, res, next) {
   const linkTitle = req.params.linkTitle || ''
-  console.log("link title",linkTitle)
 
   if (!linkTitle )
   return errorHandler.errorResponse('INVALID_FIELD', 'Link Title', next)
   try {
     const foundLink = await linkController.getDownloadFileByTitle(linkTitle)
-    console.log(foundLink)
     res.download(foundLink.filePath, path.parse(foundLink.filePath).base, (err) => {
       if (err) return next(err || 'Internal Server Error')
     })
