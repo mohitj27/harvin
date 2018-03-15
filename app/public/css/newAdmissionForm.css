@@ -248,6 +248,12 @@ section {
   max-height: 200px;
 }
 
+.edit{
+  position: fixed;
+  bottom: 10%;
+  right: 5%;
+}
+
 /*SCROLL BAR/
 
 /* width */

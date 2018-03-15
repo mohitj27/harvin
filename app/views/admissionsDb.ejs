@@ -5,6 +5,8 @@
 		<div class="section">
 			<div class="container">
 				<h3 style="text-align: center">List of all Admissions</h3>
+			<a href="/admin/admissions/new" data-position="bottom" data-delay="50" data-tooltip="New Admission" id="new-form"  class="btn-floating pulse tooltipped btn-large waves-effect waves-light blue new"><i class="material-icons">add</i></a>
+
 				<hr>
 				<table class="responsive-table centered highlight bordered" width="100%">
 					<thead>
@@ -15,7 +17,6 @@
 							<th style="text-align: center">Email</th>
 							<th style="text-align: center">Phone</th>
 							<th style="text-align: center">Action</th>
-
 						</tr>
 					</thead>
 					<tbody>
@@ -26,7 +27,7 @@
 										<%= i + 1 %>
 									</td>
 									<td style="text-align: center">
-										<%=admission.date.toLocaleDateString("en-GB")%>
+										<%=admission.date.toLocaleDateString('en-GB')%>
 									</td>
 									<td style="text-align: center">
 										<%=admission.name%>

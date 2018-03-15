@@ -1,4 +1,11 @@
 $(function () {
+  $(window).keydown(function (event) {
+    if (event.keyCode == 13) {
+      event.preventDefault()
+      return false
+    }
+  })
+
   // For error and success toasts notification
   $errorCard = $('#error-card')
   $successCard = $('#success-card')

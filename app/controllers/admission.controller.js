@@ -28,8 +28,17 @@ const findAdmissionById = function (admissionId) {
   })
 }
 
+const updateAdmissionById = function (admissionId, admissionObj) {
+  return new Promise(function (resolve, reject) {
+    Admission.findByIdAndUpdateAsync(admissionId, {$set: admissionObj})
+      .then(updatedAdmission => resolve(updatedAdmission))
+      .catch(err => reject(err))
+  })
+}
+
 module.exports = {
   newAdmission,
   findAllAdmissions,
-  findAdmissionById
+  findAdmissionById,
+  updateAdmissionById
 }

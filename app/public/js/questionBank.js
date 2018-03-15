@@ -22,19 +22,25 @@ $(function () {
     let className = $('#className').val()
     let subjectName = selectedSubjectName || $('#subjectName').val()
     if (subjectName.length > 0 && className.length > 0) {
-      $.get('/admin/questionBank/subject/' + subjectName + '?className=' + className, function (res) {
-        let chapters = {}
+      $.get(
+        '/admin/questionBank/subject/' +
+          subjectName +
+          '?className=' +
+          className,
+        function (res) {
+          let chapters = {}
 
-        if (res.subject) {
-          res.subject.chapters.forEach((chapter) => {
-            chapters[chapter.chapterName] = null
+          if (res.subject) {
+            res.subject.chapters.forEach(chapter => {
+              chapters[chapter.chapterName] = null
+            })
+          }
+
+          $('#chapterName').autocomplete({
+            data: chapters
           })
         }
-
-        $('#chapterName').autocomplete({
-          data: chapters
-        })
-      })
+      )
     }
   }
 
@@ -44,7 +50,7 @@ $(function () {
       $.get('/admin/questionBank/class/' + className, function (res) {
         let subjects = {}
         if (res.classs) {
-          res.classs.subjects.forEach((subject) => {
+          res.classs.subjects.forEach(subject => {
             subjects[subject.subjectName] = null
           })
         }
@@ -61,7 +67,7 @@ $(function () {
     let classes = {}
 
     if (res.classes) {
-      res.classes.forEach((classs) => {
+      res.classes.forEach(classs => {
         classes[classs.className] = null
       })
     }
@@ -77,9 +83,15 @@ $(function () {
     var addto = '#field' + next
     var addRemove = '#field' + next
     next = next + 1
-    var newIn = '<input name="options" autocomplete="off" class="input opt" id="field' + next + '" type="text">'
+    var newIn =
+      '<input name="options" autocomplete="off" class="input opt" id="field' +
+      next +
+      '" type="text">'
     var newInput = $(newIn)
-    var removeBtn = '<button id="remove' + (next - 1) + '" class="btn red remove-me" >-</button>'
+    var removeBtn =
+      '<button id="remove' +
+      (next - 1) +
+      '" class="btn red remove-me" >-</button>'
     var removeButton = $(removeBtn)
     console.log('ad to ', addto)
     console.log('remove ', addRemove)
@@ -104,6 +116,7 @@ $(function () {
 
   $('#submitQuesBtn').on('click', function (e) {
     e.preventDefault()
+    $('#submitQuesBtn').prop('disabled', true)
     const className = $('#className').val()
     const subjectName = $('#subjectName').val()
     const chapterName = $('#chapterName').val()
@@ -141,15 +154,23 @@ $(function () {
 
         // clear inputs
         $('#question').val('')
-        $('#field').children().remove()
-        const newIn = '<input required name="options" autocomplete="off" class="input opt quesOptions" id="field1" type="text" />'
-        const addBtn = '<button id="b1" class="btn add-more" type="button">+</button>'
+        $('#field')
+          .children()
+          .remove()
+        const newIn =
+          '<input required name="options" autocomplete="off" class="input opt quesOptions" id="field1" type="text" />'
+        const addBtn =
+          '<button id="b1" class="btn add-more" type="button">+</button>'
         $('#field').append(newIn)
         $('#field').append(addBtn)
         next = 1
-        $('#answers').children().remove()
+        $('#answers')
+          .children()
+          .remove()
+      },
+      complete: function () {
+        $('#submitQuesBtn').prop('disabled', false)
       }
-
     })
   })
 })
@@ -158,12 +179,11 @@ function refreshAns () {
   var options = []
 
   // selecting the not empty input
-  $opt = $('#addNewQuestion input[type=text]')
-    .filter(function (index) {
-      if (this.value.length > 0) {
-        return $(this).val()
-      }
-    })
+  $opt = $('#addNewQuestion input[type=text]').filter(function (index) {
+    if (this.value.length > 0) {
+      return $(this).val()
+    }
+  })
 
   // setting up options string
   for (var i = 0; i < $opt.length; i++) {
@@ -174,9 +194,18 @@ function refreshAns () {
   $answerCheckbox = $('#answers')
   $answerCheckbox.children().remove()
   for (var j = 0; j < options.length; j++) {
-    var opt = options[j].replace(/"/g, '\&quot;')
-    opt = opt.replace(/'/g, '\&apos;')
-    var cbox = '<div class="wrapAns"><p><input class="answer" type="checkbox" id="answ' + j + '" name ="answer" value="' + opt + '"><label for="answ' + j + '">' + options[j] + '</label></p></div><br>'
+    var opt = options[j].replace(/"/g, '&quot;')
+    opt = opt.replace(/'/g, '&apos;')
+    var cbox =
+      '<div class="wrapAns"><p><input class="answer" type="checkbox" id="answ' +
+      j +
+      '" name ="answer" value="' +
+      opt +
+      '"><label for="answ' +
+      j +
+      '">' +
+      options[j] +
+      '</label></p></div><br>'
     $answerCheckbox.append(cbox)
   }
 }

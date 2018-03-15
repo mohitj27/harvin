@@ -20,161 +20,200 @@
 	<main>
 		<div class="container">
 			<h4 class="center-align white-text">HARVIN ACADEMY</h4>
+			<a data-position="bottom" data-delay="50" data-tooltip="Edit form" id="edit-form" class="btn-floating tooltipped btn-large waves-effect waves-light blue edit">
+				<i class="material-icons">create</i>
+			</a>
 			<hr>
 			<br>
 			<br>
-			<div class="row">
-				<div class="col s3">
-					<img id="imgPrev" src="/profileImg/<%=admission.profileImg%>" alt="your image" />
-				</div>
-				<div class="col s3 offset-s6">
-					<input id="prev-course" disabled name="prev-course" type="text" value="<%=admission.course%>" placeholder="Course name" required
-					  class="validate" />
-					<label for="prev-course">
-						<span class="label-text">Course Applied For</span>
-						<span class="nav-dot"></span>
-					</label>
-				</div>
-			</div>
-
-			<!--  -->
-			<div class="row">
-				<div class="col s4">
-					<div class="row">
-						<div class="col s6">
-							<p>
-								<input name="prev-gender"
-								 <%if(admission.gender==='male' ){%>
-									 checked
-								<%}%>
-									disabled type="radio" id="prev-male" />
-									<label for="prev-male">Male</label>
-							</p>
-						</div>
-						<div class="col s6">
-							<p>
-								<input name="prev-gender"
-								<%if(admission.gender==='female' ){%>
-									checked
-								<%}%>
-									disabled type="radio" id="prev-female" />
-									<label for="prev-female">Female</label>
-							</p>
-						</div>
+			<form action="/admin/admissions/edit/<%=admission._id%>" method="post">
+				<div class="row">
+					<div class="col s3">
+						<img id="imgPrev" src="/profileImg/<%=admission.profileImg%>" alt="your image" />
+					</div>
+					<div class="input-field col s3 offset-s6">
+						<select disabled name="course" id="course">
+							<option value="" selected disabled>Course Applied For</option>
+							<%courses.forEach( function ( course ) { %>
+								<option value="<%=course.courseName%>"
+										<%if(admission.course === course.courseName){%>
+											selected
+											<%}%>
+									><%=course.courseName%>
+								</option>
+								<%})%>
+						</select>
 					</div>
 				</div>
-				<div class="col s4 input-field">
-					<label for="prev-dob">D.O.B</label>
-					<input type="text" id="prev-dob" value="<%=admission.dob%>" placeholder="01/01/1990" disabled name="prev-dob">
-				</div>
-				<div class="col s4 input-field">
-					<input id="prev-category" placeholder="GEN" value="<%=admission.category%>" disabled name="prev-category" type="text" required class="validate" />
-					<label for="prev-category">
-						<span class="label-text">Category</span>
-						<span class="nav-dot"></span>
-					</label>
-				</div>
-			</div>
 
-
-			<!--  -->
-			<div class="row">
-				<div class="col s4 input-field">
-					<input id="prev-name" value="<%=admission.name%>" disabled placeholder="Your name" name="prev-name" type="text" required class="validate" />
-					<label for="prev-name">
-						<span class="label-text">Name</span>
-						<span class="nav-dot"></span>
-					</label>
-				</div>
-				<div class="col s4 input-field">
-					<input id="prev-emailId" value="<%=admission.emailId%>" placeholder="Your email id" disabled name="prev-emailId" type="email" type="text" required class="validate">
-					<label for="prev-emailId">Email Id</label>
-				</div>
-				<div class="col s4 input-field">
-					<input id="prev-phone" value="<%=admission.phone%>" placeholder="Your phone" name="prev-phone" disabled type="text" type="text" required class="validate">
-					<label for="prev-phone">Contact</label>
-				</div>
-			</div>
-
-			<!--  -->
-			<h5>Parent's/ Guardian's</h5>
-
-			<div class="row">
-				<div class="col s4 input-field">
-					<input id="prev-guardiansName" value="<%=admission.guardiansName%>" placeholder="Guardians Name" name="prev-guardiansName" disabled type="text" required class="validate"
-					/>
-					<label for="prev-guardiansName">
-						<span class="label-text">Name</span>
-						<span class="nav-dot"></span>
-					</label>
-				</div>
-				<div class="col s4 input-field">
-					<input id="prev-guardiansPhone" value="<%=admission.guardiansPhone%>" placeholder="Guardians Contact" name="prev-guardiansPhone" type="text" disabled type="text"
-					  min="1111111111" max="9999999999" required class="validate">
-					<label for="prev-guardiansPhone">Contact no.</label>
-				</div>
-				<div class="col s4 input-field">
-					<input id="prev-guardiansOccupation" value="<%=admission.guardiansOccupation%>" placeholder="Guardians Occupation" name="prev-guardiansOccupation" disabled type="text"
-					  type="text" min="1111111111" max="9999999999" required class="validate">
-					<label for="prev-guardiansOccupation">Occupation</label>
-				</div>
-			</div>
-
-			<!--  -->
-
-			<div class="row">
-				<div class="col s12 input-field">
-					<input id="prev-address" disabled name="prev-address" value="<%=admission.address%>" placeholder="Address" type="text" required class="validate" />
-					<label for="prev-address">
-						<span class="label-text">Correspondence Address</span>
-						<span class="nav-dot"></span>
-					</label>
-				</div>
-			</div>
-
-			<!--  -->
-			<div class="row">
-				<div class="col s12 input-field">
-					<input id="prev-perma-address" value="<%=admission.permaAddress%>" disabled name="prev-perma-address" placeholder="Permanent Address" type="text" required class="validate"
-					/>
-					<label for="prev-perma-address">
-						<span class="label-text">Permanent Address (If it is different from correspondence one)</span>
-						<span class="nav-dot"></span>
-					</label>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col s12 input-field">
-					<input id="prev-school" value="<%=admission.school%>" disabled name="prev-school" placeholder="Your school" type="text" required class="validate" />
-					<label for="prev-school">
-						<span class="label-text">School</span>
-						<span class="nav-dot"></span>
-					</label>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col s9 white-text">
-					Marks Obtained (X/XII Science & athematics- Aggregate) - in %
-					<div class="input-field inline">
-						<input id="prev-marks" value="<%=admission.marks%>" disabled name="prev-marks" placeholder="00" type="text" class="validate">
-						<label for="prev-marks">Marks in %</label>
+				<!--  -->
+				<div class="row">
+					<div class="col s4">
+						<div class="row">
+							<div class="col s6">
+								<p>
+									<input class="gender" name="gender" <%if(admission.gender==='male' ){%> checked
+									<%}%>
+										disabled value= 'male' type="radio" id="male" />
+										<label for="male">Male</label>
+								</p>
+							</div>
+							<div class="col s6">
+								<p>
+									<input class="gender" name="gender" <%if(admission.gender==='female' ){%> checked
+									<%}%>
+										disabled value= 'female' type="radio" id="female" />
+										<label for="female">Female</label>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col s4 input-field">
+						<label for="dob">D.O.B</label>
+						<input type="text" id="dob" class="datepicker" value="<%=admission.dob%>" placeholder="01/01/1990" disabled name="dob">
+					</div>
+					<div class="col s4 input-field">
+						<select disabled required name="category" id="category">
+							<option value="" selected disabled>Choose the category</option>
+							<option value="General"
+							<%if(admission.category === 'General'){%>
+								selected
+								<%}%>
+							>General</option>
+							<option value="O.B.C."
+							<%if(admission.category === 'O.B.C.'){%>
+								selected
+								<%}%>
+							>O.B.C</option>
+							<option value="S.C."
+							<%if(admission.category === 'S.C.'){%>
+								selected
+								<%}%>
+							>S.C</option>
+							<option value="S.T."
+							<%if(admission.category === 'S.T.'){%>
+								selected
+								<%}%>
+							>S.T.</option>
+							<option value="Others"
+							<%if(admission.category === 'Others'){%>
+								selected
+								<%}%>
+							>Others</option>
+						</select>
 					</div>
 				</div>
-				<div class="col s3 input-field">
-					<input id="prev-board" value="<%=admission.board%>" disabled name="prev-board" type="text" placeholder="CBSE" required class="validate" />
-					<label for="prev-board">
-						<span class="label-text">Examination Board</span>
-						<span class="nav-dot"></span>
-					</label>
+
+
+				<!--  -->
+				<div class="row">
+					<div class="col s4 input-field">
+						<input id="name" value="<%=admission.name%>" disabled placeholder="Your name" name="name" type="text" required class="validate"
+						/>
+						<label for="name">
+							<span class="label-text">Name</span>
+							<span class="nav-dot"></span>
+						</label>
+					</div>
+					<div class="col s4 input-field">
+						<input id="emailId" value="<%=admission.emailId%>" placeholder="Your email id" disabled name="emailId" type="email" type="text"
+						  required class="validate">
+						<label for="emailId">Email Id</label>
+					</div>
+					<div class="col s4 input-field">
+						<input id="phone" value="<%=admission.phone%>" placeholder="Your phone" name="phone" disabled type="text" type="text" required
+						  class="validate">
+						<label for="phone">Contact</label>
+					</div>
 				</div>
-			</div>
+
+				<!--  -->
+				<h5>Parent's/ Guardian's</h5>
+
+				<div class="row">
+					<div class="col s4 input-field">
+						<input id="guardiansName" value="<%=admission.guardiansName%>" placeholder="Guardians Name" name="guardiansName" disabled
+						  type="text" required class="validate" />
+						<label for="guardiansName">
+							<span class="label-text">Name</span>
+							<span class="nav-dot"></span>
+						</label>
+					</div>
+					<div class="col s4 input-field">
+						<input id="guardiansPhone" value="<%=admission.guardiansPhone%>" placeholder="Guardians Contact" name="guardiansPhone" type="text"
+						  disabled type="text" min="1111111111" max="9999999999" required class="validate">
+						<label for="guardiansPhone">Contact no.</label>
+					</div>
+					<div class="col s4 input-field">
+						<input id="guardiansOccupation" value="<%=admission.guardiansOccupation%>" placeholder="Guardians Occupation" name="guardiansOccupation"
+						  disabled type="text" type="text" min="1111111111" max="9999999999" required class="validate">
+						<label for="guardiansOccupation">Occupation</label>
+					</div>
+				</div>
+
+				<!--  -->
+
+				<div class="row">
+					<div class="col s12 input-field">
+						<input id="address" disabled name="address" value="<%=admission.address%>" placeholder="Address" type="text" required class="validate"
+						/>
+						<label for="address">
+							<span class="label-text">Correspondence Address</span>
+							<span class="nav-dot"></span>
+						</label>
+					</div>
+				</div>
+
+				<!--  -->
+				<div class="row">
+					<div class="col s12 input-field">
+						<input id="perma-address" value="<%=admission.permaAddress%>" disabled name="permaAddress" placeholder="Permanent Address"
+						  type="text" required class="validate" />
+						<label for="perma-address">
+							<span class="label-text">Permanent Address (If it is different from correspondence one)</span>
+							<span class="nav-dot"></span>
+						</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 input-field">
+						<input id="school" value="<%=admission.school%>" disabled name="school" placeholder="Your school" type="text" required class="validate"
+						/>
+						<label for="school">
+							<span class="label-text">School</span>
+							<span class="nav-dot"></span>
+						</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s9 white-text">
+						Marks Obtained (X/XII Science & athematics- Aggregate) - in %
+						<div class="input-field inline">
+							<input id="marks" value="<%=admission.marks%>" disabled name="marks" placeholder="00" type="text" class="validate">
+							<label for="marks">Marks in %</label>
+						</div>
+					</div>
+					<div class="col s3 input-field">
+						<input id="board" value="<%=admission.board%>" disabled name="board" type="text" placeholder="CBSE" required class="validate"
+						/>
+						<label for="board">
+							<span class="label-text">Examination Board</span>
+							<span class="nav-dot"></span>
+						</label>
+					</div>
+				</div>
+
+				<div class="row center-align" id="edit-form-submit" style="visibility: hidden">
+					<button class="btn">Submit</button>
+				</div>
+			</form>
 		</div>
 	</main>
 
 </body>
 <script src="/js/main.js" charset="utf-8"></script>
-<script src="/js/newAdmissionForm.js" charset="utf-8"></script>
+<script src="/js/viewAdmissionForm.js" charset="utf-8"></script>
 
 </html>
