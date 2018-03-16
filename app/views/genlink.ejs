@@ -7,13 +7,22 @@
 
 				<form action="/admin/files/genlink" method="POST" enctype="multipart/form-data">
 					<div class="input-field">
-						<input name="linkTitle" id="linkTitle" type="text" class="validate">
+						<input name="linkTitle" required id="linkTitle" type="text" class="validate">
 						<label for="linkTitle">Link Name</label>
 					</div>
 					<div class="file-field input-field">
+							<div class="btn">
+								<span>Actual File</span>
+								<input type="file" required name="linkFile">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+						</div>
+					<div class="file-field input-field">
 						<div class="btn">
-							<span>File</span>
-							<input type="file" name="linkFile">
+							<span>Cover Img</span>
+							<input type="file" name="cover">
 						</div>
 						<div class="file-path-wrapper">
 							<input class="file-path validate" type="text">
@@ -30,6 +39,7 @@
 							<th style="text-align: center">Serial no.</th>
 							<th style="text-align: center">Date</th>
 							<th style="text-align: center">Title</th>
+							<th style="text-align: center"><i class="material-icons">file_download</i></th>
 							<th style="text-align: center">Download Link</th>
 							<th style="text-align: center">Action</th>
 						</tr>
@@ -47,6 +57,9 @@
 									<td style="text-align: center">
 										<%=link.linkTitle%>
 									</td>
+									<td style="text-align: center">
+											<%=link.downloads%>
+										</td>
 									<td style="text-align: center">
 
 										<a href="/admin/files/download/<%=link.linkTitle%>">

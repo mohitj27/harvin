@@ -1,0 +1,75 @@
+
+
+<%include partials/website_header.ejs%>
+  <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m3 l3">
+        <br>
+        <h5 >FILTERS</h5>
+        <br>
+        <form action="">
+            <div class="input-field">
+              <select>
+                <option value="medical" selected>All</option>
+                <option value="medical" >Medical</option>
+                <option value="engineering">Engineering</option>
+                <option value="foundation">Foundation</option>
+              </select>
+              <label>Select Stream</label>
+            </div>
+
+        </form>
+      </div>
+      <div class="col s12 m9 l9">
+
+        <h5 class="center-align">Download materials</h5>
+        <hr>
+        <br>
+        <%if(downloads){%>
+
+          <div class="row">
+        <%downloads.forEach((item,i)=>{%>
+            <div class="col s6 m4">
+
+                <div class="card" id="download-list-card">
+                  <div class="card-image valign-wrapper">
+                    <img src="<%=item.cover%>"class="responsive-img">
+                  </div>
+                  <div class="card-stacked">
+                    <div class="card-content">
+                      <div class="card-title"><%=item.linkTitle%></div>
+                    </div>
+                    <div class="card-action">
+                      <a href="/admin/files/download/<%=item.linkTitle%>">Download</a><span><i class="material-icons">file_download</i><%=item.downloads%></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <%})%>
+            </div>
+        <%}%>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</main>
+
+  <%include partials/website_footer.ejs%>
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../../js/materialize.js"></script>
+		<script src="js/init.js"></script>
+    <script>
+      $(function(){
+        $('select').material_select();
+      })
+    </script>
