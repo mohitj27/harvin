@@ -236,15 +236,6 @@ router.get('/logout', function (req, res) {
   res.redirect('/admin')
 })
 
-<<<<<<< HEAD
-router.get('/test',(req,res,next)=>{console.log(req.headers)
- next()}, jwt({
-  secret: jwtConfig.jwtSecret
-}), middleware.isAdmin, (req, res) => {
-  console.log('logged in user', req.user)
-  res.sendStatus(200)
-})
-=======
 router.get(
   '/test',
   jwt({
@@ -256,6 +247,5 @@ router.get(
     res.sendStatus(200)
   }
 )
->>>>>>> 9a828cf8b562459511d98304e2e330b7a4e19218
 
 module.exports = router
