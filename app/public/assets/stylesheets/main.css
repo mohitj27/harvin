@@ -50,12 +50,6 @@ a:active {
   text-decoration: none;
   outline: none; }
 
-dl,
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-  list-style: none; }
 
 p {
   color: #000000;
@@ -1262,9 +1256,7 @@ mark.admin {
 ==================================================*/
 .middle-content .blog-details-area .full-post .blgo-content {
   position: relative; }
-.middle-content .blog-details-area .full-post .blog-texts p:first-of-type:first-letter {
-  color: #111111;
-  font-size: 36px; }
+
 .middle-content .blog-details-area .full-post.blog-gallery .single-img {
   height: 150px;
   margin: 0 15px 15px 0px; }
