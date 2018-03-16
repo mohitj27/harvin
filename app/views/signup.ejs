@@ -5,7 +5,7 @@
       <hr>
       <br>
       <div>
-        <form action="/admin/signup" method="post" class="center-align">
+        <form class="center-align">
           <div class="row">
             <div class="input-field col s4 offset-s2">
               <input required id="instituteName" name="instituteName" type="text" class="validate">
@@ -38,7 +38,7 @@
           </div>
 
           <div class="center-align">
-            <button type="submit" class="btn">Submit
+            <button class="btn" id="submit-btn">Submit
               <i class="material-icons right">send</i>
             </button>
           </div>
@@ -47,4 +47,5 @@
 
     </div>
   </main>
+<script src="/js/adminSignup.js"></script>
   <% include partials/footer.ejs %>

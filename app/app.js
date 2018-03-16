@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const passport = require('passport')
-const localStrategy = require('passport-local')
+// const passport = require('passport')
+// const localStrategy = require('passport-local')
 const session = require('express-session')
 const flash = require('connect-flash')
 const indexRoutes = require('./routes/index.js')
@@ -57,13 +57,13 @@ app.use(session({
     sameSite: true
   }
 }))
-app.use(passport.initialize())
-app.use(passport.session())
+// app.use(passport.initialize())
+// app.use(passport.session())
 
 // Setting local strategy for authentication of user
-passport.use(new localStrategy(User.authenticate()))
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
+// passport.use(new localStrategy(User.authenticate()))
+// passport.serializeUser(User.serializeUser())
+// passport.deserializeUser(User.deserializeUser())
 
 app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
