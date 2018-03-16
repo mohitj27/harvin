@@ -3,7 +3,6 @@ var Schema = mongoose.Schema
 var Promise = require('bluebird')
 Promise.promisifyAll(mongoose)
 
-
 //= ===examSchema====
 var linkSchema = new Schema({
   linkTitle: {
@@ -25,6 +24,17 @@ var linkSchema = new Schema({
     type: String,
     required: true,
     trim: true
+  },
+
+  downloads: {
+    type: Number,
+    default: 0
+  },
+
+  cover: {
+    type: String,
+    trim: true,
+    default: 'files.jpg'
   }
 })
 
