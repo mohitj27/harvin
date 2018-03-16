@@ -6,7 +6,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
     <link rel="stylesheet" href="/css/blogTheme.css">
-<link rel="stylesheet" href="/ckeditor/plugins/tableselection/styles/tableselection.css">
+    <!-- <link rel="stylesheet" href="/ckeditor/plugins/tableselection/styles/tableselection.css"> -->
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
@@ -85,8 +85,9 @@
 
                                     <%-blogContent%>
 
-                                    <br><br>
-                                    <div class="col-xs-12 col-lg-12 col-md-12 center">
+                                        <br>
+                                        <br>
+                                        <div class="col-xs-12 col-lg-12 col-md-12 center">
                                             <h3>Liked this blog? Share with your friends</h3>
                                             <span class="fb-share-button" data-href="https://harvin.academy/blog/?title=WHY%20CHOOSE%20HARVIN?" data-layout="button_count">
                                             </span>
@@ -247,6 +248,10 @@
                 $('head').append('<meta property="og:url" content="' + pageURL + '" />')
                 $('head').append('<meta property="og:type" content="article" />')
                 $('head').append('<meta property="og:title content="Harvin academy" />')
+
+                // $.each($('table'), function (index, value) {
+                //     $(value).addClass(' cke_show_border')
+                // });
 
             });
         </script>
