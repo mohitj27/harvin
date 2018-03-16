@@ -21,7 +21,10 @@ router.get('/signup', function (req, res) {
 })
 
 // ADMIN HOME
-router.get('/', function (req, res) {
+router.get('/', (req,res,next)=>{
+  console.log(req.headers)
+  next()
+},function (req, res) {
   res.render('home')
 })
 
@@ -184,7 +187,8 @@ router.get('/logout', function (req, res) {
   res.redirect('/admin')
 })
 
-router.get('/test', jwt({
+router.get('/test',(req,res,next)=>{console.log(req.headers)
+ next()}, jwt({
   secret: jwtConfig.jwtSecret
 }), middleware.isAdmin, (req, res) => {
   console.log('logged in user', req.user)

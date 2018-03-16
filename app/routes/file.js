@@ -105,7 +105,7 @@ router.post('/new', middleware.isLoggedIn, middleware.isCentreOrAdmin, async fun
   }
 })
 
-router.get('/genlink',middleware.isLoggedIn,middleware.isCentreOrAdmin,async (req,res,next)=>{
+router.get('/genlink',async (req,res,next)=>{
 try {
   const foundLinks = await linkController.getAllLinks()
   res.render('genlink',{foundLinks})
@@ -113,7 +113,7 @@ try {
   next(e)
 } })
 
-router.post('/genlink',middleware.isLoggedIn,middleware.isCentreOrAdmin,async (req,res,next)=>{
+router.post('/genlink',async (req,res,next)=>{
   const link={linkTitle:req.body.linkTitle.replace(/\s/g,''),
               addedBy:req.user,
               uploadDate:moment(Date.now()).tz('Asia/Kolkata').format('MMMM Do YYYY, h:mm:ss a'),
