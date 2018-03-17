@@ -21,11 +21,13 @@ router.get('/signup', function (req, res) {
 })
 
 // ADMIN HOME
-router.get('/', (req,res,next)=>{
-  console.log(req.headers)
-  next()
-},function (req, res) {
-  res.render('home')
+router.get('/',
+jwt({
+  secret: jwtConfig.jwtSecret,
+  getToken:jwtConfig.getToken,
+}),function (req, res) {
+
+  res.render('home',{msg_success:"DOne"})
 })
 
 // Handle user registration-- for admin

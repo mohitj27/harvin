@@ -19,7 +19,7 @@ $(function () {
 let  tokenResp=new Response(res.token)
 self.caches.open('jwt-cache').then(function(cache) {
   // Do something with your cache
-  cache.put('token23', tokenResp.clone());
+  cache.put('token', tokenResp.clone());
   tokenResp.text().then((text)=>{
     console.log(text)
   })
@@ -27,8 +27,10 @@ self.caches.open('jwt-cache').then(function(cache) {
 
 });
           localStorage.setItem('token', res.token);
-          Materialize.toast($('<span>Signup successfull</span>'), 4000)
+
+          // Materialize.toast($('<span>Signup successfull</span>'), 4000)
           $('.toast:last').css('background-color', '#13b38b')
+          window.location.replace("/admin")
         }
       },
       error: function (err) {
@@ -40,6 +42,7 @@ self.caches.open('jwt-cache').then(function(cache) {
       },
       complete: function () {
         console.log('complete')
+
       }
     })
   })
