@@ -39,8 +39,7 @@ img {
   height: auto; }
 
 a {
-  color: #111111;
-  text-decoration: none;
+  text-decoration: underline;
   background: transparent;
   display: inline-block; }
 
