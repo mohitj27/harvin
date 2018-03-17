@@ -29,12 +29,48 @@ self.addEventListener('install', function(event) {
 //   else event.respondWith(fetch(event.request))
 // })
 
+// self.addEventListener('fetch',e =>{
+//   let url = new URL(e.request.url)
+//   let token
+//
+//   if(url.origin === location.origin){
+//     let r = new Request(e.request);
+//
+//
+//   e.waitUntil( caches.open('jwt-cache').then(function(cache) {
+//       return cache.match("admin/token")
+//     }).then(respToken=>{
+//       return respToken.text().then((text)=>{
+//         token=text
+//         r.headers.append('Authorization',`Bearer ${token}`);
+//         e.respondWith(fetch(r));
+//         return text
+//       })
+//     }))
+//   }
+//   else {
+//     e.respondWith(fetch(e.request))
+//   }
+// })
+
 
 self.addEventListener('fetch',e =>{
-  let url = new URL(e.request.url)
+  let url = new URL(e.request.url);
+  let token = "";
   if(url.origin === location.origin){
     let r = new Request(e.request);
-    r.headers.append('Authorization','Bearer dsalkdjlskajdkl');
-    e.respondWith(fetch(r));
-  }
-})
+
+    e.respondWith(caches.open('jwt-cache').then(cache => {
+      return cache.match("admin/token").then(res => {
+        if(!res){
+          return fetch(r);
+        }
+        return res.text().then(token => {
+          r.headers.append("Authorization",`Bearer ${token}`);
+          console.log("added header");
+          return fetch(r);
+        })
+      })
+    }))
+
+}}); 

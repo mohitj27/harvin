@@ -241,10 +241,10 @@ router.get(
   jwt({
     secret: jwtConfig.jwtSecret
   }),
-  middleware.isAdmin,
+
   (req, res) => {
     console.log('logged in user', req.user)
-    res.sendStatus(200)
+    res.redirect('/admin/login')
   }
 )
 
