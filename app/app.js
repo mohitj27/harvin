@@ -148,6 +148,7 @@ app.use('/', indexRoutes)
 // Error handling middleware function
 app.use(function (err, req, res, next) {
   if (err) {
+
     if (err.status !== 401 && err.status !== 403) {
       console.error('err---------------: ', err.stack)
       console.error('err_status: ', err.status)
@@ -160,6 +161,13 @@ app.use(function (err, req, res, next) {
     const status = err.status || 400
     const flashUrl = res.locals.flashUrl
     const errMsg = errorHandler.getErrorMessage(err) || err.message || err
+    //POSIIBLE PROBLEM HERE admin/route comes here in case of BAD TOKEN
+    if(err.code==="credentials_required"||err.code==='credentials_bad_format'||err.code==='credentials_bad_scheme'){
+      req.flash('error', 'Please Login')
+      console.log('status sent')
+        return res.redirect('/admin/login')
+    }
+
     if (flashUrl) {
       req.flash('error', errMsg)
       res.redirect(flashUrl)
