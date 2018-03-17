@@ -2,6 +2,7 @@ const _ = require('lodash')
 
 const errorHandler = require('../errorHandler')
 var middleware = {
+  
   isLoggedIn: function (req, res, next) {
     if (req.isAuthenticated()) {
       delete req.session.returnTo
