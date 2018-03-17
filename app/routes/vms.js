@@ -8,7 +8,9 @@ const mongoose = require('mongoose')
 const Gallery = require('./../models/Gallery')
 const Visitor = require('./../models/Visitor')
 const Blog = require('./../models/Blog')
+const Link = require('./../models/Link')
 const vmsController = require('./../controllers/vms.controller')
+const linkController = require('./../controllers/link.controller')
 const courseController = require('./../controllers/courses.controller')
 const validator = require('validator')
 const router = express.Router()
@@ -245,6 +247,11 @@ router.get('/results', (req, res, next) => {
 
 router.get('/team', (req, res, next) => {
   res.render('team')
+})
+
+router.get('/downloads', async (req, res, next) => {
+  const foundLinks = await linkController.getAllLinks()
+  res.render('downloads', { downloads: foundLinks })
 })
 
 router.get('/tnc', (req, res, next) => {
