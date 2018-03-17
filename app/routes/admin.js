@@ -27,70 +27,16 @@ jwt({
   getToken:jwtConfig.getToken,
 }),function (req, res) {
 
-  res.render('home',{msg_success:"DOne"})
+  res.render('home',{msg_success:"Welcome back!"})
 })
-
-// Handle user registration-- for admin
-// router.post('/signup', async function (req, res, next) {
-// const instituteName = req.body.instituteName || ''
-//   const centerName = req.body.centerName || ''
-//   const username = req.body.username || ''
-//   const password = req.body.password || ''
-//   const role = req.body.role
-
-//   res.locals.flashUrl = '/admin/signup'
-
-// if (!instituteName || validator.isEmpty(instituteName)) return errorHandler.errorResponse('INVALID_FIELD', 'Institute name', next)
-// if (!centerName || validator.isEmpty(centerName)) return errorHandler.errorResponse('INVALID_FIELD', 'Center name', next)
-// if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'center name', next)
-// if (!password || validator.isEmpty(password)) return errorHandler.errorResponse('INVALID_FIELD', 'password', next)
-// if (!role || role.length <= 0) return errorHandler.errorResponse('INVALID_FIELD', 'role', next)
-
-//   try {
-//     let registerdUser = await userController.registerUser({
-//       username,
-//       password,
-//       role
-//     })
-//     let createdInstitute
-
-//     createdInstitute = await instituteController.findInstituteByName(instituteName)
-//     if (!createdInstitute) {
-//       createdInstitute = await instituteController.createInstitute({
-//         instituteName
-//       })
-//     }
-
-//     let updatedInstitute = await instituteController.updateFieldsInInstituteById(createdInstitute, {
-//       centers: registerdUser
-//     })
-
-//     let createdProfile = await profileController.createNewProfile({
-//       fullName: centerName,
-//       isCenterOfInstitute: updatedInstitute
-//     })
-//     await userController.updateFieldsInUserById(registerdUser, {}, {
-//       profile: createdProfile
-//     })
-
-//     passport.authenticate('local')(req, res, function () {
-//       req.flash('success', 'Successfully signed you in as ' + req.body.username)
-//       res.redirect(req.session.returnTo || '/admin')
-//       delete req.session.returnTo
-//     })
-//   } catch (err) {
-//     err = err.toString()
-//     if (err.indexOf('registered') !== -1) return next('A center with same name is already registered')
-//     next(err || 'Internal Server Error')
-//   }
-// })
 
 // Student signup -JWT
 router.post('/signup', async (req, res, next) => {
+  res.locals.flashUrl = '/admin/signup'
   console.log('body', req.body)
   const username = req.body.username || ''
   const password = req.body.password || ''
-  const role = req.body['role[]']
+  const role = req.body.role
   const instituteName = req.body.instituteName || ''
   const centerName = req.body.centerName || ''
 
@@ -150,12 +96,13 @@ router.post('/signup', async (req, res, next) => {
       }
     )
     //
-
-    res.json({
-      success: true,
-      msg: 'Successfully created new user.',
-      user: createdUser
-    })
+req.flash("success","Signup Succesful! Please Login to Continue")
+res.redirect('/admin/login')
+    // res.json({
+    //   success: true,
+    //   msg: 'Successfully created new user.',
+    //   user: createdUser
+    // })
   } catch (err) {
     let errMsg = errorHandler.getErrorMessage(err)
     if (errMsg.indexOf('duplicate')) {
@@ -166,9 +113,9 @@ router.post('/signup', async (req, res, next) => {
 
 // Student login form-- admin
 router.get('/login', function (req, res) {
+
   res.render('login', {
-    error: res.locals.msg_error[0]
-  })
+    error: res.locals.msg_error[0]  })
 })
 
 // Handle user login -- for admin

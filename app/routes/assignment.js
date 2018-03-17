@@ -14,7 +14,9 @@ const router = express.Router()
 const ASSIGNMENT_DIR = path.join(__dirname, '/../../../HarvinDb/assignments/')
 
 router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
+
   try {
+    console.log('user assi',req.user)
     var foundAssignments = await assignmentController.findAssignmentsByUserId(req.user)
     foundAssignments = await assignmentController.populateFieldsOfAssignments(foundAssignments, ['batch'])
     return res.render('assignments', {

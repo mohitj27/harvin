@@ -117,11 +117,12 @@ router.get('/visitors', middleware.isLoggedIn, middleware.isCentreOrAdmin, async
   }
 })
 
-router.get('/gallery/upload', (req, res, next) => {
+router.get('/gallery/upload', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
+  console.log('workig', req.user)
   res.render('insertGallery')
 })
 
-router.get('/gallery/all/:category', async (req, res, next) => {
+router.get('/gallery/all/:category',  middleware.isLoggedIn, middleware.isCentreOrAdmin,async (req, res, next) => {
   let categoryToDelete = req.params.category
 
   try {
@@ -161,11 +162,11 @@ router.get('/gallery/all', async (req, res, next) => {
   }
 })
 
-router.get('/gallery', (req, res, next) => {
+router.get('/gallery', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   res.render('galleryDb')
 })
 
-router.post('/gallery', async (req, res, next) => {
+router.post('/gallery', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   if (!req.files.userFile) return errorHandler.errorResponse('INVALID_FIELD', 'image', next)
   const filePath = path.join(GALLERY_DIR, Date.now() + '__' + req.files.userFile.name)
   try {
