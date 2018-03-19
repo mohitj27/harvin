@@ -39,7 +39,7 @@ img {
   height: auto; }
 
 a {
-  text-decoration: underline;
+
   background: transparent;
   display: inline-block; }
 
@@ -50,9 +50,6 @@ a:active {
   outline: none; }
 
 
-p {
-  color: #000000;
- }
 
 h1,
 h2,
