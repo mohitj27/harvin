@@ -48,7 +48,9 @@ a:focus,
 a:active {
   text-decoration: none;
   outline: none; }
-
+strong{
+  font-weight: normal !important;
+}
 
 
 h1,
