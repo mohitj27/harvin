@@ -6,10 +6,12 @@ import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
 import PlayArrowIcon from 'material-ui-icons/PlayArrow'
+import {connect} from 'react-redux'
 import SkipNextIcon from 'material-ui-icons/SkipNext'
 import {Grid, Paper, TextField, Button} from 'material-ui'
 import axios from 'axios'
 import {FormControl, FormHelperText} from 'material-ui/Form'
+import {AuthAction} from '../../actions/login_action'
 
 const styles = theme => ({
   root:{
@@ -49,9 +51,9 @@ class LoginComponent extends Component {
   }
   onSubmit(e){
     e.preventDefault()
-    axios.post('/student/login/',this.state).then((res)=>{
-      console.log(res)
-    })
+    console.log(this.props.login)
+    this.props.login(this.state)
+
   }
   onChange(e){
     this.setState({[e.target.name]:e.target.value})
@@ -124,4 +126,13 @@ LoginComponent.propTypes = {
   theme: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, {withTheme: true})(LoginComponent)
+function mapStateToProps (state){
+  return{}
+}
+function mapDispatchToProps(dispatch){
+  return {
+    login:user=>dispatch(AuthAction(user))
+  }
+
+}
+export default withStyles(styles,{theme:true})(connect(mapStateToProps,mapDispatchToProps)(LoginComponent))

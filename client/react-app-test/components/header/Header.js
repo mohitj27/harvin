@@ -61,6 +61,7 @@ const styles = theme => ({
     height: 56
   },
   appBarShift: {
+    zIndex:100,
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create([
@@ -78,6 +79,7 @@ const styles = theme => ({
     display: 'none'
   },
   drawerPaper: {
+    zIndex:100,
     position: 'relative',
     width: drawerWidth,
     transition: theme.transitions.create('width', {

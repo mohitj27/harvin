@@ -38,11 +38,11 @@ class ListTest extends Component {
   getListElements(){
     const listItems = this.state.testList.map((item) =>
   {console.log('item', item)
-    return <a href={`https://harvin.academy/quiz/exams/${item._id}/questionPaper`}>
-      <ListItem button key={item._id} >
-        <ListItemText primary={item.examName}/>
+    return (
+      <ListItem  href={`https://harvin.academy/quiz/exams/${item._id}/questionPaper`} button key={item._id} >
+        <ListItemText  href={`https://harvin.academy/quiz/exams/${item._id}/questionPaper`} button key={item._id}  primary={item.examName}/>
       </ListItem>
-    </a>}
+    )}
      )
      return listItems
   }

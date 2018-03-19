@@ -37,10 +37,11 @@ body {
 img {
   max-width: 100%;
   height: auto; }
-
+strong{
+  font-weight: normal! important;
+}
 a {
   color: #111111;
-  text-decoration: none;
   background: transparent;
   display: inline-block; }
 
@@ -57,9 +58,7 @@ ol {
   padding: 0;
   list-style: none; }
 
-p {
-  color: #000000;
- }
+
 
 h1,
 h2,
