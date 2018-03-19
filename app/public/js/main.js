@@ -66,4 +66,12 @@ $(function () {
 
   $('.collapsible').collapsible()
   $('.button-collapse').sideNav('show')
+
 })
+function logout(){
+  caches.delete('jwt-cache').then(function(boolean) {
+  // your cache is now deleted
+  window.location.replace('/admin/login')
+})
+
+}
