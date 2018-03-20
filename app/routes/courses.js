@@ -5,7 +5,9 @@ const errorHandler = require('../errorHandler')
 const coursesCont = require('../controllers/courses.controller')
 const fileController = require('../controllers/file.controller')
 const path = require('path')
-const COURSEIMAGE_SAVE_LOCATION = path.normalize(__dirname + '/../../../HarvinDb/courseImages/')
+const COURSEIMAGE_SAVE_LOCATION = path.normalize(
+  __dirname + '/../../../HarvinDb/courseImages/'
+)
 
 router.get('/new', (req, res) => {
   res.render('newCourse')
@@ -26,7 +28,9 @@ router.get('/:courseId/edit', async (req, res, next) => {
   res.locals.flashUrl = req.header.referer
 
   const courseId = req.params.courseId || ''
-  if (!courseId || !validator.isMongoId(courseId)) return errorHandler.errorResponse('INVALID_FIELD', 'course id', next)
+  if (!courseId || !validator.isMongoId(courseId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'course id', next)
+  }
 
   try {
     const foundCourse = await coursesCont.findCourseById(courseId)
@@ -39,15 +43,17 @@ router.get('/:courseId/edit', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  if (!req.files.courseImage) return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
-  let courseImage = req.files.courseImage
-  const filePath = path.join(COURSEIMAGE_SAVE_LOCATION, courseImage.name)
-  try {
-    await fileController.uploadFileToDirectory(filePath, courseImage)
-  } catch (err) {
-    return next(err || 'Internal Server Error')
+  let file = req.file.courseImage
+  if (file) {
+    let courseImage = file
+    const filePath = path.join(COURSEIMAGE_SAVE_LOCATION, courseImage.name)
+    try {
+      await fileController.uploadFileToDirectory(filePath, courseImage)
+    } catch (err) {
+      return next(err || 'Internal Server Error')
+    }
   }
-  console.log(req.files)
+
   const courseName = req.body.courseName,
     courseTimings = req.body.courseTimings,
     courseStartingFrom = req.body.courseStartingFrom,
@@ -65,16 +71,19 @@ router.post('/', async (req, res, next) => {
     courseFrequency
   }
 
-  if (req.files.length > 0) {
-    courseImage = courseImage.name,
-    course.courseImage = courseImage
+  if (file) {
+    course.courseImage = file.name
   }
-  coursesCont.insertInCourse(course).then((result) => {
-    if (result) {
-      req.flash('success', 'Course Inserted Successfully')
-      res.redirect('/admin/courses/all')
-    }
-  }).catch(err => next(err || 'Internal Server Error'))
+
+  coursesCont
+    .insertInCourse(course)
+    .then(result => {
+      if (result) {
+        req.flash('success', 'Course Inserted Successfully')
+        res.redirect('/admin/courses/all')
+      }
+    })
+    .catch(err => next(err || 'Internal Server Error'))
 })
 router.delete('/delete/:courseName', (req, res, next) => {
   try {

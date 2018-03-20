@@ -276,74 +276,74 @@ router.post('/careers', (req, res, next) => {
 
 router.get('/blog/:url', (req, res, next) => {
   const url = req.params.url
-  if (url) {
-    Blog.findOne({
-      url
+  Blog.findOne({
+    url
+  })
+    .populate({
+      path: 'author',
+      modal: 'User'
     })
-      .populate({
-        path: 'author',
-        modal: 'User'
-      })
-      .exec((err, foundBlog) => {
-        console.log('blog', foundBlog)
-        if (err) {
-          return next(err || 'Internal Server Error')
-        } else {
-          Blog.find()
-            .sort({
-              uploadDateUnix: -1
-            })
-            .limit(3)
-            .exec((err, foundBlogs) => {
-              if (err) return next(err || 'Internal Server Error')
-              else if (foundBlog) {
-                if (foundBlog.htmlFilePath) {
-                  fs.readFile(
-                    __dirname +
-                      '/../../../HarvinDb/blog/' +
-                      foundBlog.htmlFilePath,
-                    function (err, data) {
-                      if (err) return next(err || 'Internal Server Error')
-                      res.render('standard_blog_detail', {
-                        blogContent: data,
-                        foundBlog,
-                        foundBlogs
-                      })
-                    }
-                  )
-                } else {
-                  return errorHandler.errorResponse(
-                    'NOT_FOUND',
-                    'blog html',
-                    next
-                  )
-                }
-              } else {
-                return errorHandler.errorResponse('NOT_FOUND', 'blog', next)
-              }
-            })
-        }
-      })
-  } else {
-    Blog.find({})
-      .sort({
-        uploadDateUnix: -1
-      })
-      .populate({
-        path: 'author',
-        modal: 'User'
-      })
-      .exec(function (err, foundBlogs) {
-        if (err) {
-          console.log(err)
-          next(new errors.generic())
-        } else {
-          res.render('blogTheme', {
-            foundBlogs: foundBlogs
+    .exec((err, foundBlog) => {
+      console.log('blog', foundBlog)
+      if (err) {
+        return next(err || 'Internal Server Error')
+      } else {
+        Blog.find()
+          .sort({
+            uploadDateUnix: -1
           })
-        }
-      })
-  }
+          .limit(3)
+          .exec((err, foundBlogs) => {
+            if (err) return next(err || 'Internal Server Error')
+            else if (foundBlog) {
+              if (foundBlog.htmlFilePath) {
+                fs.readFile(
+                  __dirname +
+                    '/../../../HarvinDb/blog/' +
+                    foundBlog.htmlFilePath,
+                  function (err, data) {
+                    if (err) return next(err || 'Internal Server Error')
+                    res.render('standard_blog_detail', {
+                      blogContent: data,
+                      foundBlog,
+                      foundBlogs
+                    })
+                  }
+                )
+              } else {
+                return errorHandler.errorResponse(
+                  'NOT_FOUND',
+                  'blog html',
+                  next
+                )
+              }
+            } else {
+              return errorHandler.errorResponse('NOT_FOUND', 'blog', next)
+            }
+          })
+      }
+    })
+})
+
+router.get('/blog', (req, res, next) => {
+  Blog.find({})
+    .sort({
+      uploadDateUnix: -1
+    })
+    .populate({
+      path: 'author',
+      modal: 'User'
+    })
+    .exec(function (err, foundBlogs) {
+      if (err) {
+        console.log(err)
+        next(new errors.generic())
+      } else {
+        res.render('blogTheme', {
+          foundBlogs: foundBlogs
+        })
+      }
+    })
 })
 
 module.exports = router
