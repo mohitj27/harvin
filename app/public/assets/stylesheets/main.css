@@ -125,7 +125,9 @@ textarea:focus {
 
 mark {
   color: #5cca8d;
-  background: transparent; }
+  background: transparent;
+  padding:0;
+}
 
 ::-webkit-input-placeholder {
   font-style: italic; }
@@ -918,7 +920,6 @@ mark.admin {
 ==================================================*/
 .blog-area .single-blog {
   border: 0;
-  padding: 25px 0;
   -webkit-transition: .3s ease;
   transition: .3s ease; }
   .blog-area .single-blog:hover {
