@@ -274,10 +274,11 @@ router.post('/careers', (req, res, next) => {
   res.redirect('/careers')
 })
 
-router.get('/blog', (req, res, next) => {
-  if (req.query.title) {
+router.get('/blog/:url', (req, res, next) => {
+  const url = req.params.url
+  if (url) {
     Blog.findOne({
-      blogTitle: req.query.title
+      url
     })
       .populate({
         path: 'author',

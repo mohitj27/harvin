@@ -94,7 +94,7 @@
                                     <%=blog.category%>
                                 </mark>
                                 <!-- Blog Content-->
-                                <a href="/blog/?title=<%=blog.blogTitle%>">
+                                <a href="/blog/?title=<%=blog.url%>">
                                     <div class="blgo-content content" style="background-image:url(/blogImage/<%=blog.coverImgName%>)">
                                         <span class="posted-date">
                                             <%=blog.uploadDate%>
@@ -108,13 +108,13 @@
                                     </h2>
 
 
-                                    <a href="/blog/?title=<%=blog.blogTitle%>" class="read-more double-line">read more</a>
+                                    <a href="/blog/<%=blog.url%>" class="read-more double-line">read more</a>
                                     <!-- Card Footer -->
                                 </div>
                                 <div class="card-footer border-0 p-0 bg-white">
                                     <div class="share-icons">
                                         <span>Share:</span>
-                                        <a class="fb-share-button" data-href="https://harvin.academy/blog/?title=<%=blog.blogTitle%>" data-layout="button_count">
+                                        <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
 
                                         </a>
                                         <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
@@ -132,7 +132,7 @@
                                             <%=blog.category%>
                                         </mark>
                                         <!-- Blog Content-->
-                                        <a href="/blog/?title=<%=blog.blogTitle%>">
+                                        <a href="/blog/<%=blog.url%>">
                                             <div class="blgo-content content" style="background-image:url(/blogImage/<%=blog.coverImgName%>)">
                                                 <span class="posted-date">
                                                     <%=blog.uploadDate%>
@@ -149,7 +149,7 @@
                                                 <%=blog.blogTitle%>
                                             </h2>
 
-                                            <a href="/blog/?title=<%=blog.blogTitle%>" class="read-more double-line">read more</a>
+                                            <a href="/blog/<%=blog.url%>" class="read-more double-line">read more</a>
                                             <!-- Card Footer -->
                                         </div>
                                         <div class="card-footer border-0 p-0 bg-white">

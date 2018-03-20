@@ -55,16 +55,15 @@ router.get(
 
 const editBlogPromise = function editBlogPromise (blogTitle) {
   return new Promise((resolve, reject) => {
-    Blog.findOne(
-      {
-        blogTitle
-      },
-      (err, foundBlog) => {
-        if (err) reject(err)
-        else {
-          resolve(foundBlog)
-        }
+    Blog.findOne({
+      blogTitle
+    },
+    (err, foundBlog) => {
+      if (err) reject(err)
+      else {
+        resolve(foundBlog)
       }
+    }
     )
   })
 }
@@ -93,6 +92,7 @@ router.get(
       res.render('editBlog', {
         blogTitle: foundBlog.blogTitle,
         meta: foundBlog.meta,
+        url: foundBlog.url,
         content: data
       })
     } catch (err) {
@@ -101,17 +101,16 @@ router.get(
   }
 )
 router.get('/:blogTitle', (req, res) => {
-  Blog.findOne(
-    {
-      blogTitle: req.params.blogTitle,
-      author: req.user._id
-    },
-    (err, foundBlog) => {
-      if (err) console.log(err)
-      else {
-        res.json(foundBlog)
-      }
+  Blog.findOne({
+    blogTitle: req.params.blogTitle,
+    author: req.user._id
+  },
+  (err, foundBlog) => {
+    if (err) console.log(err)
+    else {
+      res.json(foundBlog)
     }
+  }
   )
 })
 
@@ -120,24 +119,35 @@ router.post(
   middleware.isLoggedIn,
   middleware.isCentreOrAdmin,
   async (req, res, next) => {
-    if (!req.files.userFile) {
-      return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
-    }
-    const filePath = path.join(
-      BLOG_IMAGE_DIR,
-      Date.now() + '__' + req.files.userFile.name
-    )
-    try {
-      await fileController.uploadFileToDirectory(filePath, req.files.userFile)
-    } catch (err) {
-      return next(err || 'Internal Server Error')
+    let coverImgName
+    let file = req.files.userFile
+
+    if (file) {
+      const filePath = path.join(
+        BLOG_IMAGE_DIR,
+        Date.now() + '__' + file.name
+      )
+      try {
+        await fileController.uploadFileToDirectory(
+          filePath,
+          file
+        )
+      } catch (err) {
+        return next(err || 'Internal Server Error')
+      }
+      coverImgName = path.basename(filePath)
+      console.log('cover', coverImgName)
     }
     let blogTitle = req.body.title || ''
+    let url = req.body.url || ''
     if (!blogTitle) {
       return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
     }
-    blogTitle = _.trim(blogTitle)
-    var coverImgName = path.basename(filePath)
+    if (!url) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'blog url', next)
+    }
+
+    url = url.replace(/\s+/g, '-').toLowerCase()
     let blog_name = blogTitle
       .toLowerCase()
       .replace(/ /g, '_')
@@ -156,37 +166,53 @@ router.post(
       .format('MMMM Do YYYY')
     const meta = req.body.meta
 
-    Blog.findOneAndUpdate(
-      {
-        blogTitle
-      },
-      {
-        $set: {
-          htmlFilePath,
-          hashName,
-          coverImgName,
-          author: req.user,
-          publish: req.body.publish,
-          draft: req.body.draft,
-          uploadDate,
-          uploadDateUnix: Date.now(),
-          meta
-        }
-      },
-      {
-        upsert: true,
-        new: true,
-        setDefaultsOnInsert: true
-      },
-      function (err, updatedBlog) {
-        if (!err) {
-          // console.log('updatedBlog', updatedBlog)
-          res.redirect('/admin/blog/all')
-        } else {
-          res.redirect('/admin/blog/new')
-          console.log('err', err)
-        }
+    let blogObj
+
+    if (file) {
+      blogObj = {
+        htmlFilePath,
+        hashName,
+        url,
+        coverImgName,
+        author: req.user,
+        publish: req.body.publish,
+        draft: req.body.draft,
+        uploadDate,
+        uploadDateUnix: Date.now(),
+        meta
       }
+    } else {
+      blogObj = {
+        htmlFilePath,
+        hashName,
+        url,
+        author: req.user,
+        publish: req.body.publish,
+        draft: req.body.draft,
+        uploadDate,
+        uploadDateUnix: Date.now(),
+        meta
+      }
+    }
+
+    Blog.findOneAndUpdate({
+      blogTitle
+    }, {
+      $set: blogObj
+    }, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    },
+    function (err, updatedBlog) {
+      if (!err) {
+        // console.log('updatedBlog', updatedBlog)
+        res.redirect('/admin/blog/all')
+      } else {
+        res.redirect('/admin/blog/new')
+        console.log('err', err)
+      }
+    }
     )
     // })
   }
@@ -207,45 +233,41 @@ router.post('/:htmlFilePath/images', (req, res, next) => {
 
   checkBlogDir()
   checkBlogImageDir()
-  Blog.findOneAndUpdate(
-    {
-      blogTitle: htmlFilePath
+  Blog.findOneAndUpdate({
+    blogTitle: htmlFilePath
+  }, {
+    $addToSet: {
+      blogImages: req.body.filename
     },
-    {
-      $addToSet: {
-        blogImages: req.body.filename
-      },
-      $set: {
-        author: req.user,
-        uploadDate,
-        uploadDateUnix: Date.now()
-      }
-    },
-    {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true
-    },
-    function (err, updatedBlog) {
-      if (!err) {
-        // console.log('updatedBlog', updatedBlog)
-        res.sendStatus(200)
-      } else {
-        console.log('err', err)
-      }
+    $set: {
+      author: req.user,
+      uploadDate,
+      uploadDateUnix: Date.now()
     }
+  }, {
+    upsert: true,
+    new: true,
+    setDefaultsOnInsert: true
+  },
+  function (err, updatedBlog) {
+    if (!err) {
+      // console.log('updatedBlog', updatedBlog)
+      res.sendStatus(200)
+    } else {
+      console.log('err', err)
+    }
+  }
   )
 })
 router.delete('/delete/:blogTitle', (req, res) => {
   let removeBlogPromise = new Promise((resolve, reject) => {
-    Blog.remove(
-      {
-        blogTitle: req.params.blogTitle
-      },
-      err => {
-        if (err) reject(err)
-        else resolve()
-      }
+    Blog.remove({
+      blogTitle: req.params.blogTitle
+    },
+    err => {
+      if (err) reject(err)
+      else resolve()
+    }
     )
   })
   removeBlogPromise.then(() => {

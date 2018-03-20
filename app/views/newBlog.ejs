@@ -32,8 +32,12 @@
 				<form method="post" class="newBlogForm" enctype="multipart/form-data" action="/admin/blog" method="post">
 					<div class="input-field">
 						<input id="blog_title" type="text" name="title" required class="validate">
-						<label for="first_name">Blog Title</label>
+						<label for="blog_title">Blog Title</label>
 					</div>
+					<div class="input-field">
+							<input id="blog_url" type="text" name="url" required class="validate">
+							<label for="blog_url">Blog Url</label>
+						</div>
 					<div class="row">
 						<div class="input-field col s12">
 							<textarea id="meta" name="meta" class="materialize-textarea"></textarea>

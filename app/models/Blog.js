@@ -3,6 +3,12 @@ const Schema = mongoose.Schema
 let BlogSchema = new Schema({
   blogTitle: {
     type: String,
+    trim: true,
+    required: true
+  },
+  url: {
+    type: String,
+    trim: true,
     required: true
   },
   htmlFilePath: {
