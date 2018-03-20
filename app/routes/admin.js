@@ -157,10 +157,10 @@ router.post('/login', function (req, res, next) {
         user.comparePassword(req.body.password, function (err, isMatch) {
           if (isMatch && !err) {
             // Create token if the password matched and no error was thrown
-            const token = jsonwebtoken.sign(user.toObject(), jwtConfig.jwtSecret, {
+            user=_.pick(user.toObject(),['username',"profile",'role','_id'])
+            const token = jsonwebtoken.sign(user, jwtConfig.jwtSecret, {
               expiresIn: '24h' // 1 day
             })
-
             res.json({
               success: true,
               msg: 'Successfully logged you in as ' + username,

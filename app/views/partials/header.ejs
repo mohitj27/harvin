@@ -115,27 +115,8 @@
 						</ul>
 					</li>
 				<%}%>
-			<% if(!currentUser){ %>
+			
 
-				<li>
-					<a href="/admin/login"><i class="material-icons white-text">perm_identity</i>Login</a>
-				</li>
-				<li>
-					<a href="/admin/signup"><i class="fa fa-user-plus white-text"></i>Signup</a>
-				</li>
-				<% }else{ %>
-					<li>
-						<%if(institute){%>
-							<a ><i class="material-icons white-text">account_circle</i>
-								<%= institute.instituteName %>
-							</a>
-							<%}%>
-					</li>
-
-					<% } %>
-					<li>
-						<a href="#!" onclick="logout()"><i class="material-icons white-text">exit_to_app</i>Logout</a>
-					</li>
 		</ul>
 	</header>
 

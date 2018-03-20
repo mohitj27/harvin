@@ -167,7 +167,7 @@ app.use(function (err, req, res, next) {
     const flashUrl = res.locals.flashUrl
     const errMsg = errorHandler.getErrorMessage(err) || err.message || err
     //POSIIBLE PROBLEM HERE admin/route comes here in case of BAD TOKEN
-    if(err.code==="credentials_required"||err.code==='credentials_bad_format'||err.code==='credentials_bad_scheme'){
+    if(err.code==="credentials_required"||err.code==='credentials_bad_format'||err.code==='credentials_bad_scheme'||err.code==='invalid_token'){
       req.flash('error', 'Please Login')
       console.log('status sent')
         return res.redirect('/admin/login')
