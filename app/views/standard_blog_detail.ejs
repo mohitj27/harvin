@@ -1,4 +1,7 @@
 <% include partials/website_header.ejs%>
+        <!-- META FROM DB -->
+    <%-foundBlog.meta%>
+
     <!-- Title -->
     <title>Harvin Academy Blog</title>
     <!-- favicon Icon -->
@@ -144,7 +147,7 @@
                         <div class="row align-items-end">
                             <%foundBlogs.forEach(function(blog){%>
                                 <!-- Single Blog -->
-                                <article class="card single-blog text-center border-0 mb-3 mb-lg-0 col l3 offset-l1 col s6" id="related-post-card">
+                                <article class="card single-blog text-center border-0 mb-3 mb-lg-0 col l3 offset-l1 m6 s12" id="related-post-card">
                                     <a href="/blog/?title=<%=blog.blogTitle%>">
                                         <h3 class="card-title">
                                             <%=blog.blogTitle%>
@@ -252,6 +255,10 @@
                 $.each($('table'), function (index, value) {
                     $(value).parent().addClass('cke_show_borders')
                 });
+
+                $.each($('img'), function(i, v) {
+                    $(value).addClass('responsive')
+                })
 
             });
         </script>

@@ -30,6 +30,12 @@
 							<input id="blog_title" type="text" name="title" value="<%=blogTitle%>"required class="validate">
 							<label for="first_name">Blog Title</label>
 						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<textarea id="meta" name="meta" class="materialize-textarea"><%=meta%></textarea>
+								<label for="meta">Meta tags</label>
+							</div>
+						</div>
 						<div class="file-field input-field">
 							<div class="btn file-btn">
 								<span>File</span>
@@ -90,5 +96,13 @@
 		<script src="/js/socket-config.js" charset="utf-8"></script>
 		<script src="/js/blogInsert.js"></script>
 		<script src="/dist/clipboard.min.js"></script>
+<!--
+		<script>
+			$(function(){
+
+				$('#meta').trigger('autoresize');
+
+			})
+		</script> -->
 
 		<% include partials/footer.ejs%>
