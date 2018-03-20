@@ -1,162 +1,181 @@
-<DOCTYPE! html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Harvin Academy</title>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<meta name="viewport" content="width=device-width">
+<meta charset="UTF-8">
+<title>Harvin Academy</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width">
 
 
-	<!-- Compiled and minified CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
-	<!-- Compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<script src="/dist/DateTimePicker.min.js" type="text/javascript"></script>
-	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="/dist/DateTimePicker.min.js" type="text/javascript"></script>
+<script src="/js/newVms.js" type="text/javascript"></script>
+<link href="/css/newVms.css" type="text/css" rel="stylesheet"></link>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-</head>
 <body>
+	<nav class="no-pad z-depth-0">
+		<h2>HARVIN ACADEMY</h2>
+	</nav>
+	<main>
+		<div class="section no-pad">
 
-  <main>
-    <div class="section no-pad"><div class="container">
-      <div class="pop">
-        <nav>
-          <ul>
-            <li><a href="#">Harvin Academy</a></li>
-              </ul>
-        </nav>
-        <section>
-          <h2 id="name">Title</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, eligendi distinctio, inventore ipsa ea ipsam officia accusantium quod at dicta nulla omnis beatae natus vero exercitationem cum sapiente, sint cumque!</p>
-        </section>
-        <footer>
-          <a href="#"><i class="material-icons">keyboard_arrow_left</i></a>
-					<p id="counter">1/6</p>
-          <a href="#"><i class="material-icons">keyboard_arrow_right</i></a>
-        </footer>
-      </div>
-    </div></div>
-  </main>
+			<div class="container center">
+				<div class="row center-align main-row">
+					<div class="col s12 m6 push-m3 push-l3">
+
+						<form action="/vms" id="new-vms-form" method="post">
+
+							<div class="row input-field">
+								<input id="name" name="name" type="text" required class="validate" />
+								<label for="name">
+										<span class="label-text">Student's Name</span>
+										<span class="nav-dot"></span>
+									</label>
+							</div>
+
+							<div class="row" id="class-selector-wrapper">
+								<div class="col m2 class-selector btn-floating btn-large waves-effect waves-light active-class">
+									<h5 class="center-align white-text">IX</h5>
+								</div>
+								<div class="col m2 class-selector btn-floating btn-large waves-effect waves-light white">
+									<h5 class="center-align teal-text">X</h5>
+								</div>
+								<div class="col m2 class-selector  btn-floating btn-large waves-effect waves-light white">
+									<h5 class="center-align teal-text">XI</h5>
+								</div>
+								<div class="col m2 class-selector  btn-floating btn-large waves-effect waves-light white">
+									<h5 class="center-align teal-text">XII</h5>
+								</div>
+								<div class="col m2 class-selector  btn-floating btn-large waves-effect waves-light white">
+									<h5 class="center-align teal-text" id="passout">XII-Pass</h5>
+								</div>
+							</div>
+
+							<input type="hidden" required name="classs" id="classs" value="IX" class="validate">
+							<div class="row">
+									<div class="col s2">
+											<div class="input-field">
+													<input  type="text" value="+91" />
+												</div>
+										</div>
+								<div class="col s10">
+									<div class="input-field">
+											<input id="phone" name="phone" type="text" min="1111111111" max="9999999999" required class="validate" />
+											<label for="phone">
+													<span class="label-text">Phone</span>
+													<span class="nav-dot"></span>
+												</label>
+										</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s8 input-field">
+										<input id="emailId" name="emailId" type="text" required class="validate" />
+										<label for="emailId">
+												<span class="label-text">Eamil</span>
+												<span class="nav-dot"></span>
+											</label>
+								</div>
+								<div class="col s4 input-field">
+										<select id="domain-select" >
+											<option value="@gmail.com" selected>@gmail.com</option>
+											<option value="@hotmail.com" >@hotmail.com</option>
+											<option value="@rediffmail.com" >@rediffmail.com</option>
+											<option value="@outlook.com" >@outlook.com</option>
+											<option value="other" >Other</option>
+										</select>
+								</div>
+							</div>
+
+							<div class="row input-field">
+								<input id="address" name="address" type="text" required class="validate" />
+								<label for="address">
+										<span class="label-text">Address</span>
+										<span class="nav-dot"></span>
+									</label>
+							</div>
+
+
+
+							<div class="row input-field">
+								<select name="referral" id="referral-select" required class="validate">
+									<option value="" disabled selected>Choose your option</option>
+									<option value="Friends">Friends</option>
+									<option value="Social media">Social media</option>
+									<option value="Direct">Direct</option>
+									<option value="Other">Other</option>
+								</select>
+								<label>Referral</label>
+							</div>
+
+							<div class="row input-field"  style="display: none;">
+								<input id="referral-text" type="text" class="validate" />
+								<label for="referral">
+										<span class="label-text">Referral</span>
+										<span class="nav-dot"></span>
+									</label>
+							</div>
+
+							<div class="row input-field">
+								<input id="school" name="school" type="text" required class="validate" />
+								<label for="school">
+										<span class="label-text">School</span>
+										<span class="nav-dot"></span>
+									</label>
+							</div>
+
+							<div class="row input-field">
+								<input id="aim" name="aim" type="text" required class="validate"/>
+								<label for="aim">
+										<span class="label-text">Aim</span>
+										<span class="nav-dot"></span>
+									</label>
+							</div>
+
+							<div class="row input-field">
+								<textarea id="comments" name="comments" class="materialize-textarea"></textarea>
+
+								<label for="comments">
+										<span class="label-text">Comments</span>
+										<span class="nav-dot"></span>
+									</label>
+							</div>
+							<div class="row center">
+
+								<button class="btn">Submit</button>
+
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+
+	</main>
+	<% if(msg_error && msg_error.length > 0){ %>
+		<span id="error-card">
+					<%=msg_error%>
+				</span>
+		<% } %>
+
+			<% if(msg_success && msg_success.length > 0){ %>
+
+				<span id="success-card">
+							<%=msg_success%>
+						</span>
+
+				<% } %>
 </body>
 
-<style>
-*{padding: 0; margin: 0; box-sizing: border-box; }
+<script src="/js/main.js" charset="utf-8"></script>
 
-.container{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-
-
-}
-.section{
-
-  background-image:linear-gradient(-25deg,rgba(125,194,66,0.7) 45%,rgba(19,179,139,1) 100%);
-
-}
-
-
-.pop{
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-  border-radius: 20px 20px 5px 5px;
-  overflow: hidden;
-	margin:10px;
-}
-.pop nav ul{
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  background-color: #4ecdc4;
-  background-image: linear-gradient(75deg,rgba(19,179,139,1), #556270);
-  /*background-image: linear-gradient(to right, #1cd8d2, #93edc7);*/
-
-}
-
-.pop nav ul li{
-  list-style: none;
-  display: inline-block;
-  width: 100%;
-}
-
-.pop nav ul li a{
-  text-align: center;
-  text-decoration: none;
-  color: #FFF;
-	font-size: x-large;
-  font-family: 'Montserrat';
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: .25s;
-  filter: grayscale(100%);
-}
-
-.pop nav ul li a:hover{
-  background-color: rgba(255, 255, 255, .2);
-  filter: grayscale(0%);
-}
-
-.pop section{
-  background: #def1f2;
-  width: 100%;
-  padding: 40px 20px;
-}
-
-.pop section h2{
-  font-weight: 400;
-  display: block;
-  width: 100%;
-  text-align: left;
-
-  margin: 0 0 20px 0;
-  color: #5bcccc;
-}
-
-.pop section p{
-    color: #6b9999;
-}
-
-.pop footer{
-  width: 100%;
-  padding: 10px;
-  display: flex;
-  justify-content: flex-end;
-  background-color: #bed8d8;
-}
-
-.pop footer a{
-  text-decoration: none;
-  color: #333;
-  width: 80px;
-  text-align: center;
-  margin: 0 5px;
-  line-height: 30px;
-  border-radius: 5px;
-  transition: .25s;
-}
-
-.pop footer a{
-  background-color: #bed8d8;
-  color: white;
-  border: 1px solid #e8f2f2;
-}
-
-.pop footer a:hover{
-  background-color: #e8f2f2;
-}
-#counter{
-	color:white;
-	font-size: large;
-}
-
-</style>
 </html>

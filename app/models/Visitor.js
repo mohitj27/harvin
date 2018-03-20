@@ -1,12 +1,15 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var Promise = require('bluebird')
+Promise.promisifyAll(require('mongoose'))
 
-//====examSchema====
+// ===examSchema====
 var visitorSchema = new Schema({
   name: {
     type: String,
     required: true
   },
+
   phone: {
     type: String,
     required: true,
@@ -14,22 +17,48 @@ var visitorSchema = new Schema({
     minlength: 10,
     maxLength: 10
   },
+
   emailId: {
     type: String,
     required: true,
     default: ''
   },
-  classs: {
+
+  comments: {
+    type: String,
+    default: ''
+  },
+
+  address: {
     type: String,
     required: true,
-    enum: [ 'IX', 'X', 'XI', 'XII', 'XII-Pass']
+    default: ''
   },
+
+  referral: {
+    type: String,
+    required: true,
+    default: ''
+  },
+
+  school: {
+    type: String,
+    required: true,
+    default: ''
+  },
+
+  aim: {
+    type: String,
+    required: true,
+    default: ''
+  },
+
   date: {
     type: String,
     required: true,
     default: Date.now()
   }
-});
+})
 
-//Query model
-module.exports = mongoose.model("Visitor", visitorSchema);
+// Query model
+module.exports = mongoose.model('Visitor', visitorSchema)

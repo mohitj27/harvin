@@ -1,394 +1,605 @@
-var express = require("express"),
-	async = require("async"),
+const express = require('express')
+const QbController = require('../controllers/QB.controller')
+const errorHandler = require('../errorHandler/index')
+const middleware = require('../middleware')
+const validator = require('validator')
+const router = express.Router()
 
-	QB_Class = require("../models/QB_Class"),
-	QB_Subject = require("../models/QB_Subject"),
-	QB_Chapter = require("../models/QB_Chapter"),
-	Question = require("../models/Question"),
-	errors = require("../error"),
-	middleware = require("../middleware"),
+router.get(
+  '/',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  async (req, res, next) => {
+    try {
+      const foundClasses = await QbController.findAllQbClassesByUserId(
+        req.user
+      )
+      res.render('questionBank', {
+        classes: foundClasses,
+        questions: {}
+      })
+    } catch (err) {
+      next(err || 'Internal Server Error')
+    }
+  }
+)
 
-	router = express.Router();
+router.get(
+  '/addNew',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  (req, res, next) => {
+    res.render('quesBankAddNew')
+  }
+)
 
-router.get("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
-	QB_Class.find({}, function (err, classes) {
-		if (err) console.log(err);
-	})
-	.populate({
-		path: "subjects",
-		model: "QB_Subject",
-	})
-	.exec(function (err, classes) {
-		if (err) {
-			console.log(err);
-			req.flash("error", "Please try again");
-			res.redirect("/admin/questionBank");
-		} else {
-			res.render('questionBank', {
-				classes: classes,
-				questions:{}
-			});
-		}
-	});
-});
+router.get(
+  '/qbData',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  async (req, res, next) => {
+    res.locals.flashUrl = req.headers.referer
 
-router.get("/addNew", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
-	QB_Class.find({}, function (err, classes) {
-		if (err) console.log(err);
-	})
-	.populate({
-		path: "subjects",
-		model: "QB_Subject",
-	})
-	.exec(function (err, classes) {
-		if (err) {
-			console.log(err);
-			req.flash("error", "Please try again");
-			res.redirect("/admin/questionBank");
-		} else {
-			res.render('quesBankAddNew', {
-				classes: classes,
-			});
-		}
-	});
-});
+    const className = req.query.className || ''
+    const subjectName = req.query.subjectName || ''
+    const chapterName = req.query.chapterName || ''
 
-router.get("/qbData", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
-	var className = req.query.className;
-	var subjectName = req.query.subjectName;
-	var chapterName = req.query.chapterName;
-
-    if(!className){
-	    next(new errors.noContent('Please select class name'));
+    if (!className || validator.isEmpty(className)) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'class name', next)
+    }
+    if (!subjectName || validator.isEmpty(subjectName)) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'subject name', next)
+    }
+    if (!chapterName || validator.isEmpty(chapterName)) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'chapter name', next)
     }
 
-    else if(!subjectName){
-        next(new errors.noContent('Please select subject name'));
+    try {
+      let foundClass = await QbController.findQbClassByClassNameAndUserId(
+        className,
+        req.user
+      )
+      foundClass = await QbController.populateFieldsInQbClasses(foundClass, [
+        'subjects.chapters.questions'
+      ])
+      let questions
+      if (foundClass) {
+        const subject = foundClass.subjects.find(
+          item => item.subjectName === subjectName
+        )
+        if (subject) {
+          const chapter = subject.chapters.find(
+            item => item.chapterName === chapterName
+          )
+          if (chapter) {
+            questions = chapter.questions
+          }
+        }
+      }
+      let foundClasses = await QbController.findAllQbClassesByUserId(req.user)
+      return res.render('questionBank', {
+        classes: foundClasses,
+        questions: questions || [],
+        className: className,
+        subjectName: subjectName,
+        chapterName: chapterName
+      })
+    } catch (err) {
+      return next(err || 'Internal Server Error')
     }
+  }
+)
 
-    else if(!chapterName){
-        console.log('called');
-        next(new errors.generic('Please select chapter name'));
-    }
+router.get(
+  '/update',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  async (req, res, next) => {
+    res.render('qbUpdate')
+  }
+)
 
-    else{
-        QB_Class.findOne({className: className}, (err, foundClass) => {
-            if(!err && foundClass){
+const updateSubject = function (subId, classId) {
+  return new Promise(async function (resolve, reject) {
+    try {
+      let foundSubject = await QbController.findSubjectById(subId)
+      let prevClass = await QbController.findClassById(foundSubject.class)
+      let foundClass = await QbController.findClassById(classId)
+      let updatedSubject = await QbController.updateSubjectById(
+        foundSubject,
+        {},
+        {
+          class: foundClass,
+          className: foundClass.className
+        }
+      )
+      await QbController.removeSubjectFromClassById(prevClass, foundSubject)
+      foundClass = await QbController.updateClassById(
+        foundClass,
+        {
+          subjects: foundSubject
+        },
+        {}
+      )
+      // refactor
+      foundSubject = await QbController.populateFieldsInQbSubjects(
+        foundSubject,
+        ['chapters.questions']
+      )
+      let chapters = foundSubject.chapters
+      for (let chapter of chapters) {
+        await QbController.updateChapterById(
+          chapter,
+          {},
+          {
+            foundSubject
+          }
+        )
+        let questions = chapter.questions
+        for (let ques of questions) {
+          await QbController.updateQuestionById(
+            ques,
+            {},
+            {
+              class: foundClass,
+              subject: updatedSubject,
+              chapter
             }
-            else if(err){
-                console.log("error",err);
-            }
-        })
-            .populate({
-                path:"subjects",
-                model:"QB_Subject",
-                populate:{
-                    path:"chapters",
-                    model:"QB_Chapter",
-                    populate:{
-                        path:"questions",
-                        model:"Question"
-                    }
-                }
-            })
-            .exec(function (err, qbData) {
+          )
+        }
+      }
 
-                if (!err && qbData) {
-                    // questions = qbData[subjectName][chapterName][questions];
-                    subject = qbData.subjects.find(item => item.subjectName == subjectName);
-                    chapter = subject.chapters.find(item => item.chapterName == chapterName);
-                    questions = chapter.questions;
-                    QB_Class.find({}, (err, foundClasses) => {
-                        if(!err && foundClasses){
-                            res.render("questionBank",{
-                                classes: foundClasses,
-                                questions:questions,
-                                className:className,
-                                subjectName:subjectName,
-                                chapterName:chapterName
-                            });
-                        }
-                    });
+      resolve(updatedSubject)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
 
-                }
-                else if(err){
-                    console.log("error",err);
-                }
-            });
+const updateChapter = function (chapterId, subId) {
+  return new Promise(async function (resolve, reject) {
+    try {
+      let foundChapter = await QbController.findChapterById(chapterId)
+      let prevSubject = await QbController.findSubjectById(
+        foundChapter.subject
+      )
+
+      let foundSubject = await QbController.findSubjectById(subId)
+      let updatedChapter = await QbController.updateChapterById(
+        foundChapter,
+        {},
+        {
+          subject: foundSubject
+        }
+      )
+      await QbController.removeChapterFromSubjectById(
+        prevSubject,
+        foundChapter
+      )
+      foundSubject = await QbController.updateSubjectById(
+        foundSubject,
+        {
+          chapters: foundChapter
+        },
+        {}
+      )
+      // refactor
+      foundChapter = await QbController.populateFieldsInQbChapters(
+        foundChapter,
+        ['questions']
+      )
+      let questions = foundChapter.questions
+
+      for (let ques of questions) {
+        await QbController.updateQuestionById(
+          ques,
+          {},
+          {
+            chapter: updatedChapter,
+            subject: foundSubject
+          }
+        )
+      }
+
+      resolve(updatedChapter)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+router.post(
+  '/update',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  async (req, res, next) => {
+    let { subId, chapterId, classId, toUpdate } = req.body
+    if (!toUpdate || validator.isEmpty(toUpdate)) {
+      return errorHandler.errorResponse(
+        'INVALID_FIELD',
+        'field to update',
+        next
+      )
+    }
+    if (toUpdate === 'subject') {
+      if (!subId || !validator.isMongoId(subId)) {
+        return errorHandler.errorResponse('INVALID_FIELD', 'subject id', next)
+      }
+      if (!classId || !validator.isMongoId(classId)) {
+        return errorHandler.errorResponse('INVALID_FIELD', 'class id', next)
+      }
+    } else {
+      if (!subId || !validator.isMongoId(subId)) {
+        return errorHandler.errorResponse('INVALID_FIELD', 'subject id', next)
+      }
+      if (!chapterId || !validator.isMongoId(chapterId)) {
+        return errorHandler.errorResponse('INVALID_FIELD', 'chapter id', next)
+      }
     }
 
-});
+    try {
+      switch (toUpdate) {
+        case 'subject':
+          await updateSubject(subId, classId)
+          break
+        case 'chapter':
+          await updateChapter(chapterId, subId)
+          break
+        default:
+          return errorHandler.errorResponse(
+            'INVALID_FIELD',
+            'field to update',
+            next
+          )
+      }
+      res.sendStatus(200)
+    } catch (err) {
+      next(err || 'Internal Server Error')
+    }
+  }
+)
 
-
-router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res, next) => {
-	var className = req.body.className;
-	var subjectName = req.body.subjectName;
-	var chapterName = req.body.chapterName;
-
-	var optionString = req.body.options || "";
-	var answerString = req.body.answer || "";
-
-	//check the data type of options, if string convert to array
-	if(typeof(req.body.options) == typeof("")){
-		optionString = [];
-		optionString.push(req.body.options || "");
-	}
-	//check the data type of answer, if string convert to array
-	if(typeof(req.body.answer) == typeof("")){
-		answerString = [];
-		answerString.push(req.body.answer || "");
-	}
-
-	//data for new question
-	var newQues = {
-		question: req.body.question,
-		answers: [],
-		options: [],
-        answersIndex: []
-	};
-
-	//pushing options in options array
-	for(var i = 0; i < optionString.length; i++){
-		if(optionString[i] != '')
-			newQues.options.push(optionString[i]);
-	}
-
-	//pushing answers in answer array
-	for(var j = 0; j < answerString.length; j++){
-		if(answerString[j] != '')
-			newQues.answers.push(answerString[j]);
-	}
-
-    newQues.answers.forEach((answer) => {
-        newQues.options.forEach((option, optIndex) => {
-            if(answer === option){
-                newQues.answersIndex.push(optIndex);
+router.get('/refactor', async (req, res, next) => {
+  try {
+    let foundClasses = await QbController.findAllQbClasses()
+    foundClasses = await QbController.populateFieldsInQbClasses(foundClasses, [
+      'subjects.chapters.questions'
+    ])
+    for (let classs of foundClasses) {
+      let subjects = classs.subjects
+      for (let subject of subjects) {
+        await QbController.updateSubjectById(
+          subject,
+          {},
+          {
+            class: classs
+          }
+        )
+        let chapters = subject.chapters
+        for (let chapter of chapters) {
+          await QbController.updateChapterById(
+            chapter,
+            {},
+            {
+              subject
             }
-        });
-    });
+          )
+          let questions = chapter.questions
+          for (let ques of questions) {
+            await QbController.updateQuestionById(
+              ques,
+              {},
+              {
+                class: classs,
+                subject,
+                chapter
+              }
+            )
+          }
+        }
+      }
+    }
+    res.sendStatus(200)
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
 
-	async.waterfall(
-		[
-			//creating new question
-			function (callback) {
-				Question.create(newQues, (err, createdQuestion) => {
-					if (!err && createdQuestion) {
-						callback(null, createdQuestion);
-					} else {
-						callback(err);
-					}
-				});
-			},
-			function (createdQuestion, callback) {
-				QB_Chapter.findOneAndUpdate({
-						chapterName: chapterName
-					}, {
-						$addToSet: {
-							questions: createdQuestion
-						},
-						$set: {
-							chapterName: chapterName,
-						}
-					}, {
-						upsert: true,
-						new: true,
-						setDefaultsOnInsert: true
-					},
-					function (err, createdChapter) {
-						if (!err && createdChapter) {
-							callback(null,createdQuestion, createdChapter);
-						} else {
-							console.log(err);
-							callback(err);
-						}
-					}
-				);
-			},
-			function (createdQuestion, createdChapter, callback) {
-				QB_Subject.findOneAndUpdate({
-						subjectName: subjectName,
-						className: className
-					}, {
-						$addToSet: {
-							chapters: createdChapter
-						},
-						$set: {
-							subjectName: subjectName
-						}
-					}, {
-						upsert: true,
-						new: true,
-						setDefaultsOnInsert: true
-					},
-					function (err, createdSubject) {
-						if (!err && createdSubject) {
-							callback(null,createdQuestion, createdChapter, createdSubject);
+router.post(
+  '/',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  async (req, res, next) => {
+    var optionString = req.body['option[]'] || ''
+    var answerString = req.body['answer[]'] || ''
+    var question = req.body.question || ''
 
-						} else {
-							callback(err);
-						}
-					}
-				);
-			},
-			function (createdQuestion, createdChapter, createdSubject, callback) {
-				QB_Class.findOneAndUpdate({
-						className: className
-					}, {
-						$addToSet: {
-							subjects: createdSubject
-						},
-						$set: {
-							className: className
-						}
-					}, {
-						upsert: true,
-						new: true,
-						setDefaultsOnInsert: true
-					},
-					function (err, createdClass) {
-						if (!err && createdClass) {
-							callback(null);
-							req.flash("success", "Question added successfully");
-							res.redirect("/admin/questionBank/addNew");
-						} else {
-							callback(err);
-						}
-					}
-				);
-			}
-		],
-		function (err, result) {
-			if (err) {
-				console.log(err);
-				next(new errors.generic);
-			} else {
+    const className = req.body.className || ''
+    const subjectName = req.body.subjectName || ''
+    const chapterName = req.body.chapterName || ''
 
-			}
-		}
-	);
-});
+    if (!className || validator.isEmpty(className)) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'class name', next)
+    }
+    if (!subjectName || validator.isEmpty(subjectName)) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'subject name', next)
+    }
+    if (!chapterName || validator.isEmpty(chapterName)) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'chapter name', next)
+    }
+    if (!question || validator.isEmpty(question)) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'question', next)
+    }
 
-//helpers
-//helper- class
-router.get("/class/:className", function (req, res, next) {
-	QB_Class.findOne({
-			className: req.params.className,
-		}, function (err, classs) {
-			if (err) {
-				console.log(err);
-			}
-		})
-		.populate({
-			path: "subjects",
-			model: "QB_Subject"
+    let newQues = await QbController.createNewQuestionObj(
+      optionString,
+      answerString,
+      question,
+      req.user
+    )
+    if (newQues.options.length < 1) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'options', next)
+    }
+    if (newQues.answers.length < 1) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'answers', next)
+    }
 
-		})
-		.exec(function (err, classs) {
-			if (err) {
-				console.log(err);
-				req.flash("error", "Couldn't find the details of chosen class");
-				res.redirect("/admin/questionBank");
-			} else {
+    try {
+      // create new Question
+      let createdQuestion = await QbController.createQuestion(newQues)
 
-				res.json({
-					classs: classs
-				});
-			}
-		});
-});
+      // add this question to question bank also
+      let updatedChapter = await QbController.createOrUpdateQuestionInQBChapterByName(
+        chapterName,
+        createdQuestion,
+        req.user
+      )
+      let updatedSubject = await QbController.createOrUpdateChapterInQBSubjectBySubjectAndClassName(
+        subjectName,
+        className,
+        updatedChapter,
+        req.user
+      )
+      let updatedClass = await QbController.createOrUpdateSubjectInQBClassByName(
+        className,
+        updatedSubject,
+        req.user
+      )
+      updatedChapter = await QbController.updateChapterById(
+        updatedChapter,
+        {},
+        {
+          subject: updatedSubject
+        }
+      )
+      updatedSubject = await QbController.updateSubjectById(
+        updatedSubject,
+        {},
+        {
+          class: updatedClass
+        }
+      )
 
-//helper- subject
-router.get("/class/:className/subject/:subjectName", function (req, res, next) {
-	QB_Subject.findOne({
-			subjectName: req.params.subjectName,
-			className: req.params.className
-		}, function (err, subject) {
-			if (err) {
-				console.log(err);
-				next(new errors.generic);
-			}
-		})
-		.populate({
-			path: "chapters",
-			model: "QB_Chapter"
+      return res.sendStatus(200)
+    } catch (err) {
+      return next(err || 'Internal Server Error')
+    }
+  }
+)
 
-		})
-		.exec(function (err, subject) {
-			if (err) {
-				console.log(err);
-				req.flash("error", "Couldn't find the details of chosen subject");
-				res.redirect("/admin/questionBank");
-			} else {
-				res.json({
-					subject: subject
-				});
-			}
-		});
-});
+router.get('/subjectId/:subId', async (req, res, next) => {
+  let subId = req.params.subId || ''
+  if (!subId || !validator.isMongoId(subId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'subject id', next)
+  }
+  try {
+    let foundSubject = await QbController.findSubjectById(subId)
+    foundSubject = await QbController.populateFieldsInQbSubjects(foundSubject, [
+      'class'
+    ])
+    let foundClass = foundSubject.class
+    let foundClasses = await QbController.findAllQbClasses()
+    res.json({
+      classs: foundClass,
+      classes: foundClasses
+    })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
 
-//helper-chapter
-router.get("/chapter/:chapterName", function (req, res, next) {
-	QB_Chapter.findOne({
-			chapterName: req.params.chapterName
-		}, function (err, chapter) {
-			if (err) {
-				console.log(err);
-				next(new errors.generic);
-			}
-		})
-		.populate({
-			path: "topics",
-			model: "Topic"
+router.get('/chapterId/:chapId', async (req, res, next) => {
+  let chapId = req.params.chapId || ''
+  if (!chapId || !validator.isMongoId(chapId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'chapter id', next)
+  }
+  try {
+    let foundChapter = await QbController.findChapterById(chapId)
+    foundChapter = await QbController.populateFieldsInQbChapters(foundChapter, [
+      'subject'
+    ])
+    let foundSubject = foundChapter.subject
+    let foundSubjects = await QbController.findAllQbSubjects()
+    res.json({
+      subject: foundSubject,
+      subjects: foundSubjects
+    })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
 
-		})
-		.exec(function (err, chapter) {
-			if (err) {
-				console.log(err);
-				req.flash("error", "Couldn't find the details of chosen chapter");
-				res.redirect("/admin/questionBank");
-			} else {
-				res.json({
-					chapter: chapter
-				});
-			}
-		});
-});
+router.get('/classId/:classId', async (req, res, next) => {
+  let classId = req.params.classId || ''
+  if (!classId || !validator.isMongoId(classId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'class id', next)
+  }
+  try {
+    let foundClass = await QbController.findClassById(classId)
+    foundClass = await QbController.populateFieldsInQbClasses(foundClass, [
+      'subjects'
+    ])
+    let foundSubjects = foundClass.subjects
+    let foundAllSubjects = await QbController.findAllQbSubjects()
+    res.json({
+      subjects: foundSubjects,
+      allSubjects: foundAllSubjects
+    })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
 
-router.get('/refactor', (req, res, next) => {
-	Question.find({}, (err, foundQuestions) => {
-		if(!err && foundQuestions){
-			var answerIndex = [];
-			foundQuestions.forEach((question, quesIndex) => {
-				answerIndex = [];
-				question.answers.forEach((answer) => {
-					question.options.forEach((option, optIndex) => {
-						if(answer === option){
-							answerIndex.push(optIndex);
-						}
-					});
-				});
-				Question.findByIdAndUpdate(question._id,
-					{
-						$set:{
-							answersIndex: answerIndex
-						}
-					},
-					{
-						upsert: true,
-						new: true,
-						setDefaultsOnInsert: true
-					},
-					function (err, updatedQuestion) {
-						if (!err && updatedQuestion) {
-						} else {
-							console.log(err);
-						}
-					}
-				);
-			});
-			res.send('ok');
-		}
-	});
-});
+router.get(
+  '/subjects',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  async (req, res, next) => {
+    try {
+      let foundSubjects = await QbController.findAllQbSubjectsByUserId(
+        req.user
+      )
+      res.json({
+        subjects: foundSubjects
+      })
+    } catch (err) {
+      next(err || 'Internal Server Error')
+    }
+  }
+)
 
-module.exports = router;
+router.get(
+  '/chapters',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  async (req, res, next) => {
+    try {
+      let foundChapters = await QbController.findAllQbChaptersByUserId(
+        req.user
+      )
+      res.json({
+        chapters: foundChapters
+      })
+    } catch (err) {
+      next(err || 'Internal Server Error')
+    }
+  }
+)
+
+router.get(
+  '/classes',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  async (req, res, next) => {
+    try {
+      let foundClasses = await QbController.findAllQbClassesByUserId(req.user)
+      res.json({
+        classes: foundClasses
+      })
+    } catch (err) {
+      next(err || 'Internal Server Error')
+    }
+  }
+)
+
+router.get('/class/:className', async (req, res, next) => {
+  let className = req.params.className || ''
+  if (!className || validator.isEmpty(className)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'class name', next)
+  }
+
+  try {
+    let foundClass = await QbController.findQbClassByClassNameAndUserId(
+      className,
+      req.user
+    )
+    foundClass = await QbController.populateFieldsInQbClasses(foundClass, [
+      'subjects'
+    ])
+    res.json({
+      classs: foundClass
+    })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
+
+// helper- subject
+router.get('/subject/:subjectName', async (req, res, next) => {
+  const subjectName = req.params.subjectName
+  const className = req.query.className
+
+  if (!subjectName || validator.isEmpty(subjectName)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'subject name', next)
+  }
+  if (!className || validator.isEmpty(className)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'class name', next)
+  }
+
+  try {
+    let foundSubject = await QbController.findSubjectBySubjectClassAndUserId(
+      subjectName,
+      className,
+      req.user
+    )
+    foundSubject = await QbController.populateFieldsInQbSubjects(foundSubject, [
+      'chapters'
+    ])
+    return res.json({
+      subject: foundSubject
+    })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
+
+// helper-chapter
+router.get('/chapter/:chapterName', async (req, res, next) => {
+  const chapterName = req.params.chapterName
+  if (!chapterName || validator.isEmpty(chapterName)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'chapter name', next)
+  }
+
+  try {
+    let foundChapter = await QbController.findQbChapterByChapterNameAndUserId(
+      chapterName,
+      req.user
+    )
+    foundChapter = await QbController.populateFieldsInQbChapters(foundChapter, [
+      'topics'
+    ])
+    res.json({
+      chapter: foundChapter
+    })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
+
+router.delete('/:questionId', async (req, res, next) => {
+  const questionId = req.params.questionId || ''
+  if (!validator.isMongoId(questionId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'question id', next)
+  }
+  try {
+    var deletedQuestion = await QbController.deleteQuestionById(
+      req.params.questionId
+    )
+  } catch (err) {
+    return next(err || 'Internal Server Error')
+  }
+
+  if (deletedQuestion) {
+    res.json({
+      success: true,
+      msg: 'Question has been deleted successfully'
+    })
+  } else {
+    res.json({
+      success: false,
+      msg: 'Question not found'
+    })
+  }
+})
+
+module.exports = router

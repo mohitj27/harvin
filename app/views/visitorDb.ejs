@@ -6,42 +6,63 @@
 			<table class="responsive-table centered highlight bordered" width="100%">
 				<thead>
 					<tr>
-						<th width="(100/7)%" height="50px" style="text-align: center">Serial no.</th>
-						<th width="(100/7)%" height="50px" style="text-align: center">Date</th>
-						<th width="(100/7)%" height="50px" style="text-align: center">Name</th>
-						<th width="(100/7)%" height="50px" style="text-align: center">Class</th>
-						<th width="(100/7)%" height="50px" style="text-align: center">Contact</th>
-						<th width="(100/7)%" height="50px" style="text-align: center">Email Id</th>
-						<th width="(100/7)%" height="50px" style="text-align: center"></th>
+						<th style="text-align: center">Serial no.</th>
+						<th style="text-align: center">Date</th>
+						<th style="text-align: center">Name</th>
+						<th style="text-align: center">Class</th>
+						<th style="text-align: center">Contact</th>
+						<th style="text-align: center">Email Id</th>
+						<th style="text-align: center">Referral</th>
 					</tr>
 				</thead>
 				<tbody>
 					<% if (visitors){ %>
 						<% visitors.forEach((visitor, i) =>{ %>
-							<tr>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+							<tr  >
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= i + 1 %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= visitor.date %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= visitor.name %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= visitor.classs %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= visitor.phone %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
+								<td style="text-align: center" href="#modal-comment" class="modal-trigger">
 									<%= visitor.emailId %>
 								</td>
-								<td width="(100/7)%" height="50px" style="text-align: center">
-									<form method="post" action="/vms/<%=visitor._id%>?_method=delete">
-										<button class="btn btn-sm btn-danger">
-												Delete
-											</button>
+								<td id="referral" style="text-align: center" href="#modal-comment" class="modal-trigger">
+									<%= visitor.referral %>
+								</td>
+								<td id="comments" class="vms-table-text" style="text-align: center" href="#modal-comment" class="modal-trigger">
+									<p>
+										<%=visitor.comments%>
+									</p>
+								</td>
+								<td id="school" class="vms-table-text" style="text-align: center" href="#modal-comment" class="modal-trigger">
+									<p>
+										<%=visitor.school%>
+									</p>
+								</td>
+								<td id="address" class="vms-table-text" style="text-align: center" href="#modal-comment" class="modal-trigger">
+									<p >
+										<%=visitor.address%>
+									</p>
+								</td>
+								<td id="aim" class="vms-table-text" style="text-align: center" href="#modal-comment" class="modal-trigger">
+									<p >
+										<%=visitor.aim%>
+									</p>
+								</td>
+								<td style="text-align: center">
+									<form method="post" action="/<%=visitor._id%>?_method=delete">
+										<button type="submit" class="btn red"><i class="material-icons ">delete_forever</i></button>
 									</form>
 								</td>
 							</tr>
@@ -49,9 +70,17 @@
 								<% } %>
 				</tbody>
 			</table>
-
+			<div id="modal-comment" class="modal center-align">
+				<div class="modal-content">
+					<h4>Visitor Info</h4>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+				</div>
+			</div>
 		</div>
 
 
 	</main>
+	<script src="/js/visitor.js" charset="utf-8"></script>
 	<% include partials/footer.ejs %>

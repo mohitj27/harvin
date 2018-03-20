@@ -1,43 +1,39 @@
 <% include partials/header.ejs%>
-  <% include partials/includeBS.ejs%>
     <main>
 
+		<a href="/admin/questionBank/addNew" data-position="bottom" data-delay="50" data-tooltip="Add a new Question" class="new btn-floating tooltipped waves-effect waves-light red pulse"><i class="material-icons">add</i></a>
       <div class="container">
-        <div class="row center">
-          <div class="center">
-            <h1><b>Question Bank</b></h1>
-
-          </div>
-          <a href="/admin/questionBank/addNew" class="btn   new">Add new Question</a>
-          <h3 class="center">OR</h3>
+        <div class="row center-align">
+            <h3>Question Bank</h3>
         </div>
         <hr>
+        <br>
+        <br>
         <div class="row">
           <form id="showQuestions" action="/admin/questionBank/qbData" method="get">
 
             <div class="row text-center">
-              <div class="col s4 ">
-                <h2>Class</h2><br>
-
-                <select required name="className" class="selectpicker show-tick" id="qb_classs">
+              <div class="col s12 m4 input-field">
+                <select required name="className" id="qb_classs">
                     <option selected value="" disabled>Class</option>
                      <%classes.forEach(function(classs){%>
-                     <option value="<%=classs.className%>"><%=classs.className%></option>
+                       <option value="<%=classs.className%>"><%=classs.className%></option>
                      <%})%>
                 </select>
+                <label>Select Class </label>
               </div>
 
-              <div class="col s4">
-                <h2>Subject</h2> <br>
-                <select required title="Choose the Subject" name="subjectName" class="selectpicker show-tick" id="qb_subject">
+              <div class="col s12 m4 input-field">
+                <select required name="subjectName" id="qb_subject">
                 </select>
+                <label>Select Subject </label>
               </div>
 
-              <div class="col s4">
-                <h2>Chapter</h2><br>
-                <select required title="Choose the Chapter" name="chapterName" class="selectpicker show-tick" id="qb_chapter">
+              <div class="col s12 m4 input-field">
+                <select required name="chapterName" id="qb_chapter">
 
                 </select>
+                <label>Select Chapter </label>
               </div>
 
             </div>
@@ -50,48 +46,53 @@
         </div>
         <hr>
         <% if(questions && questions.length > 0){ %>
-          <h1 style="text-align: center"><b>Questions available in</b> </h1>
+          <h4 style="text-align: center">Questions available in </h4>
           <div class="row">
             <div class="col s4">
-              <h2><b>Class :</b> <i><%=className%></i></h2></b>
+              <h5>Class :<i><%=className%></i></h5>
 
             </div>
             <div class="col s4">
-              <h2><b>Subject :</b> <i><%=subjectName%></i></h2></b>
+              <h5>Subject :<i><%=subjectName%></i></h5>
 
             </div>
             <div class="col s4">
-              <h2><b>Chapter :</b> <i><%=chapterName%></i></h2></b>
+              <h5>Chapter :<i><%=chapterName%></i></h5>
 
             </div>
 
           </div>
-          <% questions.forEach(function(question, i){ %>
-            <div class="card">
-              <div style="text-align:right;float:right;">
-                <button type="button" class="btn btn-info">Edit</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-              </div>
-              <h2><%=i+1%>. <%=question.question%></h2>
-              <div class="row">
-                <div class="col s6">
-                  <h2><label class="">Options</label></h2>
-                  <% question.options.forEach(function(option){ %>
-                    <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label>
-                    </div>
+          <div class="section">
+            <% questions.forEach(function(question, i){ %>
+              <div class="card question-card hoverable">
+                <div class="card-content">
+                  <b><%=i+1%>. </b>
+                  <%=question.question%>
+                <br>
+                <div class="row">
+                  <div class="col s6">
+                    <hr>
+                    <% question.newOptions.forEach(function(option){ %>
+                      <p>
+                        <input type="checkbox" disabled id="opt<%=i+1%>"
+                        <%if(option.isAns){%>
+                         checked="checked"
+                         <%}%>
+                         />
+                        <label for="opt<%=i+1%>"><%=option.opt%></label>
+                      </p>
                     <% }) %>
-                </div>
-                <div class="col s6">
-                  <h2><label class="control-label">Answer</label></h2>
-                  <% question.answers.forEach(function(answer){ %>
-                    <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label>
-                    </div>
-                    <% }) %>
+                  </div>
                 </div>
               </div>
+              <div class="card-action right-align">
+              <!-- <a href="#!" class="blue-text "><i class="material-icons">create</i></a> -->
+              <a href="/admin/questionBank/<%=question._id%>?_method=delete" class="red-text question-delete-button"><i class="material-icons">delete_forever</i></a>
             </div>
-            <% }) %>
-              <% } %>
+              </div>
+              <% }) %>
+                <% } %>
+          </div>
 
 
       </div>
@@ -99,3 +100,4 @@
 
     </main>
     <% include partials/footer.ejs%>
+<script src="/js/QB.js" charset="utf-8"></script>

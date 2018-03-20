@@ -1,0 +1,14 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "rules": {
+    "import/newline-after-import": "off"
+  },
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jquery": true
+  }
+}

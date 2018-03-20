@@ -1,29 +1,50 @@
 <% include partials/header.ejs %>
   <main>
-    <h1 style="text-align:center">Sign up</h1>
-    <div style="width: 30%; margin:25px auto">
-      <form action="/admin/signup" method="post">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input required type="text" class="form-control" name="username" id="username" placeholder="User name">
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input required type="password" class="form-control" name="password" id="password" placeholder="password">
-        </div>
-        <div class="form-group">
-          <label for="role">Signup as</label>
-          <div>
-            <select data-live-search="true" multiple required title="Choose your role" class="materialSelect " name="role" id="role">
-                <option value="" disabled selected>Choose your option</option>
-          <option value="admin">Admin</option>
-          <option value="centre">Centre</option>
-        </select>
+    <div class="container">
+      <h2 class="center-align">Institute sign up</h2>
+      <hr>
+      <br>
+      <div>
+        <form action="/admin/signup" method="post" class="center-align">
+          <div class="row">
+            <div class="input-field col s4 offset-s2">
+              <input required id="instituteName" name="instituteName" type="text" class="validate">
+              <label for="instituteName">Name of your Institute</label>
+            </div>
+            <div class="input-field col s4 ">
+              <input required id="username" name="username" type="text" class="validate">
+              <label for="username">Name of Center (Unique)</label>
+            </div>
           </div>
-        </div>
-        <button type="submit" class="btn btn-lg btn-block">Sign Up</button>
-      </form>
-    </div>
+          <div class="row">
+            <div class="input-field col s4 offset-s2">
+              <input required id="centerName" name="centerName" type="text" class="validate">
+              <label for="centerName">Display Name of Center</label>
+            </div>
+            <div class="input-field col s4 ">
+              <input required type="password" name="password" id="password">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6 offset-s3 ">
+              <select multiple name="role" id="role">
+                <option value="" disabled >Access Rights for this center</option>
+                <option value="admin" selected>Admin</option>
+                <option value="centre" selected>Centre</option>
+              </select>
+              <label>Role / Access Rights for this center</label>
+            </div>
+          </div>
 
+          <div class="center-align">
+            <button type="submit" class="btn">Submit
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
   </main>
   <% include partials/footer.ejs %>

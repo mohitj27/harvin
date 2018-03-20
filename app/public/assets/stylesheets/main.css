@@ -39,8 +39,7 @@ img {
   height: auto; }
 
 a {
-  color: #111111;
-  text-decoration: none;
+
   background: transparent;
   display: inline-block; }
 
@@ -49,17 +48,10 @@ a:focus,
 a:active {
   text-decoration: none;
   outline: none; }
+strong{
+  font-weight: normal !important;
+}
 
-dl,
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-  list-style: none; }
-
-p {
-  color: #000000;
-  opacity: 0.75; }
 
 h1,
 h2,
@@ -67,7 +59,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Playfair Display", serif !important;
+  font-family: "Playfair Display", serif;
   line-height: 1.5 !important;
   color: #111111 !important;
   font-weight: bold !important; }
@@ -384,7 +376,7 @@ mark.admin {
       .quotes p {
         padding: 10px; } }
 
-.card-list .card-title {
+.card-list .card-title , .about-card-title{
   color: #111111;
   font-size: 20px;
   font-weight: bold; }
@@ -926,17 +918,17 @@ mark.admin {
 ==================================================*/
 .blog-area .single-blog {
   border: 0;
-  margin: 0 !important;
   padding: 25px 0;
   -webkit-transition: .3s ease;
   transition: .3s ease; }
   .blog-area .single-blog:hover {
     cursor: pointer; }
   .blog-area .single-blog .card-title {
+    font-family: 'Open sans',sans-serif;
     margin: 0 !important; }
   .blog-area .single-blog .blgo-content {
     position: relative;
-    margin: 30px 0 20px; }
+    margin-bottom: 30px; }
   .blog-area .single-blog .card-body .posted-by {
     margin-bottom: 15px;
     display: block; }
@@ -1262,9 +1254,7 @@ mark.admin {
 ==================================================*/
 .middle-content .blog-details-area .full-post .blgo-content {
   position: relative; }
-.middle-content .blog-details-area .full-post .blog-texts p:first-of-type:first-letter {
-  color: #111111;
-  font-size: 36px; }
+
 .middle-content .blog-details-area .full-post.blog-gallery .single-img {
   height: 150px;
   margin: 0 15px 15px 0px; }

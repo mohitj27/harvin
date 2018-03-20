@@ -283,7 +283,7 @@ position: relative;
 background-color:#13b38b;
 margin:0px;
 height:18%;
-padding 0;
+padding: 0;
 }
 .container1:after {
 background: linear-gradient(-45deg, #13b38b 16px, transparent 0), linear-gradient(45deg, #13b38b 16px, transparent 0);
@@ -446,7 +446,7 @@ ul#horizontal-list {
     background-image: url(./../images/banner_2.png);
   }
   #bot-card4{
-    background-image: url(./../images/banner_3.png);
+    background-image: url(./../images/banner_4.png);
   }
   #logo-card{
     background: url(./../images/harvin.png);
@@ -459,7 +459,7 @@ ul#horizontal-list {
 
   }
   #harvin-card-panel2{
-    background: url(./../images/banner_4.png);
+    background: url(./../images/banner_5.png);
 
     background-position: center center;
     background-repeat: no-repeat;

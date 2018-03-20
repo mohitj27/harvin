@@ -1,50 +1,43 @@
 <% include partials/header.ejs%>
-  <% include partials/includeBS.ejs%>
-    <main>
-      <div class="container">
-        <h1><b> Update Batch </b></h1>
-        <form id="batchUpdateForm" method="post" action="/admin/batches/updateBatch">
-          <div class="row">
-            <div class="col-sm-6">
-              <h2>Batch</h2> <br>
-
-              <select autofocus required name="batchName" class="selectpicker show-tick addbtn" id="batch">
-                    <option selected value="" disabled>Batch</option>
-                    <%=batches%>
-                    <%if(batches){%>
-                        <%batches.forEach(function(batch){%>
-                            <option value="<%=batch.batchName%>"><%=batch.batchName%></option>
-                        <%})%>
-                    <%}%>
-                </select>
+  <main>
+    <div class="container">
+      <div class="center-align">
+        <h3>Create / Update Batches</h3>
+      </div>
+      <hr>
+      <form id="batchUpdateForm" method="post" action="/admin/batches/updateBatch">
+        <div class="row">
+          <div class="col s6">
+            <div class="input-field ">
+              <input name="batchName" required type="text" id="batchName" autocomplete="off" class="autocomplete validate">
+              <label for="batchName">Batch Name</label>
             </div>
-            <div class="col-sm-6">
-              <h2>Subject</h2> <br>
-
-              <select data-live-search="true" title="Choose one or more Subject" required name="subjectId" class="selectpicker show-tick" id="subjectsInBatch" multiple>
-                    <option value="" disabled>Subject</option>
+          </div>
+          <div class="col s6">
+            <div class="input-field">
+              <select name="subjectId" multiple id="subjectsInBatch">
+      						<option value="" disabled selected>Choose Subjects</option>
                     <%if(subjects){%>
                         <%subjects.forEach(function(subject){%>
-                            <option value="<%=subject._id%>"><%=subject.subjectName%> - <%=subject.className%></option>
+                            <option value="<%=subject._id%>"><%=subject.subjectName%> of class <%=subject.className%></option>
                         <%})%>
                     <%}%>
-                </select>
-
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="batchDescription">Batch Description</label>
-                <textarea name="batchDesc" id="batchDesc" rows="5" title="Batch Description" placeholder="Give Batch description here" class="form-control"></textarea>
-              </div>
+                  </select>
             </div>
 
           </div>
-          <button class="btn submit">Update selected subject</button>
-        </form>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <div class="form-group">
+              <textarea required id="batchDesc" name="batchDesc" class="materialize-textarea validate"></textarea>
+              <label for="batchDesc">Batch Description</label>
+            </div>
+
+          </div>
+          <div class="center-align"><button class="btn">Update selected subject</button></div>
+      </form>
       </div>
-
-
-    </main>
-    <% include partials/footer.ejs%>
+  </main>
+  <script src="/js/createBatch.js" charset="utf-8"></script>
+<% include partials/footer.ejs%>

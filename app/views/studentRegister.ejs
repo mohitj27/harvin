@@ -1,43 +1,12 @@
-<% include partials/header.ejs%>
-	<h1 style="text-align: center">Register a new Account</h1>
+<% include partials/website_header.ejs%>
+	<main>
 
-	<div class="container">
-		<div style="width: 50%; margin:25px auto;">
-			<form action="/student/register" method="post" class="form-horizontal">
-				<div class="form-group">
-					<label for="username" class="col-sm-3 control-label">Username</label>
-					<div class="col-sm-9">
-						<input autofocus required name="username" type="text" class="form-control" id="username" placeholder="user123">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="password" class="col-sm-3 control-label">Password</label>
-					<div class="col-sm-9">
-						<input autofocus required name="password" type="password" id="password" class="form-control" placeholder="password@123">
-					</div>
-                </div>
-                <div class="form-group">
-                    <label for="fullName" class="col-sm-3 control-label">Full Name</label>
-                    <div class="col-sm-9">
-						<input autofocus required name="fullName" type="text" id="fullName" class="form-control" placeholder="Full Name">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="emailId" class="col-sm-3 control-label">Email ID</label>
-                    <div class="col-sm-9">
-                        <input autofocus required name="emailId" type="email" class="form-control" id="emailId" placeholder="user@xyz.com">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="phone" class="col-sm-3 control-label">Contact number</label>
-                    <div class="col-sm-9">
-                        <input autofocus required name="phone" type="number" class="form-control" id="phone" placeholder="9999999999">
-                    </div>
-                </div>
-                <input type="submit" class="btn  ">
-			</form>
-		</div>
-	</div>
 
-	<% include partials/footer.ejs%>
+	<div id="RegisterComponent"></div>
+	</main>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="/js/bundle.js"></script>
+<script src="/js/materialize.js"></script>
 
+	<% include partials/website_footer.ejs%>
+	<script src="/js/studentRegister.js"></script>

@@ -1,177 +1,45 @@
 <% include partials/header.ejs%>
+  <link rel="stylesheet" href="/css/login.css">
   <main>
-    <div class="container">
+    <div class="section">
       <div class="row">
-        <div class="col l2 "></div>
-        <div class="col s12 l8">
+        <div class="col s12 m8 offset-m2">
           <div class="card horizontal z-depth-5 valign-wrapper">
-            <div class="card-image hide-on-med-and-down">
+            <div class="card-image ">
               <img src="/img/card-main-background.png">
             </div>
             <div class="card-stacked">
               <div class="card-content">
-                <h1>LOGIN</h1>
+                <h3 class="white-text center-align">LOGIN</h3>
                 <form action="/admin/login" method="post">
                   <div class="row">
-
-
-                    <div class="input-field col l6 s6 m6 offset-l3 offset-s3 offset-m3">
-
+                    <div class="input-field col s8 offset-s2">
                       <input required type="text" class="validte" name="username" id="username" style="border-bottom:1px solid white; color:white;">
                       <label for="first_name">USERNAME</label>
-
                     </div>
-                    <div class="input-field col l6 s6 m6 offset-l3 offset-s3 offset-m3" type="password">
 
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s8 offset-s2 " type="password">
                       <input required type="password" class="form-control" name="password" id="password" style="border-bottom:1px solid white;color:white;">
                       <label for="first_name">Password</label>
                     </div>
-                    <button type="submit" class="btn col l6 s6 m6 offset-l3 offset-s3 offset-m3">Login</button>
-
                   </div>
-
-
-                  <div class="row"></div>
+                  <div class="row">
+                    <button type="submit" class="btn col s8 offset-s2 white harvinThemeText">Login</button>
+                  </div>
                 </form>
-
+                <!-- <div class="center-align">
+                  <span class='white-text'>Don't have an account?</span><a href="/admin/signup" class="white-text"><i>Sign up</i></a>
+                </div> -->
               </div>
 
             </div>
           </div>
-
-
-
         </div>
-
-        <div class="col l2 "></div>
       </div>
     </div>
 
   </main>
-  <style>
-    h1 {
-      text-align: center;
-      color: white;
-
-    }
-
-    .card#xy {
-
-
-      margin: -8px;
-      max-height: 300px;
-      background-position: top center;
-      background: url("/images/icon-white.svg");
-      background-repeat: no-repeat;
-      background-size: cover;
-
-    }
-
-    h1.main {
-      margin: 100px;
-      font-family: 'Montserrat', sans-serif;
-
-    }
-
-    .card-content {
-      background-color: #13b38b;
-      background: -webkit-linear-gradient(-45deg, #10838b, #13b38b);
-      /* For Safari 5.1 to 6.0 */
-      background: -o-linear-gradient(-45deg, #10b38b, #13b38b);
-      /* For Opera 11.1 to 12.0 */
-      background: -moz-linear-gradient(-45deg, #10b38b, #13b38b);
-      /* For Firefox 3.6 to 15 */
-      background: linear-gradient(-45deg, #00b38b, #13b38b);
-      /* Standard syntax */
-    }
-
-    img {
-
-      object-fit: cover;
-      vertical-align: middle;
-
-    }
-
-    .btn {
-      text-align: center;
-
-    }
-
-    /* label color */
-
-    input {
-      border-bottom: 1px solid white;
-      color: #ffffff;
-
-
-    }
-
-    .input-field {
-      color: white;
-    }
-
-    .input-field label {
-      color: #ffffff;
-      border-bottom: white;
-    }
-
-    /* label focus color */
-
-    .input-field input[type=text]:focus+label {
-      color: #ffffff;
-    }
-
-    /* label underline focus color */
-
-    .input-field input[type=text]:focus {
-      border-bottom: 1px solid #ffffff;
-      box-shadow: 0 1px 0 0 #ffffff;
-    }
-
-    /* valid color */
-
-    .input-field input[type=text].valid {
-      border-bottom: 1px solid #ffffff;
-      box-shadow: 0 1px 0 0 #ffffff;
-    }
-
-    /* invalid color */
-
-    .input-field input[type=text].invalid {
-      border-bottom: 1px solid #ffffff;
-      box-shadow: 0 1px 0 0 #ffffff;
-    }
-
-    /* icon prefix focus color */
-
-    .input-field .prefix.active {
-      color: #ffffff;
-      border-bottom: 1px solid #ffffff;
-
-    }
-
-    label {
-      color: #ffffff;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: bold;
-
-    }
-
-    .btn {
-      background-color: #ffffff;
-      color: #13b38b;
-
-
-
-
-
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: bold;
-
-    }
-  </style>
 
   <% include partials/footer.ejs%>

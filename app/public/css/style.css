@@ -239,9 +239,9 @@ h2, h3, h4, h5 {
 
 .scrollTop {
   position: fixed;
-  right: 10%;
-  bottom: 10px;
-  background-color: #13b38b;
+  right: 60px;
+  bottom: 4%;
+
   padding: 20px;
   z-index: 1000;
   opacity: 0;
@@ -260,7 +260,7 @@ h2, h3, h4, h5 {
 
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
 }
 
 /* Track */
@@ -276,4 +276,11 @@ h2, h3, h4, h5 {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+#mc_embed_signup input.button{
+  width:60% !important;
+  background-color: #13b38b;
+}
+.custom-modal{
+
 }

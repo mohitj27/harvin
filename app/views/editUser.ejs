@@ -1,0 +1,79 @@
+<% include partials/header.ejs%>
+	<main>
+
+
+	<div class="container">
+			<h3 class="center-align">Edit user</h3>
+			<hr>
+			<br>
+			<form action="admin/db/users/<%foundUser.id%>" method="post">
+				<div class="row">
+					<div class="col s12 m6 input-field">
+						<input id="username" name="username" type="text" class="validate" disabled value="<%=foundUser.username%>">
+						<label for="username">User Name</label>
+					</div>
+					<div class="col s12 m6 input-field">
+						<select multiple required title="Choose your role" name="role" id="role">
+							<option value="" disabled >Choose Your Role</option>
+							<option
+							<%if(foundUser.role.includes('admin')){%>
+								selected
+								<%}%>
+							value="admin">Admin</option>
+							<option
+							<%if(foundUser.role.includes('centre')){%>
+								selected
+								<%}%>
+							value="centre">Centre</option>
+							<option
+							<%if(foundUser.role.includes('student')){%>
+								selected
+								<%}%>
+							value="student">Student</option>
+						</select>
+					</div>
+
+				</div>
+				<%if(profile){%>
+					<div class="row">
+						<div class="col s12 m6 input-field">
+							<input id="fullName" name="fullName" type="text" class="validate" value="<%=profile.fullName%>">
+							<label for="fullName">Full Name</label>
+						</div>
+						<div class="col s12 m6 input-field">
+							<input id="emailId" name="emailId" type="email" class="validate" value="<%=profile.emailId%>">
+							<label for="emailId">Email Id</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12 m6 input-field">
+							<input id="phone" name="phone" type="number" min="1111111111" max="9999999999" class="validate" value="<%=profile.phone%>">
+							<label for="phone">Phone</label>
+						</div>
+						<%if(userBatch){%>
+							<div class="col s12 m6 input-field">
+								<select name="batch">
+									<option value="" disabled >Choose your option</option>
+									<%foundBatches.forEach(function(batch){%>
+
+										<option
+											<%if(batch.batchName == userBatch.batchName){%>
+											selected
+											<%}%>
+											value="<%=batch.batchName%>"><%=batch.batchName%> -- <%=batch.addedBy.username%> </option>
+									<%})%>
+								</select>
+								<label>Select Batch</label>
+							</div>
+							<%}%>
+					</div>
+					<%}%>
+
+				<div class="center-align">
+					<button type="submit" class="btn">Submit</button>
+				</div>
+			</form>
+	</div>
+	</main>
+
+	<% include partials/footer.ejs%>

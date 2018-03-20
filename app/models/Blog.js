@@ -3,8 +3,7 @@ const Schema = mongoose.Schema
 let BlogSchema = new Schema({
   blogTitle:{
     type:String,
-    required:true,
-    unique:true
+    required:true
   },
   htmlFilePath: {
     type: String,
@@ -14,9 +13,16 @@ let BlogSchema = new Schema({
     type: String,
     default:Date.now().toString()
   },
+  uploadDateUnix: {
+    type: String,
+    default:Date.now().toString()
+  },
   hashName:{
     type:String,
     required:true
+  },
+  coverImgName:{
+    type:String
   },
   blogImages:[{
     type:String,
@@ -25,6 +31,14 @@ let BlogSchema = new Schema({
   author:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
+  },
+  publish:{
+    type:String,
+    default:'off'
+  },
+  draft:{
+    type:String,
+    default:'off'
   }
 
 

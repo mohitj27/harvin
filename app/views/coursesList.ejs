@@ -1,0 +1,55 @@
+<% include partials/header.ejs%>
+
+		<link rel="stylesheet" href="/css/newcourse.css">
+		<main>
+<div class="section">
+	<div class="container">
+		<h3 style="text-align: center">List of all Courses</h3>
+		<hr>
+		<table class="responsive-table centered highlight bordered" width="100%">
+			<thead>
+				<tr>
+					<th style="text-align: center">Serial no.</th>
+					<th style="text-align: center">Courses Name</th>
+					<th style="text-align: center">Info</th>
+					<th style="text-align: center">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% if (foundCourses){ %>
+					<% foundCourses.forEach((course, i) =>{ %>
+						<tr class="hoverable" id="<%=course.courseName%>">
+							<td style="text-align: center">
+								<%= i + 1 %>
+							</td>
+
+							<td style="text-align: center">
+								<a href="/courses-list/?title=<%=course.courseName%>"><%=course.courseName%></a>
+							</td>
+							<td style="text-align: center">
+<a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Show Complete Course Data"><i class="material-icons ">dehaze</i></a>
+							</td>
+							<td style="text-align: center">
+							<a href="#" onClick="confirmDelete(this)"class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Course!"><i class="material-icons ">delete</i></a>
+							<br>
+							<a href="/admin/courses/<%=course._id%>/edit"class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit This Course!"><i class="material-icons ">create</i></a>
+							</td>
+
+						</tr>
+						<% }) %>
+							<% } %>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+		</main>
+
+
+
+		<script src="/dist/clipboard.min.js"></script>
+		<script src="/js/courseList.js"></script>
+
+		<% include partials/footer.ejs%>
+		<script type="text/javascript">
+		</script>

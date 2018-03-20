@@ -1,103 +1,120 @@
 <% include partials/header.ejs%>
   <main>
-    <h1 style="text-align: center">Edit Question paper, for exam: <b> <i><%= exam.examName%></i> </b> </h1>
+
 
     <div class="container">
-      <form id="editQuestionPaper" class="addNewQuestion" action="/exams/<%=exam._id%>/question-paper/" method="post">
-        <div class="row">
-          <div class="col-sm-4">
-            <h2>Class</h2><br>
-
-            <select required name="className" class="selectpicker show-tick addbtn" id="qb_classs">
-                    <option selected value="" disabled>Class</option>
-                    <%classes.forEach(function(classs){%>
-                    <option value="<%=classs.className%>"><%=classs.className%></option>
-                    <%})%>
-                </select>
-          </div>
-
-          <div class="col-sm-4">
-            <h2>Subject</h2> <br>
-            <select data-live-search="true" title="Choose the Subject" required name="subjectName" class="selectpicker show-tick addbtn" id="qb_subject">
-                </select>
-          </div>
-
-          <div class="col-sm-4">
-            <h2>Chapter</h2><br>
-            <select data-live-search="true" title="Choose the Chapter" required name="chapterName" class="selectpicker show-tick addbtn" id="qb_chapter">
-                </select>
-          </div>
-
-        </div>
-
-        <div class="form-group">
-          <h2 style="text-align:left;float:left;"><label for="question" class="control-label">Question</label></h2>
-          <div style="text-align:right;float:right;" class="new">
-            <input type="submit" value="Add this Question" class="btn  ">
-            <span style="margin:20px;"><b><i>OR</i></b></span>
-            <a href="/exams/<%=exam._id%>/question-paper/chooseFromQB" class="btn  ">Choose from Question Bank</a>
-
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <textarea required name="question" class="form-control" id="question" cols="30" rows="5" placeholder="e.g: Delhi is a..?"></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <h2><label for="options" class="">Options</label></h2>
-            <div class="input-append col-sm-12">
-              <div id="field">
-                <input required name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text" />
-                <button id="b1" class="btn add-more" type="button">+</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <h2>
-                        <label for="answer" class="control-label">Answer</label>
-                            <span class="btn btn-lg refresh glyphicon glyphicon-refresh" aria-hidden="true"></span>
-                    </h2>
-              <div class="col-sm-9" id="answers"></div>
-
-
-            </div>
-          </div>
-        </div>
+        <h4 class="center-align">Edit Question paper, for exam: <b> <i><%= exam.examName%></i> </b> </h4>
         <hr>
-        <h1 style="text-align: center">Questions available in this question paper</h1>
-        <% if(exam.questionPaper && questions.length > 0){ %>
-          <% questions.forEach(function(question, i){ %>
-            <div class="jumbotron">
-              <div style="text-align:right;float:right;">
-                <button type="button" class="btn btn-info">Edit</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-              </div>
-              <h2><b><%=i+1%>. <%=question.question%></b></h2>
-              <div class="row">
-                <div class="col-sm-6">
-                  <h2><label class="">Options</label></h2>
-                  <% question.options.forEach(function(option){ %>
-                    <div class="wrapAns"><label> <input disabled type="checkbox"> <%=option%></label>
+        <br>
+        <br>
+        <ul class="collapsible popout" data-collapsible="accordion">
+            <li>
+              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Add a new Question to this question paper</div>
+              <div class="collapsible-body"><span>
+                  <form id="editQuestionPaper" class="addNewQuestion" action="/admin/exams/<%=exam._id%>/question-paper/" method="post">
+                    <div class="row">
+                        <div class="col s12 m4">
+                          <div class="input-field ">
+                            <input name="className" required type="text" id="className" autocomplete="off" class="autocomplete validate">
+                            <label for="className">Class Name</label>
+                          </div>
+                        </div>
+
+                        <div class="col s12 m4">
+                          <div class="input-field ">
+                            <input name="subjectName" required type="text" id="subjectName" autocomplete="off" class="autocomplete validate">
+                            <label for="subjectName">Subject Name</label>
+                          </div>
+                        </div>
+
+                        <div class="col s12 m4">
+                          <div class="input-field ">
+                            <input name="chapterName" required type="text" id="chapterName" autocomplete="off" class="autocomplete validate">
+                            <label for="chapterName">Chapter Name</label>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="form-group">
+
+                      <div class="row">
+                          <div class="input-field">
+                            <textarea id="question" required validate name="question" placeholder="e.g: Delhi is a...?" class="materialize-textarea"></textarea>
+                            <label for="question">Question</label>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div id="addNewQuestion"  class="col s6">
+                            <p class="center-align">Options</p>
+                            <div class="input-append">
+                              <div id="field">
+                                <input required name="options" autocomplete="off" class="input opt glowing-border" id="field1" type="text" />
+                                <button id="b1" class="btn add-more" type="button">+</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col s6">
+                            <div class="form-group">
+                              <p class="center-align">Answers</p>
+                            <div class="col s9" id="answers"></div>
+                          </div>
+                        </div>
                     </div>
-                    <% }) %>
-                </div>
-                <div class="col-sm-6">
-                  <h2><label class="control-label">Answer</label></h2>
-                  <% question.answers.forEach(function(answer){ %>
-                    <div class="wrapAns"><label> <input checked disabled type="checkbox"> <%=answer%></label>
+                    <hr>
+                    <div class="center-align">
+                        <button class="btn blue" type="submit">Add this question</button>
+                        <span style="margin:20px;"><b><i>OR</i></b></span>
+                        <a href="/admin/exams/<%=exam._id%>/question-paper/chooseFromQB" class="btn light-green">Choose Questions from DB</a>
+                      </div>
                     </div>
-                    <% }) %>
+                  </form>
+              </span></div>
+            </li>
+          </ul>
+
+          <br>
+          <br>
+
+        <h5 class="center-align">Questions available in this question paper</h5>
+        <!--  -->
+        <div class="section">
+            <% if(exam.questionPaper && questions.length > 0){ %>
+            <% questions.forEach(function(question, i){ %>
+              <div class="card question-card hoverable">
+                <div class="card-content">
+                  <b><%=i+1%>. </b>
+                  <%=question.question%>
+                  <br>
+                  <div class="row">
+                    <div class="col s6">
+                      <hr>
+                      <% question.newOptions.forEach(function(option){ %>
+                        <p>
+                          <input type="checkbox" disabled id="opt<%=i+1%>"
+                          <%if(option.isAns){%>
+                            checked="checked"
+                          <%}%>
+                          />
+                          <label for="opt<%=i+1%>"><%=option.opt%></label>
+                        </p>
+                      <% }) %>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-action right-align">
+                  <!-- <a href="#!" class="blue-text "><i class="material-icons">create</i></a> -->
+                  <a href="/admin/questionBank/<%=question._id%>?_method=delete" class="red-text question-delete-button"><i class="material-icons">delete_forever</i></a>
                 </div>
               </div>
-            </div>
             <% }) %>
-              <% } %>
-      </form>
+            <% } %>
+          </div>
+
+        <!--  -->
+
     </div>
 
 
   </main>
+  <script src="/js/QB.js"></script>
+  <script src="/js/questionBank.js"></script>
   <% include partials/footer.ejs%>

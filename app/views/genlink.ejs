@@ -1,0 +1,95 @@
+<% include partials/header.ejs%>
+
+	<main>
+		<div class="container">
+			<div class="row">
+				<h3>Upload A File to generate a link</h3>
+
+				<form action="/admin/files/genlink" method="POST" enctype="multipart/form-data">
+					<div class="input-field">
+						<input name="linkTitle" required id="linkTitle" type="text" class="validate">
+						<label for="linkTitle">Link Name</label>
+					</div>
+					<div class="file-field input-field">
+							<div class="btn">
+								<span>Actual File</span>
+								<input type="file" required name="linkFile">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+						</div>
+					<div class="file-field input-field">
+						<div class="btn">
+							<span>Cover Img</span>
+							<input type="file" name="cover">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+					<input class="btn col push-l6" type="submit" />
+				</form>
+			</div>
+			<div class="row">
+				<h3>All Uploaded links</h3>
+				<table class="responsive-table centered highlight bordered" width="100%">
+					<thead>
+						<tr>
+							<th style="text-align: center">Serial no.</th>
+							<th style="text-align: center">Date</th>
+							<th style="text-align: center">Title</th>
+							<th style="text-align: center"><i class="material-icons">file_download</i></th>
+							<th style="text-align: center">Download Link</th>
+							<th style="text-align: center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% if (foundLinks){ %>
+							<% foundLinks.forEach((link, i) =>{ %>
+								<tr class="hoverable" id="<%=link.linkTitle%>">
+									<td style="text-align: center">
+										<%= i + 1 %>
+									</td>
+									<td style="text-align: center">
+										<%=link.uploadDate%>
+									</td>
+									<td style="text-align: center">
+										<%=link.linkTitle%>
+									</td>
+									<td style="text-align: center">
+											<%=link.downloads%>
+										</td>
+									<td style="text-align: center">
+
+										<a href="/admin/files/download/<%=link.linkTitle%>">
+											<%=link.linkTitle%>
+										</a>
+
+									</td>
+
+									<td style="text-align: center">
+										<input id="target_<%=link.linkTitle%>"   value="https://harvin.academy/admin/files/download/<%=link.linkTitle%>">
+
+										<span class="clipboard tooltipped" style="cursor:pointer;"  data-position="bottom" data-delay="50"  data-tooltip="Copy This Link!" data-clipboard-target="#target_<%=link.linkTitle%>">
+											<i class="small material-icons">content_copy</i>
+										</span>
+										<a style="cursor:pointer" onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Link!"><i class="material-icons ">delete</i></a>
+										<br>
+									</td>
+								</tr>
+								<% }) %>
+									<% } %>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+	</main>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+
+
+	<% include partials/footer.ejs%>
+		<script type="text/javascript" src="/js/genlink.js">
+		</script>

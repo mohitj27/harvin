@@ -1,0 +1,139 @@
+.vms-table-text{
+  display: none;
+}
+
+#error-card, #success-card{
+  display: none
+}
+
+#field {
+  margin-bottom: 20px;
+}
+#brand-logo{
+  color: white;
+font-weight: 900;
+text-align: center;
+}
+.opt {
+  width: 70%;
+  border: 1px solid #dadada;
+  border-radius: 3px;
+}
+
+.opt:focus {
+  outline: none;
+  border-color: #69a9f7;
+  box-shadow: 0 0 7px #9ec7fa;
+}
+
+/* ans wrapper for the answer checkbox */
+
+.wrapAns {
+  margin: 2px;
+}
+
+/* checkbox for choosing questions */
+
+.btn span.glyphicon {
+  opacity: 0;
+}
+
+.btn.active span.glyphicon {
+  opacity: 1;
+}
+
+nav a .btn-collapse i {
+  color: #13b38b !important;
+  background-color: #f5f5f5;
+}
+
+nav {
+  color: #13b38b !important;
+  background-color: #ffffff;
+}
+* {
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: none !important;
+}
+
+nav ul a {
+  color: #13b38b;
+}
+
+.dbImg {
+  height: 310px;
+}
+
+.newBlogForm {
+  margin: 20px 0;
+}
+
+.side-nav{
+
+background: #43A047;
+background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+}
+
+.side-nav li>a{color:white;
+
+}
+.gradient-45deg-green-teal{
+  background: #43A047;
+  background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+  background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+}
+ .collapsible-body{
+   background-color:transparent !important;
+ }
+
+/*SCROLL BAR/
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #13b38b;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+#menu-button{
+  font-size: 44px;
+  color:#13b38b;
+}
+
+.button-collapse{
+  margin:10px;
+  position: fixed;
+}
+
+.collapsible-header{
+  padding-left: 32px !important;
+}
+
+.harvinTheme {
+  background-color: #13b38b;
+  color:white;
+}
+
+.harvinThemeText {
+  color: #13b38b;
+}
+
+.new{
+  position: fixed;
+  bottom: 10%;
+  right: 5%;
+}

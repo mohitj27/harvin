@@ -1,78 +1,74 @@
 <% include partials/header.ejs%>
 	<main>
-
-		<div class="section">
+		<a href="/admin/exams/new" id="newExamButton" class="new btn-floating tooltipped waves-effect waves-light red pulse" data-position="bottom" data-delay="50" data-tooltip="Set a new Exam" class="btn-floating tooltipped waves-effect waves-light red"><i class="material-icons">add</i></a>
+		<div class="container">
 			<div class="row">
 				<div class="col m9 s12">
 					<h3>
 					List of exams
 				</h3>
 				</div>
-				<div class="col 3">
-					<a href="/admin/exams/new" class="waves-effect waves-light btn">Set New Exam</a>
-
-				</div>
 			</div>
 			<table class="responsive-table centered bordered highlight">
 				<thead>
 					<tr>
-						<th width="(100/11)%" height="50px" style="text-align: center">Serial no.</th>
-						<th width="(100/11)%" height="50px" style="text-align: center">Name</th>
-						<th width="(100/11)%" height="50px" style="text-align: center">Date</th>
-						<th width="(100/11)%" height="50px" style="text-align: center">Type</th>
-						<th width="(100/11)%" height="50px" style="text-align: center">For Batch</th>
-						<th width="(100/11)%" height="50px" style="text-align: center">Positive Marks</th>
-						<th width="(100/11)%" height="50px" style="text-align: center">Negative Marks</th>
-						<th width="(100/11)%" height="50px" style="text-align: center">Maximum Marks</th>
-						<th width="(100/11)%" height="50px" style="text-align: center">Total Time</th>
-						<th width="(100/11)%" height="50px" style="text-align: center">Edit</th>
-						<th width="(100/11)%" height="50px" style="text-align: center">Delete</th>
+						<th >Serial no.</th>
+						<th >Name</th>
+						<th >Date</th>
+						<th >Type</th>
+						<th >For Batch</th>
+						<th >Positive Marks</th>
+						<th >Negative Marks</th>
+						<th >Maximum Marks</th>
+						<th >Total Time</th>
+						<th >Edit</th>
+						<th >Delete</th>
 					</tr>
 				</thead>
 				<tbody>
 					<% if(foundExams && foundExams.length > 0){ %>
 						<% foundExams.forEach(function(exam, i){ %>
 							<tr>
-								<th width="(100/11)%" height="50px" style="text-align: center">
-									<a href="/exams/<%=exam._id%>/question-paper/">
+								<th >
+									<a href="/admin/exams/<%=exam._id%>/question-paper/">
 										<%=i+1%>
 									</a>
 								</th>
-								<th width="(100/11)%" height="50px" style="text-align: center">
-									<a href="/exams/<%=exam._id%>/question-paper/">
+								<th >
+									<a href="/admin/exams/<%=exam._id%>/question-paper/">
 										<%=exam.examName%>
 									</a>
 								</th>
-								<th width="(100/11)%" height="50px" style="text-align: center">
+								<th >
 									<%=exam.examDate%>
 								</th>
-								<th width="(100/11)%" height="50px" style="text-align: center">
+								<th >
 									<%=exam.examType%>
 								</th>
 								<% if(exam.batch){ %>
-									<th width="(100/11)%" height="50px" style="text-align: center">
+									<th >
 										<%=exam.batch.batchName%>
 									</th>
 									<% }else{ %>
-										<th width="(100/11)%" height="50px" style="text-align: center">---</th>
+										<th >---</th>
 										<%}%>
-											<th width="(100/11)%" height="50px" style="text-align: center">
+											<th >
 												<%=exam.positiveMarks%>
 											</th>
-											<th width="(100/11)%" height="50px" style="text-align: center">
+											<th >
 												<%=exam.negativeMarks%>
 											</th>
-											<th width="(100/11)%" height="50px" style="text-align: center">
+											<th >
 												<%=exam.maximumMarks%>
 											</th>
-											<th width="(100/11)%" height="50px" style="text-align: center">
+											<th >
 												<%=exam.totalTime%>
 											</th>
-											<th width="(100/11)%" height="50px" style="text-align: center">
-												<a class="btn orange" href="/exams/<%=exam._id%>/edit">Edit</a>
+											<th >
+												<a class="btn orange" href="/admin/exams/<%=exam._id%>/edit">Edit</a>
 											</th>
-											<th width="(100/11)%" height="50px" style="text-align: center">
-												<form action="/exams/<%=exam._id%>?_method=delete" method="post">
+											<th >
+												<form action="/admin/exams/<%=exam._id%>?_method=delete" method="post">
 													<input type="submit" value="Delete" class="btn red">
 												</form>
 											</th>

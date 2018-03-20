@@ -1,16 +1,27 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var Promise = require('bluebird')
+Promise.promisifyAll(mongoose)
+const beautifyUnique = require('mongoose-beautiful-unique-validation')
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
-//====examSchema====
+//= ===examSchema====
 var assignmentSchema = new Schema({
   assignmentName: {
     type: String,
     required: true
   },
-  atCenter: {
+
+  addedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Center"
+    ref: 'User'
   },
+
+  visibleTo: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+
   uploadDate: {
     type: String,
     required: true
@@ -18,20 +29,28 @@ var assignmentSchema = new Schema({
 
   lastSubDate: {
     type: String,
-    required: true,
   },
 
   batch: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Batch"
+    ref: 'Batch'
   },
 
   filePath: {
     type: String,
     required: true,
     trim: true
-  },
-});
+  }
+})
 
-//Exam model
-module.exports = mongoose.model("Assignment", assignmentSchema);
+assignmentSchema.index({
+  assignmentName: 1,
+  addedBy: 1
+}, {
+  unique: 'Duplicate assignment name!!!'
+})
+assignmentSchema.plugin(beautifyUnique)
+assignmentSchema.plugin(deepPopulate)
+
+// Exam model
+module.exports = mongoose.model('Assignment', assignmentSchema)

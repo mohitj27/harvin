@@ -1,0 +1,122 @@
+<%include partials/website_header.ejs%>
+  <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+  <link rel="stylesheet" type="text/css" href="../../css/courses-list.css">
+
+
+  <main>
+    <div class="container center">
+      <%if(foundCourse){%>
+
+        <div class="row ">
+          <h3><%=foundCourse.courseName%> <hr></h3>
+        </div>
+        <div class="row">
+          <div class="col s12 m6 l6">
+            <img src="/courseImages/<%=foundCourse.courseImage%>" height=250 width=250 class="responsive-img" alt="">
+          </div>
+          <div class="col s12 m5 l5 offset-l1 offset-m1">
+            <h5>Request a Callback</h5>
+            <form action="#!">
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="full_name" type="text" class="validate" required>
+                  <label for="full_name">Full name</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="email" type="email" class="validate" required>
+                  <label for="email">Email</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s12 center-align">
+                  <button class="btn waves-effect waves-light " type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s6 m6 l6">
+            <div class="card horizontal desc white z-depth-4">
+              <i class="material-icons huge grey-text">alarm</i>
+              <div class="card-desc-content">
+                <a href="#">Timings</a>
+                <div>
+                  <p>
+                    <%=foundCourse.courseTimings%>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col s6 m6 l6">
+            <div class="card horizontal desc white z-depth-4">
+              <i class="material-icons huge grey-text">school</i>
+              <div class="card-desc-content">
+                <a href="#">Frequency of class</a>
+                  <p>
+                    <%=foundCourse.courseFrequency%>
+                  </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s6 m6 l6">
+            <div class="card horizontal desc white z-depth-4">
+              <i class="material-icons huge grey-text ">event_note</i>
+              <div class="card-desc-content">
+                <a href="#">Course Admission Through :</a>
+                  <p >
+                    <%=foundCourse.courseAdmissionThrough%>
+                  </p>
+              </div>
+            </div>
+          </div>
+          <div class="col s6 m6 l6">
+            <div class="card horizontal desc white z-depth-4">
+              <i class="material-icons huge grey-text ">people</i>
+              <div class="card-desc-content center">
+                <a href="#">Course For :</a>
+                  <p >
+                    <%=foundCourse. courseFor%>
+                  </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 m12 l12">
+            <div class="card horizontal desc white z-depth-4">
+              <i class="material-icons huge grey-text ">people</i>
+
+              <div class="card-desc-content">
+                <div class="card-desc-title">
+                  <a href="#!">Course Description</a>
+                </div>
+                  <p class="left">
+                    <%=foundCourse.courseDescription%>
+                  </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%}%>
+
+    </div>
+  </main>
+
+  <%include partials/website_footer.ejs%>
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../../js/materialize.js"></script>
