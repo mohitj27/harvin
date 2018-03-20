@@ -1,14 +1,31 @@
-<% include partials/website_header.ejs%>
-        <!-- META FROM DB -->
+<head>
+    <title>Harvin Academy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="google-site-verification" content="eSPtYedDuFnn9GWxmT-OZJtAugNRnUJwuZ65y7JDPfE" />
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <!-- META FROM DB -->
     <%-foundBlog.meta%>
 
-    <!-- Title -->
-    <title>Harvin Academy Blog</title>
-    <!-- favicon Icon -->
-    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon" />
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/stylesheets/main.css">
-    <link rel="stylesheet" href="/css/blogTheme.css">
+</head>
+<!-- Title -->
+<!-- favicon Icon -->
+<link rel="icon" href="/assets/img/favicon.png" type="image/x-icon" />
+<!-- Stylesheets -->
+<link rel="stylesheet" href="/assets/stylesheets/main.css">
+<link rel="stylesheet" href="/css/blogTheme.css">
+
+<body>
     <!-- <link rel="stylesheet" href="/ckeditor/plugins/tableselection/styles/tableselection.css"> -->
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
@@ -18,6 +35,13 @@
 
     <!-- =========================== //Main Header =========================== -->
     <!-- =========================== Middle Content =========================== -->
+
+    <nav class="z-depth-0 no-pad">
+        <div class="nav-wrapper ">
+            <a href="#" class="brand-logo center">Harvin Academy</a>
+        </div>
+    </nav>
+
 
     <div id="fb-root"></div>
     <script>
@@ -53,21 +77,15 @@
     </script>
 
     <div class="middle-content pt-50">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
                 <!-- ====================== Main .blog-area ====================== -->
-                <main class="col-xl-9 col-lg-8 col-md-7 blog-details-area blog-area">
-                    <div class="section">
-                        <div id="content" class="container">
-                        </div>
-                    </div>
+                <main class="col l12 m10 s12 push-m1  blog-details-area blog-area">
 
                     <!-- ================= Full Post ================= -->
                     <article class="card full-post border-0">
                         <!-- <mark class="catagory text-center">Life Style</mark> -->
-                        <h2 class="card-title text-center h1 p-5">
-                            <%=foundBlog.blogTitle%>
-                        </h2>
+
                         <!-- Blog Content-->
                         <div class="blgo-content">
                             <img class="card-img rounded-0" src="/blogImage/<%=foundBlog.coverImgName%>" alt="Blog Image">
@@ -75,8 +93,11 @@
                                 <%=foundBlog.uploadDate%>
                             </span>
                         </div>
+                        <h2 class="card-title text-center h1 pt-5">
+                            <%=foundBlog.blogTitle%>
+                        </h2>
                         <!-- Card Body -->
-                        <div class="card-body blog-texts p-5">
+                        <div class="card-body blog-texts pt-1 pl-5 pr-5 pb-5">
                             <% if(foundBlog.author){ %>
                                 <span class="posted-by mt-20 mb-20 d-block">Posted By
                                     <mark class="admin">
@@ -149,9 +170,7 @@
                                 <!-- Single Blog -->
                                 <article class="card single-blog text-center border-0 mb-3 mb-lg-0 col l3 offset-l1 m6 s12" id="related-post-card">
                                     <a href="/blog/?title=<%=blog.blogTitle%>">
-                                        <h3 class="card-title">
-                                            <%=blog.blogTitle%>
-                                        </h3>
+
                                         <!-- Blog Content-->
                                         <div class="blgo-content">
                                             <img class="card-img rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image">
@@ -159,6 +178,9 @@
                                                 <%=blog.uploadDate%>
                                             </span>
                                         </div>
+                                        <h3 class="card-title">
+                                            <%=blog.blogTitle%>
+                                        </h3>
                                     </a>
                                 </article>
                                 <!-- //Single Blog -->
@@ -169,15 +191,15 @@
                 </main>
                 <!-- ====================== //Main .blog-area ====================== -->
                 <!-- ====================== Aside .middle-sidebar ====================== -->
-                <aside class="col-xl-2 col-lg-2 col-md-2 middle-sidebar ml-xl-auto pl-lg-0 pl-md-0 mt-sm-5 mt-lg-0">
+                <!-- <aside class="col-xl-2 col-lg-2 col-md-2 middle-sidebar ml-xl-auto pl-lg-0 pl-md-0 mt-sm-5 mt-lg-0">
                     <div class="row">
 
-                        <!-- Sidebar Widget, Latest Post-->
+                        Sidebar Widget, Sidebar News Letter
+                        Sidebar Widget, Latest Post
 
-                        <!-- Sidebar Widget, Sidebar News Letter -->
                         <div class="col-xl-12 col-md-11 col-sm-6 ml-lg-auto ml-md-auto sidebar-news-letter sidebar-widget pl-xl-0">
                             <h2 class="widget-title">NEWS LETTER</h2>
-                            <!-- New Letter-->
+                            New Letter
                             <div class="card news-letter border-0 rounded-0 p-15">
                                 <div class="card-body p-0">
                                     <p class="card-text">If You Want to Know Our Update News Please Subscribe Us.</p>
@@ -190,12 +212,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Sidebar Widget, Sidebar Popular Post -->
+                        Sidebar Widget, Sidebar Popular Post
 
-                        <!-- Sidebar Widget, Sidebar Advertise -->
+                        Sidebar Widget, Sidebar Advertise
                         <div class="col-xl-12 col-md-11 col-sm-6 ml-lg-auto ml-md-auto sidebar-advertise sidebar-widget pl-xl-0">
                             <h2 class="widget-title">ADVERTISE</h2>
-                            <!-- ADVERTISE-->
+                            ADVERTISE
                             <div class="card advertise border-0 rounded-0 p-15">
                                 <div class="advertise-content">
                                     <img class="card-img" src="/assets/img/sidebar/7.jpg" alt="Card image">
@@ -205,10 +227,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Sidebar Widget, Sidebar Cloud Tag -->
+                        Sidebar Widget, Sidebar Cloud Tag
                         <div class="col-xl-12 col-sm-11 ml-md-auto sidebar-cloud-tag sidebar-widget pl-xl-0">
                             <h2 class="widget-title">TAGS</h2>
-                            <!-- ADVERTISE-->
+                            ADVERTISE
                             <div class="card cloud-tag border-0 rounded-0">
                                 <ul class="tag-list d-flex flex-wrap">
                                     <li>
@@ -228,11 +250,13 @@
                             </div>
                         </div>
                     </div>
-                </aside>
+                </aside> -->
                 <!-- ====================== //Aside .middle-sidebar ====================== -->
                 </div>
             </div>
         </div>
+
+
         <!-- =========================== //Middle Content =========================== -->
         <!-- =========================== //Footer =========================== -->
 
@@ -256,7 +280,7 @@
                     $(value).parent().addClass('cke_show_borders')
                 });
 
-                $.each($('img'), function(i, v) {
+                $.each($('img'), function (i, v) {
                     $(value).addClass('responsive')
                 })
 
