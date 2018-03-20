@@ -309,3 +309,17 @@ img.cke_widget_drag_handler {
 .cke_upload_uploading img {
   opacity: 0.3;
 }
+
+      .pl-5 {
+    padding-left: 3rem!important;
+}
+.pb-5 {
+    padding-bottom: 3rem!important;
+}
+
+.pr-5 {
+    padding-right: 3rem!important;
+}
+.pt-1 {
+    padding-top: .25rem!important;
+}

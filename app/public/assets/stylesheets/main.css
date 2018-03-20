@@ -3,7 +3,7 @@
 ==================================================*/
 
 
-
+@import url(vendor/resources/bootstrap.min.css);
 @import url(vendor/resources/normalize.css);
 @import url(vendor/resources/component.css);
 @import url(vendor/resources/countrySelect.min.css);
