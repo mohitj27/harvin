@@ -1,12 +1,11 @@
 /* ================================================
             Imports
 ==================================================*/
-@import url("https://fonts.googleapis.com/css?family=Droid+Serif:400,400i");
-@import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i");
-@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
+
+@import url(vendor/resources/bootstrap.min.css);
 @import url(vendor/resources/normalize.css);
 @import url(vendor/resources/component.css);
-@import url(vendor/resources/bootstrap.min.css);
 @import url(vendor/resources/countrySelect.min.css);
 @import url(vendor/resources/animate.min.css);
 @import url(vendor/resources/owl.carousel.min.css);
@@ -39,7 +38,7 @@ img {
   height: auto; }
 
 a {
-  text-decoration: underline;
+
   background: transparent;
   display: inline-block; }
 
@@ -48,11 +47,10 @@ a:focus,
 a:active {
   text-decoration: none;
   outline: none; }
+strong{
+  font-weight: normal !important;
+}
 
-
-p {
-  color: #000000;
- }
 
 h1,
 h2,
@@ -126,7 +124,9 @@ textarea:focus {
 
 mark {
   color: #5cca8d;
-  background: transparent; }
+  background: transparent;
+  padding:0;
+}
 
 ::-webkit-input-placeholder {
   font-style: italic; }
@@ -919,7 +919,6 @@ mark.admin {
 ==================================================*/
 .blog-area .single-blog {
   border: 0;
-  padding: 25px 0;
   -webkit-transition: .3s ease;
   transition: .3s ease; }
   .blog-area .single-blog:hover {
@@ -1354,4 +1353,18 @@ mark.admin {
     -webkit-transition: all .3s ease;
     transition: all .3s ease; }
 
+
+      .pl-5 {
+    padding-left: 3rem!important;
+}
+.pb-5 {
+    padding-bottom: 3rem!important;
+}
+
+.pr-5 {
+    padding-right: 3rem!important;
+}
+.pt-1 {
+    padding-top: .25rem!important;
+}
 /*# sourceMappingURL=main.css.map */

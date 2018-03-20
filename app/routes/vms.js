@@ -284,6 +284,7 @@ router.get('/blog', (req, res, next) => {
         modal: 'User'
       })
       .exec((err, foundBlog) => {
+        console.log('blog', foundBlog)
         if (err) {
           return next(err || 'Internal Server Error')
         } else {

@@ -33,20 +33,25 @@ router.get(
   }
 )
 
-router.get('/all', middleware.isLoggedIn, middleware.isCentreOrAdmin, (req, res, next) => {
-  Blog.find({})
-    .sort({
-      uploadDateUnix: -1
-    })
-    .exec((err, foundBlog) => {
-      if (err) console.log(err)
-      else {
-        res.render('blogList', {
-          blogs: foundBlog
-        })
-      }
-    })
-})
+router.get(
+  '/all',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  (req, res, next) => {
+    Blog.find({})
+      .sort({
+        uploadDateUnix: -1
+      })
+      .exec((err, foundBlog) => {
+        if (err) console.log(err)
+        else {
+          res.render('blogList', {
+            blogs: foundBlog
+          })
+        }
+      })
+  }
+)
 
 const editBlogPromise = function editBlogPromise (blogTitle) {
   return new Promise((resolve, reject) => {
@@ -75,19 +80,26 @@ const fileOpenPromise = function fileOpenPromise (foundBlog) {
     )
   })
 }
-router.get('/edit', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
-  const blogTitle = req.query.blogTitle
-  try {
-    const foundBlog = await editBlogPromise(blogTitle)
-    const data = await fileOpenPromise(foundBlog)
-    res.render('editBlog', {
-      blogTitle: foundBlog.blogTitle,
-      content: data
-    })
-  } catch (err) {
-    next(err || 'Internal Server Error')
+router.get(
+  '/edit',
+  middleware.isLoggedIn,
+  middleware.isCentreOrAdmin,
+  async (req, res, next) => {
+    const blogTitle = req.query.blogTitle
+    try {
+      const foundBlog = await editBlogPromise(blogTitle)
+      const data = await fileOpenPromise(foundBlog)
+      console.log('blog1', foundBlog)
+      res.render('editBlog', {
+        blogTitle: foundBlog.blogTitle,
+        meta: foundBlog.meta,
+        content: data
+      })
+    } catch (err) {
+      next(err || 'Internal Server Error')
+    }
   }
-})
+)
 router.get('/:blogTitle', (req, res) => {
   Blog.findOne(
     {
@@ -108,7 +120,9 @@ router.post(
   middleware.isLoggedIn,
   middleware.isCentreOrAdmin,
   async (req, res, next) => {
-    if (!req.files.userFile) { return errorHandler.errorResponse('INVALID_FIELD', 'file', next)}
+    if (!req.files.userFile) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'file', next)
+    }
     const filePath = path.join(
       BLOG_IMAGE_DIR,
       Date.now() + '__' + req.files.userFile.name
@@ -119,7 +133,9 @@ router.post(
       return next(err || 'Internal Server Error')
     }
     let blogTitle = req.body.title || ''
-    if (!blogTitle) { return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)}
+    if (!blogTitle) {
+      return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
+    }
     blogTitle = _.trim(blogTitle)
     var coverImgName = path.basename(filePath)
     let blog_name = blogTitle
@@ -138,6 +154,8 @@ router.post(
     const uploadDate = moment(Date.now())
       .tz('Asia/Kolkata')
       .format('MMMM Do YYYY')
+    const meta = req.body.meta
+
     Blog.findOneAndUpdate(
       {
         blogTitle
@@ -151,7 +169,8 @@ router.post(
           publish: req.body.publish,
           draft: req.body.draft,
           uploadDate,
-          uploadDateUnix: Date.now()
+          uploadDateUnix: Date.now(),
+          meta
         }
       },
       {
@@ -178,7 +197,9 @@ router.post('/:htmlFilePath/images', (req, res, next) => {
   // console.log('files', req.files);
 
   let htmlFilePath = req.params.htmlFilePath || ''
-  if (!htmlFilePath) { return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)}
+  if (!htmlFilePath) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
+  }
   htmlFilePath = _.trim(htmlFilePath)
   let uploadDate = moment(Date.now())
     .tz('Asia/Kolkata')

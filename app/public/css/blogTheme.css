@@ -1,6 +1,5 @@
 .blog-area {
   margin-left: 30px;
-  padding-right: 0px !important;
 }
 
 .blog-title {
@@ -24,9 +23,22 @@ aside {
 }
 
 #related-post-card {
-  min-height: 380px;
+  min-height: 200px;
+  max-height:500px;
+  padding:0px !important;
 }
+nav{
 
+    position: fixed;
+    z-index: 100;
+    border-bottom: 1px #efefef solid;
+    background-color: white;
+}
+nav .brand-logo.center{
+  color:#13b38b;
+  font-weight: bolder;
+  font-size: x-large;
+}
 /* .share-box{
   margin-left: 0px;
   margin-right: 0px;
@@ -296,4 +308,18 @@ img.cke_widget_drag_handler {
 }
 .cke_upload_uploading img {
   opacity: 0.3;
+}
+
+      .pl-5 {
+    padding-left: 3rem!important;
+}
+.pb-5 {
+    padding-bottom: 3rem!important;
+}
+
+.pr-5 {
+    padding-right: 3rem!important;
+}
+.pt-1 {
+    padding-top: .25rem!important;
 }
