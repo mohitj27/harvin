@@ -32,6 +32,7 @@ nav{
     position: fixed;
     z-index: 100;
     border-bottom: 1px #efefef solid;
+    background-color: white;
 }
 nav .brand-logo.center{
   color:#13b38b;
