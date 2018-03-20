@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-// const passport = require('passport')
+const passport = require('passport')
 // const localStrategy = require('passport-local')
 const session = require('express-session')
 const flash = require('connect-flash')
@@ -75,6 +75,8 @@ app.use(fileUpload({
 // General middleware function
 
 app.use(async function (req, res, next) {
+  console.log('middle ware' , res.locals)
+
   try {
     // res.locals.centers = await userController.findAllCenters()
     let allCenters = await userController.findAllCenters()
@@ -103,8 +105,11 @@ app.use(async function (req, res, next) {
     res.locals.institute = res.locals.institute || {}
     res.locals.msg_error = req.flash('error') || {}
     res.locals.msg_success = req.flash('success') || {}
+    console.log('local' , res.locals)
     next()
   } catch (err) {
+    console.log('errrrrr')
+
     next(err || 'Internal Server Error')
   }
 })

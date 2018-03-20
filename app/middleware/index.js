@@ -34,6 +34,7 @@ var middleware = {
   },
 
   isCentre: function (req, res, next) {
+    // console.log('user',req.user)
     if (_.indexOf(req.user.role, 'centre') !== -1) {
       return next()
     }
@@ -45,7 +46,6 @@ var middleware = {
   },
 
   isCentreOrAdmin: function (req, res, next) {
-    console.log('iscenteror admin')
     if (_.indexOf(req.user.role, 'centre') !== -1 ||
       _.indexOf(req.user.role, 'admin') !== -1) {
       return next()
