@@ -43,12 +43,14 @@ router.get('/:courseId/edit', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  let file = req.file.courseImage
+  let file = req.files.courseImage
+  // let courseImage
+
   if (file) {
-    let courseImage = file
-    const filePath = path.join(COURSEIMAGE_SAVE_LOCATION, courseImage.name)
+    // courseImage = file
+    const filePath = path.join(COURSEIMAGE_SAVE_LOCATION, file.name)
     try {
-      await fileController.uploadFileToDirectory(filePath, courseImage)
+      await fileController.uploadFileToDirectory(filePath, file)
     } catch (err) {
       return next(err || 'Internal Server Error')
     }
