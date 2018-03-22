@@ -1,5 +1,3 @@
-
-
 <%include partials/website_header.ejs%>
   <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -7,13 +5,13 @@
   <link rel="stylesheet" type="text/css" href="../../css/courses-list.css">
 
 
-<main>
-  <div class="container">
-    <div class="row">
-      <div class="col s12 m3 l3">
-        <h5 >FILTERS</h5>
-        <br>
-        <form action="">
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m3 l3">
+          <h5>FILTERS</h5>
+          <br>
+          <form action="">
             <div class="input-field">
               <select>
                 <option value="medical" selected>Medical</option>
@@ -24,7 +22,7 @@
             </div>
             <br>
             <div class="input-field">
-                <select>
+              <select>
                   <option value="" disabled selected>Choose your class</option>
                   <option value="IX">IX Studying</option>
                   <option value="X">X Studying</option>
@@ -32,66 +30,65 @@
                   <option value="XII">XII Studying</option>
                   <option value="XII Pass">XII Appeared/Passed</option>
                 </select>
-                <label>Select Class</label>
-              </div>
-              <br>
-              <div class="input-field">
-                  <select>
+              <label>Select Class</label>
+            </div>
+            <br>
+            <div class="input-field">
+              <select>
                     <option value="" disabled selected>Choose your option</option>
                     <option value="janakpuri">Janakpurit</option>
                     <option value="preet-vihar">Preet Vihar</option>
                     <option value="meerut">Meerut</option>
                   </select>
-                  <label>Select Center</label>
-                </div>
-        </form>
-      </div>
-      <div class="col s12 m9 l9">
-        <h5>COURSES</h5>
-        <%if(foundCourses){%>
+              <label>Select Center</label>
+            </div>
+          </form>
+        </div>
+        <div class="col s12 m9 l9">
+          <h5>COURSES</h5>
+          <%if(foundCourses){%>
 
-        <%foundCourses.forEach((course,i)=>{%>
-          <div class="row">
-            <div class="col s12 m12">
-
-                <div class="card horizontal" id="course-list-card">
-                  <div class="card-image valign-wrapper">
-                    <img src="/courseImages/<%=course.courseImage%>" height=300 width=400 class="responsive-img">
-                  </div>
-                  <div class="card-stacked">
+            <%foundCourses.forEach((course,i)=>{%>
+              <div class="row">
+                <div class="col s12 m12">
 
 
-                    <div class="card-content">
-                      <div class="card-title"><%=course.courseName%></div>
-                      <p class="truncate "><%=course.courseDescription%></p>
+                  <div class="card horizontal" id="course-list-card">
+                    <div class="card-image">
+                      <img src="/courseImages/<%=course.courseImage%>" height=300 width=400 class="responsive-img">
                     </div>
-                    <div class="card-action">
-                      <a href="/courses-list/?title=<%=course.courseName%>">Read more...</a>
+                    <div class="card-stacked">
+                      <div class="card-content">
+                        <h2><%=course.courseName%></h2>
+                        <p><%=course.courseFor%></p>
+                      </div>
+                      <div class="card-action">
+                        <a href="/courses-list/?title=<%=course.courseName%>">Read more...</a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-          </div>
-        <%})%>
-        <%}%>
+              <%})%>
+                <%}%>
 
 
 
 
+        </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
 
   <%include partials/website_footer.ejs%>
 
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="../../js/materialize.js"></script>
-		<script src="js/init.js"></script>
+    <script src="js/init.js"></script>
 
-<script>
-  $(function(){
-    $('select').material_select();
-  })
-</script>
+    <script>
+      $(function() {
+        $('select').material_select();
+      })
+    </script>
