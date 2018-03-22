@@ -76,7 +76,7 @@ app.use(
   fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },
     safeFileNames: true,
-    preserveExtension: true,
+    preserveExtension: 4,
     abortOnLimit: true
   })
 )
