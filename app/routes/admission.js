@@ -11,7 +11,7 @@ middleware = require('../middleware')
 
 const PROFILE_IMG_DIR = path.join(__dirname, '/../../../HarvinDb/profileImg/')
 
-router.get('/new',middleware.isLoggedIn, async (req, res, next) => {
+router.get('/new', middleware.isLoggedIn, async (req, res, next) => {
   try {
     let allCourses = await courseController.findAllCourses()
     res.render('newAdmission', { courses: allCourses })
@@ -20,7 +20,7 @@ router.get('/new',middleware.isLoggedIn, async (req, res, next) => {
   }
 })
 
-router.get('/', async (req, res, next) => {
+router.get('/', middleware.isLoggedIn, async (req, res, next) => {
   try {
     let foundAdmissons = await admissionController.findAllAdmissions()
     res.render('admissionsDb', { admissions: foundAdmissons })
@@ -29,7 +29,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.delete('/:admissionId', async (req, res, next) => {
+router.delete('/:admissionId', middleware.isLoggedIn, async (req, res, next) => {
   const admissionId = req.params.admissionId || ''
   if (!admissionId || !validator.isMongoId(admissionId)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'admission id', next)
@@ -51,7 +51,7 @@ router.delete('/:admissionId', async (req, res, next) => {
   }
 })
 
-router.get('/view/:admissionId', async (req, res, next) => {
+router.get('/view/:admissionId', middleware.isLoggedIn, async (req, res, next) => {
   const admissionId = req.params.admissionId || ''
   if (!admissionId || !validator.isMongoId(admissionId)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'admission id', next)
@@ -72,7 +72,7 @@ router.get('/view/:admissionId', async (req, res, next) => {
   }
 })
 
-router.post('/edit/:admissionId', async (req, res, next) => {
+router.post('/edit/:admissionId', middleware.isLoggedIn, async (req, res, next) => {
   const admissionId = req.params.admissionId || ''
   if (!admissionId || !validator.isMongoId(admissionId)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'admission id', next)
@@ -89,7 +89,7 @@ router.post('/edit/:admissionId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', middleware.isLoggedIn, async (req, res, next) => {
   if (!req.files.profileImg) {
     return errorHandler.errorResponse('INVALID_FIELD', 'profile image', next)
   }

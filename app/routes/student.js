@@ -8,6 +8,7 @@ const userController = require('../controllers/user.controller')
 const batchController = require('../controllers/batch.controller')
 const profileController = require('../controllers/profile.controller')
 const progressController = require('../controllers/progress.controller')
+const middleware = require('../middleware')
 
 // TODO: pluralise populate method
 
@@ -172,7 +173,7 @@ router.get('/register', async function (req, res, next) {
   }
 })
 
-router.get('/home/:username', async (req, res, next) => {
+router.get('/home/:username', middleware.isLoggedIn, async (req, res, next) => {
   try {
     const user = userController.findUserByUserId(req.user)
   } catch (e) {

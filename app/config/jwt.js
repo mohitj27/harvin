@@ -4,7 +4,6 @@ module.exports = {
     session: false
   },
   getToken:function fromHeaderOrQuerystring (req,res) {
-    console.log('req')
     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
         return req.headers.authorization.split(' ')[1];
     }

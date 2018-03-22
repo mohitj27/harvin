@@ -1,6 +1,7 @@
 const express = require('express')
 const resultController = require('../controllers/result.controller')
 const middleware = require('../middleware')
+const errorHandler = require('../errorHandler')
 
 const router = express.Router()
 // TODO: student batch in db

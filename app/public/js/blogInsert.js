@@ -3,7 +3,7 @@ $(function() {
   $('.newBlogForm').submit(function () {
     let editordata = $('#editor1').html()
     $('#editordata').val(editordata)
-    console.log('editordata',$('#editordata').val());
+    // console.log('editordata',$('#editordata').val());
   })
 
   $('.modal').modal({
@@ -51,7 +51,7 @@ $(function() {
   let span = document.createElement('span')
   function checkBlogTitle(event) {
     let blogTitle = $('#blog_title').val()
-    console.log('title1', blogTitle)
+    // console.log('title1', blogTitle)
     if (blogTitle == '') {
       event.preventDefault()
       event.stopPropagation()
@@ -86,17 +86,17 @@ $(function() {
       reader.readAsDataURL(f)
     }
     var fileReader = new FileReader()
-    console.log('state of reader', fileReader.readyState)
+    // console.log('state of reader', fileReader.readyState)
     let blogTitle = $('#blog_title').val()
 
-    console.log('evt', evt)
+    // console.log('evt', evt)
     var file = evt.target.files[0]; // FileList object
     $.post('/admin/blog/' + blogTitle + '/images', {
       'filename': file.name
     })
     if (!file.type.match("image.*"))
       return
-    console.log(file)
+    // console.log(file)
     fileReader.readAsArrayBuffer(file);
     fileReader.onload = (evt) => {
 

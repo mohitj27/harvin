@@ -207,7 +207,7 @@ $(function () {
         url: '/admin/questionBank/classId/' + $(this).val(),
         method: 'get',
         success: function (response) {
-          console.log('res', response)
+          // console.log('res', response)
           fillSubjectsForClassUpdate(response.allSubjects)
           selectSubjectsOfClass(response.subjects, response.allSubjects)
         },

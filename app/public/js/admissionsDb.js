@@ -28,7 +28,7 @@ function confirmed () {
     .parent()
     .parent()
 
-  console.log('tr', $tr)
+  // console.log('tr', $tr)
   let admissionId = $tr.attr('id')
 
   $.ajax({

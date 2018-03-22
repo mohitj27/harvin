@@ -34,7 +34,7 @@ $(function () {
     $chap_options.remove()
     $.get('/admin/questionBank/subject/' + this.value + '?className=' + className, function (res) {
       if (res.subject) {
-        console.log('res', res.subject)
+        // console.log('res', res.subject)
         $chapter.append($('<option>', {
           'text': 'Chapter',
           'val': '',

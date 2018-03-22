@@ -16,7 +16,7 @@ const ASSIGNMENT_DIR = path.join(__dirname, '/../../../HarvinDb/assignments/')
 router.get('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
 
   try {
-    console.log('user assi',req.user)
+    // console.log('user assi',req.user)
     var foundAssignments = await assignmentController.findAssignmentsByUserId(req.user)
     foundAssignments = await assignmentController.populateFieldsOfAssignments(foundAssignments, ['batch'])
     return res.render('assignments', {
@@ -122,7 +122,7 @@ router.put('/:assignmentId', middleware.isLoggedIn, middleware.isCentreOrAdmin, 
   }
 })
 
-router.get('/:username/assignments', async (req, res, next) => {
+router.get('/:username/assignments', middleware.isLoggedIn, async (req, res, next) => {
   const username = req.params.username || ''
   if (!username || validator.isEmpty(username)) return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
 
@@ -142,7 +142,7 @@ router.get('/:username/assignments', async (req, res, next) => {
   }
 })
 
-router.get('/:assignmentId', async function (req, res, next) {
+router.get('/:assignmentId', middleware.isLoggedIn, async function (req, res, next) {
   const assignmentId = req.params.assignmentId || ''
   if (!assignmentId || !validator.isMongoId(assignmentId)) return errorHandler.errorResponse('INVALID_FIELD', 'Assignment id', next)
 

@@ -15,13 +15,13 @@ $(function () {
       },
       success: function (res) {
         if (res) {
-          console.log('res', res)
+          // console.log('res', res)
 let  tokenResp=new Response(res.token)
 self.caches.open('jwt-cache').then(function(cache) {
   // Do something with your cache
   cache.put('token', tokenResp.clone());
   tokenResp.text().then((text)=>{
-    console.log(text)
+    // console.log(text)
   })
 
 
@@ -35,13 +35,13 @@ self.caches.open('jwt-cache').then(function(cache) {
       },
       error: function (err) {
         if (err) {
-          console.log('err', err)
+          // console.log('err', err)
           Materialize.toast($('<span>' + err.responseText + '</span>'), 4000)
           $('.toast:last').css('background-color', '#f44336')
         }
       },
       complete: function () {
-        console.log('complete')
+        // console.log('complete')
 
       }
     })

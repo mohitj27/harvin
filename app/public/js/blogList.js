@@ -20,11 +20,11 @@ let publishCheckHandler = function() {
   if (this.checked) {
     // Checkbox is checked..
     sendAjax(this, 'publish', true)
-    console.log('checked')
+    // console.log('checked')
   } else {
     // Checkbox is not checked..
     sendAjax(this, 'publish', false)
-    console.log('not checked')
+    // console.log('not checked')
 
   }
 }
@@ -33,17 +33,17 @@ let draftCheckHandler = function(event) {
   if (this.checked) {
     // Checkbox is checked..
     sendAjax(this, 'draft', true)
-    console.log('checked')
+    // console.log('checked')
   } else {
     // Checkbox is not checked..
     sendAjax(this, 'draft', false)
-    console.log('not checked')
+    // console.log('not checked')
 
   }
 }
 let sendAjax = (currElement, mode, check) => {
   $tr = $(currElement).parent().parent().parent().parent()
-  console.log('tra', $tr)
+  // console.log('tra', $tr)
   let blogTitle = $tr.attr('id')
 
   $.ajax({

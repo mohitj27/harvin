@@ -32,7 +32,7 @@ $('document').ready(function() {
     let pageNumberToDisplay = $(this).html()
     $('.pagination-value').removeClass("active-chip")
     $(this).addClass("active-chip")
-    console.log('page', pageNumberToDisplay)
+    // console.log('page', pageNumberToDisplay)
     displayCurrentPageWithCategory(pageNumberToDisplay - 1)
 
 
@@ -69,11 +69,11 @@ function displayCurrentGallery(currentCategoryImages) {
 }
 
 function displayPagination(galleryLength) {
-  console.log(Math.ceil(galleryLength/perPage))
+  // console.log(Math.ceil(galleryLength/perPage))
   let i=0
   let max=Math.ceil(galleryLength/perPage)
   while ( i < max ) {
-    console.log(i)
+    // console.log(i)
     let $pageElement = $("<li><a>"+(max-(i))+"</a> </li>")
     $pageElement.children().attr("href","#!")
     if((max-1-i)==0)
@@ -117,9 +117,9 @@ function displayCurrentPage(pageNumberToDisplay) {
 }
 /**function that shows images at the start and pagination for all (ALL CATEGORY)**/
 function displayCurrentPageWithCategory(pageNumberToDisplay) {
-  console.log(currGallery)
+  // console.log(currGallery)
   $('.materialboxed').toArray().forEach((img, i) => {
-    console.log(i + perPage * pageNumberToDisplay, 'val')
+    // console.log(i + perPage * pageNumberToDisplay, 'val')
     let srcValue = currGallery[i + perPage * pageNumberToDisplay]
     if (srcValue) {
       $(img).show()
@@ -130,7 +130,7 @@ function displayCurrentPageWithCategory(pageNumberToDisplay) {
       $('.gallery-image').find("a").attr('href',"/admin/db/gallery/"+srcValue._id+"/delete")
       $('.gallery-image').find("p").html(srcValue.description)
     } else {
-      console.log('hidden')
+      // console.log('hidden')
       $(img).hide()
       $(img).parent().siblings().hide()
 
@@ -143,7 +143,7 @@ function displayCurrentPageWithCategory(pageNumberToDisplay) {
 }
 $("#category-delete").click(function(){
   let category=$('.active-chip').html().toLowerCase()
-  console.log(category)
+  // console.log(category)
   if(category!="all")
   $.get( '/admin/db/gallery/all/'+category, function(  ) {
 

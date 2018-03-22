@@ -1,9 +1,10 @@
 const express = require('express')
 const subjectController = require('../controllers/subject.controller')
 const router = express.Router()
+const middleware = require('../middleware')
 
 // helper- subject
-router.get('/:subjectName', async function (req, res, next) {
+router.get('/:subjectName', middleware.isLoggedIn, async function (req, res, next) {
   const subjectName = req.params.subjectName
   const className = req.query.className
 

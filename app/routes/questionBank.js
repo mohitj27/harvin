@@ -502,13 +502,16 @@ router.get(
   }
 )
 
-router.get('/class/:className', async (req, res, next) => {
+router.get('/class/:className', middleware.isLoggedIn, async (req, res, next) => {
+  console.log('userasdfcasdfs', req.user, req.headers)
+
   let className = req.params.className || ''
   if (!className || validator.isEmpty(className)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'class name', next)
   }
 
   try {
+    console.log('user', req.user)
     let foundClass = await QbController.findQbClassByClassNameAndUserId(
       className,
       req.user
@@ -525,7 +528,7 @@ router.get('/class/:className', async (req, res, next) => {
 })
 
 // helper- subject
-router.get('/subject/:subjectName', async (req, res, next) => {
+router.get('/subject/:subjectName', middleware.isLoggedIn, async (req, res, next) => {
   const subjectName = req.params.subjectName
   const className = req.query.className
 
@@ -554,7 +557,7 @@ router.get('/subject/:subjectName', async (req, res, next) => {
 })
 
 // helper-chapter
-router.get('/chapter/:chapterName', async (req, res, next) => {
+router.get('/chapter/:chapterName', middleware.isLoggedIn, async (req, res, next) => {
   const chapterName = req.params.chapterName
   if (!chapterName || validator.isEmpty(chapterName)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'chapter name', next)

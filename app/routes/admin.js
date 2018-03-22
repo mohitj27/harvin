@@ -33,7 +33,7 @@ jwt({
 // Student signup -JWT
 router.post('/signup', async (req, res, next) => {
   res.locals.flashUrl = '/admin/signup'
-  console.log('body', req.body)
+  // console.log('body', req.body)
   const username = req.body.username || ''
   const password = req.body.password || ''
   const role = req.body.role
@@ -192,7 +192,7 @@ router.get(
   }),
 
   (req, res) => {
-    console.log('logged in user', req.user)
+    // console.log('logged in user', req.user)
     res.redirect('/admin/login')
   }
 )
