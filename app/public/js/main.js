@@ -1,5 +1,5 @@
-$(function() {
-  $(window).keydown(function(event) {
+$(function () {
+  $(window).keydown(function (event) {
     if (event.keyCode == 13) {
       event.preventDefault()
       return false
@@ -34,13 +34,16 @@ $(function() {
     })
   }
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js', {scope: '/admin'}).then(function(reg) {
-      // registration worked
-      // console.log('Registration succeeded. Scope is ' + reg.scope);
-    }).catch(function(error) {
-      // registration failed
-      // console.log('Registration failed with ' + error);
-    });
+    navigator.serviceWorker
+      .register('/sw.js', { scope: '/admin' })
+      .then(function (reg) {
+        // registration worked
+        // console.log('Registration succeeded. Scope is ' + reg.scope);
+      })
+      .catch(function (error) {
+        // registration failed
+        // console.log('Registration failed with ' + error);
+      })
   }
 
   /// NAVBAR INIT
@@ -49,7 +52,7 @@ $(function() {
     edge: 'left', // Choose the horizontal origin
     closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
     draggable: true, // Choose whether you can drag to open on touch screens,
-    onOpen: function(el) {
+    onOpen: function (el) {
       $('body').css('padding-left', '300px')
       $('footer').css('padding-left', '300px')
       $('#sidenav-overlay').remove()
@@ -57,7 +60,7 @@ $(function() {
       $('body').css('overflow-y', 'scroll')
       // $('body').css('overflow-y', 'scroll')
     },
-    onClose: function(el) {
+    onClose: function (el) {
       $('body').css('padding-left', '0')
       $('footer').css('padding-left', '0')
     }
@@ -65,27 +68,39 @@ $(function() {
 
   $('.collapsible').collapsible()
   $('.button-collapse').sideNav('show')
-  caches.open('jwt-cache').then((cache) => {
-    cache.match('admin/token').then((res) => {
-      if (!res)
-        {
-          $('#slide-out').append($('<li><a href="/admin/login"><i class="material-icons white-text">perm_identity</i>Login</a></li><li><a href="/admin/signup"><i class="fa fa-user-plus white-text"></i>Signup</a></li>'))
-
-
-
-        }else{
-
-        console.log('token found' ,res)
-        $('#slide-out').append($('<li class="no-padding"><a href="#!" ><i class="material-icons white-text">perm_identity</i>Profile</a></li><li class="no-padding"><a href="#!" onclick="logout()"><i class="material-icons white-text">exit_to_app</i>Logout</a></li>'))
+  caches.open('jwt-cache').then(cache => {
+    cache.match('admin/token').then(res => {
+      if (!res) {
+        if (!localStorage.getItem('token')) {
+          $('#slide-out').append(
+            $(
+              '<li><a href="/admin/login"><i class="material-icons white-text">perm_identity</i>Login</a></li><li><a href="/admin/signup"><i class="fa fa-user-plus white-text"></i>Signup</a></li>'
+            )
+          )
+        } else {
+          console.log('token found local', res)
+          $('#slide-out').append(
+            $(
+              '<li class="no-padding"><a href="#!" ><i class="material-icons white-text">perm_identity</i>Profile</a></li><li class="no-padding"><a href="#!" onclick="logout()"><i class="material-icons white-text">exit_to_app</i>Logout</a></li>'
+            )
+          )
         }
+      } else {
+        console.log('token found', res)
 
+        $('#slide-out').append(
+          $(
+            '<li class="no-padding"><a href="#!" ><i class="material-icons white-text">perm_identity</i>Profile</a></li><li class="no-padding"><a href="#!" onclick="logout()"><i class="material-icons white-text">exit_to_app</i>Logout</a></li>'
+          )
+        )
+      }
     })
   })
 })
-function logout() {
-  caches.delete('jwt-cache').then(function(boolean) {
+function logout () {
+  caches.delete('jwt-cache').then(function (boolean) {
     // your cache is now deleted
     window.location.replace('/admin/login')
   })
-
+  localStorage.removeItem('token')
 }
