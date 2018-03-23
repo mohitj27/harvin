@@ -130,6 +130,7 @@ router.post('/loginWithPassword', function (req, res, next) {
 
 // Handle login with email
 router.post('/loginWithEmail', async (req, res, next) => {
+
   const emailId = req.body.username || ''
   if (!emailId || !validator.isEmail(emailId)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
@@ -144,9 +145,11 @@ router.post('/loginWithEmail', async (req, res, next) => {
     batch: ''
   }
 
+
   // find user
   try {
     var foundUser = await userController.findUserByUsername(username)
+
   } catch (err) {
     next(err || 'Internal Server Error')
   }
@@ -168,7 +171,6 @@ router.post('/loginWithEmail', async (req, res, next) => {
     ) {
       userDetail.batch = foundUser.profile.batch.batchName
     }
-
     return res.json(userDetail)
   } else {
     try {
@@ -200,7 +202,8 @@ router.post('/loginWithEmail', async (req, res, next) => {
             success: true,
             msg: 'Successfully logged you in as ' + username,
             token: token,
-            username
+            username,
+            batch: ''
           })
         } else {
           res.json({
