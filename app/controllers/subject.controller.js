@@ -91,6 +91,24 @@ const addClassToSubjectById = function (updatedSubject, updatedClass) {
   })
 }
 
+const createOrUpdateNewSubject = function (newSubject, user, classs) {
+  return new Promise(function (resolve, reject) {
+    Subject.findOneAndUpdateAsync(
+      { subjectName: newSubject.subjectName, addedBy: user, className: classs.className },
+      {
+        class: classs
+      },
+      {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      }
+    )
+      .then(updatedSubject => resolve(updatedSubject))
+      .catch(err => reject(err))
+  })
+}
+
 module.exports = {
   findAllsubjects,
   findSubjectByName,
@@ -98,5 +116,6 @@ module.exports = {
   findSubjectByUserId,
   addChapterToSubjectBySubjectClassAndUserId,
   addClassToSubjectById,
-  findSubjectsByIds
+  findSubjectsByIds,
+  createOrUpdateNewSubject
 }
