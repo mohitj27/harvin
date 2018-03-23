@@ -203,6 +203,7 @@ router.post('/loginWithEmail', async (req, res, next) => {
             msg: 'Successfully logged you in as ' + username,
             token: token,
             username,
+            password,
             batch: ''
           })
         } else {
