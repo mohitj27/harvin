@@ -18,9 +18,12 @@ const jsonwebtoken = require('jsonwebtoken')
 
 // Handle user detail update
 router.put('/:username', async (req, res, next) => {
+  console.log('body', req.body)
+
   const username = req.body.username || ''
   const batchName = req.body.batch || ''
   const password = req.body.password || ''
+  console.log('username', username)
 
   if (!username || validator.isEmpty(username)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
@@ -42,6 +45,8 @@ router.put('/:username', async (req, res, next) => {
     foundUser = await userController.populateFieldsInUsers(foundUser, [
       'profile'
     ])
+
+    console.log('foundUser', foundUser)
 
     if (!foundUser.profile) {
       return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
@@ -130,7 +135,6 @@ router.post('/loginWithPassword', function (req, res, next) {
 
 // Handle login with email
 router.post('/loginWithEmail', async (req, res, next) => {
-
   const emailId = req.body.username || ''
   if (!emailId || !validator.isEmail(emailId)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
@@ -145,16 +149,17 @@ router.post('/loginWithEmail', async (req, res, next) => {
     batch: ''
   }
 
-
   // find user
   try {
     var foundUser = await userController.findUserByUsername(username)
-
   } catch (err) {
     next(err || 'Internal Server Error')
   }
 
   if (foundUser) {
+    // update new password
+    let updatedUser = await userController.updatePassword(foundUser, password)
+
     foundUser = await userController.populateFieldsInUsers(foundUser, [
       'profile.batch'
     ])
@@ -171,6 +176,10 @@ router.post('/loginWithEmail', async (req, res, next) => {
     ) {
       userDetail.batch = foundUser.profile.batch.batchName
     }
+
+    let token = await userController.generateToken(foundUser, password)
+    userDetail.token = token
+
     return res.json(userDetail)
   } else {
     try {
@@ -186,33 +195,9 @@ router.post('/loginWithEmail', async (req, res, next) => {
       await userController.addProfileToUser(registeredUser, createdProfile)
 
       //
-      registeredUser.comparePassword(password, function (err, isMatch) {
-        if (isMatch && !err) {
-          // Create token if the password matched and no error was thrown
-          registeredUser = _.pick(registeredUser.toObject(), [
-            'username',
-            'profile',
-            'role',
-            '_id'
-          ])
-          const token = jsonwebtoken.sign(registeredUser, jwtConfig.jwtSecret, {
-            expiresIn: '1000d' // 10 day
-          })
-          res.json({
-            success: true,
-            msg: 'Successfully logged you in as ' + username,
-            token: token,
-            username,
-            password,
-            batch: ''
-          })
-        } else {
-          res.json({
-            success: false,
-            msg: 'Authentication failed. Username or Password did not match.'
-          })
-        }
-      })
+      let token = await userController.generateToken(foundUser, password)
+      userDetail.token = token
+      res.json(userDetail)
       //
     } catch (err) {
       next(err || 'Internal Server Error')
