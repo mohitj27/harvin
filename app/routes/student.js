@@ -210,8 +210,6 @@ router.post('/loginWithEmail', async (req, res, next) => {
         }
       })
       //
-
-      res.json(userDetail)
     } catch (err) {
       next(err || 'Internal Server Error')
     }
