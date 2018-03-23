@@ -176,7 +176,7 @@ router.post('/loginWithEmail', async (req, res, next) => {
         username,
         password
       })
-      const registeredUser = await userController.saveUser(newUser)
+      let registeredUser = await userController.saveUser(newUser)
       const createdProfile = await profileController.createNewProfile({
         username,
         emailId
