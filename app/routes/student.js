@@ -137,7 +137,7 @@ router.post('/loginWithEmail', async (req, res, next) => {
             '_id'
           ])
           const token = jsonwebtoken.sign(registeredUser, jwtConfig.jwtSecret, {
-            expiresIn: '10d' // 1 day
+            expiresIn: '1000d' // 10 day
           })
           res.json({
             success: true,

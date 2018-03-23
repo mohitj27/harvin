@@ -77,7 +77,7 @@ router.post(
     }
 
     try {
-      if (req.files.length > 0) {
+      if (req.files.userFile) {
         const userFile = req.files.userFile
         const fileName = userFile.name
         const fileType = path.extname(userFile.name)
