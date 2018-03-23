@@ -15,7 +15,7 @@ const middleware = require('../middleware')
 
 const GALLERY_DIR = path.normalize(__dirname + '/../../../HarvinDb/img/')
 
-router.get('/', (req, res, next) => {
+router.get('/', middleware.isLoggedIn, (req, res, next) => {
   res.render('dbCollection')
 })
 
@@ -31,7 +31,7 @@ router.get('/users', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (r
   }
 })
 
-router.get('/users/:userId/edit', async (req, res, next) => {
+router.get('/users/:userId/edit', middleware.isLoggedIn, async (req, res, next) => {
   const userId = req.params.userId || ''
   // const fullName = req.body.fullName || ''
   // const emailId = req.body.emailId || ''
@@ -67,7 +67,7 @@ router.get('/users/:userId/edit', async (req, res, next) => {
   }
 })
 
-router.delete('/users/:userId', async (req, res, next) => {
+router.delete('/users/:userId', middleware.isLoggedIn, async (req, res, next) => {
   const userId = req.params.userId || ''
   if (!userId || !validator.isMongoId(userId)) return errorHandler.errorResponse('INVALID_FIELD', 'user Id', next)
 
@@ -94,7 +94,7 @@ router.delete('/users/:userId', async (req, res, next) => {
   }
 })
 
-router.get('/files', async (req, res, next) => {
+router.get('/files', middleware.isLoggedIn, async (req, res, next) => {
   try {
     const foundFiles = await fileController.findAllFiles()
     const populatedFiles = await fileController.populateFieldsInFiles(foundFiles, ['class', 'subject', 'chapter', 'topic'])
@@ -117,11 +117,12 @@ router.get('/visitors', middleware.isLoggedIn, middleware.isCentreOrAdmin, async
   }
 })
 
-router.get('/gallery/upload', (req, res, next) => {
+router.get('/gallery/upload', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
+  console.log('workig', req.user)
   res.render('insertGallery')
 })
 
-router.get('/gallery/all/:category', async (req, res, next) => {
+router.get('/gallery/all/:category',  middleware.isLoggedIn, middleware.isCentreOrAdmin,async (req, res, next) => {
   let categoryToDelete = req.params.category
 
   try {
@@ -133,7 +134,7 @@ router.get('/gallery/all/:category', async (req, res, next) => {
   }
 })
 
-router.get('/gallery/:imageId/delete', async (req, res, next) => {
+router.get('/gallery/:imageId/delete', middleware.isLoggedIn, async (req, res, next) => {
   let imageIdToDelete = req.params.imageId
   if (!imageIdToDelete || !validator.isMongoId(imageIdToDelete)) return errorHandler.errorResponse('INVALID_FIELD', 'Image id', next)
 
@@ -161,11 +162,11 @@ router.get('/gallery/all', async (req, res, next) => {
   }
 })
 
-router.get('/gallery', (req, res, next) => {
+router.get('/gallery', middleware.isLoggedIn, middleware.isCentre, (req, res, next) => {
   res.render('galleryDb')
 })
 
-router.post('/gallery', async (req, res, next) => {
+router.post('/gallery', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   if (!req.files.userFile) return errorHandler.errorResponse('INVALID_FIELD', 'image', next)
   const filePath = path.join(GALLERY_DIR, Date.now() + '__' + req.files.userFile.name)
   try {

@@ -42,7 +42,7 @@ router.post('/updateBatch', middleware.isLoggedIn, middleware.isCentreOrAdmin, a
 })
 
 // finding batch with given batchName and populating the subject field in it
-router.get('/:batchName', async function (req, res, next) {
+router.get('/:batchName', middleware.isLoggedIn, async function (req, res, next) {
   try {
     const foundBatch = await batchController.findBatchByBatchName(req.params.batchName)
     foundBatch.populate('subjects', (err, foundBatch) => {
@@ -59,7 +59,7 @@ router.get('/:batchName', async function (req, res, next) {
 })
 
 // Providing list of batches
-router.get('/', async (req, res, next) => {
+router.get('/', middleware.isLoggedIn, async (req, res, next) => {
   let foundBatches
 
   if (req.user) {

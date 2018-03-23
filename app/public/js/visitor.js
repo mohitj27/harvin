@@ -2,7 +2,7 @@ $(function(){
 	$('.modal').modal();
 
 	$('.modal-trigger').on('click', function () {
-		console.log('text', $(this).siblings());
+		// console.log('text', $(this).siblings());
 		$modalContent = $('.modal-content')
 		$modalContent.children().remove()
 		$modalContent.append($('<h3>', {text: 'Visitor info'}))

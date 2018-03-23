@@ -1,18 +1,27 @@
 const _ = require('lodash')
+const jwtConfig = require('../config/jwt')
+const jwt = require('express-jwt')
+
 
 const errorHandler = require('../errorHandler')
 var middleware = {
-  
-  isLoggedIn: function (req, res, next) {
-    if (req.isAuthenticated()) {
-      delete req.session.returnTo
-      return next()
-    }
-    req.session.returnTo = req.originalUrl
-    res.locals.flashUrl = '/admin/login'
+  // isLoggedIn: function (req, res, next) {
+  //   if (req.isAuthenticated()) {
+  //     delete req.session.returnTo
+  //     return next()
+  //   }
+  //   req.session.returnTo = req.originalUrl
+  //   res.locals.flashUrl = '/admin/login'
+  //
+  //   return errorHandler.errorResponse('NOT_LOGGED_IN', null, next)
+  // },
+  isLoggedIn:
+    jwt({
+      secret: jwtConfig.jwtSecret,
+      getToken:jwtConfig.getToken,
+    })
 
-    return errorHandler.errorResponse('NOT_LOGGED_IN', null, next)
-  },
+  ,
 
   isAdmin: function (req, res, next) {
     if (_.indexOf(req.user.role, 'admin') !== -1) {
@@ -25,6 +34,7 @@ var middleware = {
   },
 
   isCentre: function (req, res, next) {
+    // console.log('user',req.user)
     if (_.indexOf(req.user.role, 'centre') !== -1) {
       return next()
     }

@@ -40,7 +40,6 @@ const insertInCourse = (course) => {
     }, (err, result) => {
       if (err) reject(err)
       else {
-        console.log("naman")
         resolve(true)
       }
     })

@@ -1,8 +1,9 @@
 const express = require('express')
 const chapterController = require('../controllers/chapter.controller')
 const router = express.Router()
+const middleware = require('../middleware')
 
-router.get('/:chapterName', async function (req, res, next) {
+router.get('/:chapterName' , middleware.isLoggedIn, async function (req, res, next) {
   const chapterName = req.params.chapterName
 
   try {

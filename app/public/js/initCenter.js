@@ -91,7 +91,7 @@ $(function() {
   $('.image-side').click(function() {
 
     var val = $(this).attr('src')
-    console.log(val)
+    // console.log(val)
     $('.image-main').attr('src', val)
   })
 })

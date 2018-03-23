@@ -33,6 +33,18 @@ $(function () {
       closeOnSelect: true // Close upon selecting a date,
     })
   }
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('/sw.js', { scope: '/admin' })
+      .then(function (reg) {
+        // registration worked
+        // console.log('Registration succeeded. Scope is ' + reg.scope);
+      })
+      .catch(function (error) {
+        // registration failed
+        // console.log('Registration failed with ' + error);
+      })
+  }
 
   /// NAVBAR INIT
   $('.button-collapse').sideNav({
@@ -56,4 +68,39 @@ $(function () {
 
   $('.collapsible').collapsible()
   $('.button-collapse').sideNav('show')
+  caches.open('jwt-cache').then(cache => {
+    cache.match('admin/token').then(res => {
+      if (!res) {
+        if (!localStorage.getItem('token')) {
+          $('#slide-out').append(
+            $(
+              '<li><a href="/admin/login"><i class="material-icons white-text">perm_identity</i>Login</a></li><li><a href="/admin/signup"><i class="fa fa-user-plus white-text"></i>Signup</a></li>'
+            )
+          )
+        } else {
+          console.log('token found local', res)
+          $('#slide-out').append(
+            $(
+              '<li class="no-padding"><a href="#!" ><i class="material-icons white-text">perm_identity</i>Profile</a></li><li class="no-padding"><a href="#!" onclick="logout()"><i class="material-icons white-text">exit_to_app</i>Logout</a></li>'
+            )
+          )
+        }
+      } else {
+        console.log('token found', res)
+
+        $('#slide-out').append(
+          $(
+            '<li class="no-padding"><a href="#!" ><i class="material-icons white-text">perm_identity</i>Profile</a></li><li class="no-padding"><a href="#!" onclick="logout()"><i class="material-icons white-text">exit_to_app</i>Logout</a></li>'
+          )
+        )
+      }
+    })
+  })
 })
+function logout () {
+  caches.delete('jwt-cache').then(function (boolean) {
+    // your cache is now deleted
+    window.location.replace('/admin/login')
+  })
+  localStorage.removeItem('token')
+}

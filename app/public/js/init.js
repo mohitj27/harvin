@@ -57,7 +57,7 @@
 var state = true;
 
 function tap() {
-  console.log('tap');
+  // console.log('tap');
   if (!state) {
     $('.tap-target').tapTarget('open');
 
@@ -71,7 +71,7 @@ function tap() {
 }
 
 function scrollDown() {
-  console.log('scroll')
+  // console.log('scroll')
   $('html, body').animate({
     scrollTop: $("#features").offset().top
   }, 1000);

@@ -93,15 +93,15 @@ $(function () {
       (next - 1) +
       '" class="btn red remove-me" >-</button>'
     var removeButton = $(removeBtn)
-    console.log('ad to ', addto)
-    console.log('remove ', addRemove)
+    // console.log('ad to ', addto)
+    // console.log('remove ', addRemove)
     $(addto).after(newInput)
     $(addRemove).after(removeButton)
     refreshAns()
 
     // remove option click handler
     $('#field').on('click', '.remove-me', function (e) {
-      console.log('remove', e)
+      // console.log('remove', e)
       var fieldNum = this.id.charAt(this.id.length - 1)
       var fieldID = '#field' + fieldNum
       $(this).remove()

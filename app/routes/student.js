@@ -3,23 +3,35 @@ const passport = require('passport')
 const router = express.Router()
 const validator = require('validator')
 const _ = require('lodash')
+const User = require('../models/User')
 const errorHandler = require('../errorHandler')
 const userController = require('../controllers/user.controller')
 const batchController = require('../controllers/batch.controller')
 const profileController = require('../controllers/profile.controller')
 const progressController = require('../controllers/progress.controller')
+const middleware = require('../middleware')
+const jwtConfig = require('../config/jwt')
+const jwt = require('express-jwt')
+const jsonwebtoken = require('jsonwebtoken')
+
 
 // TODO: pluralise populate method
 
 // Handle user detail update
 router.put('/:username', async (req, res, next) => {
-  const username = req.body.username || ''
-  const batchName = req.body.batch || ''
-  const password = req.body.password || ''
+  const username = req.body.username || '';
+  const batchName = req.body.batch || '';
+  const password = req.body.password || '';
 
-  if (!username || validator.isEmpty(username)) { return errorHandler.errorResponse('INVALID_FIELD', 'username', next)}
-  if (!batchName || validator.isEmpty(batchName)) { return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)}
-  if (!password || validator.isEmpty(password)) { return errorHandler.errorResponse('INVALID_FIELD', 'password', next)}
+  if (!username || validator.isEmpty(username)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+  }
+  if (!batchName || validator.isEmpty(batchName)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
+  }
+  if (!password || validator.isEmpty(password)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'password', next)
+  }
 
   try {
     // get chapters in batch
@@ -32,7 +44,9 @@ router.put('/:username', async (req, res, next) => {
       'profile'
     ])
 
-    if (!foundUser.profile) { return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)}
+    if (!foundUser.profile) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+    }
 
     let progresses = []
     progresses = await progressController.createProgressesForBatch(foundBatch)
@@ -59,11 +73,13 @@ router.post('/login', function (req, res) {
 
 // Handle login with email
 router.post('/loginWithEmail', async (req, res, next) => {
-  const emailId = req.body.username || ''
-  if (!emailId || !validator.isEmail(emailId)) { return errorHandler.errorResponse('INVALID_FIELD', 'username', next)}
+  const emailId = req.body.username || '';
+  if (!emailId || !validator.isEmail(emailId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+  }
   const index = emailId.indexOf('@')
   const username = emailId.substring(0, index)
-  const password = Math.floor(Math.random() * 89999 + 10000) + ''
+  const password = Math.floor(Math.random() * 89999 + 10000) + '';
 
   var userDetail = {
     username,
@@ -82,8 +98,12 @@ router.post('/loginWithEmail', async (req, res, next) => {
     foundUser = await userController.populateFieldsInUsers(foundUser, [
       'profile.batch'
     ])
-    if (!foundUser.profile) { return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)}
-    if (!foundUser.profile.batch) { return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)}
+    if (!foundUser.profile) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+    }
+    if (!foundUser.profile.batch) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
+    }
     if (
       foundUser.profile &&
       foundUser.profile.batch &&
@@ -95,15 +115,44 @@ router.post('/loginWithEmail', async (req, res, next) => {
     return res.json(userDetail)
   } else {
     try {
-      const registeredUser = await userController.registerUser({
+      const newUser = new User({
         username,
         password
       })
+      const registeredUser = await userController.saveUser(newUser)
       const createdProfile = await profileController.createNewProfile({
         username,
         emailId
       })
       await userController.addProfileToUser(registeredUser, createdProfile)
+
+      //
+      registeredUser.comparePassword(password, function (err, isMatch) {
+        if (isMatch && !err) {
+          // Create token if the password matched and no error was thrown
+          registeredUser = _.pick(registeredUser.toObject(), [
+            'username',
+            'profile',
+            'role',
+            '_id'
+          ])
+          const token = jsonwebtoken.sign(registeredUser, jwtConfig.jwtSecret, {
+            expiresIn: '1000d' // 10 day
+          })
+          res.json({
+            success: true,
+            msg: 'Successfully logged you in as ' + username,
+            token: token,
+            username
+          })
+        } else {
+          res.json({
+            success: false,
+            msg: 'Authentication failed. Username or Password did not match.'
+          })
+        }
+      })
+      //
 
       res.json(userDetail)
     } catch (err) {
@@ -115,18 +164,28 @@ router.post('/loginWithEmail', async (req, res, next) => {
 // Handle user registration-- for student->Mobile interface
 router.post('/signup', async (req, res, next) => {
   res.locals.flashUrl = req.headers.referer
-  const username = req.body.username || ''
-  const password = req.body.password || ''
-  const fullName = req.body.fullName || ''
-  const emailId = req.body.emailId || ''
-  const phone = req.body.phone || ''
-  const batchName = req.body.batch || ''
+  const username = req.body.username || '';
+  const password = req.body.password || '';
+  const fullName = req.body.fullName || '';
+  const emailId = req.body.emailId || '';
+  const phone = req.body.phone || '';
+  const batchName = req.body.batch || '';
 
-  if (!username || validator.isEmpty(username)) { return errorHandler.errorResponse('INVALID_FIELD', 'username', next)}
-  if (!password || validator.isEmpty(password)) { return errorHandler.errorResponse('INVALID_FIELD', 'password', next)}
-  if (!fullName || validator.isEmpty(fullName)) { return errorHandler.errorResponse('INVALID_FIELD', 'full name', next)}
-  if (!emailId || validator.isEmpty(emailId)) { return errorHandler.errorResponse('INVALID_FIELD', 'email id', next)}
-  if (!batchName || validator.isEmpty(batchName)) { return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)}
+  if (!username || validator.isEmpty(username)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+  }
+  if (!password || validator.isEmpty(password)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'password', next)
+  }
+  if (!fullName || validator.isEmpty(fullName)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'full name', next)
+  }
+  if (!emailId || validator.isEmpty(emailId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'email id', next)
+  }
+  if (!batchName || validator.isEmpty(batchName)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
+  }
 
   try {
     const foundBatch = await batchController.findBatchByBatchName(batchName)
@@ -172,7 +231,7 @@ router.get('/register', async function (req, res, next) {
   }
 })
 
-router.get('/home/:username', async (req, res, next) => {
+router.get('/home/:username', middleware.isLoggedIn, async (req, res, next) => {
   try {
     const user = userController.findUserByUserId(req.user)
   } catch (e) {
@@ -204,16 +263,24 @@ router.post('/login', async function (req, res, next) {
 })
 
 router.get('/:username/subjects', async (req, res, next) => {
-  const username = req.params.username || ''
-  if (!username || validator.isEmpty(username)) { return errorHandler.errorResponse('INVALID_FIELD', 'username', next)}
+  const username = req.params.username || '';
+  if (!username || validator.isEmpty(username)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+  }
 
   try {
     const foundUser = await userController.findUserByUsername(username)
-    if (!foundUser) { return errorHandler.errorResponse('NOT_FOUND', 'user', next)}
-    if (!foundUser.profile) { return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)}
+    if (!foundUser) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+    }
+    if (!foundUser.profile) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+    }
 
     let foundBatch = await userController.findBatchOfUserByUsername(username)
-    if (!foundBatch) { return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)}
+    if (!foundBatch) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
+    }
 
     foundBatch = await batchController.populateFieldsInBatches(foundBatch, [
       'subjects.chapters.topics.files'
@@ -227,13 +294,19 @@ router.get('/:username/subjects', async (req, res, next) => {
 })
 
 router.get('/:username/results', async (req, res, next) => {
-  const username = req.params.username || ''
-  if (!username || validator.isEmpty(username)) { return errorHandler.errorResponse('INVALID_FIELD', 'username', next)}
+  const username = req.params.username || '';
+  if (!username || validator.isEmpty(username)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+  }
 
   try {
     let foundUser = await userController.findUserByUsername(username)
-    if (!foundUser) { return errorHandler.errorResponse('NOT_FOUND', 'user', next)}
-    if (!foundUser.profile) { return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)}
+    if (!foundUser) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+    }
+    if (!foundUser.profile) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+    }
 
     foundUser = await userController.populateFieldsInUsers(foundUser, [
       'profile.results'
@@ -248,20 +321,28 @@ router.get('/:username/results', async (req, res, next) => {
 })
 
 router.get('/:username/progresses', async (req, res, next) => {
-  const username = req.params.username || ''
-  if (!username || validator.isEmpty(username)) { return errorHandler.errorResponse('INVALID_FIELD', 'username', next)}
+  const username = req.params.username || '';
+  if (!username || validator.isEmpty(username)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
+  }
 
   try {
     let foundUser = await userController.findUserByUsername(username)
-    if (!foundUser) { return errorHandler.errorResponse('NOT_FOUND', 'user', next)}
+    if (!foundUser) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+    }
 
     foundUser = await userController.populateFieldsInUsers(foundUser, [
       'profile'
     ])
-    if (!foundUser.profile) { return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)}
+    if (!foundUser.profile) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+    }
 
     let foundBatch = await userController.findBatchOfUserByUsername(username)
-    if (!foundBatch) { return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)}
+    if (!foundBatch) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
+    }
 
     let progressesToAdd = await progressController.updateProgressOfUserOfBatch(
       foundUser,
@@ -296,8 +377,10 @@ router.put('/:username/setprogress', async (req, res, next) => {
   const completed = req.body.completed
   const status = req.body.status
   let completedTopicsIds = req.body.completedTopicsIds
-  const chapterId = req.body.chapter || ''
-  if (!chapterId || validator.isEmpty(chapterId)) { return errorHandler.errorResponse('INVALID_FIELD', 'chapter', next)}
+  const chapterId = req.body.chapter || '';
+  if (!chapterId || validator.isEmpty(chapterId)) {
+    return errorHandler.errorResponse('INVALID_FIELD', 'chapter', next)
+  }
 
   let topics = []
   completedTopicsIds = _.castArray(completedTopicsIds)
@@ -310,12 +393,16 @@ router.put('/:username/setprogress', async (req, res, next) => {
 
   try {
     let foundUser = await userController.findUserByUsername(username)
-    if (!foundUser) { return errorHandler.errorResponse('NOT_FOUND', 'user', next)}
+    if (!foundUser) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user', next)
+    }
 
     foundUser = await userController.populateFieldsInUser(foundUser, [
       'profile'
     ])
-    if (!foundUser.profile) { return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)}
+    if (!foundUser.profile) {
+      return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+    }
 
     let progObj = {
       topics

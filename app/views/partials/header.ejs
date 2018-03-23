@@ -38,6 +38,7 @@
 						<div class="collapsible-body center-align side-nav-collapsible-body">
 							<ul>
 								<li><a href="/admin/files/new">Upload File</a></li>
+								<li><a href="/admin/subjects/new">Create Subjects</a></li>
 								<li><a href="/admin/files/genlink">Generate Download Link For a file</a></li>
 								<li><a href="/admin/batches/updateBatch">Create Batch</a></li>
 								<li><a href="/admin/exams/new">Set an Exam</a></li>
@@ -115,26 +116,8 @@
 						</ul>
 					</li>
 				<%}%>
-			<% if(!currentUser){ %>
 
-				<li>
-					<a href="/admin/login"><i class="material-icons white-text">perm_identity</i>Login</a>
-				</li>
-				<li>
-					<a href="/admin/signup"><i class="fa fa-user-plus white-text"></i>Signup</a>
-				</li>
-				<% }else{ %>
-					<li>
-						<%if(institute){%>
-							<a ><i class="material-icons white-text">account_circle</i>
-								<%= institute.instituteName %>
-							</a>
-							<%}%>
-					</li>
-					<li>
-						<a href="/admin/logout"><i class="material-icons white-text">exit_to_app</i>Logout</a>
-					</li>
-					<% } %>
+
 		</ul>
 	</header>
 

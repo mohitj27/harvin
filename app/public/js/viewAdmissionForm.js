@@ -13,7 +13,7 @@ $(function () {
 
   $('select').material_select()
   $('#edit-form').on('click', function () {
-    console.log('clicked')
+    // console.log('clicked')
     $('#edit-form-submit').css('visibility', '')
 
     $('#name').prop('disabled', false)

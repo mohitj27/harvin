@@ -11,22 +11,22 @@
             <div class="card-stacked">
               <div class="card-content">
                 <h3 class="white-text center-align">LOGIN</h3>
-                <form action="/admin/login" method="post">
+                <form >
                   <div class="row">
                     <div class="input-field col s8 offset-s2">
                       <input required type="text" class="validte" name="username" id="username" style="border-bottom:1px solid white; color:white;">
-                      <label for="first_name">USERNAME</label>
+                      <label for="username">USERNAME</label>
                     </div>
 
                   </div>
                   <div class="row">
                     <div class="input-field col s8 offset-s2 " type="password">
                       <input required type="password" class="form-control" name="password" id="password" style="border-bottom:1px solid white;color:white;">
-                      <label for="first_name">Password</label>
+                      <label for="password">Password</label>
                     </div>
                   </div>
                   <div class="row">
-                    <button type="submit" class="btn col s8 offset-s2 white harvinThemeText">Login</button>
+                    <button id="submit-btn" class="btn col s8 offset-s2 white harvinThemeText">Login</button>
                   </div>
                 </form>
                 <!-- <div class="center-align">
@@ -41,5 +41,5 @@
     </div>
 
   </main>
-
+<script src="/js/adminLogin.js"></script>
   <% include partials/footer.ejs%>
