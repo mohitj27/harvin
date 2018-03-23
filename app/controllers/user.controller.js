@@ -88,12 +88,12 @@ const updatePassword = function (user, newPassword) {
       if (err) {
         return reject(err)
       }
-      bcrypt.hash(user.password, salt, function (err, hash) {
+      bcrypt.hash(newPassword, salt, function (err, hash) {
         if (err) {
           return reject(err)
         }
-        user.password = hash
-        User.findByIdAndUpdate(user._id, { user }, { upsert: true }, function (
+        // user.password = hash
+        User.findByIdAndUpdate(user._id, { $set: {password: hash} }, { upsert: true, new: true }, function (
           err,
           updatedUser
         ) {
@@ -106,6 +106,7 @@ const updatePassword = function (user, newPassword) {
 }
 
 const generateToken = function (user, password) {
+
   return new Promise(function (resolve, reject) {
     user.comparePassword(password, function (err, isMatch) {
       if (isMatch && !err) {
@@ -117,7 +118,8 @@ const generateToken = function (user, password) {
 
         resolve(token)
       } else {
-        reject('Authentication failed. Username or Password did not match.')
+
+        reject('Authentication failed. Username or Password did not .')
       }
     })
   })

@@ -18,12 +18,10 @@ const jsonwebtoken = require('jsonwebtoken')
 
 // Handle user detail update
 router.put('/:username', async (req, res, next) => {
-  console.log('body', req.body)
 
   const username = req.body.username || ''
   const batchName = req.body.batch || ''
   const password = req.body.password || ''
-  console.log('username', username)
 
   if (!username || validator.isEmpty(username)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
@@ -46,7 +44,6 @@ router.put('/:username', async (req, res, next) => {
       'profile'
     ])
 
-    console.log('foundUser', foundUser)
 
     if (!foundUser.profile) {
       return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
@@ -77,7 +74,6 @@ router.post('/login', function (req, res) {
 
 // Handle user login -- for student
 router.post('/loginWithPassword', function (req, res, next) {
-  console.log('body', req.body)
   let username = req.body.username
   let password = req.body.password
   if (!username || !password) {
@@ -142,7 +138,6 @@ router.post('/loginWithEmail', async (req, res, next) => {
   const index = emailId.indexOf('@')
   const username = emailId.substring(0, index)
   const password = Math.floor(Math.random() * 89999 + 10000) + ''
-
   var userDetail = {
     username,
     password,
@@ -157,28 +152,36 @@ router.post('/loginWithEmail', async (req, res, next) => {
   }
 
   if (foundUser) {
-    // update new password
-    let updatedUser = await userController.updatePassword(foundUser, password)
+    try {
+      // update new password
 
-    foundUser = await userController.populateFieldsInUsers(foundUser, [
-      'profile.batch'
-    ])
-    if (!foundUser.profile) {
-      return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
-    }
-    if (!foundUser.profile.batch) {
-      return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
-    }
-    if (
-      foundUser.profile &&
-      foundUser.profile.batch &&
-      foundUser.profile.batch.batchName
-    ) {
-      userDetail.batch = foundUser.profile.batch.batchName
-    }
+      let updatedUser = await userController.updatePassword(
+        foundUser,
+        password
+      )
 
-    let token = await userController.generateToken(foundUser, password)
-    userDetail.token = token
+      foundUser = await userController.populateFieldsInUsers(foundUser, [
+        'profile.batch'
+      ])
+      if (!foundUser.profile) {
+        return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+      }
+      if (!foundUser.profile.batch) {
+        return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
+      }
+      if (
+        foundUser.profile &&
+        foundUser.profile.batch &&
+        foundUser.profile.batch.batchName
+      ) {
+        userDetail.batch = foundUser.profile.batch.batchName
+      }
+
+      let token = await userController.generateToken(updatedUser, password)
+      userDetail.token = token
+    } catch (err) {
+      next(err)
+    }
 
     return res.json(userDetail)
   } else {
@@ -195,9 +198,9 @@ router.post('/loginWithEmail', async (req, res, next) => {
       await userController.addProfileToUser(registeredUser, createdProfile)
 
       //
-      let token = await userController.generateToken(foundUser, password)
+      let token = await userController.generateToken(registeredUser, password)
       userDetail.token = token
-      res.json(userDetail)
+      return res.json(userDetail)
       //
     } catch (err) {
       next(err || 'Internal Server Error')
