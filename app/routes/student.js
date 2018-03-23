@@ -18,9 +18,9 @@ const jsonwebtoken = require('jsonwebtoken')
 
 // Handle user detail update
 router.put('/:username', async (req, res, next) => {
-  const username = req.body.username || '';
-  const batchName = req.body.batch || '';
-  const password = req.body.password || '';
+  const username = req.body.username || ''
+  const batchName = req.body.batch || ''
+  const password = req.body.password || ''
 
   if (!username || validator.isEmpty(username)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
@@ -72,6 +72,7 @@ router.post('/login', function (req, res) {
 
 // Handle user login -- for student
 router.post('/loginWithPassword', function (req, res, next) {
+  console.log('body', req.body)
   let username = req.body.username
   let password = req.body.password
   if (!username || !password) {
@@ -129,13 +130,13 @@ router.post('/loginWithPassword', function (req, res, next) {
 
 // Handle login with email
 router.post('/loginWithEmail', async (req, res, next) => {
-  const emailId = req.body.username || '';
+  const emailId = req.body.username || ''
   if (!emailId || !validator.isEmail(emailId)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
   }
   const index = emailId.indexOf('@')
   const username = emailId.substring(0, index)
-  const password = Math.floor(Math.random() * 89999 + 10000) + '';
+  const password = Math.floor(Math.random() * 89999 + 10000) + ''
 
   var userDetail = {
     username,
@@ -220,12 +221,12 @@ router.post('/loginWithEmail', async (req, res, next) => {
 // Handle user registration-- for student->Mobile interface
 router.post('/signup', async (req, res, next) => {
   res.locals.flashUrl = req.headers.referer
-  const username = req.body.username || '';
-  const password = req.body.password || '';
-  const fullName = req.body.fullName || '';
-  const emailId = req.body.emailId || '';
-  const phone = req.body.phone || '';
-  const batchName = req.body.batch || '';
+  const username = req.body.username || ''
+  const password = req.body.password || ''
+  const fullName = req.body.fullName || ''
+  const emailId = req.body.emailId || ''
+  const phone = req.body.phone || ''
+  const batchName = req.body.batch || ''
 
   if (!username || validator.isEmpty(username)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
@@ -318,8 +319,19 @@ router.post('/login', async function (req, res, next) {
   }
 })
 
+router.get('/batches', async (req, res, next) => {
+  try {
+    let foundBatches = await batchController.findAllBatch()
+    res.json({
+      batches: foundBatches
+    })
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
+
 router.get('/:username/subjects', async (req, res, next) => {
-  const username = req.params.username || '';
+  const username = req.params.username || ''
   if (!username || validator.isEmpty(username)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
   }
@@ -350,7 +362,7 @@ router.get('/:username/subjects', async (req, res, next) => {
 })
 
 router.get('/:username/results', async (req, res, next) => {
-  const username = req.params.username || '';
+  const username = req.params.username || ''
   if (!username || validator.isEmpty(username)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
   }
@@ -377,7 +389,7 @@ router.get('/:username/results', async (req, res, next) => {
 })
 
 router.get('/:username/progresses', async (req, res, next) => {
-  const username = req.params.username || '';
+  const username = req.params.username || ''
   if (!username || validator.isEmpty(username)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'username', next)
   }
@@ -433,7 +445,7 @@ router.put('/:username/setprogress', async (req, res, next) => {
   const completed = req.body.completed
   const status = req.body.status
   let completedTopicsIds = req.body.completedTopicsIds
-  const chapterId = req.body.chapter || '';
+  const chapterId = req.body.chapter || ''
   if (!chapterId || validator.isEmpty(chapterId)) {
     return errorHandler.errorResponse('INVALID_FIELD', 'chapter', next)
   }
