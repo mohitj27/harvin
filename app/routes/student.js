@@ -14,7 +14,6 @@ const jwtConfig = require('../config/jwt')
 const jwt = require('express-jwt')
 const jsonwebtoken = require('jsonwebtoken')
 
-
 // TODO: pluralise populate method
 
 // Handle user detail update
@@ -69,6 +68,63 @@ router.put('/:username', async (req, res, next) => {
 // Handle user login -- for student
 router.post('/login', function (req, res) {
   res.redirect('/student/home/')
+})
+
+// Handle user login -- for student
+router.post('/loginWithPassword', function (req, res, next) {
+  let username = req.body.username
+  let password = req.body.password
+  if (!username || !password) {
+    return res.json({
+      success: false,
+      msg: 'Please enter username and password.'
+    })
+  } else {
+    User.findOne(
+      {
+        username: username
+      },
+      function (err, user) {
+        if (err) next(err || 'Internal Server Error')
+
+        if (!user) {
+          res.json({
+            success: false,
+            msg: 'Authentication failed. User not found.'
+          })
+        } else {
+          // Check if password matches
+          user.comparePassword(req.body.password, function (err, isMatch) {
+            if (isMatch && !err) {
+              // Create token if the password matched and no error was thrown
+              user = _.pick(user.toObject(), [
+                'username',
+                'profile',
+                'role',
+                '_id'
+              ])
+              const token = jsonwebtoken.sign(user, jwtConfig.jwtSecret, {
+                expiresIn: '24h' // 1 day
+              })
+              res.json({
+                success: true,
+                msg: 'Successfully logged you in as ' + username,
+                token: token,
+                username,
+                password
+              })
+            } else {
+              res.json({
+                success: false,
+                msg:
+                  'Authentication failed. Username or Password did not match.'
+              })
+            }
+          })
+        }
+      }
+    )
+  }
 })
 
 // Handle login with email
