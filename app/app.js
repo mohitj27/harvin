@@ -23,12 +23,16 @@ const instituteController = require('./controllers/institute.controller')
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const env = require('dotenv').config()
-// Imports the Google Cloud client library
-const ErrorReporting = require('@google-cloud/error-reporting')
-const errors = ErrorReporting({
-  projectId: 'harvin-151295',
-  keyFilename: '../harvin-151295-61ac93ccee60.json'
-})
+let errorsRep = null
+if (process.env.CRASH_REPORT_API_KEY_PATH) {
+  // Imports the Google Cloud client library
+  const ErrorReporting = require('@google-cloud/error-reporting')
+  errorsRep = ErrorReporting({
+    projectId: 'harvin-151295',
+    keyFilename: process.env.CRASH_REPORT_API_KEY_PATH
+  })
+}
+
 // errors.report('Something broke!');
 // setting up body-parser
 app.use(
@@ -189,9 +193,10 @@ app.use(function (err, req, res, next) {
       err.code !== 'credentials_required' &&
       err.code !== 'credentials_bad_format' &&
       err.code !== 'credentials_bad_scheme' &&
-      err.code !== 'invalid_token'
+      err.code !== 'invalid_token' &&
+      errorsRep
     ) {
-      errors.report(err)
+      errorsRep.report(err)
     }
 
     if (err.status !== 401 && err.status !== 403) {
@@ -218,6 +223,10 @@ app.use(function (err, req, res, next) {
     }
 
     if (flashUrl) {
+      if (err.name.indexOf('FOUND')) {
+        return res.render('notFound')
+      }
+
       req.flash('error', errMsg)
       res.redirect(flashUrl)
     } else {

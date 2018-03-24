@@ -4,4 +4,4 @@ ecosystem.config.js
 .vscode/
 npm*log*
 \.idea/
-  
+.env

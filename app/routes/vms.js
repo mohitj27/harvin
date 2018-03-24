@@ -276,6 +276,7 @@ router.post('/careers', (req, res, next) => {
 
 router.get('/blog/:url', (req, res, next) => {
   const url = req.params.url
+  res.locals.flashUrl = '/blog/' + url
   Blog.findOne({
     url
   })
@@ -284,7 +285,9 @@ router.get('/blog/:url', (req, res, next) => {
       modal: 'User'
     })
     .exec((err, foundBlog) => {
-      console.log('blog', foundBlog)
+      if (!foundBlog) return errorHandler.errorResponse('NOT_FOUND', 'blog', next)
+      if (!foundBlog.htmlFilePath) return errorHandler.errorResponse('NOT_FOUND', 'blog html', next)
+      // console.log('blog', foundBlog)
       if (err) {
         return next(err || 'Internal Server Error')
       } else {
