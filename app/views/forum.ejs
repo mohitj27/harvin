@@ -1,0 +1,45 @@
+<%include partials/website_header%>
+
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/gallery.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css">
+
+  <main>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <% if (foundPosts){ %>
+
+            <% foundPosts.forEach((post)=>{ %>
+              <div class="col l4 m6 s12">
+                <div class="card ">
+                  <div class="card-image">
+                    <img class="responsive-img" src="<%=post.filePath%>">
+                  </div>
+                  <div class="card-stacked">
+                    <div class="card-content">
+                      <h3><%=post.postName%></h3>
+                    </div>
+                    <div class="card-action">
+                      <a href="/forum/?title=<%=post.postName%>">Read More...</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <%})%>
+                <%}%>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+
+
+  <%include partials/website_footer%>
+
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../js/materialize.js"></script>
+    <script src="../js/init.js"></script>

@@ -1,0 +1,72 @@
+<% include partials/header.ejs%>
+
+	<main>
+		<div class="container">
+			<div class="row">
+				<h3>Forum Posts</h3>
+
+				<form action="/admin/forum/newPost" method="POST" enctype="multipart/form-data">
+					<div class="input-field">
+						<input name="postName" required id="postName" type="text" class="validate">
+						<label for="postName">Post Name</label>
+					</div>
+					<div class="file-field input-field">
+							<div class="btn">
+								<span>Actual File</span>
+								<input type="file" required name="file"  >
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+						</div>
+
+					<input class="btn col push-l6" type="submit" />
+				</form>
+			</div>
+			<div class="row">
+				<h3>All Uploaded posts</h3>
+				<table class="responsive-table centered highlight bordered" width="100%">
+					<thead>
+						<tr>
+							<th style="text-align: center">Serial no.</th>
+							<th style="text-align: center">Date</th>
+							<th style="text-align: center">Title</th>
+							<th style="text-align: center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% if (foundForumPost){ %>
+							<% foundForumPost.forEach((post, i) =>{ %>
+								<tr class="hoverable" id="<%=post.postName%>">
+									<td style="text-align: center">
+										<%= i + 1 %>
+									</td>
+									<td style="text-align: center">
+										<%=post.uploadDate%>
+									</td>
+									<td style="text-align: center">
+										<%=post.postName%>
+									</td>
+
+
+
+									<td style="text-align: center">
+
+										<a style="cursor:pointer" onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Link!"><i class="material-icons ">delete</i></a>
+										<br>
+									</td>
+								</tr>
+								<% }) %>
+									<% } %>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+	</main>
+
+
+	<% include partials/footer.ejs%>
+		<script type="text/javascript" src="/js/genlink.js">
+		</script>

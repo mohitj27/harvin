@@ -1,0 +1,60 @@
+<%include partials/website_header%>
+
+
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src =
+                'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=1054614874673150&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+  <main>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <% if (foundPost){ %>
+              <div class="col l12 m12 s12">
+                <div class="card ">
+                  <div class="card-image">
+                    <img class="responsive-img" src="<%=foundPost.filePath%>">
+                  </div>
+                  <div class="card-stacked">
+                    <div class="card-content">
+                      <h3><%=foundPost.postName%></h3>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+                <%}%>
+        </div>
+      </div>
+      <div class="col-xs-12 col-lg-12 col-md-12 center">
+          <div class="fb-comments"></div>
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <script>
+              (adsbygoogle = window.adsbygoogle || []).push({
+                  google_ad_client: "ca-pub-7358139519857938",
+                  enable_page_level_ads: true
+              });
+          </script>
+      </div>
+    </div>
+
+  </main>
+
+
+
+  <%include partials/website_footer%>
+
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../js/materialize.js"></script>
+    <script src="../js/init.js"></script>
