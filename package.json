@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/gopal151295/innov8#readme",
   "dependencies": {
+    "@google-cloud/error-reporting": "^0.2.3",
     "async": "^2.5.0",
     "axios": "^0.18.0",
     "bcrypt": "^1.0.3",

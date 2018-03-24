@@ -21,14 +21,16 @@ router.get('/signup', function (req, res) {
 })
 
 // ADMIN HOME
-router.get('/',
-jwt({
-  secret: jwtConfig.jwtSecret,
-  getToken:jwtConfig.getToken,
-}),function (req, res) {
-
-  res.render('home',{msg_success:"Welcome back!"})
-})
+router.get(
+  '/',
+  jwt({
+    secret: jwtConfig.jwtSecret,
+    getToken: jwtConfig.getToken
+  }),
+  function (req, res) {
+    res.render('home', { msg_success: 'Welcome back!' })
+  }
+)
 
 // Student signup -JWT
 router.post('/signup', async (req, res, next) => {
@@ -96,8 +98,8 @@ router.post('/signup', async (req, res, next) => {
       }
     )
     //
-req.flash("success","Signup Succesful! Please Login to Continue")
-res.redirect('/admin/login')
+    req.flash('success', 'Signup Succesful! Please Login to Continue')
+    res.redirect('/admin/login')
     // res.json({
     //   success: true,
     //   msg: 'Successfully created new user.',
@@ -113,9 +115,9 @@ res.redirect('/admin/login')
 
 // Student login form-- admin
 router.get('/login', function (req, res) {
-
   res.render('login', {
-    error: res.locals.msg_error[0]  })
+    error: res.locals.msg_error[0]
+  })
 })
 
 // Handle user login -- for admin
@@ -142,40 +144,49 @@ router.post('/login', function (req, res, next) {
       msg: 'Please enter username and password.'
     })
   } else {
-    User.findOne({
-      username: username
-    }, function (err, user) {
-      if (err) next(err || 'Internal Server Error')
+    User.findOne(
+      {
+        username: username
+      },
+      function (err, user) {
+        if (err) next(err || 'Internal Server Error')
 
-      if (!user) {
-        res.json({
-          success: false,
-          msg: 'Authentication failed. User not found.'
-        })
-      } else {
-        // Check if password matches
-        user.comparePassword(req.body.password, function (err, isMatch) {
-          if (isMatch && !err) {
-            // Create token if the password matched and no error was thrown
-            user=_.pick(user.toObject(),['username',"profile",'role','_id'])
-            const token = jsonwebtoken.sign(user, jwtConfig.jwtSecret, {
-              expiresIn: '24h' // 1 day
-            })
-            res.json({
-              success: true,
-              msg: 'Successfully logged you in as ' + username,
-              token: token,
-              user
-            })
-          } else {
-            res.json({
-              success: false,
-              msg: 'Authentication failed. Username or Password did not match.'
-            })
-          }
-        })
+        if (!user) {
+          res.json({
+            success: false,
+            msg: 'Authentication failed. User not found.'
+          })
+        } else {
+          // Check if password matches
+          user.comparePassword(req.body.password, function (err, isMatch) {
+            if (isMatch && !err) {
+              // Create token if the password matched and no error was thrown
+              user = _.pick(user.toObject(), [
+                'username',
+                'profile',
+                'role',
+                '_id'
+              ])
+              const token = jsonwebtoken.sign(user, jwtConfig.jwtSecret, {
+                expiresIn: '7d' // 1 day
+              })
+              res.json({
+                success: true,
+                msg: 'Successfully logged you in as ' + username,
+                token: token,
+                user
+              })
+            } else {
+              res.json({
+                success: false,
+                msg:
+                  'Authentication failed. Username or Password did not match.'
+              })
+            }
+          })
+        }
       }
-    })
+    )
   }
 })
 

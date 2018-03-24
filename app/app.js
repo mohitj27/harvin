@@ -22,7 +22,14 @@ const userController = require('./controllers/user.controller')
 const instituteController = require('./controllers/institute.controller')
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
-
+const env = require('dotenv').config()
+// Imports the Google Cloud client library
+const ErrorReporting = require('@google-cloud/error-reporting')
+const errors = ErrorReporting({
+  projectId: 'harvin-151295',
+  keyFilename: '../harvin-151295-61ac93ccee60.json'
+})
+// errors.report('Something broke!');
 // setting up body-parser
 app.use(
   bodyParser.urlencoded({
@@ -174,6 +181,19 @@ app.use('/', indexRoutes)
 // Error handling middleware function
 app.use(function (err, req, res, next) {
   if (err) {
+    // error reporting
+
+    if (
+      err.status !== 401 &&
+      err.status !== 403 &&
+      err.code !== 'credentials_required' &&
+      err.code !== 'credentials_bad_format' &&
+      err.code !== 'credentials_bad_scheme' &&
+      err.code !== 'invalid_token'
+    ) {
+      errors.report(err)
+    }
+
     if (err.status !== 401 && err.status !== 403) {
       console.error('err---------------: ', err.stack)
       console.error('err_status: ', err.status)
@@ -205,6 +225,8 @@ app.use(function (err, req, res, next) {
     }
   }
 })
+
+// app.use(errors.express)
 
 var url =
   process.env.DATABASEURL ||
