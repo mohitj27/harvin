@@ -89,12 +89,12 @@
                     <!-- Single Blog -->
                     <% foundBlogs.forEach((blog, i) => { %>
                         <%if(i<4){%>
-                            <article class="card single-blog text-center mt-5 mb-5 pt-0 pb-3">
+                            <article class="card single-blog text-center mt-5 mb-5 pt-0 pb-3" href="/blog/?title=<%=blog.url%>" href="/blog/<%=blog.url%>">
                                 <mark class="catagory">
                                     <%=blog.category%>
                                 </mark>
                                 <!-- Blog Content-->
-                                <a href="/blog/?title=<%=blog.url%>">
+                                <a href="/blog/<%=blog.url%>">
                                     <div class="blgo-content content" style="background-image:url(/blogImage/<%=blog.coverImgName%>)">
                                         <span class="posted-date">
                                             <%=blog.uploadDate%>
@@ -102,7 +102,7 @@
                                     </div>
                                 </a>
                                 <!-- Card Body -->
-                                <div class="card-body p-0">
+                                <div class="card-body p-0" href="/blog/<%=blog.url%>">
                                     <h2 class="card-title h1 blog-title">
                                         <%=blog.blogTitle%>
                                     </h2>

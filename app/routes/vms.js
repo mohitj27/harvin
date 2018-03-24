@@ -12,6 +12,7 @@ const Link = require('./../models/Link')
 const vmsController = require('./../controllers/vms.controller')
 const linkController = require('./../controllers/link.controller')
 const courseController = require('./../controllers/courses.controller')
+const forumController = require('./../controllers/forum.controller')
 const validator = require('validator')
 const router = express.Router()
 Promise = require('bluebird')
@@ -347,6 +348,24 @@ router.get('/blog', (req, res, next) => {
         })
       }
     })
+})
+router.get('/forum', async (req, res, next) => {
+  if(!req.query.title){
+    try {
+      const foundPosts=await forumController.findPost()
+      // console.log(foundPosts)
+      res.render('forum',{foundPosts})
+    } catch (e) {
+  next(e)
+    }
+  }
+  try {
+    const foundPost= await forumController.findPost({postName:req.query.title})
+    console.log(foundPost)
+    res.render('forumPost',{foundPost:foundPost[0]})
+  } catch (e) {
+
+  }
 })
 
 module.exports = router
