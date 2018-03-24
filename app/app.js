@@ -193,9 +193,9 @@ app.use(function (err, req, res, next) {
       err.code !== 'credentials_bad_format' &&
       err.code !== 'credentials_bad_scheme' &&
       err.code !== 'invalid_token' &&
-      !(err.name.indexOf('FOUND') && err.name.indexOf('BLOG')) &&
-      errorsRep
+      err.name.indexOf('BLOG') < 0
     ) {
+      console.log('##########reported###########')
       errorsRep.report(err)
     }
 
