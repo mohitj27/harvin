@@ -12,7 +12,8 @@
     "start": "node ./app/app.js",
     "start-blog": "nodemon ./blog_service/server.js",
     "babel": "babel",
-    "webpack": "webpack-cli --watch "
+    "webpack": "webpack-cli --watch ",
+    "inspect": "kill-port --port 9229 && node --inspect=0.0.0.0:9229 app/app.js"
   },
   "repository": {
     "type": "git",

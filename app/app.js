@@ -115,7 +115,7 @@ app.use(async function (req, res, next) {
         allCenters = _.filter(allCenters, function (center) {
           if (center.profile) {
             if (
-              center.profile.isCenterOfInstitute.toString() ==
+              center.profile.isCenterOfInstitute.toString() ===
               user.profile.isCenterOfInstitute.toString()
             ) {
               return center
@@ -126,10 +126,10 @@ app.use(async function (req, res, next) {
       }
 
       if (!res.locals.institute) {
-        return errorHandler.errorResponse('NOT_FOUND', 'institute', next)
+        return errorHandler.errorResponse('NOT_FOUND', 'auth institute', next)
       }
       if (!res.locals.centers) {
-        return errorHandler.errorResponse('NOT_FOUND', 'centers', next)
+        return errorHandler.errorResponse('NOT_FOUND', 'auth centers', next)
       }
     }
     res.locals.centers = res.locals.centers || []
@@ -185,9 +185,7 @@ app.use('/', indexRoutes)
 // Error handling middleware function
 app.use(function (err, req, res, next) {
   if (err) {
-    
     // error reporting
-
     if (
       err.status !== 401 &&
       err.status !== 403 &&
@@ -195,6 +193,7 @@ app.use(function (err, req, res, next) {
       err.code !== 'credentials_bad_format' &&
       err.code !== 'credentials_bad_scheme' &&
       err.code !== 'invalid_token' &&
+      !(err.name.indexOf('FOUND') && err.name.indexOf('BLOG')) &&
       errorsRep
     ) {
       errorsRep.report(err)
@@ -217,7 +216,8 @@ app.use(function (err, req, res, next) {
       err.code === 'credentials_required' ||
       err.code === 'credentials_bad_format' ||
       err.code === 'credentials_bad_scheme' ||
-      err.code === 'invalid_token'
+      err.code === 'invalid_token' ||
+      err.name.indexOf('AUTH')
     ) {
       req.flash('error', 'Please Login')
       return res.redirect('/admin/login')
