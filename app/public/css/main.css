@@ -21,7 +21,7 @@ text-align: center;
 }
 
 strong{
-  font-weight: normal !important;
+  font-weight: bold !important;
 }
 
 .opt:focus {
