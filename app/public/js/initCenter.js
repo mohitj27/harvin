@@ -1,95 +1,129 @@
-$(function() {
+$(function () {
+  $('#enquirySubmit').on('click', function (e) {
+e.preventDefault()
+    const newEnquiry = {}
+    const name = $('#name').val()
+    const emailId = $('#emailId').val()
+    const phone = $('#phone').val()
+    const centerName = $('#centerName').val()
+    if (!name || !emailId || !phone) return
+    newEnquiry.name = name
+    newEnquiry.emailId = emailId
+    newEnquiry.phone = phone
+    newEnquiry.centerName = centerName
 
-  var pageURL = $(location).attr("href");
+    $.ajax({
+      url: '/admin/enquiries',
+      method: 'post',
+      data: newEnquiry,
+      success: function (result) {
+        Materialize.toast(
+          $('<span>Successfully Saved Your Response</span>'),
+          4000
+        )
+        $('.toast:last').css('background-color', '#13b38b')
+      },
+      error: function (error) {
+        if (error) {
+          Materialize.toast($('<span>' + error.responseText + '</span>'), 4000)
+          $('.toast:last').css('background-color', '#f44336')
+        }
+      }
+    })
+  })
+
+  var pageURL = $(location).attr('href')
   // alert(pageURL.toString().split('#')[1]);
   $('.chip').removeClass('z-depth-4 active-chip')
   switch (pageURL.toString().split('#')[1]) {
     case 'janakpuri':
       $('#j-chip').addClass('z-depth-4 active-chip')
       $('.map').attr('src', locations[0])
+      $('#centerName').val('Janakpuri')
       $('.overview').html(overview[0])
-      sideimagesrc = sideimagesrc_j
+      sideimagesrc = sideimagesrcJ
       break;
     case 'preet-vihar':
       $('#p-chip').addClass('z-depth-4 active-chip')
       $('.map').attr('src', locations[1])
+      $('#centerName').val('Preet Vihar')
       $('.overview').html(overview[1])
-      sideimagesrc = sideimagesrc_p
+      sideimagesrc = sideimagesrcP
       break;
 
     case 'meerut':
       $('#m-chip').addClass('z-depth-4 active-chip')
       $('.map').attr('src', locations[2])
+      $('#centerName').val('Meerut')
       $('.overview').html(overview[2])
-      sideimagesrc = sideimagesrc_m
+      sideimagesrc = sideimagesrcM
 
       break;
 
     default:
       $('#j-chip').addClass('z-depth-4 active-chip')
       $('.map').attr('src', locations[0])
+      $('#centerName').val('Janakpuri')
       $('.overview').html(overview[0])
-      sideimagesrc = sideimagesrc_j
+      sideimagesrc = sideimagesrcJ
       break;
   }
 
-  let $sideImages = $('.image-side').toArray();
-  $sideImages.forEach(function(img, i) {
+  let $sideImages = $('.image-side').toArray()
+  $sideImages.forEach(function (img, i) {
     $(img).attr('src', sideimagesrc[i])
   })
   $('.image-main').attr('src', sideimagesrc[0])
   let counter = 1
-  sideimagesrc = sideimagesrc_j
+  sideimagesrc = sideimagesrcJ
   if (window.innerWidth < 450) {
-    setInterval(function() {
-      $('.image-main').fadeOut(function() {
+    setInterval(function () {
+      $('.image-main').fadeOut(function () {
         $(this).attr('src', sideimagesrc[counter])
         $(this).fadeIn('fast')
       })
 
-
       counter++
       if (counter > 4) counter = 0
     }, 3000)
-
   }
-  $('.chip').click(function() {
-
+  $('.chip').click(function () {
     $('.chip').removeClass('z-depth-4 active-chip')
     $(this).addClass('z-depth-4 active-chip')
 
     switch ($(this).html()) {
       case 'Janakpuri':
         $('.map').attr('src', locations[0])
+        $('#centerName').val('Janakpuri')
         $('.overview').html(overview[0])
-        sideimagesrc = sideimagesrc_j
+        sideimagesrc = sideimagesrcJ
         break;
       case 'Preet Vihar':
         $('.map').attr('src', locations[1])
+        $('#centerName').val('Preet Vihar')
         $('.overview').html(overview[1])
-        sideimagesrc = sideimagesrc_p
+        sideimagesrc = sideimagesrcP
         break;
 
       case 'Meerut':
         $('.map').attr('src', locations[2])
+        $('#centerName').val('Meerut')
         $('.overview').html(overview[2])
-        sideimagesrc = sideimagesrc_m
+        sideimagesrc = sideimagesrcM
 
         break;
 
       default:
     }
 
-    let $sideImages = $('.image-side').toArray();
-    $sideImages.forEach(function(img, i) {
+    let $sideImages = $('.image-side').toArray()
+    $sideImages.forEach(function (img, i) {
       $(img).attr('src', sideimagesrc[i])
     })
     $('.image-main').attr('src', sideimagesrc[0])
-
   })
 
-  $('.image-side').click(function() {
-
+  $('.image-side').click(function () {
     var val = $(this).attr('src')
     // console.log(val)
     $('.image-main').attr('src', val)
@@ -133,23 +167,25 @@ are passionate towards providing our students with the best quality education.
 At Harvin, we aim to deliver highest level of conceptual clarity to the students by integration of
 social education to create a revolution in the coaching industry. Harvin is the best guide to the
 best minds.`
-
 ]
 
-let sideimagesrc_j = ["/images/1J5A2894.JPG",
-  "/images/1J5A2945.JPG",
-  "/images/1J5A2988.JPG",
-  "/images/1J5A3009.JPG"
+let sideimagesrcJ = [
+  '/images/1J5A2894.JPG',
+  '/images/1J5A2945.JPG',
+  '/images/1J5A2988.JPG',
+  '/images/1J5A3009.JPG'
 ]
 
-let sideimagesrc_m = ["/images/harvest4.jpg",
-  "/images/harvest2.jpg",
-  "/images/harvest3.jpg",
-  "/images/harvest1.jpg"
+let sideimagesrcM = [
+  '/images/harvest4.jpg',
+  '/images/harvest2.jpg',
+  '/images/harvest3.jpg',
+  '/images/harvest1.jpg'
 ]
 
-let sideimagesrc_p = ["/images/_J6A1994.JPG",
-  "/images/_J6A2000.JPG",
-  "/images/_J6A2006.JPG",
-  "/images/_J6A2007.JPG"
+let sideimagesrcP = [
+  '/images/_J6A1994.JPG',
+  '/images/_J6A2000.JPG',
+  '/images/_J6A2006.JPG',
+  '/images/_J6A2007.JPG'
 ]

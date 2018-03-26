@@ -193,7 +193,8 @@ app.use(function (err, req, res, next) {
       err.code !== 'credentials_bad_format' &&
       err.code !== 'credentials_bad_scheme' &&
       err.code !== 'invalid_token' &&
-      err.name.indexOf('BLOG') < 0
+      err.name.indexOf('BLOG') < 0 &&
+      errorsRep
     ) {
       console.log('##########reported###########')
       errorsRep.report(err)
@@ -217,7 +218,7 @@ app.use(function (err, req, res, next) {
       err.code === 'credentials_bad_format' ||
       err.code === 'credentials_bad_scheme' ||
       err.code === 'invalid_token' ||
-      err.name.indexOf('AUTH')
+      err.name.indexOf('AUTH') > -1
     ) {
       req.flash('error', 'Please Login')
       return res.redirect('/admin/login')

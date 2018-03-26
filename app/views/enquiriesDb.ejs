@@ -1,0 +1,66 @@
+<% include partials/header.ejs%>
+	<main>
+		<div class="section">
+			<div class="container">
+				<h3 style="text-align: center">List of all Enquiry</h3>
+				<hr>
+				<table class="responsive-table centered highlight bordered" width="100%">
+					<thead>
+						<tr>
+							<th style="text-align: center">Serial no.</th>
+							<th style="text-align: center">Date</th>
+							<th style="text-align: center">Name</th>
+							<th style="text-align: center">Email</th>
+							<th style="text-align: center">Phone</th>
+							<th style="text-align: center">Center</th>
+							<th style="text-align: center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% if (enquiries){ %>
+							<% enquiries.forEach((enquiry, i) =>{ %>
+								<tr class="hoverable" id="<%=enquiry._id%>">
+									<td style="text-align: center">
+										<%= i + 1 %>
+									</td>
+									<td style="text-align: center">
+										<%=enquiry.date.toLocaleDateString('en-GB')%>
+									</td>
+									<td style="text-align: center">
+										<%=enquiry.name%>
+											</a>
+									</td>
+									<td style="text-align: center">
+										<%=enquiry.emailId%>
+											</a>
+									</td>
+									<td style="text-align: center">
+										<%=enquiry.phone%>
+											</a>
+									</td>
+									<td style="text-align: center">
+										<%=enquiry.centerName%>
+											</a>
+									</td>
+
+									<td style="text-align: center">
+										<a style="cursor:pointer" onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Enquiry!"><i class="material-icons ">delete</i></a>
+									</td>
+
+								</tr>
+								<% }) %>
+									<% } %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</main>
+
+
+
+	<script src="/js/enquiryDb.js"></script>
+
+	<% include partials/footer.ejs%>
+		<script type="text/javascript">
+		</script>
