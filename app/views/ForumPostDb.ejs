@@ -11,14 +11,14 @@
 						<label for="postName">Post Name</label>
 					</div>
 					<div class="file-field input-field">
-							<div class="btn">
-								<span>Actual File</span>
-								<input type="file" required name="file"  >
-							</div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text">
-							</div>
+						<div class="btn">
+							<span>Actual File</span>
+							<input type="file" required name="file">
 						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
 
 					<input class="btn col push-l6" type="submit" />
 				</form>
@@ -37,7 +37,7 @@
 					<tbody>
 						<% if (foundForumPost){ %>
 							<% foundForumPost.forEach((post, i) =>{ %>
-								<tr class="hoverable" id="<%=post.postName%>">
+								<tr class="hoverable" id="<%=post._id%>">
 									<td style="text-align: center">
 										<%= i + 1 %>
 									</td>
@@ -52,7 +52,9 @@
 
 									<td style="text-align: center">
 
-										<a style="cursor:pointer" onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Link!"><i class="material-icons ">delete</i></a>
+										<a style="cursor:pointer" onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Link!">
+											<i class="material-icons ">delete</i>
+										</a>
 										<br>
 									</td>
 								</tr>
@@ -68,5 +70,5 @@
 
 
 	<% include partials/footer.ejs%>
-		<script type="text/javascript" src="/js/genlink.js">
+		<script type="text/javascript" src="/js/forumDb.js">
 		</script>

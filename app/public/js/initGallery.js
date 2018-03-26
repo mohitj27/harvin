@@ -111,7 +111,7 @@ function sliceIntoCategory(allImages) {
 }
 /**function that shows images at the start and pagination for all (ALL CATEGORY)**/
 function displayCurrentPage(pageNumberToDisplay) {
-  $('.materialboxed').toArray().forEach((img, i) => $(img).attr('src', allImages[i + perPage * pageNumberToDisplay].thumbPath))
+  $('.materialboxed').toArray().forEach((img, i) => $(img).attr('src', allImages[i + perPage * pageNumberToDisplay].src))
 }
 /**function that shows images at the start and pagination for all (ALL CATEGORY)**/
 function displayCurrentPageWithCategory(pageNumberToDisplay) {
@@ -121,7 +121,7 @@ function displayCurrentPageWithCategory(pageNumberToDisplay) {
     let srcValue = currGallery[i + perPage * pageNumberToDisplay]
     if (srcValue) {
       $(img).show()
-      $(img).attr('src', srcValue.thumbPath)
+      $(img).attr('src', srcValue.src)
     } else {
       // console.log('hidden')
       $(img).hide()
