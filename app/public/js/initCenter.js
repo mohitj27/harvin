@@ -1,6 +1,12 @@
+const emptyFields = () => {
+  $('#name').val('')
+  $('#phone').val('')
+  $('#emailId').val('')
+}
+
 $(function () {
   $('#enquirySubmit').on('click', function (e) {
-e.preventDefault()
+    e.preventDefault()
     const newEnquiry = {}
     const name = $('#name').val()
     const emailId = $('#emailId').val()
@@ -28,7 +34,8 @@ e.preventDefault()
           Materialize.toast($('<span>' + error.responseText + '</span>'), 4000)
           $('.toast:last').css('background-color', '#f44336')
         }
-      }
+      },
+      complete: emptyFields
     })
   })
 
@@ -42,14 +49,14 @@ e.preventDefault()
       $('#centerName').val('Janakpuri')
       $('.overview').html(overview[0])
       sideimagesrc = sideimagesrcJ
-      break;
+      break
     case 'preet-vihar':
       $('#p-chip').addClass('z-depth-4 active-chip')
       $('.map').attr('src', locations[1])
       $('#centerName').val('Preet Vihar')
       $('.overview').html(overview[1])
       sideimagesrc = sideimagesrcP
-      break;
+      break
 
     case 'meerut':
       $('#m-chip').addClass('z-depth-4 active-chip')
@@ -58,7 +65,7 @@ e.preventDefault()
       $('.overview').html(overview[2])
       sideimagesrc = sideimagesrcM
 
-      break;
+      break
 
     default:
       $('#j-chip').addClass('z-depth-4 active-chip')
@@ -66,7 +73,7 @@ e.preventDefault()
       $('#centerName').val('Janakpuri')
       $('.overview').html(overview[0])
       sideimagesrc = sideimagesrcJ
-      break;
+      break
   }
 
   let $sideImages = $('.image-side').toArray()
@@ -97,13 +104,13 @@ e.preventDefault()
         $('#centerName').val('Janakpuri')
         $('.overview').html(overview[0])
         sideimagesrc = sideimagesrcJ
-        break;
+        break
       case 'Preet Vihar':
         $('.map').attr('src', locations[1])
         $('#centerName').val('Preet Vihar')
         $('.overview').html(overview[1])
         sideimagesrc = sideimagesrcP
-        break;
+        break
 
       case 'Meerut':
         $('.map').attr('src', locations[2])
@@ -111,7 +118,7 @@ e.preventDefault()
         $('.overview').html(overview[2])
         sideimagesrc = sideimagesrcM
 
-        break;
+        break
 
       default:
     }

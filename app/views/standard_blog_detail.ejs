@@ -118,6 +118,7 @@
                                             <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
                                                 Tweet</a>
                                         </div>
+                        </div>
 
                     </article>
                     <!-- ================= /Full Post ================= -->
@@ -191,50 +192,50 @@
                     <!-- ================= //Releted post ================= -->
                 </main>
 
-                </div>
             </div>
         </div>
+    </div>
 
 
-        <!-- =========================== //Middle Content =========================== -->
-        <!-- =========================== //Footer =========================== -->
+    <!-- =========================== //Middle Content =========================== -->
+    <!-- =========================== //Footer =========================== -->
 
-        <!-- =========================== //Footer =========================== -->
-        <!-- #preloader -->
-        <!-- <div id="preloader"></div> -->
-        <!-- ======================= Scripts ======================= -->
-        <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
-        <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
-        <script src="/assets/js/plugins.js"></script>
-        <script src="/assets/js/main.js"></script>
+    <!-- =========================== //Footer =========================== -->
+    <!-- #preloader -->
+    <!-- <div id="preloader"></div> -->
+    <!-- ======================= Scripts ======================= -->
+    <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
+    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/main.js"></script>
 
-        <script>
-            $(document).ready(function () {
-                var pageURL = $(location).attr("href");
-                $('head').append('<meta property="og:url" content="' + pageURL + '" />')
-                $('head').append('<meta property="og:type" content="article" />')
-                $('head').append('<meta property="og:title content="Harvin academy" />')
+    <script>
+        $(document).ready(function () {
+            var pageURL = $(location).attr("href");
+            $('head').append('<meta property="og:url" content="' + pageURL + '" />')
+            $('head').append('<meta property="og:type" content="article" />')
+            $('head').append('<meta property="og:title content="Harvin academy" />')
 
-                $.each($('table'), function (index, value) {
-                    $(value).addClass('cke_show_border')
-
-                });
-
-
-                $.each($('table'), function (index, value) {
-                    $(value).parent().addClass('cke_show_borders')
-
-                });
-                $.each($('img'), function (index, value) {
-                    $(value).addClass('responsive-img')
-
-                });
-
-                $.each($('img'), function (i, v) {
-                    $(value).addClass('responsive')
-                })
+            $.each($('table'), function (index, value) {
+                $(value).addClass('cke_show_border')
 
             });
-        </script>
 
-        <% include partials/website_footer.ejs%>
+
+            $.each($('table'), function (index, value) {
+                $(value).parent().addClass('cke_show_borders')
+
+            });
+            $.each($('img'), function (index, value) {
+                $(value).addClass('responsive-img')
+
+            });
+
+            $.each($('img'), function (i, v) {
+                $(value).addClass('responsive')
+            })
+
+        });
+    </script>
+
+    <% include partials/website_footer.ejs%>
