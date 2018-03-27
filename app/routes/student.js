@@ -455,7 +455,7 @@ router.put('/:username/setprogress', async (req, res, next) => {
       return errorHandler.errorResponse('NOT_FOUND', 'user', next)
     }
 
-    foundUser = await userController.populateFieldsInUser(foundUser, [
+    foundUser = await userController.populateFieldsInUsers(foundUser, [
       'profile'
     ])
     if (!foundUser.profile) {

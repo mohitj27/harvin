@@ -166,26 +166,26 @@
                     <div class="releted-post">
                         <h2 class="widget-title">RELATED POST</h2>
                         <div class="section">
-                          <div class="row align-items-end">
-                              <%foundBlogs.forEach(function(blog){%>
-                                  <!-- Single Blog -->
-                                  <article class="card single-blog center-align col l4  col s6 " id="related-post-card">
-                                      <a href="/blog/<%=blog.url%>">
-                                          <!-- Blog Content-->
-                                          <div class="blgo-content">
-                                              <img class="card-img rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image">
-                                              <span class="posted-date">
-                                                  <%=blog.uploadDate%>
-                                              </span>
-                                          </div>
-                                          <h3 class="card-title">
-                                              <%=blog.blogTitle%>
-                                          </h3>
-                                      </a>
-                                  </article>
-                                  <!-- //Single Blog -->
-                                  <%})%>
-                          </div>
+                            <div class="row align-items-end">
+                                <%foundBlogs.forEach(function(blog){%>
+                                    <!-- Single Blog -->
+                                    <article class="card single-blog center-align col l4  col s6 " id="related-post-card">
+                                        <a href="/blog/<%=blog.url%>">
+                                            <!-- Blog Content-->
+                                            <div class="blgo-content">
+                                                <img class="card-img rounded-0" src="/blogImage/<%=blog.coverImgName%>" alt="Blog Image">
+                                                <span class="posted-date">
+                                                    <%=blog.uploadDate%>
+                                                </span>
+                                            </div>
+                                            <h3 class="card-title">
+                                                <%=blog.blogTitle%>
+                                            </h3>
+                                        </a>
+                                    </article>
+                                    <!-- //Single Blog -->
+                                    <%})%>
+                            </div>
                         </div>
                     </div>
                     <!-- ================= //Releted post ================= -->
@@ -215,10 +215,11 @@
                 $('head').append('<meta property="og:type" content="article" />')
                 $('head').append('<meta property="og:title content="Harvin academy" />')
 
- $.each($('table'), function (index, value) {
+                $.each($('table'), function (index, value) {
                     $(value).addClass('cke_show_border')
 
                 });
+
 
                 $.each($('table'), function (index, value) {
                     $(value).parent().addClass('cke_show_borders')
@@ -234,7 +235,6 @@
                 })
 
             });
-
         </script>
 
         <% include partials/website_footer.ejs%>
