@@ -78,7 +78,7 @@ $(function () {
             )
           )
         } else {
-          console.log('token found local', res)
+          // console.log('token found local', res)
           $('#slide-out').append(
             $(
               '<li class="no-padding"><a href="#!" ><i class="material-icons white-text">perm_identity</i>Profile</a></li><li class="no-padding"><a href="#!" onclick="logout()"><i class="material-icons white-text">exit_to_app</i>Logout</a></li>'
@@ -86,7 +86,7 @@ $(function () {
           )
         }
       } else {
-        console.log('token found', res)
+        // console.log('token found', res)
 
         $('#slide-out').append(
           $(

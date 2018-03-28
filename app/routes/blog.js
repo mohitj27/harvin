@@ -88,7 +88,7 @@ router.get(
     try {
       const foundBlog = await editBlogPromise(blogTitle)
       const data = await fileOpenPromise(foundBlog)
-      console.log('blog1', foundBlog)
+      // console.log('blog1', foundBlog)
       res.render('editBlog', {
         blogTitle: foundBlog.blogTitle,
         meta: foundBlog.meta,
@@ -136,7 +136,7 @@ router.post(
         return next(err || 'Internal Server Error')
       }
       coverImgName = path.basename(filePath)
-      console.log('cover', coverImgName)
+      // console.log('cover', coverImgName)
     }
     let blogTitle = req.body.title || ''
     let url = req.body.url || ''

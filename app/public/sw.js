@@ -1,5 +1,5 @@
 self.addEventListener('install', function(event) {
-  console.log('installing')
+  // console.log('installing')
 });
 // self.addEventListener('fetch',function(event){
 // console.log(event.request)
@@ -67,10 +67,9 @@ self.addEventListener('fetch',e =>{
         }
         return res.text().then(token => {
           r.headers.append("Authorization",`Bearer ${token}`);
-          console.log("added header");
           return fetch(r);
         })
       })
     }))
 
-}}); 
+}});

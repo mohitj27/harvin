@@ -18,7 +18,6 @@ const jsonwebtoken = require('jsonwebtoken')
 
 // Handle user detail update
 router.put('/:username', async (req, res, next) => {
-
   const username = req.body.username || ''
   const batchName = req.body.batch || ''
   const password = req.body.password || ''
@@ -36,18 +35,24 @@ router.put('/:username', async (req, res, next) => {
   try {
     // get chapters in batch
     let foundBatch = await batchController.findBatchByBatchName(batchName)
+    if (!foundBatch) {
+      return errorHandler.errorResponse('NOT_FOUND', 'batch', next)
+    }
     foundBatch = await batchController.populateFieldsInBatches(foundBatch, [
       'subjects'
     ])
     let foundUser = await userController.findUserByUsername(username)
     foundUser = await userController.populateFieldsInUsers(foundUser, [
-      'profile'
+      'profile.batch'
     ])
-
 
     if (!foundUser.profile) {
       return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
     }
+
+    if (foundUser.profile.batch && foundUser.profile.batch.id === foundBatch.id) return res.json(req.body)
+
+    await progressController.removeProgresses(foundUser.profile.progresses)
 
     let progresses = []
     progresses = await progressController.createProgressesForBatch(foundBatch)
@@ -395,12 +400,12 @@ router.get('/:username/progresses', async (req, res, next) => {
       'profile'
     ])
     if (!foundUser.profile) {
-      return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
+      return errorHandler.errorResponse('NOT_FOUND', 'user profile', next, true)
     }
 
     let foundBatch = await userController.findBatchOfUserByUsername(username)
     if (!foundBatch) {
-      return errorHandler.errorResponse('NOT_FOUND', 'user batch', next)
+      return errorHandler.errorResponse('NOT_FOUND', 'user batch', next, true)
     }
 
     let progressesToAdd = await progressController.updateProgressOfUserOfBatch(
@@ -457,7 +462,7 @@ router.put('/:username/setprogress', async (req, res, next) => {
     }
 
     foundUser = await userController.populateFieldsInUsers(foundUser, [
-      'profile'
+      'profile.progresses'
     ])
     if (!foundUser.profile) {
       return errorHandler.errorResponse('NOT_FOUND', 'user profile', next)
@@ -470,7 +475,8 @@ router.put('/:username/setprogress', async (req, res, next) => {
     if (status) progObj.status = status
     if (status) progObj.status = status
 
-    let updatedProg = await progressController.updateProgressByChapterId(
+    let updatedProg = await progressController.updateProgressByProgressesAndChapterId(
+      foundUser.profile.progresses,
       chapterId,
       progObj
     )

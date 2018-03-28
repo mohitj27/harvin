@@ -23,7 +23,7 @@ const store = createStore(rootReducer, compose(
     }
     getLoginStatus() {
       axios.get('/studentApp/home/loginState').then(res=>{
-        console.log(res)
+        // console.log(res)
       })
       return 'loggedout'
     }

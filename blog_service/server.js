@@ -37,7 +37,7 @@ io.on('connection', function (socket) {
     files = {}
   })
   socket.on('slice upload', (data) => {
-    console.log('hello', data)
+    // console.log('hello', data)
     if (!files[data.name]) {
       files[data.name] = Object.assign({}, struct, data)
       files[data.name].data = []
@@ -48,9 +48,9 @@ io.on('connection', function (socket) {
     // save the data
 
     fs.writeFile(__dirname + '/../../HarvinDb/blogImage/' + data.name, data.data, (err) => {
-      console.log('err', err)
-      console.log('files data', files[data.name])
-      console.log('twice problem')
+      // console.log('err', err)
+      // console.log('files data', files[data.name])
+      // console.log('twice problem')
       if (err) return socket.emit('upload error')
       socket.emit('end upload', data.name)
       files = {}
@@ -68,7 +68,7 @@ var con = mysql.createConnection({
 
 con.connect(function (err) {
   if (err) throw err
-  console.log('Connected!')
+  // console.log('Connected!')
 })
 
 // setting up body-parser
