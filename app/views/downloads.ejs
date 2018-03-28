@@ -1,75 +1,169 @@
-
-
 <%include partials/website_header.ejs%>
   <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
 
-<main>
-  <div class="container">
-    <div class="row">
-      <div class="col s12 m3 l3">
-        <br>
-        <h5 >FILTERS</h5>
-        <br>
-        <form action="">
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m3 l3">
+          <br>
+          <h5>FILTERS</h5>
+          <br>
+          <form action="">
             <div class="input-field">
               <select>
                 <option value="medical" selected>All</option>
-                <option value="medical" >Medical</option>
+                <option value="medical">Medical</option>
                 <option value="engineering">Engineering</option>
                 <option value="foundation">Foundation</option>
               </select>
               <label>Select Stream</label>
             </div>
 
-        </form>
-      </div>
-      <div class="col s12 m9 l9">
+          </form>
+        </div>
+        <div class="col s12 m9 l9">
 
-        <h5 class="center-align">Download materials</h5>
-        <hr>
-        <br>
-        <%if(downloads){%>
+          <h5 class="center-align">Download materials</h5>
+          <hr>
+          <br>
+          <%if(downloads){%>
 
-          <div class="row">
-        <%downloads.forEach((item,i)=>{%>
-            <div class="col s6 m4">
+            <div class="row">
+              <%downloads.forEach((item,i)=>{%>
+                <div class="col s6 m4">
 
-                <div class="card" id="download-list-card">
-                  <div class="card-image valign-wrapper">
-                    <img src="<%=item.cover%>"class="responsive-img">
-                  </div>
-                  <div class="card-stacked">
-                    <div class="card-content">
-                      <div class="card-title"><%=item.linkTitle%></div>
+                  <div class="card" id="download-list-card">
+                    <div class="card-image valign-wrapper">
+                      <img src="<%=item.cover%>" class="responsive-img">
                     </div>
-                    <div class="card-action">
-                      <a href="/admin/files/download/<%=item.linkTitle%>">Download</a><span><i class="material-icons">file_download</i><%=item.downloads%></span>
+                    <div class="card-stacked">
+                      <div class="card-content">
+                        <div class="card-title">
+                          <%=item.linkTitle%>
+                        </div>
+                      </div>
+                      <div class="card-action">
+                        <a class="modal-trigger" href="/admin/files/download/<%=item.linkTitle%>">Download</a>
+                        <span>
+                          <i class="material-icons">file_download</i>
+                          <%=item.downloads%>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <%})%>
+                <%})%>
             </div>
-        <%}%>
-
-
-
-
+            <%}%>
+        </div>
       </div>
     </div>
-  </div>
-</main>
+
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="center-align">Please fill Your Details to Download this content</h4>
+        <hr>
+        <br>
+        <div class="row">
+          <div class="input-field col s4 offset-s4">
+            <input autofocus id="name" type="text" required class="validate">
+            <label for="name">Name</label>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="input-field col s4 offset-s4">
+            <input id="emailId" type="email" required class="validate">
+            <label for="emailId">Email</label>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="input-field col s4 offset-s4">
+            <input id="phone" type="text" required class="validate">
+            <label for="phone">Contact</label>
+          </div>
+
+        </div>
+        <input type="hidden" name="purpose" id="purpose" value="Download" />
+      </div>
+      <div class="modal-footer">
+        <a href="#!" id="modal-action" class="modal-action waves-effect waves-green btn btn-flat">Agree</a>
+      </div>
+    </div>
+  </main>
 
   <%include partials/website_footer.ejs%>
 
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="../../js/materialize.js"></script>
-		<script src="js/init.js"></script>
+    <script src="js/init.js"></script>
     <script>
-      $(function(){
+      $(function () {
+        var href = ''
+        var modal = ''
         $('select').material_select();
+        $('.modal-trigger').on('click').on('click', function (e) {
+          href = $(this).attr('href')
+          if ($('#name').val() === '' || $('#phone').val() === '' || $('#emailId').val() === '') {
+            e.preventDefault()
+            $('#modal1').modal('open')
+          }
+        })
+
+        $('.modal-action').on('click').on('click', function (e) {
+          href = $(this).attr('href')
+          if ($('#name').val() === '' || $('#phone').val() === '' || $('#emailId').val() === '') {
+            e.preventDefault()
+            $('#modal1').modal('open')
+          }
+        })
+        $('.modal').modal({
+          dismissible: true, // Modal can be dismissed by clicking outside of the modal
+          opacity: .5, // Opacity of modal background
+          inDuration: 300, // Transition in duration
+          outDuration: 200, // Transition out duration
+          startingTop: '4%', // Starting top style attribute
+          endingTop: '10%', // Ending top style attribute
+          ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+            modal = modal
+            // $('#modal-action').prop('disabled', true)
+            // console.log('modal', modal.children('.modal-footer').children('a').attr('href', href), href)
+            // modal.children('.modal-footer').children('a').attr('href', href)
+          },
+          complete: function () {
+            console.log('complete')
+            if ($('#name').val() !== '' && $('#phone').val() !== '' && $('#emailId').val() !== '') {
+              modal.children('.modal-footer').children('a').attr('href', href)
+              console.log('eligible')
+              const newEnquiry = {}
+              const name = $('#name').val()
+              const emailId = $('#emailId').val()
+              const phone = $('#phone').val()
+              const centerName = $('#purpose').val()
+              if (!name || !emailId || !phone) return
+              newEnquiry.name = name
+              newEnquiry.emailId = emailId
+              newEnquiry.phone = phone
+              newEnquiry.centerName = centerName
+              console.log('will post')
+              $.ajax({
+                url: '/admin/enquiries',
+                method: 'post',
+                data: newEnquiry,
+                success: function (result) {
+
+                },
+                error: function (error) {
+
+                },
+                complete: function () {}
+              })
+            }
+          } // Callback for Modal close
+        });
       })
     </script>
