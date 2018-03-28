@@ -236,10 +236,11 @@ router.post('/signup', async (req, res, next) => {
 
   try {
     const foundBatch = await batchController.findBatchByBatchName(batchName)
-    const registerdUser = await userController.registerUser({
+    const newUserObj = new User({
       username,
       password
     })
+    const registerdUser = await userController.saveUser(newUserObj)
     let progresses = []
     progresses = await progressController.createProgressesForBatch(foundBatch)
 

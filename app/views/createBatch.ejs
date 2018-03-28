@@ -5,7 +5,10 @@
         <h3>Create / Update Batches</h3>
       </div>
       <hr>
-			<a href="/admin/subjects/new" class="new btn-floating tooltipped waves-effect waves-light red pulse" data-position="bottom" data-delay="50" data-tooltip="Create New Subject" class="btn-floating tooltipped waves-effect waves-light red"><i class="material-icons">add</i></a>
+      <a href="/admin/subjects/new" class="new btn-floating tooltipped waves-effect waves-light red pulse" data-position="bottom"
+        data-delay="50" data-tooltip="Create New Subject" class="btn-floating tooltipped waves-effect waves-light red">
+        <i class="material-icons">add</i>
+      </a>
 
       <form id="batchUpdateForm" method="post" action="/admin/batches/updateBatch">
         <div class="row">
@@ -18,13 +21,16 @@
           <div class="col s6">
             <div class="input-field">
               <select name="subjectId" multiple id="subjectsInBatch">
-      						<option value="" disabled selected>Choose Subjects</option>
-                    <%if(subjects){%>
-                        <%subjects.forEach(function(subject){%>
-                            <option value="<%=subject._id%>"><%=subject.subjectName%> of class <%=subject.className%></option>
-                        <%})%>
-                    <%}%>
-                  </select>
+                <option value="" disabled selected>Choose Subjects</option>
+                <%if(subjects){%>
+                  <%subjects.forEach(function(subject){%>
+                    <option value="<%=subject._id%>">
+                      <%=subject.subjectName%> of class
+                        <%=subject.className%>
+                    </option>
+                    <%})%>
+                      <%}%>
+              </select>
             </div>
 
           </div>
@@ -37,9 +43,48 @@
             </div>
 
           </div>
-          <div class="center-align"><button class="btn">Update selected subject</button></div>
+          <div class="center-align">
+            <button class="btn">Update selected subject</button>
+          </div>
       </form>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col s11 offset-s1">
+          <h3 style="text-align: center">List of all Existing Batches</h3>
+          <hr>
+          <table class="responsive-table centered highlight bordered" width="100%">
+            <thead>
+              <tr>
+                <th width="(100/6)%" style="text-align: center">Serial no.</th>
+                <th width="(100/6)%" style="text-align: center">Name</th>
+                <th width="(100/6)%" style="text-align: center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% batches.forEach(function (batch, i) { %>
+                <tr id="<%= batch._id %>">
+                  <td width="(100/6)%" style="text-align: center">
+                    <%= i + 1 %>
+                  </td>
+
+                  <td width="(100/6)%" style="text-align: center">
+                    <%= batch.batchName %>
+                  </td>
+
+                  <td width="(100/6)%" height="40px" style="text-align: center">
+                    <a onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Batch!">
+                      <i class="material-icons red-text">delete_forever</i>
+                    </a>
+                  </td>
+                </tr>
+                <% }) %>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
       </div>
   </main>
   <script src="/js/createBatch.js" charset="utf-8"></script>
-<% include partials/footer.ejs%>
+  <% include partials/footer.ejs%>
