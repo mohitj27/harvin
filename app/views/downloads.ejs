@@ -106,7 +106,7 @@
         var href = ''
         var modal = ''
         $('select').material_select();
-        $('.modal-trigger').on('click').on('click', function (e) {
+        $('.modal-trigger').on('click', function (e) {
           href = $(this).attr('href')
           if ($('#name').val() === '' || $('#phone').val() === '' || $('#emailId').val() === '') {
             e.preventDefault()
@@ -114,12 +114,15 @@
           }
         })
 
-        $('.modal-action').on('click').on('click', function (e) {
-          href = $(this).attr('href')
+        $('#modal-action').on('click', function (e) {
           if ($('#name').val() === '' || $('#phone').val() === '' || $('#emailId').val() === '') {
             e.preventDefault()
-            $('#modal1').modal('open')
+            Materialize.toast($('<span>Please fill all the required fields</span>'), 4000)
+            $('.toast:last').css('background-color', '#f44336')
+          } else {
+            $('#modal1').modal('close')
           }
+
         })
         $('.modal').modal({
           dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -130,15 +133,10 @@
           endingTop: '10%', // Ending top style attribute
           ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
             modal = modal
-            // $('#modal-action').prop('disabled', true)
-            // console.log('modal', modal.children('.modal-footer').children('a').attr('href', href), href)
-            // modal.children('.modal-footer').children('a').attr('href', href)
+            modal.children('.modal-footer').children('a').attr('href', href)
           },
           complete: function () {
-            console.log('complete')
             if ($('#name').val() !== '' && $('#phone').val() !== '' && $('#emailId').val() !== '') {
-              modal.children('.modal-footer').children('a').attr('href', href)
-              console.log('eligible')
               const newEnquiry = {}
               const name = $('#name').val()
               const emailId = $('#emailId').val()
@@ -149,7 +147,6 @@
               newEnquiry.emailId = emailId
               newEnquiry.phone = phone
               newEnquiry.centerName = centerName
-              console.log('will post')
               $.ajax({
                 url: '/admin/enquiries',
                 method: 'post',
