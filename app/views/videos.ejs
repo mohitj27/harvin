@@ -1,0 +1,46 @@
+<%include partials/website_header.ejs%>
+  <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+
+  <main>
+    <div class="container">
+      <h5 class="center-align">All Videos</h5>
+      <hr>
+      <br>
+      <%if(videos){%>
+
+        <div class="row">
+          <%videos.forEach((item,i)=>{%>
+            <div class="col s12 ">
+              <div class="card ">
+                <div class="card-content ">
+                  <span class="card-title">
+                    <%=item.title%>
+                  </span>
+                  <p>
+                    <%=item.description%>
+                  </p>
+                  <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLx0sYbCqOb8TBPRdmBHs5Iftvv9TPboYG"
+                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+                    <%-item.url%>
+                </div>
+                <div class="card-action">
+                    <a href="/videos/<%=item._id%>">Video link</a>
+                  </div>
+              </div>
+            </div>
+            <%})%>
+        </div>
+        <%}%>
+
+    </div>
+
+  </main>
+
+  <%include partials/website_footer.ejs%>
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../../js/materialize.js"></script>
+    <script src="js/init.js"></script>

@@ -1,0 +1,80 @@
+<% include partials/header.ejs%>
+
+	<main>
+		<div class="container">
+			<div class="row">
+				<h3>Upload Video</h3>
+
+				<form action="/admin/videos" method="POST" enctype="multipart/form-data">
+					<div class="input-field">
+						<input name="title" required id="title" type="text" required class="validate">
+						<label for="title">Video Title</label>
+					</div>
+					<div class="input-field">
+						<textarea id="description" name="description" class="materialize-textarea"></textarea>
+						<label for="description">Description</label>
+					</div>
+					<div class="input-field">
+						<textarea id="url" name="url" class="materialize-textarea"></textarea>
+						<label for="url">Video Embed code</label>
+					</div>
+					<input class="btn col push-l6" type="submit" />
+				</form>
+			</div>
+			<div class="row">
+				<h3>All Uploaded Videos</h3>
+				<table class="responsive-table centered highlight bordered" width="100%">
+					<thead>
+						<tr>
+							<th style="text-align: center">Serial no.</th>
+							<th style="text-align: center">Date</th>
+							<th style="text-align: center">Title</th>
+							<th style="text-align: center">
+								<i class="material-icons"><i class="material-icons">remove_red_eye</i></i>
+							</th>
+							<th style="text-align: center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% if (videos){ %>
+							<% videos.forEach((video, i) =>{ %>
+								<tr class="hoverable" id="<%=video._id%>">
+									<td style="text-align: center">
+										<%= i + 1 %>
+									</td>
+									<td style="text-align: center">
+										<%=video.date.toLocaleDateString('en-GB')%>
+									</td>
+									<td style="text-align: center">
+										<a href="/videos/<%=video._id%>">
+											<%=video.title%>
+										</a>
+									</td>
+									<td style="text-align: center">
+										<%=video.views%>
+									</td>
+									<td style="text-align: center">
+
+										<a onClick="confirmDelete(this)" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete This Video!">
+											<i class="material-icons red-text">delete_forever</i>
+										</a>
+
+									</td>
+
+
+								</tr>
+								<% }) %>
+									<% } %>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+	</main>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+
+
+	<% include partials/footer.ejs%>
+		<script type="text/javascript" src="/js/videoDb.js">
+		</script>

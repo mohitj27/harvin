@@ -1,0 +1,29 @@
+<%include partials/website_header.ejs%>
+  <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+
+  <main>
+    <div class="container">
+      <%if(video){%>
+      <br>
+      <br>
+      <h5 class="center-align"><%=video.title%></h5>
+
+        <%-video.url%>
+        <br><br>
+      <p class="center-align"><%=video.description%></p>
+
+          <%}%>
+        </div>
+
+    </div>
+
+  </main>
+
+  <%include partials/website_footer.ejs%>
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../../js/materialize.js"></script>
+    <script src="js/init.js"></script>
