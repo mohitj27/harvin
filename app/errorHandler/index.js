@@ -140,8 +140,16 @@ const notCenterOrAdmin = function (next) {
   )
 }
 
-const defaultError = function (next) {
-  generatError(500, 'INTERNAL_SERVER_ERROR', 'Something bad happened.', next)
+const defaultError = function (msg, next, toShowNotFound, toReport) {
+  msg = msg === null ? 'Something bad happened.' : msg
+  generatError(
+    500,
+    ERROR_TYPES.INTERNAL_SERVER_ERROR,
+    msg,
+    next,
+    toShowNotFound,
+    toReport
+  )
 }
 
 const invalidField = function (fieldName, next, toShowNotFound, toReport) {
@@ -167,29 +175,32 @@ const notFound = function (fieldName, next, toShowNotFound, toReport) {
 }
 
 const errorResponse = function (
-  name,
-  field,
+  name = '',
+  field = 'Something bad happened.',
   next,
   toShowNotFound = false,
   toReport = true
 ) {
   switch (name) {
-    case 'INVALID_FIELD':
+    case ERROR_TYPES.INVALID_FIELD:
       invalidField(field, next, toShowNotFound, toReport)
       break
-    case 'NOT_FOUND':
+    case ERROR_TYPES.NOT_FOUND:
       notFound(field, next, toShowNotFound, toReport)
       break
-    case 'NOT_A_CENTER':
+    case ERROR_TYPES.INTERNAL_SERVER_ERROR:
+      defaultError(field, next, toShowNotFound, toReport)
+      break
+    case ERROR_TYPES.NOT_A_CENTER:
       notCenter(next)
       break
-    case 'NOT_AN_ADMIN':
+    case ERROR_TYPES.NOT_AN_ADMIN:
       notAdmin(next)
       break
-    case 'NOT_A_CENTER_OR_ADMIN':
+    case ERROR_TYPES.NOT_A_CENTER_OR_ADMIN:
       notCenterOrAdmin(next)
       break
-    case 'NOT_LOGGED_IN':
+    case ERROR_TYPES.NOT_LOGGED_IN:
       notLoggedIn(next)
       break
     default:

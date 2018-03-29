@@ -205,6 +205,7 @@ app.use(function (err, req, res, next) {
       console.error('err_status: ', err.status)
       console.error('err_name: ', err.name)
       console.error('err_toShowNotFound: ', err.toShowNotFound)
+      console.error('err_toReport: ', err.toReport)
       console.error('errros: ', err.errors)
     }
     console.error('err_code: ', err.code)
