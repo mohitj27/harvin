@@ -2,11 +2,11 @@
 	<main>
 
 
-	<div class="container">
+		<div class="container">
 			<h3 class="center-align">Edit user</h3>
 			<hr>
 			<br>
-			<form action="admin/db/users/<%foundUser.id%>" method="post">
+			<form action="/admin/db/users/<%=foundUser.id%>" method="post">
 				<div class="row">
 					<div class="col s12 m6 input-field">
 						<input id="username" name="username" type="text" class="validate" disabled value="<%=foundUser.username%>">
@@ -14,22 +14,19 @@
 					</div>
 					<div class="col s12 m6 input-field">
 						<select multiple required title="Choose your role" name="role" id="role">
-							<option value="" disabled >Choose Your Role</option>
-							<option
-							<%if(foundUser.role.includes('admin')){%>
+							<option value="" disabled>Choose Your Role</option>
+							<option <%if(foundUser.role.includes( 'admin')){%>
 								selected
 								<%}%>
-							value="admin">Admin</option>
-							<option
-							<%if(foundUser.role.includes('centre')){%>
+									value="admin" disabled>Admin</option>
+							<option <%if(foundUser.role.includes( 'centre')){%>
 								selected
 								<%}%>
-							value="centre">Centre</option>
-							<option
-							<%if(foundUser.role.includes('student')){%>
+									value="centre" disabled>Centre</option>
+							<option <%if(foundUser.role.includes( 'student')){%>
 								selected
 								<%}%>
-							value="student">Student</option>
+									value="student">Student</option>
 						</select>
 					</div>
 
@@ -47,33 +44,72 @@
 					</div>
 					<div class="row">
 						<div class="col s12 m6 input-field">
-							<input id="phone" name="phone" type="number" min="1111111111" max="9999999999" class="validate" value="<%=profile.phone%>">
+							<input id="phone" name="phone" type="number" class="validate" value="<%=profile.phone%>">
 							<label for="phone">Phone</label>
 						</div>
 						<%if(userBatch){%>
 							<div class="col s12 m6 input-field">
 								<select name="batch">
-									<option value="" disabled >Choose your option</option>
+									<option value="" disabled>Choose your option</option>
 									<%foundBatches.forEach(function(batch){%>
 
-										<option
-											<%if(batch.batchName == userBatch.batchName){%>
+										<option <%if(batch.batchName == userBatch.batchName){%>
 											selected
 											<%}%>
-											value="<%=batch.batchName%>"><%=batch.batchName%> -- <%=batch.addedBy.username%> </option>
-									<%})%>
+												value="<%=batch.id%>"><%=batch.batchName%> at <%=batch.addedBy.username%> center </option>
+										<%})%>
 								</select>
 								<label>Select Batch</label>
 							</div>
-							<%}%>
-					</div>
-					<%}%>
+							<%} else {%>
+								<div class="col s12 m6 input-field">
+									<select name="batch">
+										<option value="" selected disabled>Choose your option</option>
+										<%foundBatches.forEach(function(batch){%>
 
-				<div class="center-align">
-					<button type="submit" class="btn">Submit</button>
-				</div>
+											<option value="<%=batch.id%>"><%=batch.batchName%> at <%=batch.addedBy.username%> center </option>
+											<%})%>
+									</select>
+									<label>Select Batch</label>
+								</div>
+								<%}%>
+					</div>
+					<%} else {  %>
+
+						<div class="row">
+							<div class="col s12 m6 input-field">
+								<input id="fullName" name="fullName" type="text" class="validate">
+								<label for="fullName">Full Name</label>
+							</div>
+							<div class="col s12 m6 input-field">
+								<input id="emailId" name="emailId" type="email" class="validate">
+								<label for="emailId">Email Id</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12 m6 input-field">
+								<input id="phone" name="phone" type="number" class="validate">
+								<label for="phone">Phone</label>
+							</div>
+							<div class="col s12 m6 input-field">
+								<select name="batch">
+									<option value="" disabled>Choose your option</option>
+									<%foundBatches.forEach(function(batch){%>
+
+										<option value="<%=batch.id%>"><%=batch.batchName%> at <%=batch.addedBy.username%> center </option>
+										<%})%>
+								</select>
+								<label>Select Batch</label>
+							</div>
+						</div>
+
+						<%}%>
+
+							<div class="center-align">
+								<button type="submit" class="btn">Submit</button>
+							</div>
 			</form>
-	</div>
+		</div>
 	</main>
 
 	<% include partials/footer.ejs%>

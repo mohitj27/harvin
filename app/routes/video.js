@@ -35,13 +35,11 @@ router.delete('/:videoId', middleware.isLoggedIn, async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  console.log('body', req.body)
   const date = Date.now()
   let newVideObj = req.body
 
   try {
     newVideObj.date = date
-    console.log('newVideobj', newVideObj)
     await videoController.newVideo(newVideObj)
     req.flash('success', 'Video uploaded successfully')
     res.redirect('/admin/videos')

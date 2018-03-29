@@ -65,8 +65,13 @@ router.post('/signup', async (req, res, next) => {
   })
   try {
     let createdUser = await userController.saveUser(newUser)
-
-    //
+    if (!createdUser) {
+      return errorHandler.errorResponse(
+        errorHandler.ERROR_TYPES.INTERNAL_SERVER_ERROR,
+        null,
+        next
+      )
+    }
 
     let createdInstitute
 
@@ -82,7 +87,7 @@ router.post('/signup', async (req, res, next) => {
     let updatedInstitute = await instituteController.updateFieldsInInstituteById(
       createdInstitute,
       {
-        centers: newUser
+        centers: createdUser
       }
     )
 
@@ -90,6 +95,14 @@ router.post('/signup', async (req, res, next) => {
       fullName: centerName,
       isCenterOfInstitute: updatedInstitute
     })
+
+    if (!createdProfile) {
+      return errorHandler.errorResponse(
+        errorHandler.ERROR_TYPES.INTERNAL_SERVER_ERROR,
+        null,
+        next
+      )
+    }
     await userController.updateFieldsInUserById(
       newUser,
       {},
@@ -100,11 +113,6 @@ router.post('/signup', async (req, res, next) => {
     //
     req.flash('success', 'Signup Succesful! Please Login to Continue')
     res.redirect('/admin/login')
-    // res.json({
-    //   success: true,
-    //   msg: 'Successfully created new user.',
-    //   user: createdUser
-    // })
   } catch (err) {
     let errMsg = errorHandler.getErrorMessage(err)
     if (errMsg.indexOf('duplicate')) {

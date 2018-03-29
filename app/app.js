@@ -193,7 +193,7 @@ app.use(function (err, req, res, next) {
       err.code !== 'credentials_bad_format' &&
       err.code !== 'credentials_bad_scheme' &&
       err.code !== 'invalid_token' &&
-      err.name.indexOf('BLOG') < 0 &&
+      err.toReport &&
       errorsRep
     ) {
       console.log('##########reported###########')
@@ -204,6 +204,8 @@ app.use(function (err, req, res, next) {
       console.error('err---------------: ', err.stack)
       console.error('err_status: ', err.status)
       console.error('err_name: ', err.name)
+      console.error('err_toShowNotFound: ', err.toShowNotFound)
+      console.error('err_toReport: ', err.toReport)
       console.error('errros: ', err.errors)
     }
     console.error('err_code: ', err.code)
@@ -225,13 +227,21 @@ app.use(function (err, req, res, next) {
     }
 
     if (flashUrl) {
-      if (err.name.indexOf('FOUND')) {
+      if (err.toShowNotFound) {
         return res.render('notFound')
       }
 
       req.flash('error', errMsg)
       res.redirect(flashUrl)
     } else {
+      if (err.toShowNotFound) {
+        return res
+          .status(404)
+          .json({
+            success: false,
+            msg: 'Sorry, the item you are looking for is NOT FOUND!!!'
+          })
+      }
       res.status(status).json(errMsg)
     }
   }

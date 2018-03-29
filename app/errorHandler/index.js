@@ -1,3 +1,13 @@
+const ERROR_TYPES = {
+  INVALID_FIELD: 'INVALID_FIELD',
+  NOT_FOUND: 'NOT_FOUND',
+  NOT_LOGGED_IN: 'NOT_LOGGED_IN',
+  NOT_A_CENTER: 'NOT_A_CENTER',
+  NOT_AN_ADMIN: 'NOT_AN_ADMIN',
+  NOT_A_CENTER_OR_ADMIN: 'NOT_A_CENTER_OR_ADMIN',
+  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR'
+}
+
 var getUniqueErrorMessage = function (err) {
   let output
 
@@ -72,13 +82,21 @@ var getErrorMessage = function (err) {
   return message
 }
 
-const generatError = function (status, name, message, next) {
+const generatError = function (
+  status,
+  name,
+  message,
+  next,
+  toShowNotFound = false,
+  toReport = true
+) {
   const err = new Error()
   err.status = status || 400
   err.name = name || 'BAD_REQUEST'
   err.message =
     message || 'Bad request! Please modify request to suitable format'
-
+  err.toShowNotFound = toShowNotFound
+  err.toReport = toReport
   next(err || 'Internal Server Error')
 }
 
@@ -91,52 +109,98 @@ const notLoggedIn = function (next) {
   )
 }
 
-function jsUcfirst(string) {
+function jsUcfirst (string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 const notCenter = function (next) {
-  generatError(403, 'NOT_A_CENTER', 'Forbidden! Please login into Center Account', next)
+  generatError(
+    403,
+    'NOT_A_CENTER',
+    'Forbidden! Please login into Center Account',
+    next
+  )
 }
 
 const notAdmin = function (next) {
-  generatError(403, 'NOT_AN_ADMIN', 'Forbidden! Please login into Admin Account', next)
+  generatError(
+    403,
+    'NOT_AN_ADMIN',
+    'Forbidden! Please login into Admin Account',
+    next
+  )
 }
 
 const notCenterOrAdmin = function (next) {
-  generatError(403, 'NOT_A_CENTER_OR_ADMIN', 'Forbidden! Please login into Admin or Center Account', next)
+  generatError(
+    403,
+    'NOT_A_CENTER_OR_ADMIN',
+    'Forbidden! Please login into Admin or Center Account',
+    next
+  )
 }
 
-const defaultError = function (next) {
-  generatError(500, 'INTERNAL_SERVER_ERROR', 'Something bad happened.', next)
+const defaultError = function (msg, next, toShowNotFound, toReport) {
+  msg = msg === null ? 'Something bad happened.' : msg
+  generatError(
+    500,
+    ERROR_TYPES.INTERNAL_SERVER_ERROR,
+    msg,
+    next,
+    toShowNotFound,
+    toReport
+  )
 }
 
-const invalidField = function (fieldName, next) {
-  generatError(400, 'INVALID ' + fieldName.toUpperCase(), 'Bad request! ' + jsUcfirst(fieldName) + ' not provided or invalid.', next)
+const invalidField = function (fieldName, next, toShowNotFound, toReport) {
+  generatError(
+    400,
+    'INVALID ' + fieldName.toUpperCase(),
+    'Bad request! ' + jsUcfirst(fieldName) + ' not provided or invalid.',
+    next,
+    toShowNotFound,
+    toReport
+  )
 }
 
-const notFound = function (fieldName, next) {
-  generatError(404, 'NOT FOUND ' + fieldName.toUpperCase(), jsUcfirst(fieldName) + ' not found or undefined.', next)
+const notFound = function (fieldName, next, toShowNotFound, toReport) {
+  generatError(
+    404,
+    fieldName.toUpperCase() + ' NOT FOUND',
+    jsUcfirst(fieldName) + ' not found or undefined.',
+    next,
+    toShowNotFound,
+    toReport
+  )
 }
 
-const errorResponse = function (name, field, next) {
+const errorResponse = function (
+  name = '',
+  field = 'Something bad happened.',
+  next,
+  toShowNotFound = false,
+  toReport = true
+) {
   switch (name) {
-    case 'INVALID_FIELD':
-      invalidField(field, next)
+    case ERROR_TYPES.INVALID_FIELD:
+      invalidField(field, next, toShowNotFound, toReport)
       break
-    case 'NOT_FOUND':
-      notFound(field, next)
+    case ERROR_TYPES.NOT_FOUND:
+      notFound(field, next, toShowNotFound, toReport)
       break
-    case 'NOT_A_CENTER':
+    case ERROR_TYPES.INTERNAL_SERVER_ERROR:
+      defaultError(field, next, toShowNotFound, toReport)
+      break
+    case ERROR_TYPES.NOT_A_CENTER:
       notCenter(next)
       break
-    case 'NOT_AN_ADMIN':
+    case ERROR_TYPES.NOT_AN_ADMIN:
       notAdmin(next)
       break
-    case 'NOT_A_CENTER_OR_ADMIN':
+    case ERROR_TYPES.NOT_A_CENTER_OR_ADMIN:
       notCenterOrAdmin(next)
       break
-    case 'NOT_LOGGED_IN':
+    case ERROR_TYPES.NOT_LOGGED_IN:
       notLoggedIn(next)
       break
     default:
@@ -147,5 +211,6 @@ const errorResponse = function (name, field, next) {
 
 module.exports = {
   getErrorMessage,
-  errorResponse
+  errorResponse,
+  ERROR_TYPES
 }

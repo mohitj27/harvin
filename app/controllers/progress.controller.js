@@ -1,32 +1,39 @@
 const Progress = require('./../models/Progress')
 Promise = require('bluebird')
 const mongoose = require('mongoose')
+const _ = require('lodash')
 const batchController = require('../controllers/batch.controller')
 const userController = require('../controllers/user.controller')
-const _ = require('lodash')
 mongoose.Promise = Promise
 
 const createProgress = function (newProgress) {
   return new Promise(function (resolve, reject) {
-    Progress
-      .createAsync(newProgress)
+    Progress.createAsync(newProgress)
       .then(createdProgress => resolve(createdProgress))
       .catch(err => reject(err))
   })
 }
 
-const updateProgressByChapterId = function (chapterId, updatedProg) {
+const updateProgressByProgressesAndChapterId = function (
+  progresses,
+  chapterId,
+  updatedProg
+) {
+  const progress = _.find(progresses, function (progress) {
+    return progress.chapter == chapterId
+  })
   return new Promise(function (resolve, reject) {
-    Progress
-      .findOneAndUpdate({
-        chapter: chapterId
-      }, {
+    Progress.findByIdAndUpdate(
+      progress.id,
+      {
         $set: updatedProg
-      }, {
+      },
+      {
         upsert: true,
         new: true,
         setDefaultsOnInsert: true
-      })
+      }
+    )
       .then(createdProgress => resolve(createdProgress))
       .catch(err => reject(err))
   })
@@ -52,11 +59,21 @@ const createProgressesForBatch = async function (batch) {
   return progresses
 }
 
+const removeProgresses = function (progresses) {
+  return new Promise(function (resolve, reject) {
+    Progress.remove({ _id: { $in: progresses } })
+      .then(() => resolve())
+      .catch(err => reject(err))
+  })
+}
+
 const updateProgressOfUserOfBatch = async (user, batch) => {
   let progresses = []
   progresses = await createProgressesForBatch(batch)
 
-  user = await userController.populateFieldsInUsers(user, ['profile.progresses'])
+  user = await userController.populateFieldsInUsers(user, [
+    'profile.progresses'
+  ])
 
   let usrPro = user.profile.progresses
   const isSameChapter = function (objVal, othVal) {
@@ -77,5 +94,6 @@ module.exports = {
   createProgress,
   createProgressesForBatch,
   updateProgressOfUserOfBatch,
-  updateProgressByChapterId
+  updateProgressByProgressesAndChapterId,
+  removeProgresses
 }

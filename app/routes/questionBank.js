@@ -503,7 +503,6 @@ router.get(
 )
 
 router.get('/class/:className', middleware.isLoggedIn, async (req, res, next) => {
-  console.log('userasdfcasdfs', req.user, req.headers)
 
   let className = req.params.className || ''
   if (!className || validator.isEmpty(className)) {
@@ -511,7 +510,6 @@ router.get('/class/:className', middleware.isLoggedIn, async (req, res, next) =>
   }
 
   try {
-    console.log('user', req.user)
     let foundClass = await QbController.findQbClassByClassNameAndUserId(
       className,
       req.user
