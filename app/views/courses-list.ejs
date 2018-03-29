@@ -46,11 +46,11 @@
         </div>
         <div class="col s12 m9 l9">
           <h5>COURSES</h5>
+          <div class="row">
           <%if(foundCourses){%>
-
             <%foundCourses.forEach((course,i)=>{%>
-              <div class="row">
-                <div class="col s12 m13 l2">
+
+                <div class="col s12 m13 l3">
                   <div class="card " id="course-list-card">
                     <div class="card-image">
                       <img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
@@ -63,13 +63,12 @@
                       <div class="card-action">
                         <a href="/courses-list/?title=<%=course.courseName%>">Read more...</a>
                       </div>
-
                   </div>
                 </div>
-              </div>
               <%})%>
                 <%}%>
 
+              </div>
 
 
 
