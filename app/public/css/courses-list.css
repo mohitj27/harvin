@@ -23,3 +23,8 @@ font-size: 100px !important;
 .card-desc-content{
   padding:10px;
 }
+
+.overflow{
+  overflow-y: scroll;
+  
+}

@@ -1,6 +1,6 @@
-self.addEventListener('install', function(event) {
+self.addEventListener('install', function (event) {
   // console.log('installing')
-});
+})
 // self.addEventListener('fetch',function(event){
 // console.log(event.request)
 //
@@ -53,23 +53,24 @@ self.addEventListener('install', function(event) {
 //   }
 // })
 
+self.addEventListener('fetch', e => {
+  let url = new URL(e.request.url)
+  let token = '';
+  if (url.origin === location.origin) {
+    let r = new Request(e.request)
 
-self.addEventListener('fetch',e =>{
-  let url = new URL(e.request.url);
-  let token = "";
-  if(url.origin === location.origin){
-    let r = new Request(e.request);
-
-    e.respondWith(caches.open('jwt-cache').then(cache => {
-      return cache.match("admin/token").then(res => {
-        if(!res){
-          return fetch(r);
-        }
-        return res.text().then(token => {
-          r.headers.append("Authorization",`Bearer ${token}`);
-          return fetch(r);
+    e.respondWith(
+      caches.open('jwt-cache').then(cache => {
+        return cache.match('admin/token').then(res => {
+          if (!res) {
+            return fetch(r)
+          }
+          return res.text().then(token => {
+            r.headers.append('Authorization', `Bearer ${token}`)
+            return fetch(r)
+          })
         })
       })
-    }))
-
-}});
+    )
+  }
+})
