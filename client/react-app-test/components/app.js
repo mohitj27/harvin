@@ -10,6 +10,7 @@ import Layout from './Layout'
 import Button from 'material-ui/Button';
 import thunk from 'redux-thunk'
 import {CircularProgress} from 'material-ui/Progress'
+import {connect} from 'react-redux'
 import axios from 'axios'
 
 const store = createStore(rootReducer, compose(
@@ -19,37 +20,29 @@ const store = createStore(rootReducer, compose(
   class App extends Component{
     constructor(props){
       super(props)
-      this.state={loginState:null}
     }
-    getLoginStatus() {
-      axios.get('/studentApp/home/loginState').then(res=>{
-        // console.log(res)
-      })
-      return 'loggedout'
-    }
-    componentDidMount() {
-      this.setState({loginState: this.getLoginStatus()})
 
-    }
     render(){
 
-          if (!this.state.loginState) {
-            return (<CircularProgress justify="center"/>)
-          }
-          if(this.state.loginState==='loggedout'){
+
+          if(!this.props.loginState){
           return (  <LoginComponent/>)
           }
 
-          if(this.state.loginState==='loggedin'){
+          if(this.props.loginState){
             return(
-              <Provider store={store}>
                 <MuiThemeProvider theme={HarvinTheme}>
                   <Layout/>
                 </MuiThemeProvider>
-              </Provider>
             )
           }
 
     }
   }
-export default App
+  function mapStateToProps(state){
+    console.log('is auth',state)
+    return {
+      loginState:state.login_reducer.isAuthenticated
+    }
+  }
+export default connect(mapStateToProps)(App)

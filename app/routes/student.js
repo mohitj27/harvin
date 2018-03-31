@@ -6,6 +6,7 @@ const _ = require('lodash')
 const User = require('../models/User')
 const errorHandler = require('../errorHandler')
 const userController = require('../controllers/user.controller')
+const studentController = require('../controllers/student.controller')
 const batchController = require('../controllers/batch.controller')
 const profileController = require('../controllers/profile.controller')
 const progressController = require('../controllers/progress.controller')
@@ -66,15 +67,27 @@ router.put('/:username', async (req, res, next) => {
       }
     )
 
-    return res.json(req.body)
+      return res.json(req.body)
   } catch (err) {
     next(err || 'Internal Server Error')
   }
 })
 
 // Handle user login -- for student
-router.post('/login', function (req, res) {
-  res.redirect('/student/home/')
+router.post('/login',async function (req, res,next) {
+  console.log('login',req.body)
+  try {
+    const studentToken= await studentController.loginWithJWT(req.body)
+    console.log(studentToken)
+    res.send(studentToken)
+  } catch (e) {
+    console.log(e)
+  next(e)
+  } finally {
+
+  }
+
+
 })
 
 // Handle user login -- for student

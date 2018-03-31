@@ -36,7 +36,9 @@ body {
 img {
   max-width: 100%;
   height: auto; }
-
+strong{
+  font-weight: normal! important;
+}
 a {
 
   background: transparent;
@@ -47,6 +49,7 @@ a:focus,
 a:active {
   text-decoration: none;
   outline: none; }
+
 
 
 

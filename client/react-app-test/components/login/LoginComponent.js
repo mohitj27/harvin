@@ -6,9 +6,12 @@ import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
 import PlayArrowIcon from 'material-ui-icons/PlayArrow'
+import {connect} from 'react-redux'
 import SkipNextIcon from 'material-ui-icons/SkipNext'
 import {Grid, Paper, TextField, Button} from 'material-ui'
+import axios from 'axios'
 import {FormControl, FormHelperText} from 'material-ui/Form'
+import {AuthAction} from '../../actions/login_action'
 
 const styles = theme => ({
   root:{
@@ -39,10 +42,21 @@ const styles = theme => ({
 class LoginComponent extends Component {
   constructor(props){
     super(props)
+    this.onChange=this.onChange.bind(this)
+    this.onSubmit=this.onSubmit.bind(this)
     this.state={
       username:'',
       password:'',
     }
+  }
+  onSubmit(e){
+    e.preventDefault()
+    console.log(this.props.login)
+    this.props.login(this.state)
+
+  }
+  onChange(e){
+    this.setState({[e.target.name]:e.target.value})
   }
   render() {
     const {classes, theme} = this.props
@@ -59,29 +73,43 @@ class LoginComponent extends Component {
           </Grid>
 
           <Grid item xs={12} sm={12} md={6}>
-            <div className={classes.details}>
-              <CardContent className={classes.content} justify="center">
-                <Grid container justify="center">
-                  <Grid item xs={12} justify="center">
-                    <Typography variant="display3">Harvin Login
-                    </Typography>
-
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField id="full-width" label="User Name" fullWidth value={this.state.username}  name="username" onChange={this.onChange}  margin="normal"/>
+            <form onSubmit={this.onSubmit} >
 
 
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField id="full-width" label="Password" fullWidth  value={this.state.username}  name="password" onChange={this.onChange}  margin="normal"/>
+                <div className={classes.details}>
+                  <CardContent className={classes.content} justify="center">
+
+                    <Grid container justify="center">
+
+                      <Grid item xs={12} justify="center">
+                        <Typography variant="display3">Harvin Login
+                        </Typography>
+
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField  label="Username" fullWidth value={this.state.username}  name="username" onChange={this.onChange}  type="text" margin="normal"/>
 
 
-                  </Grid>
-                </Grid>
-              </CardContent>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField  label="Password" fullWidth  value={this.state.password}  name="password" onChange={this.onChange} type="password" margin="normal"/>
 
-            </div>
 
+                      </Grid>
+                      <Grid item xs={12}>
+
+                        <Button type="submit" className="btn">Submit</Button>
+
+
+
+                      </Grid>
+                    </Grid>
+
+                  </CardContent>
+
+                </div>
+
+            </form>
           </Grid>
 
 
@@ -98,4 +126,13 @@ LoginComponent.propTypes = {
   theme: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, {withTheme: true})(LoginComponent)
+function mapStateToProps (state){
+  return{}
+}
+function mapDispatchToProps(dispatch){
+  return {
+    login:user=>dispatch(AuthAction(user))
+  }
+
+}
+export default withStyles(styles,{theme:true})(connect(mapStateToProps,mapDispatchToProps)(LoginComponent))

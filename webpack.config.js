@@ -16,5 +16,8 @@ module.exports={
       }
     ]
   },
-  mode:"development"
+  node:{
+    net:'empty',
+    dns:'empty'
+  }
 }

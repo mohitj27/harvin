@@ -38,7 +38,8 @@ const styles = theme => ({
     position: 'absolute',
     top: 70,
     width: `calc(100% - ${drawerWidth + 10}px)`,
-    left: 90
+    left: 90,
+    zIndex:2
   }
 })
 
@@ -55,9 +56,7 @@ class Layout extends React.Component {
     return (<BrowserRouter>
 
       <Fragment>
-        <Header/>
-
-        <main className={classes.main}>
+        <main className={classes.main} >
 
           <Route path='/student/home/' exact render={() => (<Home/>)}/>
           <Route path='/student/home/createTest' exact render={() => (<CreateTest/>)}/>
@@ -65,6 +64,9 @@ class Layout extends React.Component {
           <Route path='/student/home/login' exact render={() => (<LoginComponent/>)}/>
 
         </main>
+        <Header/>
+
+
       </Fragment>
     </BrowserRouter>)
   }
