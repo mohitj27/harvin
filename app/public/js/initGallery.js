@@ -90,7 +90,7 @@ function displayPagination(galleryLength) {
 
 function makeGalleryElements(image) {
   let $imageElement = $("<div><img src=" + image.src + "></div>")
-  $imageElement.addClass("col s12 m4 l3 gallery-image")
+  $imageElement.addClass("col s6 m4 l3 gallery-image")
   $imageElement.children().addClass("responsive-img materialboxed")
   $('.gallery-container').append($imageElement)
   $('.materialboxed').materialbox();
