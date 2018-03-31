@@ -437,16 +437,12 @@ ul#horizontal-list {
     background-color: white;
   }
   #bot-card1{
-    background-image: url(./../images/banner_1.png);
   }
   #bot-card2{
-    background-image: url(./../images/banner_3.png);
   }
   #bot-card3{
-    background-image: url(./../images/banner_2.png);
   }
   #bot-card4{
-    background-image: url(./../images/banner_4.png);
   }
   #logo-card{
     background: url(./../images/harvin.png);
@@ -459,7 +455,7 @@ ul#horizontal-list {
 
   }
   #harvin-card-panel2{
-    background: url(./../images/banner_5.png);
+    /* background: url(./../images/banner_5.png); */
 
     background-position: center center;
     background-repeat: no-repeat;

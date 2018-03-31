@@ -43,10 +43,10 @@
 								<label for="courseFrequency">Course Frequency</label>
 							</div>
 						</div>
-						<input id="courseDescriptionHidden" type="hidden" value="<%=foundCourse.courseDescription%>"  class="">
+						<!-- <input id="courseDescriptionHidden" type="hidden" value="<%=foundCourse.courseDescription%>"  class=""> -->
 						<div class="row">
 							<div class="input-field">
-								<textarea id="courseDescription" name="courseDescription"  value="<%=foundCourse.courseDescription%>" required class="materialize-textarea"></textarea>
+								<textarea id="courseDescription" name="courseDescription"  required class="materialize-textarea"> <%=foundCourse.courseDescription%></textarea>
 								<label for="courseDescription">Course Description</label>
 							</div>
 						</div>
@@ -82,12 +82,7 @@
 			</div>
 		</main>
 
-		<script>
-
-			$(function(){
-				$('#courseDescription').val($('#courseDescriptionHidden').val());
-				$('#courseDescription').trigger('autoresize');
-			})
-		</script>
 
 		<% include partials/footer.ejs%>
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="/js/materialize.js"></script>
