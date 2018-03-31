@@ -56,7 +56,6 @@ router.get('/vms/phone/:phone', async (req, res, next) => {
 router.get(
   '/vms',
   middleware.isLoggedIn,
-  middleware.isCentreOrAdmin,
   (req, res) => {
     res.render('newVisitor')
   }

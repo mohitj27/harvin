@@ -9,7 +9,7 @@ const linkController = require('../controllers/link.controller')
 const topicController = require('../controllers/topic.controller')
 const chapterController = require('../controllers/chapter.controller')
 const subjectController = require('../controllers/subject.controller')
-const classController = require('../controllers/class.controller')
+const classController = require('../controllers/class.controller');
 const router = express.Router()
 
 const FILE_DIR = path.normalize(__dirname + '/../../../HarvinDb/FileUploads/')
