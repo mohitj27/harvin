@@ -5,8 +5,8 @@ var config = {
     mongo: {
       host: '127.0.0.1',
       port: 27017,
-      dbName: 'harvin'
-    }
+      dbName: 'harvin',
+    },
   },
   test: {
     mode: 'test',
@@ -14,8 +14,8 @@ var config = {
     mongo: {
       host: '127.0.0.1',
       port: 27017,
-      dbName: 'harvin-test'
-    }
+      dbName: 'harvin-test',
+    },
   },
   production: {
     mode: 'production',
@@ -23,10 +23,10 @@ var config = {
     mongo: {
       host: '127.0.0.1',
       port: 27017,
-      dbName: 'harvin'
-    }
-  }
-}
+      dbName: 'harvin',
+    },
+  },
+};
 module.exports = function (mode) {
-  return config[mode || process.argv[2] || 'local'] || config.local
-}
+  return config[mode || process.argv[2] || 'local'] || config.local;
+};
