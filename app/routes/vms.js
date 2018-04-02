@@ -66,7 +66,7 @@ router.post(
   middleware.isLoggedIn,
   middleware.isCentreOrAdmin,
   (req, res, next) => {
-    console.log('body', req.body)
+    // console.log('body', req.body)
     const name = req.body.name
     const phone = req.body.phone || ''
     const emailId = req.body.emailId || ''

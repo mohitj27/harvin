@@ -223,7 +223,7 @@ router.get(
   async (req, res, next) => {
     try {
       const foundVisitors = await visitorController.findAllVisitors()
-      console.log('visitors', foundVisitors)
+      // console.log('visitors', foundVisitors)
       res.render('visitorDb', {
         visitors: foundVisitors
       })
