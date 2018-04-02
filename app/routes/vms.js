@@ -66,10 +66,11 @@ router.post(
   middleware.isLoggedIn,
   middleware.isCentreOrAdmin,
   (req, res, next) => {
+    // console.log('body', req.body)
     const name = req.body.name
     const phone = req.body.phone || ''
     const emailId = req.body.emailId || ''
-    const classs = req.body.classs
+    const classs = req.body.classs || ''
     const date = moment(Date.now())
       .tz('Asia/Kolkata')
       .format('MMMM Do YYYY, h:mm:ss a')
