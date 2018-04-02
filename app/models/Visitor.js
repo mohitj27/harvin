@@ -10,6 +10,11 @@ var visitorSchema = new Schema({
     required: true
   },
 
+  classs: {
+    type: String,
+    required: true
+  },
+
   phone: {
     type: String,
     required: true,

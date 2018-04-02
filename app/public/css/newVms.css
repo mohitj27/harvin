@@ -6,9 +6,16 @@
   margin: 0 10px;
   border-radius: 100px;
 }
+.class-selector-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 
 #passout{
-  margin-top: 0;
+  margin-top: 10px;
+  font-size: 16px;
 }
 
 .active-class{
@@ -179,4 +186,8 @@ span{
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.class-text{
+  /* font-size: 20px; */
 }
