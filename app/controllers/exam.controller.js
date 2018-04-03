@@ -1,51 +1,51 @@
-const Exam = require('./../models/Exam')
-Promise = require('bluebird')
-const mongoose = require('mongoose')
-mongoose.Promise = Promise
+const Exam = require('./../models/Exam');
+Promise = require('bluebird');
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
 
 const findExamsByUserId = function (user) {
   return new Promise(function (resolve, reject) {
     Exam.findAsync({
-      addedBy: user._id
+      addedBy: user._id,
     })
       .then(foundExams => resolve(foundExams))
-      .catch(err => reject(err))
-  })
-}
+      .catch(err => reject(err));
+  });
+};
 
 const findExamsOfBatchByBatchId = function (batchId) {
   return new Promise(function (resolve, reject) {
     Exam
       .findAsync({
-        batch: batchId
+        batch: batchId,
       })
       .then(foundExams => resolve(foundExams))
-      .catch(err => reject(err))
-  })
-}
+      .catch(err => reject(err));
+  });
+};
 
 const findExamById = function (examId) {
   return new Promise(function (resolve, reject) {
     Exam.findByIdAsync(examId)
       .then(foundExam => resolve(foundExam))
-      .catch(err => reject(err))
-  })
-}
+      .catch(err => reject(err));
+  });
+};
 
 const populateFieldsInExams = function (exams, path) {
   return new Promise(function (resolve, reject) {
     Exam
       .deepPopulate(exams, path)
       .then(exams => resolve(exams))
-      .catch(err => resolve(err))
-  })
-}
+      .catch(err => resolve(err));
+  });
+};
 
 const createOrUpdateExamByExamNameAndUserId = function (newExam, user) {
   return new Promise(function (resolve, reject) {
     Exam.findOneAndUpdateAsync({
       examName: newExam.examName,
-      addedBy: user
+      addedBy: user,
     }, {
       $set: {
         batch: newExam.batchId,
@@ -55,17 +55,17 @@ const createOrUpdateExamByExamNameAndUserId = function (newExam, user) {
         negativeMarks: newExam.negativeMarks,
         maximumMarks: newExam.maximumMarks,
         totalTime: newExam.totalTime,
-        addedBy: user
-      }
+        addedBy: user,
+      },
     }, {
       upsert: true,
       new: true,
-      setDefaultsOnInsert: true
+      setDefaultsOnInsert: true,
     })
       .then(updatedExam => resolve(updatedExam))
-      .catch(err => reject(err))
-  })
-}
+      .catch(err => reject(err));
+  });
+};
 
 const updateExamById = function (examId, newExam, user) {
   return new Promise(function (resolve, reject) {
@@ -78,25 +78,25 @@ const updateExamById = function (examId, newExam, user) {
         negativeMarks: newExam.negativeMarks,
         maximumMarks: newExam.maximumMarks,
         totalTime: newExam.totalTime,
-        addedBy: user
-      }
+        addedBy: user,
+      },
     }, {
       upsert: true,
       new: true,
-      setDefaultsOnInsert: true
+      setDefaultsOnInsert: true,
     })
       .then(updatedExam => resolve(updatedExam))
-      .catch(err => reject(err))
-  })
-}
+      .catch(err => reject(err));
+  });
+};
 
 const deleteExamById = function (examId) {
   return new Promise(function (resolve, reject) {
     Exam.findOneAndRemoveAsync(examId)
       .then(removedExam => resolve(removedExam))
-      .catch(err => resolve(err))
-  })
-}
+      .catch(err => resolve(err));
+  });
+};
 
 module.exports = {
   findExamsByUserId,
@@ -105,5 +105,5 @@ module.exports = {
   updateExamById,
   deleteExamById,
   findExamsOfBatchByBatchId,
-  populateFieldsInExams
-}
+  populateFieldsInExams,
+};
