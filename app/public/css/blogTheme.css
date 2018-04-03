@@ -2,6 +2,22 @@
   /* margin-left: 30px; */
 }
 
+@media only screen and (max-width:364px) {
+  nav ul a, nav .brand-logo {
+    font-size: large !important
+  }
+}
+
+.active-chip {
+  background-color: #13b38b;
+  color: white;
+}
+
+.pagination-wrapper{
+  display: flex;
+  justify-content: center;
+}
+
 .blog-title {
   font-family: "Open Sans', sans-serif !important";
 }

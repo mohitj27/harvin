@@ -53,13 +53,9 @@ router.get('/vms/phone/:phone', async (req, res, next) => {
   }
 })
 
-router.get(
-  '/vms',
-  middleware.isLoggedIn,
-  (req, res) => {
-    res.render('newVisitor')
-  }
-)
+router.get('/vms', middleware.isLoggedIn, (req, res) => {
+  res.render('newVisitor')
+})
 
 router.post(
   '/vms',
@@ -355,25 +351,34 @@ router.get('/blog/:url', (req, res, next) => {
 })
 
 router.get('/blog', (req, res, next) => {
-  Blog.find({})
-    .sort({
-      uploadDateUnix: -1
-    })
-    .populate({
-      path: 'author',
-      modal: 'User'
-    })
-    .exec(function (err, foundBlogs) {
-      if (err) {
-        console.log(err)
-        next(new errors.generic())
-      } else {
-        res.render('blogTheme', {
-          foundBlogs: foundBlogs
+  const perPage = 10
+  let page = req.query.page || 0
+  page = page <= 1 ? 1 : page
+
+  Blog.count({})
+    .then(count => {
+      count = Math.ceil(count / perPage)
+      Blog.find({})
+        .limit(perPage)
+        .skip(perPage * (page - 1))
+        .sort({
+          uploadDateUnix: -1
         })
-      }
+        .populate({
+          path: 'author',
+          modal: 'User'
+        })
+        .exec()
+        .then(foundBlogs =>
+          res.render('blogTheme', {foundBlogs, count, page})
+        )
+        .catch(err => next(err || new Error('Internal Server Error')))
+    })
+    .catch(err => {
+      next(err || new Error('Internal Server Error'))
     })
 })
+
 router.get('/forum', async (req, res, next) => {
   if (!req.query.title) {
     try {
