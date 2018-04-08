@@ -53,7 +53,6 @@ userSchema.pre('save', function (next) {
 
 // Create method to compare password input to password saved in database
 userSchema.methods.comparePassword = function (pw, cb) {
-  console.log(this)
   bcrypt.compare(pw, this.password, function (err, isMatch) {
     if (err) {
       return cb(err)

@@ -436,6 +436,10 @@ ul#horizontal-list {
     background-size:cover;
     background-color: white;
   }
+
+  #removeThisId{
+    margin-top: 15vh;
+  }
   #bot-card1{
   }
   #bot-card2{
