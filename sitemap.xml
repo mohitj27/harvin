@@ -8,50 +8,193 @@
 
 
 <url>
-  <loc>http://harvin.academy/</loc>
-  <lastmod>2018-01-29T16:44:48+00:00</lastmod>
+  <loc>https://harvin.academy/</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>http://harvin.academy/aboutus</loc>
-  <lastmod>2018-01-29T16:44:48+00:00</lastmod>
+  <loc>https://harvin.academy/aboutus</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://harvin.academy/centers</loc>
-  <lastmod>2018-01-29T16:44:48+00:00</lastmod>
+  <loc>https://harvin.academy/centers</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://harvin.academy/courses</loc>
-  <lastmod>2018-01-29T16:44:48+00:00</lastmod>
+  <loc>https://harvin.academy/courses-list</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://harvin.academy/gallery</loc>
-  <lastmod>2018-01-29T16:44:48+00:00</lastmod>
+  <loc>https://harvin.academy/gallery</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://harvin.academy/results</loc>
-  <lastmod>2018-01-29T16:44:48+00:00</lastmod>
+  <loc>https://harvin.academy/videos</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://harvin.academy/team</loc>
-  <lastmod>2018-01-29T16:44:48+00:00</lastmod>
+  <loc>https://harvin.academy/downloads</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://harvin.academy/careers</loc>
-  <lastmod>2018-01-29T16:44:48+00:00</lastmod>
+  <loc>https://harvin.academy/results</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://harvin.academy/tnc</loc>
-  <lastmod>2018-01-29T16:44:48+00:00</lastmod>
+  <loc>https://harvin.academy/team</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-
-
+<url>
+  <loc>https://harvin.academy/courses-list/?title=CRASH%20COURSE</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/courses-list/?title=Master%20Mind</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/tnc</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/courses-list/?title=YOUNG%20BUDS</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/courses-list/?title=BLOSSOM</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/courses-list/?title=PRODIGY</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/courses-list/?title=WIZARD</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/courses-list/?title=MASTERMIND</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/videos/5abb7ba2f1ec352be795bf78</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/videos/5abb7c4ef1ec352be795bf79</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/videos/5abb7c99f1ec352be795bf7a</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/admin/files/download/ClassXSamplePaper</loc>
+  <lastmod>2018-03-15T07:57:51+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/physics-topics-neet-2018</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/jipmer-m.b.b.s-entrance-exam-2018</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/b.a.m.s</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/bvp-cet</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/how-to-deal-with-failure-and-disappointment</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/index.html</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/afmc-admissions-2018</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/harvin&#39;s-harvest-and-heart</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/top-7-medical-colleges-in-north-india</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/kishore-vaigyanik-protsahan-yojana-(kvpy)</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/tips-to-learn-formulaes</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/?page=1</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/?page=2</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/?page=3</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/blog/?page=4</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://harvin.academy/admin/login</loc>
+  <lastmod>2018-04-06T08:48:29+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
 </urlset>
