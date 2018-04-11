@@ -96,7 +96,6 @@
                 <main class="col-md-6 blog-area">
                     <!-- Single Blog -->
                     <% foundBlogs.forEach((blog, i) => { %>
-                        <%if(i<4){%>
                             <article class="card single-blog text-center mt-5 mb-5 pt-0 pb-3" href="/blog/?title=<%=blog.url%>" href="/blog/<%=blog.url%>">
                                 <mark class="catagory">
                                     <%=blog.category%>
@@ -133,54 +132,7 @@
                             </article>
 
 
-                            <%}%>
-                                <%if(i>=4){%>
-                                    <article class="card single-blog text-center mt-5 mb-5 pt-0" style="display: none;">
-                                        <mark class="catagory">
-                                            <%=blog.category%>
-                                        </mark>
-                                        <!-- Blog Content-->
-                                        <a href="/blog/<%=blog.url%>">
-                                            <div class="blgo-content content" style="background-image:url(/blogImage/<%=blog.coverImgName%>)">
-                                                <span class="posted-date">
-                                                    <%=blog.uploadDate%>
-                                                </span>
-                                            </div>
-                                        </a>
-                                        <!-- Card Body -->
 
-                                        <div class="card-body p-0">
-
-                                            <!-- <%-blog.blogContent%> -->
-
-                                            <h2 class="card-title h1 blog-title">
-                                                <%=blog.blogTitle%>
-                                            </h2>
-
-                                            <a href="/blog/<%=blog.url%>" class="read-more double-line">read more</a>
-                                            <!-- Card Footer -->
-                                        </div>
-                                        <div class="card-footer border-0 p-0 bg-white">
-                                            <div class="share-icons">
-                                                <span>Share:</span>
-                                                <a href="index.html#">
-                                                    <i class="fa fa-facebook"></i>
-                                                </a>
-                                                <a href="index.html#">
-                                                    <i class="fa fa-twitter"></i>
-                                                </a>
-                                                <a href="index.html#">
-                                                    <i class="fa fa-google-plus"></i>
-                                                </a>
-                                                <a href="index.html#">
-                                                    <i class="fa fa-pinterest"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </article>
-
-
-                                    <%}%>
                                         <% }) %>
                                             <!-- //Single Blog -->
                                             <!-- //Pagination -->
