@@ -1,8 +1,10 @@
 $(function() {
 
   $('.newBlogForm').submit(function () {
-    let editordata = $('#editor1').html()
-    $('#editordata').val(editordata)
+    // let editordata = $('#editor1').html()
+    var data = CKEDITOR.instances.editor1.getData();
+    // console.log('data', data);
+    $('#editordata').val(data)
     // console.log('editordata',$('#editordata').val());
   })
 
