@@ -103,7 +103,6 @@
             </div>
           </div>
         </div>
-
         <div class="row">
           <div class="col s12 m12 l12">
             <div class="card horizontal desc white z-depth-4">
@@ -113,9 +112,9 @@
                 <div class="card-desc-title">
                   <a href="#!">Course Description</a>
                 </div>
-                <p class="left">
+                <pre class="left multiple-line">
                   <%=foundCourse.courseDescription%>
-                </p>
+                </pre>
               </div>
             </div>
           </div>
@@ -124,9 +123,10 @@
     </div>
   </main>
 
+  
+  
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="../../js/materialize.js"></script>
+  <script src="/js/courses-desc.js"></script>
+  
   <%include partials/website_footer.ejs%>
-
-
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="../../js/materialize.js"></script>
-    <script src="/js/courses-desc.js"></script>
