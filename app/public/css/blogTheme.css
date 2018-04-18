@@ -3,7 +3,8 @@
 }
 
 @media only screen and (max-width:364px) {
-  nav ul a, nav .brand-logo {
+  nav ul a,
+  nav .brand-logo {
     font-size: large !important
   }
 }
@@ -13,7 +14,7 @@
   color: white;
 }
 
-.pagination-wrapper{
+.pagination-wrapper {
   display: flex;
   justify-content: center;
 }
@@ -43,21 +44,25 @@ aside {
   max-height: 500px;
   padding: 0px !important;
 }
+
 nav {
   position: fixed;
   z-index: 100;
   border-bottom: 1px #efefef solid;
   background-color: white;
 }
+
 nav .brand-logo.center {
   color: #13b38b;
   font-weight: bolder;
   font-size: x-large;
 }
+
 /* .share-box{
   margin-left: 0px;
   margin-right: 0px;
 } */
+
 iframe[id^="twitter"] {
   margin-top: -12px;
 }
@@ -65,11 +70,13 @@ iframe[id^="twitter"] {
 .cke_editable {
   cursor: text;
 }
+
 .cke_editable img,
 .cke_editable input,
 .cke_editable textarea {
   cursor: default;
 }
+
 img.cke_flash {
   background-image: url(https://harvin.academy/ckeditor/plugins/flash/images/placeholder.png?t=HBDD);
   background-position: center center;
@@ -78,6 +85,7 @@ img.cke_flash {
   width: 80px;
   height: 80px;
 }
+
 .cke_editable form {
   border: 1px dotted #ff0000;
   padding: 2px;
@@ -91,6 +99,7 @@ img.cke_hidden {
   width: 16px !important;
   height: 16px !important;
 }
+
 img.cke_iframe {
   background-image: url(https://harvin.academy/ckeditor/plugins/iframe/images/placeholder.png?t=HBDD);
   background-position: center center;
@@ -99,20 +108,20 @@ img.cke_iframe {
   width: 80px;
   height: 80px;
 }
+
 .cke_contents_ltr a.cke_anchor,
 .cke_contents_ltr a.cke_anchor_empty,
 .cke_editable.cke_contents_ltr a[name],
 .cke_editable.cke_contents_ltr a[data-cke-saved-name] {
-  background: url(https://harvin.academy/ckeditor/plugins/link/images/anchor.png?t=HBDD)
-    no-repeat left center;
+  background: url(https://harvin.academy/ckeditor/plugins/link/images/anchor.png?t=HBDD) no-repeat left center;
   border: 1px dotted #00f;
   background-size: 16px;
   padding-left: 18px;
   cursor: auto;
 }
+
 .cke_contents_ltr img.cke_anchor {
-  background: url(https://harvin.academy/ckeditor/plugins/link/images/anchor.png?t=HBDD)
-    no-repeat left center;
+  background: url(https://harvin.academy/ckeditor/plugins/link/images/anchor.png?t=HBDD) no-repeat left center;
   border: 1px dotted #00f;
   background-size: 16px;
   width: 16px;
@@ -120,20 +129,20 @@ img.cke_iframe {
   height: 1.15em;
   vertical-align: text-bottom;
 }
+
 .cke_contents_rtl a.cke_anchor,
 .cke_contents_rtl a.cke_anchor_empty,
 .cke_editable.cke_contents_rtl a[name],
 .cke_editable.cke_contents_rtl a[data-cke-saved-name] {
-  background: url(https://harvin.academy/ckeditor/plugins/link/images/anchor.png?t=HBDD)
-    no-repeat right center;
+  background: url(https://harvin.academy/ckeditor/plugins/link/images/anchor.png?t=HBDD) no-repeat right center;
   border: 1px dotted #00f;
   background-size: 16px;
   padding-right: 18px;
   cursor: auto;
 }
+
 .cke_contents_rtl img.cke_anchor {
-  background: url(https://harvin.academy/ckeditor/plugins/link/images/anchor.png?t=HBDD)
-    no-repeat right center;
+  background: url(https://harvin.academy/ckeditor/plugins/link/images/anchor.png?t=HBDD) no-repeat right center;
   border: 1px dotted #00f;
   background-size: 16px;
   width: 16px;
@@ -141,9 +150,9 @@ img.cke_iframe {
   height: 1.15em;
   vertical-align: text-bottom;
 }
+
 div.cke_pagebreak {
-  background: url(https://harvin.academy/ckeditor/plugins/pagebreak/images/pagebreak.gif?t=HBDD)
-    no-repeat center center !important;
+  background: url(https://harvin.academy/ckeditor/plugins/pagebreak/images/pagebreak.gif?t=HBDD) no-repeat center center !important;
   clear: both !important;
   width: 100% !important;
   border-top: #999 1px dotted !important;
@@ -152,16 +161,15 @@ div.cke_pagebreak {
   height: 7px !important;
   cursor: default !important;
 }
+
 .cke_show_blocks h6:not([contenteditable="false"]):not(.cke_show_blocks_off),
 .cke_show_blocks h5:not([contenteditable="false"]):not(.cke_show_blocks_off),
 .cke_show_blocks h4:not([contenteditable="false"]):not(.cke_show_blocks_off),
 .cke_show_blocks h3:not([contenteditable="false"]):not(.cke_show_blocks_off),
 .cke_show_blocks h2:not([contenteditable="false"]):not(.cke_show_blocks_off),
 .cke_show_blocks h1:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks
-  blockquote:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks
-  address:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks blockquote:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks address:not([contenteditable="false"]):not(.cke_show_blocks_off),
 .cke_show_blocks pre:not([contenteditable="false"]):not(.cke_show_blocks_off),
 .cke_show_blocks div:not([contenteditable="false"]):not(.cke_show_blocks_off),
 .cke_show_blocks p:not([contenteditable="false"]):not(.cke_show_blocks_off) {
@@ -169,123 +177,120 @@ div.cke_pagebreak {
   border: 1px dotted gray;
   padding-top: 8px;
 }
+
 .cke_show_blocks h6:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_h6.png?t=HBDD);
 }
+
 .cke_show_blocks h5:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_h5.png?t=HBDD);
 }
+
 .cke_show_blocks h4:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_h4.png?t=HBDD);
 }
+
 .cke_show_blocks h3:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_h3.png?t=HBDD);
 }
+
 .cke_show_blocks h2:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_h2.png?t=HBDD);
 }
+
 .cke_show_blocks h1:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_h1.png?t=HBDD);
 }
-.cke_show_blocks
-  blockquote:not([contenteditable="false"]):not(.cke_show_blocks_off) {
+
+.cke_show_blocks blockquote:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_blockquote.png?t=HBDD);
 }
-.cke_show_blocks
-  address:not([contenteditable="false"]):not(.cke_show_blocks_off) {
+
+.cke_show_blocks address:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_address.png?t=HBDD);
 }
+
 .cke_show_blocks pre:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_pre.png?t=HBDD);
 }
+
 .cke_show_blocks div:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_div.png?t=HBDD);
 }
+
 .cke_show_blocks p:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-image: url(https://harvin.academy/ckeditor/plugins/showblocks/images/block_p.png?t=HBDD);
 }
-.cke_show_blocks.cke_contents_ltr
-  h6:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_ltr
-  h5:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_ltr
-  h4:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_ltr
-  h3:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_ltr
-  h2:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_ltr
-  h1:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_ltr
-  blockquote:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_ltr
-  address:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_ltr
-  pre:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_ltr
-  div:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_ltr
-  p:not([contenteditable="false"]):not(.cke_show_blocks_off) {
+
+.cke_show_blocks.cke_contents_ltr h6:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_ltr h5:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_ltr h4:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_ltr h3:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_ltr h2:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_ltr h1:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_ltr blockquote:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_ltr address:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_ltr pre:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_ltr div:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_ltr p:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-position: top left;
   padding-left: 8px;
 }
-.cke_show_blocks.cke_contents_rtl
-  h6:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_rtl
-  h5:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_rtl
-  h4:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_rtl
-  h3:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_rtl
-  h2:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_rtl
-  h1:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_rtl
-  blockquote:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_rtl
-  address:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_rtl
-  pre:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_rtl
-  div:not([contenteditable="false"]):not(.cke_show_blocks_off),
-.cke_show_blocks.cke_contents_rtl
-  p:not([contenteditable="false"]):not(.cke_show_blocks_off) {
+
+.cke_show_blocks.cke_contents_rtl h6:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_rtl h5:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_rtl h4:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_rtl h3:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_rtl h2:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_rtl h1:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_rtl blockquote:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_rtl address:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_rtl pre:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_rtl div:not([contenteditable="false"]):not(.cke_show_blocks_off),
+.cke_show_blocks.cke_contents_rtl p:not([contenteditable="false"]):not(.cke_show_blocks_off) {
   background-position: top right;
   padding-right: 8px;
 }
+
 .cke_show_borders table.cke_show_border,
-.cke_show_borders table.cke_show_border > tr > td,
-.cke_show_borders table.cke_show_border > tr > th,
-.cke_show_borders table.cke_show_border > tbody > tr > td,
-.cke_show_borders table.cke_show_border > tbody > tr > th,
-.cke_show_borders table.cke_show_border > thead > tr > td,
-.cke_show_borders table.cke_show_border > thead > tr > th,
-.cke_show_borders table.cke_show_border > tfoot > tr > td,
-.cke_show_borders table.cke_show_border > tfoot > tr > th {
+.cke_show_borders table.cke_show_border>tr>td,
+.cke_show_borders table.cke_show_border>tr>th,
+.cke_show_borders table.cke_show_border>tbody>tr>td,
+.cke_show_borders table.cke_show_border>tbody>tr>th,
+.cke_show_borders table.cke_show_border>thead>tr>td,
+.cke_show_borders table.cke_show_border>thead>tr>th,
+.cke_show_borders table.cke_show_border>tfoot>tr>td,
+.cke_show_borders table.cke_show_border>tfoot>tr>th {
   border: #d3d3d3 3px solid;
 }
+
 .cke_widget_wrapper {
   position: relative;
   outline: none;
 }
+
 .cke_widget_inline {
   display: inline-block;
 }
-.cke_widget_wrapper:hover > .cke_widget_element {
+
+.cke_widget_wrapper:hover>.cke_widget_element {
   outline: 2px solid yellow;
   cursor: default;
 }
+
 .cke_widget_wrapper:hover .cke_widget_editable {
   outline: 2px solid yellow;
 }
-.cke_widget_wrapper.cke_widget_focused > .cke_widget_element,
+
+.cke_widget_wrapper.cke_widget_focused>.cke_widget_element,
 .cke_widget_wrapper .cke_widget_editable.cke_widget_editable_focused {
   outline: 2px solid #ace;
 }
+
 .cke_widge t_editable {
   cursor: text;
 }
+
 .cke_widget_drag_handler_container {
   position: absolute;
   width: 15px;
@@ -295,19 +300,23 @@ div.cke_pagebreak {
   transition: height 0s 0.2s;
   line-height: 0;
 }
-.cke_widget_wrapper:hover > .cke_widget_drag_handler_container {
+
+.cke_widget_wrapper:hover>.cke_widget_drag_handler_container {
   height: 15px;
   transition: none;
 }
+
 .cke_widget_drag_handler_container:hover {
   opacity: 1;
 }
+
 img.cke_widget_drag_handler {
   cursor: move;
   width: 15px;
   height: 15px;
   display: inline-block;
 }
+
 .cke_widget_mask {
   position: absolute;
   top: 0;
@@ -316,10 +325,12 @@ img.cke_widget_drag_handler {
   height: 100%;
   display: block;
 }
+
 .cke_editable.cke_widget_dragging,
 .cke_editable.cke_widget_dragging * {
   cursor: move !important;
 }
+
 .cke_upload_uploading img {
   opacity: 0.3;
 }
@@ -327,6 +338,7 @@ img.cke_widget_drag_handler {
 .pl-5 {
   padding-left: 3rem !important;
 }
+
 .pb-5 {
   padding-bottom: 3rem !important;
 }
@@ -334,6 +346,11 @@ img.cke_widget_drag_handler {
 .pr-5 {
   padding-right: 3rem !important;
 }
+
 .pt-1 {
   padding-top: 0.25rem !important;
+}
+
+.blgo-content {
+  text-align: center;
 }

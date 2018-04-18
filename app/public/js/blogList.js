@@ -78,6 +78,10 @@ function confirmed() {
     method: 'DELETE',
     success: function(result) {
       Materialize.toast($('<span>Post Deleted</span>'), 4000)
+      $('.toast').css('background-color', '#13b3b8')
+    },
+    error: function (result) {
+      Materialize.toast($(`<span>Failure to delete ${mode}</span>`), 2000)
       $('.toast').css('background-color', '#f44336')
     }
   })
