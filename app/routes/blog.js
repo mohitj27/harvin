@@ -264,8 +264,6 @@ router.post('/:htmlFilePath/images', (req, res, next) => {
   )
 })
 router.delete('/delete/:blogId', (req, res) => {
-  console.log('this route');
-  
   let removeBlogPromise = new Promise((resolve, reject) => {
     Blog.remove({
       _id: req.params.blogId
