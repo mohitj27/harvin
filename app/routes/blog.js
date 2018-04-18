@@ -13,25 +13,25 @@ const express = require('express'),
   io = require('socket.io')(http),
   promise = require('bluebird'),
   blogCont = require('../controllers/blog.controller'),
-  fileController = require('../controllers/file.controller');
+  fileController = require('../controllers/file.controller')
 
 io.on('connection', function (socket) {
   // console.log('connected')
-});
+})
 
-const BLOG_DIR = path.normalize(__dirname + '/../../../HarvinDb/blog/');
+const BLOG_DIR = path.normalize(__dirname + '/../../../HarvinDb/blog/')
 const BLOG_IMAGE_DIR = path.normalize(
   __dirname + '/../../../HarvinDb/blogImage/'
-);
+)
 
 router.get(
   '/new',
   middleware.isLoggedIn,
   middleware.isCentreOrAdmin,
   (req, res, next) => {
-    res.render('newBlog');
+    res.render('newBlog')
   }
-);
+)
 
 router.get(
   '/all',
@@ -40,44 +40,44 @@ router.get(
   (req, res, next) => {
     Blog.find({})
       .sort({
-        uploadDateUnix: -1,
+        uploadDateUnix: -1
       })
       .exec((err, foundBlog) => {
-        if (err) console.log(err);
+        if (err) console.log(err)
         else {
           res.render('blogList', {
-            blogs: foundBlog,
-          });
+            blogs: foundBlog
+          })
         }
-      });
+      })
   }
-);
+)
 
-const editBlogPromise = function editBlogPromise(blogTitle) {
+const editBlogPromise = function editBlogPromise (blogTitle) {
   return new Promise((resolve, reject) => {
     Blog.findOne({
-      blogTitle,
+      blogTitle
     },
     (err, foundBlog) => {
-      if (err) reject(err);
-      else {
-        resolve(foundBlog);
-      }
+      if (err) reject(err)
+        else {
+        resolve(foundBlog)
+        }
     }
-    );
-  });
+    )
+  })
 };
 
-const fileOpenPromise = function fileOpenPromise(foundBlog) {
+const fileOpenPromise = function fileOpenPromise (foundBlog) {
   return new Promise((resolve, reject) => {
     fs.readFile(
       __dirname + '/../../../HarvinDb/blog/' + foundBlog.htmlFilePath,
       function (err, data) {
-        if (err) reject(err);
-        else resolve(data);
+        if (err) reject(err)
+        else resolve(data)
       }
-    );
-  });
+    )
+  })
 };
 
 router.get(
@@ -85,94 +85,94 @@ router.get(
   middleware.isLoggedIn,
   middleware.isCentreOrAdmin,
   async (req, res, next) => {
-    const blogTitle = req.query.blogTitle;
+    const blogTitle = req.query.blogTitle
     try {
-      const foundBlog = await editBlogPromise(blogTitle);
-      const data = await fileOpenPromise(foundBlog);
+      const foundBlog = await editBlogPromise(blogTitle)
+      const data = await fileOpenPromise(foundBlog)
       // console.log('blog1', foundBlog)
       res.render('editBlog', {
         blogTitle: foundBlog.blogTitle,
         meta: foundBlog.meta,
         url: foundBlog.url,
-        content: data,
-      });
+        content: data
+      })
     } catch (err) {
-      next(err || 'Internal Server Error');
+      next(err || 'Internal Server Error')
     }
   }
-);
+)
 router.get('/:blogTitle', (req, res) => {
   Blog.findOne({
     blogTitle: req.params.blogTitle,
-    author: req.user._id,
+    author: req.user._id
   },
   (err, foundBlog) => {
-    if (err) console.log(err);
-    else {
-      res.json(foundBlog);
-    }
+    if (err) console.log(err)
+      else {
+      res.json(foundBlog)
+      }
   }
-  );
-});
+  )
+})
 
 router.post(
   '/',
   middleware.isLoggedIn,
   middleware.isCentreOrAdmin,
   async (req, res, next) => {
-    let coverImgName;
-    let file = req.files.userFile;
+    let coverImgName
+    let file = req.files.userFile
 
     if (file) {
       const filePath = path.join(
         BLOG_IMAGE_DIR,
         Date.now() + '__' + file.name
-      );
+      )
       try {
         await fileController.uploadFileToDirectory(
           filePath,
           file
-        );
+        )
       } catch (err) {
-        return next(err || 'Internal Server Error');
+        return next(err || 'Internal Server Error')
       }
 
-      coverImgName = path.basename(filePath);
+      coverImgName = path.basename(filePath)
       // console.log('cover', coverImgName)
 
     }
 
-    let blogTitle = req.body.title || '';
-    let url = req.body.url || '';
+    let blogTitle = req.body.title || ''
+    let url = req.body.url || ''
     if (!blogTitle) {
-      return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next);
+      return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
     }
 
     if (!url) {
-      return errorHandler.errorResponse('INVALID_FIELD', 'blog url', next);
+      return errorHandler.errorResponse('INVALID_FIELD', 'blog url', next)
     }
 
-    url = url.replace(/\s+/g, '-').toLowerCase();
+    url = url.replace(/\s+/g, '-').toLowerCase()
     let blog_name = blogTitle
       .toLowerCase()
-      .replace(/ /g, '_')
-      .concat('.html');
-    checkBlogDir();
+      .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '_')
+      .concat('.html')
+    checkBlogDir()
     fs.writeFile(BLOG_DIR + blog_name, req.body.editordata, err => {
-      if (err) throw err;
-    });
-    let hashName = '';
+      if (err) throw err
+    })
+    let hashName = ''
     blogTitle.split(' ').forEach(function (word) {
-      hashName += word.charAt(0);
-    });
+      hashName += word.charAt(0)
+    })
 
-    const htmlFilePath = blog_name;
+    const htmlFilePath = blog_name
     const uploadDate = moment(Date.now())
       .tz('Asia/Kolkata')
-      .format('MMMM Do YYYY');
-    const meta = req.body.meta;
+      .format('MMMM Do YYYY')
+    const meta = req.body.meta
 
-    let blogObj;
+    let blogObj
 
     if (file) {
       blogObj = {
@@ -185,8 +185,8 @@ router.post(
         draft: req.body.draft,
         uploadDate,
         uploadDateUnix: Date.now(),
-        meta,
-      };
+        meta
+      }
     } else {
       blogObj = {
         htmlFilePath,
@@ -195,103 +195,103 @@ router.post(
         author: req.user,
         publish: req.body.publish,
         draft: req.body.draft,
-        meta,
-      };
+        meta
+      }
     }
 
     Blog.findOneAndUpdate({
-      blogTitle,
+      blogTitle
     }, {
-      $set: blogObj,
+      $set: blogObj
     }, {
       upsert: true,
       new: true,
-      setDefaultsOnInsert: true,
+      setDefaultsOnInsert: true
     },
     function (err, updatedBlog) {
       if (!err) {
         // console.log('updatedBlog', updatedBlog)
-        res.redirect('/admin/blog/all');
-      } else {
-        res.redirect('/admin/blog/new');
-        console.log('err', err);
-      }
+        res.redirect('/admin/blog/all')
+        } else {
+        res.redirect('/admin/blog/new')
+          console.log('err', err)
+        }
     }
-    );
+    )
     // })
   }
-);
+)
 
 router.post('/:htmlFilePath/images', (req, res, next) => {
   // console.log('body', req.body)
   // console.log('files', req.files);
 
-  let htmlFilePath = req.params.htmlFilePath || '';
+  let htmlFilePath = req.params.htmlFilePath || ''
   if (!htmlFilePath) {
-    return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next);
+    return errorHandler.errorResponse('INVALID_FIELD', 'blog title', next)
   }
 
-  htmlFilePath = _.trim(htmlFilePath);
+  htmlFilePath = _.trim(htmlFilePath)
   let uploadDate = moment(Date.now())
     .tz('Asia/Kolkata')
-    .format('MMMM Do YYYY');
+    .format('MMMM Do YYYY')
 
-  checkBlogDir();
-  checkBlogImageDir();
+  checkBlogDir()
+  checkBlogImageDir()
   Blog.findOneAndUpdate({
-    blogTitle: htmlFilePath,
+    blogTitle: htmlFilePath
   }, {
     $addToSet: {
-      blogImages: req.body.filename,
+      blogImages: req.body.filename
     },
     $set: {
       author: req.user,
       uploadDate,
-      uploadDateUnix: Date.now(),
-    },
+      uploadDateUnix: Date.now()
+    }
   }, {
     upsert: true,
     new: true,
-    setDefaultsOnInsert: true,
+    setDefaultsOnInsert: true
   },
   function (err, updatedBlog) {
     if (!err) {
       // console.log('updatedBlog', updatedBlog)
-      res.sendStatus(200);
-    } else {
-      console.log('err', err);
-    }
+      res.sendStatus(200)
+      } else {
+      console.log('err', err)
+      }
   }
-  );
-});
+  )
+})
 router.delete('/delete/:blogTitle', (req, res) => {
   let removeBlogPromise = new Promise((resolve, reject) => {
     Blog.remove({
-      blogTitle: req.params.blogTitle,
+      blogTitle: req.params.blogTitle
     },
     err => {
-      if (err) reject(err);
-      else resolve();
-    }
-    );
-  });
+      if (err) reject(err)
+        else resolve()
+      }
+    )
+  })
   removeBlogPromise.then(() => {
-    res.sendStatus(200);
-  });
-});
+    res.sendStatus(200)
+  })
+})
 
-function checkBlogDir() {
+function checkBlogDir () {
   if (!fs.existsSync(BLOG_DIR)) {
-    fs.mkdirSync(BLOG_DIR);
+    fs.mkdirSync(BLOG_DIR)
     // console.log('making blog dir')
   } else {
     // console.log('not making blog dir')
   }
 }
 
-function checkBlogImageDir() {
+function checkBlogImageDir () {
   if (!fs.existsSync(BLOG_IMAGE_DIR)) {
-    fs.mkdirSync(BLOG_IMAGE_DIR);
+    fs.mkdirSync(BLOG_IMAGE_DIR)
     // console.log('making blog dir')
   } else {
     // console.log('not making blog dir')
@@ -303,7 +303,7 @@ router.post('/editmode/:blogTitle/:mode/:check', async (req, res) => {
     req.params.blogTitle,
     req.params.mode,
     req.params.check
-  );
-  res.send(result);
-});
-module.exports = router;
+  )
+  res.send(result)
+})
+module.exports = router
