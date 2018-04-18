@@ -60,13 +60,13 @@ const editBlogPromise = function editBlogPromise (blogTitle) {
     },
     (err, foundBlog) => {
       if (err) reject(err)
-        else {
+      else {
         resolve(foundBlog)
-        }
+      }
     }
     )
   })
-};
+}
 
 const fileOpenPromise = function fileOpenPromise (foundBlog) {
   return new Promise((resolve, reject) => {
@@ -78,7 +78,7 @@ const fileOpenPromise = function fileOpenPromise (foundBlog) {
       }
     )
   })
-};
+}
 
 router.get(
   '/edit',
@@ -108,9 +108,9 @@ router.get('/:blogTitle', (req, res) => {
   },
   (err, foundBlog) => {
     if (err) console.log(err)
-      else {
+    else {
       res.json(foundBlog)
-      }
+    }
   }
   )
 })
@@ -139,7 +139,6 @@ router.post(
 
       coverImgName = path.basename(filePath)
       // console.log('cover', coverImgName)
-
     }
 
     let blogTitle = req.body.title || ''
@@ -212,10 +211,10 @@ router.post(
       if (!err) {
         // console.log('updatedBlog', updatedBlog)
         res.redirect('/admin/blog/all')
-        } else {
+      } else {
         res.redirect('/admin/blog/new')
-          console.log('err', err)
-        }
+        console.log('err', err)
+      }
     }
     )
     // })
@@ -258,21 +257,23 @@ router.post('/:htmlFilePath/images', (req, res, next) => {
     if (!err) {
       // console.log('updatedBlog', updatedBlog)
       res.sendStatus(200)
-      } else {
+    } else {
       console.log('err', err)
-      }
+    }
   }
   )
 })
-router.delete('/delete/:blogTitle', (req, res) => {
+router.delete('/delete/:blogId', (req, res) => {
+  console.log('this route');
+  
   let removeBlogPromise = new Promise((resolve, reject) => {
     Blog.remove({
-      blogTitle: req.params.blogTitle
+      _id: req.params.blogId
     },
     err => {
       if (err) reject(err)
-        else resolve()
-      }
+      else resolve()
+    }
     )
   })
   removeBlogPromise.then(() => {
