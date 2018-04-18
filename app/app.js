@@ -21,6 +21,7 @@ const instituteController = require('./controllers/institute.controller')
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const env = require('dotenv').config()
+const LOG_DIR = 'logFile.txt'
 let errorsRep = null
 if (process.env.CRASH_REPORT_API_KEY_PATH) {
   // Imports the Google Cloud client library
@@ -67,8 +68,7 @@ app.use(express.static(path.join(__dirname, '../client/harvinreact/build')))
 app.use(methodOverride('_method'))
 app.use(
   session({
-    secret:
-      'This is a secret phrase, it will be used for hashing the session id',
+    secret: 'This is a secret phrase, it will be used for hashing the session id',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -78,12 +78,41 @@ app.use(
 )
 app.use(
   fileUpload({
-    limits: { fileSize: 50 * 1024 * 1024 },
+    limits: {
+      fileSize: 50 * 1024 * 1024
+    },
     safeFileNames: true,
     preserveExtension: 4,
     abortOnLimit: true
   })
 )
+
+app.use(function (req, res, next) {
+  if (req.method === 'POST' || req.method === 'PUT') {
+    const data = req.body
+
+    fs.stat('msg.txt', (err, stats) => {
+      if (err) return console.log('err stats', err)
+      else {
+        if (stats.size > 10000000) {
+          fs.unlink('msg.txt', err => {
+            if (err) console.log('err remove file', err)
+            else {
+              fs.appendFile('msg.txt', JSON.stringify(data) + '\n', err => {
+                if (err) throw err
+              })
+            }
+          })
+        } else {
+          fs.appendFile('msg.txt', JSON.stringify(data) + '\n', err => {
+            if (err) throw err
+          })
+        }
+      }
+    })
+  }
+  next()
+})
 
 // General middleware function
 
@@ -254,11 +283,11 @@ app.use(function (err, req, res, next) {
 var url =
   process.env.DATABASEURL ||
   'mongodb://' +
-    config.mongo.host +
-    ':' +
-    config.mongo.port +
-    '/' +
-    config.mongo.dbName
+  config.mongo.host +
+  ':' +
+  config.mongo.port +
+  '/' +
+  config.mongo.dbName
 mongoose.connect(url, {
   useMongoClient: true
 })
