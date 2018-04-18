@@ -1,57 +1,57 @@
-$(function() {
-
+$(function () {
   $('.newBlogForm').submit(function () {
     // let editordata = $('#editor1').html()
-    var data = CKEDITOR.instances.editor1.getData();
+    var data = CKEDITOR.instances.editor1.getData()
     // console.log('data', data);
     $('#editordata').val(data)
     // console.log('editordata',$('#editordata').val());
   })
 
   $('.modal').modal({
-      dismissible: true
-  });
-  $('ul.tabs').tabs();
+    dismissible: true
+  })
+  $('ul.tabs').tabs()
   $('.button-collapse-image').sideNav({
     menuWidth: 300, // Default is 300
     edge: 'left', // Choose the horizontal origin
     closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor\
     draggable: true, // Choose whether you can drag to open on touch screens,
-    onOpen: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
-    onClose: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
+    onOpen: function (el) { /* Do Stuff */ }, // A function to be called when sideNav is opened
+    onClose: function (el) { /* Do Stuff */ } // A function to be called when sideNav is closed
   })
 
   var socket = io('https://harvin.academy/')
   socket.emit('message', 'Hello server')
 
-  socket.on('connect', function() {
+  socket.on('connect', function () {
     socket.emit('message', 'Hello server12')
     socket.on('end upload', (data) => {
-      $('.progress').fadeOut(2000, function() {
+      $('.progress').fadeOut(2000, function () {
         $('.progress').remove()
       })
-      let currImageElement = $('<img>');
+      let currImageElement = $('<img>')
       currImageElement.attr('src', currImageElementSrc)
 
       $('#editor1').append(currImageElement)
-  //     if ($('#summernote').length !== 0) {
-  //   $('#summernote').summernote({
-  //     placeholder: 'Write your content here!!!',
-  //     tabsize: 2,
-  //     minHeight: 500,
-  //     maxHeight: null,
-  //     focus: true
-  //   });
-  // }
-    });
+      //     if ($('#summernote').length !== 0) {
+      //   $('#summernote').summernote({
+      //     placeholder: 'Write your content here!!!',
+      //     tabsize: 2,
+      //     minHeight: 500,
+      //     maxHeight: null,
+      //     focus: true
+      //   });
+      // }
+    })
 
     socket.on('upload error', () => {
       console.log('aborting')
       fileReader.abort()
-    });
-  });
+    })
+  })
   let span = document.createElement('span')
-  function checkBlogTitle(event) {
+
+  function checkBlogTitle (event) {
     let blogTitle = $('#blog_title').val()
     // console.log('title1', blogTitle)
     if (blogTitle == '') {
@@ -64,22 +64,23 @@ $(function() {
       return true
     }
   }
-  function handleFileSelect(evt) {
-    var files = evt.target.files; // FileList object
+
+  function handleFileSelect (evt) {
+    var files = evt.target.files // FileList object
     // Loop through the FileList and render image files as thumbnails.
     for (var i = 0, f; f = files[i]; i++) {
       // Only process image files.
       if (!f.type.match('image.*')) {
-        continue;
+        continue
       }
       var reader = new FileReader()
       // Closure to capture the file information.
-      reader.onload = (function(theFile) {
-        return function(e) {
-          var span = document.createElement('span');
+      reader.onload = (function (theFile) {
+        return function (e) {
+          var span = document.createElement('span')
 
           span.innerHTML = ['<img class="thumb" src="', e.target.result,
-            '" title="', escape(theFile.name), '"/><div>https://harvin.academy/blogImage/'+theFile.name+ '</div><div class="progress"><div class="indeterminate"></div></div>'
+            '" title="', escape(theFile.name), '"/><div>https://harvin.academy/blogImage/' + theFile.name + '</div><div class="progress"><div class="indeterminate"></div></div>'
           ].join('')
           document.getElementById('img-to-upload').insertBefore(span, null)
         }
@@ -92,20 +93,19 @@ $(function() {
     let blogTitle = $('#blog_title').val()
 
     // console.log('evt', evt)
-    var file = evt.target.files[0]; // FileList object
+    var file = evt.target.files[0] // FileList object
     $.post('/admin/blog/' + blogTitle + '/images', {
       'filename': file.name
     })
-    if (!file.type.match("image.*"))
+    if (!file.type.match('image.*')) {
       return
+    }
     // console.log(file)
-    fileReader.readAsArrayBuffer(file);
+    fileReader.readAsArrayBuffer(file)
     fileReader.onload = (evt) => {
-
       currImageElementSrc = '/blogImage/' + file.name
 
-
-      var arrayBuffer = fileReader.result;
+      var arrayBuffer = fileReader.result
       socket.emit('hello', 'hello')
       socket.emit('slice upload', {
         name: file.name,
