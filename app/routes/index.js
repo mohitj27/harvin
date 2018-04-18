@@ -47,8 +47,8 @@ router.use('/studentApp/home', studentAppRoutes)
 router.use(vmsRoutes)
 
 // if not route mentioned in url
-router.get('*', function (req, res) {
-  res.redirect('/')
-})
+// router.get('*', function (req, res) {
+//   res.redirect('/')
+// })
 
 module.exports = router

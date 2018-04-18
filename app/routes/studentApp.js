@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const passport = require('passport')
 const router = express.Router()
@@ -8,7 +9,7 @@ const userController = require('../controllers/user.controller')
 const batchController = require('../controllers/batch.controller')
 const profileController = require('../controllers/profile.controller')
 const progressController = require('../controllers/progress.controller')
-router.get('/loginState',(req,res,next)=>{
-  res.send(200)
+router.get('/', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '../../client/harvinreact/build/app.html'))
 })
 module.exports = router
