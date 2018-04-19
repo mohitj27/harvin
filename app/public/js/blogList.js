@@ -68,16 +68,20 @@ draftLever.on('change', draftCheckHandler)
 
 function confirmed() {
   $tr = $(elem).parent().parent()
-  let blogTitle = $tr.attr('id')
+  let blogId = $tr.attr('id')
   $tr.fadeOut(1000, () => {
     $tr.remove()
   })
 
   $.ajax({
-    url: `/admin/blog/delete/${blogTitle}`,
+    url: `/admin/blog/delete/${blogId}`,
     method: 'DELETE',
     success: function(result) {
       Materialize.toast($('<span>Post Deleted</span>'), 4000)
+      $('.toast').css('background-color', '#13b3b8')
+    },
+    error: function (result) {
+      Materialize.toast($(`<span>Failure to delete ${mode}</span>`), 2000)
       $('.toast').css('background-color', '#f44336')
     }
   })

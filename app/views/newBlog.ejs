@@ -35,9 +35,9 @@
 						<label for="blog_title">Blog Title</label>
 					</div>
 					<div class="input-field">
-							<input id="blog_url" type="text" name="url" required class="validate">
-							<label for="blog_url">Blog Url</label>
-						</div>
+						<input id="blog_url" type="text" name="url" required class="validate">
+						<label for="blog_url">Blog Url</label>
+					</div>
 					<div class="row">
 						<div class="input-field col s12">
 							<textarea id="meta" name="meta" class="materialize-textarea"></textarea>
@@ -97,10 +97,18 @@
 	</main>
 
 
-	<script src="/ckeditor/ckeditor.js"></script>
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="/js/socket-config.js" charset="utf-8"></script>
-	<script src="/js/blogInsert.js"></script>
-	<script src="/dist/clipboard.min.js"></script>
-
 	<% include partials/footer.ejs%>
+		<script src="/ckeditor/ckeditor.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/js/socket-config.js" charset="utf-8"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="/js/blogInsert.js"></script>
+		<script src="/dist/clipboard.min.js"></script>
+
+		<script>
+			$(function () {
+				if (!window.blogInsert) {
+					alert('Something went wrong !!!, Please refresh your browser')
+				}
+			})
+		</script>

@@ -25,7 +25,7 @@
 
 			<div class="section">
 				<div class="container">
-					<form method="post" class="newBlogForm" enctype="multipart/form-data" action="/admin/blog" method="post">
+					<form method="post" id="editForm" class="newBlogForm" enctype="multipart/form-data" action="/admin/blog" method="post">
 						<div class="input-field">
 							<input id="blog_title" type="text" name="title" value="<%=blogTitle%>"required class="validate">
 							<label for="blog_title">Blog Title</label>
@@ -99,14 +99,15 @@
 
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/js/socket-config.js" charset="utf-8"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="/js/blogInsert.js"></script>
 		<script src="/dist/clipboard.min.js"></script>
-<!--
+
 		<script>
 			$(function(){
-
-				$('#meta').trigger('autoresize');
-
+				if(!window.blogInsert){
+					alert('Something went wrong !!!, Please refresh your browser')
+				}
 			})
-		</script> -->
+		</script>
 

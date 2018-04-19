@@ -5,3 +5,4 @@ ecosystem.config.js
 npm*log*
 \.idea/
 .env
+msg.txt

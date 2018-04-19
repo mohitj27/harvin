@@ -1,10 +1,23 @@
+window.blogInsert = true
+
 $(function () {
-  $('.newBlogForm').submit(function () {
-    // let editordata = $('#editor1').html()
+  $('.newBlogForm').submit(function (e) {
+    e.preventDefault()
     var data = CKEDITOR.instances.editor1.getData()
-    // console.log('data', data);
     $('#editordata').val(data)
-    // console.log('editordata',$('#editordata').val());
+    const formData = new FormData(e.target)
+
+    axios.post('/admin/blog', formData)
+      .then(res => {
+        if (res.status === 200) {
+          window.location.replace('/admin/blog/all')
+        }
+      })
+      .catch(err => {
+        console.log('err', JSON.stringify(err))
+        Materialize.toast($('<span>' + err.response.data + '</span>'), 4000)
+        $('.toast').css('background-color', '#f44336')
+      })
   })
 
   $('.modal').modal({
