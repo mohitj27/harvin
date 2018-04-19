@@ -37,7 +37,7 @@ img {
   max-width: 100%;
   height: auto; }
 strong{
-  font-weight: normal! important;
+  font-weight: bold !important;
 }
 a {
 

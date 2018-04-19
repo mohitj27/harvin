@@ -12,8 +12,8 @@ function Footer({ ...props }) {
         <p className={classes.right}>
           <span>
             &copy; {1900 + new Date().getYear()}{' '}
-            <a href="http://radixhealthcare.org" className={classes.a}>
-              Radic Health Care Pvt. Ltd.
+            <a href="https://harvin.academy" className={classes.a}>
+              Harvin.Aca Pvt. Ltd.
             </a>
           </span>
         </p>
