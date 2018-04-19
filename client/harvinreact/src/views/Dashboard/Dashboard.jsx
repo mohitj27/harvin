@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import logo from '../../assets/img/loginHosp.jpg'
 import { withStyles, Grid } from 'material-ui';
+import Quiz from '../../components/Quiz/Quiz'
 
 import {
   RegularCard,
@@ -26,6 +27,7 @@ class Dashboard extends React.Component {
     return (
       <div style={{ display: "flex", justifyContent: "center", backgroundColor: "white", height: "100%", width: "100%", }}>
         <img src={logo} alt="" height={500} width={500} />
+        <Quiz/>
       </div>
     );
   }
