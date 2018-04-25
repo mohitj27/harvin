@@ -14,6 +14,7 @@ const errorHandler = require('./errorHandler')
 const mongoose = require('mongoose')
 const fileUpload = require('express-fileupload')
 const _ = require('lodash')
+const cors = require('cors')
 const serveFavicon = require('serve-favicon')
 const User = require('./models/User.js')
 const userController = require('./controllers/user.controller')
@@ -32,6 +33,7 @@ if (process.env.CRASH_REPORT_API_KEY_PATH) {
   })
 }
 
+app.use(cors())
 // errors.report('Something broke!');
 // setting up body-parser
 app.use(

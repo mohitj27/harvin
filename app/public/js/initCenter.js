@@ -2,6 +2,7 @@ const emptyFields = () => {
   $('#name').val('')
   $('#phone').val('')
   $('#emailId').val('')
+  $('#classs').val('')
 }
 
 $(function () {
@@ -11,11 +12,13 @@ $(function () {
     const name = $('#name').val()
     const emailId = $('#emailId').val()
     const phone = $('#phone').val()
+    const classs = $('#classs').val()
     const centerName = $('#centerName').val()
     if (!name || !emailId || !phone) return
     newEnquiry.name = name
     newEnquiry.emailId = emailId
     newEnquiry.phone = phone
+    newEnquiry.classs = classs
     newEnquiry.centerName = centerName
 
     $.ajax({

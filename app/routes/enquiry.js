@@ -8,7 +8,9 @@ const express = require('express'),
 router.get('/', middleware.isLoggedIn, async (req, res, next) => {
   try {
     let foundEnquiries = await enquiryController.findAllEnquiries()
-    res.render('enquiriesDb', { enquiries: foundEnquiries })
+    res.render('enquiriesDb', {
+      enquiries: foundEnquiries
+    })
   } catch (err) {
     next(err || 'Internal Server Error')
   }
@@ -35,7 +37,6 @@ router.delete('/:enquiryId', middleware.isLoggedIn, async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  console.log('body', req.body)
   const date = Date.now()
 
   try {

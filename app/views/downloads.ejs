@@ -72,6 +72,11 @@
             <label for="name">Name</label>
           </div>
 
+          <div class="input-field col s4 offset-s4">
+            <input autofocus id="classs" type="text" required class="validate">
+            <label for="classs">Class</label>
+          </div>
+
         </div>
         <div class="row">
           <div class="input-field col s4 offset-s4">
@@ -108,14 +113,18 @@
         $('select').material_select();
         $('.modal-trigger').on('click', function (e) {
           href = $(this).attr('href')
-          if ($('#name').val() === '' || $('#phone').val() === '' || $('#emailId').val() === '') {
+          if ($('#name').val() === '' || $('#phone').val() === '' ||
+            $('#classs').val() === '' || $('#emailId')
+            .val() ===
+            '') {
             e.preventDefault()
             $('#modal1').modal('open')
           }
         })
 
         $('#modal-action').on('click', function (e) {
-          if ($('#name').val() === '' || $('#phone').val() === '' || $('#emailId').val() === '') {
+          if ($('#name').val() === '' || $('#phone').val() === '' ||
+            $('#classs').val() === '' || $('#emailId').val() === '') {
             e.preventDefault()
             Materialize.toast($('<span>Please fill all the required fields</span>'), 4000)
             $('.toast:last').css('background-color', '#f44336')
@@ -136,15 +145,18 @@
             modal.children('.modal-footer').children('a').attr('href', href)
           },
           complete: function () {
-            if ($('#name').val() !== '' && $('#phone').val() !== '' && $('#emailId').val() !== '') {
+            if ($('#name').val() !== '' && $('#phone').val() !== '' && $('#classs').val() !== '' && $(
+                '#emailId').val() !== '') {
               const newEnquiry = {}
               const name = $('#name').val()
               const emailId = $('#emailId').val()
+              const classs = $('#classs').val()
               const phone = $('#phone').val()
               const centerName = $('#purpose').val()
               if (!name || !emailId || !phone) return
               newEnquiry.name = name
               newEnquiry.emailId = emailId
+              newEnquiry.classs = classs
               newEnquiry.phone = phone
               newEnquiry.centerName = centerName
               $.ajax({
