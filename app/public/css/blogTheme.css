@@ -354,3 +354,15 @@ img.cke_widget_drag_handler {
 .blgo-content {
   text-align: center;
 }
+@media only screen and (max-width:600px){
+  .pl-5 {
+    padding-left: 0 !important;
+  }
+  
+  .pr-5 {
+    padding-right: 0 !important;
+  }
+  .card{
+    box-shadow: none;
+  }
+}
