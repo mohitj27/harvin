@@ -27,10 +27,10 @@ self.caches.open('jwt-cache').then(function(cache) {
 
 });
           localStorage.setItem('token', res.token);
-
-          // Materialize.toast($('<span>Signup successfull</span>'), 4000)
           $('.toast:last').css('background-color', '#13b38b')
-          window.location.replace("/admin")
+          setTimeout(() => {
+            window.location.replace("/admin")
+          }, 300)
         }
       },
       error: function (err) {
