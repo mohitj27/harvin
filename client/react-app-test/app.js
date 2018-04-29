@@ -38,10 +38,10 @@ ReactDOM.render(
 <RootApp/>, document.getElementById('app-root'));}
 catch(err){console.log('apperr',err)}
 
-try{
-ReactDOM.render(<LoginComponent/>, document.getElementById('LoginComponent'));}
-catch(err){console.log('apperr',err)}
+// try{
+// ReactDOM.render(<LoginComponent/>, document.getElementById('LoginComponent'));}
+// catch(err){console.log('apperr',err)}
 
-try{
-ReactDOM.render(<RegisterComponent/>, document.getElementById('RegisterComponent'));}
-catch(err){console.log('apperr',err)}
+// try{
+// ReactDOM.render(<RegisterComponent/>, document.getElementById('RegisterComponent'));}
+// catch(err){console.log('apperr',err)}

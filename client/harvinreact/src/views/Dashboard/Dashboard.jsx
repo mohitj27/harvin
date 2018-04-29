@@ -25,9 +25,8 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div style={{ display: "flex", justifyContent: "center", backgroundColor: "white", height: "100%", width: "100%", }}>
-        <img src={logo} alt="" height={500} width={500} />
-        <Quiz/>
+      <div style={{ backgroundColor: "white", height: "100%", width: "100%", padding:'10px'}}>
+        <Quiz height={500} width={500}/>
       </div>
     );
   }
