@@ -8,7 +8,6 @@ import createEmojiPlugin from 'draft-js-emoji-plugin';
 import 'draft-js-emoji-plugin/lib/plugin.css'
 import createHighlightPlugin from '../draft-highlight-plugin/highlightPlugin';
 import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
-import 'draft-js-static-toolbar-plugin/lib/plugin.css';
 
 
 
@@ -28,17 +27,17 @@ class Quiz extends Component{
           editorState: EditorState.createEmpty(),
         }
       }
-    
+
       onChange = (editorState) => {
         this.setState({
           editorState,
         });
       }
-    
+
       render() {
         return (
           <div>
-          <Editor style={{height:'100%',width:'1000px'}}
+          <Editor
             editorState={this.state.editorState}
             onChange={this.onChange}
             plugins={[highlightPlugin,toolbarPlugin, emojiPlugin]}

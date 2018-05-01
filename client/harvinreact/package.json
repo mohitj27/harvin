@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mikeljames/draft-js-drag-n-drop-upload-plugin": "^2.0.1",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.18.0",
     "chartist": "^0.10.1",
@@ -16,7 +17,12 @@
     "d3-shape": "^1.2.0",
     "d3-svg-legend": "^2.25.6",
     "d3-transition": "^1.1.1",
+    "draft-js-alignment-plugin": "^2.0.3",
+    "draft-js-drag-n-drop-plugin": "^2.0.3",
     "draft-js-emoji-plugin": "^2.0.6",
+    "draft-js-focus-plugin": "^2.0.4",
+    "draft-js-image-plugin": "^2.0.5",
+    "draft-js-resizeable-plugin": "^2.0.6",
     "immutability-helper": "^2.6.6",
     "lodash": "^4.17.5",
     "material-ui": "1.0.0-beta.34",
@@ -30,6 +36,7 @@
     "react-dom": "^16.2.0",
     "react-draft-wysiwyg": "^1.12.12",
     "react-google-maps": "^9.4.5",
+    "react-quill": "^1.2.7",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -48,6 +55,8 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "redux-devtools": "^3.4.1"
+    "css-loader": "^0.28.11",
+    "redux-devtools": "^3.4.1",
+    "style-loader": "^0.21.0"
   }
 }
