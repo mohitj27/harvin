@@ -23,6 +23,11 @@ var profileSchema = new Schema({
     ref: 'Result'
   }],
 
+  questions: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'R_Question'
+  }],
+
   batch: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Batch'
@@ -36,7 +41,9 @@ var profileSchema = new Schema({
   isCenterOfInstitute: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Institute'
-  }
+  },
+
+
 })
 
 profileSchema.plugin(deepPopulate)

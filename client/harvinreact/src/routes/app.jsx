@@ -8,6 +8,7 @@ import {
 } from 'material-ui-icons';
 import DashboardPage from '../views/Dashboard/Dashboard.jsx';
 import AddQues from '../views/AddQues/AddQues.jsx';
+import Records from '../views/Records/Records.jsx';
 
 const appRoutes = [
   {
@@ -34,7 +35,7 @@ const appRoutes = [
     path: '/records',
     sidebarName: 'Records',
     icon: SdStorage,
-    component: DashboardPage
+    component: Records
   }, {
     path: '/addQues',
     sidebarName: 'Add Question',

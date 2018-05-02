@@ -27,6 +27,12 @@ import { Editor } from 'draft-js';
 import { RegularCard, ItemGrid } from '../'
 import { ErrorSnackbar, LoadingSnackbar, SuccessSnackbar } from "../../components/GlobalSnackbar/GlobalSnackbar";
 import green from 'material-ui/colors/green';
+import Editor from 'draft-js-plugins-editor';
+import {EditorState} from 'draft-js';
+import createEmojiPlugin from 'draft-js-emoji-plugin';
+import 'draft-js-emoji-plugin/lib/plugin.css'
+import createHighlightPlugin from '../draft-highlight-plugin/highlightPlugin';
+import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
 
 
 

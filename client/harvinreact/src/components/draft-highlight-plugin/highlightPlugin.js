@@ -1,7 +1,8 @@
 import  { RichUtils } from 'draft-js';
 
 const defaultStyle = {
-  verticalAlign:'sub'
+  verticalAlign:'sub',
+  fontSize:'0.6em'
 };
 
 export default (style = {}) => {
