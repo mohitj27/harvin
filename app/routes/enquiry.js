@@ -9,7 +9,7 @@ router.get('/', middleware.isLoggedIn, async (req, res, next) => {
   try {
     let foundEnquiries = await enquiryController.findAllEnquiries()
     res.render('enquiriesDb', {
-      enquiries: foundEnquiries
+      enquiries: foundEnquiries.reverse()
     })
   } catch (err) {
     next(err || 'Internal Server Error')

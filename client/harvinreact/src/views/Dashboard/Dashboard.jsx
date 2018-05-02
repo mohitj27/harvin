@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import logo from '../../assets/img/loginHosp.jpg'
 import { withStyles, Grid } from 'material-ui';
 import Quiz from '../../components/Quiz/Quiz'
+import {EditorState} from 'draft-js';
+
 
 import {
   RegularCard,
@@ -25,9 +27,9 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div style={{ backgroundColor: "white", height: "100%", width: "100%", padding:'10px'}}>
-        <Quiz height={500} width={500}/>
-      </div>
+   
+        <Quiz quizEditorState={EditorState.createEmpty()} height={500} width={500}/>
+    
     );
   }
 }
