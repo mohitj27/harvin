@@ -25,7 +25,7 @@ router.get(
   async (req, res, next) => {
     try {
       const foundQuestions = await quesController.getQuestions()
-      return res.json({questions: foundQuestions})
+      return res.json({questions: foundQuestions.reverse()})
     } catch (e) {
       next(e)
     }

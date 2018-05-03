@@ -2,7 +2,7 @@
   display: inline-block;
 }
 
-button {
+.button {
   background: #333;
   color: #ddd;
   font-size: 18px;
@@ -14,7 +14,7 @@ button {
   border-radius: 4px;
 }
 
-button svg {
+.button svg {
   fill: #ddd;
 }
 

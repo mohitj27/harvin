@@ -1,164 +1,97 @@
-import React, { Component } from 'react';
-import { withStyles, Button } from 'material-ui';
-import cx from 'classnames';
-import PropTypes from 'prop-types';
-import Editor, { composeDecorators } from 'draft-js-plugins-editor';
-import Draft, { EditorState, RichUtils, convertFromRaw } from 'draft-js';
-import createImagePlugin from 'draft-js-image-plugin';
-import 'draft-js-static-toolbar-plugin/lib/plugin.css';
-import 'draft-js-image-plugin/lib/plugin.css';
-import editorStyles from './editorStyles.css';
-import alignmentToolStyles from './alignmentToolStyles.css';
-import buttonStyles from './buttonStyles.css';
-import createAlignmentPlugin from 'draft-js-alignment-plugin';
-import createFocusPlugin from 'draft-js-focus-plugin';
-import createResizeablePlugin from 'draft-js-resizeable-plugin';
-import createBlockDndPlugin from 'draft-js-drag-n-drop-plugin';
-import createDragNDropUploadPlugin from '@mikeljames/draft-js-drag-n-drop-upload-plugin';
-import createToolbarPlugin, { Separator } from 'draft-js-static-toolbar-plugin';
-import axios from 'axios'
+import React, { Component } from "react";
+import "react-quill/dist/quill.snow.css";
 import {
-  ItalicButton,
-  BoldButton,
-  UnderlineButton,
-  CodeButton,
-  HeadlineOneButton,
-  HeadlineTwoButton,
-  HeadlineThreeButton,
-  UnorderedListButton,
-  OrderedListButton,
-  BlockquoteButton,
-  CodeBlockButton,
-  SubButton,
-  SupButton
-} from 'draft-js-buttons';
+  Button,
+  Paper,
+  Grid,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  Typography,
+  Checkbox,
+  FormControlLabel
+} from "material-ui";
+import ReactQuill, { Quill } from "react-quill";
+import { ExpandMore } from "material-ui-icons";
+import axios from "axios";
+import ReactDOMServer from "react-dom/server";
+import HtmlToReact from "html-to-react";
+// import { ImageResize } from "quill-image-resize-module";
+const HtmlToReactParser = HtmlToReact.Parser;
 
-const focusPlugin = createFocusPlugin();
-const resizeablePlugin = createResizeablePlugin();
-const blockDndPlugin = createBlockDndPlugin();
-const alignmentPlugin =
-  createAlignmentPlugin({
-    theme: {
-      alignmentToolStyles,
-      buttonStyles
-    }
-  });
-const { AlignmentTool } = alignmentPlugin;
+// Quill.register('modules/imageResize', ImageResize);
+class Records extends React.Component {
+  state = { text: "", questions: [], checkedB: false };
 
-const decorator = composeDecorators(resizeablePlugin.decorator, alignmentPlugin.decorator, focusPlugin.decorator, blockDndPlugin.decorator);
-const imagePlugin = createImagePlugin({ decorator });
-const dragNDropFileUploadPlugin = createDragNDropUploadPlugin({
-  handleUpload: (obj) => { console.log('obj', obj) },
-  addImage: imagePlugin.addImage,
-});
-const toolbarPlugin = createToolbarPlugin({
-  structure: [
-    BoldButton,
-    ItalicButton,
-    UnderlineButton,
-    SubButton,
-    SupButton,
-    CodeButton,
-    Separator,
-    UnorderedListButton,
-    OrderedListButton,
-    BlockquoteButton,
-    CodeBlockButton
-  ]
-});
+  handleChange = value => {
+    this.setState({ text: value });
+  };
 
-const { Toolbar } = toolbarPlugin;
-
-
-
-
-
-class AddQues extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorState: EditorState.createEmpty(),
-      questions: []
-    }
+  handleCheckboxChanged = () => {
+    this.setState({checkedB : !this.state.checkedB})
   }
+
+  onSubmit = e => {
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append("question", this.state.text);
+    axios
+      .post("http://localhost:3001/admin/questions", formData)
+      .then(res => console.log("res", res))
+      .catch(err => console.log("err", err));
+  };
 
   componentDidMount = () => {
-    axios.get('http://localhost:3001/admin/questions')
+    axios
+      .get("http://localhost:3001/admin/questions")
       .then(res => {
-        let questions = res.data.questions
-        console.log('questions', questions[0].question);
-        this.setState({ questions: questions })
+        let questions = res.data.questions;
+        if (questions.length <= 0) return;
+        this.setState({ questions: questions });
       })
-      .catch(err => console.log('err', err))
-  }
-
-  onChange = (editorState) => {
-    this.setState({ editorState });
-  }
-
-  focus = () => {
-    this.editor.focus();
+      .catch(err => console.log("err", err));
   };
-  getAlignmentTool = () => {
-    console.log('type', typeof AlignmentTool)
-    return withStyles(alignmentToolStyles)(AlignmentTool)
-  }
-
-  onSubmit = (e) => {
-    e.preventDefault()
-    let formData = new FormData()
-    formData.append('question', JSON.stringify(Draft.convertToRaw(this.state.editorState.getCurrentContent())))
-    axios.post('http://localhost:3001/admin/questions', formData)
-      .then(res => console.log('res', res))
-      .catch(err => console.log('err', err))
-  }
 
   render() {
-    return (<div>
-      <h3>Add new Question</h3>
-      <div className={editorStyles.editor} onClick={this.focus} style={{ backgroundColor: 'white', minHeight: 200, padding: 20 }}>
-        <Editor
-          ref={(element) => { this.editor = element; }}
-
-          editorState={this.state.editorState}
-          onChange={this.onChange}
-          plugins={[
-            toolbarPlugin,
-            blockDndPlugin,
-            focusPlugin,
-            alignmentPlugin,
-            resizeablePlugin,
-            imagePlugin,
-            dragNDropFileUploadPlugin
-          ]}
-          customStyleMap={{
-            SUBSCRIPT: {
-              fontSize: '0.7em',
-              verticalAlign: 'sub'
-            },
-            SUPERSCRIPT: {
-              fontSize: '0.7em',
-              verticalAlign: 'super'
-            }
-          }}
+    return <div>
+        <Grid style={{ display: "flex" }} justify="center">
+          <h3>Add a ques</h3>
+        </Grid>
+        <ReactQuill value={this.state.text} onChange={this.handleChange} ref={editor => (this.editor = editor)} style={{ backgroundColor: "white" }} modules={{ toolbar: [["bold", "italic", "underline", "strike"], ["blockquote", "code-block"], [{ list: "ordered" }, { list: "bullet" }], [{ script: "sub" }, { script: "super" }], [{ indent: "-1" }, { indent: "+1" }], [{ direction: "rtl" }], [{ size: ["small", false, "large", "huge"] }], [{ header: [1, 2, 3, 4, 5, 6, false] }], [{ color: [] }, { background: [] }], [{ align: [] }], ["clean"], ["link", "image", "video", "formula"]] }} />
+        <ExpansionPanel style={{ marginTop: 16, marginBottom: 16 }}>
+          <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+            <Typography>Choose correct answers</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={this.state.checkedB}
+              onChange={this.handleCheckboxChanged}
+              value="checkedB"
+              color="primary"
+            />
+          }
+          label="1 ) 1"
         />
-      </div>
-      <Toolbar />
-      {/*<AlignmentTool/>*/}
-      <Button variant="raised" color="primary" onClick={this.onSubmit}>
-        Submit
-      </Button>
-      <hr />
-      <br />
-      <hr />
-      <h3>Previously added question</h3>
-      {this.state.questions.map(ques => {
-        return <Editor editorState={Draft.EditorState.createWithContent(Draft.convertFromRaw(JSON.parse(ques.question)))} readOnly={true} />
-        
-      }
-      )}
-    </div>);
+        </ExpansionPanel>
+        <Grid style={{ display: "flex" }} justify="center">
+          <Button variant="raised" color="primary" onClick={this.onSubmit} style={{ margin: 16 }}>
+            submit
+          </Button>
+        </Grid>
+        <Grid style={{ display: "flex" }} justify="center">
+          <h3>Previously added questions</h3>
+        </Grid>
+        {this.state.questions.map((ques, i) => {
+          let htmlToReactParser = new HtmlToReactParser();
+          let reactElement = htmlToReactParser.parse(ques.question);
+          return <Paper style={{ padding: 16, marginTop: 16 }}>
+              Q.{i + 1} {reactElement}
+            </Paper>;
+        })}
+      </div>;
   }
 }
 
-export default AddQues
+export default Records;

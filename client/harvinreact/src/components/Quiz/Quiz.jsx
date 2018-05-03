@@ -102,9 +102,9 @@ class Quiz extends Component {
   }
   getQuestionNavigationContent = (classes) => {
     return (this.state.questions.map((question, i) => {
-      return (<button variant="raised" id={question._id} value={question._id} key={question._id} aria-label="add" className={classes.quizNavButton} onClick={this.handleQuizNavClick}>
+      return (<Button variant="raised" id={question._id} value={question._id} key={question._id} aria-label="add" className={classes.quizNavButton} onClick={this.handleQuizNavClick}>
         {i + 1}
-      </button>)
+      </Button>)
     }))
   }
   getCardContent = () => {
