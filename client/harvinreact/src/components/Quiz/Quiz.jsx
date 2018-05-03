@@ -1,3 +1,6 @@
+//TODO SWATI REMOVE CARDS, LEFT ALIGN DETAIL AND REMOVE ACTIVATOR
+
+
 import React, { Component, Fragment } from 'react';
 import {
   withStyles,
@@ -19,20 +22,24 @@ import {
   SdStorage,
   Add,
 } from 'material-ui-icons';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
-import { Editor } from 'draft-js';
 import { RegularCard, ItemGrid } from '../'
 import { ErrorSnackbar, LoadingSnackbar, SuccessSnackbar } from "../../components/GlobalSnackbar/GlobalSnackbar";
-import green from 'material-ui/colors/green';
 import Editor from 'draft-js-plugins-editor';
-import {EditorState} from 'draft-js';
+import { EditorState } from 'draft-js';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import 'draft-js-emoji-plugin/lib/plugin.css'
 import createHighlightPlugin from '../draft-highlight-plugin/highlightPlugin';
 import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
+import axios from 'axios'
+import ReactDOMServer from 'react-dom/server'
+import HtmlToReactParser from 'html-to-react';
+import quizStyles from '../../variables/styles/quizStyles'
+import _ from 'lodash'
+import update from 'immutability-helper'
 
 
 
@@ -43,43 +50,75 @@ class Quiz extends Component {
   constructor(props) {
     super(props);
   }
+  state = {
+    questions: questions,
+    currentQuestion: '',
+    answers: [],
+  }
+  componentDidMount = () => {
+    axios
+      .get("http://localhost:3001/admin/questions")
+      .then(res => {
+        let questions = res.data.questions;
+        let answers = []
+        if (questions.length <= 0) return;
+        this.setState({ questions: questions });
+        this.setState({ currentQuestion: questions[0] });
+        questions.map((question, i) => {
+          answers[i] = { _id: question._id, options: [] }
+        })
+        this.setState({ answers })
+      })
+      .catch(err => console.log("err", err));
+  };
+  handleQuizNavClick = (e) => {
+    const curr = _.find(this.state.questions, function (o) {
+      console.log('filter', o)
+      return o._id === e.target.id;
+    });
+    console.log('curr', curr)
+    this.setState({ currentQuestion: curr });
+  }
+  handleChangeQuizOptionChange = (e) => {
+    
 
+  }
   getOptions = () => {
     return (options.map((option) => {
-      return (<FormControlLabel
+      return (<div>
+<FormControlLabel
         control={
           <Checkbox
-            onChange={this.handleChange}
-            value={options}
-          />
+          onChange={this.handleChangeQuizOptionChange}
+        />
         }
         label={option}
-      />)
+      />
+
+      </div>  
+      
+      )
     }))
   }
-  getQuestionNavigationContent = () => {
-    return (questions.map((question, i) => {
-      return (<Button variant="raised" style={{ backgroundColor: green[400], color: 'white' }} aria-label="add" >
+  getQuestionNavigationContent = (classes) => {
+    return (this.state.questions.map((question, i) => {
+      return (<button variant="raised" id={question._id} value={question._id} key={question._id} aria-label="add" className={classes.quizNavButton} onClick={this.handleQuizNavClick}>
         {i + 1}
-      </Button>)
+      </button>)
     }))
   }
   getCardContent = () => {
-    return (<div>
-      <Editor style={{ height: '100%', width: '1000px' }}
-        editorState={this.props.quizEditorState}
-        readOnly={true}
-      />
-      <FormControl component="fieldset">
-        <FormGroup>
-          {this.getOptions()}
-        </FormGroup>
-      </FormControl>
-
-    </div>)
+    console.log('ques', this.state.currentQuestion)
+    let htmlToReactParser = new HtmlToReactParser.Parser();
+    let reactElement = htmlToReactParser.parse(this.state.currentQuestion.question);
+    const opt = this.getOptions();
+    return <div>
+      {reactElement}
+      {opt}
+    </div>
   }
   render() {
-
+    const { classes } = this.props;
     let errorSnackbar = null;
     let successSnackbar = null;
     let processingSnackbar = null;
@@ -99,12 +138,10 @@ class Quiz extends Component {
       {processingSnackbar}
       <Grid container="container">
         <ItemGrid xs={12} sm={8} md={8}>
-          <Paper style={{padding:'20px'}}>
-            {this.getCardContent()}
-          </Paper>
+          <RegularCard cardTitle="Selected Question" cardSubtitle="" headerColor="blue" content={this.getCardContent()} />
         </ItemGrid>
         <ItemGrid xs={12} sm={4} md={4}>
-          <RegularCard cardTitle="Add new Question" cardSubtitle="This question will be added into question bank automatically" headerColor="blue" content={this.getQuestionNavigationContent()} />
+          <RegularCard cardTitle="Select any question to navigate" cardSubtitle="" headerColor="blue" content={this.getQuestionNavigationContent(classes)} />
         </ItemGrid>
       </Grid>
     </Fragment>);
@@ -114,14 +151,14 @@ Quiz.PropTypes = {
   quiz: PropTypes.object.isRequired,
   quizEditorState: PropTypes.object.isRequired,
 }
-function mapStateToProps(state){
-  return{
+function mapStateToProps(state) {
+  return {
 
   }
 }
-function mappDispatchToProps(dispatch){
-  return 
-    bindActionCreators({},dispatch)
+function mappDispatchToProps(dispatch) {
+  return
+  bindActionCreators({}, dispatch)
 }
 
-export default connect(null,null)(Quiz)
+export default withStyles(quizStyles)(Quiz)

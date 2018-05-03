@@ -9,7 +9,6 @@ router.post(
   '/',
   async (req, res, next) => {
     const body = req.body
-    console.log('question', body.question);
     try {
       const addedQues = await quesController.addQuestion({
         question: body.question

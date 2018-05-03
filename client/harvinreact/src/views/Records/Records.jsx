@@ -5,7 +5,7 @@ import ReactQuill, {Quill} from "react-quill";
 import axios from "axios";
 import ReactDOMServer from "react-dom/server";
 import HtmlToReact from "html-to-react";
-import { ImageResize } from "quill-image-resize-module";
+// import { ImageResize } from "quill-image-resize-module";
 const HtmlToReactParser = HtmlToReact.Parser;
 
 // Quill.register('modules/imageResize', ImageResize);

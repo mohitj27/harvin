@@ -154,6 +154,7 @@ class AddQues extends Component {
       <h3>Previously added question</h3>
       {this.state.questions.map(ques => {
         return <Editor editorState={Draft.EditorState.createWithContent(Draft.convertFromRaw(JSON.parse(ques.question)))} readOnly={true} />
+        
       }
       )}
     </div>);
