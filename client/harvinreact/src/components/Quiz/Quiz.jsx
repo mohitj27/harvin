@@ -1,6 +1,4 @@
 //TODO SWATI REMOVE CARDS, LEFT ALIGN DETAIL AND REMOVE ACTIVATOR
-
-
 import React, { Component, Fragment } from 'react';
 import {
   withStyles,
@@ -73,42 +71,89 @@ class Quiz extends Component {
   };
   handleQuizNavClick = (e) => {
     const curr = _.find(this.state.questions, function (o) {
-      console.log('filter', o)
       return o._id === e.target.id;
     });
-    console.log('curr', curr)
+
     this.setState({ currentQuestion: curr });
   }
   handleChangeQuizOptionChange = (e) => {
-    
+    const answerObj = _.find(this.state.answers, (o) => {
+      return o._id == this.state.currentQuestion._id
+    })
+    const answerObjIndex = _.findIndex(this.state.answers, (o) => {
+      return o._id == this.state.currentQuestion._id
+    })
+    let foundVal = _.indexOf(answerObj.options, e.target.value)
+    if (foundVal === -1) {
+      answerObj.options.push(e.target.value)
+    }
+    else {
+      _.remove(answerObj.options, (obj) => {
+        if (obj === e.target.value)
+          return obj === e.target.value
+      })
+    }
+    let newAnswers = []
+    this.state.answers.forEach((object, val) => {
+      val === answerObjIndex ? newAnswers.push(answerObj) : newAnswers.push(object)
+    })
+
+    this.setState({ answers: newAnswers }, () => {
+      this.getOptions()
+    })
 
   }
   getOptions = () => {
-    return (options.map((option) => {
-      return (<div>
-<FormControlLabel
-        control={
-          <Checkbox
-          onChange={this.handleChangeQuizOptionChange}
-        />
-        }
-        label={option}
-      />
+    const value = []
+    let answerObj = null
 
-      </div>  
-      
+    if (typeof this.state.currentQuestion == 'object') {
+      answerObj = _.find(this.state.answers, (o) => {
+        return o._id == this.state.currentQuestion._id
+      })
+
+    }
+    return (options.map((option, i) => {
+      let checked = false
+      try {
+        console.log('ano', answerObj.options[i], option);
+
+        if (_.find(answerObj.options, (optionObj) => {
+          return option == optionObj
+        })) {
+
+          checked = true
+        }
+
+
+      } catch (err) {
+        console.log(err)
+      }
+      return (<div>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={checked}
+              onChange={this.handleChangeQuizOptionChange}
+              value={option}
+            />
+          }
+          label={option}
+        />
+
+      </div>
+
       )
     }))
   }
   getQuestionNavigationContent = (classes) => {
     return (this.state.questions.map((question, i) => {
-      return (<Button variant="raised" id={question._id} value={question._id} key={question._id} aria-label="add" className={classes.quizNavButton} onClick={this.handleQuizNavClick}>
+      return (<button id={question._id} value={question._id} key={question._id} aria-label="add" className={classes.quizNavButton} onClick={this.handleQuizNavClick}>
         {i + 1}
-      </Button>)
+      </button>)
     }))
   }
   getCardContent = () => {
-    console.log('ques', this.state.currentQuestion)
     let htmlToReactParser = new HtmlToReactParser.Parser();
     let reactElement = htmlToReactParser.parse(this.state.currentQuestion.question);
     const opt = this.getOptions();
