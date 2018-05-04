@@ -55,7 +55,7 @@ const Sidebar = ({ ...props }) => {
   );
   var brand = (
     <div className={classes.logo}>
-      <a href="http://radixhealthcare.org/" className={classes.logoLink}>
+      <a href="https://harvin.academy/" className={classes.logoLink}>
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>

@@ -8,3 +8,4 @@ export { notifyLoading,
   notifyError,
   notifySuccess,
   notifyClear } from './notify_action';
+export {loginAction} from './login_action';

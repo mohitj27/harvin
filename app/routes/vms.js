@@ -23,6 +23,11 @@ router.get('/test', (req, res, next) => {
   res.render('testGallery')
 })
 
+router.get('/harvest', (req, res, next) => {
+  res.render('harvest')
+})
+
+
 router.get('/', (req, res, next) => {
   Gallery.find({
     category: {

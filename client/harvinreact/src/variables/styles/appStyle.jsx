@@ -11,6 +11,7 @@ const appStyle = theme => ({
     height: '100vh',
   },
   mainPanel: {
+    background:'#e0f7ce73',
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
