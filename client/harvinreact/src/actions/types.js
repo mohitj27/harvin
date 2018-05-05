@@ -19,9 +19,12 @@ export const GET_TEST = 'GET_TEST'
 export const GET_TEST_ERROR = 'GET_TEST_ERROR'
 export const GET_TEST_SUCCESS = 'GET_TEST_SUCCESS'
 
+export const LOGIN = 'LOGIN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+
 
 export const NOTIFY_SUCCESS = 'NOTIFY_SUCCESS';
 export const NOTIFY_ERROR = 'NOTIFY_ERROR';
 export const NOTIFY_LOADING = 'NOTIFY_LOADING';
 export const NOTIFY_CLEAR = 'NOTIFY_CLEAR';
-

@@ -24,7 +24,7 @@ const sidebarStyle = theme => ({
     bottom: '0',
     left: '0',
     zIndex: '1',
-    backgroundColor: '#fff',
+    background: 'linear-gradient(-45deg, #11cf9f, #93E192)',
     // overflow: 'auto',
     ...boxShadow,
     width: drawerWidth,
@@ -153,6 +153,7 @@ const sidebarStyle = theme => ({
     marginRight: '15px',
     textAlign: 'center',
     verticalAlign: 'middle',
+    color:'white',
 
   },
   itemActive: {
@@ -162,6 +163,7 @@ itemText: {
     margin: '0',
       lineHeight: '30px',
         fontSize: '14px',
+        color:'white',
   },
 whiteFont: {
   color: '#FFFFFF',
@@ -183,19 +185,19 @@ purple: {
 blue: {
   backgroundColor: infoColor,
     boxShadow:
-  '0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
+    '0 12px 20px -10px rgba(0, 212, 48, 0.5), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
     '&:hover': {
     backgroundColor: infoColor,
       boxShadow:
-    '0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
+    '0 12px 20px -10px rgba(0, 212, 48, 0.5), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
     },
 },
 white: {
-  backgroundColor: whiteColor,
+  backgroundColor: '#70dc97',
     boxShadow:
   '0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
     '&:hover': {
-    backgroundColor: infoColor,
+    backgroundColor: '#4bd59a',
     color:'white !important',
       boxShadow:
     '0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
