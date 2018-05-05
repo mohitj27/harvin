@@ -9,9 +9,11 @@ router.post(
   '/',
   async (req, res, next) => {
     const body = req.body
+
     try {
       const addedQues = await quesController.addQuestion({
-        question: body.question
+        question: body.question,
+        options: JSON.parse(body.options)
       })
       return res.sendStatus(200)
     } catch (e) {
@@ -25,7 +27,9 @@ router.get(
   async (req, res, next) => {
     try {
       const foundQuestions = await quesController.getQuestions()
-      return res.json({questions: foundQuestions.reverse()})
+      return res.json({
+        questions: foundQuestions.reverse()
+      })
     } catch (e) {
       next(e)
     }
