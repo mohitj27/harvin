@@ -7,14 +7,15 @@ import {
   NoteAdd
 } from 'material-ui-icons';
 import DashboardPage from '../views/Dashboard/Dashboard.jsx';
+import Home from '../views/Home/Home.jsx';
 import AddQues from '../views/AddQues/AddQues.jsx';
 
 const appRoutes = [
   {
-    path: '/dashboard',
-    sidebarName: 'Dashboard',
+    path: '/home',
+    sidebarName: 'Home',
     icon: Dashboard,
-    component: DashboardPage
+    component: Home,
   }, {
     path: '/makeoforder',
     sidebarName: 'Make Of Order',
