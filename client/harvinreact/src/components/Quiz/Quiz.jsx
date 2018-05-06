@@ -26,12 +26,6 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { RegularCard, ItemGrid } from '../'
 import { ErrorSnackbar, LoadingSnackbar, SuccessSnackbar } from "../../components/GlobalSnackbar/GlobalSnackbar";
-import Editor from 'draft-js-plugins-editor';
-import { EditorState } from 'draft-js';
-import createEmojiPlugin from 'draft-js-emoji-plugin';
-import 'draft-js-emoji-plugin/lib/plugin.css'
-import createHighlightPlugin from '../draft-highlight-plugin/highlightPlugin';
-import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
 import axios from 'axios'
 import ReactDOMServer from 'react-dom/server'
 import HtmlToReactParser from 'html-to-react';

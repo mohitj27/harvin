@@ -84,16 +84,14 @@ const sidebarStyle = theme => ({
     },
   },
   logoImage: {
-    width: '30px',
-    display: 'inline-block',
-    maxHeight: '30px',
-    marginLeft: '10px',
-    marginRight: '15px',
+    display: 'flex',
+  },
+  logoText:{
+    fontSize:'16px',
   },
   img: {
-    left: '30px',
-    position: 'relative',
     verticalAlign: 'middle',
+    height: '50px',
     border: '0',
   },
   background: {

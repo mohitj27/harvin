@@ -13,7 +13,7 @@ import appRoutes from '../../routes/app.jsx';
 
 import appStyle from '../../variables/styles/appStyle.jsx';
 
-import logo from '../../assets/img/logo.png';
+import logo from '../../assets/img/harvinLogo.png';
 
 const switchRoutes = (
   <Switch>

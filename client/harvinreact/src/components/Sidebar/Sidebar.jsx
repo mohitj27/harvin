@@ -9,7 +9,8 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Grid
 } from 'material-ui';
 
 import sidebarStyle from '../../variables/styles/sidebarStyle.jsx';
@@ -56,9 +57,10 @@ const Sidebar = ({ ...props }) => {
   var brand = (
     <div className={classes.logo}>
       <a href="https://harvin.academy/" className={classes.logoLink}>
-        <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
-        </div>
+          <Grid container>
+          <Grid item xs={4}><img src={logo} alt="logo" className={classes.img} /></Grid>
+          <Grid item xs={8}><p className={classes.logoText}>HARVIN ACADEMY</p></Grid>
+          </Grid>
       </a>
     </div>
   );
