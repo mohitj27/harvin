@@ -144,6 +144,19 @@ class Quiz extends Component {
       );
     });
   };
+
+  onSubmit = e => {
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append("answers", JSON.stringify(this.state.answers));
+    axios
+      .post("http://localhost:3001/admin/answers", formData)
+      .then(res => {
+        console.log("res", res);
+        alert(`You have scored ${res.data.marks}`);
+      })
+      .catch(err => console.log("err", err));
+  };
   getQuestionNavigationContent = classes => {
     return this.state.questions.map((question, i) => {
       return (
@@ -221,6 +234,14 @@ class Quiz extends Component {
               headerColor="blue"
               content={this.getQuestionNavigationContent(classes)}
             />
+            <Button
+              variant="raised"
+              color="primary"
+              onClick={this.onSubmit}
+              style={{ margin: 16 }}
+            >
+              submit
+            </Button>
           </ItemGrid>
         </Grid>
       </Fragment>
