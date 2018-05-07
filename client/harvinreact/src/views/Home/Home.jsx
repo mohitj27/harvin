@@ -36,7 +36,7 @@ class Home extends React.Component {
                     <Paper>
 <span style={{color:'white'}}>.</span>
                         <Grid container justify="center">
-                            <Grid item xs={2} sm={3} md={4} className={classes.profileContainer}>
+                            <Grid item xs={4} sm={3} md={2} className={classes.profileContainer}>
                                 <img src={logo} alt="" style={{ width: '100%' }} className={classes.profileImage} />
                             </Grid>
                         </Grid>
