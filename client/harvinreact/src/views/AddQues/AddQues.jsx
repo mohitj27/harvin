@@ -99,6 +99,27 @@ class Records extends React.Component {
     return false;
   };
 
+  getPrevQuesOptions = opts => {
+    const options = opts || [];
+
+    return options.map((opt, i) => {
+      return (
+        <FormControlLabel
+          style={{ marginRight: 50 }}
+          control={
+            <Checkbox
+              checked={opt.isAns}
+              value={`${opt.text}`}
+              disabled={true}
+              color="primary"
+            />
+          }
+          label={`${i + 1}) ${opt.text}`}
+        />
+      );
+    });
+  };
+
   render() {
     let options = this.state.options.map((opt, i) => {
       let removeButton = null;
@@ -202,6 +223,7 @@ class Records extends React.Component {
           return (
             <Paper style={{ padding: 16, marginTop: 16 }}>
               Q.{i + 1} {reactElement}
+              {this.getPrevQuesOptions(ques.options)}
             </Paper>
           );
         })}
