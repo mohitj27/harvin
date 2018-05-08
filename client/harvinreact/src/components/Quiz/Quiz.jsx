@@ -11,7 +11,8 @@ import {
   FormHelperText,
   CircularProgress,
   Grid,
-  Paper
+  Paper,
+  Badge
 } from "material-ui";
 import {
   Dashboard,
@@ -19,7 +20,9 @@ import {
   ContentPaste,
   LibraryBooks,
   SdStorage,
-  Add
+  Add,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
 } from "material-ui-icons";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -37,6 +40,7 @@ import HtmlToReactParser from "html-to-react";
 import quizStyles from "../../variables/styles/quizStyles";
 import _ from "lodash";
 import update from "immutability-helper";
+import red from 'material-ui/colors/red';
 
 class Quiz extends Component {
   constructor(props) {
@@ -70,7 +74,7 @@ class Quiz extends Component {
       .catch(err => console.log("err", err));
   };
   handleQuizNavClick = e => {
-    const curr = _.find(this.state.questions, function(o) {
+    const curr = _.find(this.state.questions, function (o) {
       return o._id === e.target.id;
     });
 
@@ -158,22 +162,79 @@ class Quiz extends Component {
       .catch(err => console.log("err", err));
   };
   getQuestionNavigationContent = classes => {
+    let selectedQ=_.findIndex(this.state.questions,(question)=>{
+      return question._id===this.state.currentQuestion._id
+    })
     return this.state.questions.map((question, i) => {
-      return (
+      let badges=[]
+      let qStatus=''
+      if(i===selectedQ)
+      qStatus=classes.selectedQuestion
+      if(question.markForLater)
+        badges=[...badges,( <Badge badgeContent='!' className={`${classes.badge} ${classes.markBadge}`} color="primary">
+.      </Badge>)]
+console.log('state',this.state)
+try{
+    if(this.state.answers[i].options.length>0){
+      qStatus=`${qStatus} ${classes.qStatus}`
+    }
+    console.log('qstatus',qStatus)
+  }
+    catch(err){
+      console.log('qstatus',err)
+    }
+      return (<Fragment>
         <button
           id={question._id}
           value={question._id}
           key={question._id}
           aria-label="add"
-          className={classes.quizNavButton}
+          className={`${classes.quizNavButton} ${qStatus}`}
           onClick={this.handleQuizNavClick}
         >
+
           {i + 1}
+        {badges}
         </button>
+        </Fragment>
       );
     });
   };
-  getCardContent = () => {
+  handleMarkForLater = event => {
+
+    const currentQuestionState = this.state.currentQuestion;
+    currentQuestionState.markForLater = event.target.checked;
+    this.setState({ currentQuestion: currentQuestionState })
+  }
+  handleArrowPrev = e=>{
+    let currentIndex=_.findIndex(this.state.questions,(question)=>{
+      return question._id===this.state.currentQuestion._id
+    })
+    console.log('hello',currentIndex)
+    if(currentIndex===0 )
+    return 
+
+    
+      
+        currentIndex--
+    
+    console.log('setting',this.state.questions[currentIndex],currentIndex)
+    this.setState({currentQuestion:this.state.questions[currentIndex]})
+  }
+  handleArrowNext = e=>{
+    let currentIndex=_.findIndex(this.state.questions,(question)=>{
+      return question._id===this.state.currentQuestion._id
+    })
+    console.log('hello',currentIndex)
+  
+    if(currentIndex===this.state.questions.length-1 )
+    return 
+  
+        currentIndex++
+    console.log('setting',this.state.questions[currentIndex],currentIndex)
+    this.setState({currentQuestion:this.state.questions[currentIndex]})
+  }
+  getCardContent = (classes) => {
     let htmlToReactParser = new HtmlToReactParser.Parser();
     let reactElement = htmlToReactParser.parse(
       this.state.currentQuestion.question
@@ -181,9 +242,21 @@ class Quiz extends Component {
     const opt = this.getOptions();
     return (
       <div>
+
         {reactElement}
         {opt}
-      </div>
+        <FormControlLabel
+          className={classes.markForLater}
+          control={
+            <Checkbox
+              value="markForLater"
+              color="primary"
+              onChange={this.handleMarkForLater}
+              checked={this.state.currentQuestion.markForLater || false}
+            />
+          }
+          label="Mark for later"
+        /> </div>
     );
   };
   render() {
@@ -224,8 +297,9 @@ class Quiz extends Component {
               cardTitle="Selected Question"
               cardSubtitle=""
               headerColor="blue"
-              content={this.getCardContent()}
+              content={this.getCardContent(classes)}
             />
+
           </ItemGrid>
           <ItemGrid xs={12} sm={4} md={4}>
             <RegularCard
@@ -234,6 +308,24 @@ class Quiz extends Component {
               headerColor="blue"
               content={this.getQuestionNavigationContent(classes)}
             />
+             <Button
+              variant="fab"
+              color="primary"
+              name="previous"              
+              onClick={this.handleArrowPrev}
+              style={{ margin: 16 }}
+            >
+              <KeyboardArrowLeft/>
+            </Button>
+            <Button
+              variant="fab"
+              color="primary"
+              name="next"
+              onClick={this.handleArrowNext}
+              style={{ margin: 16 }}
+            >
+              <KeyboardArrowRight/>
+            </Button>
             <Button
               variant="raised"
               color="primary"
