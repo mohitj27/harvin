@@ -222,7 +222,10 @@ class Quiz extends Component {
     currentIndex--;
 
     console.log("setting", this.state.questions[currentIndex], currentIndex);
-    this.setState({ currentQuestion: this.state.questions[currentIndex] });
+    this.setState({
+      currentQuestion: this.state.questions[currentIndex],
+      currentOptions: this.state.questions[currentIndex].options
+    });
   };
   handleArrowNext = e => {
     let currentIndex = _.findIndex(this.state.questions, question => {
@@ -234,7 +237,10 @@ class Quiz extends Component {
 
     currentIndex++;
     console.log("setting", this.state.questions[currentIndex], currentIndex);
-    this.setState({ currentQuestion: this.state.questions[currentIndex] });
+    this.setState({
+      currentQuestion: this.state.questions[currentIndex],
+      currentOptions: this.state.questions[currentIndex].options
+    });
   };
   getCardContent = classes => {
     let markForLater = null;
