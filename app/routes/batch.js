@@ -106,7 +106,7 @@ router.get('/:batchName', middleware.isLoggedIn, async function (
 })
 
 // Providing list of batches
-router.get('/', middleware.isLoggedIn, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   let foundBatches
 
   if (req.user) {

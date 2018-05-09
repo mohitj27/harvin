@@ -1,14 +1,10 @@
-import React, {
-  Fragment
-} from "react";
+import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect, Link } from "react-router-dom";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import {
-  Provider
-} from "react-redux";
+import { Provider } from "react-redux";
 import "./assets/css/material-dashboard-react.css";
 import rootReducer from "./reducers/index";
 import indexRoutes from "./routes/index.jsx";
@@ -65,7 +61,7 @@ if (token) {
       <Router history={hist}>
         <Switch>
           <Route path="/public" component={Public} />
-          <Route path="/login" component={Login} />{" "}
+          <Route path="/login" component={Login} />
           {indexRoutes.map((prop, key) => {
             return (
               <PrivateRoute

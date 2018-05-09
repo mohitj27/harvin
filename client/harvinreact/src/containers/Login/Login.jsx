@@ -1,8 +1,7 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { loginAction } from "../../actions";
-import * as actions from "../../actions";
+import { loginAction, notifyClear } from "../../actions";
 import {
   ErrorSnackbar,
   SuccessSnackbar,
@@ -58,25 +57,22 @@ class Login extends React.Component {
   render() {
     const { redirectToReferrer } = this.state;
     const { classes } = this.props;
-    let successSnackbar = null;
-    let errorSnackbar = null;
-    let loadingSnackbar = null;
-    if (this.state.successMessage !== "")
-      successSnackbar = (
+    let successSnackbar =
+      this.props.successMessage !== "" ? (
         <SuccessSnackbar
-          successMessage={this.state.successMessage}
-          onClearToast={actions.notifyClear}
+          successMessage={this.props.successMessage}
+          onClearToast={this.props.onClearToast}
         />
-      );
-    if (this.state.errorMessage !== "")
-      errorSnackbar = (
+      ) : null;
+    let errorSnackbar =
+      this.props.errorMessage !== "" ? (
         <ErrorSnackbar
-          errorMessage={this.state.errorMessage}
-          onClearToast={actions.notifyClear}
+          errorMessage={this.props.errorMessage}
+          onClearToast={this.props.onClearToast}
         />
-      );
-    if (this.state.notifyLoading !== "") loadingSnackbar = <LoadingSnackbar />;
-
+      ) : null;
+    let loadingSnackbar =
+      this.props.notifyLoading !== "" ? <LoadingSnackbar /> : null;
     if (redirectToReferrer === true) {
       return <Redirect to="/dashboard" />;
     }
@@ -135,7 +131,10 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ loginAction }, dispatch);
+  return bindActionCreators(
+    { loginAction, onClearToast: () => dispatch(notifyClear()) },
+    dispatch
+  );
 };
 
 export default withRouter(

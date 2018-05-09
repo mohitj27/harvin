@@ -21,11 +21,17 @@ export const loginAction = user => async (dispatch) => {
     dispatch(login());
     dispatch(notifyActions.notifyLoading());
     try {
-        const resp = await axios.post('http://localhost:3001/student/loginWithPassword', user)
-        console.log('res', JSON.stringify(resp));
+        const res = await axios.post('http://localhost:3001/student/loginWithPassword', user)
+        console.log('res', JSON.stringify(res));
+        if (res.data.success) {
+            dispatch(loginSuccess())
+            dispatch(notifyActions.notifySuccess(res.data.msg))
 
-        dispatch(loginSuccess())
-        dispatch(notifyActions.notifySuccess())
+        } else {
+
+            dispatch(loginError())
+            dispatch(notifyActions.notifyError(res.data.msg))
+        }
         saveToken()
 
     } catch (err) {
