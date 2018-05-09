@@ -114,7 +114,7 @@ class Records extends React.Component {
               color="primary"
             />
           }
-          label={`${i + 1}) ${opt.text}`}
+          label={`${opt.text}) Option ${opt.text}`}
         />
       );
     });
@@ -161,7 +161,7 @@ class Records extends React.Component {
                 color="primary"
               />
             }
-            label={`${opt.text}) ${opt.text}`}
+            label={`${opt.text}) Option ${opt.text}`}
           />
           {removeButton}
           {addButton}
