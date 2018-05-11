@@ -1,12 +1,28 @@
+export {
+  sendDeptOrder
+}
+from './order_action';
 
-
-
-export { sendDeptOrder } from './order_action';
-
-export {getTestList, getTest} from './test_action';
-export {getBatchList} from './user_action';
-export { notifyLoading,
+export {
+  getTestList,
+  getTest
+}
+from './test_action';
+export {}
+from './user_action';
+export {
+  getBatches
+}
+from './batch_action';
+export {
+  notifyLoading,
   notifyError,
   notifySuccess,
-  notifyClear } from './notify_action';
-export {loginAction, signupAction} from './login_action';
+  notifyClear
+}
+from './notify_action';
+export {
+  loginAction,
+  signupAction
+}
+from './login_action';

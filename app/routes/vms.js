@@ -100,8 +100,7 @@ router.post(
     }
     if (!aim) return errorHandler.errorResponse('INVALID_FIELD', 'aim', next)
 
-    if (
-      !phone ||
+    if (!phone ||
       validator.isEmpty(phone) ||
       !validator.isLength(phone, {
         min: 10,
@@ -200,10 +199,10 @@ router.get('/gallery/category', function (req, res, next) {
   let category = req.query.category
   let limit = req.query.limit
   Gallery.find({
-    category: {
-      $in: category
-    }
-  })
+      category: {
+        $in: category
+      }
+    })
     .sort({
       uploadDate: -1
     })
@@ -230,8 +229,7 @@ router.get('/gallery', (req, res, next) => {
 })
 
 router.get('/results', (req, res, next) => {
-  Gallery.find(
-    {
+  Gallery.find({
       category: 'results'
     },
     (err, foundStudents) => {
@@ -254,7 +252,9 @@ router.get('/team', (req, res, next) => {
 
 router.get('/downloads', async (req, res, next) => {
   const foundLinks = await linkController.getAllLinks()
-  res.render('downloads', { downloads: foundLinks })
+  res.render('downloads', {
+    downloads: foundLinks
+  })
 })
 
 router.get('/tnc', (req, res, next) => {
@@ -281,8 +281,8 @@ router.get('/blog/:url', (req, res, next) => {
   const url = req.params.url
   res.locals.flashUrl = '/blog/' + url
   Blog.findOne({
-    url
-  })
+      url
+    })
     .populate({
       path: 'author',
       modal: 'User'
@@ -321,8 +321,8 @@ router.get('/blog/:url', (req, res, next) => {
               if (foundBlog.htmlFilePath) {
                 fs.readFile(
                   __dirname +
-                    '/../../../HarvinDb/blog/' +
-                    foundBlog.htmlFilePath,
+                  '/../../../HarvinDb/blog/' +
+                  foundBlog.htmlFilePath,
                   function (err, data) {
                     if (err) return next(err || 'Internal Server Error')
                     res.render('standard_blog_detail', {
@@ -363,7 +363,9 @@ router.get('/blog', (req, res, next) => {
   Blog.count({})
     .then(count => {
       count = Math.ceil(count / perPage)
-      Blog.find({})
+      Blog.find({
+          publish: 'on'
+        })
         .limit(perPage)
         .skip(perPage * (page - 1))
         .sort({
@@ -375,7 +377,11 @@ router.get('/blog', (req, res, next) => {
         })
         .exec()
         .then(foundBlogs =>
-          res.render('blogTheme', {foundBlogs, count, page})
+          res.render('blogTheme', {
+            foundBlogs,
+            count,
+            page
+          })
         )
         .catch(err => next(err || new Error('Internal Server Error')))
     })
@@ -389,7 +395,9 @@ router.get('/forum', async (req, res, next) => {
     try {
       const foundPosts = await forumController.findPost()
       // console.log(foundPosts)
-      res.render('forum', { foundPosts })
+      res.render('forum', {
+        foundPosts
+      })
     } catch (e) {
       next(e)
     }
@@ -398,7 +406,9 @@ router.get('/forum', async (req, res, next) => {
     const foundPost = await forumController.findPost({
       postName: req.query.title
     })
-    res.render('forumPost', { foundPost: foundPost[0] })
+    res.render('forumPost', {
+      foundPost: foundPost[0]
+    })
   } catch (e) {}
 })
 
@@ -409,7 +419,9 @@ router.get('/videos/:videoId', async (req, res, next) => {
   }
   try {
     const foundVideo = await videoController.findVideoById(videoId)
-    res.render('video', { video: foundVideo })
+    res.render('video', {
+      video: foundVideo
+    })
   } catch (err) {
     next(err)
   }
@@ -418,7 +430,9 @@ router.get('/videos/:videoId', async (req, res, next) => {
 router.get('/videos', async (req, res, next) => {
   try {
     const foundVideos = await videoController.findAllVideos()
-    res.render('videos', { videos: foundVideos })
+    res.render('videos', {
+      videos: foundVideos
+    })
   } catch (err) {
     next(err)
   }

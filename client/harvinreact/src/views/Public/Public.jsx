@@ -1,9 +1,20 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { signupAction, getBatchList } from '../../actions';
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom';
-import loginStyles from '../../variables/styles/loginStyles';
+import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { signupAction, getBatches, notifyClear } from "../../actions";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from "react-router-dom";
+import {
+  ErrorSnackbar,
+  SuccessSnackbar,
+  LoadingSnackbar
+} from "../../components/GlobalSnackbar/GlobalSnackbar";
+import loginStyles from "../../variables/styles/loginStyles";
 import {
   Grid,
   Paper,
@@ -13,115 +24,183 @@ import {
   InputLabel,
   Input,
   Select,
-  MenuItem,
-} from 'material-ui';
-import logo from '../../assets/img/harvinLogo.png';
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100);
-  },
-
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100);
-  },
-};
+  MenuItem
+} from "material-ui";
+import logo from "../../assets/img/harvinLogo.png";
 
 class Public extends React.Component {
   state = {
-    redirectToReferrer: false,
-    username: '',
-    password: '',
-    batch: [],
-    confirmPassword: '',
+    username: "",
+    password: "",
+    confirmPassword: "",
+    batch: ""
   };
-  signup = (e) => {
+  signup = e => {
     e.preventDefault();
-    this.props.signupAction({ username: this.state.username, password: this.state.password, batch: this.state.batch });
-  };
-
-  handleChange = e => {
-    console.log('change', e.target.name);
-    this.setState({
-      [e.target.name]: e.target.value,
+    if (this.state.password !== this.state.confirmPassword) {
+      alert("Confirm password is not same as password !!!");
+      return;
+    }
+    this.props.signupAction({
+      username: this.state.username,
+      password: this.state.password,
+      batch: this.state.batch
     });
   };
 
-  componentWillMount=()=> {
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
 
-      const batchList = this.props.getBatchList();
-      this.setState({ batch:  batchList || [] });
-    };
+  componentWillMount = () => {
+    this.props.getBatches();
+  };
 
   render() {
-    const { redirectToReferrer } = this.state;
     const { classes } = this.props;
+    let successSnackbar =
+      this.props.successMessage !== "" ? (
+        <SuccessSnackbar
+          successMessage={this.props.successMessage}
+          onClearToast={this.props.onClearToast}
+        />
+      ) : null;
+    let errorSnackbar =
+      this.props.errorMessage !== "" ? (
+        <ErrorSnackbar
+          errorMessage={this.props.errorMessage}
+          onClearToast={this.props.onClearToast}
+        />
+      ) : null;
+    let loadingSnackbar =
+      this.props.notifyLoading !== "" ? <LoadingSnackbar /> : null;
 
-    if (redirectToReferrer === true) {
-      return (<Redirect to='/dashboard'/>);
+    if (this.props.isAuthenticated === true) {
+      return <Redirect to="/dashboard" />;
     }
 
-    return (<div className={classes.root}>
-      <Paper >
-        <Grid container="container" className={classes.centerContainer}>
-          <Grid item="item" xs={6}>
-            <img src={logo} alt="harvin logo" style={{
-                height: '50px',
-              }}/>
-          </Grid>
-          <Grid item="item" xs={6}>
-            <Grid container="container" direction="column" justify="center">
-              <Grid item="item" xs={12} className={classes.centerItem}>
-                <FormControl fullWidth="fullWidth" className={classes.marginBottom}>
-                  <InputLabel htmlFor="username">Username</InputLabel>
-                  <Input id="username" value={this.state.username} type="text" name="username" onChange={this.handleChange}/>
-                </FormControl>
-                <FormControl fullWidth="fullWidth" className={classes.marginBottom}>
-                  <InputLabel htmlFor="password">Password</InputLabel>
-                  <Input id="password" value={this.state.password} type="password" name="password" onChange={this.handleChange}/>
-                </FormControl>
-                <FormControl fullWidth="fullWidth" className={classes.marginBottom}>
-                  <InputLabel htmlFor="password">Confirm Password</InputLabel>
-                  <Input id="confirmPassword" value={this.state.confirmPassword} type="password" name="confirmPassword" onChange={this.handleChange}/>
-                </FormControl>
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="age-simple">Age</InputLabel>
-                  <Select value="batch" onChange={this.handleChange} inputProps={{
-                      name: 'batch',
-                      id: 'batch',
-                    }}>
-                    {this.state.batch.map((batch, i)=> {
-                      return <MenuItem key={i} value={batch}>{batch}</MenuItem>;
-                    })}
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl>
-              <br/>
-                <Button variant="raised" onClick={this.signup} className={classes.raisedButton}>
-                  Signup
-                </Button>
+    return (
+      <div className={classes.root}>
+        {successSnackbar}
+        {errorSnackbar}
+        {loadingSnackbar}
+        <Paper>
+          <Grid
+            container
+            direction={"row"}
+            justify={"center"}
+            alignItems={"center"}
+          >
+            <Grid item="item" xs={6}>
+              <Grid
+                container
+                direction={"row"}
+                justify={"center"}
+                alignItems={"center"}
+              >
+                <img src={logo} alt="harvin logo" style={{ height: "50px" }} />
               </Grid>
-
+            </Grid>
+            <Grid item="item" xs={6}>
+              <Grid container="container" direction="column" justify="center">
+                <Grid item="item" xs={12} className={classes.centerItem}>
+                  <FormControl
+                    fullWidth="fullWidth"
+                    className={` ${classes.formControl}`}
+                  >
+                    <InputLabel htmlFor="username">Username</InputLabel>
+                    <Input
+                      id="username"
+                      value={this.state.username}
+                      type="text"
+                      name="username"
+                      onChange={this.handleChange}
+                    />
+                  </FormControl>
+                  <FormControl
+                    fullWidth="fullWidth"
+                    className={` ${classes.formControl}`}
+                  >
+                    <InputLabel htmlFor="password">Password</InputLabel>
+                    <Input
+                      id="password"
+                      value={this.state.password}
+                      type="password"
+                      name="password"
+                      onChange={this.handleChange}
+                    />
+                  </FormControl>
+                  <FormControl
+                    fullWidth="fullWidth"
+                    className={` ${classes.formControl}`}
+                  >
+                    <InputLabel htmlFor="password">Confirm Password</InputLabel>
+                    <Input
+                      id="confirmPassword"
+                      value={this.state.confirmPassword}
+                      type="password"
+                      name="confirmPassword"
+                      onChange={this.handleChange}
+                    />
+                  </FormControl>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel>Choose your batch</InputLabel>
+                    <Select
+                      value={this.state.batch}
+                      style={{ width: "100%" }}
+                      onChange={this.handleChange}
+                      inputProps={{ name: "batch", id: "batch" }}
+                    >
+                      {this.props.batches.map((batch, i) => {
+                        return (
+                          <MenuItem key={i} value={batch._id}>
+                            {batch.batchName}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                  <br />
+                  <Button
+                    variant="raised"
+                    onClick={this.signup}
+                    className={classes.raisedButton}
+                  >
+                    Signup
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Paper>
-    </div>);
+        </Paper>
+      </div>
+    );
   }
 }
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    successMessage: state.notify.success,
+    errorMessage: state.notify.error,
+    notifyLoading: state.notify.loading,
+    notifyClear: state.notify.clear,
+    isAuthenticated: state.auth.isAuthenticated,
+    batches: state.batch.batches || []
+  };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    signupAction,
-    getBatchList,
-  }, dispatch);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      signupAction,
+      getBatches,
+      onClearToast: () => dispatch(notifyClear())
+    },
+    dispatch
+  );
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(loginStyles)(Public)));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(withStyles(loginStyles)(Public))
+);

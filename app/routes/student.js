@@ -59,30 +59,28 @@ router.put('/:username', async (req, res, next) => {
     progresses = await progressController.createProgressesForBatch(foundBatch)
 
     await profileController.updateFieldsInProfileById(
-      foundUser.profile,
-      {},
-      {
+      foundUser.profile, {}, {
         batch: foundBatch,
         progresses
       }
     )
 
-      return res.json(req.body)
+    return res.json(req.body)
   } catch (err) {
     next(err || 'Internal Server Error')
   }
 })
 
 // Handle user login -- for student
-router.post('/login',async function (req, res,next) {
-  console.log('login',req.body)
+router.post('/login', async function (req, res, next) {
+  console.log('login', req.body)
   try {
-    const studentToken= await studentController.loginWithJWT(req.body)
+    const studentToken = await studentController.loginWithJWT(req.body)
     console.log(studentToken)
     res.send(studentToken)
   } catch (e) {
     console.log(e)
-  next(e)
+    next(e)
   } finally {
 
   }
@@ -100,8 +98,7 @@ router.post('/loginWithPassword', function (req, res, next) {
       msg: 'Please enter username and password.'
     })
   } else {
-    User.findOne(
-      {
+    User.findOne({
         username: username
       },
       function (err, user) {
@@ -136,8 +133,7 @@ router.post('/loginWithPassword', function (req, res, next) {
             } else {
               res.json({
                 success: false,
-                msg:
-                  'Authentication failed. Username or Password did not match.'
+                msg: 'Authentication failed. Username or Password did not match.'
               })
             }
           })
@@ -226,9 +222,57 @@ router.post('/loginWithEmail', async (req, res, next) => {
   }
 })
 
+// Handle signup for harvinReact
+router.post('/harvin-signup', async (req, res, next) => {
+  const emailId = req.body.email || ''
+  const password = req.body.password
+  const batch = req.body.batch || ''
+  if (!emailId || !validator.isEmail(emailId) || password) {
+    return res.json({
+      success: false,
+      msg: 'Please enter email and password.'
+    })
+  }
+  const index = emailId.indexOf('@')
+  const username = emailId.substring(0, index)
+  var userDetail = {
+    username,
+    emailId,
+    password,
+    batch
+  }
+
+  // find user
+  try {
+    var foundUser = await userController.findUserByUsername(username)
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+  try {
+    const newUser = new User({
+      username,
+      password
+    })
+    let registeredUser = await userController.saveUser(newUser)
+    const createdProfile = await profileController.createNewProfile({
+      username,
+      emailId
+    })
+    await userController.addProfileToUser(registeredUser, createdProfile)
+
+    //
+    let token = await userController.generateToken(registeredUser, password)
+    userDetail.token = token
+    return res.json(userDetail)
+    //
+  } catch (err) {
+    next(err || 'Internal Server Error')
+  }
+})
+
 // Handle user registration-- for student->Mobile interface
 router.post('/signup', async (req, res, next) => {
-  res.locals.flashUrl = req.headers.referer
+  // res.locals.flashUrl = req.headers.referer
   const username = req.body.username || ''
   const password = req.body.password || ''
   const fullName = req.body.fullName || ''
@@ -249,7 +293,7 @@ router.post('/signup', async (req, res, next) => {
     return errorHandler.errorResponse('INVALID_FIELD', 'email id', next)
   }
   if (!batchName || validator.isEmpty(batchName)) {
-    return errorHandler.errorResponse('INVALID_FIELD', 'batch', next)
+    return errorHandpostler.errorResponse('INVALID_FIELD', 'batch', next)
   }
 
   try {
@@ -271,9 +315,7 @@ router.post('/signup', async (req, res, next) => {
     }
     const createdProfile = await profileController.createNewProfile(newProfile)
     await userController.updateFieldsInUserById(
-      registerdUser,
-      {},
-      {
+      registerdUser, {}, {
         profile: createdProfile
       }
     )
@@ -300,9 +342,7 @@ router.get('/register', async function (req, res, next) {
 router.get('/home/:username', middleware.isLoggedIn, async (req, res, next) => {
   try {
     const user = userController.findUserByUserId(req.user)
-  } catch (e) {
-  } finally {
-  }
+  } catch (e) {} finally {}
   next()
 })
 router.get('/home', async (req, res, next) => {
@@ -427,18 +467,15 @@ router.get('/:username/progresses', async (req, res, next) => {
     )
 
     let updatedProfile = await profileController.updateFieldsInProfileById(
-      foundUser.profile,
-      {
+      foundUser.profile, {
         progresses: {
           $each: progressesToAdd
         }
-      },
-      {}
+      }, {}
     )
 
     updatedProfile = await profileController.populateFieldsInProfiles(
-      updatedProfile,
-      ['progresses']
+      updatedProfile, ['progresses']
     )
     return res.json({
       progresses: updatedProfile.progresses
