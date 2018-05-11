@@ -1,7 +1,12 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { loginAction } from '../../actions';
+import { loginAction, notifyClear } from '../../actions';
+import {
+  ErrorSnackbar,
+  SuccessSnackbar,
+  LoadingSnackbar
+} from '../../components/GlobalSnackbar/GlobalSnackbar';
 import {
   BrowserRouter as Router,
   Route,
@@ -54,13 +59,31 @@ class Login extends React.Component {
   render() {
     const { redirectToReferrer } = this.state;
     const { classes } = this.props;
-
+    let successSnackbar =
+      this.props.successMessage !== '' ? (
+        <SuccessSnackbar
+          successMessage={this.props.successMessage}
+          onClearToast={this.props.onClearToast}
+        />
+      ) : null;
+    let errorSnackbar =
+      this.props.errorMessage !== '' ? (
+        <ErrorSnackbar
+          errorMessage={this.props.errorMessage}
+          onClearToast={this.props.onClearToast}
+        />
+      ) : null;
+    let loadingSnackbar =
+      this.props.notifyLoading !== '' ? <LoadingSnackbar /> : null;
     if (redirectToReferrer === true) {
       return <Redirect to="/dashboard" />;
     }
 
     return (
       <div className={classes.root}>
+        {successSnackbar}
+        {errorSnackbar}
+        {loadingSnackbar}
         <Paper>
           <Grid container className={classes.centerContainer}>
             <Grid item xs={6} className={classes.centerContainer}>
@@ -102,11 +125,19 @@ class Login extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  return {};
+  return {
+    successMessage: state.notify.success,
+    errorMessage: state.notify.error,
+    notifyLoading: state.notify.loading,
+    notifyClear: state.notify.clear,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ loginAction }, dispatch);
+  return bindActionCreators(
+    { loginAction, onClearToast: () => dispatch(notifyClear()) },
+    dispatch
+  );
 };
 
 export default withRouter(

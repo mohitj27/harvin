@@ -32,7 +32,7 @@ setAuthToken(token);
 const store = createStore(rootReducer, enhancer);
 let App = null;
 const fakeAuth = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   authenticate(cb) {
     this.isAuthenticated = true;
     setTimeout(cb, 100); // fake async
