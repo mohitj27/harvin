@@ -37,48 +37,50 @@ router.get('/:courseId/edit', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-    let file = req.files.courseImage;
+  let file = req.files.courseImage;
 
-    // let courseImage
+  // let courseImage
 
-    if (file) {
-      // courseImage = file
-      const filePath = path.join(COURSEIMAGE_SAVE_LOCATION, file.name);
-      try {
-        await fileController.uploadFileToDirectory(filePath, file);
-      } catch (err) {
-        return next(err || 'Internal Server Error');
-      }
+  if (file) {
+    // courseImage = file
+    const filePath = path.join(COURSEIMAGE_SAVE_LOCATION, file.name);
+    try {
+      await fileController.uploadFileToDirectory(filePath, file);
+    } catch (err) {
+      return next(err || 'Internal Server Error');
     }
+  }
 
-    const courseName = req.body.courseName,
-      courseTimings = req.body.courseTimings,
-      courseStartingFrom = req.body.courseStartingFrom,
-      courseDescription = req.body.courseDescription,
-      courseFor = req.body.courseFor,
-      courseAdmissionThrough = req.body.courseAdmissionThrough,
-      courseFrequency = req.body.courseFrequency,
-     course = {
-      courseName,
-      courseTimings,
-      courseStartingFrom,
-      courseDescription,
-      courseFor,
-      courseAdmissionThrough,
-      courseFrequency,
-    };
+  const courseName = req.body.courseName;
+  const courseTimings = req.body.courseTimings;
+  const courseStartingFrom = req.body.courseStartingFrom;
+  const courseDescription = req.body.courseDescription;
+  const courseFor = req.body.courseFor;
+  const courseAdmissionThrough = req.body.courseAdmissionThrough;
+  const courseFrequency = req.body.courseFrequency;
+  const _id = req.body.courseId;
+  const course = {
+    _id,
+    courseName,
+    courseTimings,
+    courseStartingFrom,
+    courseDescription,
+    courseFor,
+    courseAdmissionThrough,
+    courseFrequency,
+  };
 
-    if (file) {
-      course.courseImage = file.name;
+  if (file) {
+    course.courseImage = file.name;
+  }
+
+  coursesCont.insertInCourse(course).then(result => {
+    if (result) {
+      req.flash('success', 'Course Inserted Successfully');
+      res.redirect('/admin/courses/all');
     }
-
-    coursesCont.insertInCourse(course).then(result => {
-      if (result) {
-        req.flash('success', 'Course Inserted Successfully');
-        res.redirect('/admin/courses/all');
-      }
-    }).catch(err => next(err || 'Internal Server Error'));
-  });
+  }).catch(err => next(err || 'Internal Server Error'));
+});
 router.delete('/delete/:courseName', (req, res, next) => {
   try {
     const courseName = coursesCont.deleteOneCourse(req.params.courseName);

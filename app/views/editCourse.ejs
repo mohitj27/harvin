@@ -6,7 +6,7 @@
 				<div class="container">
           <h3 class="center">Edit Course</h3>
 					<form method="post" class="newBlogForm" enctype="multipart/form-data" action="/admin/courses" method="post">
-
+						<input type="text" name="courseId" value="<%=foundCourse._id%>" hidden>
 						<div class="row">
 							<div class="input-field">
 								<input id="courseName" type="text" name="courseName" value="<%=foundCourse.courseName%>" required class="validate">
