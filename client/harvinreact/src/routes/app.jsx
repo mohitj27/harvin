@@ -20,28 +20,28 @@ const appRoutes = [
     path: '/makeoforder',
     sidebarName: 'Make Of Order',
     icon: Person,
-    component: DashboardPage
+    component: DashboardPage,
   }, {
     path: '/makeofstock',
     sidebarName: 'Make Of Stock',
     icon: ContentPaste,
-    component: DashboardPage
+    component: DashboardPage,
   }, {
     path: '/stats',
     sidebarName: 'Transactions',
     icon: LibraryBooks,
-    component: DashboardPage
+    component: DashboardPage,
   }, {
     path: '/addQues',
     sidebarName: 'Add Question',
     icon: NoteAdd,
-    component: AddQues
+    component: AddQues,
   }, {
     redirect: true,
     path: '/',
     to: '/dashboard',
-    navbarName: 'Redirect'
-  }
+    navbarName: 'Redirect',
+  },
 ];
 
 export default appRoutes;

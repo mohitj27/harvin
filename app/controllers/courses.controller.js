@@ -32,7 +32,7 @@ const findOneCourseUsingName = (courseName) =>
 const insertInCourse = (course) =>
    new Promise((resolve, reject) => {
     Course.updateOne({
-      courseName: course.courseName,
+      _id: course._id,
     }, course, {
       upsert: true,
     }, (err, result) => {
