@@ -16,6 +16,7 @@ const fileUpload = require('express-fileupload')
 const _ = require('lodash')
 const cors = require('cors')
 const serveFavicon = require('serve-favicon')
+const sleep = require('sleep');
 const User = require('./models/User.js')
 const userController = require('./controllers/user.controller')
 const instituteController = require('./controllers/institute.controller')
@@ -90,6 +91,7 @@ app.use(
 )
 
 app.use(function (req, res, next) {
+  // sleep.sleep(1)
   if (req.method === 'POST' || req.method === 'PUT') {
     const data = req.body
 

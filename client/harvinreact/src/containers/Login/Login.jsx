@@ -34,7 +34,8 @@ const Protected = () => <h3>Protected</h3>;
 
 class Login extends React.Component {
   state = {
-    redirectToReferrer: false,
+    isAuthenticated: false,
+    isLoginInProgress: false,
     username: "",
     password: ""
   };
@@ -44,17 +45,28 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password
     });
-    // fakeAuth.authenticate(() => {
-    //     this.setState(() => ({
-    //         redirectToReferrer: true
-    //     }))
-    // })
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      !nextProps.isLoginInProgress &&
+      nextProps.successMessage ===
+        "Successfully logged you in as " + prevState.username
+    ) {
+      return {
+        isLoginInProgress: false,
+        isAuthenticated: true
+      };
+    }
+    return null;
+  }
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
+    console.log("state", this.state);
+
     const { redirectToReferrer } = this.state;
     const { classes } = this.props;
     let successSnackbar =
@@ -73,7 +85,7 @@ class Login extends React.Component {
       ) : null;
     let loadingSnackbar =
       this.props.notifyLoading !== "" ? <LoadingSnackbar /> : null;
-    if (redirectToReferrer === true) {
+    if (this.props.isAuthenticated === true) {
       return <Redirect to="/dashboard" />;
     }
 
@@ -127,7 +139,9 @@ const mapStateToProps = state => {
     successMessage: state.notify.success,
     errorMessage: state.notify.error,
     notifyLoading: state.notify.loading,
-    notifyClear: state.notify.clear
+    notifyClear: state.notify.clear,
+    isAuthenticated: state.auth.isAuthenticated,
+    isLoginInProgress: state.auth.isLoginInProgress
   };
 };
 const mapDispatchToProps = dispatch => {

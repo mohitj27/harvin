@@ -30,23 +30,25 @@ if (url == "http://localhost:3010")
 setAuthToken(token);
 const store = createStore(rootReducer, enhancer);
 let App = null;
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100); // fake async
-  }
-};
+// const fakeAuth = {
+//   isAuthenticated: false,
+//   authenticate(cb) {
+//     this.isAuthenticated = true;
+//     setTimeout(cb, 100); // fake async
+//   },
+//   signout(cb) {
+//     this.isAuthenticated = false;
+//     setTimeout(cb, 100); // fake async
+//   }
+// };
+// console.log("redux", store.getState());
+
 const studentHome = null;
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      fakeAuth.isAuthenticated === true ? (
+      store.getState().auth.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
         <Redirect to="/login" />
