@@ -222,29 +222,28 @@ router.post('/loginWithEmail', async (req, res, next) => {
 })
 
 // Handle signup for harvinReact
-router.post('/harvin-signup', async (req, res, next) => {
-  const emailId = req.body.email || ''
+router.post('/harvinSignup', async (req, res, next) => {
+  const username = req.body.username || ''
   const password = req.body.password
   const batch = req.body.batch || ''
-  if (!emailId || !validator.isEmail(emailId) || !password) {
+
+  if (!username || !password) {
     return res.json({
       success: false,
-      msg: 'Please enter email and password.'
+      msg: 'Please enter username and password.'
     })
   }
-  const index = emailId.indexOf('@')
-  const username = emailId.substring(0, index)
+
   var userDetail = {
     username,
-    emailId,
     password,
     batch
   }
 
   try {
     let foundBatch
-    if (batch !== '') {
-      foundBatch = await batchController.findBatchByBatchName(batch)
+    if (batch !== '' && validator.isMongoId(batch)) {
+      foundBatch = await batchController.findBatchById(batch)
       if (!foundBatch)
         return res.json({
           success: false,
@@ -259,7 +258,7 @@ router.post('/harvin-signup', async (req, res, next) => {
 
     let registeredUser = await userController.saveUser(newUser)
     let newProfile = {
-      emailId
+      fullName: username
     }
 
     // create profile
@@ -290,7 +289,7 @@ router.post('/harvin-signup', async (req, res, next) => {
     if (errMsg.includes('exists')) {
       return res.json({
         success: false,
-        msg: 'This email id is already registered.'
+        msg: 'This username is already registered.'
       })
     } else return next(err || 'Internal Server Error')
   }

@@ -3,9 +3,10 @@ import * as actionTypes from '../actions/types';
 
 const initialState = {
   isLoginInProgress: false,
-  isAuthenticated: false
+  isAuthenticated: false,
+  isSignupInProgress: false,
+  isRegistered: false,
 };
-
 const login = (state, action) =>
   update(state, {
     isLoginInProgress: {
@@ -33,6 +34,33 @@ const loginError = (state, action) =>
     },
   });
 
+const signup = (state, action) =>
+  update(state, {
+    isSignupInProgress: {
+      $set: true,
+    },
+  });
+
+const signupSuccess = (state, action) =>
+  update(state, {
+    isSignupInProgress: {
+      $set: false,
+    },
+    isRegistered: {
+      $set: true,
+    },
+  });
+
+const signupError = (state, action) =>
+  update(state, {
+    isSignupInProgress: {
+      $set: false,
+    },
+    isRegistered: {
+      $set: false,
+    },
+  });
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.LOGIN:
@@ -41,6 +69,13 @@ const reducer = (state = initialState, action) => {
       return loginSuccess(state, action);
     case actionTypes.LOGIN_ERROR:
       return loginError(state, action);
+
+    case actionTypes.SIGNUP:
+      return signup(state, action);
+    case actionTypes.SIGNUP_SUCCESS:
+      return signupSuccess(state, action);
+    case actionTypes.SIGNUP_ERROR:
+      return signupError(state, action);
     default:
       return state;
   }
