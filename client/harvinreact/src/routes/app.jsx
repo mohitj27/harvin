@@ -9,7 +9,7 @@ import {
 import DashboardPage from '../views/Dashboard/Dashboard.jsx';
 import Home from '../views/Home/Home.jsx';
 import AddQues from '../views/AddQues/AddQues.jsx';
-
+import ListTest from '../views/ListTest/ListTest.jsx';
 const appRoutes = [
   {
     path: '/home',
@@ -36,6 +36,11 @@ const appRoutes = [
     sidebarName: 'Add Question',
     icon: NoteAdd,
     component: AddQues,
+  }, {
+    path: '/Tests',
+    sidebarName: 'Tests',
+    icon: NoteAdd,
+    component: ListTest,
   }, {
     redirect: true,
     path: '/',

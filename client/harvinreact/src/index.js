@@ -49,7 +49,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      store.getState().auth.isAuthenticated === true ? (
+      store.getState().auth.isAuthenticated === false ? (
         <Component {...props} />
       ) : (
         <Redirect to="/login" />

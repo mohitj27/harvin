@@ -26,12 +26,19 @@ class Records extends React.Component {
   state = {
     text: '',
     questions: [],
-    options: [{ text: '1', isAns: false }, { text: '2', isAns: false }],
+    options: [],
+    optionsHtml:[],
   };
 
   handleChange = value => {
     this.setState({ text: value });
   };
+  handleOptionsChange = (value, pos) =>{
+    const optHtml=this.state.optionsHtml
+    const newData=update(optHtml,{[pos]:{$set:value}})
+    console.log('value',newData)
+    this.setState({optionsHtml:newData})
+  }
 
   handleCheckboxChanged = index => {
     const newState = update(this.state, {
@@ -49,7 +56,13 @@ class Records extends React.Component {
     e.preventDefault();
     let formData = new FormData();
     formData.append('question', this.state.text);
-    formData.append('options', JSON.stringify(this.state.options));
+    
+    const updatedOptions=this.state.options.map((opt,i)=>{
+       opt.text=this.state.optionsHtml[i]
+       return opt
+    }) 
+    formData.append('options', JSON.stringify(updatedOptions));
+    
     axios
       .post('http://localhost:3001/admin/questions', formData)
       .then(res => console.log('res', res))
@@ -58,10 +71,24 @@ class Records extends React.Component {
 
   onAddOption = () => {
     const currentLenght = this.state.options.length;
+    
     const newOpt = {
-      text: currentLenght + 1 + '',
-      isAns: false,
-    };
+        text: ( <ReactQuill
+          value={this.state.optionsHtml[currentLenght+1]||''}
+          onChange={(value)=>{this.handleOptionsChange(value,currentLenght)}}
+          ref={editor => (this.editor = editor)}
+          style={{ backgroundColor: 'white' }}
+          modules={{
+            toolbar: [
+              [{ script: 'sub' }, { script: 'super' }],
+              ["image"]
+            ]
+          }}
+        />),
+        html:this.state.options[currentLenght+1]||'',
+        isAns: false,
+      };
+
     const newState = update(this.state, {
       options: {
         $push: [newOpt],
@@ -69,6 +96,8 @@ class Records extends React.Component {
     });
 
     this.setState({ options: newState.options });
+    
+    
   };
 
   onRemoveOption = () => {
@@ -102,57 +131,59 @@ class Records extends React.Component {
 
   getPrevQuesOptions = opts => {
     const options = opts || [];
+    let htmlToReactParser = new HtmlToReactParser();    
 
     return options.map((opt, i) => {
+    let reactElement = htmlToReactParser.parse(opt.text);
+      
       return (
-        <FormControlLabel
-          style={{ marginRight: 50 }}
-          control={
+        <Fragment>
+      
             <Checkbox
               checked={opt.isAns}
               value={`${opt.text}`}
               disabled={true}
               color="primary"
             />
-          }
-          label={`${opt.text}) Option ${opt.text}`}
-        />
+          
+          {reactElement}
+        
+        </Fragment>
       );
     });
   };
 
   render() {
+    let addButton = null;
+    
+      addButton = (
+        <IconButton
+          variant="fab"
+          mini
+          color="primary"
+          onClick={this.onAddOption}
+          style={{ marginLeft: 16 }}
+        >
+          <Add />
+        </IconButton>
+      );
+  
     let options = this.state.options.map((opt, i) => {
       let removeButton = null;
-      let addButton = null;
-      if (i === this.state.options.length - 1)
-        addButton = (
-          <IconButton
-            variant="fab"
-            mini
-            color="primary"
-            onClick={this.onAddOption}
-            style={{ marginLeft: 16 }}
-          >
-            <Add />
-          </IconButton>
-        );
-      if (i > 1 && i === this.state.options.length - 1)
-        removeButton = (
-          <IconButton
-            variant="fab"
-            mini
-            color="secondary"
-            onClick={this.onRemoveOption}
-            style={{ marginRight: 16 }}
-          >
-            <Clear />
-          </IconButton>
-        );
+      removeButton = (
+        <IconButton
+          variant="fab"
+          mini
+          color="secondary"
+          onClick={this.onRemoveOption}
+          style={{ marginRight: 16 }}
+        >
+          <Clear />
+        </IconButton>
+      );
       return (
         <div style={{ marginRight: 50 }}>
-          <FormControlLabel
-            control={
+    
               <Checkbox
                 checked={opt.isAns}
                 onChange={() => {
@@ -162,11 +193,10 @@ class Records extends React.Component {
                 value={opt.text}
                 color="primary"
               />
-            }
-            label={`${opt.text}) Option ${opt.text}`}
-          />
+            
+            {opt.text}
+          
           {removeButton}
-          {addButton}
         </div>
       );
     });
@@ -193,7 +223,7 @@ class Records extends React.Component {
               [{ color: [] }, { background: [] }],
               [{ align: [] }],
               ["clean"],
-              ["link", "image", "video", "formula"]
+              ["link", "image", "formula"]
             ]
           }}
         />
@@ -202,7 +232,8 @@ class Records extends React.Component {
             <Typography>Choose Correct Answer</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Grid style={{ display: "flex", flexWrap: "wrap" }}>{options}</Grid>
+            <Grid style={{ display: "flex", flexWrap: "wrap" }}>{options}
+          {addButton}</Grid>
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <Grid style={{ display: "flex" }} justify="center">

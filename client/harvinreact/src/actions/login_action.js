@@ -48,7 +48,7 @@ export const signupAction = user => async (dispatch) => {
   dispatch(login());
   dispatch(notifyActions.notifyLoading());
   try {
-    const resp = await axios.post('http://localhost:3001/student/signup', user);
+    const resp = await axios.post('http://localhost:3001/student/harvin-signup', user);
     console.log('res', JSON.stringify(resp));
 
     dispatch(loginSuccess());

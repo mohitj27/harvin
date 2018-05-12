@@ -36,11 +36,13 @@ import {
 } from "../../components/GlobalSnackbar/GlobalSnackbar";
 import axios from "axios";
 import ReactDOMServer from "react-dom/server";
-import HtmlToReactParser from "html-to-react";
+import HtmlToReact from "html-to-react";
 import quizStyles from "../../variables/styles/quizStyles";
 import _ from "lodash";
 import update from "immutability-helper";
 import red from "material-ui/colors/red";
+const HtmlToReactParser = HtmlToReact.Parser;
+
 
 class Quiz extends Component {
   constructor(props) {
@@ -133,18 +135,18 @@ class Quiz extends Component {
       } catch (err) {
         console.log(err);
       }
+      let htmlToReactParser = new HtmlToReactParser();    
+      let reactElement = htmlToReactParser.parse(option.text);
       return (
         <div>
-          <FormControlLabel
-            control={
+        
               <Checkbox
                 checked={checked}
                 onChange={this.handleChangeQuizOptionChange}
                 value={option.text}
               />
-            }
-            label={`${i + 1}) Option ${option.text}`}
-          />
+            
+            {reactElement}
         </div>
       );
     });
@@ -261,7 +263,7 @@ class Quiz extends Component {
       );
     }
 
-    let htmlToReactParser = new HtmlToReactParser.Parser();
+    let htmlToReactParser = new HtmlToReactParser();
     let reactElement = htmlToReactParser.parse(
       this.state.currentQuestion.question
     );

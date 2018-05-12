@@ -20,13 +20,13 @@ export const getTestList = username => async dispatch => {
     dispatch(notifyLoading);
     dispatch(getTestListAction());
     try {
-        const res = await axios.get(`/admin/exams/${username}/exams`);
+        const res = await axios.get(`http://localhost:3001/admin/exams/${username}/exams`);
         dispatch(notifySuccess(res.data.msg))
         return dispatch(getTestListSuccess(res.data.tests))
     } catch (err) {
         const errMsg = err.response ? err.response.data.msg : 'Error while sending department order';
         dispatch(getTestListError)
-        return dispatch(getTestListError.notifyError(errMsg));
+        return dispatch(notifyError(errMsg));
     } finally {
         setTimeout(dispatch(notifyClear), 3000)
     }
