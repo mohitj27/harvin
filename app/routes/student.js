@@ -206,7 +206,6 @@ router.post('/loginWithEmail', async (req, res, next) => {
       })
       let registeredUser = await userController.saveUser(newUser)
       const createdProfile = await profileController.createNewProfile({
-        username,
         emailId
       })
       await userController.addProfileToUser(registeredUser, createdProfile)
@@ -227,7 +226,7 @@ router.post('/harvin-signup', async (req, res, next) => {
   const emailId = req.body.email || ''
   const password = req.body.password
   const batch = req.body.batch || ''
-  if (!emailId || !validator.isEmail(emailId) || password) {
+  if (!emailId || !validator.isEmail(emailId) || !password) {
     return res.json({
       success: false,
       msg: 'Please enter email and password.'
@@ -242,31 +241,58 @@ router.post('/harvin-signup', async (req, res, next) => {
     batch
   }
 
-  // find user
   try {
-    var foundUser = await userController.findUserByUsername(username)
-  } catch (err) {
-    next(err || 'Internal Server Error')
-  }
-  try {
+    let foundBatch
+    if (batch !== '') {
+      foundBatch = await batchController.findBatchByBatchName(batch)
+      if (!foundBatch)
+        return res.json({
+          success: false,
+          msg: 'Batch not found'
+        })
+    }
+    // new user
     const newUser = new User({
       username,
       password
     })
+
     let registeredUser = await userController.saveUser(newUser)
-    const createdProfile = await profileController.createNewProfile({
-      username,
+    let newProfile = {
       emailId
-    })
+    }
+
+    // create profile
+    const createdProfile = await profileController.createNewProfile(newProfile)
+
+    // add profile to user account
     await userController.addProfileToUser(registeredUser, createdProfile)
 
-    //
-    let token = await userController.generateToken(registeredUser, password)
-    userDetail.token = token
-    return res.json(userDetail)
-    //
+    if (batch !== '') {
+      let progresses = await progressController.createProgressesForBatch(foundBatch)
+
+      await profileController.updateFieldsInProfileById(
+        createdProfile, {}, {
+          batch: foundBatch,
+          progresses
+        }
+      )
+    }
+
+    return res.json({
+      success: true,
+      msg: 'Successfully created your account. Please login to continue.'
+    })
   } catch (err) {
-    next(err || 'Internal Server Error')
+    // console.log('err', err);
+
+    let errMsg = errorHandler.getErrorMessage(err)
+    if (errMsg.includes('exists')) {
+      return res.json({
+        success: false,
+        msg: 'This email id is already registered.'
+      })
+    } else return next(err || 'Internal Server Error')
   }
 })
 

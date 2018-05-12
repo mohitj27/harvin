@@ -28,7 +28,9 @@ router.get(
     getToken: jwtConfig.getToken
   }),
   function (req, res) {
-    res.render('home', { msg_success: 'Welcome back!' })
+    res.render('home', {
+      msg_success: 'Welcome back!'
+    })
   }
 )
 
@@ -85,8 +87,7 @@ router.post('/signup', async (req, res, next) => {
     }
 
     let updatedInstitute = await instituteController.updateFieldsInInstituteById(
-      createdInstitute,
-      {
+      createdInstitute, {
         centers: createdUser
       }
     )
@@ -104,9 +105,7 @@ router.post('/signup', async (req, res, next) => {
       )
     }
     await userController.updateFieldsInUserById(
-      newUser,
-      {},
-      {
+      newUser, {}, {
         profile: createdProfile
       }
     )
@@ -115,7 +114,7 @@ router.post('/signup', async (req, res, next) => {
     res.redirect('/admin/login')
   } catch (err) {
     let errMsg = errorHandler.getErrorMessage(err)
-    if (errMsg.indexOf('duplicate')) {
+    if (errMsg.includes('duplicate')) {
       return next(new Error('This username is already taken.'))
     } else return next(err || 'Internal Server Error')
   }
@@ -153,8 +152,7 @@ router.post('/login', function (req, res, next) {
       msg: 'Please enter username and password.'
     })
   } else {
-    User.findOne(
-      {
+    User.findOne({
         username: username
       },
       function (err, user) {
@@ -188,8 +186,7 @@ router.post('/login', function (req, res, next) {
             } else {
               res.json({
                 success: false,
-                msg:
-                  'Authentication failed. Username or Password did not match.'
+                msg: 'Authentication failed. Username or Password did not match.'
               })
             }
           })
