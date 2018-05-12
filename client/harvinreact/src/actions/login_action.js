@@ -29,7 +29,9 @@ const signupError = () => ({
   type: SIGNUP_ERROR,
 });
 
-const saveToken = () => {};
+const saveToken = (token) => {
+  window.localStorage.setItem('token', token)
+};
 
 export const loginAction = user => async (dispatch) => {
   dispatch(login());
@@ -38,6 +40,7 @@ export const loginAction = user => async (dispatch) => {
     const res = await axios.post('http://localhost:3001/student/loginWithPassword', user);
     console.log('res', JSON.stringify(res));
     if (res.data.success) {
+      saveToken(res.data.token)
       dispatch(loginSuccess());
       dispatch(notifyActions.notifySuccess(res.data.msg));
 
@@ -46,8 +49,6 @@ export const loginAction = user => async (dispatch) => {
       dispatch(loginError());
       dispatch(notifyActions.notifyError(res.data.msg));
     }
-
-    saveToken();
 
   } catch (err) {
     console.log('err', JSON.stringify(err));
