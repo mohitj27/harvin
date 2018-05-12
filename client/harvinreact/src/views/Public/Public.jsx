@@ -33,7 +33,9 @@ class Public extends React.Component {
     username: "",
     password: "",
     confirmPassword: "",
-    batch: ""
+    batch: "",
+    isSignupInProgress: false,
+    isRegistered: false
   };
   signup = e => {
     e.preventDefault();
@@ -54,9 +56,20 @@ class Public extends React.Component {
     });
   };
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.props.getBatches();
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      !nextProps.isSignupInProgress &&
+      nextProps.successMessage ===
+        "Successfully created your account. Please login to continue."
+    ) {
+      return { isSignupInProgress: false, isRegistered: true };
+    }
+    return null;
+  }
 
   render() {
     const { classes } = this.props;
@@ -77,8 +90,8 @@ class Public extends React.Component {
     let loadingSnackbar =
       this.props.notifyLoading !== "" ? <LoadingSnackbar /> : null;
 
-    if (this.props.isAuthenticated === true) {
-      return <Redirect to="/dashboard" />;
+    if (this.props.isRegistered === true) {
+      return <Redirect to="/login" />;
     }
 
     return (
@@ -185,7 +198,8 @@ const mapStateToProps = state => {
     errorMessage: state.notify.error,
     notifyLoading: state.notify.loading,
     notifyClear: state.notify.clear,
-    isAuthenticated: state.auth.isAuthenticated,
+    isRegistered: state.auth.isRegistered,
+    isSignupInProgress: state.auth.isSignupInProgress,
     batches: state.batch.batches || []
   };
 };

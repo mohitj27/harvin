@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import 'react-quill/dist/quill.snow.css';
+import React, { Component, Fragment } from "react";
+import "react-quill/dist/quill.snow.css";
 import {
   Button,
   Paper,
@@ -11,23 +11,27 @@ import {
   Checkbox,
   FormControlLabel,
   IconButton
-} from 'material-ui';
-import ReactQuill, { Quill } from 'react-quill';
-import { ExpandMore, Add, Clear } from 'material-ui-icons';
-import axios from 'axios';
-import ReactDOMServer from 'react-dom/server';
-import HtmlToReact from 'html-to-react';
-import update from 'immutability-helper';
+} from "material-ui";
+import ReactQuill, { Quill } from "react-quill";
+import { ExpandMore, Add, Clear } from "material-ui-icons";
+import axios from "axios";
+import ReactDOMServer from "react-dom/server";
+import HtmlToReact from "html-to-react";
+import update from "immutability-helper";
 // import { ImageResize } from "quill-image-resize-module";
 const HtmlToReactParser = HtmlToReact.Parser;
 
 // Quill.register('modules/imageResize', ImageResize);
 class Records extends React.Component {
   state = {
-    text: '',
+    text: "",
     questions: [],
+<<<<<<< HEAD
     options: [],
     optionsHtml:[],
+=======
+    options: [{ text: "1", isAns: false }, { text: "2", isAns: false }]
+>>>>>>> 5c4db0adfb6d2cae3d6334db4698d1a740e8bae8
   };
 
   handleChange = value => {
@@ -44,9 +48,9 @@ class Records extends React.Component {
     const newState = update(this.state, {
       options: {
         [index]: {
-          $toggle: ['isAns'],
-        },
-      },
+          $toggle: ["isAns"]
+        }
+      }
     });
 
     this.setState({ options: newState.options });
@@ -55,6 +59,7 @@ class Records extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     let formData = new FormData();
+<<<<<<< HEAD
     formData.append('question', this.state.text);
     
     const updatedOptions=this.state.options.map((opt,i)=>{
@@ -63,16 +68,21 @@ class Records extends React.Component {
     }) 
     formData.append('options', JSON.stringify(updatedOptions));
     
+=======
+    formData.append("question", this.state.text);
+    formData.append("options", JSON.stringify(this.state.options));
+>>>>>>> 5c4db0adfb6d2cae3d6334db4698d1a740e8bae8
     axios
-      .post('http://localhost:3001/admin/questions', formData)
-      .then(res => console.log('res', res))
-      .catch(err => console.log('err', err));
+      .post("http://localhost:3001/admin/questions", formData)
+      .then(res => console.log("res", res))
+      .catch(err => console.log("err", err));
   };
 
   onAddOption = () => {
     const currentLenght = this.state.options.length;
     
     const newOpt = {
+<<<<<<< HEAD
         text: ( <ReactQuill
           value={this.state.optionsHtml[currentLenght+1]||''}
           onChange={(value)=>{this.handleOptionsChange(value,currentLenght)}}
@@ -89,10 +99,15 @@ class Records extends React.Component {
         isAns: false,
       };
 
+=======
+      text: currentLenght + 1 + "",
+      isAns: false
+    };
+>>>>>>> 5c4db0adfb6d2cae3d6334db4698d1a740e8bae8
     const newState = update(this.state, {
       options: {
-        $push: [newOpt],
-      },
+        $push: [newOpt]
+      }
     });
 
     this.setState({ options: newState.options });
@@ -103,8 +118,8 @@ class Records extends React.Component {
   onRemoveOption = () => {
     const newState = update(this.state, {
       options: {
-        $splice: [[this.state.options.length - 1, 1]],
-      },
+        $splice: [[this.state.options.length - 1, 1]]
+      }
     });
 
     this.setState({ options: newState.options });
@@ -112,13 +127,13 @@ class Records extends React.Component {
 
   componentDidMount = () => {
     axios
-      .get('http://localhost:3001/admin/questions')
+      .get("http://localhost:3001/admin/questions")
       .then(res => {
         let questions = res.data.questions;
         if (questions.length <= 0) return;
         this.setState({ questions: questions });
       })
-      .catch(err => console.log('err', err));
+      .catch(err => console.log("err", err));
   };
 
   isAtleastOneOptionSelected = () => {
@@ -189,7 +204,6 @@ class Records extends React.Component {
                 onChange={() => {
                   this.handleCheckboxChanged(i);
                 }}
-
                 value={opt.text}
                 color="primary"
               />
@@ -202,23 +216,23 @@ class Records extends React.Component {
     });
     return (
       <div>
-        <Grid style={{ display: 'flex' }} justify="center">
+        <Grid style={{ display: "flex" }} justify="center">
           <h3>Add New Question</h3>
         </Grid>
         <ReactQuill
           value={this.state.text}
           onChange={this.handleChange}
           ref={editor => (this.editor = editor)}
-          style={{ backgroundColor: 'white' }}
+          style={{ backgroundColor: "white" }}
           modules={{
             toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              ['blockquote', 'code-block'],
-              [{ list: 'ordered' }, { list: 'bullet' }],
-              [{ script: 'sub' }, { script: 'super' }],
-              [{ indent: '-1' }, { indent: '+1' }],
-              [{ direction: 'rtl' }],
-              [{ size: ['small', false, "large", "huge"] }],
+              ["bold", "italic", "underline", "strike"],
+              ["blockquote", "code-block"],
+              [{ list: "ordered" }, { list: "bullet" }],
+              [{ script: "sub" }, { script: "super" }],
+              [{ indent: "-1" }, { indent: "+1" }],
+              [{ direction: "rtl" }],
+              [{ size: ["small", false, "large", "huge"] }],
               [{ header: [1, 2, 3, 4, 5, 6, false] }],
               [{ color: [] }, { background: [] }],
               [{ align: [] }],
