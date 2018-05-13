@@ -148,8 +148,7 @@ router.get(
         req.user
       );
       foundChapter = await QBController.populateFieldsInQbChapters(
-        foundChapter,
-        ["questions"]
+        foundChapter, ["questions"]
       );
 
       return res.render("chooseFromQB", {
@@ -409,14 +408,14 @@ router.post(
         req.user
       );
       updatedChapter = await QBController.updateChapterById(
-        updatedChapter,
-        {},
-        { subject: updatedSubject }
+        updatedChapter, {}, {
+          subject: updatedSubject
+        }
       );
       updatedSubject = await QBController.updateSubjectById(
-        updatedSubject,
-        {},
-        { class: updatedClass }
+        updatedSubject, {}, {
+          class: updatedClass
+        }
       );
 
       req.flash("success", "Question has been added Successfully");
@@ -568,8 +567,7 @@ router.get("/:username/exams/:examId/questionPaper", async (req, res, next) => {
       "questionPaper"
     ]);
     let populatedQuestionPaper = await QBController.populateFieldsInQuestionPapers(
-      foundExam.questionPaper,
-      ["questions"]
+      foundExam.questionPaper, ["questions"]
     );
 
     var questionPaper = {};
@@ -600,6 +598,12 @@ router.get("/:username/exams", async (req, res, next) => {
       username,
       next
     );
+    if (!userBatch) {
+      return res.json({
+        success: false,
+        msg: 'Batch of user not found'
+      })
+    }
     let foundExams = await examController.findExamsOfBatchByBatchId(
       userBatch._id
     );
