@@ -254,7 +254,7 @@ app.use(function (err, req, res, next) {
       err.code === 'credentials_bad_format' ||
       err.code === 'credentials_bad_scheme' ||
       err.code === 'invalid_token' ||
-      err.name.indexOf('AUTH') > -1
+      (err.name && err.name.indexOf('AUTH') > -1)
     ) {
       req.flash('error', 'Please Login')
       return res.redirect('/admin/login')
