@@ -113,7 +113,7 @@ function sliceIntoCategory(allImages) {
 }
 /**function that shows images at the start and pagination for all (ALL CATEGORY)**/
 function displayCurrentPage(pageNumberToDisplay) {
-  $('.materialboxed').toArray().forEach((img, i) => $(img).attr('src', allImages[i + perPage * pageNumberToDisplay].thumbPath))
+  $('.materialboxed').toArray().forEach((img, i) => $(img).attr('src', allImages[i + perPage * pageNumberToDisplay].src))
 }
 /**function that shows images at the start and pagination for all (ALL CATEGORY)**/
 function displayCurrentPageWithCategory(pageNumberToDisplay) {
@@ -126,7 +126,7 @@ function displayCurrentPageWithCategory(pageNumberToDisplay) {
       $(img).parent().siblings().show()
 
 
-      $(img).attr('src', srcValue.thumbPath)
+      $(img).attr('src', srcValue.src)
       $('.gallery-image').find("a").attr('href',"/admin/db/gallery/"+srcValue._id+"/delete")
       $('.gallery-image').find("p").html(srcValue.description)
     } else {

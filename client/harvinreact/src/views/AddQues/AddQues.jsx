@@ -26,12 +26,8 @@ class Records extends React.Component {
   state = {
     text: "",
     questions: [],
-<<<<<<< HEAD
     options: [],
     optionsHtml:[],
-=======
-    options: [{ text: "1", isAns: false }, { text: "2", isAns: false }]
->>>>>>> 5c4db0adfb6d2cae3d6334db4698d1a740e8bae8
   };
 
   handleChange = value => {
@@ -59,7 +55,6 @@ class Records extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     let formData = new FormData();
-<<<<<<< HEAD
     formData.append('question', this.state.text);
     
     const updatedOptions=this.state.options.map((opt,i)=>{
@@ -68,10 +63,6 @@ class Records extends React.Component {
     }) 
     formData.append('options', JSON.stringify(updatedOptions));
     
-=======
-    formData.append("question", this.state.text);
-    formData.append("options", JSON.stringify(this.state.options));
->>>>>>> 5c4db0adfb6d2cae3d6334db4698d1a740e8bae8
     axios
       .post("http://localhost:3001/admin/questions", formData)
       .then(res => console.log("res", res))
@@ -82,7 +73,6 @@ class Records extends React.Component {
     const currentLenght = this.state.options.length;
     
     const newOpt = {
-<<<<<<< HEAD
         text: ( <ReactQuill
           value={this.state.optionsHtml[currentLenght+1]||''}
           onChange={(value)=>{this.handleOptionsChange(value,currentLenght)}}
@@ -99,11 +89,6 @@ class Records extends React.Component {
         isAns: false,
       };
 
-=======
-      text: currentLenght + 1 + "",
-      isAns: false
-    };
->>>>>>> 5c4db0adfb6d2cae3d6334db4698d1a740e8bae8
     const newState = update(this.state, {
       options: {
         $push: [newOpt]
@@ -123,7 +108,7 @@ class Records extends React.Component {
     });
 
     this.setState({ options: newState.options });
-  };
+  };Z
 
   componentDidMount = () => {
     axios

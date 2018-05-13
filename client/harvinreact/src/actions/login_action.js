@@ -61,13 +61,8 @@ export const signupAction = user => async (dispatch) => {
   dispatch(signup());
   dispatch(notifyActions.notifyLoading());
   try {
-<<<<<<< HEAD
-    const resp = await axios.post('http://localhost:3001/student/harvin-signup', user);
-    console.log('res', JSON.stringify(resp));
-=======
     const res = await axios.post('http://localhost:3001/student/harvinSignup', user);
     console.log('res', JSON.stringify(res));
->>>>>>> 5c4db0adfb6d2cae3d6334db4698d1a740e8bae8
 
     if (res.data.success) {
       dispatch(signupSuccess());
