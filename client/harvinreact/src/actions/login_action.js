@@ -54,7 +54,7 @@ export const loginAction = user => async (dispatch) => {
     console.log('err', JSON.stringify(err));
 
     const errMsg = err.response ? err.data.message : 'Error While Logging in Please try again!';
-    dispatch(notifyActions.notifyError(err));
+    dispatch(notifyActions.notifyError(errMsg));
   }
 };
 
@@ -78,6 +78,6 @@ export const signupAction = user => async (dispatch) => {
     console.log('err', JSON.stringify(err));
 
     const errMsg = err.response ? err.data.message : 'Error While Signing in. Please try again!';
-    dispatch(notifyActions.notifyError(err));
+    dispatch(notifyActions.notifyError(errMsg));
   }
 };

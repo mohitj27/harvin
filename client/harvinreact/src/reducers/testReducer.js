@@ -10,7 +10,6 @@ import {
 import { getTestList } from '../actions';
 const initalState = {
   tests: [],
-  test: {},
 };
 const getTestListSuccess = (state, action) => update(state, {
   tests: {

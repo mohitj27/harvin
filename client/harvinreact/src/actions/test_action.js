@@ -10,6 +10,9 @@ import {
     GET_TEST,
     GET_TEST_ERROR,
     GET_TEST_SUCCESS,
+    GET_ALL_QUESTIONS,
+    GET_ALL_QUESTIONS_ERROR,
+    GET_ALL_QUESTIONS_SUCCESS,
 } from './types'
 import { notifyLoading, notifyClear, notifyError, notifySuccess } from '.';
 const getTestListAction = () => ({ type: GET_TEST_LIST })
@@ -33,7 +36,7 @@ export const getTestList = username => async dispatch => {
 }
 const getTestAction = () => ({ type: GET_TEST })
 const getTestError = () => ({ type: GET_TEST_ERROR })
-const getTestSuccess = test => ({ type: GET_TEST_SUCCESS ,payload:test})
+const getTestSuccess = test => ({ type: GET_TEST_SUCCESS, payload: test })
 export const getTest = testid => async dispatch => {
     dispatch(notifyLoading());
     dispatch(getTestAction());

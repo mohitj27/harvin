@@ -22,7 +22,7 @@ import update from "immutability-helper";
 const HtmlToReactParser = HtmlToReact.Parser;
 
 // Quill.register('modules/imageResize', ImageResize);
-class Records extends React.Component {
+class AddQues extends React.Component {
   state = {
     text: "",
     questions: [],
@@ -201,7 +201,30 @@ class Records extends React.Component {
     });
     return (
       <div>
+       
         <Grid style={{ display: "flex" }} justify="center">
+          <h3>Previously added questions</h3>
+        </Grid>
+        {this.state.questions.map((ques, i) => {
+          let htmlToReactParser = new HtmlToReactParser();
+          let reactElement = htmlToReactParser.parse(ques.question);
+          return (
+            <ExpansionPanel >
+          <ExpansionPanelSummary  expandIcon={<ExpandMore />}>
+            <Typography style={{alignSelf:'center',marginRight:'5px',}} >
+              Q.{i + 1}        
+            </Typography> {reactElement}      
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid style={{ display: "flex", flexWrap: "wrap" }}>{options}          
+            {this.getPrevQuesOptions(ques.options)}
+          </Grid>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+            
+          );
+        })}
+         <Grid style={{ display: "flex" }} justify="center">
           <h3>Add New Question</h3>
         </Grid>
         <ReactQuill
@@ -246,22 +269,9 @@ class Records extends React.Component {
             submit
           </Button>
         </Grid>
-        <Grid style={{ display: "flex" }} justify="center">
-          <h3>Previously added questions</h3>
-        </Grid>
-        {this.state.questions.map((ques, i) => {
-          let htmlToReactParser = new HtmlToReactParser();
-          let reactElement = htmlToReactParser.parse(ques.question);
-          return (
-            <Paper style={{ padding: 16, marginTop: 16 }}>
-              Q.{i + 1} {reactElement}
-              {this.getPrevQuesOptions(ques.options)}
-            </Paper>
-          );
-        })}
       </div>
     );
   }
 }
 
-export default Records;
+export default AddQues;
