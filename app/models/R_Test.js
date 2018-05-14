@@ -5,6 +5,7 @@ const deepPopulate = require('mongoose-deep-populate')(mongoose)
 //= ===test Schema====
 var testSchema = new Schema({
   name: String,
+  time: Number,
   created: Date,
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,

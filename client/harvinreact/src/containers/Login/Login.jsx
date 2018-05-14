@@ -71,7 +71,7 @@ class Login extends React.Component {
   };
 
   render() {
-    console.log("state", this.state);
+    // console.log("state", this.state);
 
     const { redirectToReferrer } = this.state;
     const { classes } = this.props;

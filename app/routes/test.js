@@ -16,6 +16,8 @@ router.post("/", middleware.isLoggedIn, async (req, res, next) => {
     const addedTest = await testController.addTest({
       created: date,
       createdBy: user._id,
+      name: body.name,
+      time: body.time,
       maxMarks: body.maxMarks,
       sections: body.sections
     });
@@ -48,6 +50,7 @@ router.get("/:id", async (req, res, next) => {
     let foundTest = foundTests[0]
     foundTest = await testController.populateFieldsInTests(foundTest, ["createdBy", "sections.questions"])
     return res.json({
+      success: true,
       tests: foundTests.reverse()
     });
   } catch (err) {
@@ -93,6 +96,7 @@ router.get("/", middleware.isLoggedIn, async (req, res, next) => {
     });
     foundTests = await testController.populateFieldsInTests(foundTests, ["createdBy"])
     return res.json({
+      success: true,
       tests: foundTests.reverse()
     });
   } catch (e) {

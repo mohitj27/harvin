@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt from 'jsonwebtoken'
 import {
   LOGIN,
   LOGIN_SUCCESS,
@@ -12,8 +13,9 @@ import * as notifyActions from './notify_action';
 const login = () => ({
   type: LOGIN,
 });
-const loginSuccess = () => ({
+const loginSuccess = (currentUser) => ({
   type: LOGIN_SUCCESS,
+  currentUser
 });
 const loginError = () => ({
   type: LOGIN_ERROR,
@@ -40,8 +42,10 @@ export const loginAction = user => async (dispatch) => {
     const res = await axios.post('http://localhost:3001/student/loginWithPassword', user);
     console.log('res', JSON.stringify(res));
     if (res.data.success) {
-      saveToken(res.data.token)
-      dispatch(loginSuccess());
+      const token = res.data.token
+      saveToken(token)
+      const decodedToken = jwt.decode(token)
+      dispatch(loginSuccess(decodedToken));
       dispatch(notifyActions.notifySuccess(res.data.msg));
 
     } else {

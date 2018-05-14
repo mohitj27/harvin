@@ -37,9 +37,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       if (token) {
         setAuthToken(token);
         decoded = jwt.decode(token);
+        store.dispatch({
+          type: "LOGIN_SUCCESS",
+          currentUser: decoded
+        });
       }
       let date = Date.now() / 1000;
-
       return token && decoded && decoded.exp >= date === true ? (
         <Component {...props} />
       ) : (

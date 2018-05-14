@@ -6,6 +6,7 @@ const initialState = {
   isAuthenticated: false,
   isSignupInProgress: false,
   isRegistered: false,
+  currentUser: null
 };
 const login = (state, action) =>
   update(state, {
@@ -22,6 +23,9 @@ const loginSuccess = (state, action) =>
     isAuthenticated: {
       $set: true,
     },
+    currentUser: {
+      $set: action.currentUser
+    }
   });
 
 const loginError = (state, action) =>

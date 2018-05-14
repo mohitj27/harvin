@@ -4,8 +4,8 @@ export {
 from './order_action';
 
 export {
-  getTestList,
-  getTest
+  fetchTestList,
+  fetchTest
 }
 from './test_action';
 export {}
