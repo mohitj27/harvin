@@ -1,26 +1,28 @@
-import React, { Fragment } from "react";
-import ReactDOM from "react-dom";
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch, Redirect, Link } from "react-router-dom";
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import { Provider } from "react-redux";
-import "./assets/css/material-dashboard-react.css";
-import rootReducer from "./reducers/index";
-import indexRoutes from "./routes/index.jsx";
-import logger from "redux-logger";
+import React, { Fragment } from 'react';
+import ReactDOM from 'react-dom';
+import { createBrowserHistory } from 'history';
+import { Router, Route, Switch, Redirect, Link } from 'react-router-dom';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import './assets/css/material-dashboard-react.css';
+import rootReducer from './reducers/index';
+import indexRoutes from './routes/index.jsx';
+import logger from 'redux-logger';
 
-import jwt from "jsonwebtoken";
-import setAuthToken from "./config/setAuthToken";
-import url from "./config";
-import Login from "./containers/Login/Login";
-import Public from "./views/Public/Public";
+import jwt from 'jsonwebtoken';
+import setAuthToken from './config/setAuthToken';
+import url from './config';
+import Login from './containers/Login/Login';
+import Public from './views/Public/Public';
+import Dashboard from './views/Dashboard/Dashboard.jsx';
+
 const hist = createBrowserHistory();
 const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-      })
+  // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+})
     : compose;
 
 const enhancer = composeEnhancers(applyMiddleware(thunk, logger));
@@ -32,7 +34,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => {
-      let token = localStorage.getItem("token");
+      let token = localStorage.getItem('token');
       let decoded = jwt.decode(token);
       let date = Date.now() / 1000;
       // console.log("condition", token, decoded);
@@ -40,8 +42,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         setAuthToken(token);
         decoded = jwt.decode(token);
         store.dispatch({
-          type: "LOGIN_SUCCESS",
-          currentUser: decoded
+          type: 'LOGIN_SUCCESS',
+          currentUser: decoded,
         });
         return <Component {...props} />;
       } else {
@@ -49,6 +51,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         return <Redirect to="/login" />;
       }
     }}
+
   />
 );
 App = (
@@ -57,6 +60,7 @@ App = (
       <Switch>
         <Route path="/public" component={Public} />
         <Route path="/login" component={Login} />
+        <Route path="/quiz/:id" component={Dashboard}/>
         {indexRoutes.map((prop, key) => {
           return (
             <PrivateRoute
@@ -70,4 +74,4 @@ App = (
     </Router>
   </Provider>
 );
-ReactDOM.render(App, document.getElementById("root"));
+ReactDOM.render(App, document.getElementById('root'));
