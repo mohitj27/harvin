@@ -36,7 +36,7 @@ const Protected = () => <h3>Protected</h3>;
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    console.log("called");
+    // console.log("called");
   }
   state = {
     isAuthenticated: false,
