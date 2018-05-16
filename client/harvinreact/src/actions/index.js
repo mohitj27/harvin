@@ -6,6 +6,7 @@ export {
 export {
   getTestList,
   getTest,
+  sendCreatedTest,
 }
   from './test_action';
 export {

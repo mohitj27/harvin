@@ -97,38 +97,43 @@
                     <!-- Single Blog -->
                     <% foundBlogs.forEach((blog, i) => { %>
                             <article class="card single-blog text-center mt-5 mb-5 pt-0 pb-3" href="/blog/?title=<%=blog.url%>" href="/blog/<%=blog.url%>">
-                                <mark class="catagory">
-                                    <%=blog.category%>
-                                </mark>
-                                <!-- Blog Content-->
-                                <a href="/blog/<%=blog.url%>">
-                                    <div class="blgo-content content" style="background-image:url(/blogImage/<%=blog.coverImgName%>)">
-                                        <span class="posted-date">
-                                            <%=blog.uploadDate%>
-                                        </span>
+                              
+                                
+                                
+                                    <mark class="catagory">
+                                        <%=blog.category%>
+                                    </mark>
+                                    <!-- Blog Content-->
+                                    <a href="/blog/<%=blog.url%>" >
+                                        <div class="blgo-content content" style="background-image:url(/blogImage/<%=blog.coverImgName%>)">
+                                            <span class="posted-date">
+                                                <%=blog.uploadDate%>
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <!-- Card Body -->
+                                    <div class="card-body p-0" href="/blog/<%=blog.url%>">
+                                        <h2 class="card-title h1 blog-title" href="/blog/<%=blog.url%>">
+                                            <a href="/blog/<%=blog.url%>" style="color:#000000c7;"><%=blog.blogTitle%></a>  
+                                        </h2>
+    
+    
+                                        <a href="/blog/<%=blog.url%>" class="read-more double-line">read more</a>
+                                        <!-- Card Footer -->
+                                    </div>
+                                    <div class="card-footer border-0 p-0 bg-white">
+                                        <div class="share-icons">
+                                            <span>Share:</span>
+                                            <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
+    
+                                            </a>
+                                            <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
+                                                Tweet</a>
+    
+                                        </div>
                                     </div>
                                 </a>
-                                <!-- Card Body -->
-                                <div class="card-body p-0" href="/blog/<%=blog.url%>">
-                                    <h2 class="card-title h1 blog-title" href="/blog/<%=blog.url%>">
-                                        <%=blog.blogTitle%>
-                                    </h2>
-
-
-                                    <a href="/blog/<%=blog.url%>" class="read-more double-line">read more</a>
-                                    <!-- Card Footer -->
-                                </div>
-                                <div class="card-footer border-0 p-0 bg-white">
-                                    <div class="share-icons">
-                                        <span>Share:</span>
-                                        <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
-
-                                        </a>
-                                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
-                                            Tweet</a>
-
-                                    </div>
-                                </div>
+                                
                             </article>
 
 
