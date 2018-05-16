@@ -34,20 +34,18 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     render={props => {
       let token = localStorage.getItem("token");
       let decoded;
-      if (token) {
+      let date = Date.now() / 1000;
+      if (token && decoded && decoded.exp >= date === true) {
         setAuthToken(token);
         decoded = jwt.decode(token);
         store.dispatch({
           type: "LOGIN_SUCCESS",
           currentUser: decoded
         });
+        return <Component {...props} />;
+      } else {
+        return <Redirect to="/login" />;
       }
-      let date = Date.now() / 1000;
-      return token && decoded && decoded.exp >= date === true ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to="/login" />
-      );
     }}
   />
 );
