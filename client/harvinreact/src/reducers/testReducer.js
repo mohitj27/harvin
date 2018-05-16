@@ -1,42 +1,47 @@
 import update from 'immutability-helper';
-import {
-  GET_TEST_LIST,
-  GET_TEST_LIST_ERROR,
-  GET_TEST_LIST_SUCCESS,
-  GET_TEST,
-  GET_TEST_ERROR,
-  GET_TEST_SUCCESS
-} from '../actions/types';
-import { getTestList } from '../actions';
-const initalState = {
+import * as actionTypes from '../actions/types';
+
+const initialState = {
+  isFetchTestListInProgress: false,
   tests: [],
+  test: ''
 };
-const getTestListSuccess = (state, action) => update(state, {
-  tests: {
-    $set: action.payload,
-  },
-});
-const getTestSuccess = (state, action) => update(state, {
-  test: {
-    $set: action.payload,
-  },
-});
-export default(state = initalState, action = {}) => {
+
+const getTestList = (state, action) =>
+  update(state, {
+    isFetchTestListInProgress: {
+      $set: true,
+    },
+  });
+
+const getTestListSuccess = (state, action) =>
+  update(state, {
+    isFetchTestListInProgress: {
+      $set: false,
+    },
+    tests: {
+      $set: action.tests,
+    },
+  });
+
+const getTestListError = (state, action) =>
+  update(state, {
+    isFetchTestListInProgress: {
+      $set: false,
+    }
+  });
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_TEST_LIST:
-      return state;
-    case GET_TEST_LIST_ERROR:
-      return state;
-    case GET_TEST_LIST_SUCCESS:
+    case actionTypes.GET_TEST_LIST:
+      return getTestList(state, action);
+    case actionTypes.GET_TEST_LIST_SUCCESS:
       return getTestListSuccess(state, action);
-    case GET_TEST_LIST:
-      return state;
-    case GET_TEST_LIST_ERROR:
-      return state;
-    case GET_TEST_LIST_SUCCESS:
-      return getTestSuccess(state, action);
+    case actionTypes.GET_TEST_LIST_ERROR:
+      return getTestListError(state, action);
     default:
-      break;
+      return state;
   }
-  return state;
 };
+
+export default reducer;

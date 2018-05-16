@@ -4,9 +4,9 @@ export {
   from './order_action';
 
 export {
-  getTestList,
-  getTest,
   sendCreatedTest,
+  fetchTestList,
+  fetchTest
 }
   from './test_action';
 export {

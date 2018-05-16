@@ -1,259 +1,458 @@
-import React, { Fragment } from 'react';
-import HtmlToReact from "html-to-react";
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import update from 'immutability-helper';
-import _ from 'lodash';
-import quizStyles from '../../variables/styles/quizStyles';
-import { getTestList, getAllQuestions ,sendCreatedTest} from '../../actions/';
+import React, { Component, Fragment } from "react";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
+import * as actionTypes from "../../actions/types";
+import testListStyle from "../../variables/styles/testListStyle";
 import {
-    withStyles,
-    ExpansionPanel,
-    ExpansionPanelSummary,
-    ExpansionPanelDetails,
-    Typography,
-    Grid,
-    Checkbox,
-    Tooltip,
-    IconButton,
-    Button,
-    TextField,
-} from 'material-ui';
-import { ExpandMore, Add, Clear } from "material-ui-icons";
+  ErrorSnackbar,
+  SuccessSnackbar,
+  LoadingSnackbar
+} from "../../components/GlobalSnackbar/GlobalSnackbar";
+import { Delete, FilterList } from "material-ui-icons";
+import Table, {
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel
+} from "material-ui/Table";
 
-const HtmlToReactParser = HtmlToReact.Parser;
+import {
+  withStyles,
+  Grid,
+  CircularProgress,
+  Toolbar,
+  Typography,
+  Paper,
+  Checkbox,
+  Snackbar,
+  IconButton,
+  Tooltip
+} from "material-ui";
 
+import { lighten } from "material-ui/styles/colorManipulator";
 
-class Test extends React.Component {
-    state = {
-        name: '',
-        time:'',
-        maxMarks: '',
-        expandedSection: 1,
-        maxMarks: '',
-        tests: [],
-        sections: [{
-            id: 1,
-            title: 'New Section',
-            posMarks: 4,
-            negMarks: -1,
-            questions: [
-                "5af81fcfb7588b41e60798a4",
-                "5af6ec76e89b041ec181d932",
-                "5af84015b7588b41e60798a5"
-            ],
-        }],
-    }
-    handleChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-    }
-    getEmptySection = () => {
-        return {
-            id: this.state.sections.length + 1,
-            title: 'New Section',
-            posMarks: 4,
-            negMarks: -1,
-            questions: [],
-        }
-    }
-    componentDidMount = () => {
-        this.props.getTestList('j');
-        this.props.getAllQuestions();
-    }
-    handleAddQuestionToTestClick = (e, pos, id) => {
-        e.stopPropagation();
-        const sections = this.state.sections
-        console.log('pos', pos);
-        pos = this.state.expandedSection - 1
-        const updated = update(sections, { [pos]: { questions: { $push: [id] } } })
-        this.setState({ sections: updated })
+import { RegularCard, ItemGrid, CustomInput } from "../../components";
 
-    }
-    handleAddSectionToTestClick = (e) => {
-        e.stopPropagation()
-        const sections = this.state.sections
-        const empty = this.getEmptySection()
-        const up = update(sections, { $push: [empty] })
-        this.setState({ sections: up })
-    }
-    handleTestSubmitClick = (e) => {
-        e.preventDefault();
-        let form= new FormData()
-        form.append('sections',this.state.sections)
-        form.append('name',this.state.name)
-        form.append('time',this.state.time)
-        form.append('maxMarks',this.state.maxMarks)
-        
+function createData(id, name, created, createdBy, time, maxMarks) {
+  const newDate = new Date(created);
+  return {
+    id,
+    name,
+    created: newDate.toLocaleString(),
+    createdBy,
+    time,
+    maxMarks
+  };
+}
 
-    }
-    handlePanelExpansion = (e, pos) => {
-        e.stopPropagation()
-        if (pos === this.state.expandedSection)
-            this.setState({ expandedSection: -1 })
-        else this.setState({ expandedSection: pos })
-        console.log('panel change', pos, this.state.expandedSection)
-    }
-    getPrevQuesOptions = opts => {
-        const options = opts || [];
-        let htmlToReactParser = new HtmlToReactParser();
+const columnData = [
+  { id: "name", numeric: false, disablePadding: false, label: "Name" },
+  { id: "created", numeric: true, disablePadding: true, label: "Date" },
+  {
+    id: "createdBy",
+    numeric: false,
+    disablePadding: false,
+    label: "Created By"
+  },
+  { id: "time", numeric: true, disablePadding: true, label: "Time (mins)" },
+  { id: "maxMarks", numeric: true, disablePadding: true, label: "Marks" }
+];
 
-        return options.map((opt, i) => {
-            let reactElement = htmlToReactParser.parse(opt.text);
+class EnhancedTableHead extends React.Component {
+  createSortHandler = property => event => {
+    this.props.onRequestSort(event, property);
+  };
 
+  render() {
+    const {
+      onSelectAllClick,
+      order,
+      orderBy,
+      numSelected,
+      rowCount
+    } = this.props;
+
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell padding="checkbox">
+            <Checkbox
+              indeterminate={numSelected > 0 && numSelected < rowCount}
+              checked={numSelected === rowCount}
+              onChange={onSelectAllClick}
+            />
+          </TableCell>
+          {columnData.map(column => {
             return (
-                <Fragment>
-
-                    <Checkbox
-                        checked={opt.isAns}
-                        value={`${opt.text}`}
-                        disabled={true}
-                        color="primary"
-                    />
-
-                    {reactElement}
-
-                </Fragment>
+              <TableCell
+                key={column.id}
+                numeric={column.numeric}
+                padding={column.disablePadding ? "none" : "default"}
+                sortDirection={orderBy === column.id ? order : false}
+              >
+                <Tooltip
+                  title="Sort"
+                  placement={column.numeric ? "bottom-end" : "bottom-start"}
+                  enterDelay={300}
+                >
+                  <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={order}
+                    onClick={this.createSortHandler(column.id)}
+                  >
+                    {column.label}
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
             );
-        });
-    };
-    render() {
-        let htmlToReactParser = new HtmlToReactParser();
+          }, this)}
+        </TableRow>
+      </TableHead>
+    );
+  }
+}
 
-        return (<div>
-            <Grid container justify="center">
-                <h3>Create a test</h3>
-                <Grid item xs={6}>
-                    <TextField
-                        id="name"
-                        label="Test Name"
-                        value={this.state.name}
-                        onChange={this.handleChange}
-                        margin="normal"
-                        name="name"
-                    />
-                    <TextField
-                        id="maxMarks"
-                        name="maxMarks"
-                        label="Max Marks"
-                        value={this.state.maxMarks}
-                        onChange={this.handleChange}
-                        margin="normal"
-                    />
-                     <TextField
-                        id="time"
-                        name="time"
-                        label="Time(in min)"
-                        value={this.state.time}
-                        onChange={this.handleChange}
-                        margin="normal"
-                    />
-                    
-                </Grid>
-                <Grid item xs={12}>
-                    {this.state.sections.map((section, i) => {
-                        return (<ExpansionPanel expanded={section.id === this.state.expandedSection} onChange={(e) => { this.handlePanelExpansion(e, i + 1) }}  >
-                            <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-                                <Typography style={{ alignSelf: 'center', marginRight: '5px', }} >
-                                    Section.{i + 1}
-                                </Typography>
-                                {section.title}
+EnhancedTableHead.propTypes = {
+  numSelected: PropTypes.number.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
+  order: PropTypes.string.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired
+};
 
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <Grid item xs={6}>
-                                    <TextField
-                                        id="name"
-                                        label="Section Name"
-                                        value={section.name}
-                                        onChange={this.handleChangeSectionChange}
-                                        margin="normal"
-                                        name="name"
-                                    />
-                                    <TextField
-                                        id="posMarks"
-                                        name="posMarks"
-                                        label="posMarks"
-                                        value={section.posMarks}
-                                        onChange={this.handleChangeSectionChange}
-                                        margin="normal"
-                                    />
-                                    <TextField
-                                        id="negMarks"
-                                        name="negMarks"
-                                        label="negMarks"
-                                        value={section.negMarks}
-                                        onChange={this.handleChangeSectionChange}
-                                        margin="normal"
-                                    />
-                                </Grid>
-                                <Grid item>
-                                    {
-                                        section.questions.map((question, i) => {
-                                            const f = _.find(this.props.allQuestions, (obj) => {
-                                                return obj._id == question
-                                            })
-                                            if (f) {
-                                                let reactElement = htmlToReactParser.parse(f.question);
-                                                return (<div style={{ display: 'flex', flexWrap: 'initial' }}>
-                                                    <Typography style={{ alignSelf: 'center', marginRight: '5px', }} >
-                                                        Q.{i + 1}
-                                                    </Typography>
-                                                    {reactElement}</div>)
-                                            }
-                                            else return
-                                        })}
-                                </Grid>
-                            </ExpansionPanelDetails>
-                        </ExpansionPanel>
-                        )
-                    })}
-                    <Button variant="fab" onClick={this.handleAddSectionToTestClick}>
-                        <Add />
-                    </Button>
-                    <Button variant="raised" onClick={this.handleTestSubmitClick}>
-                        Submit
-                    </Button>
-                </Grid>
-            </Grid>
+const toolbarStyles = theme => ({
+  root: {
+    paddingRight: theme.spacing.unit
+  },
+  highlight:
+    theme.palette.type === "light"
+      ? {
+          color: theme.palette.secondary.main,
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+        }
+      : {
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.secondary.dark
+        },
+  spacer: {
+    flex: "1 1 100%"
+  },
+  actions: {
+    color: theme.palette.text.secondary
+  },
+  title: {
+    flex: "0 0 auto"
+  }
+});
 
-            <Grid container justify="center">
-                <h3>Previously added questions</h3>
-            </Grid>
-            {this.props.allQuestions.map((ques, i) => {
-                let reactElement = htmlToReactParser.parse(ques.question);
-                return (
-                    <ExpansionPanel >
-                        <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-                            <Typography style={{ alignSelf: 'center', marginRight: '5px', }} >
-                                Q.{i + 1}
-                            </Typography>
-                            {reactElement}
-                            <Tooltip title="Add to Test">
-                                <IconButton style={{ amrginLeft: '20px', paddingRight: '0', alignSelf: 'center' }} onClick={(e) => {
-                                    this.handleAddQuestionToTestClick(e, i, ques._id)
-                                }}>
-                                    <Add />
-                                </IconButton>
-                            </Tooltip>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                            <Grid >
-                                {this.getPrevQuesOptions(ques.options)}
-                            </Grid>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
+let EnhancedTableToolbar = props => {
+  const { numSelected, classes } = props;
 
-                );
-            })}
+  return (
+    <Toolbar
+      className={classNames(classes.root, {
+        [classes.highlight]: numSelected > 0
+      })}
+    >
+      <div className={classes.title}>
+        {numSelected > 0 ? (
+          <Typography color="inherit" variant="subheading">
+            {numSelected} selected
+          </Typography>
+        ) : (
+          <Typography variant="title">Tests</Typography>
+        )}
+      </div>
+      <div className={classes.spacer} />
+      <div className={classes.actions}>
+        {numSelected > 0 ? (
+          <Tooltip title="Delete">
+            <IconButton aria-label="Delete">
+              <Delete />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip title="Filter list">
+            <IconButton aria-label="Filter list">
+              <FilterList />
+            </IconButton>
+          </Tooltip>
+        )}
+      </div>
+    </Toolbar>
+  );
+};
 
+EnhancedTableToolbar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  numSelected: PropTypes.number.isRequired
+};
 
-        </div>)
+EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
+
+class Stats extends Component {
+  state = {
+    tests: null,
+    order: "asc",
+    orderBy: "created",
+    selected: [],
+    page: 0,
+    rowsPerPage: 5,
+    data: [],
+    isFetchTestListInProgress: false
+  };
+
+  componentDidMount() {
+    this.props.onTestListFetch();
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!nextProps.isFetchTestListInProgress) {
+      const tests = nextProps.tests;
+      if (tests && tests.length > 0) {
+        const data = tests
+          .map(t => {
+            return createData(
+              t._id,
+              t.name,
+              t.created,
+              t.createdBy.username,
+              t.time,
+              t.maxMarks
+            );
+          })
+          .sort((a, b) => (a.time < b.time ? -1 : 1));
+        return {
+          isFetchTestListInProgress: false,
+          tests,
+          data
+        };
+      }
+    } else {
+      return { isFetchTestListInProgress: nextProps.isFetchTestListInProgress };
     }
+    return null;
+  }
+
+  handleRequestSort = (event, property) => {
+    const orderBy = property;
+    let order = "desc";
+
+    if (this.state.orderBy === property && this.state.order === "desc") {
+      order = "asc";
+    }
+
+    const data =
+      order === "desc"
+        ? this.state.data.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
+        : this.state.data.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
+
+    this.setState({ data, order, orderBy });
+  };
+
+  handleSelectAllClick = (event, checked) => {
+    if (checked) {
+      this.setState({ selected: this.state.data.map(n => n.id) });
+      return;
+    }
+    this.setState({ selected: [] });
+  };
+
+  handleClick = (event, id) => {
+    const { selected } = this.state;
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    this.setState({ selected: newSelected });
+  };
+
+  handleChangePage = (event, page) => {
+    this.setState({ page });
+  };
+
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value });
+  };
+
+  isSelected = id => this.state.selected.indexOf(id) !== -1;
+
+  getCardContent() {
+    const { classes } = this.props;
+
+    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const emptyRows =
+      rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const circularProgress = (
+      <Grid container className={classes.root}>
+        <Grid item xs={12}>
+          <Grid
+            container
+            spacing={16}
+            alignItems={"row"}
+            direction={"center"}
+            justify={"center"}
+          >
+            {" "}
+            <CircularProgress />
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+
+    const table = (
+      <div className={classes.root}>
+        <EnhancedTableToolbar numSelected={selected.length} />
+        <div className={classes.tableWrapper}>
+          <Table>
+            <EnhancedTableHead
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={this.handleSelectAllClick}
+              onRequestSort={this.handleRequestSort}
+              rowCount={data.length}
+            />
+            <TableBody>
+              {data
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map(n => {
+                  const isSelected = this.isSelected(n.id);
+
+                  return (
+                    <TableRow
+                      hover
+                      onClick={event => this.handleClick(event, n.id)}
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      tabIndex={-1}
+                      key={n.id}
+                      selected={isSelected}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox checked={isSelected} />
+                      </TableCell>
+                      <TableCell padding="none">{n.name}</TableCell>
+                      <TableCell>{n.created}</TableCell>
+                      <TableCell>
+                        {n.createdBy === this.props.currentUser.username
+                          ? "You"
+                          : n.createdBy}
+                      </TableCell>
+                      <TableCell>{n.time}</TableCell>
+                      <TableCell>{n.maxMarks}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 49 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <TablePagination
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          backIconButtonProps={{
+            "aria-label": "Previous Page"
+          }}
+          nextIconButtonProps={{
+            "aria-label": "Next Page"
+          }}
+          onChangePage={this.handleChangePage}
+          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+        />
+      </div>
+    );
+
+    const transactions =
+      this.state.data && this.state.data.length >= 0 ? table : circularProgress;
+
+    return <Fragment>{transactions}</Fragment>;
+  }
+
+  render() {
+    const { classes } = this.props;
+    let successSnackbar =
+      this.props.successMessage !== "" ? (
+        <SuccessSnackbar
+          successMessage={this.props.successMessage}
+          onClearToast={this.props.onClearToast}
+        />
+      ) : null;
+    let errorSnackbar =
+      this.props.errorMessage !== "" ? (
+        <ErrorSnackbar
+          errorMessage={this.props.errorMessage}
+          onClearToast={this.props.onClearToast}
+        />
+      ) : null;
+    let loadingSnackbar =
+      this.props.notifyLoading !== "" ? <LoadingSnackbar /> : null;
+
+    return (
+      <Fragment>
+        {successSnackbar}
+        {errorSnackbar}
+        {loadingSnackbar}
+        <Grid container="container">
+          <ItemGrid xs={12} sm={12} md={12}>
+            <RegularCard
+              cardTitle="Test"
+              cardSubtitle="List of all the tests available to you to attempt"
+              headerColor="blue"
+              content={this.getCardContent()}
+            />
+          </ItemGrid>
+        </Grid>
+      </Fragment>
+    );
+  }
 }
-const mapStateToProps = (state) => {
-    return { allQuestions: state.questions.allQuestions }
-}
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ getTestList, getAllQuestions,sendCreatedTest }, dispatch)
-}
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(quizStyles)(Test))
+
+Stats.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => {
+  return {
+    tests: state.test.tests,
+    isFetchTestListInProgress: state.test.isFetchTestListInProgress,
+    successMessage: state.notify.success,
+    errorMessage: state.notify.error,
+    notifyLoading: state.notify.loading,
+    notifyClear: state.notify.clear,
+    currentUser: state.auth.currentUser
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTestListFetch: () => dispatch(actions.fetchTestList())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(testListStyle)(Stats)
+);
