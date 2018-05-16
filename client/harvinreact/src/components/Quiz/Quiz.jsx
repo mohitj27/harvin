@@ -55,26 +55,7 @@ class Quiz extends Component {
     answers: []
   };
   componentDidMount = () => {
-    axios
-      .get("http://localhost:3001/admin/questions")
-      .then(res => {
-        let questions = res.data.questions;
-        let answers = [];
-        if (questions.length <= 0) return;
-        let currentOptions = questions[0].options || [];
-
-        this.setState({
-          questions: questions,
-          currentQuestion: questions[0] || "",
-          currentOptions
-        });
-        // this.setState({ currentQuestion: questions[0] });
-        questions.map((question, i) => {
-          answers[i] = { _id: question._id, options: [] };
-        });
-        this.setState({ answers });
-      })
-      .catch(err => console.log("err", err));
+    
   };
   handleQuizNavClick = e => {
     const curr = _.find(this.state.questions, function(o) {

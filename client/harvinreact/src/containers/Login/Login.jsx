@@ -91,7 +91,7 @@ class Login extends React.Component {
       ) : null;
     let loadingSnackbar =
       this.props.notifyLoading !== "" ? <LoadingSnackbar /> : null;
-    if (this.props.isAuthenticated === true) {
+    if (this.props.isAuthenticated === true&& window.localStorage.getItem('token')) {
       return <Redirect to="/dashboard" />;
     }
 

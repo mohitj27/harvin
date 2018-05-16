@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import update from 'immutability-helper';
 import _ from 'lodash';
 import quizStyles from '../../variables/styles/quizStyles';
-import { fetchTestList, getAllQuestions ,sendCreatedTest} from '../../actions/';
+import { fetchTestList, getAllQuestions, sendCreatedTest } from '../../actions/';
 import {
     withStyles,
     ExpansionPanel,
@@ -27,20 +27,17 @@ const HtmlToReactParser = HtmlToReact.Parser;
 class CreateTest extends React.Component {
     state = {
         name: '',
-        time:'',
+        time: '',
         maxMarks: '',
         expandedSection: 1,
         maxMarks: '',
         tests: [],
         sections: [{
             id: 1,
-            title: 'New Section',
+            title: '',
             posMarks: 4,
             negMarks: -1,
             questions: [
-                "5af81fcfb7588b41e60798a4",
-                "5af6ec76e89b041ec181d932",
-                "5af84015b7588b41e60798a5"
             ],
         }],
     }
@@ -50,7 +47,7 @@ class CreateTest extends React.Component {
     getEmptySection = () => {
         return {
             id: this.state.sections.length + 1,
-            title: 'New Section',
+            title: '',
             posMarks: 4,
             negMarks: -1,
             questions: [],
@@ -63,10 +60,14 @@ class CreateTest extends React.Component {
     handleAddQuestionToTestClick = (e, pos, id) => {
         e.stopPropagation();
         const sections = this.state.sections
-        console.log('pos', pos);
         pos = this.state.expandedSection - 1
-        const updated = update(sections, { [pos]: { questions: { $push: [id] } } })
+        console.log('pos', pos);
+        try {
+            const updated = update(sections, { [pos]: { questions: { $push: [id] } } })
         this.setState({ sections: updated })
+        } catch (error) {
+            console.log(error)
+        }
 
     }
     handleAddSectionToTestClick = (e) => {
@@ -78,11 +79,11 @@ class CreateTest extends React.Component {
     }
     handleTestSubmitClick = (e) => {
         e.preventDefault();
-        let form= new FormData()
-        form.append('sections',JSON.stringify(this.state.sections))
-        form.append('name',this.state.name)
-        form.append('time',this.state.time)
-        form.append('maxMarks',this.state.maxMarks)
+        let form = new FormData()
+        form.append('sections', JSON.stringify(this.state.sections))
+        form.append('name', this.state.name)
+        form.append('time', this.state.time)
+        form.append('maxMarks', this.state.maxMarks)
         this.props.sendCreatedTest(form)
 
     }
@@ -139,7 +140,7 @@ class CreateTest extends React.Component {
                         onChange={this.handleChange}
                         margin="normal"
                     />
-                     <TextField
+                    <TextField
                         id="time"
                         name="time"
                         label="Time(in min)"
@@ -147,44 +148,42 @@ class CreateTest extends React.Component {
                         onChange={this.handleChange}
                         margin="normal"
                     />
-                    
+
                 </Grid>
                 <Grid item xs={12}>
                     {this.state.sections.map((section, i) => {
                         return (<ExpansionPanel expanded={section.id === this.state.expandedSection} onChange={(e) => { this.handlePanelExpansion(e, i + 1) }}  >
                             <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-                                <Typography style={{ alignSelf: 'center', marginRight: '5px', }} >
-                                    Section.{i + 1}
-                                </Typography>
-                                {section.title}
 
+                                <TextField
+                                    id="name"
+                                    label="Section Name"
+                                    value={section.title}
+                                    onChange={this.handleChangeSectionChange}
+                                    margin="normal"
+                                    name="name"
+                                />
+                              
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 <Grid item xs={6}>
-                                    <TextField
-                                        id="name"
-                                        label="Section Name"
-                                        value={section.name}
-                                        onChange={this.handleChangeSectionChange}
-                                        margin="normal"
-                                        name="name"
-                                    />
-                                    <TextField
-                                        id="posMarks"
-                                        name="posMarks"
-                                        label="posMarks"
-                                        value={section.posMarks}
-                                        onChange={this.handleChangeSectionChange}
-                                        margin="normal"
-                                    />
-                                    <TextField
-                                        id="negMarks"
-                                        name="negMarks"
-                                        label="negMarks"
-                                        value={section.negMarks}
-                                        onChange={this.handleChangeSectionChange}
-                                        margin="normal"
-                                    />
+                                <TextField
+                                    id="posMarks"
+                                    name="posMarks"
+                                    label="posMarks"
+                                    value={section.posMarks}
+                                    onChange={this.handleChangeSectionChange}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    id="negMarks"
+                                    name="negMarks"
+                                    label="negMarks"
+                                    value={section.negMarks}
+                                    onChange={this.handleChangeSectionChange}
+                                    margin="normal"
+                                />
+
                                 </Grid>
                                 <Grid item>
                                     {
@@ -254,6 +253,6 @@ const mapStateToProps = (state) => {
     return { allQuestions: state.questions.allQuestions }
 }
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ fetchTestList, getAllQuestions,sendCreatedTest }, dispatch)
+    return bindActionCreators({ fetchTestList, getAllQuestions, sendCreatedTest }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(quizStyles)(CreateTest))
