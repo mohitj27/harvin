@@ -19,6 +19,7 @@ import Table, {
   TableRow,
   TableSortLabel
 } from "material-ui/Table";
+import { Button } from "material-ui";
 
 import {
   withStyles,
@@ -358,6 +359,16 @@ class Stats extends Component {
                       </TableCell>
                       <TableCell>{n.time}</TableCell>
                       <TableCell>{n.maxMarks}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="raised"
+                          size="small"
+                          color="primary"
+                          className={"mybutton"}
+                        >
+                          Try it
+                        </Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
