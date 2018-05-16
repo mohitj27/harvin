@@ -10,6 +10,7 @@ import DashboardPage from '../views/Dashboard/Dashboard.jsx';
 import Home from '../views/Home/Home.jsx';
 import AddQues from '../views/AddQues/AddQues.jsx';
 import ListTest from '../views/ListTest/ListTest.jsx';
+import CreateTest from '../views/CreateTest/CreateTest.jsx';
 const appRoutes = [
   {
     path: '/home',
@@ -17,10 +18,10 @@ const appRoutes = [
     icon: Dashboard,
     component: Home,
   }, {
-    path: '/makeoforder',
-    sidebarName: 'Make Of Order',
+    path: '/createTest',
+    sidebarName: 'Create Test',
     icon: Person,
-    component: DashboardPage,
+    component: CreateTest,
   }, {
     path: '/makeofstock',
     sidebarName: 'Make Of Stock',
