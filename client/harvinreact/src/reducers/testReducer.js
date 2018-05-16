@@ -7,6 +7,30 @@ const initialState = {
   test: ''
 };
 
+const getTest = (state, action) =>
+  update(state, {
+    isFetchTestInProgress: {
+      $set: true,
+    },
+  });
+
+const getTestSuccess = (state, action) =>
+  update(state, {
+    isFetchTestInProgress: {
+      $set: false,
+    },
+    test: {
+      $set: action.test,
+    },
+  });
+
+const getTestError = (state, action) =>
+  update(state, {
+    isFetchTestInProgress: {
+      $set: false,
+    }
+  });
+
 const getTestList = (state, action) =>
   update(state, {
     isFetchTestListInProgress: {
@@ -39,6 +63,13 @@ const reducer = (state = initialState, action) => {
       return getTestListSuccess(state, action);
     case actionTypes.GET_TEST_LIST_ERROR:
       return getTestListError(state, action);
+
+    case actionTypes.GET_TEST:
+      return getTest(state, action);
+    case actionTypes.GET_TEST_SUCCESS:
+      return getTestSuccess(state, action);
+    case actionTypes.GET_TEST_ERROR:
+      return getTestError(state, action);
     default:
       return state;
   }

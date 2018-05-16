@@ -51,7 +51,7 @@ router.get("/:id", async (req, res, next) => {
     foundTest = await testController.populateFieldsInTests(foundTest, ["createdBy", "sections.questions"])
     return res.json({
       success: true,
-      tests: foundTests.reverse()
+      test: foundTest
     });
   } catch (err) {
     next(err)

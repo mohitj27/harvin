@@ -4,6 +4,10 @@
 
 import { successColor } from "../styles";
 
-const testListStyles = {};
+const testListStyles = {
+  tableWrapper: {
+    overflowX: "auto"
+  }
+};
 
 export default testListStyles;

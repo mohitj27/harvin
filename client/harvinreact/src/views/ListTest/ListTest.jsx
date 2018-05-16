@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import * as actions from "../../actions";
 import * as actionTypes from "../../actions/types";
 import testListStyle from "../../variables/styles/testListStyle";
+import { loginAction, notifyClear } from "../../actions";
 import {
   ErrorSnackbar,
   SuccessSnackbar,
@@ -460,7 +461,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onTestListFetch: () => dispatch(actions.fetchTestList())
+    onTestListFetch: () => dispatch(actions.fetchTestList()),
+    onClearToast: () => dispatch(notifyClear())
   };
 };
 

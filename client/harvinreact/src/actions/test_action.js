@@ -20,6 +20,17 @@ import {
     notifySuccess
 } from '../actions/notify_action';
 
+const getTest = () => ({
+    type: GET_TEST
+})
+const getTestSuccess = test => ({
+    type: GET_TEST_SUCCESS,
+    test
+})
+const getTestError = () => ({
+    type: GET_TEST_ERROR
+})
+
 const getTestList = () => ({
     type: GET_TEST_LIST
 })
@@ -51,27 +62,19 @@ export const fetchTestList = username => async dispatch => {
         dispatch(getTestListError())
         return dispatch(notifyError(errMsg));
     } finally {
-        setTimeout(dispatch(notifyClear()), 3000)
+        setTimeout(() => {
+            dispatch(notifyClear())
+        }, 3000)
     }
 }
 
-const getTest = () => ({
-    type: GET_TEST
-})
-const getTestError = () => ({
-    type: GET_TEST_ERROR
-})
-const getTestSuccess = test => ({
-    type: GET_TEST_SUCCESS,
-    payload: test
-})
 export const fetchTest = testid => async dispatch => {
     dispatch(getTest());
     dispatch(notifyLoading());
     try {
         const res = await axios.get(`http://localhost:3001/admin/tests/${testid}`);
         if (res.data.success) {
-            dispatch(getTestSuccess(res.data.tests));
+            dispatch(getTestSuccess(res.data.test));
         } else {
             dispatch(getTestError());
             dispatch(notifyError(res.data.msg));
@@ -80,17 +83,19 @@ export const fetchTest = testid => async dispatch => {
         const errMsg = err.response ? err.response.data.msg : 'Error while getting the test';
         dispatch(notifyError(errMsg))
     } finally {
-        return dispatch(notifyClear())
+        setTimeout(() => {
+            dispatch(notifyClear())
+        }, 3000)
     }
 }
 const sendCreatedTestAction = () => ({
-    type:SEND_CREATED_TEST
+    type: SEND_CREATED_TEST
 })
 const sendCreatedTestSuccess = () => ({
-    type:SEND_CREATED_TEST_SUCCESS
+    type: SEND_CREATED_TEST_SUCCESS
 })
 const sendCreatedTestError = () => ({
-    type:SEND_CREATED_TEST_ERROR
+    type: SEND_CREATED_TEST_ERROR
 })
 
 export const sendCreatedTest = test => async (dispatch) => {
@@ -98,7 +103,7 @@ export const sendCreatedTest = test => async (dispatch) => {
     dispatch(sendCreatedTestAction());
     dispatch(notifyLoading());
     try {
-        const res = await axios.post(`http://localhost:3001/admin/tests/`,test);
+        const res = await axios.post(`http://localhost:3001/admin/tests/`, test);
         if (res.data.success) {
             dispatch(sendCreatedTestSuccess(res.data.msg));
         } else {
