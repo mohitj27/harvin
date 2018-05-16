@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import update from 'immutability-helper';
 import _ from 'lodash';
 import quizStyles from '../../variables/styles/quizStyles';
-import { getTestList, getAllQuestions ,sendCreatedTest} from '../../actions/';
+import { fetchTestList, getAllQuestions ,sendCreatedTest} from '../../actions/';
 import {
     withStyles,
     ExpansionPanel,
@@ -57,7 +57,7 @@ class CreateTest extends React.Component {
         }
     }
     componentDidMount = () => {
-        this.props.getTestList('j');
+        this.props.fetchTestList('j');
         this.props.getAllQuestions();
     }
     handleAddQuestionToTestClick = (e, pos, id) => {
@@ -79,11 +79,11 @@ class CreateTest extends React.Component {
     handleTestSubmitClick = (e) => {
         e.preventDefault();
         let form= new FormData()
-        form.append('sections',this.state.sections)
+        form.append('sections',JSON.stringify(this.state.sections))
         form.append('name',this.state.name)
         form.append('time',this.state.time)
         form.append('maxMarks',this.state.maxMarks)
-        
+        this.props.sendCreatedTest(form)
 
     }
     handlePanelExpansion = (e, pos) => {
@@ -254,6 +254,6 @@ const mapStateToProps = (state) => {
     return { allQuestions: state.questions.allQuestions }
 }
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ getTestList, getAllQuestions,sendCreatedTest }, dispatch)
+    return bindActionCreators({ fetchTestList, getAllQuestions,sendCreatedTest }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(quizStyles)(CreateTest))

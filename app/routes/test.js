@@ -19,7 +19,7 @@ router.post("/", middleware.isLoggedIn, async (req, res, next) => {
       name: body.name,
       time: body.time,
       maxMarks: body.maxMarks,
-      sections: body.sections
+      sections: JSON.parse(body.sections)
     });
     return res.json({
       success: true,

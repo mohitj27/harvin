@@ -9,6 +9,9 @@ import {
     GET_ALL_QUESTIONS,
     GET_ALL_QUESTIONS_ERROR,
     GET_ALL_QUESTIONS_SUCCESS,
+    SEND_CREATED_TEST,
+    SEND_CREATED_TEST_SUCCESS,
+    SEND_CREATED_TEST_ERROR,
 } from './types'
 import {
     notifyLoading,
@@ -80,4 +83,32 @@ export const fetchTest = testid => async dispatch => {
         return dispatch(notifyClear())
     }
 }
+const sendCreatedTestAction = () => ({
+    type:SEND_CREATED_TEST
+})
+const sendCreatedTestSuccess = () => ({
+    type:SEND_CREATED_TEST_SUCCESS
+})
+const sendCreatedTestError = () => ({
+    type:SEND_CREATED_TEST_ERROR
+})
 
+export const sendCreatedTest = test => async (dispatch) => {
+
+    dispatch(sendCreatedTestAction());
+    dispatch(notifyLoading());
+    try {
+        const res = await axios.post(`http://localhost:3001/admin/tests/`,test);
+        if (res.data.success) {
+            dispatch(sendCreatedTestSuccess(res.data.msg));
+        } else {
+            dispatch(sendCreatedTestError());
+            dispatch(notifyError(res.data.msg));
+        }
+    } catch (err) {
+        const errMsg = err.response ? err.response.data.msg : 'Error while getting the test';
+        dispatch(notifyError(errMsg))
+    } finally {
+        return dispatch(notifyClear())
+    }
+}

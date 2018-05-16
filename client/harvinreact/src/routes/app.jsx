@@ -34,7 +34,7 @@ const appRoutes = [
     component: DashboardPage,
   }, {
     path: '/addQues',
-    sidebarName: 'Add Question',
+  sidebarName: 'Add Question',
     icon: NoteAdd,
     component: AddQues,
   }, {
