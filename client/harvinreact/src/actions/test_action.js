@@ -6,9 +6,6 @@ import {
     GET_TEST,
     GET_TEST_ERROR,
     GET_TEST_SUCCESS,
-    GET_ALL_QUESTIONS,
-    GET_ALL_QUESTIONS_ERROR,
-    GET_ALL_QUESTIONS_SUCCESS,
     SEND_CREATED_TEST,
     SEND_CREATED_TEST_SUCCESS,
     SEND_CREATED_TEST_ERROR,
@@ -17,7 +14,6 @@ import {
     notifyLoading,
     notifyClear,
     notifyError,
-    notifySuccess
 } from '../actions/notify_action';
 
 const getTest = () => ({

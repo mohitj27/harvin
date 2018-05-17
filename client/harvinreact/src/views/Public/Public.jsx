@@ -1,20 +1,17 @@
-import React from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { signupAction, getBatches, notifyClear } from "../../actions";
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { signupAction, getBatches, notifyClear } from '../../actions';
 import {
-  BrowserRouter as Router,
-  Route,
-  Link,
   Redirect,
   withRouter
-} from "react-router-dom";
+} from 'react-router-dom';
 import {
   ErrorSnackbar,
   SuccessSnackbar,
   LoadingSnackbar
-} from "../../components/GlobalSnackbar/GlobalSnackbar";
-import loginStyles from "../../variables/styles/loginStyles";
+} from '../../components/GlobalSnackbar/GlobalSnackbar';
+import loginStyles from '../../variables/styles/loginStyles';
 import {
   Grid,
   Paper,
@@ -25,34 +22,35 @@ import {
   Input,
   Select,
   MenuItem
-} from "material-ui";
-import logo from "../../assets/img/harvinLogo.png";
+} from 'material-ui';
+import logo from '../../assets/img/harvinLogo.png';
 
 class Public extends React.Component {
   state = {
-    username: "",
-    password: "",
-    confirmPassword: "",
-    batch: "",
+    username: '',
+    password: '',
+    confirmPassword: '',
+    batch: '',
     isSignupInProgress: false,
-    isRegistered: false
+    isRegistered: false,
   };
   signup = e => {
     e.preventDefault();
     if (this.state.password !== this.state.confirmPassword) {
-      alert("Confirm password is not same as password !!!");
+      alert('Confirm password is not same as password !!!');
       return;
     }
+
     this.props.signupAction({
       username: this.state.username,
       password: this.state.password,
-      batch: this.state.batch
+      batch: this.state.batch,
     });
   };
 
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -64,31 +62,32 @@ class Public extends React.Component {
     if (
       !nextProps.isSignupInProgress &&
       nextProps.successMessage ===
-        "Successfully created your account. Please login to continue."
+        'Successfully created your account. Please login to continue.'
     ) {
       return { isSignupInProgress: false, isRegistered: true };
     }
+
     return null;
   }
 
   render() {
     const { classes } = this.props;
     let successSnackbar =
-      this.props.successMessage !== "" ? (
+      this.props.successMessage !== '' ? (
         <SuccessSnackbar
           successMessage={this.props.successMessage}
           onClearToast={this.props.onClearToast}
         />
       ) : null;
     let errorSnackbar =
-      this.props.errorMessage !== "" ? (
+      this.props.errorMessage !== '' ? (
         <ErrorSnackbar
           errorMessage={this.props.errorMessage}
           onClearToast={this.props.onClearToast}
         />
       ) : null;
     let loadingSnackbar =
-      this.props.notifyLoading !== "" ? <LoadingSnackbar /> : null;
+      this.props.notifyLoading !== '' ? <LoadingSnackbar /> : null;
 
     if (this.props.isRegistered === true) {
       return <Redirect to="/login" />;
@@ -102,18 +101,18 @@ class Public extends React.Component {
         <Paper>
           <Grid
             container
-            direction={"row"}
-            justify={"center"}
-            alignItems={"center"}
+            direction={'row'}
+            justify={'center'}
+            alignItems={'center'}
           >
             <Grid item="item" xs={6}>
               <Grid
                 container
-                direction={"row"}
-                justify={"center"}
-                alignItems={"center"}
+                direction={'row'}
+                justify={'center'}
+                alignItems={'center'}
               >
-                <img src={logo} alt="harvin logo" style={{ height: "50px" }} />
+                <img src={logo} alt="harvin logo" style={{ height: '50px' }} />
               </Grid>
             </Grid>
             <Grid item="item" xs={6}>
@@ -162,9 +161,9 @@ class Public extends React.Component {
                     <InputLabel>Choose your batch</InputLabel>
                     <Select
                       value={this.state.batch}
-                      style={{ width: "100%" }}
+                      style={{ width: '100%' }}
                       onChange={this.handleChange}
-                      inputProps={{ name: "batch", id: "batch" }}
+                      inputProps={{ name: 'batch', id: 'batch' }}
                     >
                       {this.props.batches.map((batch, i) => {
                         return (
@@ -200,7 +199,7 @@ const mapStateToProps = state => {
     notifyClear: state.notify.clear,
     isRegistered: state.auth.isRegistered,
     isSignupInProgress: state.auth.isSignupInProgress,
-    batches: state.batch.batches || []
+    batches: state.batch.batches || [],
   };
 };
 
@@ -209,7 +208,7 @@ const mapDispatchToProps = dispatch => {
     {
       signupAction,
       getBatches,
-      onClearToast: () => dispatch(notifyClear())
+      onClearToast: () => dispatch(notifyClear()),
     },
     dispatch
   );

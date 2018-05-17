@@ -3,9 +3,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import * as actionTypes from '../../actions/types';
 import testListStyle from '../../variables/styles/testListStyle';
-import { loginAction, notifyClear } from '../../actions';
+import { notifyClear } from '../../actions';
 import { Link } from 'react-router-dom';
 import {
   ErrorSnackbar,
@@ -29,16 +28,14 @@ import {
   CircularProgress,
   Toolbar,
   Typography,
-  Paper,
   Checkbox,
-  Snackbar,
   IconButton,
   Tooltip
 } from 'material-ui';
 
 import { lighten } from 'material-ui/styles/colorManipulator';
 
-import { RegularCard, ItemGrid, CustomInput } from '../../components';
+import { RegularCard, ItemGrid } from '../../components';
 
 function createData(id, name, created, createdBy, time, maxMarks) {
   const newDate = new Date(created);

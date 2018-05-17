@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import logo from '../../assets/img/loginHosp.jpg';
-import { withStyles, Grid } from 'material-ui';
+import { withStyles } from 'material-ui';
 import Quiz from '../../components/Quiz/Quiz';
-import { loginAction, notifyClear } from '../../actions';
+import { notifyClear } from '../../actions';
 import {
   ErrorSnackbar,
   SuccessSnackbar,
@@ -11,8 +10,6 @@ import {
 } from '../../components/GlobalSnackbar/GlobalSnackbar';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import * as actionTypes from '../../actions/types';
-import { RegularCard, ItemGrid } from '../../components';
 
 import dashboardStyle from '../../variables/styles/dashboardStyle';
 

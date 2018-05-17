@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import logo from "../../assets/img/loginHosp.jpg";
+import React from 'react';
+import PropTypes from 'prop-types';
+import logo from '../../assets/img/loginHosp.jpg';
 import {
     withStyles,
     Grid,
@@ -10,31 +10,28 @@ import {
     Typography,
     Button,
     CardActions,
-} from "material-ui";
-import Quiz from "../../components/Quiz/Quiz";
-import { EditorState } from "draft-js";
-import { RegularCard, ItemGrid } from "../../components";
-import homeStyles from "../../variables/styles/homeStyles";
+} from 'material-ui';
+import homeStyles from '../../variables/styles/homeStyles';
 
 class Home extends React.Component {
-    state = {
-        value: 0
+  state = {
+      value: 0,
     };
-    handleChange = (event, value) => {
-        this.setState({ value });
-    };
-
-    handleChangeIndex = index => {
-        this.setState({ value: index });
+  handleChange = (event, value) => {
+      this.setState({ value });
     };
 
-    render() {
-        const { classes } = this.props
-        return (<div className={classes.root}>
+  handleChangeIndex = index => {
+      this.setState({ value: index });
+    };
+
+  render() {
+    const { classes } = this.props;
+    return (<div className={classes.root}>
             <Grid container>
                 <Grid item xs={12} sm={8} md={8}>
                     <Paper>
-<span style={{color:'white'}}>.</span>
+<span style={{ color: 'white' }}>.</span>
                         <Grid container justify="center">
                             <Grid item xs={4} sm={3} md={2} className={classes.profileContainer}>
                                 <img src={logo} alt="" style={{ width: '100%' }} className={classes.profileImage} />
@@ -56,12 +53,12 @@ class Home extends React.Component {
                 </Grid>
             </Grid>
         </div>
-        );
-    }
+    );
+  }
 }
 
 Home.propTypes = {
-    classes: PropTypes.object.isRequired
-};
+    classes: PropTypes.object.isRequired,
+  };
 
 export default withStyles(homeStyles)(Home);

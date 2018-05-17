@@ -1,64 +1,45 @@
 //TODO SWATI REMOVE CARDS, LEFT ALIGN DETAIL AND REMOVE ACTIVATOR
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import {
   withStyles,
   Button,
-  FormLabel,
-  FormControl,
-  FormGroup,
   FormControlLabel,
   Checkbox,
-  FormHelperText,
-  CircularProgress,
   Grid,
-  Paper,
   Badge
-} from "material-ui";
+} from 'material-ui';
 import {
-  Dashboard,
-  Person,
-  ContentPaste,
-  LibraryBooks,
-  SdStorage,
-  Add,
   KeyboardArrowLeft,
   KeyboardArrowRight
-} from "material-ui-icons";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import cx from "classnames";
-import PropTypes from "prop-types";
-import { RegularCard, ItemGrid } from "../";
+} from 'material-ui-icons';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+import { RegularCard, ItemGrid } from '../';
 import {
   ErrorSnackbar,
   LoadingSnackbar,
   SuccessSnackbar
-} from "../../components/GlobalSnackbar/GlobalSnackbar";
-import axios from "axios";
-import ReactDOMServer from "react-dom/server";
-import HtmlToReact from "html-to-react";
-import quizStyles from "../../variables/styles/quizStyles";
-import _ from "lodash";
-import update from "immutability-helper";
-import red from "material-ui/colors/red";
+} from '../../components/GlobalSnackbar/GlobalSnackbar';
+import axios from 'axios';
+import HtmlToReact from 'html-to-react';
+import quizStyles from '../../variables/styles/quizStyles';
+import _ from 'lodash';
 const HtmlToReactParser = HtmlToReact.Parser;
 
-
 class Quiz extends Component {
-  constructor(props) {
-    super(props);
-  }
   state = {
     questions: [],
-    currentQuestion: "",
+    currentQuestion: '',
     currentOptions: [],
-    answers: []
+    answers: [],
   };
   componentDidMount = () => {
-    
+
   };
+
   handleQuizNavClick = e => {
-    const curr = _.find(this.state.questions, function(o) {
+    const curr = _.find(this.state.questions, function (o) {
       return o._id === e.target.id;
     });
 
@@ -66,12 +47,13 @@ class Quiz extends Component {
 
     this.setState({ currentQuestion: curr, currentOptions });
   };
+
   handleChangeQuizOptionChange = e => {
     const answerObj = _.find(this.state.answers, o => {
-      return o._id == this.state.currentQuestion._id;
+      return o._id === this.state.currentQuestion._id;
     });
     const answerObjIndex = _.findIndex(this.state.answers, o => {
-      return o._id == this.state.currentQuestion._id;
+      return o._id === this.state.currentQuestion._id;
     });
     let foundVal = _.indexOf(answerObj.options, e.target.value);
     if (foundVal === -1) {
@@ -81,6 +63,7 @@ class Quiz extends Component {
         if (obj === e.target.value) return obj === e.target.value;
       });
     }
+
     let newAnswers = [];
     this.state.answers.forEach((object, val) => {
       val === answerObjIndex
@@ -92,23 +75,22 @@ class Quiz extends Component {
       this.getOptions();
     });
   };
+
   getOptions = () => {
-    const value = [];
     let answerObj = null;
 
-    if (typeof this.state.currentQuestion == "object") {
+    if (typeof this.state.currentQuestion == 'object') {
       answerObj = _.find(this.state.answers, o => {
-        return o._id == this.state.currentQuestion._id;
+        return o._id === this.state.currentQuestion._id;
       });
     }
+
     return this.state.currentOptions.map((option, i) => {
       let checked = false;
       try {
-        // console.log("ano", answerObj.options[i], option.text);
-
         if (
           _.find(answerObj.options, optionObj => {
-            return option.text == optionObj;
+            return option.text === optionObj;
           })
         ) {
           checked = true;
@@ -116,17 +98,18 @@ class Quiz extends Component {
       } catch (err) {
         console.log(err);
       }
-      let htmlToReactParser = new HtmlToReactParser();    
+
+      let htmlToReactParser = new HtmlToReactParser();
       let reactElement = htmlToReactParser.parse(option.text);
       return (
         <div>
-        
+
               <Checkbox
                 checked={checked}
                 onChange={this.handleChangeQuizOptionChange}
                 value={option.text}
               />
-            
+
             {reactElement}
         </div>
       );
@@ -136,22 +119,23 @@ class Quiz extends Component {
   onSubmit = e => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("answers", JSON.stringify(this.state.answers));
+    formData.append('answers', JSON.stringify(this.state.answers));
     axios
-      .post("http://localhost:3001/admin/answers", formData)
+      .post('http://localhost:3001/admin/answers', formData)
       .then(res => {
-        console.log("res", res);
+        console.log('res', res);
         alert(`You have scored ${res.data.marks}`);
       })
-      .catch(err => console.log("err", err));
+      .catch(err => console.log('err', err));
   };
+
   getQuestionNavigationContent = classes => {
     let selectedQ = _.findIndex(this.state.questions, question => {
       return question._id === this.state.currentQuestion._id;
     });
     return this.state.questions.map((question, i) => {
       let badges = [];
-      let qStatus = "";
+      let qStatus = '';
       if (i === selectedQ) qStatus = classes.selectedQuestion;
       if (question.markForLater)
         badges = [
@@ -161,18 +145,20 @@ class Quiz extends Component {
             className={`${classes.badge} ${classes.markBadge}`}
             color="primary"
           >
-            .{" "}
-          </Badge>
+            .{' '}
+          </Badge>,
         ];
-      console.log("state", this.state);
+      console.log('state', this.state);
       try {
         if (this.state.answers[i].options.length > 0) {
           qStatus = `${qStatus} ${classes.qStatus}`;
         }
-        console.log("qstatus", qStatus);
+
+        console.log('qstatus', qStatus);
       } catch (err) {
-        console.log("qstatus", err);
+        console.log('qstatus', err);
       }
+
       return (
         <Fragment>
           <button
@@ -190,44 +176,48 @@ class Quiz extends Component {
       );
     });
   };
+
   handleMarkForLater = event => {
     const currentQuestionState = this.state.currentQuestion;
     currentQuestionState.markForLater = event.target.checked;
     this.setState({ currentQuestion: currentQuestionState });
   };
+
   handleArrowPrev = e => {
     let currentIndex = _.findIndex(this.state.questions, question => {
       return question._id === this.state.currentQuestion._id;
     });
-    console.log("hello", currentIndex);
+    console.log('hello', currentIndex);
     if (currentIndex <= 0) return;
 
     currentIndex--;
 
-    console.log("setting", this.state.questions[currentIndex], currentIndex);
+    console.log('setting', this.state.questions[currentIndex], currentIndex);
     this.setState({
       currentQuestion: this.state.questions[currentIndex],
-      currentOptions: this.state.questions[currentIndex].options
+      currentOptions: this.state.questions[currentIndex].options,
     });
   };
+
   handleArrowNext = e => {
     let currentIndex = _.findIndex(this.state.questions, question => {
       return question._id === this.state.currentQuestion._id;
     });
-    console.log("hello", currentIndex);
+    console.log('hello', currentIndex);
 
     if (currentIndex === this.state.questions.length - 1) return;
 
     currentIndex++;
-    console.log("setting", this.state.questions[currentIndex], currentIndex);
+    console.log('setting', this.state.questions[currentIndex], currentIndex);
     this.setState({
       currentQuestion: this.state.questions[currentIndex],
-      currentOptions: this.state.questions[currentIndex].options
+      currentOptions: this.state.questions[currentIndex].options,
     });
   };
+
   getCardContent = classes => {
     let markForLater = null;
-    if (this.state.currentQuestion !== "") {
+    if (this.state.currentQuestion !== '') {
       markForLater = (
         <FormControlLabel
           className={classes.markForLater}
@@ -257,13 +247,14 @@ class Quiz extends Component {
       </div>
     );
   };
+
   render() {
     const { classes } = this.props;
     let errorSnackbar = null;
     let successSnackbar = null;
     let processingSnackbar = null;
 
-    if (this.props.errorMessage && this.props.errorMessage !== "")
+    if (this.props.errorMessage && this.props.errorMessage !== '')
       errorSnackbar = (
         <ErrorSnackbar
           errorMessage={this.props.errorMessage}
@@ -271,7 +262,7 @@ class Quiz extends Component {
         />
       );
 
-    if (this.props.successMessage && this.props.successMessage !== "")
+    if (this.props.successMessage && this.props.successMessage !== '')
       successSnackbar = (
         <SuccessSnackbar
           successMessage={this.props.succuessMessage}
@@ -279,9 +270,9 @@ class Quiz extends Component {
         />
       );
 
-    if (this.props.notifyLoading && this.props.notifyLoading !== "")
+    if (this.props.notifyLoading && this.props.notifyLoading !== '')
       processingSnackbar = (
-        <LoadingSnackbar notifyLoading={this.props.notifyLoading !== ""} />
+        <LoadingSnackbar notifyLoading={this.props.notifyLoading !== ''} />
       );
 
     return (
@@ -343,9 +334,10 @@ Quiz.PropTypes = {
 function mapStateToProps(state) {
   return {};
 }
-function mappDispatchToProps(dispatch) {
-  return;
+
+function mapDispatchToProps(dispatch) {
   bindActionCreators({}, dispatch);
+  return;
 }
 
-export default withStyles(quizStyles)(Quiz);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(quizStyles)(Quiz));

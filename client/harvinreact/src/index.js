@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { createBrowserHistory } from 'history';
-import { Router, Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -29,7 +29,6 @@ const enhancer = composeEnhancers(applyMiddleware(thunk, logger));
 
 const store = createStore(rootReducer, enhancer);
 let App = null;
-const studentHome = null;
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}

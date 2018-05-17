@@ -3,7 +3,6 @@ import {
   Person,
   ContentPaste,
   LibraryBooks,
-  SdStorage,
   NoteAdd
 } from 'material-ui-icons';
 import DashboardPage from '../views/Dashboard/Dashboard.jsx';
@@ -34,7 +33,7 @@ const appRoutes = [
     component: DashboardPage,
   }, {
     path: '/addQues',
-  sidebarName: 'Add Question',
+    sidebarName: 'Add Question',
     icon: NoteAdd,
     component: AddQues,
   }, {

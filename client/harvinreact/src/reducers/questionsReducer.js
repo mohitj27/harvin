@@ -12,7 +12,6 @@ export default  (state=initialState,action)=>{
     switch (action.type) {
         case GET_ALL_QUESTIONS_SUCCESS:
             return getAllQuestions(state,action)
-            break;
         default:
             break;
     }

@@ -31,5 +31,6 @@ export const getBatches = () => async (dispatch) => {
 
     const errMsg = err.response ? err.data.message : 'Error While getting batchees !!! Please try again!';
     dispatch(notifyActions.notifyError(errMsg));
+    dispatch(getBatchListError())
   }
 };

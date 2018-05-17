@@ -10,7 +10,6 @@ import {
   primaryColor,
   primaryBoxShadow,
   infoColor,
-  whiteColor,
   successColor,
   warningColor,
   dangerColor
@@ -86,8 +85,8 @@ const sidebarStyle = theme => ({
   logoImage: {
     display: 'flex',
   },
-  logoText:{
-    fontSize:'16px',
+  logoText: {
+    fontSize: '16px',
   },
   img: {
     verticalAlign: 'middle',
@@ -127,10 +126,10 @@ const sidebarStyle = theme => ({
     position: 'relative',
     display: 'block',
     textDecoration: 'none',
-  color: '#757575c4',
-  '&:hover':{
-    color:'#757575c4',
-  },
+    color: '#757575c4',
+    '&:hover': {
+      color: '#757575c4',
+    },
   },
   itemLink: {
     width: 'auto',
@@ -151,77 +150,77 @@ const sidebarStyle = theme => ({
     marginRight: '15px',
     textAlign: 'center',
     verticalAlign: 'middle',
-    color:'white',
+    color: 'white',
 
   },
   itemActive: {
   },
-itemText: {
-    ...defaultFont,
-    margin: '0',
-      lineHeight: '30px',
-        fontSize: '14px',
-        color:'white',
-  },
-whiteFont: {
-  color: '#FFFFFF',
-  },
-greyFont: {
-  color: '#757575c4',
-  '&:hover':{
-    color:'white',
-  },
-  },
-purple: {
-  backgroundColor: primaryColor,
-    ...primaryBoxShadow,
+  itemText: {
+      ...defaultFont,
+      margin: '0',
+        lineHeight: '30px',
+          fontSize: '14px',
+          color: 'white',
+    },
+  whiteFont: {
+    color: '#FFFFFF',
+    },
+  greyFont: {
+    color: '#757575c4',
     '&:hover': {
+      color: 'white',
+    },
+    },
+  purple: {
     backgroundColor: primaryColor,
       ...primaryBoxShadow,
-    },
-},
-blue: {
-  backgroundColor: infoColor,
-    boxShadow:
-    '0 12px 20px -10px rgba(0, 212, 48, 0.5), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
-    '&:hover': {
+      '&:hover': {
+      backgroundColor: primaryColor,
+        ...primaryBoxShadow,
+      },
+  },
+  blue: {
     backgroundColor: infoColor,
       boxShadow:
-    '0 12px 20px -10px rgba(0, 212, 48, 0.5), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
-    },
-},
-white: {
-  backgroundColor: '#70dc97',
-    boxShadow:
-  '0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
-    '&:hover': {
-    backgroundColor: '#4bd59a',
-    color:'white !important',
+      '0 12px 20px -10px rgba(0, 212, 48, 0.5), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
+      '&:hover': {
+      backgroundColor: infoColor,
+        boxShadow:
+      '0 12px 20px -10px rgba(0, 212, 48, 0.5), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
+      },
+  },
+  white: {
+    backgroundColor: '#70dc97',
       boxShadow:
     '0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
-    },
+      '&:hover': {
+      backgroundColor: '#4bd59a',
+      color: 'white !important',
+        boxShadow:
+      '0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
+      },
 
-},
-green: {
-  backgroundColor: successColor,
-    boxShadow:
-  '0 12px 20px -10px rgba(76,175,80,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(76,175,80,.2)',
-    '&:hover': {
+  },
+  green: {
     backgroundColor: successColor,
       boxShadow:
     '0 12px 20px -10px rgba(76,175,80,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(76,175,80,.2)',
-    },
-},
-orange: {
-  backgroundColor: warningColor,
-    boxShadow:
-  '0 12px 20px -10px rgba(255,152,0,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(255,152,0,.2)',
-    '&:hover': {
+      '&:hover': {
+      backgroundColor: successColor,
+        boxShadow:
+      '0 12px 20px -10px rgba(76,175,80,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(76,175,80,.2)',
+      },
+  },
+  orange: {
     backgroundColor: warningColor,
       boxShadow:
     '0 12px 20px -10px rgba(255,152,0,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(255,152,0,.2)',
-    },
-},
+      '&:hover': {
+      backgroundColor: warningColor,
+        boxShadow:
+      '0 12px 20px -10px rgba(255,152,0,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(255,152,0,.2)',
+      },
+  },
 red: {
   backgroundColor: dangerColor,
     boxShadow:
