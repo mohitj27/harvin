@@ -339,7 +339,6 @@ class Quiz extends Component {
 }
 Quiz.PropTypes = {
   quiz: PropTypes.object.isRequired,
-  quizEditorState: PropTypes.object.isRequired
 };
 function mapStateToProps(state) {
   return {};

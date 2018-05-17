@@ -360,7 +360,7 @@ router.get('/blog', (req, res, next) => {
   let page = req.query.page || 0
   page = page <= 1 ? 1 : page
 
-  Blog.count({})
+  Blog.count({publish:'on'})
     .then(count => {
       count = Math.ceil(count / perPage)
       Blog.find({
