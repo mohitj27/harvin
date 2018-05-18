@@ -6,6 +6,12 @@ const loadingStyles = {
   },
   title: {
     textAlign: "center"
+  },
+  startBtn: {
+    textAlign: "center"
+  },
+  startIcon: {
+    marginLeft: "10px"
   }
 };
 

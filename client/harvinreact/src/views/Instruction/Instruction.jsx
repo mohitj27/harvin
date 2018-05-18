@@ -8,8 +8,13 @@ import {
   CardContent,
   Typography,
   Button,
-  CardActions
+  CardActions,
+  FormControlLabel,
+  Checkbox
 } from "material-ui";
+import { Link } from "react-router-dom";
+import { Add, Send, FileUpload, Clear, Done } from "material-ui-icons";
+import Icon from "@material-ui/core/Icon";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
@@ -20,7 +25,21 @@ import instructionStyles from "../../variables/styles/instructionStyle";
 class Instruction extends React.Component {
   state = {
     value: 0,
-    test: ""
+    test: "",
+    haveReadAllInstructions: false,
+    isTestStarted: false
+  };
+
+  handleChange = () => {
+    this.setState({
+      haveReadAllInstructions: !this.state.haveReadAllInstructions
+    });
+  };
+
+  onTestStart = () => {
+    this.setState({
+      isTestStarted: !this.state.isTestStarted
+    });
   };
 
   componentDidMount = () => {
@@ -82,9 +101,9 @@ class Instruction extends React.Component {
                     gutterBottom
                     className={classes.title}
                   >
-                    {`${
+                    {`${Math.abs(
                       section.negMarks
-                    } will be awarded for each inCorrect answer`}
+                    )} will be deducted for each incorrect answer`}
                   </Typography>
                 </Fragment>
               );
@@ -115,37 +134,38 @@ class Instruction extends React.Component {
             gutterBottom
             className={classes.title}
           >
+            Max marks: {this.state.test.maxMarks}
+          </Typography>
+          <Typography
+            variant="subheading"
+            gutterBottom
+            className={classes.title}
+          >
             time: {this.state.test.time}
           </Typography>
           {sections}
-          <Typography
-            variant="subheading"
-            gutterBottom
-            className={classes.title}
-          >
-            sections: {this.state.test.sections.length}
-          </Typography>
-          <Typography
-            variant="subheading"
-            gutterBottom
-            className={classes.title}
-          >
-            sections: {this.state.test.sections.length}
-          </Typography>
-          <Typography
-            variant="subheading"
-            gutterBottom
-            className={classes.title}
-          >
-            sections: {this.state.test.sections.length}
-          </Typography>
-          <Typography
-            variant="subheading"
-            gutterBottom
-            className={classes.title}
-          >
-            sections: {this.state.test.sections.length}
-          </Typography>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.state.haveReadAllInstructions}
+                onChange={this.handleChange}
+                value="haveReadAllInstructions"
+              />
+            }
+            label="I have read all the instructions carefully"
+          />
+          <div className={classes.startBtn}>
+            <Button
+              className={classes.button}
+              disabled={!this.state.haveReadAllInstructions}
+              variant="raised"
+              color="primary"
+              onClick={this.onTestStart}
+            >
+              {`Start the Test `}
+              <Send className={classes.startIcon} />
+            </Button>
+          </div>
         </Fragment>
       );
     }
