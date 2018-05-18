@@ -1,18 +1,18 @@
-import React, { Component, Fragment } from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
-import * as actionTypes from '../../actions/types';
-import testListStyle from '../../variables/styles/testListStyle';
-import { loginAction, notifyClear } from '../../actions';
-import { Link } from 'react-router-dom';
+import React, { Component, Fragment } from "react";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
+import * as actionTypes from "../../actions/types";
+import testListStyle from "../../variables/styles/testListStyle";
+import { loginAction, notifyClear } from "../../actions";
+import { Link } from "react-router-dom";
 import {
   ErrorSnackbar,
   SuccessSnackbar,
   LoadingSnackbar
-} from '../../components/GlobalSnackbar/GlobalSnackbar';
-import { Delete, FilterList } from 'material-ui-icons';
+} from "../../components/GlobalSnackbar/GlobalSnackbar";
+import { Delete, FilterList } from "material-ui-icons";
 import Table, {
   TableBody,
   TableCell,
@@ -20,8 +20,8 @@ import Table, {
   TablePagination,
   TableRow,
   TableSortLabel
-} from 'material-ui/Table';
-import { Button } from 'material-ui';
+} from "material-ui/Table";
+import { Button } from "material-ui";
 
 import {
   withStyles,
@@ -34,11 +34,11 @@ import {
   Snackbar,
   IconButton,
   Tooltip
-} from 'material-ui';
+} from "material-ui";
 
-import { lighten } from 'material-ui/styles/colorManipulator';
+import { lighten } from "material-ui/styles/colorManipulator";
 
-import { RegularCard, ItemGrid, CustomInput } from '../../components';
+import { RegularCard, ItemGrid, CustomInput } from "../../components";
 
 function createData(id, name, created, createdBy, time, maxMarks) {
   const newDate = new Date(created);
@@ -48,21 +48,21 @@ function createData(id, name, created, createdBy, time, maxMarks) {
     created: newDate.toLocaleString(),
     createdBy,
     time,
-    maxMarks,
+    maxMarks
   };
 }
 
 const columnData = [
-  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'created', numeric: false, disablePadding: true, label: 'Date' },
+  { id: "name", numeric: false, disablePadding: false, label: "Name" },
+  { id: "created", numeric: false, disablePadding: true, label: "Date" },
   {
-    id: 'createdBy',
+    id: "createdBy",
     numeric: false,
     disablePadding: false,
-    label: 'Created By',
+    label: "Created By"
   },
-  { id: 'time', numeric: false, disablePadding: true, label: 'Time (mins)' },
-  { id: 'maxMarks', numeric: false, disablePadding: true, label: 'Marks' },
+  { id: "time", numeric: false, disablePadding: true, label: "Time (mins)" },
+  { id: "maxMarks", numeric: false, disablePadding: true, label: "Marks" }
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -77,14 +77,13 @@ class EnhancedTableHead extends React.Component {
       orderBy,
       numSelected,
       rowCount,
-      classes,
+      classes
     } = this.props;
 
     return (
       <TableHead>
         <TableRow>
-          <TableCell padding="checkbox"
-            >
+          <TableCell padding="checkbox">
             <Checkbox
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={numSelected === rowCount}
@@ -98,12 +97,12 @@ class EnhancedTableHead extends React.Component {
                 className={classes.noPad}
                 key={column.id}
                 numeric={column.numeric}
-                padding={column.disablePadding ? 'none' : 'default'}
+                padding={column.disablePadding ? "none" : "default"}
                 sortDirection={orderBy === column.id ? order : false}
               >
                 <Tooltip
                   title="Sort"
-                  placement={column.numeric ? 'bottom-end' : 'bottom-start'}
+                  placement={column.numeric ? "bottom-end" : "bottom-start"}
                   enterDelay={300}
                 >
                   <TableSortLabel
@@ -129,32 +128,32 @@ EnhancedTableHead.propTypes = {
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
+  rowCount: PropTypes.number.isRequired
 };
 
 const toolbarStyles = theme => ({
   root: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing.unit
   },
   highlight:
-    theme.palette.type === 'light'
+    theme.palette.type === "light"
       ? {
           color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
         }
       : {
           color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
+          backgroundColor: theme.palette.secondary.dark
         },
   spacer: {
-    flex: '1 1 100%',
+    flex: "1 1 100%"
   },
   actions: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   title: {
-    flex: '0 0 auto',
-  },
+    flex: "0 0 auto"
+  }
 });
 
 let EnhancedTableToolbar = props => {
@@ -163,7 +162,7 @@ let EnhancedTableToolbar = props => {
   return (
     <Toolbar
       className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0,
+        [classes.highlight]: numSelected > 0
       })}
     >
       <div className={classes.title}>
@@ -197,7 +196,7 @@ let EnhancedTableToolbar = props => {
 
 EnhancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
+  numSelected: PropTypes.number.isRequired
 };
 
 EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
@@ -205,13 +204,13 @@ EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 class Stats extends Component {
   state = {
     tests: null,
-    order: 'asc',
-    orderBy: 'created',
+    order: "asc",
+    orderBy: "created",
     selected: [],
     page: 0,
     rowsPerPage: 5,
     data: [],
-    isFetchTestListInProgress: false,
+    isFetchTestListInProgress: false
   };
 
   componentDidMount() {
@@ -237,7 +236,7 @@ class Stats extends Component {
         return {
           isFetchTestListInProgress: false,
           tests,
-          data,
+          data
         };
       }
     } else {
@@ -249,14 +248,14 @@ class Stats extends Component {
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
-    let order = 'desc';
+    let order = "desc";
 
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
+    if (this.state.orderBy === property && this.state.order === "desc") {
+      order = "asc";
     }
 
     const data =
-      order === 'desc'
+      order === "desc"
         ? this.state.data.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
         : this.state.data.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
 
@@ -315,11 +314,11 @@ class Stats extends Component {
           <Grid
             container
             spacing={16}
-            alignItems={'row'}
-            direction={'center'}
-            justify={'center'}
+            alignItems={"row"}
+            direction={"center"}
+            justify={"center"}
           >
-            {' '}
+            {" "}
             <CircularProgress />
           </Grid>
         </Grid>
@@ -330,9 +329,7 @@ class Stats extends Component {
       <div className={classes.root}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
-          <Table
-          className={classes.noPad}
-            >
+          <Table className={classes.noPad}>
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
@@ -359,34 +356,41 @@ class Stats extends Component {
                       selected={isSelected}
                       className={classes.noPad}
                     >
-                      <TableCell padding="checkbox" >
+                      <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
                       </TableCell>
-                      <TableCell padding="none" className={classes.noPad}>{n.name}</TableCell>
+                      <TableCell padding="none" className={classes.noPad}>
+                        {n.name}
+                      </TableCell>
                       <TableCell>{n.created}</TableCell>
                       <TableCell className={classes.noPad}>
                         {n.createdBy === this.props.currentUser.username
-                          ? 'You'
+                          ? "You"
                           : n.createdBy}
                       </TableCell>
                       <TableCell className={classes.noPad}>{n.time}</TableCell>
-                      <TableCell className={classes.noPad}>{n.maxMarks}</TableCell>
                       <TableCell className={classes.noPad}>
-                        <Button
-                          variant="raised"
-                          size="small"
-                          color="primary"
-                          className={`${classes.noPad} ${classes.whiteText}`}
-                        >
-                        <Link to={`/quiz/${n.id}`}>Try It!</Link>
-                        </Button>
+                        {n.maxMarks}
+                      </TableCell>
+                      <TableCell className={classes.noPad}>
+                        <Link to={`/quiz/${n.id}`}>
+                          <Button
+                            variant="raised"
+                            size="small"
+                            color="primary"
+                            className={`${classes.noPad} ${classes.whiteText}`}
+                            value="Try it"
+                          >
+                            Try it
+                          </Button>
+                        </Link>
                       </TableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6}  className={classes.noPad}/>
+                  <TableCell colSpan={6} className={classes.noPad} />
                 </TableRow>
               )}
             </TableBody>
@@ -398,10 +402,10 @@ class Stats extends Component {
           rowsPerPage={rowsPerPage}
           page={page}
           backIconButtonProps={{
-            'aria-label': 'Previous Page',
+            "aria-label": "Previous Page"
           }}
           nextIconButtonProps={{
-            'aria-label': 'Next Page',
+            "aria-label": "Next Page"
           }}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
@@ -418,21 +422,21 @@ class Stats extends Component {
   render() {
     const { classes } = this.props;
     let successSnackbar =
-      this.props.successMessage !== '' ? (
+      this.props.successMessage !== "" ? (
         <SuccessSnackbar
           successMessage={this.props.successMessage}
           onClearToast={this.props.onClearToast}
         />
       ) : null;
     let errorSnackbar =
-      this.props.errorMessage !== '' ? (
+      this.props.errorMessage !== "" ? (
         <ErrorSnackbar
           errorMessage={this.props.errorMessage}
           onClearToast={this.props.onClearToast}
         />
       ) : null;
     let loadingSnackbar =
-      this.props.notifyLoading !== '' ? <LoadingSnackbar /> : null;
+      this.props.notifyLoading !== "" ? <LoadingSnackbar /> : null;
 
     return (
       <Fragment>
@@ -440,7 +444,6 @@ class Stats extends Component {
         {errorSnackbar}
         {loadingSnackbar}
         <Grid container="container">
-
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
               cardTitle="Test"
@@ -456,7 +459,7 @@ class Stats extends Component {
 }
 
 Stats.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
@@ -467,14 +470,14 @@ const mapStateToProps = state => {
     errorMessage: state.notify.error,
     notifyLoading: state.notify.loading,
     notifyClear: state.notify.clear,
-    currentUser: state.auth.currentUser,
+    currentUser: state.auth.currentUser
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onTestListFetch: () => dispatch(actions.fetchTestList()),
-    onClearToast: () => dispatch(notifyClear()),
+    onClearToast: () => dispatch(notifyClear())
   };
 };
 
