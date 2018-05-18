@@ -10,10 +10,15 @@ import {
   Button,
   CardActions,
   FormControlLabel,
-  Checkbox
+  Checkbox,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Collapse
 } from "material-ui";
 import { Link } from "react-router-dom";
-import { Add, Send, FileUpload, Clear, Done } from "material-ui-icons";
+import { Send, Inbox, Star, StarBorder } from "material-ui-icons";
 import Icon from "@material-ui/core/Icon";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { connect } from "react-redux";
@@ -66,45 +71,43 @@ class Instruction extends React.Component {
     ) {
       sections = (
         <Fragment>
-          <Typography
-            variant="subheading"
-            gutterBottom
-            className={classes.title}
-          >
-            sections: {this.state.test.sections.length}
-          </Typography>
+          <ListItem>
+            <ListItemIcon>
+              <Star />
+            </ListItemIcon>
+            <ListItemText
+              primary={`sections: ${this.state.test.sections.length}`}
+            />
+          </ListItem>
 
           {this.state.test.sections.map((section, i) => {
             if (section) {
               return (
                 <Fragment>
-                  <Typography
-                    variant="subheading"
-                    gutterBottom
-                    className={classes.title}
-                  >
-                    {`section ${i + 1}: ${section.title}  have: ${
-                      section.questions.length
-                    } questions`}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    gutterBottom
-                    className={classes.title}
-                  >
-                    {`${
-                      section.posMarks
-                    } will be awarded for each correct answer and`}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    gutterBottom
-                    className={classes.title}
-                  >
-                    {`${Math.abs(
-                      section.negMarks
-                    )} will be deducted for each incorrect answer`}
-                  </Typography>
+                  <ListItem>
+                    <ListItemIcon>
+                      <Star />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={`section ${i + 1}: ${section.title}  have: ${
+                        section.questions.length
+                      } questions`}
+                    />
+                  </ListItem>
+                  <ListItem className={classes.nested}>
+                    <ListItemText
+                      primary={`${
+                        section.posMarks
+                      } will be awarded for each correct answer and`}
+                    />
+                  </ListItem>
+                  <ListItem className={classes.nested}>
+                    <ListItemText
+                      primary={`${Math.abs(
+                        section.negMarks
+                      )} will be deducted for each incorrect answer`}
+                    />
+                  </ListItem>
                 </Fragment>
               );
             } else {
@@ -125,48 +128,58 @@ class Instruction extends React.Component {
       );
     } else {
       cardContent = (
-        <Fragment>
-          <Typography variant="headline" gutterBottom className={classes.title}>
-            {this.state.test.name}
-          </Typography>
-          <Typography
-            variant="subheading"
-            gutterBottom
-            className={classes.title}
-          >
-            Max marks: {this.state.test.maxMarks}
-          </Typography>
-          <Typography
-            variant="subheading"
-            gutterBottom
-            className={classes.title}
-          >
-            time: {this.state.test.time}
-          </Typography>
-          {sections}
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.haveReadAllInstructions}
-                onChange={this.handleChange}
-                value="haveReadAllInstructions"
+        <Grid container="container">
+          <ItemGrid xs={1} />
+          <ItemGrid xs={10}>
+            <Fragment>
+              <Typography
+                variant="headline"
+                gutterBottom
+                className={classes.title}
+              >
+                {this.state.test.name}
+              </Typography>
+              <ListItem>
+                <ListItemIcon>
+                  <Star />
+                </ListItemIcon>
+                <ListItemText
+                  primary={`Max marks: ${this.state.test.maxMarks}`}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <Star />
+                </ListItemIcon>
+                <ListItemText primary={`time: ${this.state.test.time}`} />
+              </ListItem>
+              {sections}
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={this.state.haveReadAllInstructions}
+                    onChange={this.handleChange}
+                    value="haveReadAllInstructions"
+                  />
+                }
+                label="I have read all the instructions carefully"
               />
-            }
-            label="I have read all the instructions carefully"
-          />
-          <div className={classes.startBtn}>
-            <Button
-              className={classes.button}
-              disabled={!this.state.haveReadAllInstructions}
-              variant="raised"
-              color="primary"
-              onClick={this.onTestStart}
-            >
-              {`Start the Test `}
-              <Send className={classes.startIcon} />
-            </Button>
-          </div>
-        </Fragment>
+              <div className={classes.startBtn}>
+                <Button
+                  className={classes.button}
+                  disabled={!this.state.haveReadAllInstructions}
+                  variant="raised"
+                  color="primary"
+                  onClick={this.onTestStart}
+                >
+                  {`Start the Test `}
+                  <Send className={classes.startIcon} />
+                </Button>
+              </div>
+            </Fragment>
+          </ItemGrid>
+          <ItemGrid xs={1} />
+        </Grid>
       );
     }
     return cardContent;
@@ -177,7 +190,7 @@ class Instruction extends React.Component {
     return (
       <Fragment>
         <Grid container="container">
-          <ItemGrid xs={12} sm={12} md={12}>
+          <ItemGrid xs={12}>
             <RegularCard
               cardTitle="Instuction"
               cardSubtitle="Please read all these instuctions carefully"
