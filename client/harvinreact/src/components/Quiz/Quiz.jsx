@@ -36,7 +36,9 @@ class Quiz extends Component {
   state = {
     questions: [],
     currentQuestion: '',
+    currentSection:'',
     currentOptions: [],
+    expandedSection: '',    
     answers: [],
     test: 'test',
   };
@@ -44,24 +46,43 @@ class Quiz extends Component {
 
   };
 
-  handleQuizNavClick = e => {
-    const curr = _.find(this.state.questions, function (o) {
+  handleQuizNavClick = (e,questions) => {
+    
+    const curr = _.find(questions, function (o) {
       return o._id === e.target.id;
     });
+    console.log('cerr',questions,e.target.id,curr)
 
     let currentOptions = curr.options || [];
-
     this.setState({ currentQuestion: curr, currentOptions });
   };
+  handlePanelExpansion = (e, id) => {
+    e.stopPropagation();
+    if (id === this.state.expandedSection)
+      this.setState({ expandedSection: -1 });
+    else this.setState({ expandedSection: id });
+  };
+
 
   handleChangeQuizOptionChange = e => {
-    const answerObj = _.find(this.state.answers, o => {
+    const sectionAnswer=_.find(this.state.sectionAnswers,secObj=>{
+      return secObj._id===this.state.expandedSection
+    })
+    console.log('sectionAnswer',sectionAnswer)
+    const answerObj = _.find(sectionAnswer.answer, o => {
+
+      return o._id === this.state.currentQuestion._id;
+
+
+    });
+    const answerObjIndex = _.findIndex(sectionAnswer.answer, o => {
       return o._id === this.state.currentQuestion._id;
     });
-    const answerObjIndex = _.findIndex(this.state.answers, o => {
-      return o._id === this.state.currentQuestion._id;
-    });
+    console.log('sectionAnswer',answerObj)
+    
+  
     let foundVal = _.indexOf(answerObj.options, e.target.value);
+    console.log('target',e.target)
     if (foundVal === -1) {
       answerObj.options.push(e.target.value);
     } else {
@@ -70,23 +91,33 @@ class Quiz extends Component {
       });
     }
 
-    let newAnswers = [];
-    this.state.answers.forEach((object, val) => {
-      val === answerObjIndex
-        ? newAnswers.push(answerObj)
-        : newAnswers.push(object);
-    });
-
-    this.setState({ answers: newAnswers }, () => {
-      this.getOptions();
-    });
+    const newAnswers = [];
+    // this.state.answers.forEach((object, val) => {
+    //   val === answerObjIndex
+    //     ? newAnswers.push(answerObj)
+    //     : newAnswers.push(object);
+    // });
+    console.log('setState',newAnswers)
+    this.setState({ 'dsajhdash': newAnswers })
   };
+
 
   getOptions = () => {
     let answerObj = null;
+    
 
     if (typeof this.state.currentQuestion == 'object') {
-      answerObj = _.find(this.state.answers, o => {
+      const sectionAnswer=_.find(this.state.sectionAnswers,secObj=>{
+        return secObj._id===this.state.expandedSection
+      })
+      console.log('sectionAnswer',sectionAnswer)
+       answerObj = _.find(sectionAnswer.answer, o => {
+  
+        return o._id === this.state.currentQuestion._id;
+  
+  
+      });
+      const answerObjIndex = _.findIndex(sectionAnswer.answer, o => {
         return o._id === this.state.currentQuestion._id;
       });
     }
@@ -114,6 +145,7 @@ class Quiz extends Component {
             checked={checked}
             onChange={this.handleChangeQuizOptionChange}
             value={option.text}
+            id={option._id}
           />
 
           {reactElement}
@@ -129,7 +161,6 @@ class Quiz extends Component {
     axios
       .post('http://localhost:3001/admin/answers', formData)
       .then(res => {
-        console.log('res', res);
         alert(`You have scored ${res.data.marks}`);
       })
       .catch(err => console.log('err', err));
@@ -140,9 +171,14 @@ class Quiz extends Component {
     return (
       <div>
         {this.state.test.sections.map((section) => {
-          return (<ExpansionPanel>
+          return (<ExpansionPanel
+            expanded={section._id === this.state.expandedSection}
+            onChange={e => {
+              this.handlePanelExpansion(e, section._id);
+            }}
+          >
             <ExpansionPanelSummary expandIcon={<KeyboardArrowDown />}>
-              <Typography className={classes.heading}>section.name</Typography>
+              <Typography className={classes.heading}>{section.title}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               {this.getQuestionNavigationContent(classes,section.questions)}
@@ -153,14 +189,16 @@ class Quiz extends Component {
     )
 
   }
-  getQuestionNavigationContent = classes => {
-    let selectedQ = _.findIndex(this.state.questions, question => {
+  getQuestionNavigationContent = (classes,questions) => {
+    let selectedQ = _.find(questions, question => {
       return question._id === this.state.currentQuestion._id;
-    });
-    return this.state.questions.map((question, i) => {
+    })||{};
+    
+    return questions.map((question, i) => {
+      
       let badges = [];
       let qStatus = '';
-      if (i === selectedQ) qStatus = classes.selectedQuestion;
+      if (question._id === selectedQ._id) qStatus = classes.selectedQuestion;
       if (question.markForLater)
         badges = [
           ...badges,
@@ -172,7 +210,6 @@ class Quiz extends Component {
             .{' '}
           </Badge>,
         ];
-      console.log('state', this.state);
       try {
         if (this.state.answers[i].options.length > 0) {
           qStatus = `${qStatus} ${classes.qStatus}`;
@@ -180,9 +217,8 @@ class Quiz extends Component {
 
         console.log('qstatus', qStatus);
       } catch (err) {
-        console.log('qstatus', err);
+        console.log('qerr', err);
       }
-
       return (
         <Fragment>
           <button
@@ -191,7 +227,7 @@ class Quiz extends Component {
             key={question._id}
             aria-label="add"
             className={`${classes.quizNavButton} ${qStatus}`}
-            onClick={this.handleQuizNavClick}
+            onClick={(val)=>{this.handleQuizNavClick(val,questions)}}
           >
             {i + 1}
             {badges}
@@ -203,7 +239,14 @@ class Quiz extends Component {
   static getDerivedStateFromProps = (nextProps, prevState) => {
     if (nextProps.test) {
       console.log('nextProp', nextProps)
-      return { test: nextProps.test, questions: nextProps.test.sections[0].questions }
+      
+      const answerObj=nextProps.test.sections.map((section,i)=>{
+        const innObj=section.questions.map((question)=>{
+          return {_id:question._id,options:[]}
+        })
+        return {_id:section._id,answer:innObj}
+      })
+      return { test: nextProps.test, questions: nextProps.test.sections[0].questions,sectionAnswers:answerObj }
     }
     return {}
   }
