@@ -13,8 +13,7 @@ export {
   getAllQuestions,
 }
   from './question_action'
-export { }
-  from './user_action';
+
 export {
   getBatches
 }

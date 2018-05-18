@@ -57,7 +57,9 @@ class Dashboard extends React.Component {
         {errorSnackbar}
         {loadingSnackbar}
         {testName}
+        
         <Quiz
+          test={this.props.test}
           height={500}
           width={500}
         />

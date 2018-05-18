@@ -7,11 +7,16 @@ import {
   FormControlLabel,
   Checkbox,
   Grid,
-  Badge
+  Badge,
+  ExpansionPanelSummary,
+  Typography,
+  ExpansionPanelDetails,
+  ExpansionPanel,
 } from 'material-ui';
 import {
   KeyboardArrowLeft,
-  KeyboardArrowRight
+  KeyboardArrowRight,
+  KeyboardArrowDown,
 } from 'material-ui-icons';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -33,6 +38,7 @@ class Quiz extends Component {
     currentQuestion: '',
     currentOptions: [],
     answers: [],
+    test: 'test',
   };
   componentDidMount = () => {
 
@@ -104,13 +110,13 @@ class Quiz extends Component {
       return (
         <div>
 
-              <Checkbox
-                checked={checked}
-                onChange={this.handleChangeQuizOptionChange}
-                value={option.text}
-              />
+          <Checkbox
+            checked={checked}
+            onChange={this.handleChangeQuizOptionChange}
+            value={option.text}
+          />
 
-            {reactElement}
+          {reactElement}
         </div>
       );
     });
@@ -128,7 +134,25 @@ class Quiz extends Component {
       })
       .catch(err => console.log('err', err));
   };
+  getSectionNavigationContent = classes => {
+    if(!this.state.test.sections)
+    return ;
+    return (
+      <div>
+        {this.state.test.sections.map((section) => {
+          return (<ExpansionPanel>
+            <ExpansionPanelSummary expandIcon={<KeyboardArrowDown />}>
+              <Typography className={classes.heading}>section.name</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              {this.getQuestionNavigationContent(classes,section.questions)}
+            </ExpansionPanelDetails>
+          </ExpansionPanel>)
+        })}
+      </div>
+    )
 
+  }
   getQuestionNavigationContent = classes => {
     let selectedQ = _.findIndex(this.state.questions, question => {
       return question._id === this.state.currentQuestion._id;
@@ -176,7 +200,13 @@ class Quiz extends Component {
       );
     });
   };
-
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    if (nextProps.test) {
+      console.log('nextProp', nextProps)
+      return { test: nextProps.test, questions: nextProps.test.sections[0].questions }
+    }
+    return {}
+  }
   handleMarkForLater = event => {
     const currentQuestionState = this.state.currentQuestion;
     currentQuestionState.markForLater = event.target.checked;
@@ -253,7 +283,7 @@ class Quiz extends Component {
     let errorSnackbar = null;
     let successSnackbar = null;
     let processingSnackbar = null;
-
+    console.log('')
     if (this.props.errorMessage && this.props.errorMessage !== '')
       errorSnackbar = (
         <ErrorSnackbar
@@ -294,7 +324,7 @@ class Quiz extends Component {
               cardTitle="Select any question to navigate"
               cardSubtitle=""
               headerColor="blue"
-              content={this.getQuestionNavigationContent(classes)}
+              content={this.getSectionNavigationContent(classes)}
             />
             <Button
               variant="fab"
