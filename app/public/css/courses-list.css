@@ -1,30 +1,37 @@
-#course-list-card{
+#course-list-card {
 }
-.card-image{
-max-height:300px !important;
-max-width:300px !important;
+.card-image {
+  max-height: 700px !important;
+  max-width: 700px !important;
 }
-div >input {
-  color:#9e9e9e;
+div > input {
+  color: #9e9e9e;
 }
 .card-title {
-  color:#616161;
+  color: #616161;
 }
-.truncate{
-color:#616161 !important;
+.truncate {
+  color: #616161 !important;
 }
-.material-icons.huge{
-font-size: 100px !important;
+.material-icons.huge {
+  font-size: 100px !important;
 }
-.card.horizontal.desc{
-  padding:15px !important;
+.card.horizontal.desc {
+  padding: 15px !important;
   height: 200px;
 }
-.card-desc-content{
-  padding:10px;
+.card-desc-content {
+  padding: 10px;
 }
 
-.overflow{
+.overflow {
   overflow-y: scroll;
-  
+}
+
+.course-card-img > img {
+  margin-bottom: 70px;
+}
+
+.course-card-img > span {
+  margin-bottom: -100px;
 }

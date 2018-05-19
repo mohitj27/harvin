@@ -23,23 +23,23 @@
             <br>
             <div class="input-field">
               <select>
-                  <option value="" disabled selected>Choose your class</option>
-                  <option value="IX">IX Studying</option>
-                  <option value="X">X Studying</option>
-                  <option value="XI">XI Studying</option>
-                  <option value="XII">XII Studying</option>
-                  <option value="XII Pass">XII Appeared/Passed</option>
-                </select>
+                <option value="" disabled selected>Choose your class</option>
+                <option value="IX">IX Studying</option>
+                <option value="X">X Studying</option>
+                <option value="XI">XI Studying</option>
+                <option value="XII">XII Studying</option>
+                <option value="XII Pass">XII Appeared/Passed</option>
+              </select>
               <label>Select Class</label>
             </div>
             <br>
             <div class="input-field">
               <select>
-                    <option value="" disabled selected>Choose your option</option>
-                    <option value="janakpuri">Janakpuri</option>
-                    <option value="preet-vihar">Preet Vihar</option>
-                    <option value="meerut">Meerut</option>
-                  </select>
+                <option value="" disabled selected>Choose your option</option>
+                <option value="janakpuri">Janakpuri</option>
+                <option value="preet-vihar">Preet Vihar</option>
+                <option value="meerut">Meerut</option>
+              </select>
               <label>Select Center</label>
             </div>
           </form>
@@ -47,28 +47,32 @@
         <div class="col s12 m9 l9">
           <h5>COURSES</h5>
           <div class="row">
-          <%if(foundCourses){%>
-            <%foundCourses.forEach((course,i)=>{%>
+            <%if(foundCourses){%>
+              <%foundCourses.forEach((course,i)=>{%>
 
                 <div class="col s12 m4 l4">
                   <div class="card " id="course-list-card">
-                    <div class="card-image">
+                    <div class="card-image course-card-img">
                       <img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
-                      <span class="card-title" style="color:#616161 !important;"><%=course.courseName%></span>
+                      <span class="card-title" style="color:#616161 !important;">
+                        <%=course.courseName%>
+                      </span>
                     </div>
 
-                      <div class="card-content">
-                        <p class="truncate"><%=course.courseFor%></p>
-                      </div>
-                      <div class="card-action">
-                        <a href="/courses-list/?title=<%=course.courseName%>">Read more...</a>
-                      </div>
+                    <div class="card-content">
+                      <p class="truncate">
+                        <%=course.courseFor%>
+                      </p>
+                    </div>
+                    <div class="card-action">
+                      <a href="/courses-list/?title=<%=course.courseName%>">Read more...</a>
+                    </div>
                   </div>
                 </div>
-              <%})%>
-                <%}%>
+                <%})%>
+                  <%}%>
 
-              </div>
+          </div>
 
 
 
@@ -85,7 +89,7 @@
     <script src="js/init.js"></script>
 
     <script>
-      $(function() {
+      $(function () {
         $('select').material_select();
       })
     </script>
