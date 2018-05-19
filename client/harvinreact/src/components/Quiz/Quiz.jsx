@@ -79,6 +79,7 @@ class Quiz extends Component {
     this.setState({
       expandedSection: id,
       currentOptions,
+      questions: sectionOpened.questions,
       currentQuestion: questionToOpen
     });
   };
@@ -224,6 +225,12 @@ class Quiz extends Component {
     // doneQues style
     let doneStyle;
 
+    // review style
+    let badge;
+
+    // current section questions
+    const currentSectionQuestions = this.state.questions;
+
     // for each question in current section
     return currentSection.answer.map((ans, i) => {
       // applying selectedQuesStyle
@@ -234,6 +241,18 @@ class Quiz extends Component {
       // applying doneStyle
       if (ans.options.length > 0) doneStyle = `${classes.qStatus}`;
       else doneStyle = ``;
+
+      // apppling badge style
+      if (currentSectionQuestions[i].markForLater)
+        badge = (
+          <Badge
+            badgeContent="!"
+            className={`${classes.badge}`}
+            color="primary"
+          />
+        );
+      else badge = ``;
+
       return (
         <Fragment>
           <button
@@ -249,29 +268,11 @@ class Quiz extends Component {
             }}
           >
             {i + 1}
+            {badge}
           </button>
         </Fragment>
       );
     });
-
-    return <div>hello</div>;
-    // return (
-    // <Fragment>
-    //   <button
-    //     id={question._id}
-    //     value={question._id}
-    //     key={question._id}
-    //     aria-label="add"
-    //     className={`${classes.quizNavButton} ${qStatus}`}
-    //     onClick={val => {
-    //       this.handleQuizNavClick(val, questions);
-    //     }}
-    //   >
-    //     {i + 1}
-    //     {badges}
-    //   </button>
-    // </Fragment>
-    // );
   };
   static getDerivedStateFromProps = (nextProps, prevState) => {
     if (nextProps.test) {
