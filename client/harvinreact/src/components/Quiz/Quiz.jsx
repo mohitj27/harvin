@@ -224,11 +224,25 @@ class Quiz extends Component {
             .{' '}
           </Badge>,
         ];
+        
       try {
-        if (this.state.answers[i].options.length > 0) {
+        const currAnswerSection=_.find(this.state.sectionAnswers,(section)=>{
+          return section._id===this.state.expandedSection
+        })
+        
+        const currentAnswer=_.find(currAnswerSection.answer,(answer)=>{
+          
+          return selectedQ._id===question._id
+        })
+        console.log('sectionid',currentAnswer)
+        
+        if (currentAnswer.options.length > 0) {
           qStatus = `${qStatus} ${classes.qStatus}`;
         }
-
+        else{
+          qStatus = `${qStatus}`;
+          
+        }
         console.log('qstatus', qStatus);
       } catch (err) {
         console.log('qerr', err);
