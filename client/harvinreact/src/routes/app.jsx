@@ -10,7 +10,6 @@ import Home from "../views/Home/Home.jsx";
 import AddQues from "../views/AddQues/AddQues.jsx";
 import ListTest from "../views/ListTest/ListTest.jsx";
 import CreateTest from "../views/CreateTest/CreateTest.jsx";
-import Instruction from "../views/Instruction/Instruction.jsx";
 const appRoutes = [
   {
     path: "/home",
@@ -23,18 +22,6 @@ const appRoutes = [
     sidebarName: "Create Test",
     icon: Person,
     component: CreateTest
-  },
-  {
-    path: "/instuction",
-    sidebarName: "Instruction",
-    icon: ContentPaste,
-    component: Instruction
-  },
-  {
-    path: "/stats",
-    sidebarName: "Transactions",
-    icon: LibraryBooks,
-    component: DashboardPage
   },
   {
     path: "/addQues",
