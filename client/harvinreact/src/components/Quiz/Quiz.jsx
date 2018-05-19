@@ -29,6 +29,7 @@ import {
 import axios from 'axios';
 import HtmlToReact from 'html-to-react';
 import quizStyles from '../../variables/styles/quizStyles';
+import update from 'immutability-helper';
 import _ from 'lodash';
 const HtmlToReactParser = HtmlToReact.Parser;
 
@@ -36,11 +37,11 @@ class Quiz extends Component {
   state = {
     questions: [],
     currentQuestion: '',
-    currentSection:'',
     currentOptions: [],
     expandedSection: '',    
     answers: [],
     test: 'test',
+    lastQuestionOpened:'',
   };
   componentDidMount = () => {
 
@@ -51,66 +52,76 @@ class Quiz extends Component {
     const curr = _.find(questions, function (o) {
       return o._id === e.target.id;
     });
-    console.log('cerr',questions,e.target.id,curr)
 
     let currentOptions = curr.options || [];
-    this.setState({ currentQuestion: curr, currentOptions });
+    this.setState({ currentQuestion: curr, currentOptions ,lastQuestionOpened:curr._id});
   };
   handlePanelExpansion = (e, id) => {
     e.stopPropagation();
-    if (id === this.state.expandedSection)
-      this.setState({ expandedSection: -1 });
-    else this.setState({ expandedSection: id });
+    let questionToOpen;
+  
+      //TODO LAST QUESTION OPENED SHOULD BE OPENED ON SECTION CHANGE
+    // questionToOpen=_.find(_.find(this.state.test.sections,(section)=>{
+    //   return section._id===this.state.expandedSection
+    // }),(question)=>{
+    //   return question._id===this.state.lastQuestionOpened
+    // })
+    const sectionOpened=_.find(this.state.test.sections,(section)=>{
+      return section._id===id
+    })
+    const curr = sectionOpened.questions[0]
+    let currentOptions = curr.options || [];
+    questionToOpen=sectionOpened.questions[0]
+
+    // if (id === this.state.expandedSection)
+      // this.setState({ expandedSection: -1 });
+     this.setState({ expandedSection: id ,currentOptions,currentQuestion:questionToOpen});
   };
 
 
   handleChangeQuizOptionChange = e => {
+    const sectionAnswers=this.state.sectionAnswers;
     const sectionAnswer=_.find(this.state.sectionAnswers,secObj=>{
       return secObj._id===this.state.expandedSection
     })
-    console.log('sectionAnswer',sectionAnswer)
-    const answerObj = _.find(sectionAnswer.answer, o => {
-
-      return o._id === this.state.currentQuestion._id;
-
-
-    });
-    const answerObjIndex = _.findIndex(sectionAnswer.answer, o => {
+    const sectionAnswerIndex=_.findIndex(this.state.sectionAnswers,secObj=>{
+      return secObj._id===this.state.expandedSection
+    })
+    const newSectionAnswer=_.cloneDeep(sectionAnswer)
+    
+    const answerObj = _.find(newSectionAnswer.answer, (o,i) => {
       return o._id === this.state.currentQuestion._id;
     });
-    console.log('sectionAnswer',answerObj)
+    
+    const answerObjIndex = _.findIndex(newSectionAnswer.answer, o => {
+      return o._id === this.state.currentQuestion._id;
+    });
     
   
-    let foundVal = _.indexOf(answerObj.options, e.target.value);
-    console.log('target',e.target)
+    let foundVal = _.indexOf(answerObj.options, e.target.id);
     if (foundVal === -1) {
-      answerObj.options.push(e.target.value);
+      answerObj.options.push(e.target.id);
     } else {
       _.remove(answerObj.options, obj => {
-        if (obj === e.target.value) return obj === e.target.value;
+         return obj === e.target.id;
       });
     }
-
-    const newAnswers = [];
-    // this.state.answers.forEach((object, val) => {
-    //   val === answerObjIndex
-    //     ? newAnswers.push(answerObj)
-    //     : newAnswers.push(object);
-    // });
-    console.log('setState',newAnswers)
-    this.setState({ 'dsajhdash': newAnswers })
+    const newSectionAnswers=update(sectionAnswers,{[sectionAnswerIndex]:{answer:{[answerObjIndex]:{$set:answerObj}}}})
+    
+    this.setState({ sectionAnswers: newSectionAnswers})
   };
 
 
   getOptions = () => {
     let answerObj = null;
-    
+    try{
 
     if (typeof this.state.currentQuestion == 'object') {
+
+      
       const sectionAnswer=_.find(this.state.sectionAnswers,secObj=>{
         return secObj._id===this.state.expandedSection
       })
-      console.log('sectionAnswer',sectionAnswer)
        answerObj = _.find(sectionAnswer.answer, o => {
   
         return o._id === this.state.currentQuestion._id;
@@ -125,9 +136,9 @@ class Quiz extends Component {
     return this.state.currentOptions.map((option, i) => {
       let checked = false;
       try {
-        if (
+    if (
           _.find(answerObj.options, optionObj => {
-            return option.text === optionObj;
+            return option._id === optionObj;
           })
         ) {
           checked = true;
@@ -151,7 +162,10 @@ class Quiz extends Component {
           {reactElement}
         </div>
       );
-    });
+    });}
+    catch(err){
+      console.log(err)
+    }
   };
 
   onSubmit = e => {
@@ -246,7 +260,7 @@ class Quiz extends Component {
         })
         return {_id:section._id,answer:innObj}
       })
-      return { test: nextProps.test, questions: nextProps.test.sections[0].questions,sectionAnswers:answerObj }
+      return { test: nextProps.test, questions: nextProps.test.sections[0].questions,sectionAnswers:answerObj ,expandedSection:nextProps.test.sections[0]}
     }
     return {}
   }
@@ -260,7 +274,6 @@ class Quiz extends Component {
     let currentIndex = _.findIndex(this.state.questions, question => {
       return question._id === this.state.currentQuestion._id;
     });
-    console.log('hello', currentIndex);
     if (currentIndex <= 0) return;
 
     currentIndex--;
@@ -276,12 +289,10 @@ class Quiz extends Component {
     let currentIndex = _.findIndex(this.state.questions, question => {
       return question._id === this.state.currentQuestion._id;
     });
-    console.log('hello', currentIndex);
 
     if (currentIndex === this.state.questions.length - 1) return;
 
     currentIndex++;
-    console.log('setting', this.state.questions[currentIndex], currentIndex);
     this.setState({
       currentQuestion: this.state.questions[currentIndex],
       currentOptions: this.state.questions[currentIndex].options,
@@ -326,7 +337,6 @@ class Quiz extends Component {
     let errorSnackbar = null;
     let successSnackbar = null;
     let processingSnackbar = null;
-    console.log('')
     if (this.props.errorMessage && this.props.errorMessage !== '')
       errorSnackbar = (
         <ErrorSnackbar

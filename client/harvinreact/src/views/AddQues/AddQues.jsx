@@ -13,6 +13,7 @@ import {
 import ReactQuill from 'react-quill';
 import { ExpandMore, Add, Clear } from 'material-ui-icons';
 import axios from 'axios';
+import {v4} from 'uuid';
 import HtmlToReact from 'html-to-react';
 import update from 'immutability-helper';
 // import { ImageResize } from "quill-image-resize-module";
@@ -86,6 +87,7 @@ class AddQues extends Component {
         />),
         html: this.state.options[currentLenght + 1] || '',
         isAns: false,
+        _id:v4(),//fn to generate UID for Options Important so that test can differentiate between options
       };
 
     const newState = update(this.state, {
