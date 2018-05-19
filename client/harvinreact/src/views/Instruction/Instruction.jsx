@@ -18,7 +18,7 @@ import {
   Collapse
 } from "material-ui";
 import { Link } from "react-router-dom";
-import { Send, Inbox, Star, StarBorder } from "material-ui-icons";
+import { Send, Star } from "material-ui-icons";
 import Icon from "@material-ui/core/Icon";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { connect } from "react-redux";
