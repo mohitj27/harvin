@@ -65,8 +65,15 @@ class CreateTest extends React.Component {
     e.stopPropagation();
     const sections = this.state.sections;
     pos = this.state.expandedSection - 1;
-    console.log("pos", pos);
+    
     try {
+      const section=_.find(sections,(section)=>{
+        return this.state.expandedSection===section.id
+      })
+      const q= section.questions.includes(id)
+      
+      if(q===true)
+      return ;
       const updated = update(sections, {
         [pos]: { questions: { $push: [id] } }
       });
@@ -78,7 +85,7 @@ class CreateTest extends React.Component {
   handleAddSectionToTestClick = e => {
     e.stopPropagation();
     const sections = this.state.sections;
-    const empty = this.getEmptySection();
+    const empty = this.getEmptySection(); 
     const up = update(sections, { $push: [empty] });
     this.setState({ sections: up });
   };
