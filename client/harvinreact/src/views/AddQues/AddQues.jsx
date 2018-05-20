@@ -217,7 +217,7 @@ class AddQues extends Component {
             </Typography> {reactElement}
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Grid style={{ display: 'flex', flexWrap: 'wrap' }}>{options}
+            <Grid style={{ display: 'flex', flexWrap: 'wrap' }}>
             {this.getPrevQuesOptions(ques.options)}
           </Grid>
           </ExpansionPanelDetails>
