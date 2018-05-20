@@ -7,21 +7,26 @@ const validator = require('validator')
 const mongoose = require('mongoose')
 const router = express.Router()
 
-router.post('/', async (req, res, next) => {
-  const answers = JSON.parse(req.body.answers)
+router.post('/:id', async (req, res, next) => {
+  try {
+  const sectionAnswers =JSON.parse(req.body.answers)
   const marksArray = []
-  for (let ans of answers) {
+  for (let answers of sectionAnswers){
+  for (let ans of answers.answer) {
+
+    // console.log(ans)
     let isCorrect = await quesController.checkAns(ans._id, ans.options)
     marksArray.push(isCorrect)
   }
-
+  }
   const marks = marksArray.reduce((sum, isCorrect) => isCorrect ? sum + 1 : sum + 0, 0)
-
   res.json({
     success: true,
-    marks: `${marks} / ${answers.length}`
+    marks: `${marks} / ${marksArray.length}`
   })
-
+} catch (error) {
+    console.log(error)
+}
 })
 
 module.exports = router

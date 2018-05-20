@@ -30,7 +30,7 @@ const checkAns = (questionId, answers) => {
       const foundQuestions = await getQuestions({
         _id: questionId
       })
-
+      // console.log(foundQuestions)
       // if question not found - return 
       if (foundQuestions.length < 1) return resolve(null)
       const foundQuestion = foundQuestions[0]
