@@ -174,9 +174,10 @@ class Quiz extends Component {
   onSubmit = e => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("answers", JSON.stringify(this.state.answers));
+    formData.append("maxMarks",this.state.test.maxMarks);
+    formData.append("answers", JSON.stringify(this.state.sectionAnswers));
     axios
-      .post("http://localhost:3001/admin/answers", formData)
+      .post(`http://localhost:3001/admin/answers/${this.state.test._id}`, formData)
       .then(res => {
         alert(`You have scored ${res.data.marks}`);
       })
@@ -277,12 +278,12 @@ class Quiz extends Component {
   static getDerivedStateFromProps = (nextProps, prevState) => {
     if (nextProps.test) {
       console.log("nextProp", nextProps);
-
+      //Section Answer Created Here
       const answerObj = nextProps.test.sections.map((section, i) => {
         const innObj = section.questions.map(question => {
           return { _id: question._id, options: [] };
         });
-        return { _id: section._id, answer: innObj };
+        return { _id: section._id, answer: innObj,posMarks:section.posMarks,negMarks:section.negMarks, };
       });
       return {
         test: nextProps.test,

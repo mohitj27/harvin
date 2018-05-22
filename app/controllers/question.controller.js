@@ -23,6 +23,9 @@ const addQuestion = function (questionObj) {
 }
 
 const checkAns = (questionId, answers) => {
+  console.log(questionId
+    , answers)
+
   return new Promise(async (resolve, reject) => {
     let isCorrect = true
     try {
@@ -30,7 +33,7 @@ const checkAns = (questionId, answers) => {
       const foundQuestions = await getQuestions({
         _id: questionId
       })
-
+      console.log(foundQuestions)
       // if question not found - return 
       if (foundQuestions.length < 1) return resolve(null)
       const foundQuestion = foundQuestions[0]
@@ -47,7 +50,7 @@ const checkAns = (questionId, answers) => {
       // check each correct option with given ans
       for (let opt of options) {
         if (opt.isAns) {
-          if (_.findIndex(answers, (o) => o == opt.text) === -1) {
+          if (_.findIndex(answers, (o) => o == opt._id) === -1) {
             isCorrect = false
             break
           }
