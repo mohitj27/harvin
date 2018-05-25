@@ -1,77 +1,77 @@
-let allImages = []
-let slicedImages = {}
-let currGallery = []
+let allImages = [];
+let slicedImages = {};
+let currGallery = [];
 let counter = 0;
 let perPage = 4;
 
-$('document').ready(function() {
-  getImagesFromServer()
+$('document').ready(function () {
+  getImagesFromServer();
 
-  $('.chip').click(function() {
+  $('.chip').click(function () {
     counter = 0;
-    $('.chip').removeClass('z-depth-4 active-chip')
+    $('.chip').removeClass('z-depth-4 active-chip');
     $('.chip').css({
-      "background-color": "",
-      'color': ''
-    })
-    $(this).addClass('z-depth-4 active-chip')
-    let category = $(this).html().toLowerCase()
-    $('.gallery-image').fadeOut(500)
-    $('.gallery-image').remove()
+      'background-color': '',
+      color: '',
+    });
+    $(this).addClass('z-depth-4 active-chip');
+    let category = $(this).html().toLowerCase();
+    $('.gallery-image').fadeOut(500);
+    $('.gallery-image').remove();
     if (category == 'all')
-      currGallery = allImages
+      currGallery = allImages;
     else
-      currGallery = slicedImages[category]
-// console.log(currGallery)
-    displayCurrentGallery(currGallery)
-    $('.gallery-image').fadeIn(500)
+      currGallery = slicedImages[category];
+    // console.log(currGallery)
+    displayCurrentGallery(currGallery);
+    $('.gallery-image').fadeIn(500);
 
-  })
+  });
 
-  $('.pagination').on('click','a.pagination-value', function() {
-    let pageNumberToDisplay = $(this).html()
-    $('.pagination-value').removeClass("active-chip")
-    $(this).addClass("active-chip")
+  $('.pagination').on('click', 'a.pagination-value', function () {
+    let pageNumberToDisplay = $(this).html();
+    $('.pagination-value').removeClass('active-chip');
+    $(this).addClass('active-chip');
     // console.log('page', pageNumberToDisplay)
-    displayCurrentPageWithCategory(pageNumberToDisplay - 1)
+    displayCurrentPageWithCategory(pageNumberToDisplay - 1);
 
-
-  })
-
+  });
 
 });
 
 function getImagesFromServer() {
-  $.get("/admin/db/gallery/all", function(res) {
+  $.get('/admin/db/gallery/all', function (res) {
     if (res) {
       allImages = res.images;
       currGallery = res.images;
-      sliceIntoCategory(allImages)
-      displayCurrentGallery(allImages)
+      sliceIntoCategory(allImages);
+      currGallery = slicedImages['category'];
+
+      displayCurrentGallery(currGallery);
 
     }
   });
 }
 
 function displayCurrentGallery(currentCategoryImages) {
-  $('.pagination-value').remove()
+  $('.pagination-value').remove();
 
   if (currentCategoryImages) {
-    currentCategoryImages.forEach(function(image, i) {
+    currentCategoryImages.forEach(function (image, i) {
       if (i < perPage) {
         counter++;
-        makeGalleryElements(image)
+        makeGalleryElements(image);
       }
-    })
+    });
 
-    displayPagination(currentCategoryImages.length)
+    displayPagination(currentCategoryImages.length);
 
   }
 }
 
 function displayPagination(galleryLength) {
   // console.log(Math.ceil(galleryLength/perPage))
-  let i=0
+  let i = 0;
   let max=Math.ceil(galleryLength/perPage)
   while ( i < max ) {
     // console.log(i)
