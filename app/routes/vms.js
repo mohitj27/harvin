@@ -200,99 +200,99 @@ router.get('/courses-list', async (req, res, next) => {
       next(err || 'Internal Server Error');
     }
   }
-})
+});
 
 router.get('/gallery/category', function (req, res, next) {
-  let category = req.query.category
-  let limit = req.query.limit
+  let category = req.query.category;
+  let limit = req.query.limit;
   Gallery.find({
       category: {
-        $in: category
-      }
+        $in: category,
+      },
     })
     .sort({
-      uploadDate: -1
+      uploadDate: -1,
     })
     .limit(parseInt(limit))
     .exec(function (err, gallery) {
       if (err) {
-        console.log(err)
+        console.log(err);
       } else {
         res.json({
-          gallery: gallery
-        })
+          gallery: gallery,
+        });
       }
-    })
-})
+    });
+});
 
 router.get('/gallery', (req, res, next) => {
   Gallery.find({}, (err, foundImages) => {
     if (!err && foundImages) {
       res.render('gallery', {
-        items: foundImages
-      })
+        items: foundImages,
+      });
     }
-  })
-})
+  });
+});
 
 router.get('/results', (req, res, next) => {
   Gallery.find({
-      category: 'results'
+      category: 'results',
     },
     (err, foundStudents) => {
       if (!err && foundStudents) {
         res.render('results', {
           students: foundStudents,
-          testimonials: foundStudents
-        })
+          testimonials: foundStudents,
+        });
       } else {
-        console.log(err)
-        next(new errors.generic())
+        console.log(err);
+        next(new errors.generic());
       }
     }
-  )
-})
+  );
+});
 
 router.get('/team', (req, res, next) => {
-  res.render('team')
-})
+  res.render('team');
+});
 
 router.get('/downloads', async (req, res, next) => {
-  const foundLinks = await linkController.getAllLinks()
+  const foundLinks = await linkController.getAllLinks();
   res.render('downloads', {
-    downloads: foundLinks
-  })
-})
+    downloads: foundLinks,
+  });
+});
 
 router.get('/tnc', (req, res, next) => {
-  res.render('tnc')
-})
+  res.render('tnc');
+});
 
 router.get('/privacy', (req, res, next) => {
-  res.render('privacy')
-})
+  res.render('privacy');
+});
 
 router.get('/careers', (req, res, next) => {
-  res.render('careers')
-})
+  res.render('careers');
+});
 
 router.post('/careers', (req, res, next) => {
   req.flash(
     'success',
     'Response recoreded successfully, We will get back to you soon!'
-  )
-  res.redirect('/careers')
-})
+  );
+  res.redirect('/careers');
+});
 
 router.get('/blog/:url', (req, res, next) => {
-  const url = req.params.url
-  res.locals.flashUrl = '/blog/' + url
+  const url = req.params.url;
+  res.locals.flashUrl = '/blog/' + url;
   Blog.findOne({
-      url
+      url,
     })
     .populate({
       path: 'author',
-      modal: 'User'
+      modal: 'User',
     })
     .exec((err, foundBlog) => {
       if (!foundBlog) {
@@ -302,8 +302,9 @@ router.get('/blog/:url', (req, res, next) => {
           next,
           true,
           false
-        )
+        );
       }
+
       if (!foundBlog.htmlFilePath) {
         return errorHandler.errorResponse(
           'NOT_FOUND',
@@ -311,19 +312,19 @@ router.get('/blog/:url', (req, res, next) => {
           next,
           true,
           false
-        )
+        );
       }
       // console.log('blog', foundBlog)
       if (err) {
-        return next(err || 'Internal Server Error')
+        return next(err || 'Internal Server Error');
       } else {
         Blog.find()
           .sort({
-            uploadDateUnix: -1
+            uploadDateUnix: -1,
           })
           .limit(3)
           .exec((err, foundBlogs) => {
-            if (err) return next(err || 'Internal Server Error')
+            if (err) return next(err || 'Internal Server Error');
             else if (foundBlog) {
               if (foundBlog.htmlFilePath) {
                 fs.readFile(
@@ -331,11 +332,11 @@ router.get('/blog/:url', (req, res, next) => {
                   '/../../../HarvinDb/blog/' +
                   foundBlog.htmlFilePath,
                   function (err, data) {
-                    if (err) return next(err || 'Internal Server Error')
+                    if (err) return next(err || 'Internal Server Error');
                     res.render('standard_blog_detail', {
                       blogContent: data,
                       foundBlog,
-                      foundBlogs
+                      foundBlogs,
                     })
                   }
                 )
@@ -384,7 +385,7 @@ router.get('/blog', (req, res, next) => {
         })
         .exec()
         .then(foundBlogs =>
-          res.render('allBlogs', {
+          res.render('blogTheme', {
             foundBlogs,
             count,
             page
