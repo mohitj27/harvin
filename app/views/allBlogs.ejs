@@ -33,16 +33,6 @@
 <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-<!-- site content here -->
-<!-- =========================== Main Header =========================== -->
-<!-- =========================== //Main Header =========================== -->
-<!-- =========================== Banner Post =========================== -->
-
-<!-- =========================== //Banner Post =========================== -->
-<!-- =========================== Catagory Area =========================== -->
-
-<!-- =========================== //Catagory Area =========================== -->
-<!-- =========================== Middle Content =========================== -->
 
 <!-- share buttons -->
 <div id="fb-root"></div><script>
@@ -92,15 +82,45 @@
 
     <nav class="z-depth-0">
       <div class="nav-wrapper" id="top-nav">
-        <a href="#">Home</a>
-        <a href="#">Home</a>
-        <a href="#">Home</a>
-        <a href="#">Home</a>
+        <ul>
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">Home</a>
+          </li>
+        </ul>
         <input type="text right" placeholder="Search..." id="top-search" />
       </div>
     </nav>
 
     <div class="" id="banner-container">
+
+      <div class="carousel carousel-slider center" data-indicators="true">
+  
+  <div class="carousel-item red white-text" href="#one!">
+    <h2>First Panel</h2>
+    <p class="white-text">This is your first panel</p>
+  </div>
+  <div class="carousel-item amber white-text" href="#two!">
+    <h2>Second Panel</h2>
+    <p class="white-text">This is your second panel</p>
+  </div>
+  <div class="carousel-item green white-text" href="#three!">
+    <h2>Third Panel</h2>
+    <p class="white-text">This is your third panel</p>
+  </div>
+  <div class="carousel-item blue white-text" href="#four!">
+    <h2>Fourth Panel</h2>
+    <p class="white-text">This is your fourth panel</p>
+  </div>
+</div>
 
     </div>
     <div class="grid">
@@ -200,9 +220,10 @@
   </div>
   <!-- NEW SECTION CHANGES TILL HERE -->
 
+  <% include partials/website_footer.ejs%>
+
+
   <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
-  <script src="/assets/js/main.js"></script>
+  <script src="/js/init.js"></script>
   <script src="/js/blogTheme.js"></script>
   <script src="/js/materialize.js"></script>
-
-  <% include partials/website_footer.ejs%>

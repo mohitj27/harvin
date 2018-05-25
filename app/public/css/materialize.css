@@ -4354,7 +4354,7 @@ nav ul a.btn > .material-icons, nav ul a.btn-large > .material-icons, nav ul a.b
 }
 
 nav ul a:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.27);
 }
 
 nav ul.left {
@@ -5273,7 +5273,7 @@ small {
   width: inherit;
   display: inline-block;
   text-align: center;
-  color: #fff;
+  color: white;
   font-size: 1.6rem;
   line-height: 40px;
 }

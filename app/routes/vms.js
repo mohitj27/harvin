@@ -78,41 +78,47 @@ router.post(
     const comments = req.body.comments;
     const address = req.body.address;
     const referral = req.body.referral;
-    const school = req.body.school
-    const aim = req.body.aim
+    const school = req.body.school;
+    const aim = req.body.aim;
 
-    res.locals.flashUrl = req.originalUrl
+    res.locals.flashUrl = req.originalUrl;
 
     if (!name) {
-      return errorHandler.errorResponse('INVALID_FIELD', 'visitor name', next)
+      return errorHandler.errorResponse('INVALID_FIELD', 'visitor name', next);
     }
+
     if (!classs) {
-      return errorHandler.errorResponse('INVALID_FIELD', 'class', next)
+      return errorHandler.errorResponse('INVALID_FIELD', 'class', next);
     }
+
     if (!address) {
-      return errorHandler.errorResponse('INVALID_FIELD', 'address', next)
+      return errorHandler.errorResponse('INVALID_FIELD', 'address', next);
     }
+
     if (!referral) {
-      return errorHandler.errorResponse('INVALID_FIELD', 'referral', next)
+      return errorHandler.errorResponse('INVALID_FIELD', 'referral', next);
     }
+
     if (!school) {
-      return errorHandler.errorResponse('INVALID_FIELD', 'school', next)
+      return errorHandler.errorResponse('INVALID_FIELD', 'school', next);
     }
-    if (!aim) return errorHandler.errorResponse('INVALID_FIELD', 'aim', next)
+
+    if (!aim) return errorHandler.errorResponse('INVALID_FIELD', 'aim', next);
 
     if (!phone ||
       validator.isEmpty(phone) ||
       !validator.isLength(phone, {
         min: 10,
-        max: 10
+        max: 10,
       })
     ) {
-      return errorHandler.errorResponse('INVALID_FIELD', 'phone', next)
+      return errorHandler.errorResponse('INVALID_FIELD', 'phone', next);
     }
 
     if (!emailId || !validator.isEmail(emailId)) {
-      return errorHandler.errorResponse('INVALID_FIELD', 'email', next)
+      return errorHandler.errorResponse('INVALID_FIELD', 'email', next);
     }
+
     const newVisitor = {
       name,
       phone,
@@ -123,74 +129,75 @@ router.post(
       address,
       referral,
       school,
-      aim
-    }
+      aim,
+    };
 
-    var promise = vmsController.addNewVisitor(newVisitor)
+    var promise = vmsController.addNewVisitor(newVisitor);
     promise.then(
       function (createdVisitor) {
-        req.flash('success', 'Your response has been saved successfully')
-        res.redirect('/vms')
+        req.flash('success', 'Your response has been saved successfully');
+        res.redirect('/vms');
       },
+
       function (err) {
-        next(err || 'Internal Server Error')
+        next(err || 'Internal Server Error');
       }
-    )
+    );
   }
-)
+);
 
 router.delete('/:visitorId', (req, res, next) => {
   Visitor.findByIdAndRemove(req.params.visitorId, err => {
     if (!err) {
-      req.flash('success', 'Entry deleted successfully')
-      res.redirect('/admin/db/visitors')
+      req.flash('success', 'Entry deleted successfully');
+      res.redirect('/admin/db/visitors');
     } else {
-      console.log(err)
-      next(new errors.generic())
+      console.log(err);
+      next(new errors.generic());
     }
-  })
-})
+  });
+});
 
 router.get('/aboutus', (req, res, next) => {
-  res.render('aboutus')
-})
+  res.render('aboutus');
+});
 
 router.get('/centers', (req, res, next) => {
-  res.render('centers')
-})
+  res.render('centers');
+});
 
 router.post('/centers', (req, res, next) => {
   req.flash(
     'success',
     'Response recoreded successfully, We will get back to you soon!'
-  )
-  res.redirect('/centers')
-})
+  );
+  res.redirect('/centers');
+});
 
 router.get('/courses', (req, res, next) => {
-  res.render('courses')
-})
+  res.render('courses');
+});
 
 router.get('/courses-list', async (req, res, next) => {
   if (!req.query.title) {
     try {
-      const foundCourses = await courseController.findAllCourses()
+      const foundCourses = await courseController.findAllCourses();
       res.render('courses-list', {
-        foundCourses
-      })
+        foundCourses,
+      });
     } catch (err) {
-      next(err || 'Internal Server Error')
+      next(err || 'Internal Server Error');
     }
   } else {
     try {
       const foundCourse = await courseController.findOneCourseUsingName(
         req.query.title
-      )
+      );
       res.render('courses-desc', {
-        foundCourse
-      })
+        foundCourse,
+      });
     } catch (err) {
-      next(err || 'Internal Server Error')
+      next(err || 'Internal Server Error');
     }
   }
 })
@@ -377,7 +384,7 @@ router.get('/blog', (req, res, next) => {
         })
         .exec()
         .then(foundBlogs =>
-          res.render('blogTheme', {
+          res.render('allBlogs', {
             foundBlogs,
             count,
             page

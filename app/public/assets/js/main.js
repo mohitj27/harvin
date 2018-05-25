@@ -1,5 +1,5 @@
-(function($) {
-  "use strict";
+(function ($) {
+  'use strict';
   /* ==================== Table Of Content ====================
   1.  Script Initialization
   2.  preloaderSetup
@@ -19,11 +19,11 @@
   // $('.read-more').
 
   // Window Load Function
-  $(window).on('load', function() {
+  $(window).on('load', function () {
     preloaderSetup();
   });
   // Document Ready Function
-  $(document).ready(function() {
+  $(document).ready(function () {
     scrollUpSetup();
     countrySelector();
     mobileMenu();
@@ -35,18 +35,18 @@
   });
 
   // Window Resize Function
-  $(window).on('resize', function() {
+  $(window).on('resize', function () {
 
   });
 
   // Window Scroll Function
-  $(window).on('scroll', function() {
+  $(window).on('scroll', function () {
 
   });
 
   // =================== preloaderSetup ===================
   function preloaderSetup() {
-    $('#preloader').fadeOut('slow', function() {
+    $('#preloader').fadeOut('slow', function () {
       $(this).remove();
     });
   } // preloaderSetup
@@ -55,9 +55,8 @@
   function scrollUpSetup() {
     var $mainHeaderHeight = $('.main-header').height();
 
-    $('body').append('<span id="scrollup"><i class="fa fa-angle-double-up"></i></span>');
     // scroll function
-    $(window).on('scroll', function() {
+    $(window).on('scroll', function () {
       var $scrollTop = $(window).scrollTop();
       // ScrollUp show
       if ($scrollTop >= $mainHeaderHeight) {
@@ -67,27 +66,27 @@
       }
     });
     // click function
-    $('#scrollup').on('click', function(e) {
+    $('#scrollup').on('click', function (e) {
       e.preventDefault();
       $('html, body').animate({
-        scrollTop: 0
+        scrollTop: 0,
       }, 1111);
     });
 
   } // scrollUpSetup
   // =================== countrySelector ===================
   function countrySelector() {
-    $(".country_selector").countrySelect({
+    $('.country_selector').countrySelect({
       defaultCountry: 'us',
-      responsiveDropdown: true
+      responsiveDropdown: true,
     });
   }
 
   // =================== mobileMenu ===================
   function mobileMenu() {
-    $('.m-menu-btn').on('click', function() {
+    $('.m-menu-btn').on('click', function () {
       $(this).children().toggleClass('active');
-    })
+    });
   }
 
   // =================== catagorySlider ===================
@@ -105,16 +104,16 @@
       responsive: {
         0: {
           items: 2,
-          margin: 15
+          margin: 15,
         },
         600: {
-          items: 3
+          items: 3,
         },
         1000: {
-          items: 4
-        }
-      }
-    })
+          items: 4,
+        },
+      },
+    });
   }
 
   // =================== LatestPostSlider ===================
@@ -131,16 +130,16 @@
       margin: 15,
       responsive: {
         0: {
-          items: 1
+          items: 1,
         },
         333: {
-          items: 2
+          items: 2,
         },
         576: {
-          items: 1
-        }
-      }
-    })
+          items: 1,
+        },
+      },
+    });
   }
 
   // =================== blogSlider ===================
@@ -156,16 +155,16 @@
       dots: false,
       responsive: {
         0: {
-          items: 1
+          items: 1,
         },
         600: {
-          items: 1
+          items: 1,
         },
         1000: {
-          items: 1
-        }
-      }
-    })
+          items: 1,
+        },
+      },
+    });
   }
 
 
@@ -177,37 +176,37 @@
       percentPosition: true,
       masonry: {
         // use element for option
-        columnWidth: '.single-blog'
-      }
-    })
+        columnWidth: '.single-blog',
+      },
+    });
   }
 
   // =================== popupSetup ===================
   function popupSetup() {
 
-    $("[data-fancybox]").fancybox({
+    $('[data-fancybox]').fancybox({
       loop: true,
       thumbs: {
-        autoStart: true
-      }
+        autoStart: true,
+      },
     });
 
   }
 
-
-
 })(jQuery); // End of use strict
-let counter = 2
+
+let counter = 2;
 
 function expandMore() {
-  $('article').each(function(index) {
+  $('article').each(function (index) {
 
-    if (index <( counter * 4)) {
+    if (index < (counter * 4)) {
       $(this).css({
-        'display': ''
-      })
+        display: '',
+      });
     }
-  })
-  counter++
+  });
+
+  counter++;
 
 }
