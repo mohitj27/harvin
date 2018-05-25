@@ -1,5 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import 'react-quill/dist/quill.snow.css';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import "react-quill/dist/quill.snow.css";
+import { Redirect, withRouter } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -8,24 +10,36 @@ import {
   ExpansionPanelSummary,
   Typography,
   Checkbox,
-  IconButton
-} from 'material-ui';
-import ReactQuill from 'react-quill';
-import { ExpandMore, Add, Clear } from 'material-ui-icons';
-import axios from 'axios';
-import {v4} from 'uuid';
-import HtmlToReact from 'html-to-react';
-import update from 'immutability-helper';
+  IconButton,
+  withStyles
+} from "material-ui";
+import {
+  ErrorSnackbar,
+  SuccessSnackbar,
+  LoadingSnackbar
+} from "../../components/GlobalSnackbar/GlobalSnackbar";
+import addQuesStyle from "../../variables/styles/addQuesStyle";
+import * as actions from "../../actions";
+import ReactQuill from "react-quill";
+import { ExpandMore, Add, Clear } from "material-ui-icons";
+import axios from "axios";
+import { v4 } from "uuid";
+import HtmlToReact from "html-to-react";
+import update from "immutability-helper";
+import { loginAction, notifyClear } from "../../actions";
+import * as _ from "lodash";
 // import { ImageResize } from "quill-image-resize-module";
 const HtmlToReactParser = HtmlToReact.Parser;
 
 // Quill.register('modules/imageResize', ImageResize);
 class AddQues extends Component {
   state = {
-    text: '',
+    text: "",
     questions: [],
     options: [],
     optionsHtml: [],
+    isQuestionAddedSuccessfully: false,
+    isFetchingAllQuestionsInProgress: true
   };
 
   handleChange = value => {
@@ -35,7 +49,7 @@ class AddQues extends Component {
   handleOptionsChange = (value, pos) => {
     const optHtml = this.state.optionsHtml;
     const newData = update(optHtml, { [pos]: { $set: value } });
-    console.log('value', newData);
+    // console.log("value", newData);
     this.setState({ optionsHtml: newData });
   };
 
@@ -43,82 +57,101 @@ class AddQues extends Component {
     const newState = update(this.state, {
       options: {
         [index]: {
-          $toggle: ['isAns'],
-        },
-      },
+          $toggle: ["isAns"]
+        }
+      }
     });
 
     this.setState({ options: newState.options });
   };
 
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    console.log("next", nextProps);
+
+    if (
+      !nextProps.isCreateQuesInProgress &&
+      nextProps.isQuestionAddedSuccessfully
+    ) {
+      return {
+        isQuestionAddedSuccessfully: nextProps.isQuestionAddedSuccessfully,
+        text: "",
+        options: [],
+        optionsHtml: [],
+        isFetchingAllQuestionsInProgress: false
+      };
+    }
+    if (
+      !nextProps.isFetchingAllQuestionsInProgress &&
+      nextProps.questions.length >= 0
+    ) {
+      return {
+        questions: nextProps.questions,
+        isFetchingAllQuestionsInProgress:
+          nextProps.isFetchingAllQuestionsInProgress
+      };
+    }
+    return null;
+  };
+
   onSubmit = e => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append('question', this.state.text);
+    formData.append("question", this.state.text);
 
-    const updatedOptions = this.state.options.map((opt, i)=> {
+    const prevOptions = _.cloneDeep(this.state.options);
+    const updatedOptions = prevOptions.map((opt, i) => {
       opt.text = this.state.optionsHtml[i];
       return opt;
     });
-    formData.append('options', JSON.stringify(updatedOptions));
-
-    axios
-      .post('http://localhost:3001/admin/questions', formData)
-      .then(res => console.log('res', res))
-      .catch(err => console.log('err', err));
+    formData.append("options", JSON.stringify(updatedOptions));
+    this.props.onCreateQues(formData);
+    this.props.onQuestionsFetch();
   };
 
   onAddOption = () => {
     const currentLenght = this.state.options.length;
 
     const newOpt = {
-        text: (<ReactQuill
-          value={this.state.optionsHtml[currentLenght + 1] || ''}
-          onChange={(value)=> {this.handleOptionsChange(value, currentLenght);}}
-
-          ref={editor => (this.editor = editor)}
-          style={{ backgroundColor: 'white' }}
-          modules={{
-            toolbar: [
-              [{ script: 'sub' }, { script: 'super' }],
-              ['image'],
-            ],
+      text: (
+        <ReactQuill
+          value={this.state.optionsHtml[currentLenght + 1] || ""}
+          onChange={value => {
+            this.handleOptionsChange(value, currentLenght);
           }}
-        />),
-        html: this.state.options[currentLenght + 1] || '',
-        isAns: false,
-        _id:v4(),//fn to generate UID for Options Important so that test can differentiate between options
-      };
+          ref={editor => (this.editor = editor)}
+          style={{ backgroundColor: "white" }}
+          modules={{
+            toolbar: [[{ script: "sub" }, { script: "super" }], ["image"]]
+          }}
+        />
+      ),
+      html: this.state.options[currentLenght + 1] || "",
+      isAns: false,
+      _id: v4() //fn to generate UID for Options Important so that test can differentiate between options
+    };
 
     const newState = update(this.state, {
       options: {
-        $push: [newOpt],
-      },
+        $push: [newOpt]
+      }
     });
 
     this.setState({ options: newState.options });
-
   };
 
   onRemoveOption = () => {
     const newState = update(this.state, {
       options: {
-        $splice: [[this.state.options.length - 1, 1]],
-      },
+        $splice: [[this.state.options.length - 1, 1]]
+      }
     });
 
     this.setState({ options: newState.options });
-  };Z;
+  };
+  Z;
 
   componentDidMount = () => {
-    axios
-      .get('http://localhost:3001/admin/questions')
-      .then(res => {
-        let questions = res.data.questions;
-        if (questions.length <= 0) return;
-        this.setState({ questions: questions });
-      })
-      .catch(err => console.log('err', err));
+    this.props.onQuestionsFetch();
   };
 
   isAtleastOneOptionSelected = () => {
@@ -138,16 +171,14 @@ class AddQues extends Component {
 
       return (
         <Fragment>
-
-            <Checkbox
-              checked={opt.isAns}
-              value={`${opt.text}`}
-              disabled={true}
-              color="primary"
-            />
+          <Checkbox
+            checked={opt.isAns}
+            value={`${opt.text}`}
+            disabled={true}
+            color="primary"
+          />
 
           {reactElement}
-
         </Fragment>
       );
     });
@@ -155,6 +186,23 @@ class AddQues extends Component {
 
   render() {
     let addButton = null;
+
+    let successSnackbar =
+      this.props.successMessage !== "" ? (
+        <SuccessSnackbar
+          successMessage={this.props.successMessage}
+          onClearToast={this.props.onClearToast}
+        />
+      ) : null;
+    let errorSnackbar =
+      this.props.errorMessage !== "" ? (
+        <ErrorSnackbar
+          errorMessage={this.props.errorMessage}
+          onClearToast={this.props.onClearToast}
+        />
+      ) : null;
+    let loadingSnackbar =
+      this.props.notifyLoading !== "" ? <LoadingSnackbar /> : null;
 
     addButton = (
       <IconButton
@@ -164,8 +212,8 @@ class AddQues extends Component {
         onClick={this.onAddOption}
         style={{ marginLeft: 16 }}
       >
-          <Add />
-        </IconButton>
+        <Add />
+      </IconButton>
     );
 
     let options = this.state.options.map((opt, i) => {
@@ -183,18 +231,16 @@ class AddQues extends Component {
       );
       return (
         <div style={{ marginRight: 50 }}>
+          <Checkbox
+            checked={opt.isAns}
+            onChange={() => {
+              this.handleCheckboxChanged(i);
+            }}
+            value={opt.text}
+            color="primary"
+          />
 
-              <Checkbox
-                checked={opt.isAns}
-                onChange={() => {
-                  this.handleCheckboxChanged(i);
-                }}
-
-                value={opt.text}
-                color="primary"
-              />
-
-            {opt.text}
+          {opt.text}
 
           {removeButton}
         </div>
@@ -202,52 +248,54 @@ class AddQues extends Component {
     });
     return (
       <div>
-
-        <Grid style={{ display: 'flex' }} justify="center">
+        {successSnackbar}
+        {errorSnackbar}
+        {loadingSnackbar}
+        <Grid style={{ display: "flex" }} justify="center">
           <h3>Previously added questions</h3>
         </Grid>
         {this.state.questions.map((ques, i) => {
           let htmlToReactParser = new HtmlToReactParser();
           let reactElement = htmlToReactParser.parse(ques.question);
           return (
-            <ExpansionPanel >
-          <ExpansionPanelSummary  expandIcon={<ExpandMore />}>
-            <Typography style={{ alignSelf: 'center', marginRight: '5px', }} >
-              Q.{i + 1}
-            </Typography> {reactElement}
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Grid style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {this.getPrevQuesOptions(ques.options)}
-          </Grid>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+                <Typography style={{ alignSelf: "center", marginRight: "5px" }}>
+                  Q.{i + 1}
+                </Typography>{" "}
+                {reactElement}
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Grid style={{ display: "flex", flexWrap: "wrap" }}>
+                  {this.getPrevQuesOptions(ques.options)}
+                </Grid>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           );
         })}
-         <Grid style={{ display: 'flex' }} justify="center">
+        <Grid style={{ display: "flex" }} justify="center">
           <h3>Add New Question</h3>
         </Grid>
         <ReactQuill
           value={this.state.text}
           onChange={this.handleChange}
           ref={editor => (this.editor = editor)}
-          style={{ backgroundColor: 'white' }}
+          style={{ backgroundColor: "white" }}
           modules={{
             toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              ['blockquote', 'code-block'],
-              [{ list: 'ordered' }, { list: 'bullet' }],
-              [{ script: 'sub' }, { script: 'super' }],
-              [{ indent: '-1' }, { indent: '+1' }],
-              [{ direction: 'rtl' }],
-              [{ size: ['small', false, 'large', 'huge'] }],
+              ["bold", "italic", "underline", "strike"],
+              ["blockquote", "code-block"],
+              [{ list: "ordered" }, { list: "bullet" }],
+              [{ script: "sub" }, { script: "super" }],
+              [{ indent: "-1" }, { indent: "+1" }],
+              [{ direction: "rtl" }],
+              [{ size: ["small", false, "large", "huge"] }],
               [{ header: [1, 2, 3, 4, 5, 6, false] }],
               [{ color: [] }, { background: [] }],
               [{ align: [] }],
-              ['clean'],
-              ['link', 'image', 'formula'],
-            ],
+              ["clean"],
+              ["link", "image", "formula"]
+            ]
           }}
         />
         <ExpansionPanel style={{ marginTop: 16, marginBottom: 16 }}>
@@ -255,11 +303,13 @@ class AddQues extends Component {
             <Typography>Choose Correct Answer</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Grid style={{ display: 'flex', flexWrap: 'wrap' }}>{options}
-          {addButton}</Grid>
+            <Grid style={{ display: "flex", flexWrap: "wrap" }}>
+              {options}
+              {addButton}
+            </Grid>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-        <Grid style={{ display: 'flex' }} justify="center">
+        <Grid style={{ display: "flex" }} justify="center">
           <Button
             variant="raised"
             color="primary"
@@ -275,4 +325,30 @@ class AddQues extends Component {
   }
 }
 
-export default AddQues;
+const mapStateToProps = state => {
+  return {
+    successMessage: state.notify.success,
+    errorMessage: state.notify.error,
+    notifyLoading: state.notify.loading,
+    notifyClear: state.notify.clear,
+    isCreateQuesInProgress: state.questions.isCreateQuesInProgress,
+    questions: state.questions.allQuestions,
+    isFetchingAllQuestionsInProgress:
+      state.questions.isFetchingAllQuestionsInProgress,
+    isQuestionAddedSuccessfully: state.questions.isQuestionAddedSuccessfully
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onQuestionsFetch: () => dispatch(actions.getAllQuestions()),
+    onCreateQues: ques => dispatch(actions.createQuesAction(ques)),
+    onClearToast: () => dispatch(notifyClear())
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(
+    withStyles(addQuesStyle)(AddQues)
+  )
+);

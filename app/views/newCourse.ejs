@@ -1,86 +1,91 @@
-
 <% include partials/header.ejs%>
-		<main>
+	<main>
 
-			<div class="section">
-				<div class="container">
-          <h3 class="center">Add a Course</h3>
-					<form method="post" class="newBlogForm" enctype="multipart/form-data" action="/admin/courses" method="post">
-
-						<div class="row">
-							<div class="input-field">
-								<input id="courseName" type="text" name="courseName" required class="validate">
-								<label for="courseName">Course Name</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="file-field input-field">
-								<div class="btn file-btn">
-									<span>File</span>
-									<input type="file" name="courseImage" required>
-								</div>
-								<div class="file-path-wrapper">
-									<input class="file-path validate" placeholder="Course Image" type="text">
-
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field">
-								<input id="courseTimings" type="text" name="classTimings" class="">
-								<label for="courseTimings">Class Timings</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field">
-								<input id="startFrom" type="text" name="courseStartingFrom" class="datepicker">
-								<label for="startFrom">Course Starting from</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field">
-								<input id="courseFrequency" type="text" name="courseFrequency" class="">
-								<label for="courseFrequency">Course Frequency</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field">
-								<textarea id="blog_title" class="materialize-textarea validate" name="courseDescription" required></textarea>
-								<label for="first_name">Course Description</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field">
-								<input id="courseFor" type="text" name="courseFor" required class="validate">
-								<label for="courseFor">Course For</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field">
-								<input id="courseAdmissionThrough" type="text" name="courseAdmissionThrough" required class="validate">
-								<label for="courseAdmissionThrough">Course Admission Through</label>
-							</div>
-						</div>
-
-
-						<div class="row">
-							<div class="center-align">
-								<button class="btn" id="submit-button">Submit</button>
-							</div>
-						</div>
-					</form>
+		<div class="section">
+			<div class="container">
+				<h3 class="center">Add a Course</h3>
+				<form method="post" class="newBlogForm" enctype="multipart/form-data" action="/admin/courses" method="post">
 
 					<div class="row">
-						<div class="col s12">
-							<div id="editor1" contenteditable="true">
+						<div class="input-field">
+							<input id="courseName" type="text" name="courseName" required class="validate">
+							<label for="courseName">Course Name</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field">
+							<input id="courseUrl" type="text" name="courseUrl" required class="validate">
+							<label for="courseUrl">Course URL</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="file-field input-field">
+							<div class="btn file-btn">
+								<span>File</span>
+								<input type="file" name="courseImage" required>
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" placeholder="Course Image" type="text">
 
 							</div>
 						</div>
 					</div>
+					<div class="row">
+						<div class="input-field">
+							<input id="courseTimings" type="text" name="classTimings" class="">
+							<label for="courseTimings">Class Timings</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field">
+							<input id="startFrom" type="text" name="courseStartingFrom" class="datepicker">
+							<label for="startFrom">Course Starting from</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field">
+							<input id="courseFrequency" type="text" name="courseFrequency" class="">
+							<label for="courseFrequency">Course Frequency</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field">
+							<textarea id="blog_title" class="materialize-textarea validate" name="courseDescription" required></textarea>
+							<label for="first_name">Course Description</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field">
+							<input id="courseFor" type="text" name="courseFor" required class="validate">
+							<label for="courseFor">Course For</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field">
+							<input id="courseAdmissionThrough" type="text" name="courseAdmissionThrough" required class="validate">
+							<label for="courseAdmissionThrough">Course Admission Through</label>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="center-align">
+							<button class="btn" id="submit-button">Submit</button>
+						</div>
+					</div>
+				</form>
+
+				<div class="row">
+					<div class="col s12">
+						<div id="editor1" contenteditable="true">
+
+						</div>
+					</div>
 				</div>
 			</div>
+		</div>
 
 
-		</main>
+	</main>
 
-		<% include partials/footer.ejs%>
+	<% include partials/footer.ejs%>

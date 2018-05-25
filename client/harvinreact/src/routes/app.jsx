@@ -10,6 +10,7 @@ import Home from "../views/Home/Home.jsx";
 import AddQues from "../views/AddQues/AddQues.jsx";
 import ListTest from "../views/ListTest/ListTest.jsx";
 import CreateTest from "../views/CreateTest/CreateTest.jsx";
+import Questions from "../views/Questions/Questions.jsx";
 const appRoutes = [
   {
     path: "/home",
@@ -34,6 +35,12 @@ const appRoutes = [
     sidebarName: "Tests",
     icon: NoteAdd,
     component: ListTest
+  },
+  {
+    path: "/Questions",
+    sidebarName: "Questions",
+    icon: NoteAdd,
+    component: Questions
   },
   {
     redirect: true,

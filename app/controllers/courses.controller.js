@@ -23,7 +23,7 @@ const findOneCourseUsingName = courseName =>
   new Promise((resolve, reject) => {
     Course.findOne(
       {
-        courseName
+        courseUrl: courseName
       },
       (err, foundCourse) => {
         if (err) reject(err);

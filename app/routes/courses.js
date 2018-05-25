@@ -56,6 +56,7 @@ router.post("/", async (req, res, next) => {
   }
 
   const courseName = req.body.courseName;
+  const courseUrl = req.body.courseUrl;
   const courseTimings = req.body.classTimings;
   const courseStartingFrom = req.body.courseStartingFrom;
   const courseDescription = req.body.courseDescription;
@@ -65,6 +66,7 @@ router.post("/", async (req, res, next) => {
   const _id = req.body.courseId;
   const course = {
     courseName,
+    courseUrl,
     courseTimings,
     courseStartingFrom,
     courseDescription,
