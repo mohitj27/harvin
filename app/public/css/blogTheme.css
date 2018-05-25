@@ -46,7 +46,7 @@ aside {
 }
 
 nav {
-  position: fixed;
+  /* position: fixed; */
   z-index: 100;
   border-bottom: 1px #efefef solid;
   background-color: white;

@@ -1,66 +1,66 @@
-const express = require('express')
-const fs = require('fs')
-const moment = require('moment-timezone')
-const errors = require('../error')
-const errorHandler = require('../errorHandler')
-const middleware = require('../middleware')
-const mongoose = require('mongoose')
-const Gallery = require('./../models/Gallery')
-const Visitor = require('./../models/Visitor')
-const Blog = require('./../models/Blog')
-const Link = require('./../models/Link')
-const vmsController = require('./../controllers/vms.controller')
-const linkController = require('./../controllers/link.controller')
-const courseController = require('./../controllers/courses.controller')
-const forumController = require('./../controllers/forum.controller')
-const videoController = require('./../controllers/video.controller')
-const validator = require('validator')
-const router = express.Router()
-Promise = require('bluebird')
-mongoose.Promise = Promise
+const express = require('express');
+const fs = require('fs');
+const moment = require('moment-timezone');
+const errors = require('../error');
+const errorHandler = require('../errorHandler');
+const middleware = require('../middleware');
+const mongoose = require('mongoose');
+const Gallery = require('./../models/Gallery');
+const Visitor = require('./../models/Visitor');
+const Blog = require('./../models/Blog');
+const Link = require('./../models/Link');
+const vmsController = require('./../controllers/vms.controller');
+const linkController = require('./../controllers/link.controller');
+const courseController = require('./../controllers/courses.controller');
+const forumController = require('./../controllers/forum.controller');
+const videoController = require('./../controllers/video.controller');
+const validator = require('validator');
+const router = express.Router();
+Promise = require('bluebird');
+mongoose.Promise = Promise;
 
 router.get('/test', (req, res, next) => {
-  res.render('testGallery')
-})
+  res.render('testGallery');
+});
 
 router.get('/harvest', (req, res, next) => {
-  res.render('harvest')
-})
-
+  res.render('harvest');
+});
 
 router.get('/', (req, res, next) => {
   Gallery.find({
     category: {
-      $in: ['results']
-    }
+      $in: ['results'],
+    },
   }).exec((err, foundStudents) => {
     if (!err && foundStudents) {
       res.render('vmsLanding', {
-        students: foundStudents
-      })
+        students: foundStudents,
+      });
     } else {
-      console.log(err)
-      next(new errors.generic())
+      console.log(err);
+      next(new errors.generic());
     }
-  })
-})
+  });
+});
 
 router.get('/vms/phone/:phone', async (req, res, next) => {
-  const phone = req.params.phone || ''
+  const phone = req.params.phone || '';
   if (!phone || validator.isEmpty(phone)) {
-    return errorHandler.errorResponse('INVALID_FIELD', 'phone', next)
+    return errorHandler.errorResponse('INVALID_FIELD', 'phone', next);
   }
+
   try {
-    const foundVisitor = await vmsController.findVisitorByPhone(phone)
-    res.json(foundVisitor)
+    const foundVisitor = await vmsController.findVisitorByPhone(phone);
+    res.json(foundVisitor);
   } catch (err) {
-    next(err || 'Internal Server Error')
+    next(err || 'Internal Server Error');
   }
-})
+});
 
 router.get('/vms', middleware.isLoggedIn, (req, res) => {
-  res.render('newVisitor')
-})
+  res.render('newVisitor');
+});
 
 router.post(
   '/vms',
@@ -68,16 +68,16 @@ router.post(
   middleware.isCentreOrAdmin,
   (req, res, next) => {
     // console.log('body', req.body)
-    const name = req.body.name
-    const phone = req.body.phone || ''
-    const emailId = req.body.emailId || ''
-    const classs = req.body.classs || ''
+    const name = req.body.name;
+    const phone = req.body.phone || '';
+    const emailId = req.body.emailId || '';
+    const classs = req.body.classs || '';
     const date = moment(Date.now())
       .tz('Asia/Kolkata')
-      .format('MMMM Do YYYY, h:mm:ss a')
-    const comments = req.body.comments
-    const address = req.body.address
-    const referral = req.body.referral
+      .format('MMMM Do YYYY, h:mm:ss a');
+    const comments = req.body.comments;
+    const address = req.body.address;
+    const referral = req.body.referral;
     const school = req.body.school
     const aim = req.body.aim
 

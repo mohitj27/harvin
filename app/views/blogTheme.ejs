@@ -87,6 +87,13 @@
             <a href="#" class="brand-logo center">Harvin Academy</a>
         </div>
     </nav>
+    <!-- NEW SECTION CHANGES FOR HERE -->
+    <div class="">
+
+
+
+    </div>
+    <!-- NEW SECTION CHANGES TILL HERE -->
 
     <div class="middle-content">
         <div class="container-fluid">
@@ -97,9 +104,9 @@
                     <!-- Single Blog -->
                     <% foundBlogs.forEach((blog, i) => { %>
                             <article class="card single-blog text-center mt-5 mb-5 pt-0 pb-3" href="/blog/?title=<%=blog.url%>" href="/blog/<%=blog.url%>">
-                              
-                                
-                                
+
+
+
                                     <mark class="catagory">
                                         <%=blog.category%>
                                     </mark>
@@ -114,10 +121,10 @@
                                     <!-- Card Body -->
                                     <div class="card-body p-0" href="/blog/<%=blog.url%>">
                                         <h2 class="card-title h1 blog-title" href="/blog/<%=blog.url%>">
-                                            <a href="/blog/<%=blog.url%>" style="color:#000000c7;"><%=blog.blogTitle%></a>  
+                                            <a href="/blog/<%=blog.url%>" style="color:#000000c7;"><%=blog.blogTitle%></a>
                                         </h2>
-    
-    
+
+
                                         <a href="/blog/<%=blog.url%>" class="read-more double-line">read more</a>
                                         <!-- Card Footer -->
                                     </div>
@@ -125,15 +132,15 @@
                                         <div class="share-icons">
                                             <span>Share:</span>
                                             <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
-    
+
                                             </a>
                                             <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
                                                 Tweet</a>
-    
+
                                         </div>
                                     </div>
                                 </a>
-                                
+
                             </article>
 
 

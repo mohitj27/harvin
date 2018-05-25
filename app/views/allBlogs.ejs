@@ -1,0 +1,208 @@
+<head>
+  <title>Harvin Academy</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google-site-verification" content="eSPtYedDuFnn9GWxmT-OZJtAugNRnUJwuZ65y7JDPfE" />
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97403760-2"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+          dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'UA-97403760-2');
+  </script>
+
+</head>
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="/css/allBlogs.css">
+<!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+<!-- site content here -->
+<!-- =========================== Main Header =========================== -->
+<!-- =========================== //Main Header =========================== -->
+<!-- =========================== Banner Post =========================== -->
+
+<!-- =========================== //Banner Post =========================== -->
+<!-- =========================== Catagory Area =========================== -->
+
+<!-- =========================== //Catagory Area =========================== -->
+<!-- =========================== Middle Content =========================== -->
+
+<!-- share buttons -->
+<div id="fb-root"></div><script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src =
+            'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=1054614874673150&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<!-- twitter scripts -->
+<script>
+    window.twttr = (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function (f) {
+            t._e.push(f);
+        };
+
+        return t;
+    }(document, "script", "twitter-wjs"));
+</script>
+
+<body>
+  <!-- <nav class="z-depth-0 no-pad">
+    <div class="nav-wrapper ">
+      <a href="#" class="brand-logo center">Harvin Academy</a>
+    </div>
+  </nav> -->
+
+  <!-- NEW SECTION CHANGES FOR HERE -->
+  <div class="section " id="main-section">
+
+
+    <h3 id="topmost">Harvin Academy</h3>
+
+    <nav class="z-depth-0">
+      <div class="nav-wrapper" id="top-nav">
+        <a href="#">Home</a>
+        <a href="#">Home</a>
+        <a href="#">Home</a>
+        <a href="#">Home</a>
+        <input type="text right" placeholder="Search..." id="top-search" />
+      </div>
+    </nav>
+
+    <div class="" id="banner-container">
+
+    </div>
+    <div class="grid">
+      <div class="popular-section-col">
+
+        <h5 class="dark-font">Popular Searches</h5>
+        <hr id="main-ruler">
+      </div>
+      <div class="news-letter-col">
+        <div id="news-letter-card" class="z-depth-2">
+          <h5 class="center">Newsletter</h5>
+
+          <form action="#!" class="center">
+            <div class="input-field">
+              <input id="first_name" type="text" class="validate">
+              <label for="first_name">First Name</label>
+            </div>
+
+            <div class="input-field">
+              <input id="first_name" type="text" class="validate">
+              <label for="first_name">First Name</label>
+            </div>
+            <button class="btn waves-effect waves-light center" type="submit" name="action">Submit
+    <i class="material-icons right">send</i>
+  </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <h5 class="dark-font">Latest Posts </h5>
+    <hr id="main-ruler">
+
+
+    <div id="latest-post-container">
+
+
+      <% foundBlogs.forEach((blog, i) => { %>
+        <div class="latest-post-grid">
+          <div class="latest-post-image">
+            <img class="responsive-img latest-post-image" src="/blogImage/<%=blog.coverImgName%>" alt=""/>
+          </div>
+          <div class="latest-post-info">
+              <a href="/blog/<%=blog.url%>" style="color:#000000c7;">
+              <h4 class="dark-font">  <%=blog.blogTitle%></h4>
+              <p><%=blog.uploadDate%></p>
+              </a>
+              <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
+                  Tweet</a>
+                  <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
+                  Share
+                  </a>
+          </div>
+        </div>
+
+        <% }) %>
+
+
+        <div class="pagination-wrapper">
+            <ul class="pagination">
+                <li class="waves-effect">
+                    <a href="#!" id="prev-button" class="prev-button" onClick="prevPage()">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                </li>
+                <%for(var i = 1; i <= count; i++){%>
+                    <li class="waves-effect">
+                            <a href="/blog?page=<%=i%>" class="prev-button
+                            <%if(page==i){%>
+                                active-chip
+                                <%}%>
+                            ">
+                                <%=i%>
+                            </a>
+                    </li>
+                <%}%>
+                <li class="waves-effect">
+                    <a href="#1>" id="next-button" class="next-button" onClick="nextPage()">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+  </div>
+  <!-- NEW SECTION CHANGES TILL HERE -->
+
+  <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/js/blogTheme.js"></script>
+  <script src="/js/materialize.js"></script>
+
+  <% include partials/website_footer.ejs%>
