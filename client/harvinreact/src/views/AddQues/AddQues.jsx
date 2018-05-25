@@ -28,18 +28,15 @@ import HtmlToReact from "html-to-react";
 import update from "immutability-helper";
 import { loginAction, notifyClear } from "../../actions";
 import * as _ from "lodash";
-// import { ImageResize } from "quill-image-resize-module";
 const HtmlToReactParser = HtmlToReact.Parser;
 
-// Quill.register('modules/imageResize', ImageResize);
 class AddQues extends Component {
   state = {
     text: "",
     questions: [],
     options: [],
     optionsHtml: [],
-    isQuestionAddedSuccessfully: false,
-    isFetchingAllQuestionsInProgress: true
+    isQuestionAddedSuccessfully: false
   };
 
   handleChange = value => {
@@ -80,16 +77,6 @@ class AddQues extends Component {
         isFetchingAllQuestionsInProgress: false
       };
     }
-    if (
-      !nextProps.isFetchingAllQuestionsInProgress &&
-      nextProps.questions.length >= 0
-    ) {
-      return {
-        questions: nextProps.questions,
-        isFetchingAllQuestionsInProgress:
-          nextProps.isFetchingAllQuestionsInProgress
-      };
-    }
     return null;
   };
 
@@ -105,7 +92,6 @@ class AddQues extends Component {
     });
     formData.append("options", JSON.stringify(updatedOptions));
     this.props.onCreateQues(formData);
-    this.props.onQuestionsFetch();
   };
 
   onAddOption = () => {
@@ -148,11 +134,6 @@ class AddQues extends Component {
 
     this.setState({ options: newState.options });
   };
-  Z;
-
-  componentDidMount = () => {
-    this.props.onQuestionsFetch();
-  };
 
   isAtleastOneOptionSelected = () => {
     for (let i = 0; i < this.state.options.length; i++) {
@@ -162,27 +143,27 @@ class AddQues extends Component {
     return false;
   };
 
-  getPrevQuesOptions = opts => {
-    const options = opts || [];
-    let htmlToReactParser = new HtmlToReactParser();
+  // getPrevQuesOptions = opts => {
+  //   const options = opts || [];
+  //   let htmlToReactParser = new HtmlToReactParser();
 
-    return options.map((opt, i) => {
-      let reactElement = htmlToReactParser.parse(opt.text);
+  //   return options.map((opt, i) => {
+  //     let reactElement = htmlToReactParser.parse(opt.text);
 
-      return (
-        <Fragment>
-          <Checkbox
-            checked={opt.isAns}
-            value={`${opt.text}`}
-            disabled={true}
-            color="primary"
-          />
+  //     return (
+  //       <Fragment>
+  //         <Checkbox
+  //           checked={opt.isAns}
+  //           value={`${opt.text}`}
+  //           disabled={true}
+  //           color="primary"
+  //         />
 
-          {reactElement}
-        </Fragment>
-      );
-    });
-  };
+  //         {reactElement}
+  //       </Fragment>
+  //     );
+  //   });
+  // };
 
   render() {
     let addButton = null;
@@ -251,28 +232,7 @@ class AddQues extends Component {
         {successSnackbar}
         {errorSnackbar}
         {loadingSnackbar}
-        <Grid style={{ display: "flex" }} justify="center">
-          <h3>Previously added questions</h3>
-        </Grid>
-        {this.state.questions.map((ques, i) => {
-          let htmlToReactParser = new HtmlToReactParser();
-          let reactElement = htmlToReactParser.parse(ques.question);
-          return (
-            <ExpansionPanel>
-              <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-                <Typography style={{ alignSelf: "center", marginRight: "5px" }}>
-                  Q.{i + 1}
-                </Typography>{" "}
-                {reactElement}
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <Grid style={{ display: "flex", flexWrap: "wrap" }}>
-                  {this.getPrevQuesOptions(ques.options)}
-                </Grid>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-          );
-        })}
+
         <Grid style={{ display: "flex" }} justify="center">
           <h3>Add New Question</h3>
         </Grid>
@@ -333,15 +293,12 @@ const mapStateToProps = state => {
     notifyClear: state.notify.clear,
     isCreateQuesInProgress: state.questions.isCreateQuesInProgress,
     questions: state.questions.allQuestions,
-    isFetchingAllQuestionsInProgress:
-      state.questions.isFetchingAllQuestionsInProgress,
     isQuestionAddedSuccessfully: state.questions.isQuestionAddedSuccessfully
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onQuestionsFetch: () => dispatch(actions.getAllQuestions()),
     onCreateQues: ques => dispatch(actions.createQuesAction(ques)),
     onClearToast: () => dispatch(notifyClear())
   };

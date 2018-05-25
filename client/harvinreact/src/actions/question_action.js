@@ -28,7 +28,6 @@ export const getAllQuestions = () => async dispatch => {
   try {
     const resp = await axios.get("http://localhost:3001/admin/questions");
     dispatch(getAllQuestionSuccess(resp.data.questions));
-    // dispatch(notifySuccess());
   } catch (err) {
     const errMsg = err.response
       ? err.response.data.msg
