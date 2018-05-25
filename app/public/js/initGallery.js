@@ -45,7 +45,7 @@ function getImagesFromServer() {
       allImages = res.images;
       currGallery = res.images;
       sliceIntoCategory(allImages);
-      currGallery = slicedImages['category'];
+      currGallery = slicedImages['classroom'];
 
       displayCurrentGallery(currGallery);
 
@@ -72,25 +72,26 @@ function displayCurrentGallery(currentCategoryImages) {
 function displayPagination(galleryLength) {
   // console.log(Math.ceil(galleryLength/perPage))
   let i = 0;
-  let max=Math.ceil(galleryLength/perPage)
-  while ( i < max ) {
+  let max = Math.ceil(galleryLength / perPage);
+  while (i < max) {
     // console.log(i)
-    let $pageElement = $("<li><a>"+(max-(i))+"</a> </li>")
-    $pageElement.children().attr("href","#!")
-    if((max-1-i)==0)
-    $pageElement.children().addClass("active-chip")
-    $pageElement.children().addClass("pagination-value")
-   $('.pagination li:nth-child(1)').after($pageElement)
-   i=i+1
+    let $pageElement = $('<li><a>' + (max - (i)) + '</a> </li>');
+    $pageElement.children().attr('href', '#!');
+    if ((max - 1 - i) == 0)
+    $pageElement.children().addClass('active-chip');
+    $pageElement.children().addClass('pagination-value');
+    $('.pagination li:nth-child(1)').after($pageElement);
+    i = i + 1;
 
   }
-  $('.pagination').children().addClass("waves-effect")
+
+  $('.pagination').children().addClass('waves-effect');
 
 }
 
 function makeGalleryElements(image) {
-  let $imageElement = $("<div><img src=" + image.src + "></div>")
-  $imageElement.addClass("col s6 m4 l3 gallery-image")
+  let $imageElement = $('<div><img src=' + image.src + '></div>');
+  $imageElement.addClass('col s6 m4 l3 gallery-image')
   $imageElement.children().addClass("responsive-img materialboxed")
   $('.gallery-container').append($imageElement)
   $('.materialboxed').materialbox();
