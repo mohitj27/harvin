@@ -78,18 +78,7 @@ router.get('/edit', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (re
     next(err || 'Internal Server Error');
   }
 });
-router.get('/:blogTitle', (req, res) => {
-  Blog.findOne({
-    blogTitle: req.params.blogTitle,
-    author: req.user._id,
-  }, (err, foundBlog) => {
-    if (err)
-      console.log(err);
-    else {
-      res.json(foundBlog);
-    }
-  });
-});
+
 
 router.post('/', middleware.isLoggedIn, middleware.isCentreOrAdmin, async (req, res, next) => {
   let coverImgName;

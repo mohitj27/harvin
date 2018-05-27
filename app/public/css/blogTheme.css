@@ -358,7 +358,7 @@ img.cke_widget_drag_handler {
   .pl-5 {
     padding-left: 0 !important;
   }
-  
+
   .pr-5 {
     padding-right: 0 !important;
   }
@@ -366,3 +366,9 @@ img.cke_widget_drag_handler {
     box-shadow: none;
   }
 }
+
+.row .container{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    }

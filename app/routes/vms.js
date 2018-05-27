@@ -284,12 +284,44 @@ router.post('/careers', (req, res, next) => {
   res.redirect('/careers');
 });
 
+router.get('/blog/page',(req,res,next)=>{
+  const perPage = 3
+  let page = req.query.page || 0
+  console.log(page)
+  page = page <= 1 ? 1 : page
+  Blog.count({publish:'on'})
+    .then(count => {
+      count = Math.ceil(count / perPage)
+      Blog.find({
+          publish: 'on'
+        })
+        .limit(perPage)
+        .skip(perPage * (page - 1))
+        .sort({
+          uploadDateUnix: -1
+        })
+        .populate({
+          path: 'author',
+          modal: 'User'
+        })
+        .exec()
+        .then(foundBlogs =>
+          res.send(
+            foundBlogs
+          )
+        )
+        .catch(err => next(err || new Error('Internal Server Error')))
+    })
+    .catch(err => {
+      next(err || new Error('Internal Server Error'))
+    })
+})
 router.get('/blog/:url', (req, res, next) => {
   const url = req.params.url;
   res.locals.flashUrl = '/blog/' + url;
-  Blog.findOne({
+  Blog.findOneAndUpdate({
       url,
-    })
+    },{ $inc: { views: 1 } },{upsert:true})
     .populate({
       path: 'author',
       modal: 'User',
@@ -314,7 +346,7 @@ router.get('/blog/:url', (req, res, next) => {
           false
         );
       }
-      // console.log('blog', foundBlog)
+      console.log('blog', foundBlog)
       if (err) {
         return next(err || 'Internal Server Error');
       } else {
@@ -363,8 +395,9 @@ router.get('/blog/:url', (req, res, next) => {
     })
 })
 
+
 router.get('/blog', (req, res, next) => {
-  const perPage = 10
+  const perPage = 3
   let page = req.query.page || 0
   page = page <= 1 ? 1 : page
 
@@ -384,12 +417,10 @@ router.get('/blog', (req, res, next) => {
           modal: 'User'
         })
         .exec()
-        .then(foundBlogs =>
-          res.render('blogTheme', {
-            foundBlogs,
-            count,
-            page
-          })
+        .then(foundBlogs =>{
+Blog.find({publish:'on'}).sort({views:-1}).limit(perPage).then(foundPopularBlogs=>{
+  res.render("allBlogs",{foundBlogs,foundPopularBlogs,count,page})
+})}
         )
         .catch(err => next(err || new Error('Internal Server Error')))
     })
@@ -397,7 +428,6 @@ router.get('/blog', (req, res, next) => {
       next(err || new Error('Internal Server Error'))
     })
 })
-
 router.get('/forum', async (req, res, next) => {
   if (!req.query.title) {
     try {

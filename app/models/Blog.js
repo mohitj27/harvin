@@ -53,6 +53,10 @@ let BlogSchema = new Schema({
     type: String,
     trim: true,
     default: ''
+  },
+  views:{
+    type:Number,
+    default:0,
   }
 })
 

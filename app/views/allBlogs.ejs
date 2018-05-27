@@ -102,7 +102,7 @@
 
     <div class="" id="banner-container">
 
-      <div class="carousel carousel-slider center" data-indicators="true">
+      <div class="carousel carousel-slider center" data-indicators="true" style="height:100% !important;">
   
   <div class="carousel-item red white-text" href="#one!">
     <h2>First Panel</h2>
@@ -127,7 +127,37 @@
       <div class="popular-section-col">
 
         <h5 class="dark-font">Popular Searches</h5>
-        <hr id="main-ruler">
+        <hr id="main-ruler"
+        >
+
+
+    <div id="latest-post-container">
+
+
+      <% foundPopularBlogs.forEach((blog, i) => { %>
+        <div class="latest-post-grid">
+          <div class="latest-post-image">
+            <img class="responsive-img latest-post-image" src="/blogImage/<%=blog.coverImgName%>" alt=""/>
+          </div>
+          <div class="latest-post-info">
+              <a href="/blog/<%=blog.url%>" style="color:#000000c7;">
+              <h4 class="dark-font">  <%=blog.blogTitle%></h4>
+              <p><%=blog.uploadDate%></p>
+              </a>
+              <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
+                  Tweet</a>
+                  <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
+                  Share
+                  </a>
+          </div>
+        </div>
+
+        <% }) %>
+
+
+        
+
+    </div>
       </div>
       <div class="news-letter-col">
         <div id="news-letter-card" class="z-depth-2">
@@ -189,7 +219,7 @@
                 </li>
                 <%for(var i = 1; i <= count; i++){%>
                     <li class="waves-effect">
-                            <a href="/blog?page=<%=i%>" class="prev-button
+                            <a onClick="paginationClick(this)" data-value="<%=i%>"class="prev-button
                             <%if(page==i){%>
                                 active-chip
                                 <%}%>
