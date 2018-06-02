@@ -14,6 +14,7 @@ const middleware = require("../middleware");
 const jwtConfig = require("../config/jwt");
 const jwt = require("express-jwt");
 const jsonwebtoken = require("jsonwebtoken");
+const path = require("path");
 
 // TODO: pluralise populate method
 
@@ -375,13 +376,12 @@ router.get("/register", async function(req, res, next) {
 router.get("/home/:username", middleware.isLoggedIn, async (req, res, next) => {
   try {
     const user = userController.findUserByUserId(req.user);
-  } catch (e) {
-  } finally {
-  }
+  } catch (e) {}
   next();
 });
 router.get("/home", async (req, res, next) => {
-  res.render("studentHome");
+  console.log("dirname", __dirname);
+  res.sendFile(path.join(__dirname, "../../client/harvinreact/build/app.html"));
 });
 
 // User Register form-- student->from web interface
