@@ -6,3 +6,4 @@ npm*log*
 \.idea/
 .env
 msg.txt
+client/harvinreact/build/
