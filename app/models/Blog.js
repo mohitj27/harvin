@@ -1,11 +1,12 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 let BlogSchema = new Schema({
   blogTitle: {
     type: String,
     trim: true,
     required: true
   },
+  category: String,
   url: {
     type: String,
     trim: true,
@@ -34,20 +35,20 @@ let BlogSchema = new Schema({
   blogImages: [
     {
       type: String,
-      default: 'avatar_01.jpg'
+      default: "avatar_01.jpg"
     }
   ],
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: "User"
   },
   publish: {
     type: String,
-    default: 'off'
+    default: "off"
   },
   draft: {
     type: String,
-    default: 'off'
+    default: "off"
   },
   meta: {
     type: String,
@@ -58,6 +59,6 @@ let BlogSchema = new Schema({
     type:Number,
     default:0,
   }
-})
+});
 
-module.exports = mongoose.model('Blog', BlogSchema)
+module.exports = mongoose.model("Blog", BlogSchema);
