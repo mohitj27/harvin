@@ -20,7 +20,7 @@
 				</div>
 				<div class="row">
 					<div class="input-field s12 col m6 offset-m3">
-						<select name="category">
+						<select name="category" id="category">
 							<option value="" disabled selected>Choose Category</option>
 							<option value="events">Events</option>
 							<option value="results">Results</option>
@@ -34,10 +34,17 @@
 						</select>
 					</div>
 				</div>
+
 				<div class="row">
 					<div class="input-field col s12 m6 offset-m3">
 						<textarea id="textarea1" name="description" class="materialize-textarea"></textarea>
 						<label for="textarea1">Description</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field s12 col m6 offset-m3">
+						<label for="date" id="dateLabel">Date</label>
+						<input id="date" name="date" type="text" class="datepicker">
 					</div>
 				</div>
 				<div class="row center-align">
@@ -50,6 +57,32 @@
 	<% include partials/footer.ejs%>
 		<script>
 			$(function () {
+				$('.datepicker').pickadate({
+					selectMonths: true, // Creates a dropdown to control month
+					selectYears: 15, // Creates a dropdown of 15 years to control year,
+					today: 'Today',
+					clear: 'Clear',
+					close: 'Ok',
+					closeOnSelect: true, // Close upon selecting a date,
+					container: undefined, // ex. 'body' will append picker to body
+				});
+				$date = $('#date')
+				$dateLabel = $('#dateLabel')
 
+				$date.hide()
+				$dateLabel.hide()
+				let selectedCategory = ''
+				$('#category').change((e) => {
+					// console.log('event', e.target.value);
+					selectedCategory = e.target.value
+					if (selectedCategory === 'vms-events-panel') {
+						$date.show()
+						$dateLabel.show()
+					} else {
+						$date.val('')
+						$date.hide()
+						$dateLabel.hide()
+					}
+				})
 			})
 		</script>

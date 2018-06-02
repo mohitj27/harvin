@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-var Promise = require('bluebird')
-Promise.promisifyAll(require('mongoose'))
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+var Promise = require("bluebird");
+Promise.promisifyAll(require("mongoose"));
 
 //= ===Gallery Schmea====
 var gallerySchema = new Schema({
@@ -16,27 +16,28 @@ var gallerySchema = new Schema({
   filePath: {
     type: String,
     required: true,
-    default: 'NA'
+    default: "NA"
   },
   src: {
     type: String,
     required: true,
-    default: 'images/avatar_1.png'
+    default: "images/avatar_1.png"
   },
   category: {
     type: String,
     required: true,
-    default: 'other'
+    default: "other"
   },
   thumbPath: {
     type: String,
     required: true,
-    default: 'images/avatar_1.png'
+    default: "images/avatar_1.png"
   },
+  eventDate: String,
   description: {
     type: String
   }
-})
+});
 
 // Gallery model
-module.exports = mongoose.model('Gallery', gallerySchema)
+module.exports = mongoose.model("Gallery", gallerySchema);
