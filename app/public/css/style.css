@@ -14,6 +14,10 @@
   src: url(./../fonts/BebasNeue/BebasNeue.otf);
 }
 
+
+.sandbox-correct-pronounciation {
+  padding: 10em 0 10em 0;
+}
 @import url(https://fonts.googleapis.com/css?family=EB+Garamond|Cardo:400italic);
 nav ul a, nav .brand-logo {
   color: #13b38b;
@@ -135,8 +139,8 @@ html, body {
 
 @media only screen and (min-width: 950px) {
   nav ul a, nav .brand-logo {
-    color: #13b38b;
-    left: 10%;
+    color: #8c9795;
+    left: 5%;
   }
 }
 
@@ -288,7 +292,183 @@ h2, h3, h4, h5 {
 #mc_embed_signup input.button{
   width:60% !important;
   background-color: #13b38b;
+}#nav-mobile > li > p{
+margin:0px 20px;
 }
-.custom-modal{
 
+.top-most{
+background-color: #13b38b;
+color: white;
+}
+@media only screen and (min-width: 601px){
+nav{height: 110px;line-height: 110px;box-shadow: none;}}
+nav ul a{font-size: 1.2rem;font-weight: 500;}
+.info-nav{height: 4em;position:  absolute;top: 0;}
+.landing-col{background: url(/images/hero01.jpg);height: -webkit-fill-available;background-repeat:  no-repeat;margin: 0 auto;background-size: cover;justify-content:  center;}
+
+.top-container{/* height: 80%; */}
+.heading-correct-pronounciation {
+  margin: auto;
+  margin-top: 30%;
+  line-height: 1.5em;
+  text-align: center;
+}
+#premier{
+  color: white;
+  margin-top: -10px;
+}
+h1{
+
+  color: white;
+  font-family: 'Cardo', serif;
+  font-size: 1.5em;
+  font-weight: normal;
+  font-style: italic;
+  letter-spacing: 0.1em;
+}
+em{
+
+  font-family: 'Montserrat', serif;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  font-style: normal;
+  margin: 10px;
+  text-shadow: 0.07em 0.07em 0 rgba(255, 255, 255, 0.2 );
+}
+#upcoming{
+  color: #7e7d7d;
+  font-weight: 500;
+}
+#upcoming-card{
+  display: flex;
+  background: url('/images/hero01.jpg');
+  min-height: 400px;
+  flex-direction: column;
+}
+#upcoming-overlay{
+  text-align: start;
+  background: #d3d3d3cc;
+  align-self: right;
+  /* flex-grow: 1; */
+  margin-top:  auto;
+  padding: 5px 15px;
+}
+#important-dates{
+  display: flex;
+  flex-direction:  column;
+}
+.important-dates-p{
+  text-align:  left;
+  line-height: 1.5rem;
+  font-size:  initial;
+  margin:0px 5px;
+}
+.dates{
+  margin:15px;
+  display: flex;
+  flex-direction: row;
+}
+.dates-info{
+  text-align: left;
+}
+#upcoming-info-heading{
+  color:#5d5d5d;
+  margin: 0px;
+  font-weight:  600;
+}
+.important-dates-heading{
+  margin:0px 5px;
+  color: #767676;
+  margin-bottom: 5px;
+}
+.section-heading{
+  color: #7e7d7d;
+  font-weight: 500;
+}
+.why-title{
+  bottom:50%;
+  top:50%;
+  left: 50% !important;
+  right:50% !important;
+  color: #504f4f;
+  max-width: 100%;
+  padding: 24px;
+  font-size: 1.5rem;
+}
+.milestones-section{
+background: url('/images/hero01.jpg');
+}
+.inverted-button{
+  border-radius: 20px;
+  border:#13b38b 1px solid;
+  color:#13b38b;
+  padding: 0 50px;
+}
+
+#first-section{
+  background: url('/images/harvin_cover_background.jpg');
+  background-color: #13b38b;
+  background-size:  cover;
+  background-position:  bottom;
+  background-repeat: no-repeat;
+  }
+
+  .harvin-heading-text{
+    color:white !important;
+    text-align: center;
+    }
+  #removeThisId > div:nth-child(2) > h2{
+  text-align: center;
+  
+  }
+  #removeThisId > div:nth-child(2) > h2:after{content:'|';color: #fffb0099;}
+  #removeThisId > div:nth-child(1) > h2:after{content:'|';color: #fffb0099;}
+  
+  
+  
+    .harvin-heading-text:last-of-type{
+    padding: 20px
+    }
+    .info-text-row{
+    background: #13b38b21;
+    }
+  
+    .info-text-section{
+    color: #737373;
+    margin: 0px 20px;
+    text-align: center;
+    }
+  
+  .inline-flex{
+  display: inline-flex;
+  }
+  .yellow-material{color: #13b38b;}
+  #harvin-card-panel{
+    background: url(./../images/hero01.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 40%;
+    padding: 0;
+  }
+
+
+.heading-correct-pronounciation {
+  margin: auto;
+  line-height: 1.5em;
+}
+.register-card-title{
+  color:white;
+  padding:  20px;
+  margin-top: -100px;
+  font-weight: 700;
+  background-color: #13b38b;
+}
+#register-now-section{
+  background: #555;
+}
+#blog-section{
+  margin-bottom: 100px;
 }

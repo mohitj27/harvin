@@ -77,3 +77,7 @@ function scrollDown() {
   }, 1000);
 
 }
+
+function removeTopbar(){
+  
+}
