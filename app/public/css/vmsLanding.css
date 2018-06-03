@@ -121,9 +121,7 @@ background-size: 20%;
 .card .card-image img {
   max-height: 400px;
 }
-nav{
-  background-color: #1eae8b !important;
-}
+
 #content-parent {
   margin: 0;
   width: 100%;
@@ -138,9 +136,6 @@ nav{
   background-size: 50px 50px;
 }
 
-nav ul a, nav .brand-logo {
-  color: white;
-}
 .filler{
   background:#ddd;
     display:inline-block;
@@ -336,13 +331,7 @@ height: 64px;
   margin-left: 0px !important;
 }
 
-.nav-wrapper{
-position: fixed !important;
-width:100%;
-z-index:1000;
-height:64px !important;
-
-}
+.nav-wrapper{position: fixed !important;width:100%;z-index:1000;height:64px !important;}
 .results-col{
   margin-bottom: 20px;
 }
@@ -509,10 +498,6 @@ text-align: center;
   text-align: center;
   }
 
-  .nav-wrapper {
-    background-color: #1eae8b;
-    color: #13b38b;
-  }
 .inline-flex{
 display: inline-flex;
 }
