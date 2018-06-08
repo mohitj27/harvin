@@ -358,7 +358,7 @@ router.post(
       newFile.eventDate = eventDate;
     }
 
-    console.log("eventdate", newFile);
+    // console.log("eventdate", newFile);
 
     try {
       const createdImage = await galleryController.createNewImage(newFile);
