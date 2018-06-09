@@ -19,8 +19,43 @@ const quizStyles = {
           },
 
       },
+    testHeader: {
+      backgroundColor: '#4545450f',
+      height: '8%',
+      display: 'flex',
+      borderBottom: '10px solid #13b38b',
+      marginBottom: '20px',
+    },
+    testName: {
+      textAlign: 'center',
+      flexGrow: '0.8',
+      margin: 'auto 0',
+    },
+    clock: {
+      flexGrow: '0.5',
+    },
+    ExpansionPanelDetails: {
+      padding: '24px',
+    },
+    submitButton: {
+      flexGrow: '0.5',
+      backgroundColor: '#13b38b',
+      '&:hover': {
+        backgroundColor: '#13b38b',
+      },
+    },
+    testControls: {
+      borderLeft: '2px solid grey',
+      display: 'flex',
+      flexGrow: '0.2',
+    },
+    containerNoSpacing: {
+      margin: '-16px !important',
+      marginTop: '20px',
+    },
     markForLater: {
         float: 'right',
+        marginTop: '20px',
       },
     buttonBadge: {
         backgroundColor: '#fa3e3e',

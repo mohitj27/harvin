@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import PropTypes from "prop-types";
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import {
   withStyles,
   Grid,
@@ -16,35 +16,35 @@ import {
   ListItemIcon,
   ListItemText,
   Collapse
-} from "material-ui";
+} from 'material-ui';
 
-import { RegularCard, ItemGrid } from "../../components";
-import { Link } from "react-router-dom";
-import { Send, Star } from "material-ui-icons";
-import Icon from "@material-ui/core/Icon";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Quiz from "../../components/Quiz/Quiz";
-import { notifyClear } from "../../actions";
+import { RegularCard, ItemGrid } from '../../components';
+import { Link } from 'react-router-dom';
+import { Send, Star } from 'material-ui-icons';
+import Icon from '@material-ui/core/Icon';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Quiz from '../../components/Quiz/Quiz';
+import { notifyClear } from '../../actions';
 import {
   ErrorSnackbar,
   SuccessSnackbar,
   LoadingSnackbar
-} from "../../components/GlobalSnackbar/GlobalSnackbar";
-import { connect } from "react-redux";
-import * as actions from "../../actions";
+} from '../../components/GlobalSnackbar/GlobalSnackbar';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
-import dashboardStyle from "../../variables/styles/dashboardStyle";
+import dashboardStyle from '../../variables/styles/dashboardStyle';
 
 class Dashboard extends React.Component {
   state = {
-    test: "",
+    test: '',
     haveReadAllInstructions: false,
-    isTestStarted: false
+    isTestStarted: true,
   };
 
   handleChange = () => {
     this.setState({
-      haveReadAllInstructions: !this.state.haveReadAllInstructions
+      haveReadAllInstructions: !this.state.haveReadAllInstructions,
     });
   };
 
@@ -55,15 +55,16 @@ class Dashboard extends React.Component {
   static getDerivedStateFromProps = (nextProps, prevState) => {
     if (nextProps.test) {
       return {
-        test: nextProps.test
+        test: nextProps.test,
       };
     }
+
     return null;
   };
 
   onTestStart = () => {
     this.setState({
-      isTestStarted: !this.state.isTestStarted
+      isTestStarted: !this.state.isTestStarted,
     });
   };
 
@@ -124,10 +125,11 @@ class Dashboard extends React.Component {
         </Fragment>
       );
     }
-    let cardContent;
-    console.log("test", this.state.test.name);
 
-    if (this.state.test == "") {
+    let cardContent;
+    console.log('test', this.state.test.name);
+
+    if (this.state.test == '') {
       cardContent = (
         <div className={classes.loading}>
           <CircularProgress />
@@ -189,6 +191,7 @@ class Dashboard extends React.Component {
         </Grid>
       );
     }
+
     return cardContent;
   };
 
@@ -217,12 +220,13 @@ class Dashboard extends React.Component {
         </Fragment>
       );
     }
+
     return testScreen;
   }
 }
 
 Dashboard.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -233,14 +237,14 @@ const mapStateToProps = state => {
     errorMessage: state.notify.error,
     notifyLoading: state.notify.loading,
     notifyClear: state.notify.clear,
-    currentUser: state.auth.currentUser
+    currentUser: state.auth.currentUser,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onTestFetch: id => dispatch(actions.fetchTest(id)),
-    onClearToast: () => dispatch(notifyClear())
+    onClearToast: () => dispatch(notifyClear()),
   };
 };
 
