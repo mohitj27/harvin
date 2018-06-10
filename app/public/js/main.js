@@ -28,6 +28,22 @@ $(function() {
 
   $("select").material_select();
 
+  $("nav")
+    .find("a")
+    .not(".button-collapse")
+    .each(function() {
+      // console.log("path0");
+
+      var href = $(this).attr("href");
+      var path = window.location.pathname;
+      console.log("path", path, href);
+
+      if (path.substring(0, href.length) === href) {
+        $(this)
+          .closest("li")
+          .addClass("active-link");
+      }
+    });
   // Date picker initialization
   if ($(".datepicker").length !== 0) {
     $(".datepicker").pickadate({
