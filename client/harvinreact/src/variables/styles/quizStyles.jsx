@@ -33,6 +33,8 @@ const quizStyles = {
     },
     clock: {
       flexGrow: '0.5',
+      margin: 'auto',
+      textAlign: 'center',
     },
     ExpansionPanelDetails: {
       padding: '24px',
@@ -52,6 +54,7 @@ const quizStyles = {
     containerNoSpacing: {
       margin: '-16px !important',
       marginTop: '20px',
+      paddingTop: '20px',
     },
     markForLater: {
         float: 'right',

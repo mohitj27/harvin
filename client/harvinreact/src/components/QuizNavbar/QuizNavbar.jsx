@@ -22,12 +22,10 @@ class QuizNavbar extends React.Component {
             <img src={logo} alt=""  className={classes.harvinLogo} />
 
           </Typography>
-          <Typography variant="title"  className={`${classes.flex} ${classes.on3b}`}>
-            Exam
+          <Typography variant="display1"  className={`${classes.flex} ${classes.on3b}`}>
+           Exam
           </Typography>
-          <Typography variant="title"  className={`${classes.flex} ${classes.on3b}`}>
-            Result
-          </Typography>
+
         </Toolbar>
       </AppBar>
     </div>

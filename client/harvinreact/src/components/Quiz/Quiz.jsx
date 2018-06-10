@@ -52,7 +52,7 @@ class Quiz extends Component {
     const interval = setInterval(()=> {
       try {
         this.setState({ time: this.state.time - 1 });
-        if (this.state.time === 0) {
+        if (this.state.time <= 0) {
           clearInterval(interval);
           this.setState({ testFinished: true });
         }
@@ -201,6 +201,8 @@ class Quiz extends Component {
       .post(`http://localhost:3001/admin/answers/${this.state.test._id}`, formData)
       .then(res => {
         alert(`You have scored ${res.data.marks}`);
+        window.location.replace('/activity');
+
       })
       .catch(err => console.log('err', err));
   };
@@ -338,7 +340,7 @@ class Quiz extends Component {
         {testName}
         </Typography>
         <div className={classes.testControls}>
-          <Typography className={classes.clock}>
+          <Typography variant="display2" className={classes.clock}>
             {min}:{sec}
           </Typography>
           <Button
@@ -434,7 +436,9 @@ class Quiz extends Component {
           onClearToast={this.props.onClearToast}
         />
       );
+
     if (this.state.testFinished === true) {
+      this.onSubmit({ preventDefault: ()=> {} });
       finishTestSnackBar = (<SnackBar
         message="Test Finished!"
         open={this.state.testFinished}
@@ -462,13 +466,13 @@ class Quiz extends Component {
         {finishTestSnackBar}
         <QuizNavbar/>
         {this.getTestTitle(this.props.test.name, classes)}
-        <Grid container="container" className={classes.containerNoSpacing}>
-          <ItemGrid xs={12} sm={8} md={8}>
+        <Grid container="container" direction="row" justify="flex-end" className={classes.containerNoSpacing}>
+          <ItemGrid xs={12} sm={6} md={6}>
             <div classNames={classes.questionContentCard}>
               {this.getCardContent(classes)}
             </div>
           </ItemGrid>
-          <ItemGrid style={{ padding: '15px !important' }} xs={12} sm={4} md={4}>
+          <ItemGrid style={{ padding: '15px !important' }} xs={12} sm={3} md={3}>
           <Card classNames={classes.navigationContentCard}>
               {this.getSectionNavigationContent(classes)}
           </Card>
@@ -477,7 +481,7 @@ class Quiz extends Component {
               color="primary"
               name="previous"
               onClick={this.handleArrowPrev}
-              style={{ margin: 16 }}
+              style={{ margin: 16, backgroundColor: '#13b38b', }}
             >
               <KeyboardArrowLeft />
             </Button>
@@ -486,7 +490,7 @@ class Quiz extends Component {
               color="primary"
               name="next"
               onClick={this.handleArrowNext}
-              style={{ margin: 16, float: 'right', }}
+              style={{ margin: 16, float: 'right', backgroundColor: '#13b38b', }}
             >
               <KeyboardArrowRight />
             </Button>

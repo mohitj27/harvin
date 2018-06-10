@@ -4,50 +4,57 @@ import {
   ContentPaste,
   LibraryBooks,
   NoteAdd
-} from "material-ui-icons";
-import DashboardPage from "../views/Dashboard/Dashboard.jsx";
-import Home from "../views/Home/Home.jsx";
-import AddQues from "../views/AddQues/AddQues.jsx";
-import ListTest from "../views/ListTest/ListTest.jsx";
-import CreateTest from "../views/CreateTest/CreateTest.jsx";
-import Questions from "../views/Questions/Questions.jsx";
+} from 'material-ui-icons';
+import DashboardPage from '../views/Dashboard/Dashboard.jsx';
+import Home from '../views/Home/Home.jsx';
+import AddQues from '../views/AddQues/AddQues.jsx';
+import ListTest from '../views/ListTest/ListTest.jsx';
+import CreateTest from '../views/CreateTest/CreateTest.jsx';
+import Questions from '../views/Questions/Questions.jsx';
+import Activity from '../views/Activity/Activity.jsx';
 const appRoutes = [
   {
-    path: "/home",
-    sidebarName: "Home",
+    path: '/home',
+    sidebarName: 'Home',
     icon: Dashboard,
-    component: Home
+    component: Home,
   },
   {
-    path: "/createTest",
-    sidebarName: "Create Test",
+    path: '/createTest',
+    sidebarName: 'Create Test',
     icon: Person,
-    component: CreateTest
+    component: CreateTest,
   },
   {
-    path: "/addQues",
-    sidebarName: "Add Question",
+    path: '/addQues',
+    sidebarName: 'Add Question',
     icon: NoteAdd,
-    component: AddQues
+    component: AddQues,
   },
   {
-    path: "/Tests",
-    sidebarName: "Tests",
+    path: '/Tests',
+    sidebarName: 'Tests',
     icon: NoteAdd,
-    component: ListTest
+    component: ListTest,
   },
   {
-    path: "/Questions",
-    sidebarName: "Questions",
+    path: '/Questions',
+    sidebarName: 'Questions',
     icon: NoteAdd,
-    component: Questions
+    component: Questions,
+  },
+  {
+    path: '/Activity',
+    sidebarName: 'Activity',
+    icon: NoteAdd,
+    component: Activity,
   },
   {
     redirect: true,
-    path: "/",
-    to: "/dashboard",
-    navbarName: "Redirect"
-  }
+    path: '/',
+    to: '/dashboard',
+    navbarName: 'Redirect',
+  },
 ];
 
 export default appRoutes;

@@ -7,7 +7,8 @@ const styles = {
     backgroundColor: 'white',
   },
   flex: {
-    flex: 0.15,
+    flex: 0.2,
+    textAlign: 'center',
   },
   menuButton: {
     marginLeft: -12,
@@ -19,6 +20,8 @@ const styles = {
   },
   on3b: {
     color: '#13b38b',
+    textAlign: 'left',
+
   },
 };
 export default styles;
