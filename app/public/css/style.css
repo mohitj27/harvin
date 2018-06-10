@@ -472,3 +472,16 @@ background: url('/images/hero01.jpg');
 #blog-section{
   margin-bottom: 100px;
 }
+
+.headerDivider {
+
+  border-left: 6px solid green;
+  height: inherit;
+
+}
+ul>li>p{
+  margin: 15px 10px;
+}
+#navbar{
+  background:white; 
+}
