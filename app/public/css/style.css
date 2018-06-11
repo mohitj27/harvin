@@ -587,7 +587,7 @@ em {
   align-items: center;
   grid-template-columns: 1fr 1fr;
   grid-gap: 1em;
-  z-index: 2;
+  /* z-index: 2; */
   /* color: white; */
 
 }
@@ -621,13 +621,6 @@ em {
   display: grid;
   grid-gap: 1em;
   z-index: 2;
-}
-
-#parent{
-  /* display: grid; */
-  /* justify-content: center; */
-  /* align-items: center; */
-  /* grid-template-columns: 1fr 1fr; */
 }
 
 #hero-img{
@@ -686,7 +679,7 @@ em {
   font-weight: bold;
 }
 
-#next-info > div > p:nth-child(3) {
+#next-info > div > p:nth-child(4) {
   color: #717171;
   line-height: 1.5em;
 }
@@ -699,4 +692,94 @@ em {
 #vid{
   grid-column: 2/3;
   grid-row: 2/3;
+}
+
+#scnd-section{
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 5em;
+}
+/* #scnd-section > div:nth-child(1) */
+#scnd-section > .features {
+  text-align: center;
+}
+
+#scnd-section > .features > div > i:nth-child(1){
+  color: #13b38b;
+  font-size: 4em;
+}
+
+#scnd-section > .features > div > p:nth-child(2){
+  color: #303130e6;
+  font-size: 1.2em;
+}
+
+#scnd-section > .features > div > p:nth-child(3){
+  color: #8e928ee6;
+  line-height: 2em;
+}
+
+#popular-course-heading{
+  grid-column: 1/4;
+  /* border-bottom: 2px solid #303130e6; */
+}
+
+#popular-course-heading > hr{
+  width: 10vw;
+  color: black;
+}
+#popular-course-heading > h4{
+  color: #303130e6;
+  font-weight: bold;
+}
+
+#popular-course-heading > p{
+  color: #8e928ee6;
+  font-weight: bold;
+}
+
+#testimonials-overlay-content {
+  text-align: center;
+  z-index: 2;
+  /* color: white */
+}
+
+#testimonials-overlay-content > h4 {
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+}
+
+#testimonials-overlay-content > p {
+  color: #ffffff9c;
+}
+
+#testimonials-overlay-content > hr {
+  width: 10vw;
+}
+
+#testimonials {
+  display: grid;
+  padding-top: 50px;
+  
+}
+#overlay-testimonials-section{
+  z-index: 1;
+  background-color: rgba(18, 21, 18, 0.49);
+  height: 55vh;
+  position: absolute;
+  width: 100%;
+}
+
+#testimonials-banner-img{
+  width: 100vw;
+  margin: 0;
+  position: absolute;
+  height: 55vh;
+}
+
+#feature-utilities {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
