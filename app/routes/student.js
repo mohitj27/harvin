@@ -77,10 +77,8 @@ router.put("/:username", async (req, res, next) => {
 
 // Handle user login -- for student
 router.post("/login", async function(req, res, next) {
-  console.log("login", req.body);
   try {
     const studentToken = await studentController.loginWithJWT(req.body);
-    console.log(studentToken);
     res.send(studentToken);
   } catch (e) {
     console.log(e);

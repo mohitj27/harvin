@@ -23,7 +23,7 @@ router.get("/", async (req, res, next) => {
   try {
     const foundQuestions = await quesController.getQuestions();
     return res.json({
-      questions: []
+      questions: foundQuestions
     });
   } catch (e) {
     next(e);

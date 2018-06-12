@@ -1,5 +1,6 @@
 const errorHandler = require('../errorHandler')
 const User = require('./../models/User')
+const Profile = require('./../models/Profile')
 const _ = require('lodash')
 Promise = require('bluebird')
 const mongoose = require('mongoose')
@@ -249,8 +250,29 @@ const updateFieldsInUserById = function (user, addToSetFields, setFields) {
     })
   }
 }
+const insertMarksToUser =  (testId,marks,user)=>{
+  console.log('user',marks)
+  return  new Promise(async (resolve,reject)=>{
+    try {
+      const foundUser=await User.findById({_id:user._id});
+      const foundProfile=foundUser.profile;
+      Profile.findByIdAndUpdate({_id:foundProfile},
+        {"$push":{"results":{testId,marks}}},
+        {upsert:true},(err)=>{
+          if(err)
+          reject(err)
+          resolve()
+        })
+    } catch (e) {
+      reject(e)
+    }
+
+
+  })
+}
 
 module.exports = {
+  insertMarksToUser,
   findUserByUsername,
   registerUser,
   saveUser,

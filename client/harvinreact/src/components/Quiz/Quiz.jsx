@@ -196,6 +196,7 @@ class Quiz extends Component {
     e.preventDefault();
     let formData = new FormData();
     formData.append('maxMarks', this.state.test.maxMarks);
+    formData.append('testId', this.state.test._id);
     formData.append('answers', JSON.stringify(this.state.sectionAnswers));
     axios
       .post(`http://localhost:3001/admin/answers/${this.state.test._id}`, formData)
