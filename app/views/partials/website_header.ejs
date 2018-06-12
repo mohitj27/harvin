@@ -49,7 +49,8 @@
 
   <nav id="main-nav">
     <div id="nav-wrapper">
-      <a href="/"><img src="/images/harvin.png" id="harvin-logo" alt="Harvin Logo"></a>
+      <a href="/" id="harvin-logo-anchor"><img src="/images/harvin.png" id="harvin-logo" alt="Harvin Logo"></a>
+      
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li>
           <a href="/aboutus" >About</a>
@@ -76,7 +77,41 @@
           <a href="/team">Our team</a>
         </li>
       </ul>
-      <div class="hide-on-med-and-down"  id="login-btn-wrapper"><a class="waves-effect waves-light btn" id="login-btn">Register / Login</a></div>
+      <div class="hide-on-med-and-down"  id="login-btn-wrapper"><a href="/admin/login" class="waves-effect waves-light btn" id="login-btn">Register / Login</a></div>
+      <ul class="side-nav side-nav-main" id="mobile-demo">
+        <li>
+          <h3 href="" class="brand-logo">MENU</h3>
+        </li>
+        <br>
+        <li>
+          <a href="/aboutus" class="bordered-list">ABOUT</a>
+        </li>
+        <li>
+          <a href="/centers" class="bordered-list">CENTERS</a>
+        </li>
+        <li>
+          <a href="/courses-list" class="bordered-list">COURSES</a>
+        </li>
+        <li>
+          <a href="/gallery" class="bordered-list">GALLERY</a>
+        </li>
+        <li>
+            <a href="/videos" class="bordered-list">Videos</a>
+          </li>
+        <li>
+          <a href="/downloads" class="bordered-list">Downloads</a>
+        </li>
+        <li>
+          <a href="/results" class="bordered-list">RESULTS</a>
+        </li>
+        <li>
+          <a href="/team" class="bordered-list">OUR TEAM</a>
+        </li>
+
+      </ul>
+      <a href="#" data-activates="mobile-demo" class="button-collapse " style="margin-top:5px;">
+        <i class="material-icons">menu</i>
+      </a>
     </div>
   </nav>
 

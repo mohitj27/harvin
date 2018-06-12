@@ -625,11 +625,12 @@ em {
   grid-row: 1/2;
   display: grid;
   grid-gap: 1em;
+  grid-template-columns: 1fr 1fr;
   z-index: 2;
 }
 
 #hero-img{
-  width: 90vw;
+  width: 100vw;
   /* z-index: 0; */
   margin: 0;
   position: absolute;
@@ -670,6 +671,7 @@ em {
   grid-row: 2/3;
   text-align: center;
   /* font-style: bold; */
+  margin: 0;
   background-color: #efeeee;
 }
 
@@ -692,11 +694,16 @@ em {
 #right-sec > iframe {
   /* justify-content: center;
   align-items: center; */
-  margin: 10px auto;
+  /* margin: 10px auto; */
 }
 #vid{
   grid-column: 2/3;
   grid-row: 2/3;
+}
+
+#vid > iframe {
+  height: 100%;
+  width: 100%;
 }
 
 #scnd-section{
@@ -801,7 +808,7 @@ em {
 }
 
 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
+/*  large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1800px) {
   #feature-utilities {
     margin-top: 200px;
@@ -825,4 +832,14 @@ em {
 
 #testimonials-overlay-content > div.carousel.carousel-slider.center.initialized {
   margin-top: 80px;
+}
+
+/*  large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 992px) {
+  /* #harvin-logo-anchor{
+    margin-top: 200px;
+  } */
+  #nav-wrapper {
+    text-align: center;
+  }
 }
