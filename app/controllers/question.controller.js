@@ -23,8 +23,7 @@ const addQuestion = function (questionObj) {
 }
 
 const checkAns = (questionId, answers) => {
-  console.log(questionId
-    , answers)
+
 
   return new Promise(async (resolve, reject) => {
     let isCorrect = true
@@ -33,8 +32,7 @@ const checkAns = (questionId, answers) => {
       const foundQuestions = await getQuestions({
         _id: questionId
       })
-      console.log(foundQuestions)
-      // if question not found - return 
+      // if question not found - return
       if (foundQuestions.length < 1) return resolve(null)
       const foundQuestion = foundQuestions[0]
 

@@ -1,6 +1,6 @@
 //TODO SWATI REMOVE CARDS, LEFT ALIGN DETAIL AND REMOVE ACTIVATOR
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import {
   withStyles,
   Button,
@@ -11,42 +11,61 @@ import {
   ExpansionPanelSummary,
   Typography,
   ExpansionPanelDetails,
-  ExpansionPanel
-} from "material-ui";
+  ExpansionPanel,
+  Card,
+} from 'material-ui';
+import SnackBar from '@material-ui/core/Snackbar';
 import {
   KeyboardArrowLeft,
   KeyboardArrowRight,
   KeyboardArrowDown
-} from "material-ui-icons";
-import { bindActionCreators } from "redux";
-import PropTypes from "prop-types";
-import { RegularCard, ItemGrid } from "../";
+} from 'material-ui-icons';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+import { RegularCard, ItemGrid } from '../';
 import {
   ErrorSnackbar,
   LoadingSnackbar,
   SuccessSnackbar
-} from "../../components/GlobalSnackbar/GlobalSnackbar";
-import axios from "axios";
-import HtmlToReact from "html-to-react";
-import quizStyles from "../../variables/styles/quizStyles";
-import update from "immutability-helper";
-import _ from "lodash";
+} from '../../components/GlobalSnackbar/GlobalSnackbar';
+import QuizNavbar from '../../components/QuizNavbar/QuizNavbar';
+import axios from 'axios';
+import HtmlToReact from 'html-to-react';
+import quizStyles from '../../variables/styles/quizStyles';
+import update from 'immutability-helper';
+import _ from 'lodash';
 const HtmlToReactParser = HtmlToReact.Parser;
 
 class Quiz extends Component {
   state = {
     questions: [],
-    currentQuestion: "",
+    currentQuestion: '',
     currentOptions: [],
-    expandedSection: "",
+    expandedSection: '',
     answers: [],
-    test: "test",
-    lastQuestionOpened: ""
+    test: 'test',
+    lastQuestionOpened: '',
+    time: '',
   };
+  constructor(props) {
+    super(props);
+    const interval = setInterval(()=> {
+      try {
+        this.setState({ time: this.state.time - 1 });
+        if (this.state.time <= 0) {
+          clearInterval(interval);
+          this.setState({ testFinished: true });
+        }
+      } catch (e) {
+        console.log('err', e);
+      }
+    }, 1000);
+  }
+
   componentDidMount = () => {};
 
   handleQuizNavClick = (e, questions) => {
-    const curr = _.find(questions, function(o) {
+    const curr = _.find(questions, function (o) {
       return o._id === e.target.id;
     });
 
@@ -54,9 +73,10 @@ class Quiz extends Component {
     this.setState({
       currentQuestion: curr,
       currentOptions,
-      lastQuestionOpened: curr._id
+      lastQuestionOpened: curr._id,
     });
   };
+
   handlePanelExpansion = (e, id) => {
     e.stopPropagation();
     let questionToOpen;
@@ -80,7 +100,7 @@ class Quiz extends Component {
       expandedSection: id,
       currentOptions,
       questions: sectionOpened.questions,
-      currentQuestion: questionToOpen
+      currentQuestion: questionToOpen,
     });
   };
 
@@ -113,10 +133,11 @@ class Quiz extends Component {
         return obj === e.target.id;
       });
     }
+
     const newSectionAnswers = update(sectionAnswers, {
       [sectionAnswerIndex]: {
-        answer: { [answerObjIndex]: { $set: answerObj } }
-      }
+        answer: { [answerObjIndex]: { $set: answerObj } },
+      },
     });
 
     this.setState({ sectionAnswers: newSectionAnswers });
@@ -125,7 +146,7 @@ class Quiz extends Component {
   getOptions = () => {
     let answerObj = null;
     try {
-      if (typeof this.state.currentQuestion == "object") {
+      if (typeof this.state.currentQuestion == 'object') {
         const sectionAnswer = _.find(this.state.sectionAnswers, secObj => {
           return secObj._id === this.state.expandedSection;
         });
@@ -174,15 +195,19 @@ class Quiz extends Component {
   onSubmit = e => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("maxMarks",this.state.test.maxMarks);
-    formData.append("answers", JSON.stringify(this.state.sectionAnswers));
+    formData.append('maxMarks', this.state.test.maxMarks);
+    formData.append('testId', this.state.test._id);
+    formData.append('answers', JSON.stringify(this.state.sectionAnswers));
     axios
       .post(`http://localhost:3001/admin/answers/${this.state.test._id}`, formData)
       .then(res => {
         alert(`You have scored ${res.data.marks}`);
+        window.location.replace('/activity');
+
       })
-      .catch(err => console.log("err", err));
+      .catch(err => console.log('err', err));
   };
+
   getSectionNavigationContent = classes => {
     if (!this.state.test.sections) return;
     return (
@@ -200,7 +225,7 @@ class Quiz extends Component {
                   {section.title}
                 </Typography>
               </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
+              <ExpansionPanelDetails className={classes.ExpansionPanelDetails}>
                 {this.getQuestionNavigationContent(classes, section.questions)}
               </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -209,6 +234,7 @@ class Quiz extends Component {
       </div>
     );
   };
+
   getQuestionNavigationContent = (classes, questions) => {
     if (!questions) return <div />;
 
@@ -275,29 +301,63 @@ class Quiz extends Component {
       );
     });
   };
+
   static getDerivedStateFromProps = (nextProps, prevState) => {
     if (nextProps.test) {
-      console.log("nextProp", nextProps);
+      console.log('nextProp', nextProps);
       //Section Answer Created Here
       const answerObj = nextProps.test.sections.map((section, i) => {
         const innObj = section.questions.map(question => {
           return { _id: question._id, options: [] };
         });
-        return { _id: section._id, answer: innObj,posMarks:section.posMarks,negMarks:section.negMarks, };
+        return { _id: section._id, answer: innObj, posMarks: section.posMarks, negMarks: section.negMarks, };
       });
       return {
         test: nextProps.test,
         questions: nextProps.test.sections[0].questions,
         sectionAnswers: answerObj,
-        expandedSection: nextProps.test.sections[0]
+        expandedSection: nextProps.test.sections[0]._id,
+        currentQuestion: nextProps.test.sections[0].questions[0],
+        currentOptions: nextProps.test.sections[0].questions[0].options,
+        time: parseInt(nextProps.test.time) * 60,
       };
     }
+
     return {};
   };
+
   handleMarkForLater = event => {
     const currentQuestionState = this.state.currentQuestion;
     currentQuestionState.markForLater = event.target.checked;
     this.setState({ currentQuestion: currentQuestionState });
+  };
+
+  getTestTitle = (testName, classes)=> {
+    const min = Math.floor(this.state.time / 60);
+    const sec = this.state.time % 60;
+    return (
+      <div className={classes.testHeader}>
+        <Typography className={classes.testName} variant="display2">
+        {testName}
+        </Typography>
+        <div className={classes.testControls}>
+          <Typography variant="display2" className={classes.clock}>
+            {min}:{sec}
+          </Typography>
+          <Button
+            variant="raised"
+            color="primary"
+            onClick={this.onSubmit}
+            style={{ margin: 16 }}
+            className={classes.submitButton}
+          >
+            submit
+          </Button>
+        </div>
+
+
+      </div>
+    );
   };
 
   handleArrowPrev = e => {
@@ -308,10 +368,9 @@ class Quiz extends Component {
 
     currentIndex--;
 
-    console.log("setting", this.state.questions[currentIndex], currentIndex);
     this.setState({
       currentQuestion: this.state.questions[currentIndex],
-      currentOptions: this.state.questions[currentIndex].options
+      currentOptions: this.state.questions[currentIndex].options,
     });
   };
 
@@ -325,13 +384,13 @@ class Quiz extends Component {
     currentIndex++;
     this.setState({
       currentQuestion: this.state.questions[currentIndex],
-      currentOptions: this.state.questions[currentIndex].options
+      currentOptions: this.state.questions[currentIndex].options,
     });
   };
 
   getCardContent = classes => {
     let markForLater = null;
-    if (this.state.currentQuestion !== "") {
+    if (this.state.currentQuestion !== '') {
       markForLater = (
         <FormControlLabel
           className={classes.markForLater}
@@ -353,12 +412,15 @@ class Quiz extends Component {
       this.state.currentQuestion.question
     );
     const opt = this.getOptions(classes);
-    return (
-      <div>
+    return (<div>
+      {markForLater}
+      <Card style={{ padding: '20px', }}>
+
         {reactElement}
         {opt}
-        {markForLater}
-      </div>
+      </Card>
+
+    </div>
     );
   };
 
@@ -367,7 +429,8 @@ class Quiz extends Component {
     let errorSnackbar = null;
     let successSnackbar = null;
     let processingSnackbar = null;
-    if (this.props.errorMessage && this.props.errorMessage !== "")
+    let finishTestSnackBar = null;
+    if (this.props.errorMessage && this.props.errorMessage !== '')
       errorSnackbar = (
         <ErrorSnackbar
           errorMessage={this.props.errorMessage}
@@ -375,7 +438,15 @@ class Quiz extends Component {
         />
       );
 
-    if (this.props.successMessage && this.props.successMessage !== "")
+    if (this.state.testFinished === true) {
+      this.onSubmit({ preventDefault: ()=> {} });
+      finishTestSnackBar = (<SnackBar
+        message="Test Finished!"
+        open={this.state.testFinished}
+      />);
+    }
+
+    if (this.props.successMessage && this.props.successMessage !== '')
       successSnackbar = (
         <SuccessSnackbar
           successMessage={this.props.succuessMessage}
@@ -383,9 +454,9 @@ class Quiz extends Component {
         />
       );
 
-    if (this.props.notifyLoading && this.props.notifyLoading !== "")
+    if (this.props.notifyLoading && this.props.notifyLoading !== '')
       processingSnackbar = (
-        <LoadingSnackbar notifyLoading={this.props.notifyLoading !== ""} />
+        <LoadingSnackbar notifyLoading={this.props.notifyLoading !== ''} />
       );
 
     return (
@@ -393,28 +464,25 @@ class Quiz extends Component {
         {errorSnackbar}
         {successSnackbar}
         {processingSnackbar}
-        <Grid container="container">
-          <ItemGrid xs={12} sm={8} md={8}>
-            <RegularCard
-              cardTitle="Selected Question"
-              cardSubtitle=""
-              headerColor="blue"
-              content={this.getCardContent(classes)}
-            />
+        {finishTestSnackBar}
+        <QuizNavbar/>
+        {this.getTestTitle(this.props.test.name, classes)}
+        <Grid container="container" direction="row" justify="flex-end" className={classes.containerNoSpacing}>
+          <ItemGrid xs={12} sm={6} md={6}>
+            <div classNames={classes.questionContentCard}>
+              {this.getCardContent(classes)}
+            </div>
           </ItemGrid>
-          <ItemGrid xs={12} sm={4} md={4}>
-            <RegularCard
-              cardTitle="Select any question to navigate"
-              cardSubtitle=""
-              headerColor="blue"
-              content={this.getSectionNavigationContent(classes)}
-            />
+          <ItemGrid style={{ padding: '15px !important' }} xs={12} sm={3} md={3}>
+          <Card classNames={classes.navigationContentCard}>
+              {this.getSectionNavigationContent(classes)}
+          </Card>
             <Button
               variant="fab"
               color="primary"
               name="previous"
               onClick={this.handleArrowPrev}
-              style={{ margin: 16 }}
+              style={{ margin: 16, backgroundColor: '#13b38b', }}
             >
               <KeyboardArrowLeft />
             </Button>
@@ -423,18 +491,11 @@ class Quiz extends Component {
               color="primary"
               name="next"
               onClick={this.handleArrowNext}
-              style={{ margin: 16 }}
+              style={{ margin: 16, float: 'right', backgroundColor: '#13b38b', }}
             >
               <KeyboardArrowRight />
             </Button>
-            <Button
-              variant="raised"
-              color="primary"
-              onClick={this.onSubmit}
-              style={{ margin: 16 }}
-            >
-              submit
-            </Button>
+
           </ItemGrid>
         </Grid>
       </Fragment>
@@ -442,7 +503,7 @@ class Quiz extends Component {
   }
 }
 Quiz.PropTypes = {
-  quiz: PropTypes.object.isRequired
+  quiz: PropTypes.object.isRequired,
 };
 function mapStateToProps(state) {
   return {};
