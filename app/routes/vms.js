@@ -64,6 +64,10 @@ router.get("/vms", middleware.isLoggedIn, (req, res) => {
   res.render("newVisitor");
 });
 
+router.get("/mdis", (req, res) => {
+  res.render("mdis");
+});
+
 router.post(
   "/vms",
   middleware.isLoggedIn,
