@@ -26,6 +26,9 @@ router.get("/test", (req, res, next) => {
 router.get("/harvest", (req, res, next) => {
   res.render("harvest");
 }); /*Route for new Landing page */
+router.get("/home", (req, res) => {
+  res.render("<h1>hello</h1>");
+});
 router.get("/", (req, res) => {
   res.render("HomePage");
 });
