@@ -836,10 +836,19 @@ em {
 
 /*  large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 992px) {
-  /* #harvin-logo-anchor{
-    margin-top: 200px;
-  } */
-  #nav-wrapper {
-    text-align: center;
+  #harvin-logo-anchor{
+   grid-column: 2/3;
+
   }
+
+  #sidebar-collapse{
+    grid-column: 1/2;
+    grid-row: 1/1
+  }
+
+  /* #nav-wrapper {
+    grid-template-columns: 
+  } */
+
+  
 }
