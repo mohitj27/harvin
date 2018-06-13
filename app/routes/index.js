@@ -26,6 +26,7 @@ const enquiryRoutes = require('./enquiry')
 const videoRoutes = require('./video')
 const studentAppRoutes = require('./studentApp')
 
+router.use(vmsRoutes)
 router.use('/student', studentRoutes)
 router.use('/admin/batches', batchRoutes)
 router.use('/admin/files', fileRoutes)
@@ -50,7 +51,7 @@ router.use('/admin/enquiries', enquiryRoutes)
 router.use('/admin/videos', videoRoutes)
 router.use('/admin', adminRoutes)
 router.use('/studentApp/home', studentAppRoutes)
-router.use(vmsRoutes)
+
 
 // if not route mentioned in url
 // router.get('*', function (req, res) {
