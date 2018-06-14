@@ -3,7 +3,8 @@ import {
   Person,
   ContentPaste,
   LibraryBooks,
-  NoteAdd
+  NoteAdd,
+  Delete
 } from 'material-ui-icons';
 import DashboardPage from '../views/Dashboard/Dashboard.jsx';
 import Home from '../views/Home/Home.jsx';
@@ -29,6 +30,12 @@ const appRoutes = [
     path: '/addQues',
     sidebarName: 'Add Question',
     icon: NoteAdd,
+    component: AddQues,
+  },
+  {
+    path: '/removeQues',
+    sidebarName: 'Remove Question',
+    icon: Delete,
     component: AddQues,
   },
   {

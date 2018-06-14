@@ -12,14 +12,16 @@ import {
   SuccessSnackbar,
   LoadingSnackbar
 } from "../../components/GlobalSnackbar/GlobalSnackbar";
-import { ExpandMore } from "material-ui-icons";
+import { ExpandMore ,Edit ,Delete} from "material-ui-icons";
 import HtmlToReact from "html-to-react";
 import {
   Button,
   Grid,
+  Icon,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
+  ExpansionPanelActions,
   Typography,
   Checkbox,
   IconButton
@@ -27,13 +29,31 @@ import {
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { withStyles } from "@material-ui/core/styles";
 import { RegularCard, ItemGrid } from "../../components";
+import ProgressBar from '../../components/ProgressBar/ProgessBar';
+
 
 const HtmlToReactParser = HtmlToReact.Parser;
 
 class Questions extends Component {
   state = {
-    questions: null
+    questions: null,
+    loading: false,
+    success: false
   };
+
+  editButtonClicked=(event,index,Obj)=>{
+    // console.log(event);
+    // console.log(Obj._id);
+    // var index = array.indexOf(5);
+    // if (index > -1) {
+    //   array.splice(index, 1);
+    // }
+  }
+
+  deleteButtonClicked=(event,index,Obj)=>{
+    // console.log(Obj._id);
+  }
+
 
   getCardContent() {
     let { classes } = this.props;
@@ -64,9 +84,16 @@ class Questions extends Component {
                   {this.getPrevQuesOptions(ques.options)}
                 </Grid>
               </ExpansionPanelDetails>
+              <ExpansionPanelActions>
+                  <Button onClick={(event)=>{this.editButtonClicked(event,i,ques)}}>
+                    <Edit/>
+                  </Button>
+                  <Button onClick={(event)=>this.deleteButtonClicked(event,i,ques)}>
+                    <Delete/>
+                  </Button>
+              </ExpansionPanelActions>
             </ExpansionPanel>
-          );
-        });
+          )        });
       } else {
         content = (
           <Grid
@@ -99,10 +126,10 @@ class Questions extends Component {
 
   componentDidMount() {
     this.props.onQuestionsFetch();
+    console.log('componentDidMount',this.state.questions)
   }
 
   static getDerivedStateFromProps = (nextProps, prevState) => {
-    console.log("next", nextProps);
 
     if (
       !nextProps.isFetchingAllQuestionsInProgress &&
@@ -137,7 +164,7 @@ class Questions extends Component {
     });
   };
 
-  render() {
+  render() { 
     let successSnackbar =
       this.props.successMessage !== "" ? (
         <SuccessSnackbar
@@ -185,7 +212,7 @@ function mapStateToProps(state) {
     notifyClear: state.notify.clear,
     questions: state.questions.allQuestions,
     isFetchingAllQuestionsInProgress:
-      state.questions.isFetchingAllQuestionsInProgress
+    state.questions.isFetchingAllQuestionsInProgress
   };
 }
 

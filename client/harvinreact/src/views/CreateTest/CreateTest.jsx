@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import update from "immutability-helper";
 import _ from "lodash";
+import UniStyle from '../uniStyle/style'
 import quizStyles from "../../variables/styles/quizStyles";
 import {
   fetchTestList,
@@ -91,12 +92,13 @@ class CreateTest extends React.Component {
   };
   handleTestSubmitClick = e => {
     e.preventDefault();
+    if( this.state.name!=='' && this.state.maxMarks  && this.state.time!==''){
     let form = new FormData();
     form.append("sections", JSON.stringify(this.state.sections));
     form.append("name", this.state.name);
     form.append("time", this.state.time);
     form.append("maxMarks", this.state.maxMarks);
-    this.props.sendCreatedTest(form);
+    this.props.sendCreatedTest(form);}
   };
   handlePanelExpansion = (e, pos) => {
     e.stopPropagation();
@@ -145,10 +147,11 @@ class CreateTest extends React.Component {
     return (
       <div>
         <Grid container justify="center">
-          <h3>Create a test</h3>
-          <Grid item xs={6}>
+          <h3 style={UniStyle.uppercaseString}>Create a test</h3>
+          <Grid item xs={12}>
             <TextField
               id="name"
+              required="true"
               label="Test Name"
               value={this.state.name}
               onChange={this.handleChange}
@@ -157,6 +160,7 @@ class CreateTest extends React.Component {
             />
             <TextField
               id="maxMarks"
+              required="true"
               name="maxMarks"
               label="Max Marks"
               value={this.state.maxMarks}
@@ -165,6 +169,7 @@ class CreateTest extends React.Component {
             />
             <TextField
               id="time"
+              required="true"
               name="time"
               label="Time(in min)"
               value={this.state.time}
@@ -247,18 +252,21 @@ class CreateTest extends React.Component {
                 </ExpansionPanel>
               );
             })}
+            <br/>
             <Button variant="fab" onClick={this.handleAddSectionToTestClick}>
               <Add />
             </Button>
-            <Button variant="raised" onClick={this.handleTestSubmitClick}>
+            <Button style={{marginLeft:'2vw'}} variant="raised" onClick={this.handleTestSubmitClick}>
               Submit
             </Button>
           </Grid>
         </Grid>
 
         <Grid container justify="center">
-          <h3>Previously added questions</h3>
+          <h3 style={UniStyle.uppercaseString}>Previously added questions</h3>
         </Grid>
+        <br/>
+        <br/>
         {this.props.allQuestions.map((ques, i) => {
           let reactElement = htmlToReactParser.parse(ques.question);
           return (

@@ -5,14 +5,18 @@ import {
   GET_ALL_QUESTIONS_SUCCESS,
   CREATE_QUES,
   CREATE_QUES_ERROR,
-  CREATE_QUES_SUCCESS
+  CREATE_QUES_SUCCESS,
+  DELETE_QUES,
+  DELETE_QUES_SUCCESS,
+  DELETE_QUES_ERROR
 } from "../actions/types";
 
 const initialState = {
   allQuestions: [],
   isCreateQuesInProgress: false,
   isFetchingAllQuestionsInProgress: false,
-  isQuestionAddedSuccessfully: false
+  isQuestionAddedSuccessfully: false,
+  isQuestionDeleteInProgress:false
 };
 
 const getAllQuestions = (state, action) => {
@@ -48,6 +52,22 @@ const createQuesError = (state, action) => {
   });
 };
 
+const deleteQues =()=>{
+  return update(state,{
+    isCreateQuesInProgress:{$set:true}
+  });
+};
+const deleteQuesSuccess =()=>{
+  return update(state,{
+    isCreateQuesInProgress:{$set:false}
+  });
+};
+const deleteQuesError =()=>{
+  return update(state,{
+    isCreateQuesInProgress:{$set:false}
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_QUESTIONS:
@@ -62,6 +82,13 @@ export default (state = initialState, action) => {
       return createQuesError(state, action);
     case CREATE_QUES_SUCCESS:
       return createQuesSuccess(state, action);
+    case DELETE_QUES:
+      return deleteQues(state,action)
+    case DELETE_QUES_SUCCESS:
+      return deleteQuesSuccess(state ,action);
+    case DELETE_QUES_ERROR:
+      return deleteQuesError(state,action)
+    
     default:
       return state;
   }

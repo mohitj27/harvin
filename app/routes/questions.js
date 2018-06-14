@@ -30,4 +30,29 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.delete("/delete/:id", async (req, res, next) => {
+  try {
+    console.log(req.params.id);
+    const questionsAfterObjectDelete = await quesController.deleteQuestion({_id:req.params.id});
+    console.log(questionsAfterObjectDelete);
+    if(!questionsAfterObjectDelete){
+      return res.json({
+        success:false,
+        msg:"Question Could not be deleted ."
+      });
+    }
+    return res.json({
+      questions: questionsAfterObjectDelete,
+      success:true,
+      msg:"Question Deleted Successfully ."
+    });
+  } catch (e) {
+    console.log(e);
+    return res.json({
+      success:false,
+      msg:"Question Could not be deleted ."
+    });
+  }
+});
+
 module.exports = router;
