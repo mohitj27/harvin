@@ -738,10 +738,6 @@ em {
   /* border-bottom: 2px solid #303130e6; */
 }
 
-#popular-course-heading > hr{
-  width: 10vw;
-  color: black;
-}
 #popular-course-heading > h4{
   color: #303130e6;
   font-weight: bold;
@@ -765,10 +761,6 @@ em {
 
 #testimonials-overlay-content > p {
   color: #ffffff9c;
-}
-
-#testimonials-overlay-content > hr {
-  width: 10vw;
 }
 
 #testimonials {
@@ -836,10 +828,49 @@ em {
 
 /*  large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 992px) {
-  /* #harvin-logo-anchor{
-    margin-top: 200px;
-  } */
-  #nav-wrapper {
-    text-align: center;
+  #harvin-logo-anchor{
+   grid-column: 2/3;
+
   }
+
+  #sidebar-collapse{
+    grid-column: 1/2;
+    grid-row: 1/1
+  }
+
+  /* #nav-wrapper {
+    grid-template-columns: 
+  } */
+
+  
 }
+
+.testimonial-text{
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
+.testimonial-avatar{
+  font-size: 100px;
+}
+
+#testimonials-wrapper > .indicators .indicator-item {
+background-color: #a8cec4;
+}
+
+#testimonials-wrapper > .indicators .indicator-item.active{
+background-color: #13b38b;
+}
+
+#daily-blogs{
+  color: black
+}
+
+.short-hr{
+  width: 10vw;
+}
+
+#view-all-courses-btn{
+  grid-column: 2/3;
+}
+
