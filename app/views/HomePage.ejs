@@ -4,10 +4,10 @@
 			margin-top: 4em;
 
 		}
-		#navbar >div{
-		height:100%;
-		}
 
+		#navbar>div {
+			height: 100%;
+		}
 	</style>
 	<!-- <link href="../css/homePage.css" type="text/css" rel="stylesheet" /> -->
 	<meta name="google-site-verification" content="eSPtYedDuFnn9GWxmT-OZJtAugNRnUJwuZ65y7JDPfE" />
@@ -71,7 +71,7 @@
 			</div>
 		</div> -->
 
-		<!-- <img src="/images/hero.jpeg" class="responsive" id="hero-img" alt=""> -->
+		<img src="/images/hero.jpeg" class="responsive" id="hero-img" alt="">
 		<div id="overlay"></div>
 		<div class="section container" id="fst-section">
 
@@ -101,8 +101,10 @@
 					</div>
 
 				</div>
-				<div id="vid"><iframe src="https://www.youtube.com/embed/GbMYOQYhVGo?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0"
-					allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+				<div id="vid">
+					<iframe src="https://www.youtube.com/embed/GbMYOQYhVGo?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media"
+					 allowfullscreen></iframe>
+				</div>
 			</div>
 		</div>
 		<div class="section container" id="scnd-section">
@@ -133,53 +135,36 @@
 			<div id="popular-course-heading">
 				<h4>POPULAR COURSES</h4>
 				<p>Provides course for Medical And Engineering</p>
-				<hr>
+				<hr class="short-hr">
 			</div>
-			<div class="courses-card">
-				<div class="card">
-					<div class="card-image">
-						<img src="images/hero01.jpg">
-						<span class="card-title">Card Title</span>
-						<a class="btn-floating halfway-fab waves-effect waves-light red">
-							<i class="material-icons">near_me</i>
-						</a>
-					</div>
-					<div class="card-content">
-						<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little
-							markup to use effectively.</p>
-					</div>
-				</div>
-			</div>
-			<div class="courses-card">
-				<div class="card">
-					<div class="card-image">
-						<img src="images/hero01.jpg">
-						<span class="card-title">Card Title</span>
-						<a class="btn-floating halfway-fab waves-effect waves-light red">
-							<i class="material-icons">near_me</i>
-						</a>
-					</div>
-					<div class="card-content">
-						<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little
-							markup to use effectively.</p>
-					</div>
-				</div>
-			</div>
-			<div class="courses-card">
-				<div class="card">
-					<div class="card-image">
-						<img src="images/hero01.jpg">
-						<span class="card-title">Card Title</span>
-						<a class="btn-floating halfway-fab waves-effect waves-light red">
-							<i class="material-icons">near_me</i>
-						</a>
-					</div>
-					<div class="card-content">
-						<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little
-							markup to use effectively.</p>
-					</div>
-				</div>
-			</div>
+					<%if(foundCourses){%>
+              <%foundCourses.forEach((course,i)=>{%>
+
+                <div class="course-card">
+                  <div class="card">
+                    <div class="card-image">
+                      <img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
+                      <span class="card-title">
+                        <%=course.courseName%>
+											</span>
+											<a class="btn-floating halfway-fab waves-effect waves-light red">
+												<i class="material-icons">near_me</i>
+											</a>
+                    </div>
+
+                    <div class="card-content">
+                      <p class="truncate">
+                        <%=course.courseFor%>
+                      </p>
+                    </div>
+                    <div class="card-action">
+                      <a href="/courses-list/?title=<%=course.courseUrl%>">Read more...</a>
+                    </div>
+                  </div>
+                </div>
+              <%})%>
+            <%}%>
+
 		</div>
 		<img src="/images/banner1.jpeg" id="testimonials-banner-img" alt="Banner">
 		<div id="overlay-testimonials-section"></div>
@@ -187,7 +172,7 @@
 			<div id="testimonials-overlay-content">
 				<h4>LET'S TRY OUR UTILITIES</h4>
 				<p>When you learn in Harvin Academy, you get access to our utilities</p>
-				<hr>
+				<hr class="short-hr">
 				<div id="feature-utilities" class="z-depth-3">
 					<div class="features">
 						<div class="card-content">
@@ -212,58 +197,39 @@
 				</div>
 				<h4>HAPPY STUDENTS</h4>
 				<p>What students have to say</p>
-				<hr>
-				<div class="carousel carousel-slider center" data-indicators="true">
-					<div class="carousel-fixed-item center">
+				<hr class="short-hr">
+				<div class="carousel carousel-slider center" id="testimonials-wrapper" data-indicators="true">
+					<!-- <div class="carousel-fixed-item center">
 						<a class="btn waves-effect white grey-text darken-text-2">button</a>
-					</div>
+					</div> -->
 					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
-						<p class="black-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
+						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
 							refers? Bonum incolumis acies: misera caecitas.</p>
+						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
 					</div>
-					<div class="carousel-item amber white-text" href="#two!">
-						<h2 class="testimonial-quote">Second Panel</h2>
-						<p class="black-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
+					<div class="carousel-item  white black-text" href="#two!">
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
 							refers? Bonum incolumis acies: misera caecitas.</p>
+						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
 					</div>
-					<div class="carousel-item green white-text" href="#three!">
-						<h2 class="testimonial-quote">Third Panel</h2>
-						<p class="black-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
+					<div class="carousel-item  white black-text" href="#three!">
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
 							refers? Bonum incolumis acies: misera caecitas.</p>
+						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
 					</div>
-					<div class="carousel-item blue white-text" href="#four!">
-						<h2 class="testimonial-quote">Fourth Panel</h2>
-						<p class="black-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
+					<div class="carousel-item white black-text" href="#four!">
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
 							refers? Bonum incolumis acies: misera caecitas.</p>
+						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- <div class="happy-stendets-section section no-pad center">
-
-			<div class="carousel carousel-slider center" data-indicators="true">
-
-				<div class="carousel-item white " href="#one!">
-					<h2>First Testimonial</h2>
-					<p class="white-text">This is your first panel</p>
-				</div>
-				<div class="carousel-item  white" href="#two!">
-					<h2>Second Testimonial</h2>
-					<p class="white-text">This is your second panel</p>
-				</div>
-				<div class="carousel-item  white" href="#three!">
-					<h2>Third Testimonial</h2>
-					<p class="white-text">This is your third panel</p>
-				</div>
-				<div class="carousel-item white" href="#four!">
-					<h2>Fourth Testimonial</h2>
-					<p class="white-text">This is your fourth panel</p>
-				</div>
-			</div>
-			<a class="btn waves-effect white inverted-button">VIEW ALL</a>
-		</div> -->
 		<div class="section download-app-section">
 			<div class="container">
 				<div class="row">
@@ -342,46 +308,23 @@
 			<div class="container">
 
 				<div class="row center">
-					<h3 class="section-heading">FROM OUR BLOG</h3>
-
-					<div class="col s12 l4 m4 courses-card">
-						<div class="card hoverable">
-							<div class="card-image">
-								<img src="images/hero01.jpg">
-								<span class="why-title">Card Title</span>
+					<h3 class="section-heading" id="daily-blogs">FROM OUR BLOG</h3>
+					<p>From our blogs</p>
+					<hr class="short-hr">
+					<%foundPopularBlogs.forEach(function(blog) {%>
+						<a href="/blog/<%=blog.url%>">
+							<div class="col s12 l4 m4 courses-card">
+								<div class="card hoverable">
+									<div class="card-image">
+										<img class="responsive-img" src="/blogImage/<%=blog.coverImgName%>">
+										<span class="why-title"><%=blog.blogTitle%></span>
+									</div>
+								</div>
 							</div>
-							<div class="card-content">
-								<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little
-									markup to use effectively.</p>
-							</div>
-						</div>
-					</div>
-					<div class="col s12 l4 m4 courses-card-section">
-						<div class="card hoverable">
-							<div class="card-image">
-								<img src="images/hero01.jpg">
-								<span class="why-title">Card Title</span>
-							</div>
-							<div class="card-content">
-								<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little
-									markup to use effectively.</p>
-							</div>
-						</div>
-					</div>
-					<div class="col s12 l4 m4 courses-card">
-						<div class="card hoverable">
-							<div class="card-image">
-								<img src="images/hero01.jpg">
-								<span class="why-title">Card Title</span>
-							</div>
-							<div class="card-content">
-								<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little
-									markup to use effectively.</p>
-							</div>
-						</div>
-
-					</div>
-					<a class="btn waves-effect white inverted-button">VIEW ALL</a>
+						</a>
+					<%})%>
+					
+					<a class="btn waves-effect white inverted-button" href="/blog">VIEW ALL</a>
 
 				</div>
 
