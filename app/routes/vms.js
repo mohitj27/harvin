@@ -6,6 +6,7 @@ const errorHandler = require("../errorHandler");
 const middleware = require("../middleware");
 const mongoose = require("mongoose");
 const Gallery = require("./../models/Gallery");
+const Course = require("./../models/Course");
 const Visitor = require("./../models/Visitor");
 const Blog = require("./../models/Blog");
 const Link = require("./../models/Link");
@@ -25,28 +26,22 @@ router.get("/test", (req, res, next) => {
 
 router.get("/harvest", (req, res, next) => {
   res.render("harvest");
-}); /*Route for new Landing page */
-router.get("/home", (req, res) => {
-  res.render("<h1>hello</h1>");
 });
+
 router.get("/", (req, res) => {
-  res.render("HomePage");
-});
-router.get("/", (req, res, next) => {
-  Gallery.find({
-    category: {
-      $in: ["results"]
-    }
-  }).exec((err, foundStudents) => {
-    if (!err && foundStudents) {
-      res.render("vmsLanding", {
-        students: foundStudents
+  Blog.find({ publish: "on" })
+    .sort({ views: -1 })
+    .limit(3)
+    .then(foundPopularBlogs => {
+      Course.find({})
+      .then(foundCourses => {
+
+        res.render("HomePage", {
+          foundPopularBlogs,
+          foundCourses
+        })
       });
-    } else {
-      console.log(err);
-      next(new errors.generic());
-    }
-  });
+    }).catch(err => next(err))
 });
 
 router.get("/vms/phone/:phone", async (req, res, next) => {
