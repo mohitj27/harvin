@@ -52,17 +52,17 @@ const createQuesError = (state, action) => {
   });
 };
 
-const deleteQues =()=>{
+const deleteQues =(state,action)=>{
   return update(state,{
     isCreateQuesInProgress:{$set:true}
   });
 };
-const deleteQuesSuccess =()=>{
+const deleteQuesSuccess =(state,action)=>{
   return update(state,{
     isCreateQuesInProgress:{$set:false}
   });
 };
-const deleteQuesError =()=>{
+const deleteQuesError =(state,action)=>{
   return update(state,{
     isCreateQuesInProgress:{$set:false}
   });
