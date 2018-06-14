@@ -183,7 +183,9 @@ router.post("/centers", (req, res, next) => {
   );
   res.redirect("/centers");
 });
-
+router.post("/mdis",(req,res,next)=>{
+  res.send(200);
+})
 router.get("/courses", (req, res, next) => {
   res.render("courses");
 });
