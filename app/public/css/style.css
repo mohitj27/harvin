@@ -301,7 +301,15 @@ background-color: #13b38b;
 color: white;
 }
 @media only screen and (min-width: 601px){
-nav{height: 110px;line-height: 110px;box-shadow: none;}}
+nav{
+  height: 110px;line-height: 110px;box-shadow: none;
+  /* overiding ankush */
+  
+  height: 81px;
+  line-height: 84px;
+
+  }
+}
 nav ul a{font-size: 1.2rem;font-weight: 500;}
 .info-nav{height: 4em;position:  absolute;top: 0;}
 .landing-col{background: url(/images/hero01.jpg);height: -webkit-fill-available;background-repeat:  no-repeat;margin: 0 auto;background-size: cover;justify-content:  center;}
