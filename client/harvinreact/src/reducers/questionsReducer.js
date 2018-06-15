@@ -64,11 +64,11 @@ const deleteQuesSuccess =(state,action)=>{
   console.log('state allquestionds', state.allQuestions);
   console.log('action',action);
   var questions= _.cloneDeep(state.allQuestions).filter((e)=>e._id!==action.id);
-  console.log("length is ",questions.lenght)
+  console.log("length is ",questions.length)
   return update(state,{
     isQuestionDeleteInProgress:{$set:false},
     isQuestionDeletedSuccessfully:{$set:true},
-    questions:{$set:questions}
+    allQuestions:{$set:questions}
       });
 };
 const deleteQuesError =(state,action)=>{
