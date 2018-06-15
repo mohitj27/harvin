@@ -137,33 +137,33 @@
 				<p>Provides course for Medical And Engineering</p>
 				<hr class="short-hr">
 			</div>
-					<%if(foundCourses){%>
-              <%foundCourses.forEach((course,i)=>{%>
+			<%if(foundCourses){%>
+				<%foundCourses.forEach((course,i)=>{%>
 
-                <div class="course-card">
-                  <div class="card">
-                    <div class="card-image">
-                      <img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
-                      <span class="card-title">
-                        <%=course.courseName%>
-											</span>
-											<a class="btn-floating halfway-fab waves-effect waves-light red">
-												<i class="material-icons">near_me</i>
-											</a>
-                    </div>
+					<div class="course-card">
+						<div class="card">
+							<div class="card-image">
+								<img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
+								<span class="card-title">
+									<%=course.courseName%>
+								</span>
+								<a class="btn-floating halfway-fab waves-effect waves-light red">
+									<i class="material-icons">near_me</i>
+								</a>
+							</div>
 
-                    <div class="card-content">
-                      <p class="truncate">
-                        <%=course.courseFor%>
-                      </p>
-                    </div>
-                    <div class="card-action">
-                      <a href="/courses-list/?title=<%=course.courseUrl%>">Read more...</a>
-                    </div>
-                  </div>
-                </div>
-              <%})%>
-            <%}%>
+							<div class="card-content">
+								<p class="truncate">
+									<%=course.courseFor%>
+								</p>
+							</div>
+							<div class="card-action">
+								<a href="/courses-list/?title=<%=course.courseUrl%>">Read more...</a>
+							</div>
+						</div>
+					</div>
+					<%})%>
+						<%}%>
 
 		</div>
 		<img src="/images/banner1.jpeg" id="testimonials-banner-img" alt="Banner">
@@ -311,20 +311,35 @@
 					<h3 class="section-heading" id="daily-blogs">FROM OUR BLOG</h3>
 					<p>From our blogs</p>
 					<hr class="short-hr">
-					<%foundPopularBlogs.forEach(function(blog) {%>
-						<a href="/blog/<%=blog.url%>">
-							<div class="col s12 l4 m4 courses-card">
-								<div class="card hoverable">
-									<div class="card-image">
-										<img class="responsive-img" src="/blogImage/<%=blog.coverImgName%>">
-										<span class="why-title"><%=blog.blogTitle%></span>
+					<div id="popular-blogs-wrapper">
+						<%foundPopularBlogs.forEach(function(blog) {%>
+							
+								<div class="course-card">
+									<div class="card1">
+										<div class="card-image blog-card-img-title" style="background: url(/blogImage/<%=blog.coverImgName%>) no-repeat center center; height: 400px; -webkit-background-size: cover;
+											-moz-background-size: cover;
+											-o-background-size: cover;
+											background-size: cover;">
+
+										</div>
+										<hr class="midium-hr">
+										<div class="card-content">
+												<span class="why-title">
+														<%=blog.blogTitle%>
+													</span>
+											<p class="truncate blog-title">
+												Lorem Ipsum dolor sit amer Lorem Ipsum dolor sit amerLorem Ipsum dolor sit amerLorem Ipsum dolor sit amer
+											</p>
+										</div>
+										<div class="card-action left">
+											<a href="/blog/<%=blog.url%>">Read more...</a>
+										</div>
 									</div>
 								</div>
-							</div>
-						</a>
-					<%})%>
-					
-					<a class="btn waves-effect white inverted-button" href="/blog">VIEW ALL</a>
+							<%})%>
+					</div>
+					<br>
+					<a class="btn waves-effect white inverted-button" id="view-all-blogs-btn" href="/blog">VIEW ALL</a>
 
 				</div>
 
