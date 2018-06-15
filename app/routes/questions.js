@@ -38,13 +38,13 @@ router.delete("/delete/:id", async (req, res, next) => {
     if(!questionsAfterObjectDelete){
       return res.json({
         success:false,
-        msg:"Question Could not be deleted ."
+        msg:"Question Could not be deleted."
       });
     }
     return res.json({
-      questions: questionsAfterObjectDelete,
+      question: questionsAfterObjectDelete,
       success:true,
-      msg:"Question Deleted Successfully ."
+      msg:"Question Deleted Successfully."
     });
   } catch (e) {
     console.log(e);

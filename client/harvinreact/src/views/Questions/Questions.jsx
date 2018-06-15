@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import questionsStyle from "../../variables/styles/questionsStyle";
-import { getAllQuestions } from "../../actions";
+import { getAllQuestions ,deleteQuesAction } from "../../actions";
 
 import * as actions from "../../actions";
 import classnames from "classnames";
@@ -46,14 +46,15 @@ class Questions extends Component {
     // console.log(Obj._id);
     // var index = array.indexOf(5);
     // if (index > -1) {
-    //   array.splice(index, 1);
-    // }
+      //   array.splice(index, 1);
+      // }
+    }
+    
+    deleteButtonClicked=(event,index,Obj)=>{
+      this.props.onQuestionDelete(Obj._id);
+      console.log('componentDidMount',this.state.questions)
   }
-
-  deleteButtonClicked=(event,index,Obj)=>{
-    // console.log(Obj._id);
-  }
-
+    
 
   getCardContent() {
     let { classes } = this.props;
@@ -125,8 +126,7 @@ class Questions extends Component {
   }
 
   componentDidMount() {
-    this.props.onQuestionsFetch();
-    console.log('componentDidMount',this.state.questions)
+    this.props.onQuestionsFetch()
   }
 
   static getDerivedStateFromProps = (nextProps, prevState) => {
@@ -138,6 +138,11 @@ class Questions extends Component {
       return {
         questions: nextProps.questions
       };
+    }
+    if(!nextProps.isQuestionDeleteInProgress && nextProps.notifySuccess === 'Question Deleted Successfully.'  ){
+      return {
+        questions: nextProps.questions
+      }
     }
     return null;
   };
@@ -200,7 +205,8 @@ class Questions extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onQuestionsFetch: () => dispatch(actions.getAllQuestions())
+    onQuestionsFetch: () => dispatch(actions.getAllQuestions()),
+    onQuestionDelete:(obj)=>dispatch(actions.deleteQuesAction(obj))
   };
 }
 

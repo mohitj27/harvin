@@ -1,4 +1,5 @@
 import update from "immutability-helper";
+import _ from 'lodash';
 import {
   GET_ALL_QUESTIONS,
   GET_ALL_QUESTIONS_ERROR,
@@ -16,7 +17,8 @@ const initialState = {
   isCreateQuesInProgress: false,
   isFetchingAllQuestionsInProgress: false,
   isQuestionAddedSuccessfully: false,
-  isQuestionDeleteInProgress:false
+  isQuestionDeleteInProgress:false,
+  isQuestionDeletedSuccessfully:false
 };
 
 const getAllQuestions = (state, action) => {
@@ -54,21 +56,31 @@ const createQuesError = (state, action) => {
 
 const deleteQues =(state,action)=>{
   return update(state,{
-    isCreateQuesInProgress:{$set:true}
+    isQuestionDeleteInProgress:{$set:true},
+    isQuestionDeletedSuccessfully:{$set:false}
   });
 };
 const deleteQuesSuccess =(state,action)=>{
+  console.log('state allquestionds', state.allQuestions);
+  console.log('action',action);
+  var questions= _.cloneDeep(state.allQuestions).filter((e)=>e._id!==action.id);
+  console.log("length is ",questions.lenght)
   return update(state,{
-    isCreateQuesInProgress:{$set:false}
-  });
+    isQuestionDeleteInProgress:{$set:false},
+    isQuestionDeletedSuccessfully:{$set:true},
+    questions:{$set:questions}
+      });
 };
 const deleteQuesError =(state,action)=>{
   return update(state,{
-    isCreateQuesInProgress:{$set:false}
+    isQuestionDeleteInProgress:{$set:false},
+    isQuestionDeletedSuccessfully:{$set:false},
   });
 };
 
 export default (state = initialState, action) => {
+  console.log('state', state);
+
   switch (action.type) {
     case GET_ALL_QUESTIONS:
       return getAllQuestions(state, action);

@@ -33,12 +33,6 @@ const appRoutes = [
     component: AddQues,
   },
   {
-    path: '/removeQues',
-    sidebarName: 'Remove Question',
-    icon: Delete,
-    component: AddQues,
-  },
-  {
     path: '/Tests',
     sidebarName: 'Tests',
     icon: NoteAdd,
