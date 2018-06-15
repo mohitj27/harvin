@@ -47,37 +47,40 @@
 
 <body>
 
-  <nav id="navbar">
-
-    <div class="nav-wrapper z-depth-0">
-      <a href="#" data-activates="mobile-demo" class="button-collapse " style="margin-top:5px;">
-        <i class="material-icons">menu</i>
-      </a>
-      <img src="images/harvin.png" class="hide-on-small-only" alt="harvin png" style="height:100%;width:70px;    float: left;  margin:20px;margin-right: 30px;   margin-left: 8%;">
-      <h4 class="hide-on-med-and-up" style="margin-left:20%;">Harvin Academy</h4>
-      <ul id="nav-mobile" class="right hide-on-med-and-down" >
+  <nav id="main-nav">
+    <div id="nav-wrapper">
+      <a href="/" id="harvin-logo-anchor"><img src="/images/harvin.png" id="harvin-logo" alt="Harvin Logo"></a>
+      
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+          <a href="/aboutus" >About</a>
+        </li>
+        <li>
+          <a href="/centers" >Locations</a>
+        </li>
         <li>
           <a href="/courses-list">Courses</a>
         </li>
         <li>
           <a href="/gallery">Gallery</a>
         </li>
-        <li>
-            <a href="/videos">Videos</a>
-          </li>
-        <li>
-          <a href="/downloads">Downloads</a>
-        </li>
+        <!-- <li>
+            <a href="/videos" >Videos</a>
+          </li> -->
+        <!-- <li>
+          <a href="/downloads" >Downloads</a>
+        </li> -->
         <li>
           <a href="/results">Results</a>
         </li>
         <li>
-          <a href="/team">Our Team</a>
+          <a href="/team">Our team</a>
         </li>
       </ul>
+      <div class="hide-on-med-and-down"  id="login-btn-wrapper"><a href="/admin/login" class="waves-effect waves-light btn" id="login-btn">Register / Login</a></div>
       <ul class="side-nav side-nav-main" id="mobile-demo">
         <li>
-          <h3 href="" class="brand-logo">MENU</h3>
+          <h3 href="" class="brand-logo" id="brand-name">HARVIN ACADEMY</h3>
         </li>
         <br>
         <li>
@@ -106,6 +109,9 @@
         </li>
 
       </ul>
+      <a href="#" data-activates="mobile-demo" class="button-collapse " id="sidebar-collapse" style="margin-top:5px;">
+        <i class="material-icons">menu</i>
+      </a>
     </div>
   </nav>
 
