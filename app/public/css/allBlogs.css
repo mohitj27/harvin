@@ -8,7 +8,7 @@ color: white;
 
 nav ul a, nav .brand-logo{
   font-weight: bold;
-  font-size: larger;
+  font-size: small;
 }
 
 nav ul a:hover{
@@ -68,9 +68,12 @@ display: grid;
 grid-template-columns: 55% auto 37.5%;
 }
 .popular-section-col{grid-column: 1/2;}
-.news-letter-col{grid-column: 3/4;}
-.latest-post-grid{display: grid;grid-template-columns: 40% auto 55%;margin: 20px auto;}
+.news-letter-col{grid-column: 3/4;align-self:  center;}
+.latest-post-grid{display: grid;grid-template-columns: 40% auto 55%;margin: 20px auto;grid-template-rows:  33% 33% 33%;}
 .latest-post-info{grid-column: 3/4;padding: 20px 0;}
-.latest-post-image{
+.latest-post-image{grid-column: 1/2;max-height: 400px;}
+.popular-post-grid{display: grid;grid-template-columns: 40% auto 55%;margin: 20px auto;}
+.popular-post-info{grid-column: 3/4;padding: 20px 0;}
+.popular-post-image{
 grid-column: 1/2;
 }
