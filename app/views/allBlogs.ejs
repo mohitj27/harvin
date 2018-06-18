@@ -108,7 +108,7 @@
 
       <div class="carousel carousel-slider center" data-indicators="true" style="height:100% !important;">
 
-        <div class="carousel-item red white-text" href="#one!">
+        <div class="carousel-item  white-text" href="#one!">
           <img src="/images/banner-blog-4.jpg" alt="">
         </div>
         <div class="carousel-item amber white-text" href="#two!">
@@ -137,8 +137,9 @@
 
           <% foundPopularBlogs.forEach((blog, i) => { %>
             <div class="popular-post-grid">
-              <div class="popular-post-image">
-                <img class="responsive-img popular-post-image" src="/blogImage/<%=blog.coverImgName%>" alt="" />
+              <div class="popular-post-image" style="background:url('/blogImage/<%=blog.coverImgName%>');
+                background-size: cover;
+               background-repeat: no-repeat;">
               </div>
               <div class="popular-post-info">
                 <a href="/blog/<%=blog.url%>" style="color:#000000c7;">
@@ -196,8 +197,9 @@
 
       <% foundBlogs.forEach((blog, i) => { %>
         <div class="latest-post-grid">
-          <div class="latest-post-image">
-            <img class="responsive-img latest-post-image" src="/blogImage/<%=blog.coverImgName%>" alt="" />
+          <div class="latest-post-image" style="background:url('/blogImage/<%=blog.coverImgName%>');
+            background-size: cover;
+           background-repeat: no-repeat;">
           </div>
           <div class="latest-post-info">
             <a href="/blog/<%=blog.url%>" style="color:#000000c7;">
