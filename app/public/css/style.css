@@ -603,6 +603,16 @@ em {
   height: calc(110vh - 64px);
   position: absolute;
   width: 100vw;
+  max-width:  100%;
+}
+
+#overlay-normal{
+  z-index: 1;
+  background-color: rgba(26, 41, 30, 0.72);
+  height: 100%;
+  position: absolute;
+  width: 100vw;
+  max-width:  100%;
 }
 #left-sec {
   grid-column: 1/2;
@@ -635,6 +645,7 @@ em {
   /* z-index: 0; */
   margin: 0;
   position: absolute;
+  max-width:  100%;
   height: calc(110vh - 64px);
 }
 
@@ -780,6 +791,7 @@ em {
 #testimonials-banner-img{
   width: 100vw;
   margin: 0;
+  max-width: 100%;
   position: absolute;
   height: 55vh;
 }
@@ -874,4 +886,10 @@ background-color: #13b38b;
 #view-all-courses-btn{
   grid-column: 2/3;
 }
-
+#download-app-container{
+  width: 80%;
+}
+#download-app-section{
+  background: url('/images/hero01.jpg') no-repeat;
+  background-size:  cover;
+}

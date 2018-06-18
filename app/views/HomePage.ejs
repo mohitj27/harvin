@@ -137,33 +137,33 @@
 				<p>Provides course for Medical And Engineering</p>
 				<hr class="short-hr">
 			</div>
-					<%if(foundCourses){%>
-              <%foundCourses.forEach((course,i)=>{%>
+			<%if(foundCourses){%>
+				<%foundCourses.forEach((course,i)=>{%>
 
-                <div class="course-card">
-                  <div class="card">
-                    <div class="card-image">
-                      <img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
-                      <span class="card-title">
-                        <%=course.courseName%>
-											</span>
-											<a class="btn-floating halfway-fab waves-effect waves-light red">
-												<i class="material-icons">near_me</i>
-											</a>
-                    </div>
+					<div class="course-card">
+						<div class="card">
+							<div class="card-image">
+								<img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
+								<span class="card-title">
+									<%=course.courseName%>
+								</span>
+								<a class="btn-floating halfway-fab waves-effect waves-light red">
+									<i class="material-icons">near_me</i>
+								</a>
+							</div>
 
-                    <div class="card-content">
-                      <p class="truncate">
-                        <%=course.courseFor%>
-                      </p>
-                    </div>
-                    <div class="card-action">
-                      <a href="/courses-list/?title=<%=course.courseUrl%>">Read more...</a>
-                    </div>
-                  </div>
-                </div>
-              <%})%>
-            <%}%>
+							<div class="card-content">
+								<p class="truncate">
+									<%=course.courseFor%>
+								</p>
+							</div>
+							<div class="card-action">
+								<a href="/courses-list/?title=<%=course.courseUrl%>">Read more...</a>
+							</div>
+						</div>
+					</div>
+					<%})%>
+						<%}%>
 
 		</div>
 		<img src="/images/banner1.jpeg" id="testimonials-banner-img" alt="Banner">
@@ -230,11 +230,15 @@
 			</div>
 		</div>
 
-		<div class="section download-app-section">
-			<div class="container">
+		<div id="overlay-normal"></div>
+		<div class="section no-pad" id="download-app-section">
+			<div class="container" id="download-app-container">
+
 				<div class="row">
-					<div class="col s12 m4 l4">
-						<div id="important-dates">
+					<div class="col s12 m4 l4" style="
+					display: flex;
+					justify-content: center;">
+						<div id="important-dates" style="z-index: 100;">
 							<div class="dates">
 								<div>
 									<i class="large material-icons">developer_board</i>
@@ -264,12 +268,16 @@
 						</div>
 
 					</div>
-					<div class="col s6 m4 l4 center hide-on-small-only">
-						<img src="/images/phoneFrame.jpg" alt="">
+					<div class="col s6 m4 l4 center hide-on-small-only" style="
+					display: flex;
+					justify-content: center;">
+						<img src="/images/phoneFrame.jpg" style="max-height:500px;z-index:1000;display: block;" alt="">
 					</div>
 
-					<div class="col s6 m4 l4 hide-on-small-only">
-						<div id="important-dates">
+					<div class="col s6 m4 l4 hide-on-small-only" style="
+					display: flex;
+					justify-content: center;">
+						<div id="important-dates" style="z-index: 100;">
 							<div class="dates">
 								<div>
 									<i class="large material-icons">developer_board</i>
@@ -317,14 +325,16 @@
 								<div class="card hoverable">
 									<div class="card-image">
 										<img class="responsive-img" src="/blogImage/<%=blog.coverImgName%>">
-										<span class="why-title"><%=blog.blogTitle%></span>
+										<span class="why-title">
+											<%=blog.blogTitle%>
+										</span>
 									</div>
 								</div>
 							</div>
 						</a>
-					<%})%>
-					
-					<a class="btn waves-effect white inverted-button" href="/blog">VIEW ALL</a>
+						<%})%>
+
+							<a class="btn waves-effect white inverted-button" href="/blog">VIEW ALL</a>
 
 				</div>
 
