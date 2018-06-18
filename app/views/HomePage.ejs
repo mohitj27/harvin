@@ -319,22 +319,35 @@
 					<h3 class="section-heading" id="daily-blogs">FROM OUR BLOG</h3>
 					<p>From our blogs</p>
 					<hr class="short-hr">
-					<%foundPopularBlogs.forEach(function(blog) {%>
-						<a href="/blog/<%=blog.url%>">
-							<div class="col s12 l4 m4 courses-card">
-								<div class="card hoverable">
-									<div class="card-image">
-										<img class="responsive-img" src="/blogImage/<%=blog.coverImgName%>">
+					<div id="popular-blogs-wrapper">
+						<%foundPopularBlogs.forEach(function(blog) {%>
+
+							<div class="course-card">
+								<div class="card1">
+									<div class="card-image blog-card-img-title" style="background: url(/blogImage/<%=blog.coverImgName%>) no-repeat center center; height: 400px; -webkit-background-size: cover;
+											-moz-background-size: cover;
+											-o-background-size: cover;
+											background-size: cover;">
+
+									</div>
+									<hr class="midium-hr">
+									<div class="card-content">
 										<span class="why-title">
 											<%=blog.blogTitle%>
 										</span>
+										<p class="truncate blog-title">
+											Lorem Ipsum dolor sit amer Lorem Ipsum dolor sit amerLorem Ipsum dolor sit amerLorem Ipsum dolor sit amer
+										</p>
+									</div>
+									<div class="card-action left">
+										<a href="/blog/<%=blog.url%>">Read more...</a>
 									</div>
 								</div>
 							</div>
-						</a>
-						<%})%>
-
-							<a class="btn waves-effect white inverted-button" href="/blog">VIEW ALL</a>
+							<%})%>
+					</div>
+					<br>
+					<a class="btn waves-effect white inverted-button" id="view-all-blogs-btn" href="/blog">VIEW ALL</a>
 
 				</div>
 

@@ -14,7 +14,20 @@ const getQuestions = function (query) {
   })
 }
 
+const deleteQuestion=(query)=>{
+  console.log(query);
+  var query = query ? query : {};
+  
+    return new Promise(function (resolve, reject) {
+      R_Question.findOneAndRemove(query)
+        .then(foundQuestions => resolve(foundQuestions))
+        .catch(err => reject(err))
+    })
+}
+
+
 const addQuestion = function (questionObj) {
+  console.log(questionObj);
   return new Promise(function (resolve, reject) {
     R_Question.create(questionObj)
       .then(createdQues => resolve(createdQues))
@@ -67,5 +80,6 @@ const checkAns = (questionId, answers) => {
 module.exports = {
   addQuestion,
   getQuestions,
-  checkAns
+  checkAns,
+  deleteQuestion
 }

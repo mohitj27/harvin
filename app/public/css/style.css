@@ -462,7 +462,7 @@ em {
   top: 50%;
   left: 50% !important;
   right: 50% !important;
-  color: #504f4f;
+  color: #000000;
   max-width: 100%;
   padding: 24px;
   font-size: 1.5rem;
@@ -720,7 +720,7 @@ em {
 
 #scnd-section{
   display: grid;
-  align-items: center;
+  /* align-items: center; */
   justify-items: center;
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 5em;
@@ -886,10 +886,25 @@ background-color: #13b38b;
 #view-all-courses-btn{
   grid-column: 2/3;
 }
-#download-app-container{
-  width: 80%;
+
+#popular-blogs-wrapper{
+  display: grid;
+  grid-template-columns:minmax(33%, 33%) minmax(33%, 33%) minmax(33%, 33%);
+  grid-gap: 1em;
 }
-#download-app-section{
-  background: url('/images/hero01.jpg') no-repeat;
-  background-size:  cover;
+
+#view-all-blogs-btn{
+  grid-column: 2/3;
 }
+
+.midium-hr{
+  width: 100%
+}
+
+.blog-title{
+  color: #383636c9
+}
+
+/* .blog-card-img-title{
+  max-height: 400px;
+} */
