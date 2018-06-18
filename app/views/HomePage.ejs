@@ -82,283 +82,257 @@
 				<hr class="short-hr">
 			</div>
 
-						<%foundCourses.forEach(function(course) {%>
+			<%foundCourses.forEach(function(course) {%>
+
+				<div class="course-card">
+					<div class="card">
+						<div class="card-image">
+							<img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
+							<span class="card-title">
+								<%=course.courseName%>
+							</span>
+							<a class="btn-floating halfway-fab waves-effect waves-light red" href="/courses-list/?title=<%=course.courseUrl%>">
+								<i class="material-icons">near_me</i>
+							</a>
+						</div>
+
+						<div class="card-content">
+							<p class="truncate">
+								<%=course.courseFor%>
+							</p>
+						</div>
+					</div>
+				</div>
+				<%})%>
+		</div>
+		<img src="/images/banner1.jpeg" id="testimonials-banner-img" alt="Banner">
+		<div id="overlay-testimonials-section"></div>
+		<div class="section container" id="testimonials">
+			<div id="testimonials-overlay-content">
+				<h4>LET'S TRY OUR UTILITIES</h4>
+				<p>When you learn in Harvin Academy, you get access to our utilities</p>
+				<hr class="short-hr">
+				<div id="feature-utilities" class="z-depth-3">
+					<div class="features">
+						<div class="card-content">
+							<i class="large material-icons">developer_board</i>
+							<p>ADEQUATE LIBRARY FACILITY</p>
+						</div>
+
+					</div>
+					<div class="features">
+						<div class="card-content">
+							<i class="large material-icons">developer_board</i>
+							<p>GROUP DISCUSSION & READING ROOM</p>
+						</div>
+
+					</div>
+					<div class="features">
+						<div class="card-content">
+							<i class="large material-icons">developer_board</i>
+							<p>PRACTICAL LAB</p>
+						</div>
+					</div>
+				</div>
+				<h4>HAPPY STUDENTS</h4>
+				<p>What students have to say</p>
+				<hr class="short-hr">
+				<div class="carousel carousel-slider center" id="testimonials-wrapper" data-indicators="true">
+					<!-- <div class="carousel-fixed-item center">
+						<a class="btn waves-effect white grey-text darken-text-2">button</a>
+					</div> -->
+					<div class="carousel-item white black-text" href="#one!">
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
+							refers? Bonum incolumis acies: misera caecitas.</p>
+						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
+					</div>
+					<div class="carousel-item  white black-text" href="#two!">
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
+							refers? Bonum incolumis acies: misera caecitas.</p>
+						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
+					</div>
+					<div class="carousel-item  white black-text" href="#three!">
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
+							refers? Bonum incolumis acies: misera caecitas.</p>
+						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
+					</div>
+					<div class="carousel-item white black-text" href="#four!">
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
+							refers? Bonum incolumis acies: misera caecitas.</p>
+						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<img src="/images/1J5A2947.jpeg" alt="" id="hero-img" class="responsive-img">
+		<div id="overlay"></div>
+		<div class="section no-pad" id="download-app-section">
+			<div class="container" id="download-app-container">
+
+				<div class="row">
+					<div class="col s12 m4 l4" style="
+					display: flex;
+					justify-content: center;">
+						<div id="important-dates" style="z-index: 100;">
+							<div class="dates">
+								<div>
+									<i class="large material-icons">developer_board</i>
+								</div>
+								<div class="dates-info">
+									<h5 class="important-dates-heading">
+										Heading</h5>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
+								</div>
+							</div>
+							<div class="dates">
+								<i class="large material-icons">developer_board</i>
+								<div class="dates-info">
+									<h5 class="important-dates-heading">
+										Heading</h5>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
+								</div>
+							</div>
+							<div class="dates">
+								<i class="large material-icons">developer_board</i>
+								<div class="dates-info">
+									<h5 class="important-dates-heading">
+										Heading</h5>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="col s6 m4 l4 center hide-on-small-only" style="
+					display: flex;
+					justify-content: center;">
+						<img src="/images/phoneFrame.jpg" style="max-height:500px;z-index:1000;display: block;" alt="">
+					</div>
+
+					<div class="col s6 m4 l4 hide-on-small-only" style="
+					display: flex;
+					justify-content: center;">
+						<div id="important-dates" style="z-index: 100;">
+							<div class="dates">
+								<div>
+									<i class="large material-icons">developer_board</i>
+								</div>
+								<div class="dates-info">
+									<h5 class="important-dates-heading">
+										Heading</h5>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
+								</div>
+							</div>
+							<div class="dates">
+								<i class="large material-icons">developer_board</i>
+								<div class="dates-info">
+									<h5 class="important-dates-heading">
+										Heading</h5>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
+								</div>
+							</div>
+							<div class="dates">
+								<i class="large material-icons">developer_board</i>
+								<div class="dates-info">
+									<h5 class="important-dates-heading">
+										Heading</h5>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="section" id="blog-section">
+			<div class="container">
+
+				<div class="row center">
+					<h3 class="section-heading" id="daily-blogs">FROM OUR BLOG</h3>
+					<p>From our blogs</p>
+					<hr class="short-hr">
+					<div id="popular-blogs-wrapper">
+						<%foundPopularBlogs.forEach(function(blog) {%>
 
 							<div class="course-card">
 								<div class="card1">
-									<div class="card-image blog-card-img-title" style="background: url(/courseImages/<%=course.courseImage%>) no-repeat center center; height: 300px; -webkit-background-size: cover;
-										-moz-background-size: cover;
-										-o-background-size: cover;
-										background-size: cover;">
-
-									</div>
-									<hr class="midium-hr">
-									<div class="card-content">
-										<span class="why-title">
-											<%=course.courseName%>
-										</span>
-										<p class="truncate blog-title">
-											Lorem Ipsum dolor sit amer Lorem Ipsum dolor sit amerLorem Ipsum dolor sit amerLorem Ipsum dolor sit amer
-										</p>
-									</div>
-									<div class="card-action left">
-										<a href="<%=course.courseName%>">Read more...</a>
-									</div>
-								</div>
-							</div>
-							<%})%>
-			</div>
-			<img src="/images/banner1.jpeg" id="testimonials-banner-img" alt="Banner">
-			<div id="overlay-testimonials-section"></div>
-			<div class="section container" id="testimonials">
-				<div id="testimonials-overlay-content">
-					<h4>LET'S TRY OUR UTILITIES</h4>
-					<p>When you learn in Harvin Academy, you get access to our utilities</p>
-					<hr class="short-hr">
-					<div id="feature-utilities" class="z-depth-3">
-						<div class="features">
-							<div class="card-content">
-								<i class="large material-icons">developer_board</i>
-								<p>ADEQUATE LIBRARY FACILITY</p>
-							</div>
-
-						</div>
-						<div class="features">
-							<div class="card-content">
-								<i class="large material-icons">developer_board</i>
-								<p>GROUP DISCUSSION & READING ROOM</p>
-							</div>
-
-						</div>
-						<div class="features">
-							<div class="card-content">
-								<i class="large material-icons">developer_board</i>
-								<p>PRACTICAL LAB</p>
-							</div>
-						</div>
-					</div>
-					<h4>HAPPY STUDENTS</h4>
-					<p>What students have to say</p>
-					<hr class="short-hr">
-					<div class="carousel carousel-slider center" id="testimonials-wrapper" data-indicators="true">
-						<!-- <div class="carousel-fixed-item center">
-						<a class="btn waves-effect white grey-text darken-text-2">button</a>
-					</div> -->
-						<div class="carousel-item white black-text" href="#one!">
-							<i class="fa fa-quote-right" aria-hidden="true"></i>
-							<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
-								refers? Bonum incolumis acies: misera caecitas.</p>
-							<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
-						</div>
-						<div class="carousel-item  white black-text" href="#two!">
-							<i class="fa fa-quote-right" aria-hidden="true"></i>
-							<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
-								refers? Bonum incolumis acies: misera caecitas.</p>
-							<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
-						</div>
-						<div class="carousel-item  white black-text" href="#three!">
-							<i class="fa fa-quote-right" aria-hidden="true"></i>
-							<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
-								refers? Bonum incolumis acies: misera caecitas.</p>
-							<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
-						</div>
-						<div class="carousel-item white black-text" href="#four!">
-							<i class="fa fa-quote-right" aria-hidden="true"></i>
-							<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
-								refers? Bonum incolumis acies: misera caecitas.</p>
-							<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div id="overlay-normal"></div>
-			<div class="section no-pad" id="download-app-section">
-				<div class="container" id="download-app-container">
-
-					<div class="row">
-						<div class="col s12 m4 l4" style="
-					display: flex;
-					justify-content: center;">
-							<div id="important-dates" style="z-index: 100;">
-								<div class="dates">
-									<div>
-										<i class="large material-icons">developer_board</i>
-									</div>
-									<div class="dates-info">
-										<h5 class="important-dates-heading">
-											Heading</h5>
-										<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
-									</div>
-								</div>
-								<div class="dates">
-									<i class="large material-icons">developer_board</i>
-									<div class="dates-info">
-										<h5 class="important-dates-heading">
-											Heading</h5>
-										<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
-									</div>
-								</div>
-								<div class="dates">
-									<i class="large material-icons">developer_board</i>
-									<div class="dates-info">
-										<h5 class="important-dates-heading">
-											Heading</h5>
-										<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
-									</div>
-								</div>
-							</div>
-
-						</div>
-						<div class="col s6 m4 l4 center hide-on-small-only" style="
-					display: flex;
-					justify-content: center;">
-							<img src="/images/phoneFrame.jpg" style="max-height:500px;z-index:1000;display: block;" alt="">
-						</div>
-
-						<div class="col s6 m4 l4 hide-on-small-only" style="
-					display: flex;
-					justify-content: center;">
-							<div id="important-dates" style="z-index: 100;">
-								<div class="dates">
-									<div>
-										<i class="large material-icons">developer_board</i>
-									</div>
-									<div class="dates-info">
-										<h5 class="important-dates-heading">
-											Heading</h5>
-										<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
-									</div>
-								</div>
-								<div class="dates">
-									<i class="large material-icons">developer_board</i>
-									<div class="dates-info">
-										<h5 class="important-dates-heading">
-											Heading</h5>
-										<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
-									</div>
-								</div>
-								<div class="dates">
-									<i class="large material-icons">developer_board</i>
-									<div class="dates-info">
-										<h5 class="important-dates-heading">
-											Heading</h5>
-										<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
-									</div>
-								</div>
-							</div>
-
-						</div>
-
-					</div>
-				</div>
-			</div>
-
-			<div class="section" id="blog-section">
-				<div class="container">
-
-					<div class="row center">
-						<h3 class="section-heading" id="daily-blogs">FROM OUR BLOG</h3>
-						<p>From our blogs</p>
-						<hr class="short-hr">
-						<div id="popular-blogs-wrapper">
-							<%foundPopularBlogs.forEach(function(blog) {%>
-
-								<div class="course-card">
-									<div class="card1">
-										<div class="card-image blog-card-img-title" style="background: url(/blogImage/<%=blog.coverImgName%>) no-repeat center center; height: 300px; -webkit-background-size: cover;
+									<div class="card-image blog-card-img-title" style="background: url(/blogImage/<%=blog.coverImgName%>) no-repeat center center; height: 300px; -webkit-background-size: cover;
 											-moz-background-size: cover;
 											-o-background-size: cover;
 											background-size: cover;">
 
-										</div>
-										<hr class="midium-hr">
-										<div class="card-content">
-											<span class="why-title">
-												<%=blog.blogTitle%>
-											</span>
-											<p class="truncate blog-title">
-												Lorem Ipsum dolor sit amer Lorem Ipsum dolor sit amerLorem Ipsum dolor sit amerLorem Ipsum dolor sit amer
-											</p>
-										</div>
-										<div class="card-action left">
-											<a href="/blog/<%=blog.url%>">Read more...</a>
-										</div>
-									</div>
-								</div>
-								<%})%>
-
-						<%foundCourses.forEach(function(course) {%>
-
-							<div class="course-card">
-								<div class="card1">
-									<div class="card-image blog-card-img-title" style="background: url(/courseImages/<%=course.courseImage%>) no-repeat center center; height: 300px; -webkit-background-size: cover;
-										-moz-background-size: cover;
-										-o-background-size: cover;
-										background-size: cover;">
-
 									</div>
 									<hr class="midium-hr">
 									<div class="card-content">
-										<span class="why-title">
-											<%=course.courseName%>
-										</span>
+											<a href="/blog/<%=blog.url%>"><span class="why-title">
+													<%=blog.blogTitle%>
+												</span></a>
+										
 										<p class="truncate blog-title">
 											Lorem Ipsum dolor sit amer Lorem Ipsum dolor sit amerLorem Ipsum dolor sit amerLorem Ipsum dolor sit amer
 										</p>
 									</div>
 									<div class="card-action left">
-										<a href="<%=course.courseName%>">Read more...</a>
+										<a href="/blog/<%=blog.url%>">Read more...</a>
 									</div>
 								</div>
 							</div>
 							<%})%>
-						</div>
-						<br>
-						<a class="btn waves-effect white inverted-button" id="view-all-blogs-btn" href="/blog">VIEW ALL</a>
 
 					</div>
+					<br>
+					<a class="btn waves-effect white inverted-button" id="view-all-blogs-btn" href="/blog">VIEW ALL</a>
 
 				</div>
+
 			</div>
-			<div class="section " id="register-now-section">
+		</div>
+		<div class="section " id="register-now-section">
 
-				<div class="container">
-					<div class="row">
-						<div class="col s8 m5 l5 push-l1 push-m1">
-							<div class="card hoverable">
-								<div class="card-image ">
-									<h4 class="register-card-title center">REGISTER NOW</h4>
-								</div>
-								<div class="card-content">
-									<div class="row center">
+			<div class="container">
+				<div class="row">
+					<div class="col s8 m5 l5 push-l1 push-m1">
+						<div class="card hoverable">
+							<div class="card-image ">
+								<h4 class="register-card-title center">REGISTER NOW</h4>
+							</div>
+							<div class="card-content">
+								<div class="row center">
 
-										<div class="input-field col s12">
-											<input id="last_name" type="text" class="validate">
-											<label for="last_name">Last Name</label>
-										</div>
-
-										<div class="input-field col s12">
-											<input id="last_name" type="text" class="validate">
-											<label for="last_name">Last Name</label>
-										</div>
-
-										<div class="input-field col s12">
-											<input id="last_name" type="text" class="validate">
-											<label for="last_name">Last Name</label>
-										</div>
-
-										<a class="btn waves-effect " style="background-color: #13b38b;">SIGN UP</a>
-
-
+									<div class="input-field col s12">
+										<input id="last_name" type="text" class="validate">
+										<label for="last_name">Last Name</label>
 									</div>
+
+									<div class="input-field col s12">
+										<input id="last_name" type="text" class="validate">
+										<label for="last_name">Last Name</label>
+									</div>
+
+									<div class="input-field col s12">
+										<input id="last_name" type="text" class="validate">
+										<label for="last_name">Last Name</label>
+									</div>
+
+									<a class="btn waves-effect " style="background-color: #13b38b;">SIGN UP</a>
+
+
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
+
 			</div>
+		</div>
 	</main>
 	<%include partials/website_footer.ejs%>
 
@@ -413,4 +387,14 @@
 
 		<script>
 			$('.carousel.carousel-slider').carousel({ fullWidth: true });
+			// setTimeout(()=> {
+			// 	$('.carousel').carousel('next');
+			// }, 5000)
+
+			function nextTestimonial() {
+				$('.carousel').carousel('next');
+
+				setTimeout(() => nextTestimonial(), 3000)
+			}
+			nextTestimonial()
 		</script>
