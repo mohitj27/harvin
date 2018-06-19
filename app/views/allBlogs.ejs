@@ -76,188 +76,209 @@
   </nav> -->
 
   <!-- NEW SECTION CHANGES FOR HERE -->
-  <div class="section " id="main-section">
+  <main>
+    <div class="section " id="main-section">
 
 
-    <h4 id="topmost">Harvin Academy</h4>
+      <h4 id="topmost">Harvin Academy</h4>
 
-    <nav class="z-depth-0">
-      <div class="nav-wrapper" id="top-nav">
-        <ul>
-          <li>
-            <a href="/blog">Home</a>
-          </li>
-          <li>
-            <a href="/blog/category/motivational">Motivtional</a>
-          </li>
-          <li>
-            <a href="/blog/category/about-harvin">College and Admissionme</a>
-          </li>
-          <li>
-            <a href="/blog/category/Tips-and-Tricks">Tips and Tricks</a>
-          </li>
-          <li>
-            <a href="/blog/category/about-harvin">About Harvin</a>
-          </li>
-        </ul>
-        <input type="text right" placeholder="Search..." id="top-search" />
-      </div>
-    </nav>
+      <nav class="z-depth-0 ">
 
-    <div class="" id="banner-container">
-
-      <div class="carousel carousel-slider center" data-indicators="true" style="height:100% !important;">
-
-        <div class="carousel-item red white-text" href="#one!">
-          <img src="/images/banner-blog-4.jpg" alt="">
-        </div>
-        <div class="carousel-item amber white-text" href="#two!">
-          <img src="/images/banner-blog-1.jpg" alt="">
-        </div>
-        <div class="carousel-item green white-text" href="#three!">
-          <img src="/images/banner-blog-3.jpg" alt="">
-
-        </div>
-        <div class="carousel-item blue white-text" href="#four!">
-          <img src="/images/banner-blog-2.jpg" alt="">
-
-        </div>
-      </div>
-
-    </div>
-    <div class="grid">
-      <div class="popular-section-col">
-
-        <h5 class="dark-font">Popular Searches</h5>
-        <hr id="main-ruler">
-
-
-        <div id="popular-post-container">
-
-
-          <% foundPopularBlogs.forEach((blog, i) => { %>
-            <div class="popular-post-grid">
-              <div class="popular-post-image">
-                <img class="responsive-img popular-post-image" src="/blogImage/<%=blog.coverImgName%>" alt="" />
-              </div>
-              <div class="popular-post-info">
-                <a href="/blog/<%=blog.url%>" style="color:#000000c7;">
-                  <h5 class="dark-font">
-                    <%=blog.blogTitle%>
-                  </h5>
-                  <p>
-                    <%=blog.uploadDate%>
-                  </p>
-                </a>
-                <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
-                  Tweet</a>
-                <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
-                  Share
-                </a>
-              </div>
-            </div>
-
-            <% }) %>
-
-
-
-
-        </div>
-      </div>
-      <div class="news-letter-col">
-        <div id="news-letter-card" class="z-depth-2">
-          <h5 class="center" style="color:#ababab;">Newsletter</h5>
-
-          <form action="#!" class="center">
-            <div class="input-field">
-              <input id="first_name" type="text" class="validate">
-              <label for="first_name">First Name</label>
-            </div>
-
-            <div class="input-field">
-              <input id="first_name" type="text" class="validate">
-              <label for="first_name">First Name</label>
-            </div>
-            <button class="btn waves-effect waves-light center" type="submit" name="action">Submit
-              <i class="material-icons right">send</i>
-            </button>
-
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <h5 class="dark-font">Latest Posts </h5>
-    <hr id="main-ruler">
-
-
-    <div id="latest-post-container">
-
-
-      <% foundBlogs.forEach((blog, i) => { %>
-        <div class="latest-post-grid">
-          <div class="latest-post-image">
-            <img class="responsive-img latest-post-image" src="/blogImage/<%=blog.coverImgName%>" alt="" />
-          </div>
-          <div class="latest-post-info">
-            <a href="/blog/<%=blog.url%>" style="color:#000000c7;">
-              <h4 class="dark-font">
-                <%=blog.blogTitle%>
-              </h4>
-              <p>
-                <%=blog.uploadDate%>
-              </p>
-            </a>
-            <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
-              Tweet</a>
-            <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
-              Share
-            </a>
-          </div>
-        </div>
-        <% }) %>
-    </div>
-
-
-    <div class="pagination-wrapper">
-      <ul class="pagination">
-        <li class="waves-effect">
-          <a href="#!" id="prev-button" class="prev-button" onClick="prevPage()">
-            <i class="material-icons">chevron_left</i>
+        <div class="nav-wrapper" id="top-nav">
+          <a href="#" data-activates="mobile-demo" class="button-collapse">
+            <i class="material-icons" style="color:white;">menu</i>
           </a>
-        </li>
-        <%for(var i = 1; i <= count; i++){%>
+          <ul class="hide-on-small-only">
+            <li>
+              <a href="/blog">Home</a>
+            </li>
+            <li>
+              <a href="/blog/category/motivational">Motivtional</a>
+            </li>
+            <li>
+              <a href="/blog/category/about-harvin">College and Admissionme</a>
+            </li>
+            <li>
+              <a href="/blog/category/Tips-and-Tricks">Tips and Tricks</a>
+            </li>
+            <li>
+              <a href="/blog/category/about-harvin">About Harvin</a>
+            </li>
+          </ul>
+          <input type="text right" placeholder="Search..." id="top-search" />
+          <ul class="side-nav" id="mobile-demo">
+            <li>
+              <a href="sass.html">Sass</a>
+            </li>
+            <li>
+              <a href="badges.html">Components</a>
+            </li>
+            <li>
+              <a href="collapsible.html">Javascript</a>
+            </li>
+            <li>
+              <a href="mobile.html">Mobile</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="" id="banner-container">
+
+        <div class="carousel carousel-slider center" data-indicators="true" style="height:100% !important;">
+
+          <div class="carousel-item  white-text" href="#one!">
+            <img src="/images/banner-blog-4.jpg" alt="">
+          </div>
+          <div class="carousel-item amber white-text" href="#two!">
+            <img src="/images/banner-blog-1.jpg" alt="">
+          </div>
+          <div class="carousel-item green white-text" href="#three!">
+            <img src="/images/banner-blog-3.jpg" alt="">
+
+          </div>
+          <div class="carousel-item blue white-text" href="#four!">
+            <img src="/images/banner-blog-2.jpg" alt="">
+
+          </div>
+        </div>
+
+      </div>
+      <div class="grid">
+        <div class="popular-section-col">
+
+          <h5 class="dark-font">Popular Searches</h5>
+          <hr id="main-ruler">
+
+
+          <div id="popular-post-container">
+
+
+            <% foundPopularBlogs.forEach((blog, i) => { %>
+              <div class="popular-post-grid">
+                <div class="popular-post-image" style="background:url('/blogImage/<%=blog.coverImgName%>');
+                background-size: cover;
+               background-repeat: no-repeat;">
+                </div>
+                <div class="popular-post-info">
+                  <a href="/blog/<%=blog.url%>" style="color:#000000c7;">
+                    <h5 class="dark-font">
+                      <%=blog.blogTitle%>
+                    </h5>
+                    <p>
+                      <%=blog.uploadDate%>
+                    </p>
+                  </a>
+                  <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
+                    Tweet</a>
+                  <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
+                    Share
+                  </a>
+                </div>
+              </div>
+
+              <% }) %>
+
+
+
+
+          </div>
+        </div>
+        <div class="news-letter-col">
+          <div id="news-letter-card" class="z-depth-2">
+            <h5 class="center" style="color:#ababab;">Newsletter</h5>
+
+            <form action="#!" class="center">
+              <div class="input-field">
+                <input id="first_name" type="text" class="validate">
+                <label for="first_name">First Name</label>
+              </div>
+
+              <div class="input-field">
+                <input id="first_name" type="text" class="validate">
+                <label for="first_name">First Name</label>
+              </div>
+              <button class="btn waves-effect waves-light center" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <h5 class="dark-font">Latest Posts </h5>
+      <hr id="main-ruler">
+
+
+      <div id="latest-post-container">
+
+
+        <% foundBlogs.forEach((blog, i) => { %>
+          <div class="latest-post-grid">
+            <div class="latest-post-image" style="background:url('/blogImage/<%=blog.coverImgName%>');
+            background-size: cover;
+           background-repeat: no-repeat;">
+            </div>
+            <div class="latest-post-info">
+              <a href="/blog/<%=blog.url%>" style="color:#000000c7;">
+                <h4 class="dark-font">
+                  <%=blog.blogTitle%>
+                </h4>
+                <p>
+                  <%=blog.uploadDate%>
+                </p>
+              </a>
+              <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
+                Tweet</a>
+              <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
+                Share
+              </a>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+
+
+      <div class="pagination-wrapper">
+        <ul class="pagination">
           <li class="waves-effect">
-            <a onClick="paginationClick(this)" data-value="<%=i%>" class="prev-button
+            <a href="#!" id="prev-button" class="prev-button" onClick="prevPage()">
+              <i class="material-icons">chevron_left</i>
+            </a>
+          </li>
+          <%for(var i = 1; i <= count; i++){%>
+            <li class="waves-effect">
+              <a onClick="paginationClick(this)" data-value="<%=i%>" class="prev-button
                             <%if(page==i){%>
                                 active-chip
                                 <%}%>
                             ">
-              <%=i%>
-            </a>
-          </li>
-          <%}%>
-            <li class="waves-effect">
-              <a href="#1>" id="next-button" class="next-button" onClick="nextPage()">
-                <i class="material-icons">chevron_right</i>
+                <%=i%>
               </a>
             </li>
-      </ul>
+            <%}%>
+              <li class="waves-effect">
+                <a href="#1>" id="next-button" class="next-button" onClick="nextPage()">
+                  <i class="material-icons">chevron_right</i>
+                </a>
+              </li>
+        </ul>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
     </div>
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-  <!-- NEW SECTION CHANGES TILL HERE -->
-
+    <!-- NEW SECTION CHANGES TILL HERE -->
+  </main>
   <% include partials/website_footer.ejs%>
 
 
