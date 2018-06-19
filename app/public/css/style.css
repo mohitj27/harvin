@@ -16,6 +16,7 @@
   padding: 10em 0 10em 0;
 }
 @import url(https://fonts.googleapis.com/css?family=EB+Garamond|Cardo:400italic);
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 
 #nav-logo {
   height: 70%;
@@ -545,11 +546,17 @@ em {
   background-color: #13b38b;
 }
 #register-now-section {
-  /* background: #555; */
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  grid-gap: 5em;
+  max-height: 400px;
+  margin-bottom: 20px;
 }
+
+#register-now-card {
+  width: 30%;
+  margin-bottom: -312px;
+  margin-right: 4%;
+  float: right;
+}
+
 #blog-section {
   margin-bottom: 100px;
 }
@@ -647,6 +654,7 @@ h5 {
 
 #left-sec > h4 {
   font-weight: bold;
+  font-family: 'Josefin Sans', sans-serif;
 }
 #right-sec {
   grid-column: 2/3;
@@ -841,6 +849,23 @@ h5 {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+.mapouter {
+  height: 400px;
+  padding-bottom: 2em;
+}
+
+.gmap_canvas {
+  overflow: hidden;
+  background: none !important;
+  height: 100%;
+  width: 100%;
+}
+
+iframe#gmap_canvas {
+  width: 100%;
+  height: 100%;
+}
+
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   #feature-utilities {
@@ -952,6 +977,7 @@ h5 {
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+
   #fst-section {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
