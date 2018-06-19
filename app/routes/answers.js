@@ -10,9 +10,11 @@ const router = express.Router();
 
 router.post('/:id', middleware.isLoggedIn, async (req, res, next) => {
   try {
-    console.log('req', req.user);
+    console.log('req-----------', req.user);
+    console.log('req.body------',req.body);
     const sectionAnswers = JSON.parse(req.body.answers);
     const marksArray = [];
+    
     for (let answers of sectionAnswers) {
       for (let ans of answers.answer) {
 
@@ -23,6 +25,8 @@ router.post('/:id', middleware.isLoggedIn, async (req, res, next) => {
     }
 
     const marks = marksArray.reduce((sum, isCorrect) => isCorrect ? sum + 1 : sum + 0, 0);
+    const incorrectAns = sectionAnswers.length;
+    
     const insertMarksToUser = userController.insertMarksToUser(req.body.testId, `${marks} / ${marksArray.length}`, req.user);
 
     res.json({

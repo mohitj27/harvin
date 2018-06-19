@@ -29,6 +29,19 @@ const enhancer = composeEnhancers(applyMiddleware(thunk, logger));
 
 const store = createStore(rootReducer, enhancer);
 let App = null;
+let token = localStorage.getItem('token');
+      let decoded = jwt.decode(token);
+      let date = Date.now() / 1000;
+      // console.log("condition", token, decoded);
+      if (token && decoded && decoded.exp >= date === true) {
+        setAuthToken(token);
+        decoded = jwt.decode(token);
+        store.dispatch({
+          type: 'LOGIN_SUCCESS',
+          currentUser: decoded,
+        });
+      }
+      
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}

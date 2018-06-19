@@ -13,6 +13,8 @@ import ListTest from '../views/ListTest/ListTest.jsx';
 import CreateTest from '../views/CreateTest/CreateTest.jsx';
 import Questions from '../views/Questions/Questions.jsx';
 import Activity from '../views/Activity/Activity.jsx';
+import Result from '../views/Results/Results.jsx';
+
 const appRoutes = [
   {
     path: '/home',
@@ -43,6 +45,12 @@ const appRoutes = [
     sidebarName: 'Questions',
     icon: NoteAdd,
     component: Questions,
+  },
+  {
+    path: '/result/:id',
+    sidebarName: 'Results',
+    icon: NoteAdd,
+    component: Result,
   },
   {
     path: '/Activity',

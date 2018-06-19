@@ -198,12 +198,15 @@ class Quiz extends Component {
     formData.append('maxMarks', this.state.test.maxMarks);
     formData.append('testId', this.state.test._id);
     formData.append('answers', JSON.stringify(this.state.sectionAnswers));
+    // console.log(formData);
+    console.log("sectionState",this.state.sectionAnswers);
     axios
       .post(`http://localhost:3001/admin/answers/${this.state.test._id}`, formData)
       .then(res => {
         alert(`You have scored ${res.data.marks}`);
-        window.location.replace('/activity');
-
+        // window.location.replace('/activity');
+        window.location.replace('/result/123');
+        
       })
       .catch(err => console.log('err', err));
   };
