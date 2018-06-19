@@ -322,6 +322,13 @@ h5 {
   width: 6px;
 }
 
+#thrd-section::-webkit-scrollbar {
+  height: 0;
+}
+
+#thrd-section::-webkit-scrollbar-track {
+  background-color: white;
+}
 #popular-blogs-wrapper::-webkit-scrollbar {
   height: 0;
 }
@@ -473,7 +480,6 @@ em {
   color: #000000;
   max-width: 100%;
   /* padding: 24px; */
-  font-size: 1.5rem;
 }
 .milestones-section {
   background: url("/images/hero01.jpg");
@@ -556,8 +562,8 @@ em {
 #register-now-card {
   width: 30%;
   margin-bottom: -312px;
-  margin-right: 4%;
-  float: right;
+  /* margin-right: 4%; */
+  /* float: right; */
 }
 
 #blog-section {
@@ -783,15 +789,18 @@ h5 {
 
 #thrd-section {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 5em;
   min-width: 0;
   min-height: 0;
+  overflow-x: scroll;
+  overflow-y:  hidden;
 }
 
 .course-card {
   min-width: 0;
   overflow: hidden;
+  /* grid-column: 1/2; */
 }
 
 /* #scnd-section > div:nth-child(1) */
@@ -802,6 +811,9 @@ h5 {
 }
 
 @media screen and (max-device-width:400px){
+  #popular-course-heading{
+    /* grid-column: 1/2 !important; */
+  }
   .course-card{
     min-width: 100vw;
     overflow: hidden;
@@ -816,6 +828,10 @@ h5 {
   }
   .mapouter{
     display: none;
+  }
+  .course-card{
+    min-width: 100vw;
+    grid-row: 2/3;
   }
 
 }
@@ -835,9 +851,10 @@ h5 {
 }
 
 #popular-course-heading {
-  grid-column: 1/4;
-  margin-top: 50px;
+  /* grid-column: 1/5; */
+  /* margin-top: 50px; */
   justify-self: center;
+  text-align:  center;
 }
 
 #popular-course-heading > h4 {
@@ -1037,10 +1054,13 @@ iframe#gmap_canvas {
   #thrd-section {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 2em;
+    margin-left: 0;
+    width: 100vw;
+    margin-right:  0;
   }
 
   #popular-course-heading {
-    grid-column: 1/3;
+    /* grid-column: 1/3; */
   }
 
   #left-sec {
