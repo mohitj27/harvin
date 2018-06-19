@@ -105,3 +105,6 @@ grid-template-columns: 55% auto 37.5%;
 .popular-post-image{
 grid-column: 1/2;
 }
+main{
+  padding: 0 5%;
+}
