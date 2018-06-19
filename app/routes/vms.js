@@ -34,13 +34,12 @@ router.get("/", (req, res) => {
     .limit(3)
     .then(foundPopularBlogs => {
       Course.find({})
-      .then(foundCourses => {
-
-        res.render("HomePage", {
-          foundPopularBlogs,
-          foundCourses
-        })
-      });
+        .then(foundCourses => {
+          res.render("HomePage", {
+            foundPopularBlogs,
+            foundCourses
+          })
+        });
     }).catch(err => next(err))
 });
 
@@ -60,6 +59,10 @@ router.get("/vms/phone/:phone", async (req, res, next) => {
 
 router.get("/vms", middleware.isLoggedIn, (req, res) => {
   res.render("newVisitor");
+});
+
+router.get("/mdis", (req, res) => {
+  res.render("mdis");
 });
 
 router.post(
@@ -135,12 +138,12 @@ router.post(
 
     var promise = vmsController.addNewVisitor(newVisitor);
     promise.then(
-      function(createdVisitor) {
+      function (createdVisitor) {
         req.flash("success", "Your response has been saved successfully");
         res.redirect("/vms");
       },
 
-      function(err) {
+      function (err) {
         next(err || "Internal Server Error");
       }
     );
@@ -174,7 +177,9 @@ router.post("/centers", (req, res, next) => {
   );
   res.redirect("/centers");
 });
-
+router.post("/mdis", (req, res, next) => {
+  res.send(200);
+})
 router.get("/courses", (req, res, next) => {
   res.render("courses");
 });
@@ -203,7 +208,7 @@ router.get("/courses-list", async (req, res, next) => {
   }
 });
 
-router.get("/gallery/category", function(req, res, next) {
+router.get("/gallery/category", function (req, res, next) {
   let category = req.query.category;
   let limit = req.query.limit;
   Gallery.find({
@@ -215,7 +220,7 @@ router.get("/gallery/category", function(req, res, next) {
       uploadDate: -1
     })
     .limit(parseInt(limit))
-    .exec(function(err, gallery) {
+    .exec(function (err, gallery) {
       if (err) {
         console.log(err);
       } else {
@@ -396,9 +401,9 @@ router.get("/blog/:url", (req, res, next) => {
               if (foundBlog.htmlFilePath) {
                 fs.readFile(
                   __dirname +
-                    "/../../../HarvinDb/blog/" +
-                    foundBlog.htmlFilePath,
-                  function(err, data) {
+                  "/../../../HarvinDb/blog/" +
+                  foundBlog.htmlFilePath,
+                  function (err, data) {
                     if (err) return next(err || "Internal Server Error");
                     res.render("standard_blog_detail", {
                       blogContent: data,
@@ -490,7 +495,7 @@ router.get("/forum", async (req, res, next) => {
     res.render("forumPost", {
       foundPost: foundPost[0]
     });
-  } catch (e) {}
+  } catch (e) { }
 });
 
 router.get("/videos/:videoId", async (req, res, next) => {

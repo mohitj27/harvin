@@ -1,0 +1,85 @@
+<%include partials/website_header.ejs%>
+  <link rel="stylesheet" type="text/css" href="../../css/centers.css">
+  <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/mdis.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="../../css/materialize-social.css" type="text/css" rel="stylesheet"></link>
+  <main>
+    <div id="overlay-head"></div>
+    <div class="section" id="mdis-container">
+      <div style="z-index: 100;">
+        <h2 id="top-heading" class="center">MDIS</h2>
+        <h5 class="center">Preperation for the European Medical Schools</h5>
+      </div>
+    </div>
+    <div class="container" id="what-mdis">
+      <div id="hero-mdis-img" class="hide-on-small-only"></div>
+      <div id="what-info">
+        <h4 id="what-mdis-h">What is MDIS?</h4>
+        <p>Medical Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+        <p>Medical Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+      </div>
+    </div>
+    <div class="container" id="mdis-tab-section">
+      <div id="mdis-tabs">
+        <button class="mdis-tab-item activated arrow" value="0">Course Description</button>
+        <button class="mdis-tab-item" value="1">Harvin and MDIS</button>
+        <button class="mdis-tab-item" value="2">Partner Universities</button>
+        <button class="mdis-tab-item" value="3">FAQ's</button>
+      </div>
+      <div id="mdis-tabs-info">
+
+        <div class="mdis-tab-content">
+          <p>Medical Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 1</p>
+        </div>
+
+        <div class="mdis-tab-content">
+          <p>Medical Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 2</p>
+        </div>
+
+        <div class="mdis-tab-content">
+          <p>Medical Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 3</p>
+        </div>
+
+        <div class="mdis-tab-content">
+          <p>Medical Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 4  </p>
+        </div>
+
+      </div>
+    </div>
+    <div class="container" id="request-callback-container">
+      <h4 id="req-callback">REQUEST A CALLBACK</h4>
+      <p id="req-callback-para" class="center">For any query regarding the course.</p>
+    <form action="#!">
+      <div class="row center">
+        <div class="input-field col s12 m6 l4 push-l4 push-m3">
+          <input id="full_name" type="text" class="validate">
+          <label for="full_name">Full Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 m6 l4 push-l4 push-m3">
+          <input id="contact" type="text" class="validate">
+          <label for="contact">Contact No.</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 m6 l4 push-l4 push-m3">
+          <input id="email" type="email" class="validate">
+          <label for="email">Email Id</label>
+        </div>
+      </div>
+<div class="row center">
+  <a class="waves-effect waves-light btn" href="#!" onClick="requrestMDIScallback();">button</a>
+
+</div>
+    </form>
+    </div>
+  </main>
+  <%include partials/website_footer.ejs%>
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../../js/materialize.js"></script>
+    <script src="../../js/init.js"></script>
+    <script src="../../js/mdis.js"></script>

@@ -14,66 +14,10 @@
 
 	<main>
 
-		<!-- <nav class="info-nav">
-			<div class="nav-wrapper top-most">
-				<ul stlye="margin-left:20%;">
-					<li class="hide-on-med-and-down">
-						<p>Have any Questions?</p>
-					</li>
-					<li>
-						<p>(+91) 8470933206</p>
-					</li>
-					<li>
-						<p>info@harvin.academy</p>
-					</li>
-
-				</ul>
-				<span style="float:right">
-					<a href="#!" onClick="removeTopBar();">
-						<i class="material-icons">close</i>
-					</a>
-				</span>
-			</div>
-		</nav> -->
-		<!-- <div class="section no-pad " id="first-section">
-			<div class="section no-pad-bot">
-
-			</div>
-			<div class="section valign-wrapper " id="hero-section">
-				<div class="container landing-container">
-					<div class="row" id='removeThisId'>
-						<div class="col s12 m4 l4">
-							<h2 class="harvin-heading-text">Medical</h2>
-						</div>
-						<div class="col s12 m4 l4">
-							<h2 class="harvin-heading-text">Engineering</h2>
-						</div>
-						<div class="col s12 m4 l4">
-							<h2 class="harvin-heading-text">Crash Course</h2>
-						</div>
-						<div class="col s12 l12 m12 ">
-							<div class="card-panel z-depth-5 center" id="harvin-card-panel">
-
-								<div class="sandbox sandbox-correct-pronounciation">
-									<h1 class="heading heading-correct-pronounciation">
-										<em>Harvin Academy</em>
-									</h1>
-									<p id="premier">The Premier institute for PMT|IIT-JEE</p>
-								</div>
-							</div>
-
-						</div>
-
-
-					</div>
-
-				</div>
-			</div>
-		</div> -->
 
 		<img src="/images/hero.jpeg" class="responsive" id="hero-img" alt="">
 		<div id="overlay"></div>
-		<div class="section container" id="fst-section">
+		<div class=" container" id="fst-section">
 
 			<div id="left-sec">
 				<h4>WELCOME TO HARVIN ACADEMY</h4>
@@ -97,9 +41,8 @@
 						<!-- <br> -->
 						<p>Droppers Batch For NEET and IIT JEE</p>
 						<br>
-						<p>Starting from 15th June at Harvin Academy Preet Vihar and Harvin Academy Janakpuri.</p>
+						<p>Started from 15th June at Harvin Academy Preet Vihar and Harvin Academy Janakpuri.</p>
 					</div>
-
 				</div>
 				<div id="vid">
 					<iframe src="https://www.youtube.com/embed/GbMYOQYhVGo?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media"
@@ -127,44 +70,42 @@
 			<div class="features">
 				<div class="card-content">
 					<i class="large material-icons">developer_board</i>
-					<p>PERSONAL PROBLEM ON SOLVING SESSIOIN</p>
-					<p>Identifying problem, developing possible solution and taking the appropriate course of action.</p>
+					<p>SYSTEMATIC AND PLANNED TEACHING</p>
+					<p>Systematic and planned teaching routine, structured approach to help students.</p>
 				</div>
 
 			</div>
-			<div id="popular-course-heading">
-				<h4>POPULAR COURSES</h4>
-				<p>Provides course for Medical And Engineering</p>
-				<hr class="short-hr">
-			</div>
-			<%if(foundCourses){%>
-				<%foundCourses.forEach((course,i)=>{%>
-
-					<div class="course-card">
-						<div class="card">
-							<div class="card-image">
-								<img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
-								<span class="card-title">
-									<%=course.courseName%>
-								</span>
-								<a class="btn-floating halfway-fab waves-effect waves-light red">
-									<i class="material-icons">near_me</i>
-								</a>
-							</div>
-
-							<div class="card-content">
-								<p class="truncate">
-									<%=course.courseFor%>
-								</p>
-							</div>
-							<div class="card-action">
-								<a href="/courses-list/?title=<%=course.courseUrl%>">Read more...</a>
+			
+		</div>
+		<div class="section container" id="thrd-section">
+				<div id="popular-course-heading">
+						<h4>POPULAR COURSES</h4>
+						<p>Provides course for Medical And Engineering</p>
+						<hr class="short-hr">
+					</div>
+		
+					<%foundCourses.forEach(function(course) {%>
+		
+						<div class="course-card">
+							<div class="card">
+								<div class="card-image">
+									<img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
+									<span class="card-title">
+										<%=course.courseName%>
+									</span>
+									<a class="btn-floating halfway-fab waves-effect waves-light red" href="/courses-list/?title=<%=course.courseUrl%>">
+										<i class="material-icons">near_me</i>
+									</a>
+								</div>
+		
+								<div class="card-content">
+									<p class="truncate">
+										<%=course.courseFor%>
+									</p>
+								</div>
 							</div>
 						</div>
-					</div>
-					<%})%>
-						<%}%>
-
+						<%})%>
 		</div>
 		<img src="/images/banner1.jpeg" id="testimonials-banner-img" alt="Banner">
 		<div id="overlay-testimonials-section"></div>
@@ -230,70 +171,75 @@
 			</div>
 		</div>
 
-		<div class="section download-app-section">
-			<div class="container">
+		<img src="/images/1J5A2947.jpeg" alt="" id="hero-img-features-section" class="responsive-img">
+		<div id="overlay-features-section"></div>
+		<div class="section no-pad" id="download-app-section">
+			<div class="container" id="download-app-container">
+
 				<div class="row">
-					<div class="col s12 m4 l4">
-						<div id="important-dates">
+					<div class="col s12 m4 l4" style="
+					display: flex;
+					justify-content: center;">
+						<div id="important-dates" style="z-index: 100;">
 							<div class="dates">
-								<div>
-									<i class="large material-icons">developer_board</i>
-								</div>
+									<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
 										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
-								</div>
-							</div>
-							<div class="dates">
-								<i class="large material-icons">developer_board</i>
-								<div class="dates-info">
-									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
 								</div>
 							</div>
 							<div class="dates">
-								<i class="large material-icons">developer_board</i>
+								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
 										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
+								</div>
+							</div>
+							<div class="dates">
+								<i class="medium material-icons green-text">developer_board</i>
+								<div class="dates-info">
+									<h5 class="important-dates-heading">
+										Heading</h5>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
 								</div>
 							</div>
 						</div>
 
 					</div>
-					<div class="col s6 m4 l4 center hide-on-small-only">
-						<img src="/images/phoneFrame.jpg" alt="">
+					<div class="col s6 m4 l4 center hide-on-small-only" style="
+					display: flex;
+					justify-content: center;">
+						<img src="/images/phoneFrame.jpg" style="max-height:400px;z-index:1; margin-top: -40px;" alt="">
 					</div>
 
-					<div class="col s6 m4 l4 hide-on-small-only">
-						<div id="important-dates">
+					<div class="col s12 m4 l4" style="
+					display: flex;
+					justify-content: center;">
+						<div id="important-dates" style="z-index: 100;">
 							<div class="dates">
-								<div>
-									<i class="large material-icons">developer_board</i>
-								</div>
+									<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
 										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
-								</div>
-							</div>
-							<div class="dates">
-								<i class="large material-icons">developer_board</i>
-								<div class="dates-info">
-									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
 								</div>
 							</div>
 							<div class="dates">
-								<i class="large material-icons">developer_board</i>
+								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
 										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omniumLorem Ipsum dolor sit amer ,omnium</p>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
+								</div>
+							</div>
+							<div class="dates">
+								<i class="medium material-icons green-text">developer_board</i>
+								<div class="dates-info">
+									<h5 class="important-dates-heading">
+										Heading</h5>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
 								</div>
 							</div>
 						</div>
@@ -308,35 +254,39 @@
 			<div class="container">
 
 				<div class="row center">
-					<h3 class="section-heading" id="daily-blogs">FROM OUR BLOG</h3>
+					<h3 class="section-heading" id="daily-blogs">DAILY BLOGS</h3>
 					<p>From our blogs</p>
 					<hr class="short-hr">
 					<div id="popular-blogs-wrapper">
 						<%foundPopularBlogs.forEach(function(blog) {%>
-							
-								<div class="course-card">
-									<div class="card1">
-										<div class="card-image blog-card-img-title" style="background: url(/blogImage/<%=blog.coverImgName%>) no-repeat center center; height: 400px; -webkit-background-size: cover;
+
+							<div class="course-card">
+								<div class="card1">
+									<div class="card-image blog-card-img-title" style="background: url(/blogImage/<%=blog.coverImgName%>) no-repeat center center; height: 300px; -webkit-background-size: cover;
 											-moz-background-size: cover;
 											-o-background-size: cover;
 											background-size: cover;">
 
-										</div>
-										<hr class="midium-hr">
-										<div class="card-content">
-												<span class="why-title">
-														<%=blog.blogTitle%>
-													</span>
-											<p class="truncate blog-title">
-												Lorem Ipsum dolor sit amer Lorem Ipsum dolor sit amerLorem Ipsum dolor sit amerLorem Ipsum dolor sit amer
-											</p>
-										</div>
-										<div class="card-action left">
-											<a href="/blog/<%=blog.url%>">Read more...</a>
-										</div>
+									</div>
+									<hr class="midium-hr">
+									<div class="card-content">
+										<a href="/blog/<%=blog.url%>">
+											<span class="why-title">
+												<%=blog.blogTitle%>
+											</span>
+										</a>
+
+										<p class="truncate blog-title">
+											Lorem Ipsum dolor sit amer Lorem Ipsum dolor sit amerLorem Ipsum dolor sit amerLorem Ipsum dolor sit amer
+										</p>
+									</div>
+									<div class="card-action left">
+										<a href="/blog/<%=blog.url%>">Read more...</a>
 									</div>
 								</div>
+							</div>
 							<%})%>
+
 					</div>
 					<br>
 					<a class="btn waves-effect white inverted-button" id="view-all-blogs-btn" href="/blog">VIEW ALL</a>
@@ -345,43 +295,69 @@
 
 			</div>
 		</div>
-		<div class="section " id="register-now-section">
 
-			<div class="container">
-				<div class="row">
-					<div class="col s8 m5 l5 push-l1 push-m1">
-						<div class="card hoverable">
-							<div class="card-image ">
-								<h4 class="register-card-title center">REGISTER NOW</h4>
-							</div>
-							<div class="card-content">
-								<div class="row center">
+		<div class="container " id="register-now-section">
 
-									<div class="input-field col s12">
-										<input id="last_name" type="text" class="validate">
-										<label for="last_name">Last Name</label>
-									</div>
+			<div class="card hoverable">
+				<div class="card-image ">
+					<h4 class="register-card-title center">REGISTER NOW</h4>
+				</div>
+				<div class="card-content">
+					<div class="row center">
 
-									<div class="input-field col s12">
-										<input id="last_name" type="text" class="validate">
-										<label for="last_name">Last Name</label>
-									</div>
-
-									<div class="input-field col s12">
-										<input id="last_name" type="text" class="validate">
-										<label for="last_name">Last Name</label>
-									</div>
-
-									<a class="btn waves-effect " style="background-color: #13b38b;">SIGN UP</a>
-
-
-								</div>
-							</div>
+						<div class="input-field col s12">
+							<input id="last_name" type="text" class="validate">
+							<label for="last_name">Last Name</label>
 						</div>
+
+						<div class="input-field col s12">
+							<input id="last_name" type="text" class="validate">
+							<label for="last_name">Last Name</label>
+						</div>
+
+						<div class="input-field col s12">
+							<input id="last_name" type="text" class="validate">
+							<label for="last_name">Last Name</label>
+						</div>
+
+						<a class="btn waves-effect " style="background-color: #13b38b;">SIGN UP</a>
+
+
 					</div>
 				</div>
-
 			</div>
+
+
+			<div class="mapouter">
+				<div class="gmap_canvas">
+					<iframe id="gmap_canvas" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56025.53693796154!2d77.25
+			678771665312!3d28.641866248905934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m
+			2!1s0x390cfb56d7a68be1%3A0xc0d24e384452c9f7!2sHarvin+Academy!5e0!3m2!1sen!2sin!4
+			v1493884209281" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">H</iframe>
+					<a href="https://www.maps-erstellen.de"></a>
+				</div>
+				<style>
+					.mapouter {
+						text-align: right;
+						height: 100%;
+						width: 100%;
+						padding-bottom: 2em;
+					}
+
+					.gmap_canvas {
+						overflow: hidden;
+						background: none !important;
+						height: 100%;
+						width: 100%;
+					}
+
+					iframe#gmap_canvas {
+						width: 100%;
+						height: 100%;
+					}
+				</style>
+			</div>
+
 		</div>
 	</main>
 	<%include partials/website_footer.ejs%>
@@ -437,4 +413,14 @@
 
 		<script>
 			$('.carousel.carousel-slider').carousel({ fullWidth: true });
+			// setTimeout(()=> {
+			// 	$('.carousel').carousel('next');
+			// }, 5000)
+
+			function nextTestimonial() {
+				$('.carousel').carousel('next');
+
+				setTimeout(() => nextTestimonial(), 3000)
+			}
+			nextTestimonial()
 		</script>

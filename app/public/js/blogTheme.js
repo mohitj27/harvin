@@ -13,17 +13,19 @@ $(function () {
   $('.carousel.carousel-slider').carousel({ fullWidth: true });
 
 });
-function paginationClick(e){
-  const value=$(e).data('value');
-  if($(".active-chip").data('value')!=$(e).data('value')){
+function paginationClick(e) {
+  const value = $(e).data('value');
+  if ($(".active-chip").data('value') != $(e).data('value')) {
     $(".active-chip").removeClass("active-chip")
     $(e).addClass("active-chip")
-    $.getJSON(`page/?page=${value}`,function(data){
-      $('.latest-post-grid').remove()
-      const $BlogsHTML=$(".latest-post-grid")
-      data.forEach(function(val,i)  {
+    $('.latest-post-grid').remove()
+    $.getJSON(`page/?page=${value}`, function (data) {
+      const $BlogsHTML = $(".latest-post-grid")
+      data.forEach(function (val, i) {
         console.log(val)
-          $('#latest-post-container').prepend(`
+        // $('#latest-post-container').prepend(`ishank1`);
+        // $('#latest-post-container').append(`ishank`);
+        $('#latest-post-container').append(`
           <div class="latest-post-grid">
           <div class="latest-post-image">
             <img class="responsive-img latest-post-image" src="/blogImage/${data[i].coverImgName}" alt=""/>
