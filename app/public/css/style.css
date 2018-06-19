@@ -50,7 +50,6 @@
 
   #feature-utilities {
     margin-top: 10px;
-
   }
 }
 
@@ -456,7 +455,7 @@ em {
 }
 
 .important-dates-p {
-  color: white
+  color: white;
 }
 .section-heading {
   color: #7e7d7d;
@@ -560,7 +559,7 @@ em {
   grid-template-columns: 1fr 3fr 1fr;
 }
 
-#main-nav{
+#main-nav {
   background-color: white;
   color: black;
   height: 64px;
@@ -570,16 +569,16 @@ em {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   justify-items: center;
-  align-items: center
+  align-items: center;
 }
 
-#login-btn-wrapper{
+#login-btn-wrapper {
 }
 
-#login-btn{
+#login-btn {
   background-color: white;
   border: 1px solid #13b38b;
-  color: #13b38b
+  color: #13b38b;
 }
 
 #harvin-logo {
@@ -603,35 +602,33 @@ em {
   grid-gap: 1em;
   /* z-index: 2; */
   /* color: white; */
-
 }
-#overlay{
+#overlay {
   z-index: 1;
   background-color: rgba(26, 41, 30, 0.72);
   height: calc(110vh - 64px);
   position: absolute;
   width: 100vw;
-  max-width:  100%;
+  max-width: 100%;
 }
 
-#overlay-features-section{
+#overlay-features-section {
   z-index: 1;
   background-color: rgba(26, 41, 30, 0.72);
   height: calc(110vh - 64px);
   position: absolute;
   width: 100vw;
-  max-width:  100%;
+  max-width: 100%;
 }
 
-#overlay-normal{
+#overlay-normal {
   z-index: 1;
   background-color: rgba(26, 41, 30, 0.72);
-  height:  calc(110vh - 64px);
+  height: calc(110vh - 64px);
   position: absolute;
   width: 100vw;
-  max-width:  100%;
+  max-width: 100%;
 }
-
 
 #left-sec {
   grid-column: 1/2;
@@ -641,7 +638,8 @@ em {
   /* color: white; */
 }
 
-#left-sec > h4, h5{
+#left-sec > h4,
+h5 {
   color: white;
   /* font-weight: bold; */
   /* float: left; */
@@ -659,23 +657,23 @@ em {
   z-index: 2;
 }
 
-#hero-img{
+#hero-img {
   width: 100vw;
   margin: 0;
   position: absolute;
-  max-width:  100%;
+  max-width: 100%;
   height: calc(110vh - 64px);
 }
 
-#hero-img-features-section{
+#hero-img-features-section {
   width: 100vw;
   margin: 0;
   position: absolute;
-  max-width:  100%;
+  max-width: 100%;
   height: calc(110vh - 64px);
 }
 
-#passion-for-education{
+#passion-for-education {
   grid-column: 1/3;
   grid-row: 1/2;
   /* color: white */
@@ -683,9 +681,10 @@ em {
   padding: 5% 10%;
   /* padding-left: 10%; */
   /* padding-right: 10%; */
-  background-color: rgb(226, 217, 217, 0.29)
+  background-color: rgb(226, 217, 217, 0.29);
 }
-#passion-for-education > h5, #passion-for-education > p {
+#passion-for-education > h5,
+#passion-for-education > p {
   font-weight: bold;
   color: white;
 }
@@ -696,15 +695,15 @@ em {
 #passion-for-education > h5 {
   /* color: white; */
   font-style: italic;
-
 }
 
-#passion-for-education > h5:before, #passion-for-education > h5:after {
+#passion-for-education > h5:before,
+#passion-for-education > h5:after {
   color: #563a3a;
   content: '"';
 }
 
-#next-info{
+#next-info {
   grid-column: 1/2;
   grid-row: 2/3;
   text-align: center;
@@ -729,7 +728,7 @@ em {
   line-height: 1.5em;
 }
 
-#vid{
+#vid {
   grid-column: 2/3;
   grid-row: 2/3;
 }
@@ -739,7 +738,7 @@ em {
   width: 100%;
 }
 
-#scnd-section{
+#scnd-section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 5em;
@@ -756,7 +755,7 @@ em {
   min-height: 0;
 }
 
-.course-card{
+.course-card {
   min-width: 0;
   overflow: hidden;
 }
@@ -768,33 +767,33 @@ em {
   overflow: hidden;
 }
 
-#scnd-section > .features > div > i:nth-child(1){
+#scnd-section > .features > div > i:nth-child(1) {
   color: #13b38b;
   font-size: 4em;
 }
 
-#scnd-section > .features > div > p:nth-child(2){
+#scnd-section > .features > div > p:nth-child(2) {
   color: #303130e6;
   font-size: 1.2em;
 }
 
-#scnd-section > .features > div > p:nth-child(3){
+#scnd-section > .features > div > p:nth-child(3) {
   color: #8e928ee6;
   line-height: 2em;
 }
 
-#popular-course-heading{
+#popular-course-heading {
   grid-column: 1/4;
   margin-top: 50px;
   justify-self: center;
 }
 
-#popular-course-heading > h4{
+#popular-course-heading > h4 {
   color: #303130e6;
   font-weight: bold;
 }
 
-#popular-course-heading > p{
+#popular-course-heading > p {
   color: #8e928ee6;
   font-weight: bold;
 }
@@ -817,9 +816,8 @@ em {
 #testimonials {
   display: grid;
   padding-top: 100px;
-
 }
-#overlay-testimonials-section{
+#overlay-testimonials-section {
   z-index: 1;
   background-color: rgba(18, 21, 18, 0.49);
   height: 55vh;
@@ -827,7 +825,7 @@ em {
   width: 100%;
 }
 
-#testimonials-banner-img{
+#testimonials-banner-img {
   width: 100vw;
   margin: 0;
   max-width: 100%;
@@ -843,14 +841,12 @@ em {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   #feature-utilities {
     margin-top: 45px;
   }
 }
-
 
 /*  large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1800px) {
@@ -865,8 +861,7 @@ em {
   margin-top: 100px;
 }
 
-#testimonials-overlay-content > p:nth-child(6)
-{
+#testimonials-overlay-content > p:nth-child(6) {
   color: #504f4f;
 }
 
@@ -874,83 +869,81 @@ em {
   font-size: 60px;
 }
 
-#testimonials-overlay-content > div.carousel.carousel-slider.center.initialized {
+#testimonials-overlay-content
+  > div.carousel.carousel-slider.center.initialized {
   margin-top: 80px;
 }
 
 /*  large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 992px) {
-  #harvin-logo-anchor{
-   grid-column: 2/3;
-
+  #harvin-logo-anchor {
+    grid-column: 2/3;
   }
 
-  #sidebar-collapse{
+  #sidebar-collapse {
     grid-column: 1/2;
-    grid-row: 1/1
+    grid-row: 1/1;
   }
 
   /* #nav-wrapper {
     grid-template-columns: 
   } */
-
-  
 }
 
-.testimonial-text{
+.testimonial-text {
   padding-left: 200px;
   padding-right: 200px;
 }
 
-.testimonial-avatar{
+.testimonial-avatar {
   font-size: 100px;
 }
 
 #testimonials-wrapper > .indicators .indicator-item {
-background-color: #a8cec4;
+  background-color: #a8cec4;
 }
 
-#testimonials-wrapper > .indicators .indicator-item.active{
-background-color: #13b38b;
+#testimonials-wrapper > .indicators .indicator-item.active {
+  background-color: #13b38b;
 }
 
-#daily-blogs{
-  color: black
+#daily-blogs {
+  color: black;
 }
 
-.short-hr{
+.short-hr {
   width: 10vw;
 }
 
-#view-all-courses-btn{
+#view-all-courses-btn {
   grid-column: 2/3;
 }
 
-#popular-blogs-wrapper{
+#popular-blogs-wrapper {
   display: grid;
-  grid-template-columns:repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 5em;
   min-width: 0;
   min-height: 0;
 }
 
-#view-all-blogs-btn{
+#view-all-blogs-btn {
   grid-column: 2/3;
 }
 
-.midium-hr{
-  width: 100%
+.midium-hr {
+  width: 100%;
 }
 
-.blog-title{
-  color: #383636c9
+.blog-title {
+  color: #383636c9;
 }
 
 /* .blog-card-img-title{
   max-height: 400px;
 } */
 
-#download-app-section{
+#download-app-section {
   margin-top: 150px;
   height: calc(110vh - 64px - 150px);
 }
@@ -959,13 +952,13 @@ background-color: #13b38b;
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-  #fst-section{
+  #fst-section {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     height: 134vh;
   }
 
-  #scnd-section{
+  #scnd-section {
     grid-column-gap: 1em;
   }
 
@@ -974,7 +967,7 @@ background-color: #13b38b;
     grid-gap: 2em;
   }
 
-  #popular-course-heading{
+  #popular-course-heading {
     grid-column: 1/3;
   }
 
@@ -983,12 +976,13 @@ background-color: #13b38b;
     grid-row: 1/2;
   }
 
-  #right-sec{
+  #right-sec {
     grid-column: 1/3;
     grid-row: 3/4;
   }
 
-  #hero-img, #overlay{
+  #hero-img,
+  #overlay {
     height: 135vh;
   }
 
@@ -1001,11 +995,12 @@ background-color: #13b38b;
     margin-top: 90px;
   }
 
-  #testimonials-overlay-content > div.carousel.carousel-slider.center.initialized {
+  #testimonials-overlay-content
+    > div.carousel.carousel-slider.center.initialized {
     margin-top: 40px;
   }
 
-  .testimonial-text{
+  .testimonial-text {
     padding-left: 50px;
     padding-right: 50px;
   }
@@ -1016,31 +1011,40 @@ background-color: #13b38b;
     margin-bottom: 5px;
     font-size: 1.3em;
   }
-  
+
   .important-dates-p {
     color: white;
     font-size: 1em;
   }
-  
-  .dates > i{
+
+  .dates > i {
     font-size: 4em;
   }
 
-  #hero-img-features-section, #overlay-features-section{
+  #hero-img-features-section,
+  #overlay-features-section {
     height: 100vh;
   }
 
-  #download-app-section{
+  #download-app-section {
     margin-top: 60px;
     height: 90vh;
   }
 
-  #popular-blogs-wrapper{
+  #popular-blogs-wrapper {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 2em;
   }
 
-  #register-now-section{
+  #register-now-section {
     grid-gap: 1em;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  #download-app-section {
+    margin-top: 350px;
+    height: calc(100vh - 64px);
   }
 }
