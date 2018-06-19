@@ -599,22 +599,15 @@ em {
 #scnd-section::-webkit-scrollbar-thumb {
 }
 #fst-section {
-  /* height: 300px; */
-  /* background-image: url("/images/hero.jpeg"); */
-  /* opacity: 0.5; */
   background-color: rgb(20, 9, 9);
   overflow: hidden;
-  /* background-size: cover;
-  background-repeat: no-repeat; */
   height: calc(110vh - 64px);
-  /* color: white; */
   display: grid;
   justify-content: center;
   align-items: center;
   grid-template-columns: 1fr 1fr;
   grid-gap: 1em;
-  /* z-index: 2; */
-  /* color: white; */
+  width: 85%;
 }
 #overlay {
   z-index: 1;
@@ -648,7 +641,7 @@ em {
   grid-row: 1/2;
   text-align: center;
   z-index: 2;
-  /* color: white; */
+  text-align: left;
 }
 
 #left-sec > h4,
@@ -727,9 +720,8 @@ h5 {
   background-color: #efeeee;
 }
 
-#next-info > div > i {
-  font-size: 75px;
-  margin-bottom: 20px;
+.my-icons{
+  height: 70px;
 }
 
 #next-info > div > p:nth-child(2) {
@@ -1001,6 +993,10 @@ iframe#gmap_canvas {
 #download-app-section {
   margin-top: 150px;
   height: calc(110vh - 64px - 150px);
+}
+
+#nav-mobile > li > a:hover{
+  color: #13b38b;
 }
 
 /* ------- for mobile------- */
