@@ -78,37 +78,37 @@
 				</div>
 
 			</div>
-			
+
+		</div>
+		<div id="popular-course-heading">
+			<h4>POPULAR COURSES</h4>
+			<p>Provides course for Medical And Engineering</p>
+			<hr class="short-hr">
 		</div>
 		<div class="section container" id="thrd-section">
-				<div id="popular-course-heading">
-						<h4>POPULAR COURSES</h4>
-						<p>Provides course for Medical And Engineering</p>
-						<hr class="short-hr">
-					</div>
-		
-					<%foundCourses.forEach(function(course) {%>
-		
-						<div class="course-card">
-							<div class="card">
-								<div class="card-image">
-									<img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
-									<span class="card-title">
-										<%=course.courseName%>
-									</span>
-									<a class="btn-floating halfway-fab waves-effect waves-light red" href="/courses-list/?title=<%=course.courseUrl%>">
-										<i class="material-icons">near_me</i>
-									</a>
-								</div>
-		
-								<div class="card-content">
-									<p class="truncate">
-										<%=course.courseFor%>
-									</p>
-								</div>
-							</div>
+
+			<%foundCourses.forEach(function(course) {%>
+
+				<div class="course-card">
+					<div class="card">
+						<div class="card-image">
+							<img src="/courseImages/<%=course.courseImage%>" class="responsive-img">
+							<span class="card-title">
+								<%=course.courseName%>
+							</span>
+							<a class="btn-floating halfway-fab waves-effect waves-light red" href="/courses-list/?title=<%=course.courseUrl%>">
+								<i class="material-icons">near_me</i>
+							</a>
 						</div>
-						<%})%>
+
+						<div class="card-content">
+							<p class="truncate">
+								<%=course.courseFor%>
+							</p>
+						</div>
+					</div>
+				</div>
+				<%})%>
 		</div>
 		<img src="/images/banner1.jpeg" id="testimonials-banner-img" alt="Banner">
 		<div id="overlay-testimonials-section"></div>
@@ -185,11 +185,11 @@
 					justify-content: center;">
 						<div id="important-dates" style="z-index: 100;">
 							<div class="dates">
-									<i class="medium material-icons green-text">developer_board</i>
+								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
 										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
 								</div>
 							</div>
 							<div class="dates">
@@ -197,7 +197,7 @@
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
 										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
 								</div>
 							</div>
 							<div class="dates">
@@ -205,7 +205,7 @@
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
 										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
 								</div>
 							</div>
 						</div>
@@ -222,11 +222,11 @@
 					justify-content: center;">
 						<div id="important-dates" style="z-index: 100;">
 							<div class="dates">
-									<i class="medium material-icons green-text">developer_board</i>
+								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
 										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
 								</div>
 							</div>
 							<div class="dates">
@@ -234,7 +234,7 @@
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
 										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
 								</div>
 							</div>
 							<div class="dates">
@@ -242,7 +242,7 @@
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
 										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer  amer  amer ,omnium</p>
+									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
 								</div>
 							</div>
 						</div>
@@ -259,7 +259,6 @@
 				<div class="row center">
 					<h3 class="section-heading" id="daily-blogs">DAILY BLOGS</h3>
 					<p>From our blogs</p>
-					<hr class="short-hr">
 					<div id="popular-blogs-wrapper">
 						<%foundPopularBlogs.forEach(function(blog) {%>
 
@@ -271,13 +270,15 @@
 											background-size: cover;">
 
 									</div>
-									<hr class="midium-hr">
-									<div class="card-content">
+									<div class="card-content" style="
+									text-align:  left;
+								">
 										<a href="/blog/<%=blog.url%>">
 											<span class="why-title">
 												<%=blog.blogTitle%>
 											</span>
 										</a>
+										<hr class="midium-hr">
 
 										<p class="truncate blog-title">
 											Lorem Ipsum dolor sit amer Lorem Ipsum dolor sit amerLorem Ipsum dolor sit amerLorem Ipsum dolor sit amer
@@ -330,7 +331,7 @@
 
 		<div class="section " id="register-now-section">
 
-			
+
 
 
 			<div class="mapouter">
