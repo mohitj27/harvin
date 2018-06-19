@@ -1048,3 +1048,24 @@ h5 {
     height: calc(100vh - 64px);
   }
 }
+
+/* Extra small devices  */
+@media only screen and (max-width: 361px) {
+  #hero-img, #overlay {
+    height: 163vh;
+  }
+  #scnd-section{
+
+    margin-top: 30vh;
+  }
+  .register-card-title{
+    margin-top: 0px;
+  }
+  .card{
+
+    margin: 0.1rem 0 1rem 0;
+  }
+  .mapouter{
+    padding-bottom: 1em !important; 
+  }
+}
