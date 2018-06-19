@@ -8,7 +8,10 @@ import {
   CREATE_QUES_ERROR,
   DELETE_QUES,
   DELETE_QUES_SUCCESS,
-  DELETE_QUES_ERROR
+  DELETE_QUES_ERROR,
+  GET_ALL_RESULTS,
+  GET_ALL_RESULTS_ERROR,
+  GET_ALL_RESULTS_SUCCESS
 } from "./types";
 import { notifyLoading, notifyClear, notifyError, notifySuccess } from ".";
 

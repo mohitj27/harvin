@@ -21,17 +21,11 @@ var resultSchema = new Schema({
     default: '-1',
   },
   marks: { type: String, default: -1, },
-  nCorrectAns: {
-    type: String,
-    required: true,
-    default: '-1',
-  },
+  nCorrectAns: Object,
+  // sectionsAns:{
 
-  nIncorrectAns: {
-    type: String,
-    required: true,
-    default: '-1',
-  },
+  // },
+  nIncorrectAns:Object,
 
   nQuestionsAnswered: {
     type: String,

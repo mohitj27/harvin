@@ -205,7 +205,7 @@ class Quiz extends Component {
       .then(res => {
         alert(`You have scored ${res.data.marks}`);
         // window.location.replace('/activity');
-        window.location.replace('/result/123');
+        // window.location.replace('/result/123');
         
       })
       .catch(err => console.log('err', err));

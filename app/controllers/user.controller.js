@@ -257,13 +257,13 @@ const updateFieldsInUserById = function (user, addToSetFields, setFields) {
   }
 };
 
-const insertMarksToUser =  (testId, marks, user)=> {
+const insertMarksToUser =  (testId, marks,nCorrectAns,nIncorrectAns, user)=> {
   console.log('user', marks, testId, user);
   return new Promise(async (resolve, reject)=> {
     try {
       const foundUser = await User.findById({ _id: user._id });
       const foundProfile = foundUser.profile;
-      const resultToBeInserted = await Results.create({ testId, marks, examTakenDate: Date.now() });
+      const resultToBeInserted = await Results.create({ testId, marks, nCorrectAns, nIncorrectAns, examTakenDate: Date.now() });
       Profile.findByIdAndUpdate({ _id: foundProfile },
         { $push: { results: resultToBeInserted } },
         { upsert: true }, (err)=> {
@@ -274,7 +274,6 @@ const insertMarksToUser =  (testId, marks, user)=> {
     } catch (e) {
       reject(e);
     }
-
   });
 };
 

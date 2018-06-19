@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import resultStyle from "../../variables/styles/resultStyle";
-import { getAllQuestions ,deleteQuesAction } from "../../actions";
+import { getAllQuestions ,deleteQuesAction ,getAllResult } from "../../actions";
 
 import * as actions from "../../actions";
 import classnames from "classnames";
@@ -117,7 +117,8 @@ class Result extends Component {
   }
 
   componentDidMount() {
-    this.props.onQuestionsFetch()
+    this.props.getAllResult();
+    this.props.onQuestionsFetch();
   }
 
   static getDerivedStateFromProps = (nextProps, prevState) => {
@@ -199,7 +200,8 @@ class Result extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onQuestionsFetch: () => dispatch(actions.getAllQuestions()),
-    onQuestionDelete:(obj)=>dispatch(actions.deleteQuesAction(obj))
+    onQuestionDelete:(obj)=>dispatch(actions.deleteQuesAction(obj)),
+    getAllResult:()=>dispatch(actions.getAllResult())
   };
 }
 

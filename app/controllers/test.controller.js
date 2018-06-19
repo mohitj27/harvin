@@ -1,5 +1,6 @@
 const errorHandler = require('../errorHandler')
 const R_Test = require('./../models/R_Test')
+const Result = require('./../models/Result')
 const _ = require('lodash')
 Promise = require('bluebird')
 const mongoose = require('mongoose')
@@ -38,6 +39,7 @@ const populateFieldsInTests = function (tests, path) {
       .catch(err => reject(err))
   })
 }
+
 module.exports = {
   addTest,
   getTests,
