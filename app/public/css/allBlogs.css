@@ -2,6 +2,34 @@
   /* padding: 0 10%; */
 }
 
+
+@media only screen and (max-width: 600px) {
+  /* #top-nav{
+   background-color: red;
+   width: 100%;
+  display: grid;
+  grid-template-rows: repeat(6, 0px);
+  grid-gap: 10px; 
+  } */
+  /* nav ul a, nav .brand-logo {
+    font-size: 12px;
+  }
+  li {
+    list-style-type: none;
+    font-size: 12px;
+    
+  } */
+  #top-nav {
+    display: flex;
+    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, auto));
+    grid-auto-rows: minmax(10vh, 55px);
+    }
+  }
+
+
+
 nav ul a, nav .brand-logo{
 color: white;
 }
@@ -12,7 +40,7 @@ nav ul a, nav .brand-logo{
 }
 
 nav ul a:hover{
-rgba(255, 255, 255, 0.27)
+color:rgba(255, 255, 255, 0.27)
 
 }
 .row .container{
