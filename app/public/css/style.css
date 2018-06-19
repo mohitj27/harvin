@@ -451,8 +451,12 @@ em {
 }
 .important-dates-heading {
   margin: 0px 5px;
-  color: #767676;
+  color: white;
   margin-bottom: 5px;
+}
+
+.important-dates-p {
+  color: white
 }
 .section-heading {
   color: #7e7d7d;
@@ -542,7 +546,10 @@ em {
   background-color: #13b38b;
 }
 #register-now-section {
-  background: #555;
+  /* background: #555; */
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-gap: 5em;
 }
 #blog-section {
   margin-bottom: 100px;
