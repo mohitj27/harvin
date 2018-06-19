@@ -681,7 +681,7 @@ em {
 }
 
 #next-info > div > p:nth-child(2) {
-  color: #13b38b;
+  color: #515655;
   font-size: 20px;
   font-weight: bold;
 }
@@ -735,7 +735,7 @@ em {
 
 #popular-course-heading{
   grid-column: 1/4;
-  /* border-bottom: 2px solid #303130e6; */
+      margin-top: 50px;
 }
 
 #popular-course-heading > h4{

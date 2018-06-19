@@ -14,66 +14,10 @@
 
 	<main>
 
-		<!-- <nav class="info-nav">
-			<div class="nav-wrapper top-most">
-				<ul stlye="margin-left:20%;">
-					<li class="hide-on-med-and-down">
-						<p>Have any Questions?</p>
-					</li>
-					<li>
-						<p>(+91) 8470933206</p>
-					</li>
-					<li>
-						<p>info@harvin.academy</p>
-					</li>
-
-				</ul>
-				<span style="float:right">
-					<a href="#!" onClick="removeTopBar();">
-						<i class="material-icons">close</i>
-					</a>
-				</span>
-			</div>
-		</nav> -->
-		<!-- <div class="section no-pad " id="first-section">
-			<div class="section no-pad-bot">
-
-			</div>
-			<div class="section valign-wrapper " id="hero-section">
-				<div class="container landing-container">
-					<div class="row" id='removeThisId'>
-						<div class="col s12 m4 l4">
-							<h2 class="harvin-heading-text">Medical</h2>
-						</div>
-						<div class="col s12 m4 l4">
-							<h2 class="harvin-heading-text">Engineering</h2>
-						</div>
-						<div class="col s12 m4 l4">
-							<h2 class="harvin-heading-text">Crash Course</h2>
-						</div>
-						<div class="col s12 l12 m12 ">
-							<div class="card-panel z-depth-5 center" id="harvin-card-panel">
-
-								<div class="sandbox sandbox-correct-pronounciation">
-									<h1 class="heading heading-correct-pronounciation">
-										<em>Harvin Academy</em>
-									</h1>
-									<p id="premier">The Premier institute for PMT|IIT-JEE</p>
-								</div>
-							</div>
-
-						</div>
-
-
-					</div>
-
-				</div>
-			</div>
-		</div> -->
 
 		<img src="/images/hero.jpeg" class="responsive" id="hero-img" alt="">
 		<div id="overlay"></div>
-		<div class="section container" id="fst-section">
+		<div class=" container" id="fst-section">
 
 			<div id="left-sec">
 				<h4>WELCOME TO HARVIN ACADEMY</h4>
@@ -127,8 +71,8 @@
 			<div class="features">
 				<div class="card-content">
 					<i class="large material-icons">developer_board</i>
-					<p>PERSONAL PROBLEM ON SOLVING SESSIOIN</p>
-					<p>Identifying problem, developing possible solution and taking the appropriate course of action.</p>
+					<p>SYSTEMATIC AND PLANNED TEACHING</p>
+					<p>Systematic and planned teaching routine, structured approach to help students.</p>
 				</div>
 
 			</div>
@@ -147,7 +91,7 @@
 								<span class="card-title">
 									<%=course.courseName%>
 								</span>
-								<a class="btn-floating halfway-fab waves-effect waves-light red">
+								<a class="btn-floating halfway-fab waves-effect waves-light red" href="/courses-list/?title=<%=course.courseUrl%>">
 									<i class="material-icons">near_me</i>
 								</a>
 							</div>
@@ -156,9 +100,6 @@
 								<p class="truncate">
 									<%=course.courseFor%>
 								</p>
-							</div>
-							<div class="card-action">
-								<a href="/courses-list/?title=<%=course.courseUrl%>">Read more...</a>
 							</div>
 						</div>
 					</div>
@@ -230,7 +171,7 @@
 			</div>
 		</div>
 
-		<div class="section download-app-section">
+		<div class="section download-app-section container">
 			<div class="container">
 				<div class="row">
 					<div class="col s12 m4 l4">
@@ -316,7 +257,7 @@
 							
 								<div class="course-card">
 									<div class="card1">
-										<div class="card-image blog-card-img-title" style="background: url(/blogImage/<%=blog.coverImgName%>) no-repeat center center; height: 400px; -webkit-background-size: cover;
+										<div class="card-image blog-card-img-title" style="background: url(/blogImage/<%=blog.coverImgName%>) no-repeat center center; height: 300px; -webkit-background-size: cover;
 											-moz-background-size: cover;
 											-o-background-size: cover;
 											background-size: cover;">
