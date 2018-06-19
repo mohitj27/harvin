@@ -7,7 +7,7 @@
  * Made By MaterializeCSS.com
  */
 
-@font-face {
+ @font-face {
   font-family: bebasneue;
   src: url(./../fonts/BebasNeue/BebasNeue.otf);
 }
@@ -321,6 +321,13 @@ h5 {
   width: 6px;
 }
 
+#popular-blogs-wrapper::-webkit-scrollbar {
+  height: 0;
+}
+
+#popular-blogs-wrapper::-webkit-scrollbar-track {
+  background-color: white;
+}
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
@@ -457,14 +464,14 @@ em {
   color: #7e7d7d;
   font-weight: 500;
 }
-.why-title {
-  bottom: 50%;
+ .why-title {
+  /*bottom: 50%;
   top: 50%;
   left: 50% !important;
-  right: 50% !important;
+  right: 50% !important; */
   color: #000000;
   max-width: 100%;
-  padding: 24px;
+  /* padding: 24px; */
   font-size: 1.5rem;
 }
 .milestones-section {
@@ -661,7 +668,7 @@ h5 {
   grid-gap: 1em;
   grid-template-columns: 1fr 1fr;
   z-index: 2;
-  grid-template-rows:  1fr 1fr;
+  grid-template-rows: auto auto;
 }
 
 #hero-img {
@@ -787,6 +794,10 @@ h5 {
 }
 
 @media screen and (max-device-width:400px){
+  .course-card{
+    min-width: 100vw;
+    overflow: hidden;
+  }
   #scnd-section > .features {
     min-width: 100vW;
   }
@@ -795,7 +806,10 @@ h5 {
     margin-right:0;
 
   }
-  
+  .mapouter{
+    display: none;
+  }
+
 }
 #scnd-section > .features > div > i:nth-child(1) {
   color: #13b38b;
@@ -955,6 +969,7 @@ h5 {
   grid-gap: 5em;
   min-width: 0;
   min-height: 0;
+  overflow-x:  scroll;
 }
 
 #view-all-blogs-btn {
@@ -984,7 +999,7 @@ h5 {
 @media only screen and (max-width: 600px) {
   #fst-section {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr auto auto;
     height: 134vh;
   }
 
@@ -1062,11 +1077,6 @@ h5 {
     height: 90vh;
   }
 
-  #popular-blogs-wrapper {
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 2em;
-  }
-
   #register-now-section {
     grid-gap: 1em;
   }
@@ -1079,3 +1089,7 @@ h5 {
     height: calc(100vh - 64px);
   }
 }
+ div.card-action.left > a{
+   color:black;
+   font-weight: 800;
+ }
