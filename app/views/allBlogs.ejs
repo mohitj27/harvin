@@ -80,7 +80,7 @@
     <div class="section " id="main-section">
 
 
-      <h4 id="topmost">Harvin Academy</h4>
+      <h4 id="topmost" class="center-align">Harvin Academy</h4>
 
       <nav class="z-depth-0 ">
 
@@ -128,17 +128,17 @@
         <div class="carousel carousel-slider center" data-indicators="true" style="height:100% !important;">
 
           <div class="carousel-item  white-text" href="#one!">
-            <img src="/images/banner-blog-4.jpg" alt="">
+            <img src="/images/banner-blog-4.jpg" class="banner-img" alt="">
           </div>
           <div class="carousel-item amber white-text" href="#two!">
-            <img src="/images/banner-blog-1.jpg" alt="">
+            <img src="/images/banner-blog-1.jpg" class="banner-img" alt="">
           </div>
           <div class="carousel-item green white-text" href="#three!">
-            <img src="/images/banner-blog-3.jpg" alt="">
+            <img src="/images/banner-blog-3.jpg" class="banner-img" alt="">
 
           </div>
           <div class="carousel-item blue white-text" href="#four!">
-            <img src="/images/banner-blog-2.jpg" alt="">
+            <img src="/images/banner-blog-2.jpg" class="banner-img" alt="">
 
           </div>
         </div>
@@ -184,21 +184,20 @@
 
           </div>
         </div>
-        <div class="news-letter-col">
-          <div id="news-letter-card" class="z-depth-2">
+        <div class="news-letter-col z-depth-2">
+          <div id="news-letter-card" >
             <h5 class="center" style="color:#ababab;">Newsletter</h5>
 
             <form action="#!" class="center">
-              <div class="input-field">
-                <input id="first_name" type="text" class="validate">
-                <label for="first_name">First Name</label>
+                <div class="input-field" id="email-input">
+                    <input id="name" type="text" class="validate">
+                    <label for="name">Name</label>
+                  </div>
+              <div class="input-field" id="email-input">
+                <input id="email" type="text" class="validate">
+                <label for="email">Email</label>
               </div>
-
-              <div class="input-field">
-                <input id="first_name" type="text" class="validate">
-                <label for="first_name">First Name</label>
-              </div>
-              <button class="btn waves-effect waves-light center" type="submit" name="action">Submit
+              <button id="submit-btn" class="btn waves-effect waves-light center" type="submit" name="action">Subscribe
                 <i class="material-icons right">send</i>
               </button>
 
@@ -241,7 +240,7 @@
 
 
       <div class="pagination-wrapper">
-        <ul class="pagination">
+        <ul class="pagination center-align">
           <li class="waves-effect">
             <a href="#!" id="prev-button" class="prev-button" onClick="prevPage()">
               <i class="material-icons">chevron_left</i>
@@ -286,3 +285,13 @@
     <script src="/js/init.js"></script>
     <script src="/js/blogTheme.js"></script>
     <script src="/js/materialize.js"></script>
+
+    <script>
+      function nextBanner() {
+				$('.carousel').carousel('next');
+
+				setTimeout(() => nextBanner(), 3000)
+			}
+			nextBanner()
+
+    </script>
