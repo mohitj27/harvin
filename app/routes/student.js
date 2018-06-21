@@ -17,7 +17,11 @@ const jsonwebtoken = require("jsonwebtoken");
 const path = require("path");
 
 // TODO: pluralise populate method
-
+//UPDATE PROFILE FOR STUDENT REACT APP
+router.put('/profile', async (req, res, next) => {
+  console.log(req.body)
+  res.send(200)
+})
 // Handle user detail update
 router.put("/:username", async (req, res, next) => {
   const username = req.body.username || "";
@@ -76,7 +80,7 @@ router.put("/:username", async (req, res, next) => {
 });
 
 // Handle user login -- for student
-router.post("/login", async function(req, res, next) {
+router.post("/login", async function (req, res, next) {
   try {
     const studentToken = await studentController.loginWithJWT(req.body);
     res.send(studentToken);
@@ -88,7 +92,7 @@ router.post("/login", async function(req, res, next) {
 });
 
 // Handle user login -- for student
-router.post("/loginWithPassword", function(req, res, next) {
+router.post("/loginWithPassword", function (req, res, next) {
   let username = req.body.username;
   let password = req.body.password;
   if (!username || !password) {
@@ -101,7 +105,7 @@ router.post("/loginWithPassword", function(req, res, next) {
       {
         username: username
       },
-      function(err, user) {
+      function (err, user) {
         if (err) next(err || "Internal Server Error");
 
         if (!user) {
@@ -111,7 +115,7 @@ router.post("/loginWithPassword", function(req, res, next) {
           });
         } else {
           // Check if password matches
-          user.comparePassword(req.body.password, function(err, isMatch) {
+          user.comparePassword(req.body.password, function (err, isMatch) {
             if (isMatch && !err) {
               // Create token if the password matched and no error was thrown
               user = _.pick(user.toObject(), [
@@ -360,7 +364,7 @@ router.post("/signup", async (req, res, next) => {
 });
 
 // User Register form-- student->from web interface
-router.get("/register", async function(req, res, next) {
+router.get("/register", async function (req, res, next) {
   try {
     const foundBatches = await batchController.findAllBatch();
     return res.render("studentRegister", {
@@ -374,7 +378,7 @@ router.get("/register", async function(req, res, next) {
 router.get("/home/:username", middleware.isLoggedIn, async (req, res, next) => {
   try {
     const user = userController.findUserByUserId(req.user);
-  } catch (e) {}
+  } catch (e) { }
   next();
 });
 router.get("/home", async (req, res, next) => {
@@ -383,7 +387,7 @@ router.get("/home", async (req, res, next) => {
 });
 
 // User Register form-- student->from web interface
-router.get("/login", async function(req, res, next) {
+router.get("/login", async function (req, res, next) {
   try {
     const foundBatches = await batchController.findAllBatch();
     return res.render("studentLogin");
@@ -392,7 +396,7 @@ router.get("/login", async function(req, res, next) {
   }
 });
 // User Register form-- student->from web interface
-router.post("/login", async function(req, res, next) {
+router.post("/login", async function (req, res, next) {
   try {
     const foundUser = await userController.findOneUser();
     return res.render("studentLogin");
