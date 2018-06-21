@@ -1,4 +1,4 @@
-#mdis-container{background-image: url('/images/hero01.jpg');height: 35%;justify-content:  center;flex-direction: column;display: flex;align-items:  center;}
+#mdis-container{background-image: url('/images/mdis-cover.png');height: 35%;background-repeat:  no-repeat;justify-content:  center;flex-direction: column;background-size: cover;display: flex;align-items:  center;}
 
 #top-heading{color: white;text-align: center;font-weight:  700;}
 #overlay-head{  z-index: 1;
@@ -18,10 +18,7 @@ grid-column-gap:56px;
 margin-top: 56px ;
 margin-bottom: 56px;
 }
-#hero-mdis-img{
-height: inherit;
-background: url('/images/hero01.jpg')
-}
+#hero-mdis-img{/* height: inherit; */background: url('/images/mdis-front.png');background-size:  cover;}
 #what-info{}
 #what-mdis-h{font-weight: 600;color: #5d5c5c;}
 #mdis-tab-section{
