@@ -143,13 +143,6 @@ nav .brand-logo {
 @media only screen and (max-width: 400px) {
   nav ul a,
   nav .brand-logo {
-    left: 50%;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  nav ul a,
-  nav .brand-logo {
     color: #13b38b;
     left: 50%;
     font-size: 10px;
@@ -1036,6 +1029,18 @@ iframe#gmap_canvas {
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
 
+  #popular-blogs-wrapper {
+    grid-gap: 2em
+  }
+
+  .blog-card-img-title{
+    max-height: 150px;
+  }
+
+  #register-now-card{
+    width: 50%;
+  }
+
   #fst-section {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr auto auto;
@@ -1045,6 +1050,8 @@ iframe#gmap_canvas {
   #scnd-section {
     grid-column-gap: 1em;
     width: 100vw;
+    padding-left: 3%;
+    padding-right: 3%;
   }
 
   #thrd-section {
@@ -1053,15 +1060,14 @@ iframe#gmap_canvas {
     margin-left: 0;
     width: 100vw;
     margin-right:  0;
-  }
-
-  #popular-course-heading {
-    /* grid-column: 1/3; */
+    padding-left: 3%;
+    padding-right: 3%;
   }
 
   #left-sec {
     grid-column: 1/3;
     grid-row: 1/2;
+    text-align: center;
   }
 
   #right-sec {
@@ -1135,3 +1141,46 @@ iframe#gmap_canvas {
    color:black;
    font-weight: 800;
  }
+
+ @media only screen and (min-width: 600px) and (max-width: 733px) {
+  #thrd-section{
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 2em;
+  }
+  .course-card-title{
+    font-size: 1.5em !important;
+  }
+}
+
+ /* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 734px) and (max-width: 992px) {
+  #thrd-section{
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 2em;
+  }
+}
+
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+  #thrd-section{
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 5em;
+  }
+
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1366px){
+  #thrd-section{
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 3em;
+  }
+
+}
+
+#download-links{
+  display: flex;
+  justify-content: center;
+}
+
+#download-links > img{
+  z-index: 2;
+}
