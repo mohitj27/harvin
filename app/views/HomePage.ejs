@@ -399,13 +399,8 @@
 
 		<script>
 			$('.carousel.carousel-slider').carousel({ fullWidth: true });
-			// setTimeout(()=> {
-			// 	$('.carousel').carousel('next');
-			// }, 5000)
-
 			function nextTestimonial() {
 				$('.carousel').carousel('next');
-
 				setTimeout(() => nextTestimonial(), 3000)
 			}
 			nextTestimonial()
