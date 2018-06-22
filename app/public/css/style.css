@@ -605,7 +605,6 @@ em {
 #scnd-section::-webkit-scrollbar-thumb {
 }
 #fst-section {
-  background-color: rgb(20, 9, 9);
   overflow: hidden;
   height: calc(110vh - 64px);
   display: grid;
@@ -1017,7 +1016,6 @@ iframe#gmap_canvas {
 
 #download-app-section {
   margin-top: 150px;
-  height: calc(110vh - 64px - 150px);
 }
 
 #nav-mobile > li > a:hover{
@@ -1183,4 +1181,16 @@ iframe#gmap_canvas {
 
 #download-links > img{
   z-index: 2;
+}
+#fst-section-main{
+  background: url(./../images/hero.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width:100vw;
+  max-width: 100%;
+}
+#download-app-section{
+  background: url(./../images/1J5A2947.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
