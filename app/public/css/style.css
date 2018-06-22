@@ -605,7 +605,6 @@ em {
 #scnd-section::-webkit-scrollbar-thumb {
 }
 #fst-section {
-  background-color: rgb(20, 9, 9);
   overflow: hidden;
   height: calc(110vh - 64px);
   display: grid;
@@ -923,13 +922,13 @@ iframe#gmap_canvas {
   }
 }
 
-#testimonials-overlay-content > h4:nth-child(5) {
+#testimonials-overlay-content > h4:nth-child(6) {
   color: black;
   font-weight: bold;
   margin-top: 100px;
 }
 
-#testimonials-overlay-content > p:nth-child(6) {
+#testimonials-overlay-content > p:nth-child(7) {
   color: #504f4f;
 }
 
@@ -1014,7 +1013,6 @@ iframe#gmap_canvas {
 
 #download-app-section {
   margin-top: 150px;
-  height: calc(110vh - 64px - 150px);
 }
 
 #nav-mobile > li > a:hover {
@@ -1280,4 +1278,18 @@ div.card-action.left > a {
   #passion-for-education .carousel .carousel-item {
     max-height: 250px !important;
   }
+}
+
+#fst-section-main{ 
+  background: url(./../images/hero.jpg); 
+  background-repeat: no-repeat; 
+  background-size: cover; 
+  width:100vw; 
+  max-width: 100%; 
+}
+ 
+#download-app-section{
+  background: url(./../images/1J5A2947.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
