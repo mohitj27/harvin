@@ -7,7 +7,7 @@
  * Made By MaterializeCSS.com
  */
 
- @font-face {
+@font-face {
   font-family: bebasneue;
   src: url(./../fonts/BebasNeue/BebasNeue.otf);
 }
@@ -16,7 +16,7 @@
   padding: 10em 0 10em 0;
 }
 @import url(https://fonts.googleapis.com/css?family=EB+Garamond|Cardo:400italic);
-@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans");
 
 #nav-logo {
   height: 70%;
@@ -465,7 +465,7 @@ em {
   color: #7e7d7d;
   font-weight: 500;
 }
- .why-title {
+.why-title {
   /*bottom: 50%;
   top: 50%;
   left: 50% !important;
@@ -659,7 +659,7 @@ h5 {
 
 #left-sec > h4 {
   font-weight: bold;
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
 #right-sec {
   grid-column: 2/3;
@@ -726,7 +726,7 @@ h5 {
   background-color: #efeeee;
 }
 
-.my-icons{
+.my-icons {
   height: 70px;
 }
 
@@ -751,19 +751,18 @@ h5 {
   width: 100%;
 }
 
-
-@media screen and (max-device-height: 700px)  {
-  #next-info{
-    display:none;
+@media screen and (max-device-height: 700px) {
+  #next-info {
+    display: none;
   }
-  #vid{
+  #vid {
     grid-column: 1/3;
     grid-row: 2/3;
   }
 }
 #scnd-section {
   overflow-x: scroll;
-  overflow-y:  hidden;
+  overflow-y: hidden;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 5em;
@@ -779,7 +778,7 @@ h5 {
   min-width: 0;
   min-height: 0;
   overflow-x: scroll;
-  overflow-y:  hidden;
+  overflow-y: hidden;
 }
 
 .course-card {
@@ -795,30 +794,28 @@ h5 {
   overflow: hidden;
 }
 
-@media screen and (max-device-width:400px){
-  #popular-course-heading{
+@media screen and (max-device-width: 400px) {
+  #popular-course-heading {
     /* grid-column: 1/2 !important; */
   }
-  .course-card{
+  .course-card {
     min-width: 100vw;
     overflow: hidden;
   }
   #scnd-section > .features {
-    min-width: 100vW;
+    min-width: 100vw;
   }
-  #scnd-section{
-    margin-left:0;
-    margin-right:0;
-
+  #scnd-section {
+    margin-left: 0;
+    margin-right: 0;
   }
-  .mapouter{
+  .mapouter {
     display: none;
   }
-  .course-card{
+  .course-card {
     min-width: 100vw;
     grid-row: 2/3;
   }
-
 }
 #scnd-section > .features > div > i:nth-child(1) {
   color: #13b38b;
@@ -839,7 +836,7 @@ h5 {
   /* grid-column: 1/5; */
   /* margin-top: 50px; */
   justify-self: center;
-  text-align:  center;
+  text-align: center;
 }
 
 #popular-course-heading > h4 {
@@ -996,7 +993,7 @@ iframe#gmap_canvas {
   grid-gap: 5em;
   min-width: 0;
   min-height: 0;
-  overflow-x:  scroll;
+  overflow-x: scroll;
 }
 
 #view-all-blogs-btn {
@@ -1020,7 +1017,7 @@ iframe#gmap_canvas {
   height: calc(110vh - 64px - 150px);
 }
 
-#nav-mobile > li > a:hover{
+#nav-mobile > li > a:hover {
   color: #13b38b;
 }
 
@@ -1028,16 +1025,15 @@ iframe#gmap_canvas {
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-
   #popular-blogs-wrapper {
-    grid-gap: 2em
+    grid-gap: 2em;
   }
 
-  .blog-card-img-title{
+  .blog-card-img-title {
     max-height: 150px;
   }
 
-  #register-now-card{
+  #register-now-card {
     width: 50%;
   }
 
@@ -1059,7 +1055,7 @@ iframe#gmap_canvas {
     grid-gap: 2em;
     margin-left: 0;
     width: 100vw;
-    margin-right:  0;
+    margin-right: 0;
     padding-left: 3%;
     padding-right: 3%;
   }
@@ -1137,50 +1133,151 @@ iframe#gmap_canvas {
     height: calc(100vh - 64px);
   }
 }
- div.card-action.left > a{
-   color:black;
-   font-weight: 800;
- }
+div.card-action.left > a {
+  color: black;
+  font-weight: 800;
+}
 
- @media only screen and (min-width: 600px) and (max-width: 733px) {
-  #thrd-section{
+@media only screen and (min-width: 600px) and (max-width: 733px) {
+  #thrd-section {
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 2em;
   }
-  .course-card-title{
+  .course-card-title {
     font-size: 1.5em !important;
   }
 }
 
- /* Small devices (portrait tablets and large phones, 600px and up) */
+/* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 734px) and (max-width: 992px) {
-  #thrd-section{
+  #thrd-section {
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 2em;
   }
 }
 
 @media only screen and (min-width: 993px) and (max-width: 1200px) {
-  #thrd-section{
+  #thrd-section {
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 5em;
   }
-
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1366px){
-  #thrd-section{
+@media only screen and (min-width: 1200px) and (max-width: 1366px) {
+  #thrd-section {
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 3em;
   }
-
 }
 
-#download-links{
+#download-links {
   display: flex;
   justify-content: center;
 }
 
-#download-links > img{
+#download-links > img {
   z-index: 2;
+}
+
+@media only screen and (max-width: 1400px) {
+  
+  .important-dates-heading {
+    font-size: 1.2em;
+  }
+
+  .important-dates-p {
+    font-size: 0.9em;
+  }
+
+}
+
+@media only screen and (max-width: 437px) {
+
+  #passion-for-education > div.carousel {
+    height: 380px !important;
+  }
+
+  #passion-for-education .carousel .carousel-item {
+    max-height: 380px !important;
+  }
+}
+
+@media only screen and (min-width: 437px) {
+
+  #passion-for-education > div.carousel {
+    height: 330px !important;
+  }
+
+  #passion-for-education .carousel .carousel-item {
+    max-height: 330px !important;
+  }
+}
+
+
+@media only screen and (min-width: 601px) and (max-width: 649px) {
+
+  #passion-for-education > div.carousel {
+    height: 420px !important;
+  }
+
+  #passion-for-education .carousel .carousel-item {
+    max-height: 420px !important;
+  }
+}
+
+
+@media only screen and (min-width: 650px) {
+
+  #passion-for-education > div.carousel {
+    height: 330px !important;
+  }
+
+  #passion-for-education .carousel .carousel-item {
+    max-height: 330px !important;
+  }
+}
+
+
+@media only screen and (min-width: 890px) {
+
+  #passion-for-education > div.carousel {
+    height: 300px !important;
+  }
+
+  #passion-for-education .carousel .carousel-item {
+    max-height: 300px !important;
+  }
+}
+
+@media only screen and (min-width: 1010px) {
+
+  #passion-for-education > div.carousel {
+    height: 260px !important;
+  }
+
+  #passion-for-education .carousel .carousel-item {
+    max-height: 260px !important;
+  }
+}
+
+@media only screen and (min-width: 1201px) {
+
+  #passion-for-education > div.carousel {
+    height: 270px !important;
+  }
+
+  #passion-for-education .carousel .carousel-item {
+    max-height: 270px !important;
+  }
+}
+
+@media only screen and (min-width: 1301px) {
+
+  #passion-for-education > div.carousel {
+    height: 250px !important;
+  }
+
+  #passion-for-education .carousel .carousel-item {
+    max-height: 250px !important;
+  }
 }

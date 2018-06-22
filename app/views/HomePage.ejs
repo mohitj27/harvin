@@ -28,11 +28,21 @@
 			</div>
 			<div id="right-sec">
 				<div id="passion-for-education">
-					<h5> Passion For Education </h5>
+					<div class="carousel carousel-slider center" data-indicators="true">
+						
+						<div class="carousel-item white-text" href="#one!">
+							<h5> Passion For Education </h5>
 					<p>Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by providing
 						you Total Quality Management for your budding career plans.</p>
-					<!-- <br> -->
+					
 					<p>Come and Feel the Difference</p>
+						</div>
+						<div class="carousel-item white-text" href="#two!">
+							<h5>MDIS</h5>
+							<p class="white-text">MDIS conducts an entrance examination for students interested in pursuing MBBS from abroad. Harvin Academy provides coaching for the MDIS entrance exam at a very nominal fee</p>
+						</div>
+						
+					</div>
 				</div>
 				<div id="next-info" class="card">
 					<div class="card-content">
@@ -187,25 +197,25 @@
 							<div class="dates">
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
-									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+									<h5 class="important-dates-heading">Study Material</h5>
+									<p class="important-dates-p">Access to all Biology and Maths chapters to study while on the go.</p>
 								</div>
 							</div>
 							<div class="dates">
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+										Test Series</h5>
+									<p class="important-dates-p">Exclusive access to test series with answer key to test yourself.
+									</p>
 								</div>
 							</div>
 							<div class="dates">
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+										Online Test</h5>
+									<p class="important-dates-p">Numerous online MCQ tests available to choose from. </p>
 								</div>
 							</div>
 						</div>
@@ -225,24 +235,24 @@
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+										Save Offline</h5>
+									<p class="important-dates-p">Download assignments with net connectivity and use them wherever you go.</p>
 								</div>
 							</div>
 							<div class="dates">
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+										User Friendly</h5>
+									<p class="important-dates-p">Easy access to our in-app features with low data usage.</p>
 								</div>
 							</div>
 							<div class="dates">
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+										Regular Updates</h5>
+									<p class="important-dates-p">New assignments and test series added regularly for more practice of the students.</p>
 								</div>
 							</div>
 						</div>
@@ -403,8 +413,25 @@
 
 		<script>
 			$('.carousel.carousel-slider').carousel({ fullWidth: true });
+			let isMdisVisible = false;
+
+			let $passionForEdu = $('#passion-for-education').children('h5')
+			let $passionForEduDetails = $('#passion-for-education').children('p')
+
 			function nextTestimonial() {
 				$('.carousel').carousel('next');
+				if(isMdisVisible){
+					$passionForEdu.text('Passion For Education')
+					$passionForEduDetails.text('Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by providing you Total Quality Management for your budding career plans.')
+					$()
+					isMdisVisible = false
+			}
+				else{
+					$passionForEdu.text('MDIS')
+					$passionForEduDetails.text('MDIS conducts an entrance examination for students interested in pursuing MBBS from abroad. Harvin Academy provides coaching for the MDIS entrance exam at a very nominal fee')
+					isMdisVisible = true
+
+				}
 				setTimeout(() => nextTestimonial(), 3000)
 			}
 			nextTestimonial()
