@@ -35,10 +35,19 @@ router.get("/", (req, res) => {
     .then(foundPopularBlogs => {
       Course.find({})
         .then(foundCourses => {
-          res.render("HomePage", {
-            foundPopularBlogs,
-            foundCourses
+          Gallery.find({
+            category: {
+              $in: ['results']
+            }
           })
+          .then(foundStudents => {
+            res.render("HomePage", {
+              foundPopularBlogs,
+              foundCourses,
+              students: foundStudents
+            })
+          }).catch(err => next(err))
+          
         });
     }).catch(err => next(err))
 });

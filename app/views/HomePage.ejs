@@ -29,19 +29,20 @@
 			<div id="right-sec">
 				<div id="passion-for-education">
 					<div class="carousel carousel-slider center" data-indicators="true">
-						
+
 						<div class="carousel-item white-text" href="#one!">
 							<h5> Passion For Education </h5>
-					<p>Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by providing
-						you Total Quality Management for your budding career plans.</p>
-					
-					<p>Come and Feel the Difference</p>
+							<p>Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by
+								providing you Total Quality Management for your budding career plans.</p>
+
+							<p>Come and Feel the Difference</p>
 						</div>
 						<div class="carousel-item white-text" href="#two!">
 							<h5>MDIS</h5>
-							<p class="white-text">MDIS conducts an entrance examination for students interested in pursuing MBBS from abroad. Harvin Academy provides coaching for the MDIS entrance exam at a very nominal fee</p>
+							<p class="white-text">MDIS conducts an entrance examination for students interested in pursuing MBBS from abroad. Harvin Academy provides
+								coaching for the MDIS entrance exam at a very nominal fee</p>
 						</div>
-						
+
 					</div>
 				</div>
 				<div id="next-info" class="card">
@@ -130,25 +131,55 @@
 				<div id="feature-utilities" class="z-depth-3">
 					<div class="features">
 						<div class="card-content">
-					<img src="/icons/home3-sv8.png" class="my-icons" alt="">
+							<img src="/icons/home3-sv8.png" class="my-icons" alt="">
 							<p>ADEQUATE LIBRARY FACILITY</p>
 						</div>
 
 					</div>
 					<div class="features">
 						<div class="card-content">
-					<img src="/icons/home3-sv3.png" class="my-icons" alt="">
+							<img src="/icons/home3-sv3.png" class="my-icons" alt="">
 							<p>GROUP DISCUSSION & READING ROOM</p>
 						</div>
 
 					</div>
 					<div class="features">
 						<div class="card-content">
-					<img src="/icons/home3-sv6.png" class="my-icons" alt="">
+							<img src="/icons/home3-sv6.png" class="my-icons" alt="">
 							<p>PRACTICAL LAB</p>
 						</div>
 					</div>
 				</div>
+
+				<!-- results -->
+				<!-- Our Results -->
+				<div class="section" id="content">
+					<div id="content">
+						<div class="container">
+
+							<div class="row">
+								<div class="col s12 center">
+									<br>
+									<h3 class="bold" style="color:#303130e6">OUR RESULTS</h3>
+									<hr class="short-hr">
+									<% if (students){ %>
+										<% students.forEach((student, i) =>{ %>
+											<%if(student.category == 'results'){%>
+												<%if(i<8){%>
+													<div class="col s6 m4 l3 materialboxed">
+														<img class="responsive-img z-depth-4 " id="result-image" src="<%=student.src%>">
+														</img>
+													</div>
+													<%}%>
+												<%}%>
+											<% }) %>
+										<% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end results -->
 				<h4>HAPPY STUDENTS</h4>
 				<p>What students have to say</p>
 				<hr class="short-hr">
@@ -420,13 +451,13 @@
 
 			function nextTestimonial() {
 				$('.carousel').carousel('next');
-				if(isMdisVisible){
+				if (isMdisVisible) {
 					$passionForEdu.text('Passion For Education')
 					$passionForEduDetails.text('Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by providing you Total Quality Management for your budding career plans.')
 					$()
 					isMdisVisible = false
-			}
-				else{
+				}
+				else {
 					$passionForEdu.text('MDIS')
 					$passionForEduDetails.text('MDIS conducts an entrance examination for students interested in pursuing MBBS from abroad. Harvin Academy provides coaching for the MDIS entrance exam at a very nominal fee')
 					isMdisVisible = true
