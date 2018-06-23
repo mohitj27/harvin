@@ -966,6 +966,15 @@ iframe#gmap_canvas {
   font-size: 100px;
 }
 
+#testimonials-wrapper  {
+  max-height: 400px !important;
+}
+
+#testimonials-wrapper > .carousel-item > img {
+  max-height: 150px;
+  max-width: 150px;
+}
+
 #testimonials-wrapper > .indicators .indicator-item {
   background-color: #a8cec4;
 }
@@ -1012,7 +1021,7 @@ iframe#gmap_canvas {
 } */
 
 #download-app-section {
-  margin-top: 150px;
+  /* margin-top: 150px; */
 }
 
 #nav-mobile > li > a:hover {
@@ -1293,3 +1302,17 @@ div.card-action.left > a {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+/* .testimonialImg{
+  border:2px solid grey;
+} */
+
+/* 
+.carousel .carousel-slider .carousel-item{
+  min-height: 200px !important;
+}
+
+#testimonials-wrapper > div.carousel-item {
+  min-height: 200px !important;
+
+} */
