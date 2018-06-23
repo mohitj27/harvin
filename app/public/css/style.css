@@ -967,7 +967,7 @@ iframe#gmap_canvas {
 }
 
 #testimonials-wrapper  {
-  max-height: 400px !important;
+  height: 400px !important;
 }
 
 #testimonials-wrapper > .carousel-item > img {
