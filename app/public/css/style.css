@@ -606,7 +606,7 @@ em {
 }
 #fst-section {
   overflow: hidden;
-  height: calc(110vh - 64px);
+  /* height: calc(110vh - 64px); */
   display: grid;
   justify-content: center;
   align-items: center;
@@ -617,7 +617,7 @@ em {
 #overlay {
   z-index: 1;
   background-color: rgba(26, 41, 30, 0.72);
-  height: calc(110vh - 64px);
+  /* height: calc(110vh - 64px); */
   position: absolute;
   width: 100vw;
   max-width: 100%;
@@ -626,7 +626,7 @@ em {
 #overlay-features-section {
   z-index: 1;
   background-color: rgba(26, 41, 30, 0.72);
-  height: calc(110vh - 64px);
+  /* height: calc(110vh - 64px); */
   position: absolute;
   width: 100vw;
   max-width: 100%;
@@ -635,7 +635,7 @@ em {
 #overlay-normal {
   z-index: 1;
   background-color: rgba(26, 41, 30, 0.72);
-  height: calc(110vh - 64px);
+  /* height: calc(110vh - 64px); */
   position: absolute;
   width: 100vw;
   max-width: 100%;
@@ -675,7 +675,7 @@ h5 {
   margin: 0;
   position: absolute;
   max-width: 100%;
-  height: calc(110vh - 64px);
+  /* height: calc(110vh - 64px); */
 }
 
 #hero-img-features-section {
@@ -683,7 +683,7 @@ h5 {
   margin: 0;
   position: absolute;
   max-width: 100%;
-  height: calc(110vh - 64px);
+  /* height: calc(110vh - 64px); */
 }
 
 #passion-for-education {
@@ -1127,8 +1127,8 @@ iframe#gmap_canvas {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1400px) {
   #download-app-section {
-    margin-top: 350px;
-    height: calc(100vh - 64px);
+    /* margin-top: 350px; */
+    /* height: calc(100vh - 64px); */
   }
 }
 div.card-action.left > a {
