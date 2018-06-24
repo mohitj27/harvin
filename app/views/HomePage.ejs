@@ -61,6 +61,53 @@
 						 allowfullscreen></iframe>
 					</div>
 				</div>
+
+			</div>
+			<div class=" container" id="fst-section2" style="display: none;">
+
+				<div id="left-sec">
+					<h4>WELCOME TO HARVIN ACADEMY</h4>
+					<h5>The premier Institute of PMT | IIT-JEE</h5>
+					<br>
+					<br>
+					<a class="waves-effect waves-light btn">about us</a>
+				</div>
+				<div id="right-sec">
+					<div id="passion-for-education">
+						<div class="carousel carousel-slider center" data-indicators="true">
+
+							<div class="carousel-item white-text" href="#one!">
+								<h5> Passion For Education </h5>
+								<p>Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by
+									providing you Total Quality Management for your budding career plans.</p>
+
+								<p>Come and Feel the Difference</p>
+							</div>
+							<div class="carousel-item white-text" href="#two!">
+								<h5>MDIS</h5>
+								<p class="white-text">MDIS conducts an entrance examination for students interested in pursuing MBBS from abroad. Harvin Academy provides
+									coaching for the MDIS entrance exam at a very nominal fee</p>
+							</div>
+
+						</div>
+					</div>
+					<div id="next-info" class="card">
+						<div class="card-content">
+							<!-- <i class="fas fa-user-graduate"></i> -->
+							<!-- <i class="fa fa-user-o" aria-hidden="true"></i> -->
+							<img src="/icons/noun_872574_cc.png" class="my-icons" alt="">
+							<!-- <br> -->
+							<p>Droppers Batch For NEET and IIT JEE</p>
+							<br>
+							<p>Started from 15th June at Harvin Academy Preet Vihar and Harvin Academy Janakpuri.</p>
+						</div>
+					</div>
+					<div id="vid">
+						<iframe src="https://www.youtube.com/embed/wvUDeika_tY?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media"
+						 allowfullscreen></iframe>
+					</div>
+				</div>
+
 			</div>
 
 		</div>
@@ -201,7 +248,8 @@
 					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
 						<p class="black-text testimonial-text">I feel lucky to be a part of Harin Academy and thankful for helping me achieve my goal. The faculty is amazing and
-							healpful.</p>
+							healpful.
+						</p>
 						<img class="testimonialImg responsive-img" src="/images/testimonials/amulya-gupta.jpg">
 					</div>
 					<div class="carousel-item white black-text" href="#one!">
@@ -446,26 +494,22 @@
 
 		<script>
 			$('.carousel.carousel-slider').carousel({ fullWidth: true });
-			let isMdisVisible = false;
-
-			let $passionForEdu = $('#passion-for-education').children('h5')
-			let $passionForEduDetails = $('#passion-for-education').children('p')
-
-			function nextTestimonial() {
-				$('.carousel').carousel('next');
-				if (isMdisVisible) {
-					$passionForEdu.text('Passion For Education')
-					$passionForEduDetails.text('Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by providing you Total Quality Management for your budding career plans.')
-					$()
-					isMdisVisible = false
+			let count = 0;
+			setInterval(() => {
+				if (count % 2 === 0) {
+					console.log('a', count)
+					$('#fst-section').css('display', 'none')
+					$('#fst-section2').css('display', 'grid')
+					count++
 				}
 				else {
-					$passionForEdu.text('MDIS')
-					$passionForEduDetails.text('MDIS conducts an entrance examination for students interested in pursuing MBBS from abroad. Harvin Academy provides coaching for the MDIS entrance exam at a very nominal fee')
-					isMdisVisible = true
+					console.log('b', count)
 
+					$('#fst-section2').css('display', 'none')
+					$('#fst-section').css('display', 'grid')
+					count++
 				}
-				setTimeout(() => nextTestimonial(), 5000)
-			}
-			nextTestimonial()
+
+
+			}, 3000)
 		</script>
