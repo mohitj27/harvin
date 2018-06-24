@@ -40,15 +40,15 @@ router.get("/", (req, res) => {
               $in: ['results']
             }
           })
-            .then(foundResults => {
-              res.render("HomePage", {
-                foundPopularBlogs,
-                foundCourses,
-                students: foundResults
-              })
-            })
-            .catch(err => next(err))
 
+          .then(foundStudents => {
+            res.render("HomePage", {
+              foundPopularBlogs,
+              foundCourses,
+              students: foundStudents
+            })
+          }).catch(err => next(err))
+          
         });
     }).catch(err => next(err))
 });

@@ -14,6 +14,8 @@
 
 	<main>
 
+
+
 		<div class="section" id="fst-section-main">
 			<div class=" container" id="fst-section">
 
@@ -26,12 +28,62 @@
 				</div>
 				<div id="right-sec">
 					<div id="passion-for-education">
-						<h5> Passion For Education </h5>
-						<p>Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by providing
-							you Total Quality Management for your budding career plans.</p>
-						<!-- <br> -->
-						<p>Come and Feel the Difference</p>
+						<div class="carousel carousel-slider center" data-indicators="true">
+
+							<div class="carousel-item white-text" href="#one!">
+								<h5> Passion For Education </h5>
+								<p>Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by
+									providing you Total Quality Management for your budding career plans.</p>
+
+								<p>Come and Feel the Difference</p>
+							</div>
+							<div class="carousel-item white-text" href="#two!">
+								<h5>MDIS</h5>
+								<p class="white-text">MDIS conducts an entrance examination for students interested in pursuing MBBS from abroad. Harvin Academy provides
+									coaching for the MDIS entrance exam at a very nominal fee</p>
+							</div>
+
+						</div>
 					</div>
+
+
+					<div id="next-info" class="card">
+						<div class="card-content">
+							<!-- <i class="fas fa-user-graduate"></i> -->
+							<!-- <i class="fa fa-user-o" aria-hidden="true"></i> -->
+							<img src="/icons/noun_872574_cc.png" class="my-icons" alt="">
+							<!-- <br> -->
+							<p>Droppers Batch For NEET and IIT JEE</p>
+							<br>
+							<p>Started from 15th June at Harvin Academy Preet Vihar and Harvin Academy Janakpuri.</p>
+						</div>
+					</div>
+					<div id="vid">
+						<iframe src="https://www.youtube.com/embed/wvUDeika_tY?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media"
+						 allowfullscreen></iframe>
+					</div>
+				</div>
+				<div id="right-sec2" style="display: none;">
+					<div id="passion-for-education">
+						<div class="carousel carousel-slider center" data-indicators="true">
+
+							<div class="carousel-item white-text" href="#one!">
+								<h5> Passion For Education </h5>
+								<p>Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by
+									providing you Total Quality Management for your budding career plans.</p>
+
+								<p>Come and Feel the Difference</p>
+							</div>
+							<div class="carousel-item white-text" href="#two!">
+								<h5>MDIS</h5>
+								<p class="white-text">MDIS conducts an entrance examination for students interested in pursuing MBBS from abroad. Harvin Academy provides
+									coaching for the MDIS entrance exam at a very nominal fee</p>
+							</div>
+
+						</div>
+					</div>
+
+
 					<div id="next-info" class="card">
 						<div class="card-content">
 							<!-- <i class="fas fa-user-graduate"></i> -->
@@ -110,39 +162,6 @@
 				</div>
 				<%})%>
 		</div>
-		<div class="section" id="content">
-			<div id="content">
-				<div class="container">
-					<div class="row">
-						<div class="col s12 center">
-							<br>
-							<h3 class="bold" style="color: #303130e6 !important;">OUR RESULTS</h3>
-							<hr class="short-hr">
-							<br>
-							<div class="our-results">
-								<% if (students){ %>
-									<% students.forEach((student, i) =>{ %>
-										<%if(student.category == 'results'){%>
-											<%if(i<12){%>
-												<div class="col s4 l2 m2 results-col materialboxed">
-													<img class="responsive-img z-depth-4 " id="result-image" src="<%=student.src%>"> </img>
-												</div>
-												<%}%>
-													<%}%>
-														<% }) %>
-															<% } %>
-							</div>
-						</div>
-					</div>
-					<br>
-					<div class="row center-align">
-						<a href="/results" class="btn-floating btn-large waves-effect waves-light grey">
-							<i class="material-icons">chevron_right</i>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
 		<img src="/images/banner1.jpeg" id="testimonials-banner-img" alt="Banner">
 		<div id="overlay-testimonials-section"></div>
 		<div class="section container" id="testimonials">
@@ -172,42 +191,74 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- results -->
+				<!-- Our Results -->
+				<div class="section" id="content">
+					<div id="content">
+						<div class="container">
+
+							<div class="row">
+								<div class="col s12 center">
+									<br>
+									<h3 class="bold" style="color:#303130e6">OUR RESULTS</h3>
+									<p style="color: #504f4f"> Harvin Academy proudly announces best result for NEET Exam</p>
+									<hr class="short-hr">
+									<% if (students){ %>
+										<% students.forEach((student, i) =>{ %>
+											<%if(student.category == 'results'){%>
+												<%if(i<8){%>
+													<div class="col s6 m4 l3 materialboxed">
+														<img class="responsive-img z-depth-4 " id="result-image" src="<%=student.src%>">
+														</img>
+													</div>
+													<%}%>
+														<%}%>
+															<% }) %>
+																<% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end results -->
 				<h4>HAPPY STUDENTS</h4>
 				<p>What students have to say</p>
 				<hr class="short-hr">
 				<div class="carousel carousel-slider center" id="testimonials-wrapper" data-indicators="true">
-					<!-- <div class="carousel-fixed-item center">
-						<a class="btn waves-effect white grey-text darken-text-2">button</a>
-					</div> -->
 					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
-						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
-							refers? Bonum incolumis acies: misera caecitas.</p>
-						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">Harvin showed me the right path to reach my target that i had chosen.Harvin Academy aid to my dream of becoming a doctor.</p>
+						<img class="testimonialImg responsive-img" src="/images/testimonials/adnan-malik.jpg">
 					</div>
-					<div class="carousel-item  white black-text" href="#two!">
+					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
-						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
-							refers? Bonum incolumis acies: misera caecitas.</p>
-						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">I am grateful to Harvin Academy for helping me achieve this golden dream of clearing the NEET exam.</p>
+						<img class="testimonialImg responsive-img" src="/images/testimonials/akanksha-gupta.jpg">
 					</div>
-					<div class="carousel-item  white black-text" href="#three!">
+					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
-						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
-							refers? Bonum incolumis acies: misera caecitas.</p>
-						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">I feel lucky to be a part of Harin Academy and thankful for helping me achieve my goal. The faculty is amazing and
+							healpful.
+						</p>
+						<img class="testimonialImg responsive-img" src="/images/testimonials/amulya-gupta.jpg">
 					</div>
-					<div class="carousel-item white black-text" href="#four!">
+					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
-						<p class="black-text testimonial-text">Quid de Platone aut de Democrito loquar? Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus
-							refers? Bonum incolumis acies: misera caecitas.</p>
-						<i class="fa fa-user-o testimonial-avatar" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">I feel obliged to Harvin Academy for helping me achive this milestone. Harvin Academy helped me a lot achieve my goal.</p>
+						<img class="testimonialImg responsive-img" src="/images/testimonials/kritika-gupta.jpg">
+					</div>
+					<div class="carousel-item white black-text" href="#one!">
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+						<p class="black-text testimonial-text">Harvin Academy is the Mecca of Medical Education. It has really helped me a lot to shape my career and case my path
+							in getting admission in Medical College.</p>
+						<img class="testimonialImg responsive-img" src="/images/testimonials/simran-sarthi.jpg">
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="section " id="download-app-section">
+		<div class="section" id="download-app-section">
 			<div class="container" id="download-app-container">
 
 				<div class="row">
@@ -218,25 +269,25 @@
 							<div class="dates">
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
-									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+									<h5 class="important-dates-heading">Study Material</h5>
+									<p class="important-dates-p">Access to all Biology and Maths chapters to study while on the go.</p>
 								</div>
 							</div>
 							<div class="dates">
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+										Test Series</h5>
+									<p class="important-dates-p">Exclusive access to test series with answer key to test yourself.
+									</p>
 								</div>
 							</div>
 							<div class="dates">
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+										Online Test</h5>
+									<p class="important-dates-p">Numerous online MCQ tests available to choose from. </p>
 								</div>
 							</div>
 						</div>
@@ -256,24 +307,24 @@
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+										Save Offline</h5>
+									<p class="important-dates-p">Download assignments with net connectivity and use them wherever you go.</p>
 								</div>
 							</div>
 							<div class="dates">
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+										User Friendly</h5>
+									<p class="important-dates-p">Easy access to our in-app features with low data usage.</p>
 								</div>
 							</div>
 							<div class="dates">
 								<i class="medium material-icons green-text">developer_board</i>
 								<div class="dates-info">
 									<h5 class="important-dates-heading">
-										Heading</h5>
-									<p class="important-dates-p">Lorem Ipsum dolor sit amer amer amer ,omnium</p>
+										Regular Updates</h5>
+									<p class="important-dates-p">New assignments and test series added regularly for more practice of the students.</p>
 								</div>
 							</div>
 						</div>
@@ -434,9 +485,45 @@
 
 		<script>
 			$('.carousel.carousel-slider').carousel({ fullWidth: true });
+			let isMdisVisible = false;
+
+			let $passionForEdu = $('#passion-for-education').children('h5')
+			let $passionForEduDetails = $('#passion-for-education').children('p')
+
 			function nextTestimonial() {
 				$('.carousel').carousel('next');
-				setTimeout(() => nextTestimonial(), 3000)
+				if (isMdisVisible) {
+					$passionForEdu.text('Passion For Education')
+					$passionForEduDetails.text('Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success by providing you Total Quality Management for your budding career plans.')
+					$()
+					isMdisVisible = false
+				}
+				else {
+					$passionForEdu.text('MDIS')
+					$passionForEduDetails.text('MDIS conducts an entrance examination for students interested in pursuing MBBS from abroad. Harvin Academy provides coaching for the MDIS entrance exam at a very nominal fee')
+					isMdisVisible = true
+
+				}
+				setTimeout(() => nextTestimonial(), 5000)
 			}
 			nextTestimonial()
+			let count = 0;
+			setInterval(() => {
+				if (count % 2 === 0) {
+					console.log('a', count)
+					$('#right-sec').css('display', 'none')
+					$('#right-sec2').css('display', 'grid')
+					count++
+				}
+				else {
+					console.log('b', count)
+
+					$('#right-sec2').css('display', 'none')
+					$('#right-sec').css('display', 'grid')
+					count++
+				}
+
+
+			}, 3000)
+
 		</script>
