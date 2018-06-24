@@ -116,20 +116,22 @@
 					<div class="row">
 						<div class="col s12 center">
 							<br>
-							<h3 class="bold">OUR RESULTS</h3>
-							<hr>
+							<h3 class="bold" style="color: #303130e6 !important;">OUR RESULTS</h3>
+							<hr class="short-hr">
 							<br>
-							<% if (students){ %>
-								<% students.forEach((student, i) =>{ %>
-									<%if(student.category == 'results'){%>
-										<%if(i<12){%>
-											<div class="col s4 l2 m2 results-col materialboxed">
-												<img class="responsive-img z-depth-4 " id="result-image" src="<%=student.src%>"> </img>
-											</div>
-											<%}%>
+							<div class="our-results">
+								<% if (students){ %>
+									<% students.forEach((student, i) =>{ %>
+										<%if(student.category == 'results'){%>
+											<%if(i<12){%>
+												<div class="col s4 l2 m2 results-col materialboxed">
+													<img class="responsive-img z-depth-4 " id="result-image" src="<%=student.src%>"> </img>
+												</div>
 												<%}%>
-													<% }) %>
-														<% } %>
+													<%}%>
+														<% }) %>
+															<% } %>
+							</div>
 						</div>
 					</div>
 					<br>
