@@ -40,6 +40,7 @@ router.get("/", (req, res) => {
               $in: ['results']
             }
           })
+
           .then(foundStudents => {
             res.render("HomePage", {
               foundPopularBlogs,
