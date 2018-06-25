@@ -1092,8 +1092,8 @@ iframe#gmap_canvas {
     margin-left: 0;
     width: 100vw;
     margin-right: 0;
-    padding-left: 3%;
-    padding-right: 3%;
+    /* padding-left: 3%; */
+    /* padding-right: 3%; */
   }
 
   #left-sec {
