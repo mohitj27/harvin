@@ -32,6 +32,11 @@ let BlogSchema = new Schema({
   coverImgName: {
     type: String
   },
+  desc: {
+    type: String,
+    default:
+      "Lorem Ipsum dolor sit amer Lorem Ipsum dolor sit amerLorem Ipsum dolor sit amerLorem Ipsum dolor sit amer"
+  },
   blogImages: [
     {
       type: String,
@@ -53,11 +58,11 @@ let BlogSchema = new Schema({
   meta: {
     type: String,
     trim: true,
-    default: ''
+    default: ""
   },
-  views:{
-    type:Number,
-    default:0,
+  views: {
+    type: Number,
+    default: 0
   }
 });
 

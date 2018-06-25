@@ -5,6 +5,12 @@ $(function () {
     e.preventDefault()
     var data = CKEDITOR.instances.editor1.getData()
     $('#editordata').val(data)
+    // let desc = data.match("<([A-Za-z][A-Za-z0-9]*)\\b[^>]*>(.*?)</\\1>")[0]
+    let desc = $('#editor1').text().slice(0, 100)
+    console.log('desc', desc);
+    
+    $("#desc").val(desc)
+    // console.log('desc',$("#desc").val());
     const formData = new FormData(e.target)
 
     axios.post('/admin/blog', formData)

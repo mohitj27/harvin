@@ -135,6 +135,7 @@ router.post(
     }
 
     let blogTitle = req.body.title || "";
+    let desc = req.body.desc;
     let category = req.body.category || "";
     let url = req.body.url || "";
     if (!blogTitle) {
@@ -174,6 +175,7 @@ router.post(
         hashName,
         url,
         coverImgName,
+        desc,
         author: req.user,
         publish: req.body.publish,
         draft: req.body.draft,
@@ -186,6 +188,7 @@ router.post(
         htmlFilePath,
         category,
         hashName,
+        desc,
         url,
         author: req.user,
         publish: req.body.publish,
