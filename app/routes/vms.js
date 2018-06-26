@@ -45,7 +45,7 @@ router.get("/", (req, res) => {
             res.render("HomePage", {
               foundPopularBlogs,
               foundCourses,
-              students: foundStudents
+              students: foundStudents.reverse()
             })
           }).catch(err => next(err))
           
