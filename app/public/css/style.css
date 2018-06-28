@@ -555,6 +555,7 @@ em {
 #register-now-card {
   width: 30%;
   margin-bottom: -312px;
+  margin-left: 20px;
   /* margin-right: 4%; */
   /* float: right; */
 }
@@ -681,7 +682,6 @@ h5 {
   grid-template-rows: 1fr 1fr;
 }
 
-
 #right-sec2 {
   grid-column: 2/3;
   grid-row: 1/2;
@@ -691,7 +691,6 @@ h5 {
   z-index: 2;
   grid-template-rows: auto auto;
 }
-
 
 #hero-img {
   width: 100vw;
@@ -835,7 +834,7 @@ h5 {
     display: none;
   }
   .course-card {
-    min-width: 100vw;
+    min-width: 80vw;
     grid-row: 2/3;
   }
 }
@@ -989,7 +988,7 @@ iframe#gmap_canvas {
   font-size: 100px;
 }
 
-#testimonials-wrapper  {
+#testimonials-wrapper {
   height: 400px !important;
 }
 
@@ -1092,6 +1091,7 @@ iframe#gmap_canvas {
     margin-left: 0;
     width: 100vw;
     margin-right: 0;
+    padding-left: 20px;
     /* padding-left: 3%; */
     /* padding-right: 3%; */
   }
@@ -1219,7 +1219,6 @@ div.card-action.left > a {
 }
 
 @media only screen and (max-width: 1400px) {
-  
   .important-dates-heading {
     font-size: 1.2em;
   }
@@ -1227,11 +1226,9 @@ div.card-action.left > a {
   .important-dates-p {
     font-size: 0.9em;
   }
-
 }
 
 @media only screen and (max-width: 437px) {
-
   #passion-for-education > div.carousel {
     height: 380px !important;
   }
@@ -1242,7 +1239,6 @@ div.card-action.left > a {
 }
 
 @media only screen and (min-width: 437px) {
-
   #passion-for-education > div.carousel {
     height: 330px !important;
   }
@@ -1252,9 +1248,7 @@ div.card-action.left > a {
   }
 }
 
-
 @media only screen and (min-width: 601px) and (max-width: 649px) {
-
   #passion-for-education > div.carousel {
     height: 420px !important;
   }
@@ -1264,9 +1258,7 @@ div.card-action.left > a {
   }
 }
 
-
 @media only screen and (min-width: 650px) {
-
   #passion-for-education > div.carousel {
     height: 330px !important;
   }
@@ -1276,9 +1268,7 @@ div.card-action.left > a {
   }
 }
 
-
 @media only screen and (min-width: 890px) {
-
   #passion-for-education > div.carousel {
     height: 300px !important;
   }
@@ -1289,7 +1279,6 @@ div.card-action.left > a {
 }
 
 @media only screen and (min-width: 1010px) {
-
   #passion-for-education > div.carousel {
     height: 260px !important;
   }
@@ -1300,7 +1289,6 @@ div.card-action.left > a {
 }
 
 @media only screen and (min-width: 1201px) {
-
   #passion-for-education > div.carousel {
     height: 270px !important;
   }
@@ -1311,7 +1299,6 @@ div.card-action.left > a {
 }
 
 @media only screen and (min-width: 1301px) {
-
   #passion-for-education > div.carousel {
     height: 250px !important;
   }
@@ -1321,20 +1308,20 @@ div.card-action.left > a {
   }
 }
 
-#fst-section-main{ 
-  background: url(./../images/hero.jpg); 
-  background-repeat: no-repeat; 
-  background-size: cover; 
-  width:100vw; 
-  max-width: 100%; 
+#fst-section-main {
+  background: url(./../images/hero.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  max-width: 100%;
 }
- 
-#download-app-section{
+
+#download-app-section {
   background: url(./../images/1J5A2947.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#download-our-app{
+#download-our-app {
   margin-bottom: 30px;
 }
