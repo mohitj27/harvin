@@ -757,6 +757,12 @@ h5 {
   font-weight: bold;
 }
 
+#mdis-button {
+  background-color: lightsteelblue;
+  width: 4em;
+  height: 2em;
+}
+
 #next-info > div > p:nth-child(4) {
   color: #717171;
   line-height: 1.5em;
