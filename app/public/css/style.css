@@ -757,12 +757,6 @@ h5 {
   font-weight: bold;
 }
 
-#mdis-button {
-  background-color: lightsteelblue;
-  width: 10em;
-  height: 3.5em;
-  border-radius: 5px;
-}
 
 #next-info > div > p:nth-child(4) {
   color: #717171;
