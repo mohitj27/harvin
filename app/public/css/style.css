@@ -759,8 +759,9 @@ h5 {
 
 #mdis-button {
   background-color: lightsteelblue;
-  width: 4em;
-  height: 2em;
+  width: 10em;
+  height: 3.5em;
+  border-radius: 5px;
 }
 
 #next-info > div > p:nth-child(4) {
