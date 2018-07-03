@@ -19,6 +19,8 @@ $(() => {
   })
 })
 function requrestMDIScallback(e) {
+  e.preventDefault();
+  const form = $("#form")
   const name = $("#full_name").prop("value")
   const contact = $("#contact").prop("value")
   const email = $("#email").prop("value")
@@ -26,6 +28,9 @@ function requrestMDIScallback(e) {
     return
 
   $.post('/admin/enquiries', { name, contact, emailId: email, 'centerName': 'mdis' }, function (data) {
-    console.log(data)
+    console.log(data, "wsqewqqeqw")
+    $("#full_name").prop("value") = ""
+    $("#contact").prop("value") = ""
+    $("#email").prop("value") = ""
   })
 }
