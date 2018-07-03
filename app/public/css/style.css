@@ -466,7 +466,6 @@ em {
 }
 .section-heading {
   color: #7e7d7d;
-  font-weight: 500;
 }
 .why-title {
   /*bottom: 50%;
@@ -865,7 +864,6 @@ h5 {
 
 #popular-course-heading > h4 {
   color: #303130e6;
-  font-weight: bold;
 }
 
 #popular-course-heading > p {
@@ -881,7 +879,6 @@ h5 {
 
 #testimonials-overlay-content > h4 {
   color: rgb(255, 255, 255);
-  font-weight: bold;
 }
 
 #testimonials-overlay-content > p {
@@ -949,7 +946,6 @@ iframe#gmap_canvas {
 
 #testimonials-overlay-content > h4:nth-child(6) {
   color: black;
-  font-weight: bold;
   margin-top: 100px;
 }
 
