@@ -8,6 +8,10 @@
 		#navbar>div {
 			height: 100%;
 		}
+
+		.card .card-content {
+			padding: 0px 10px 24px 10px;
+		}
 	</style>
 	<!-- <link href="../css/homePage.css" type="text/css" rel="stylesheet" /> -->
 	<meta name="google-site-verification" content="eSPtYedDuFnn9GWxmT-OZJtAugNRnUJwuZ65y7JDPfE" />
@@ -24,7 +28,7 @@
 					<h5>The premier Institute of PMT | IIT-JEE</h5>
 					<br>
 					<br>
-					<a class="waves-effect waves-light btn">about us</a>
+					<a class="waves-effect waves-light btn" href="./aboutus">about us</a>
 				</div>
 				<div id="right-sec">
 					<div id="passion-for-education">
@@ -168,7 +172,7 @@
 							<div class="row">
 								<div class="col s12 center">
 									<br>
-									<h3 class="bold" style="color:#303130e6">OUR RESULTS</h3>
+									<h4 class="bold" style="color:#303130e6">OUR RESULTS</h4>
 									<p style="color: #504f4f"> Harvin Academy proudly announces best result for NEET Exam</p>
 									<hr class="short-hr">
 									<% if (students){ %>
@@ -227,7 +231,7 @@
 
 		<div class="section" id="download-app-section">
 			<div class="container" id="download-app-container">
-				<h3 class="section-heading white-text center-align" id="download-our-app">DOWNLOAD OUR APP</h3>
+				<h4 class="section-heading white-text center-align" id="download-our-app">DOWNLOAD OUR APP</h4>
 				<div class="row">
 					<div class="col s12 m4 l4" style="
 					display: flex;
@@ -310,7 +314,7 @@
 			<div class="container">
 
 				<div class="row center">
-					<h3 class="section-heading" id="daily-blogs">DAILY BLOGS</h3>
+					<h4 class="section-heading" id="daily-blogs">DAILY BLOGS</h4>
 					<p>From our blogs</p>
 					<div id="popular-blogs-wrapper">
 						<%foundPopularBlogs.forEach(function(blog) {%>
@@ -358,25 +362,31 @@
 				<h4 class="register-card-title center">REGISTER NOW</h4>
 			</div>
 			<div class="card-content">
-				<div class="row center">
+				<form>
+					<div class="row center" style="margin-bottom: 0px;">
 
-					<div class="input-field col s12">
-						<input id="first_name" type="text" class="validate">
-						<label for="first_name">First name</label>
-					</div>
+						<div class="input-field col s12">
+							<input id="first_name" type="text" class="validate">
+							<label for="first_name">First name</label>
+						</div>
 
-					<div class="input-field col s12">
-						<input id="last_name" type="text" class="validate">
-						<label for="last_name">Last Name</label>
-					</div>
+						<div class="input-field col s12">
+							<input id="last_name" type="text" class="validate">
+							<label for="last_name">Last Name</label>
+						</div>
 
-					<div class="input-field col s12">
-						<input id="email" type="text" class="validate">
-						<label for="email">Email</label>
-					</div>
+						<div class="input-field col s12">
+							<input id="email" type="text" class="validate">
+							<label for="email">Email</label>
+						</div>
 
-					<a class="btn waves-effect " style="background-color: #13b38b;">SIGN UP</a>
+						<div class="input-field col s12">
+							<input id="phone" type="text" class="validate">
+							<label for="phone">Phone</label>
+						</div>
 
+						<button class="btn waves-effect" style="background-color: #13b38b;" onclick="(e)=>{e.preventDefault()}">SIGN UP</button>
+				</form>
 
 				</div>
 			</div>
@@ -403,7 +413,7 @@
 
 
 
-		<div href="#modal1" class="fixed-action-btn modal-trigger">
+		<div href="#modal1" style="display: none" class="fixed-action-btn modal-trigger">
 			<a class="btn-floating btn-large red">
 				<i class="large material-icons">email</i>
 			</a>
@@ -477,3 +487,16 @@
 			nextTestimonial()
 
 		</script>
+		<!--Start of Tawk.to Script-->
+		<script type="text/javascript">
+			var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+			(function () {
+				var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+				s1.async = true;
+				s1.src = 'https://embed.tawk.to/5b3b33c94af8e57442dc492d/default';
+				s1.charset = 'UTF-8';
+				s1.setAttribute('crossorigin', '*');
+				s0.parentNode.insertBefore(s1, s0);
+			})();
+		</script>
+		<!--End of Tawk.to Script-->

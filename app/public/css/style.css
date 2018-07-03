@@ -289,7 +289,10 @@ h5 {
 .footer-section {
   margin-bottom: 0;
 }
-
+#headerAccountState
+{
+  background-color: #2ab48b !important;
+}
 .scrollTop {
   position: fixed;
   right: 60px;
@@ -544,7 +547,6 @@ em {
   color: white;
   padding: 20px;
   margin-top: -100px;
-  font-weight: 700;
   background-color: #13b38b;
 }
 #register-now-section {
