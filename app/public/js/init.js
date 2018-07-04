@@ -1,9 +1,9 @@
-(function($) {
-  $(function() {
+(function ($) {
+  $(function () {
     $("nav")
       .find("a")
       .not(".button-collapse")
-      .each(function() {
+      .each(function () {
         // console.log("path0");
 
         var href = $(this).attr("href");
@@ -20,7 +20,8 @@
     $(".parallax").parallax();
     // $('.carousel').carousel();
     $(".carousel").carousel({
-      fullWidth: true
+      fullWidth: true,
+      duration: 700
     });
 
     $(".tap-target").tapTarget("open");
@@ -42,7 +43,7 @@
   // declare variable
   var scrollTop = $(".scrollTop");
 
-  $(window).scroll(function() {
+  $(window).scroll(function () {
     // declare variable
     var topPos = $(this).scrollTop();
 
@@ -55,7 +56,7 @@
   }); // scroll END
 
   //Click event to scroll to top
-  $(scrollTop).click(function() {
+  $(scrollTop).click(function () {
     $("html, body").animate(
       {
         scrollTop: 0
@@ -89,4 +90,4 @@ function scrollDown() {
   );
 }
 
-function removeTopbar() {}
+function removeTopbar() { }
