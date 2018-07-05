@@ -1,5 +1,5 @@
 const express = require('express')
-const resultController = require('../controllers/result.controller')
+const registerController = require('../controllers/register.controller')
 const middleware = require('../middleware')
 const errorHandler = require('../errorHandler')
 

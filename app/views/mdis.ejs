@@ -13,14 +13,52 @@
       </div>
     </div>
     <div class="container" id="what-mdis">
-      <div id="hero-mdis-img" class="hide-on-small-only"></div>
-      <div id="what-info">
-        <h4 id="what-mdis-h">What is MDIS?</h4>
-        <p>Medical Doctor International Studies is an innovated pre-medical program that prepares students to take the entrance
-          exams for the European Medical Schools.</p>
-        <p>They are the official representative of several International European Medical Schools and serve as a bridge betwwen
-          those schools and the student.</p>
+
+      <div class="col l6 m6 s12">
+        <div id="what-info">
+          <h4 id="what-mdis-h">What is MDIS?</h4>
+          <p>Medical Doctor International Studies is an innovated pre-medical program that prepares students to take the entrance
+            exams for the European Medical Schools.</p>
+          <br>
+          <p>They are the official representative of several International European Medical Schools and serve as a bridge between
+            those schools and the student.</p>
+        </div>
       </div>
+
+      <div class="col l6 m6 s12">
+        <div class="container" id="request-callback-container">
+          <h4 id="req-callback">REQUEST A CALLBACK</h4>
+          <p id="req-callback-para" class="center">For any query regarding the course.</p>
+
+          <form id="form" action="./mdis">
+            <!-- <div class="row center"> -->
+            <div class="input-field col s12 m6 l4 push-l4 push-m3">
+              <input id="full_name" type="text" class="validate">
+              <label for="full_name">Full Name</label>
+            </div>
+            <!-- </div> -->
+            <!-- <div class="row"> -->
+            <div class="input-field col s12 m6 l4 push-l4 push-m3">
+              <input id="contact" type="text" class="validate">
+              <label for="contact">Contact No.</label>
+            </div>
+            <!-- </div> -->
+            <!-- <div class="row"> -->
+            <div class="input-field col s12 m6 l4 push-l4 push-m3">
+              <input id="email" type="email" class="validate">
+              <label for="email">Email Id</label>
+            </div>
+            <!-- </div> -->
+            <div class="row center">
+              <button type="submit" class="waves-effect waves-light btn" onClick="requrestMDIScallback();">SUBMIT</button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="temp">
+      <div id="hero-mdis-img" class="hide-on-small-only"></div>
     </div>
     <div class="container" id="mdis-tab-section">
       <div id="mdis-tabs">
@@ -84,34 +122,7 @@
 
       </div>
     </div>
-    <div class="container" id="request-callback-container">
-      <h4 id="req-callback">REQUEST A CALLBACK</h4>
-      <p id="req-callback-para" class="center">For any query regarding the course.</p>
-      <form id="form" action="./mdis">
-        <div class="row center">
-          <div class="input-field col s12 m6 l4 push-l4 push-m3">
-            <input id="full_name" type="text" class="validate">
-            <label for="full_name">Full Name</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12 m6 l4 push-l4 push-m3">
-            <input id="contact" type="text" class="validate">
-            <label for="contact">Contact No.</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12 m6 l4 push-l4 push-m3">
-            <input id="email" type="email" class="validate">
-            <label for="email">Email Id</label>
-          </div>
-        </div>
-        <div class="row center">
-          <button type="submit" class="waves-effect waves-light btn" onClick="requrestMDIScallback();">SUBMIT</button>
 
-        </div>
-      </form>
-    </div>
   </main>
   <%include partials/website_footer.ejs%>
 
