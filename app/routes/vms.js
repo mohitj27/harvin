@@ -41,14 +41,14 @@ router.get("/", (req, res) => {
             }
           })
 
-          .then(foundStudents => {
-            res.render("HomePage", {
-              foundPopularBlogs,
-              foundCourses,
-              students: foundStudents.reverse()
-            })
-          }).catch(err => next(err))
-          
+            .then(foundStudents => {
+              res.render("HomePage", {
+                foundPopularBlogs,
+                foundCourses,
+                students: foundStudents
+              })
+            }).catch(err => next(err))
+
         });
     }).catch(err => next(err))
 });
