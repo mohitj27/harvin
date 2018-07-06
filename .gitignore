@@ -7,3 +7,6 @@ npm*log*
 .env
 msg.txt
 client/harvinreact/build/
+binding.gyp
+build/
+src/
