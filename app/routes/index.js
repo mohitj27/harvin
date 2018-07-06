@@ -27,6 +27,7 @@ const videoRoutes = require('./video')
 const studentAppRoutes = require('./studentApp')
 const resgisterRoutes = require('./register')
 const clientRoutes = require('./client')
+const sitemapRoutes = require('./sitemap')
 
 router.use('/student', studentRoutes)
 router.use('/admin/batches', batchRoutes)
@@ -54,6 +55,8 @@ router.use('/admin', adminRoutes)
 router.use('/studentApp/home', studentAppRoutes)
 router.use('/register', resgisterRoutes)
 router.use('/quiz', clientRoutes)
+router.use('/sitemap', sitemapRoutes)
+
 router.use(vmsRoutes)
 
 
