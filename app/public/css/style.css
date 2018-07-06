@@ -1062,7 +1062,8 @@ iframe#gmap_canvas {
   }
 
   #register-now-card {
-    width: 50%;
+    width: 100%;
+    margin:0px;
   }
 
   #fst-section {
@@ -1156,7 +1157,7 @@ iframe#gmap_canvas {
 
   #download-app-section {
     margin-top: 60px;
-    height: 90vh;
+    height: 135%;
   }
 
   #register-now-section {
