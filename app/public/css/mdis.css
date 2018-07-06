@@ -112,6 +112,7 @@ p {
   color: #8f8d8d;
 }
 
+
 /* Portrait */
 @media only screen and (max-device-width: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
   #what-info {
@@ -124,6 +125,7 @@ p {
     grid-template-columns: 1fr;
 
   }
+
 
 }
 ol > li {
