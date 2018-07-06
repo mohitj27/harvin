@@ -51,6 +51,7 @@ app.use(compression());
 
 // APP favicon
 app.use(serveFavicon(path.join(__dirname, "public", "images", "harvin.png")));
+app.use(express.static(path.join(__dirname, '/client/harvinreact/build')));
 
 // view engine
 app.set("views", path.join(__dirname, "/views"));
