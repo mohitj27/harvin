@@ -1316,6 +1316,14 @@ div.card-action.left > a {
   max-width: 100%;
 }
 
+#scnd-section-main {
+  background: url(./../background_slider.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  max-width: 100%;
+}
+
 #download-app-section {
   background: url(./../images/1J5A2947.jpg);
   background-repeat: no-repeat;

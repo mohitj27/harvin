@@ -20,8 +20,84 @@
 
 
 
-		<div class="section" id="fst-section-main">
-			<div class=" container" id="fst-section">
+		<div class="section">
+			<div class="carousel carousel-slider " data-indicators="true">
+				<div class="carousel-item white-text" href="#one!" id="fst-section-main">
+					<div class="container" id="fst-section">
+						<div id="left-sec">
+							<h4>WELCOME TO HARVIN ACADEMY</h4>
+							<h5>The premier Institute of PMT | IIT-JEE</h5>
+							<br>
+							<br>
+							<a class="waves-effect waves-light btn" href="./aboutus">about us</a>
+						</div>
+						<div class="">
+							<div style="">
+								<div id="">
+									<div class="center" data-indicators="true">
+
+										<div class="white-text" style="background-color: rgb(226, 217, 217, 0.29);margin: 20px;padding: 10px;" href="#one!">
+											<h5> Passion For Education </h5>
+											<p>Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success
+												by providing you Total Quality Management for your budding career plans.</p>
+
+											<p>Come and Feel the Difference</p>
+										</div>
+
+									</div>
+								</div>
+								<br/>
+								<div class="" style="display:grid; grid-template-columns:50% 50%;grid-gap: 10px">
+									<div style="background-color: #504f4f;height: 300px;padding: 20px;    background-color: #efeeee;color: black">
+
+										<h5 style="color: black">Droppers Batch For NEET and IIT JEE</h5>
+										<br style="color: black" />
+										<p style="color: black">Started from 23rd June at Harvin Academy Preet Vihar and Harvin Academy Janakpuri.</p>
+									</div>
+									<div style="height: 300px;">
+										<iframe style="height: 100%;" src="https://www.youtube.com/embed/wvUDeika_tY?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0"
+										 allow="autoplay; encrypted-media" allowfullscreen></iframe>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-item white-text" href="#one!" id="scnd-section-main">
+					<div class="container" id="fst-section">
+						<div id="left-sec">
+							<h4>WELCOME TO HARVIN ACADEMY</h4>
+							<h5>The premier Institute of PMT | IIT-JEE</h5>
+							<br>
+							<br>
+							<a class="waves-effect waves-light btn" href="./aboutus">about us</a>
+						</div>
+						<div class="">
+							<div style="">
+								<div class="" style="display:grid;background-color: rgb(226, 217, 217, 0.29); grid-template-columns:50% 50%;margin-top: 50px">
+									<div style="height: 520px;cursor: pointer;" onclick="window.location.href='./../mdis'">
+										<img src="/images/lady.png" style="width: 92%;height:55% ;background-color: #fff;margin:4%;" />
+										<h5 style="text-align: center;font-weight: bold;color: #13b38b">MDIS</h5>
+										<p style="padding: 2%">MDIS conducts an entrance examination in pursuing MBBS from abroad. Harvin Academy provides coachin for MDIS entrance
+											exam at a very nominal fee .</p>
+									</div>
+									<div class="" style="display:grid; grid-template-rows:50% 50%">
+										<div style="height: 250px;">
+											<iframe style="height: 100%;" src="https://www.youtube.com/embed/wvUDeika_tY?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0"
+											 allow="autoplay; encrypted-media" allowfullscreen></iframe>
+										</div>
+										<div style="background-color: #504f4f;height: 250px;padding: 10px;    background-color: #efeeee;color: black">
+											<h5 style="color:#13b38b">Two years batch for NEET and IIT JEE</h5>
+											<p style="color: black">Started from 23rd July at Harvin Academy Preet Vihar and Harvin Academy Janakpuri.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="display: none" class=" container" id="fst-section">
 
 				<div id="left-sec">
 					<h4>WELCOME TO HARVIN ACADEMY</h4>
@@ -474,6 +550,7 @@
 			let $passionForEduDetails = $('#passion-for-education').children('p')
 
 			function nextTestimonial() {
+				$('.carousel').css("height", "650px")
 				$('.carousel').carousel('next');
 				if (isMdisVisible) {
 					$passionForEdu.text('Passion For Education')
