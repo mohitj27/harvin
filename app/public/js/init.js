@@ -1,5 +1,6 @@
 (function ($) {
   $(function () {
+    $('#sign_up').on('click', function () { registerNowButtonClicked(event) });
     $("nav")
       .find("a")
       .not(".button-collapse")
@@ -78,6 +79,29 @@ function tap() {
     $(".tap-target").tapTarget("close");
     state = false;
   }
+}
+
+function registerNowButtonClicked(event) {
+  event.preventDefault();
+  let first_name = $('#first_name').val().trim();
+  let last_name = $('#last_name').val().trim();
+  let email = $('#email').val().trim();
+  let phone = $('#phone').val().trim();
+  $.ajax({
+    method: "POST",
+    url: "/register",
+    data: {
+      fullName: first_name + ' ' + last_name,
+      email: email,
+      phone: phone
+    }
+  })
+    .done(function (res) { console.log("done", res) })
+    // .success(function (response) {
+    //   console.log('sdfsfs', response)
+    //   alert(response)
+    // })
+    .fail(function () { console.log('an error has occured') });
 }
 
 function scrollDown() {

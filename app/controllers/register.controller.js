@@ -3,24 +3,24 @@ Promise = require('bluebird')
 const mongoose = require('mongoose')
 mongoose.Promise = Promise
 
-const populateFieldsInResults = function (register, path) {
-    return new Promise(function (resolve, reject) {
-        Register
-            .deepPopulate(register, path)
-            .then(populatedResults => resolve(populatedResults))
-            .catch(err => reject(err))
-    })
-}
+function registerUser(User) {
+    console.log(User);
+    UserReg = new Register(User)
+    Register.findOne({ email: User.email }).then((user) => {
+        if (user) {
+            return 'email address has registered already';
+        }
+        else {
+            UserReg.save().then((user) => {
+                // return 'successfully registerd';
+                return new Promise((resolve, reject) => {
+                    resolve(user);
+                })
+            });
+        }
+    });
 
-const findAllResults = function () {
-    return new Promise(function (resolve, reject) {
-        Register.findAsync()
-            .then(foundResults => resolve(foundResults))
-            .catch(err => reject(err))
-    })
 }
-
 module.exports = {
-    populateFieldsInResults,
-    findAllResults
+    registerUser
 }
