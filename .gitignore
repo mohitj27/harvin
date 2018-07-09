@@ -8,3 +8,4 @@ npm*log*
 msg.txt
 binding.gyp
 src/
+build/
