@@ -10,6 +10,7 @@ gulp.task('imageMin', function() {
         'app/public/assets/img/**/*.+(jpg|png)',
         'app/public/assets/img/**/**/*.+(jpg|png)',
         'app/public/assets/img/*.+(png|jpg)',
+        'app/public/icons/*.+(png|jpg)',
     ])
 	.pipe(imagemin())
 	.pipe(gulp.dest('app/public/dist/images'))
