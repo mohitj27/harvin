@@ -12,7 +12,7 @@ gulp.task('imageMin', function() {
         'app/public/assets/img/*.+(png|jpg)',
     ])
 	.pipe(imagemin())
-	.pipe(gulp.dest('app/dist/images'))
+	.pipe(gulp.dest('app/public/dist/images'))
 });
 
 // Minify JS
@@ -21,7 +21,7 @@ gulp.task('imageMin', function() {
 //         'app/public/assets/js/main.js'
 //         ])
 //         .pipe(uglify())
-//         .pipe(gulp.dest('app/dist/js'))
+//         .pipe(gulp.dest('app/public/dist/js'))
 // });
 
 // Clean CSS
@@ -32,7 +32,7 @@ gulp.task('cleanCss', function () {
         'app/public/css/*.css'
     ])
     .pipe(cleanCss())
-	.pipe(gulp.dest('app/dist/css'))
+	.pipe(gulp.dest('app/public/dist/css'))
 });
 
 gulp.task('default', ['imageMin', 'cleanCss']);
