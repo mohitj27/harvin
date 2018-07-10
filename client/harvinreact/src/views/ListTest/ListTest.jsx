@@ -136,13 +136,13 @@ const toolbarStyles = theme => ({
   highlight:
     theme.palette.type === "light"
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark
+      },
   spacer: {
     flex: "1 1 100%"
   },
@@ -169,8 +169,8 @@ let EnhancedTableToolbar = props => {
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography variant="title">Tests</Typography>
-        )}
+            <Typography variant="title">Tests</Typography>
+          )}
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
@@ -181,12 +181,12 @@ let EnhancedTableToolbar = props => {
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterList />
-            </IconButton>
-          </Tooltip>
-        )}
+            <Tooltip title="Filter list">
+              <IconButton aria-label="Filter list">
+                <FilterList />
+              </IconButton>
+            </Tooltip>
+          )}
       </div>
     </Toolbar>
   );
@@ -371,7 +371,7 @@ class Stats extends Component {
                         {n.maxMarks}
                       </TableCell>
                       <TableCell className={classes.noPad}>
-                        <Link to={`/quiz/${n.id}`}>
+                        <Link to={`/HarvinQuiz/quiz/${n.id}`}>
                           <Button
                             variant="raised"
                             size="small"

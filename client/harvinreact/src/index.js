@@ -21,8 +21,8 @@ const hist = createBrowserHistory();
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-  // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-})
+      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+    })
     : compose;
 
 const enhancer = composeEnhancers(applyMiddleware(thunk, logger));
@@ -47,7 +47,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         return <Component {...props} />;
       } else {
         // console.log("calling login");
-        return <Redirect to="/login" />;
+        return <Redirect to="/HarvinQuiz/login" />;
       }
     }}
 
@@ -57,10 +57,11 @@ App = (
   <Provider store={store}>
     <Router history={hist}>
       <Switch>
-        <Route path="/public" component={Public} />
-        <Route path="/login" component={Login} />
-        <Route path="/quiz/:id" component={Dashboard}/>
+        <Route path="/HarvinQuiz/public" component={Public} />
+        <Route path="/HarvinQuiz/login" component={Login} />
+        <Route path="/HarvinQuiz/quiz/:id" component={Dashboard} />
         {indexRoutes.map((prop, key) => {
+          console.log('prop', prop);
           return (
             <PrivateRoute
               path={prop.path}

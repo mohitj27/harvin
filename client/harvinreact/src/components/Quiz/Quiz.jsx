@@ -49,7 +49,7 @@ class Quiz extends Component {
   };
   constructor(props) {
     super(props);
-    const interval = setInterval(()=> {
+    const interval = setInterval(() => {
       try {
         this.setState({ time: this.state.time - 1 });
         if (this.state.time <= 0) {
@@ -62,7 +62,7 @@ class Quiz extends Component {
     }, 1000);
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => { };
 
   handleQuizNavClick = (e, questions) => {
     const curr = _.find(questions, function (o) {
@@ -202,7 +202,7 @@ class Quiz extends Component {
       .post(`http://localhost:3001/admin/answers/${this.state.test._id}`, formData)
       .then(res => {
         alert(`You have scored ${res.data.marks}`);
-        window.location.replace('/activity');
+        window.location.replace('/HarvinQuiz/activity');
 
       })
       .catch(err => console.log('err', err));
@@ -289,7 +289,7 @@ class Quiz extends Component {
             aria-label="add"
             className={`${
               classes.quizNavButton
-            } ${selectedQuesStyle} ${doneStyle}`}
+              } ${selectedQuesStyle} ${doneStyle}`}
             onClick={val => {
               this.handleQuizNavClick(val, questions);
             }}
@@ -332,13 +332,13 @@ class Quiz extends Component {
     this.setState({ currentQuestion: currentQuestionState });
   };
 
-  getTestTitle = (testName, classes)=> {
+  getTestTitle = (testName, classes) => {
     const min = Math.floor(this.state.time / 60);
     const sec = this.state.time % 60;
     return (
       <div className={classes.testHeader}>
         <Typography className={classes.testName} variant="display2">
-        {testName}
+          {testName}
         </Typography>
         <div className={classes.testControls}>
           <Typography variant="display2" className={classes.clock}>
@@ -439,7 +439,7 @@ class Quiz extends Component {
       );
 
     if (this.state.testFinished === true) {
-      this.onSubmit({ preventDefault: ()=> {} });
+      this.onSubmit({ preventDefault: () => { } });
       finishTestSnackBar = (<SnackBar
         message="Test Finished!"
         open={this.state.testFinished}
@@ -465,7 +465,7 @@ class Quiz extends Component {
         {successSnackbar}
         {processingSnackbar}
         {finishTestSnackBar}
-        <QuizNavbar/>
+        <QuizNavbar />
         {this.getTestTitle(this.props.test.name, classes)}
         <Grid container="container" direction="row" justify="flex-end" className={classes.containerNoSpacing}>
           <ItemGrid xs={12} sm={6} md={6}>
@@ -474,9 +474,9 @@ class Quiz extends Component {
             </div>
           </ItemGrid>
           <ItemGrid style={{ padding: '15px !important' }} xs={12} sm={3} md={3}>
-          <Card classNames={classes.navigationContentCard}>
+            <Card classNames={classes.navigationContentCard}>
               {this.getSectionNavigationContent(classes)}
-          </Card>
+            </Card>
             <Button
               variant="fab"
               color="primary"

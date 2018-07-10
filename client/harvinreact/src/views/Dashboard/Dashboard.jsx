@@ -99,14 +99,14 @@ class Dashboard extends React.Component {
                     <ListItemText
                       primary={`section ${i + 1}: ${section.title}  have: ${
                         section.questions.length
-                      } questions`}
+                        } questions`}
                     />
                   </ListItem>
                   <ListItem className={classes.nested}>
                     <ListItemText
                       primary={`${
                         section.posMarks
-                      } will be awarded for each correct answer and`}
+                        } will be awarded for each correct answer and`}
                     />
                   </ListItem>
                   <ListItem className={classes.nested}>

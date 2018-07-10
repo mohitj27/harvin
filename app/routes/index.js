@@ -26,6 +26,8 @@ const enquiryRoutes = require('./enquiry')
 const videoRoutes = require('./video')
 const studentAppRoutes = require('./studentApp')
 const resgisterRoutes = require('./register')
+const clientRoutes = require('./client')
+
 
 const sitemapRoutes = require('./sitemap')
 
@@ -55,6 +57,7 @@ router.use('/admin', adminRoutes)
 router.use('/studentApp/home', studentAppRoutes)
 router.use('/register', resgisterRoutes)
 router.use('/sitemap', sitemapRoutes)
+router.use('/HarvinQuiz', clientRoutes)
 
 router.use(vmsRoutes)
 

@@ -15,47 +15,48 @@ import Questions from '../views/Questions/Questions.jsx';
 import Activity from '../views/Activity/Activity.jsx';
 const appRoutes = [
   {
-    path: '/home',
+    path: '/HarvinQuiz/home',
     sidebarName: 'Home',
     icon: Dashboard,
     component: Home,
   },
   {
-    path: '/createTest',
+    path: '/HarvinQuiz/createTest',
     sidebarName: 'Create Test',
     icon: Person,
     component: CreateTest,
   },
   {
-    path: '/addQues',
+    path: '/HarvinQuiz/addQues',
     sidebarName: 'Add Question',
     icon: NoteAdd,
     component: AddQues,
   },
   {
-    path: '/Tests',
+    path: '/HarvinQuiz/Tests',
     sidebarName: 'Tests',
     icon: NoteAdd,
     component: ListTest,
   },
   {
-    path: '/Questions',
+    path: '/HarvinQuiz/Questions',
     sidebarName: 'Questions',
     icon: NoteAdd,
     component: Questions,
   },
   {
-    path: '/Activity',
+    path: '/HarvinQuiz/Activity',
     sidebarName: 'Activity',
     icon: NoteAdd,
     component: Activity,
   },
   {
     redirect: true,
-    path: '/',
-    to: '/dashboard',
+    path: '/HarvinQuiz/',
+    to: '/HarvinQuiz',
     navbarName: 'Redirect',
   },
 ];
+// appRoutes = appRoutes.map(e => '/HarvinQuiz/' + e.path)
 
 export default appRoutes;

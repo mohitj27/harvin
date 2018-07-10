@@ -100,6 +100,7 @@ export const sendCreatedTest = test => async (dispatch) => {
     dispatch(notifyLoading());
     try {
         const res = await axios.post(`http://localhost:3001/admin/tests/`, test);
+        console.log('kuchbhi', res.data);
         if (res.data.success) {
             dispatch(sendCreatedTestSuccess(res.data.msg));
         } else {
