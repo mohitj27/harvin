@@ -1,5 +1,5 @@
 $(function () {})
-let elem
+var elem;
 
 function confirmDelete (currElement) {
   elem = currElement
@@ -29,13 +29,13 @@ function confirmed () {
     .parent()
 
   // console.log('tr', $tr)
-  let admissionId = $tr.attr('id')
+  var admissionId = $tr.attr('id')
 
   $.ajax({
     url: '/admin/admissions/' + admissionId,
     method: 'DELETE',
     success: function (result) {
-      $tr.fadeOut('fast', () => {
+      $tr.fadeOut('fast', function() {
         $tr.remove()
       })
       Materialize.toast($('<span>Admission Deleted Successfully</span>'), 4000)
