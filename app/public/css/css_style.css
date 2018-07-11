@@ -573,7 +573,6 @@ em {
 #main-nav {
   background-color: white;
   color: black;
-  height: 64px;
 }
 
 #nav-wrapper {
@@ -671,7 +670,7 @@ h5 {
 
 #left-sec > h4 {
   font-weight: bold;
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Josefin Sans";
 }
 #right-sec {
   grid-column: 2/3;
