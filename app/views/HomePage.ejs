@@ -15,13 +15,15 @@
 	</style>
 	<!-- <link href="../css/homePage.css" type="text/css" rel="stylesheet" /> -->
 	<meta name="google-site-verification" content="eSPtYedDuFnn9GWxmT-OZJtAugNRnUJwuZ65y7JDPfE" />
+	<!-- Required Core Stylesheet -->
+	<link rel="stylesheet" href="node_modules/@glidejs/glide/dist/css/glide.core.min.css">
 
 	<main>
 
 
 
 		<div class="section">
-			<div class="carousel carousel-slider " data-indicators="true">
+			<div class="carousel carousel-slider" data-indicators="true">
 				<div class="carousel-item white-text" href="#one!" id="fst-section-main">
 					<div class="container" id="fst-section">
 						<div id="left-sec">
@@ -36,7 +38,7 @@
 								<div id="">
 									<div class="center" data-indicators="true">
 
-										<div class="white-text" style="background-color: rgb(226, 217, 217, 0.29);margin: 20px;padding: 10px;" href="#one!">
+										<div class="white-text" style="background-color: rgb(226, 217, 217, 0.29);margin: 20px 20px 10px 20px;padding: 10px;" href="#one!">
 											<h5> Passion For Education </h5>
 											<p>Harvin Academy is a sincere effort by acclaimed academicians and professionals to ease your pursuit of success
 												by providing you Total Quality Management for your budding career plans.</p>
@@ -47,8 +49,8 @@
 									</div>
 								</div>
 								<br/>
-								<div class="" style="display:grid; grid-template-columns:50% 50%;grid-gap: 10px">
-									<div style="background-color: #504f4f;height: 300px;padding: 20px;    background-color: #efeeee;color: black">
+								<div style="display:grid; grid-template-columns:50% 50%;grid-gap: 10px">
+									<div style="padding: 1.4em; background-color: #efeeee;color: black">
 
 										<h5 style="color: black">Droppers Batch For NEET and IIT JEE</h5>
 										<br style="color: black" />
@@ -66,36 +68,35 @@
 				<div class="carousel-item white-text" href="#one!" id="scnd-section-main">
 					<div class="container" id="fst-section">
 						<div id="left-sec">
-							<img src="/images/slider21.png" height="500px" ,width="500px" style="margin-right:30px; margin-top:30px " />
+							<img src="../dist/images/slider21.png" height="500px" ,width="500px" style="margin-right:30px; margin-top:30px " />
 							<!-- <h4>WELCOME TO HARVIN ACADEMY</h4>
 							<h5>The premier Institute of PMT | IIT-JEE</h5>
 							<br>
 							<br>
 							<a class="waves-effect waves-light btn" href="./aboutus">about us</a> -->
 						</div>
-						<div class="">
-							<div style="">
-								<div class="" style="display:grid;background-color: rgb(226, 217, 217, 0.29); grid-template-columns:50% 50%;margin-top: 50px">
-									<div style="height: 520px;cursor: pointer;" onclick="window.location.href='./../mdis'">
-										<img src="/images/lady.png" style="width: 92%;height:55% ;background-color: #fff;margin:4%;" />
-										<h5 style="text-align: center;font-weight: bold;color: #13b38b">MDIS</h5>
-										<p style="padding: 2%">MDIS conducts an entrance examination in pursuing MBBS from abroad. Harvin Academy provides coachin for MDIS entrance
-											exam at a very nominal fee .</p>
-									</div>
-									<div class="" style="display:grid; grid-template-rows:50% 50%">
-										<div style="height: 250px;">
-											<iframe style="height: 100%;" src="https://www.youtube.com/embed/wvUDeika_tY?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0"
-											 allow="autoplay; encrypted-media" allowfullscreen></iframe>
-										</div>
-										<div style="background-color: #504f4f;height: 250px;padding: 10px;    background-color: #efeeee;color: black">
-											<h5 style="color:#13b38b">Two years batch for NEET and IIT JEE</h5>
-											<p style="color: black">Started from 23rd July at Harvin Academy Preet Vihar and Harvin Academy Janakpuri.</p>
-										</div>
-									</div>
+						<div>
+						<div style="display:grid; grid-template-columns:50% 50%;margin-top: 50px">
+							<div style="height: 520px; cursor: pointer; background-color: rgb(226, 217, 217, 0.29);" onclick="window.location.href='./../mdis'">
+								<img src="../dist/images/lady.png" style="width: 92%;height:55%;" />
+								<h5 style="text-align: center;font-weight: bold;color: #13b38b">MDIS</h5>
+								<p style="padding: 0.5em;text-align: center">MDIS conducts an entrance examination in pursuing MBBS from abroad. Harvin Academy provides coachin for MDIS entrance
+									exam at a very nominal fee .</p>
+							</div>
+							<div style="display:grid; grid-template-rows:50% 50%; margin-left: 1em;">
+								<div style="height: auto;">
+									<iframe style="height: 105%;" src="https://www.youtube.com/embed/wvUDeika_tY?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0"
+									 allow="autoplay; encrypted-media" allowfullscreen></iframe>
+								</div>
+								<div style="height: auto;margin-top: 2em;padding: 1.5em;color: black; background-color: #efeeee;">
+									<h5 style="color:#13b38b">Two years batch for NEET and IIT JEE</h5>
+									<p style="color: black">Started from 23rd July at Harvin Academy Preet Vihar and Harvin Academy Janakpuri.</p>
 								</div>
 							</div>
 						</div>
+						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 			<div style="display: none" class=" container" id="fst-section">
@@ -129,11 +130,11 @@
 
 						</div>
 					</div>
-					<div id="next-info" class="card">
+					<div id="next-info" class="card" style="height: auto;">
 						<div class="card-content">
 							<!-- <i class="fas fa-user-graduate"></i> -->
 							<!-- <i class="fa fa-user-o" aria-hidden="true"></i> -->
-							<img src="../public/dist/images/icons/icons_noun_872574_cc.png" class="my-icons" alt="">
+							<img src="../dist/images/icons/icons_noun_872574_cc.png" class="my-icons" alt="">
 							<!-- <br> -->
 							<p>Droppers Batch For NEET and IIT JEE</p>
 							<br>
@@ -153,7 +154,7 @@
 		<div class="section container" id="scnd-section">
 			<div class="features">
 				<div class="card-content">
-					<img src="../public/dist/images/icons/icons_home3-sv2.png" class="my-icons" alt="">
+					<img src="../dist/images/icons/icons_home3-sv2.png" class="my-icons" alt="">
 					<p>HIGHLY QUALIFIED AND TRAINED FACULTY</p>
 					<p>The most important factors in raising student achievement is a highly qualified teacher.</p>
 				</div>
@@ -161,7 +162,7 @@
 			</div>
 			<div class="features">
 				<div class="card-content">
-					<img src="../public/dist/images/icons/icons_home2-icon3.png" class="my-icons" alt="">
+					<img src="../dist/images/icons/icons_home2-icon3.png" class="my-icons" alt="">
 
 					<p>SYSTEMATIC AND PLANNED TEACHING</p>
 					<p>Systematic and planned teaching routine, structured approach to help students.</p>
@@ -170,7 +171,7 @@
 			</div>
 			<div class="features">
 				<div class="card-content">
-					<img src="../public/dist/images/icons/icons_home2-icon2.png" class="my-icons" alt="">
+					<img src="../dist/images/icons/icons_home2-icon2.png" class="my-icons" alt="">
 
 					<p>PERSONAL PROBLEM ON SOLVING SESSIOIN</p>
 					<p>Identifying problem, developing possible solution and taking the appropriate course of action.</p>
@@ -209,7 +210,7 @@
 				</div>
 				<%})%>
 		</div>
-		<img src="/images/banner1.jpeg" id="testimonials-banner-img" alt="Banner">
+		<img src="../dist/images/banner1.jpeg" id="testimonials-banner-img" alt="Banner">
 		<div id="overlay-testimonials-section"></div>
 		<div class="section container" id="testimonials">
 			<div id="testimonials-overlay-content">
@@ -219,21 +220,21 @@
 				<div id="feature-utilities" class="z-depth-3">
 					<div class="features">
 						<div class="card-content">
-							<img src="../public/dist/images/icons/icons_home3-sv8.png" class="my-icons" alt="">
+							<img src="../dist/images/icons/icons_home3-sv8.png" class="my-icons" alt="">
 							<p>ADEQUATE LIBRARY FACILITY</p>
 						</div>
 
 					</div>
 					<div class="features">
 						<div class="card-content">
-							<img src="../public/dist/images/icons/icons_home3-sv3.png" class="my-icons" alt="">
+							<img src="../dist/images/icons/icons_home3-sv3.png" class="my-icons" alt="">
 							<p>GROUP DISCUSSION & READING ROOM</p>
 						</div>
 
 					</div>
 					<div class="features">
 						<div class="card-content">
-							<img src="../public/dist/images/icons/icons_home3-sv6.png" class="my-icons" alt="">
+							<img src="../dist/images/icons/icons_home3-sv6.png" class="my-icons" alt="">
 							<p>PRACTICAL LAB</p>
 						</div>
 					</div>
@@ -281,30 +282,30 @@
 					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
 						<p class="black-text testimonial-text">Harvin showed me the right path to reach my target that i had chosen.Harvin Academy aid to my dream of becoming a doctor.</p>
-						<img class="testimonialImg responsive-img" src="/images/testimonials/adnan-malik.jpg">
+						<img class="testimonialImg responsive-img" src="../images/testimonials/adnan-malik.jpg">
 					</div>
 					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
 						<p class="black-text testimonial-text">I am grateful to Harvin Academy for helping me achieve this golden dream of clearing the NEET exam.</p>
-						<img class="testimonialImg responsive-img" src="/images/testimonials/akanksha-gupta.jpg">
+						<img class="testimonialImg responsive-img" src="../images/testimonials/akanksha-gupta.jpg">
 					</div>
 					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
 						<p class="black-text testimonial-text">I feel lucky to be a part of Harin Academy and thankful for helping me achieve my goal. The faculty is amazing and
 							healpful.
 						</p>
-						<img class="testimonialImg responsive-img" src="/images/testimonials/amulya-gupta.jpg">
+						<img class="testimonialImg responsive-img" src="../images/testimonials/amulya-gupta.jpg">
 					</div>
 					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
 						<p class="black-text testimonial-text">I feel obliged to Harvin Academy for helping me achive this milestone. Harvin Academy helped me a lot achieve my goal.</p>
-						<img class="testimonialImg responsive-img" src="/images/testimonials/kritika-gupta.jpg">
+						<img class="testimonialImg responsive-img" src="../images/testimonials/kritika-gupta.jpg">
 					</div>
 					<div class="carousel-item white black-text" href="#one!">
 						<i class="fa fa-quote-right" aria-hidden="true"></i>
 						<p class="black-text testimonial-text">Harvin Academy is the Mecca of Medical Education. It has really helped me a lot to shape my career and case my path
 							in getting admission in Medical College.</p>
-						<img class="testimonialImg responsive-img" src="/images/testimonials/simran-sarthi.jpg">
+						<img class="testimonialImg responsive-img" src="../images/testimonials/simran-sarthi.jpg">
 					</div>
 				</div>
 			</div>
@@ -348,7 +349,7 @@
 					<div class="col s6 m4 l4 center hide-on-small-only" style="
 					display: flex;
 					justify-content: center;">
-						<img src="/images/phoneFrame.png" style="max-height:400px;z-index:1; margin-top: -40px;" alt="">
+						<img src="../dist/images/phoneFrame.png" style="max-height:400px;z-index:1; margin-top: -40px;" alt="">
 					</div>
 
 					<div class="col s12 m4 l4" style="
@@ -385,8 +386,8 @@
 
 				</div>
 				<div class="row hide-on-small-only" id="download-links">
-					<img src="/images/playstore.png" alt="">
-					<img src="/images/appstore.svg" alt="">
+					<img src="../dist/images/playstore.png" alt="">
+					<img src="../dist/images/appstore.svg" alt="">
 				</div>
 			</div>
 		</div>
@@ -543,6 +544,16 @@
 		<script src="js/init.js"></script>
 
 		<script>
+			// Initializes the tooltip on landing page image
+			$('.tooltipped').tooltip();
+
+
+			// // Resizes the iframe according to size available
+			// function resizeIframe(obj) {
+			// 	obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+			// }
+
+			// Rest of the script
 			$('.carousel.carousel-slider').carousel({ fullWidth: true });
 
 			let isMdisVisible = false;

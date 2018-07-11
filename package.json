@@ -7,9 +7,9 @@
   "description": "",
   "main": "./app/app.js",
   "scripts": {
-    "nodemon": "nodemon --watch .env --watch ./app/app.js --watch routes --watch models --watch middleware --watch config --watch bin ./app/app.js && webpack-cli --watch",
+    "nodemon": "nodemon --watch .env --watch ./app/app.js --watch routes --watch models --watch middleware --watch config --watch bin ./app/app.js && webpack-cli --watch && gulp",
     "test": "./node_modules/.bin/mocha app/tests --reporter spec --color --timeout 10000 --require app/tests/helper/chai.js",
-    "start": "node ./app/app.js",
+    "start": "node ./app/app.js && gulp",
     "start-blog": "nodemon ./blog_service/server.js",
     "babel": "babel",
     "webpack": "webpack-cli --watch ",
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/gopal151295/innov8#readme",
   "dependencies": {
+    "@glidejs/glide": "^3.1.0",
     "@google-cloud/error-reporting": "^0.2.3",
     "async": "^2.5.0",
     "axios": "^0.18.0",
