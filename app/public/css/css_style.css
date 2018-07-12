@@ -545,7 +545,6 @@ em {
 .register-card-title {
   color: white;
   padding: 20px;
-  margin-top: -100px;
   background-color: #13b38b;
 }
 #register-now-section {
@@ -561,9 +560,9 @@ em {
   /* float: right; */
 }
 
-#blog-section {
+/* #blog-section {
   margin-bottom: 100px;
-}
+} */
 
 #nav-wrapper1 {
   display: grid;
@@ -833,6 +832,9 @@ h5 {
   }
   .mapouter {
     display: none;
+    position: relative;
+    top: -7em;
+    height: 82%;
   }
   .course-card {
     min-width: 80vw;
@@ -913,8 +915,9 @@ h5 {
 }
 
 .mapouter {
-  height: 400px;
-  padding-bottom: 2em;
+  height: 91%;
+  width: 200%;
+  padding-bottom: 1em;
 }
 
 .gmap_canvas {

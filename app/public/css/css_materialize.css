@@ -3406,9 +3406,10 @@ nav ul a span.badge {
 }
 
 .row {
-  margin-left: auto;
+  /* margin-left: auto;
   margin-right: auto;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
+  margin: 7em auto auto auto;
 }
 
 .row:after {
@@ -4510,7 +4511,7 @@ h3 {
 h4 {
   font-size: 2.28rem;
   line-height: 110%;
-  margin: 1.14rem 0 0.912rem 0;
+  margin: 0;
 }
 
 h5 {
