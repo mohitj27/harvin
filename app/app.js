@@ -34,6 +34,12 @@ if (process.env.CRASH_REPORT_API_KEY_PATH) {
   });
 }
 
+// STATIC FILES SERVED FIRST TO REDUCE RESPONSE TIME FOR STATIC FILES
+app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "./../../HarvinDb")));
+console.log("path", path.join(__dirname, "../client/harvinreact/build"));
+
+
 app.use(cors());
 // errors.report('Something broke!');
 // setting up body-parser
@@ -64,9 +70,9 @@ app.use(
 );
 app.use(flash());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "/public")));
-app.use(express.static(path.join(__dirname, "./../../HarvinDb")));
-console.log("path", path.join(__dirname, "../client/harvinreact/build"));
+// app.use(express.static(path.join(__dirname, "/public")));
+// app.use(express.static(path.join(__dirname, "./../../HarvinDb")));
+// console.log("path", path.join(__dirname, "../client/harvinreact/build"));
 
 app.use(express.static(path.join(__dirname, "../client/harvinreact/build")));
 app.use(methodOverride("_method"));

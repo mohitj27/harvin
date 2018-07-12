@@ -7,9 +7,9 @@
   "description": "",
   "main": "./app/app.js",
   "scripts": {
-    "nodemon": "nodemon --watch .env --watch ./app/app.js --watch routes --watch models --watch middleware --watch config --watch bin ./app/app.js && webpack-cli --watch && gulp",
+    "nodemon": "nodemon --watch .env --watch ./app/app.js --watch routes --watch models --watch middleware --watch config --watch bin ./app/app.js && webpack-cli --watch",
     "test": "./node_modules/.bin/mocha app/tests --reporter spec --color --timeout 10000 --require app/tests/helper/chai.js",
-    "start": "node ./app/app.js && gulp",
+    "start": "node ./app/app.js",
     "start-blog": "nodemon ./blog_service/server.js",
     "babel": "babel",
     "webpack": "webpack-cli --watch ",
