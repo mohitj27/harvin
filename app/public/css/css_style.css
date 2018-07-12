@@ -1311,7 +1311,8 @@ div.card-action.left > a {
 }
 
 #fst-section-main {
-  background: url(./../images/hero.jpg);
+  /* background: url(./../images/hero.jpg); */
+  background: url(../dist/images/hero.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   width: 100vw;
@@ -1319,7 +1320,8 @@ div.card-action.left > a {
 }
 
 #scnd-section-main {
-  background: url(./../background_slider.png);
+  /* background: url(./../background_slider.png); */
+  background: url(../dist/images/background_slider.png);
   background-repeat: no-repeat;
   background-size: cover;
   width: 100vw;
