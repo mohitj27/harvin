@@ -38,13 +38,13 @@ import { lighten } from "material-ui/styles/colorManipulator";
 
 import { RegularCard, ItemGrid, CustomInput } from "../../components";
 
-function createData(id, name, created, createdBy, time, maxMarks) {
+function createData(id, name, created, time, maxMarks) {
   const newDate = new Date(created);
   return {
     id,
     name,
     created: newDate.toLocaleString(),
-    createdBy,
+    // createdBy,
     time,
     maxMarks
   };
@@ -225,7 +225,7 @@ class Stats extends Component {
               t._id,
               t.name,
               t.created,
-              t.createdBy.username,
+              // t.createdBy.username,
               t.time,
               t.maxMarks
             );
@@ -362,9 +362,12 @@ class Stats extends Component {
                       </TableCell>
                       <TableCell>{n.created}</TableCell>
                       <TableCell className={classes.noPad}>
-                        {n.createdBy === this.props.currentUser.username
-                          ? "You"
-                          : n.createdBy}
+                        {
+                          "You"
+                          // n.createdBy === this.props.currentUser.username
+                          // ? "You"
+                          // : n.createdBy
+                        }
                       </TableCell>
                       <TableCell className={classes.noPad}>{n.time}</TableCell>
                       <TableCell className={classes.noPad}>

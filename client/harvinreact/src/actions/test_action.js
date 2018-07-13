@@ -38,7 +38,7 @@ const getTestListError = () => ({
     type: GET_TEST_LIST_ERROR
 })
 
-export const fetchTestList = username => async dispatch => {
+export const fetchTestList = () => async dispatch => {
     dispatch(getTestList());
     dispatch(notifyLoading());
     try {
