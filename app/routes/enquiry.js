@@ -38,7 +38,7 @@ router.delete('/:enquiryId', middleware.isLoggedIn, async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   const date = Date.now()
-
+  console.log("an enquiry has come");
   try {
     req.body.date = date
     await enquiryController.newEnquiry(req.body)

@@ -19,18 +19,22 @@ $(() => {
   })
 })
 function requrestMDIScallback(e) {
-  e.preventDefault();
-  const form = $("#form")
+  // e.preventDefault();
+
+  console.log('cl;finwick is working ');
+
+  // const form = $("#form")
   const name = $("#full_name").prop("value")
   const contact = $("#contact").prop("value")
   const email = $("#email").prop("value")
   if (name.length < 1 || contact.length < 1 || email.length < 1)
     return
 
-  $.post('/admin/enquiries', { name, contact, emailId: email, 'centerName': 'mdis' }, function (data) {
+  $.post('/admin/enquiries/', { name: name, contact: contact, emailId: email, 'centerName': 'mdis' }, function (data) {
     console.log(data, "wsqewqqeqw")
-    $("#full_name").prop("value") = ""
-    $("#contact").prop("value") = ""
-    $("#email").prop("value") = ""
+    console.log(name, contact, email);
+    // $("#full_name").prop("value") = ""
+    // $("#contact").prop("value") = ""
+    // $("#email").prop("value") = ""
   })
 }

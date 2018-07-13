@@ -39,7 +39,7 @@ export const loginAction = user => async (dispatch) => {
   dispatch(login());
   dispatch(notifyActions.notifyLoading());
   try {
-    const res = await axios.post('https://harvin.academy/student/loginWithPassword', user);
+    const res = await axios.post('http://localhost:3001/student/loginWithPassword', user);
     console.log('res', JSON.stringify(res));
     if (res.data.success) {
       const token = res.data.token

@@ -43,7 +43,7 @@ export const fetchTestList = username => async dispatch => {
     dispatch(notifyLoading());
     try {
         const res = await axios.get(`http://localhost:3001/admin/tests/`);
-        console.log('res derived', res);
+        console.log('res derived', res.data);
 
         if (res.data.success) {
             dispatch(getTestListSuccess(res.data.tests));

@@ -90,6 +90,7 @@ router.delete("/:id", async (req, res, next) => {
 })
 
 router.get("/", middleware.isLoggedIn, async (req, res, next) => {
+  console.log('this route is in action ')
   const user = req.user
   try {
     let foundTests = await testController.getTests({

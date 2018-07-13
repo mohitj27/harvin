@@ -18,12 +18,13 @@ var middleware = {
   isLoggedIn:
     jwt({
       secret: jwtConfig.jwtSecret,
-      getToken:jwtConfig.getToken,
+      getToken: jwtConfig.getToken,
     })
 
   ,
 
   isAdmin: function (req, res, next) {
+    console.log("is admin midd");
     if (_.indexOf(req.user.role, 'admin') !== -1) {
       return next()
     }
@@ -34,6 +35,7 @@ var middleware = {
   },
 
   isCentre: function (req, res, next) {
+    console.log("is center midd")
     // console.log('user',req.user)
     if (_.indexOf(req.user.role, 'centre') !== -1) {
       return next()
@@ -46,6 +48,7 @@ var middleware = {
   },
 
   isCentreOrAdmin: function (req, res, next) {
+    console.log("is centre or admin midd")
     if (_.indexOf(req.user.role, 'centre') !== -1 ||
       _.indexOf(req.user.role, 'admin') !== -1) {
       return next()

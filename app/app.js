@@ -98,7 +98,7 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   // sleep.sleep(1);
   if (req.method === "POST" || req.method === "PUT") {
     const data = req.body;
@@ -128,8 +128,9 @@ app.use(function(req, res, next) {
 
 // General middleware function
 
-app.use(async function(req, res, next) {
+app.use(async function (req, res, next) {
   try {
+    console.log("general middleware is working ");
     // res.locals.centers = await userController.findAllCenters()
     let allCenters = await userController.findAllCenters();
     allCenters = await userController.populateFieldsInUsers(allCenters, [
@@ -146,7 +147,7 @@ app.use(async function(req, res, next) {
         res.locals.institute = await instituteController.findInstituteById(
           user.profile.isCenterOfInstitute
         );
-        allCenters = _.filter(allCenters, function(center) {
+        allCenters = _.filter(allCenters, function (center) {
           if (center.profile) {
             if (
               center.profile.isCenterOfInstitute.toString() ===
@@ -188,7 +189,7 @@ let struct = {
   slice: 0
 };
 
-io.on("connection", function(socket) {
+io.on("connection", function (socket) {
   socket.on("end upload", () => {
     files = {};
   });
@@ -223,9 +224,11 @@ io.on("connection", function(socket) {
 app.use("/", indexRoutes);
 
 // Error handling middleware function
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   if (err) {
-    // error reporting
+    // error reportin
+    console.log("error handling is working")
+
     if (
       err.status !== 401 &&
       err.status !== 403 &&
@@ -265,7 +268,7 @@ app.use(function(err, req, res, next) {
       (err.name && err.name.indexOf("AUTH") > -1)
     ) {
       req.flash("error", "Please Login");
-      return res.redirect("/admin/login");
+      return res.redirect("/HarvinQuiz/login");
     }
 
     if (flashUrl) {
@@ -293,23 +296,23 @@ app.use(function(err, req, res, next) {
 var url =
   process.env.DATABASEURL ||
   "mongodb://" +
-    config.mongo.host +
-    ":" +
-    config.mongo.port +
-    "/" +
-    config.mongo.dbName;
+  config.mongo.host +
+  ":" +
+  config.mongo.port +
+  "/" +
+  config.mongo.dbName;
 mongoose.connect(url, {
   useMongoClient: true
 });
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
-db.once("open", function(err) {
+db.once("open", function (err) {
   if (err) {
     console.log(err);
   } else {
     let port = process.env.PORT || config.port;
-    http.listen(port, function() {
+    http.listen(port, function () {
       console.log("Server has started!!! Listening at " + port);
     });
   }
