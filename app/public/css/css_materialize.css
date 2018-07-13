@@ -3409,7 +3409,7 @@ nav ul a span.badge {
   /* margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px; */
-  margin: 7em auto auto auto;
+  /* margin: 7em auto auto auto; */
 }
 
 .row:after {
