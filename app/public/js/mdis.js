@@ -18,24 +18,31 @@ $(() => {
 
   })
 })
+function isEmail(email) {
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  return regex.test(email);
+}
 function requrestMDIScallback(e) {
   // e.preventDefault();
-
-  console.log('cl;finwick is working ');
-
   // const form = $("#form")
-  const name = $("#full_name").prop("value")
-  const contact = $("#contact").prop("value")
-  const email = $("#email").prop("value")
-  if (name.length < 1 || contact.length < 1 || email.length < 1)
+  const name = $("#full_name").val()
+  const contact = $("#contact").val()
+  const email = $("#email").val()
+  if (name.length < 1 || contact.length < 1 || email.length < 1 || !isEmail(email)) {
+    Materialize.toast("Please check fields ..!", 1500)
+    $(".toast").css("background-color", "red");
     return
+  }
 
-  $.post('/admin/enquiries/', { name: name, contact: contact, emailId: email, 'centerName': 'mdis' }, function (data) {
-    console.log("form submittedß")
-    Materialize.toast("Registered Successfully !! ", 1500)
-    $(".toast").css("background-color", "#229976");
-    $("#full_name").val('')
-    $("#contact").val('')
-    $("#email").val('')
-  })
+  $.post('/admin/enquiries/', { name: name, contact: contact, emailId: email, 'centerName': 'mdis' })
+    .done(function (data) {
+      console.log("form submittedß")
+      Materialize.toast("Registered Successfully !! ", 1500)
+      $(".toast").css("background-color", "#229976");
+      $("#full_name").val('')
+      $("#contact").val('')
+      $("#email").val('')
+      return
+    })
+
 }
