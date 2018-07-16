@@ -31,10 +31,11 @@ function requrestMDIScallback(e) {
     return
 
   $.post('/admin/enquiries/', { name: name, contact: contact, emailId: email, 'centerName': 'mdis' }, function (data) {
-    console.log(data, "wsqewqqeqw")
-    console.log(name, contact, email);
-    // $("#full_name").prop("value") = ""
-    // $("#contact").prop("value") = ""
-    // $("#email").prop("value") = ""
+    console.log("form submittedß")
+    Materialize.toast("Registered Successfully !! ", 1500)
+    $(".toast").css("background-color", "#229976");
+    $("#full_name").val('')
+    $("#contact").val('')
+    $("#email").val('')
   })
 }

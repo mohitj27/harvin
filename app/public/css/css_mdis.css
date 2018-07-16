@@ -9,6 +9,16 @@
   align-items: center;
 }
 
+/* toast starting */
+  .toast{
+    background-color: #229976 !important;
+  }
+  #toast-container {
+    background-color: #229976 !important;
+
+  }
+/* toast ending */
+
 .main-heading {
   z-index: 100;
 }
