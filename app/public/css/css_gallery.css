@@ -21,6 +21,7 @@
 .chip:hover{
   background-color:#13b38b;
   color:white;
+  cursor: pointer;
 }
 *{
   transition: all 1s ease-out;

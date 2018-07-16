@@ -1,1 +1,1 @@
-.gallery-image{margin-top:10px!important;margin-bottom:10px!important}.chip:hover{background-color:#13b38b;color:#fff}*{transition:all 1s ease-out}.active-chip{background-color:#13b38b;color:#fff}.active-chip:hover{background-color:#13b38b;color:#fff}
+.gallery-image{margin-top:10px!important;margin-bottom:10px!important}.chip:hover{background-color:#13b38b;color:#fff;cursor:pointer}*{transition:all 1s ease-out}.active-chip{background-color:#13b38b;color:#fff}.active-chip:hover{background-color:#13b38b;color:#fff}
