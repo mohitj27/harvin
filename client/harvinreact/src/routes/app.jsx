@@ -10,6 +10,7 @@ import DashboardPage from '../views/Dashboard/Dashboard.jsx';
 import Home from '../views/Home/Home.jsx';
 import AddQues from '../views/AddQues/AddQues.jsx';
 import ListTest from '../views/ListTest/ListTest.jsx';
+import Login from '../containers/Login/Login.jsx';
 import CreateTest from '../views/CreateTest/CreateTest.jsx';
 import Questions from '../views/Questions/Questions.jsx';
 import Activity from '../views/Activity/Activity.jsx';
@@ -51,12 +52,16 @@ const appRoutes = [
     component: Activity,
   },
   {
+    path: '/HarvinQuiz/Logout',
+    sidebarName: 'Log Out',
+    icon: NoteAdd
+  },
+  {
     redirect: true,
     path: '/HarvinQuiz/',
     to: '/HarvinQuiz',
     navbarName: 'Redirect',
-  },
+  }
 ];
-// appRoutes = appRoutes.map(e => '/HarvinQuiz/' + e.path)
 
 export default appRoutes;

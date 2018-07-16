@@ -12,6 +12,8 @@ import logger from 'redux-logger';
 
 import jwt from 'jsonwebtoken';
 import setAuthToken from './config/setAuthToken';
+import removeAuthToken from './config/removeAuthToken';
+
 import url from './config';
 import Login from './containers/Login/Login';
 import Public from './views/Public/Public';
@@ -60,6 +62,12 @@ App = (
         <Route path="/HarvinQuiz/public" component={Public} />
         <Route path="/HarvinQuiz/login" component={Login} />
         <Route path="/HarvinQuiz/quiz/:id" component={Dashboard} />
+        <Route path="/HarvinQuiz/Logout" render={(props) => {
+          removeAuthToken();
+          return (
+            <Login />
+          )
+        }} />
         {indexRoutes.map((prop, key) => {
           console.log('prop', prop);
           return (
