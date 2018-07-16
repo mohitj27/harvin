@@ -89,6 +89,7 @@ router.get("/mdis", (req, res) => {
           .populate({ path: "author", modal: "User" })
           .exec()
           .then(foundBlogs =>{
+            console.log(foundBlogs,'foundBlogs')
             res.render("mdis", {
               foundBlogs
             })}

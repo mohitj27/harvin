@@ -122,7 +122,9 @@
 
       </div>
     </div>
-  
+    <%if (foundBlogs.length > 0) { %>
+      
+      
           <div class="container ">
             <div class="row"> 
                 
@@ -187,8 +189,8 @@
 
                               <% }) %>
          
-          </div>        
-
+          </div>  </div>       
+          <% } %>
   </main>
   <%include partials/website_footer.ejs%>
 
