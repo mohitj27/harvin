@@ -37,7 +37,7 @@ function requrestMDIScallback(e) {
   $.post('/admin/enquiries/', { name: name, contact: contact, emailId: email, 'centerName': 'mdis' })
     .done(function (data) {
       console.log("form submittedß")
-      Materialize.toast("Registered Successfully !! ", 1500)
+      Materialize.toast("Will back to you !!", 1500)
       $(".toast").css("background-color", "#229976");
       $("#full_name").val('')
       $("#contact").val('')
