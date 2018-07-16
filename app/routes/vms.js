@@ -72,7 +72,34 @@ router.get("/vms", middleware.isLoggedIn, (req, res) => {
 });
 
 router.get("/mdis", (req, res) => {
-  res.render("mdis");
+
+    const categoryName = 'mdis';
+    Blog.find({ category: categoryName }).then();
+    // const perPage = 10;
+    // page is for which page to show (selected)
+    // let page = req.query.page || 0;
+    // page = page <= 1 ? 1 : page;
+  
+    Blog.count({ publish: "on", category: categoryName })
+      .then(
+
+        Blog.find({ publish: "on", category: categoryName })
+          .limit(3)
+          .sort({ uploadDateUnix: -1 })
+          .populate({ path: "author", modal: "User" })
+          .exec()
+          .then(foundBlogs =>{
+            res.render("mdis", {
+              foundBlogs
+            })}
+          )
+          .catch(err => {next(err || new Error("Internal Server Error"))})
+      )
+      .catch(err => {
+        next(err || new Error("Internal Server Error"));
+      });
+  
+  //res.render("mdis");
 });
 
 router.post(
