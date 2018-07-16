@@ -123,11 +123,11 @@
       </div>
     </div>
   
-          <div class="container row">
-            <div> 
+          <div class="container ">
+            <div class="row"> 
                 
                 <% foundBlogs.forEach((blog, i) => { %>
-                  <article class="card single-blog text-center mt-5 mb-5 pt-0 pb-3" href="/blog/?title=<%=blog.url%>" href="/blog/<%=blog.url%>">
+                  <!-- <article class="card single-blog text-center mt-5 mb-5 pt-0 pb-3" href="/blog/?title=<%=blog.url%>" href="/blog/<%=blog.url%>">
 
 
 <!-- 
@@ -135,7 +135,7 @@
                               <%=blog.category%>
                           </mark> -->
                           <!-- Blog Content-->
-                          <a href="/blog/<%=blog.url%>" >
+                          <!-- <a href="/blog/<%=blog.url%>" >
                               <div class="blgo-content content" style="background-image:url(/blogImage/<%=blog.coverImgName%>)">
                                   <span class="posted-date">
                                       <%=blog.uploadDate%>
@@ -144,15 +144,15 @@
                               </div>
                           </a>
                           <!-- Card Body -->
-                          <div class="card-body p-0" href="/blog/<%=blog.url%>">
+                          <!-- <div class="card-body p-0" href="/blog/<%=blog.url%>">
                               <h2 class="card-title h1 blog-title" href="/blog/<%=blog.url%>">
                                   <a href="/blog/<%=blog.url%>" style="color:#000000c7;"><%=blog.blogTitle%></a>
                               </h2>
 
 
-                              <a href="/blog/<%=blog.url%>" class="read-more double-line">read more</a>
+                              <a href="/blog/<%=blog.url%>" class="read-more double-line">read more</a> -->
                               <!-- Card Footer -->
-                          </div>
+                          <!-- </div>
                           <div class="card-footer border-0 p-0 bg-white">
                               <div class="share-icons">
                                   <span>Share:</span>
@@ -166,9 +166,24 @@
                           </div>
                       </a>
 
-                  </article>
-
-
+                  </article> -->
+ 
+                  
+                      <div class="col s12 m6 l4">
+                        <div class="card small">
+                          <div class="card-image">
+                            <img src="/blogImage/<%=blog.coverImgName%>">
+                            <span class="card-title"><%=blog.blogTitle%></span>
+                          </div>
+                          <div class="card-content">
+                            <p><%=blog.uploadDate%></p>
+                          </div>
+                          <div class="card-action">
+                            <a href="/blog/<%=blog.url%>">Read more........</a>
+                          </div>
+                        </div>
+                      </div>
+                    
 
                               <% }) %>
          
