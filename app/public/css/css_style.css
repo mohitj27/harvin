@@ -572,6 +572,8 @@ em {
 #main-nav {
   background-color: white;
   color: black;
+  position: relative;
+  top: 7px;
 }
 
 #nav-wrapper {

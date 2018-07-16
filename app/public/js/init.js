@@ -1,6 +1,9 @@
 (function ($) {
   $(function () {
-    $('#sign_up').on('click', function () { registerNowButtonClicked(event) });
+    $('#sign_up').on('click', function (e) {
+      e.preventDefault(); 
+      registerNowButtonClicked(event);
+    });
     $("nav")
       .find("a")
       .not(".button-collapse")
@@ -81,12 +84,13 @@ function tap() {
   }
 }
 
-function registerNowButtonClicked(event) {
-  event.preventDefault();
-  let first_name = $('#first_name').val().trim();
-  let last_name = $('#last_name').val().trim();
-  let email = $('#email').val().trim();
-  let phone = $('#phone').val().trim();
+function registerNowButtonClicked(e) {
+  e.preventDefault();
+  const first_name = $('#first_name').val().trim();
+  const last_name = $('#last_name').val().trim();
+  const email = $('#email').val().trim();
+  const phone = $('#phone').val().trim();
+  console.log(first_name, last_name, email, phone);
   $.ajax({
     method: "POST",
     url: "/register",
@@ -96,12 +100,8 @@ function registerNowButtonClicked(event) {
       phone: phone
     }
   })
-    .done(function (res) { console.log("done", res) })
-    // .success(function (response) {
-    //   console.log('sdfsfs', response)
-    //   alert(response)
-    // })
-    .fail(function () { console.log('an error has occured') });
+  .done((res) => alert("done ", res))
+  .fail(() => alert('an error has occured'));
 }
 
 function scrollDown() {

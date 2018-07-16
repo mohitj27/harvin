@@ -7,7 +7,9 @@ const router = express.Router()
 // TODO: student batch in db
 router.post('/', async (req, res, next) => {
     try {
-        res.send(registerController.registerUser(req.body));
+        const result = await registerController.registerUser(req.body);
+        console.log('\n\nres after coming from controller is: ', result, '\n\n')
+        res.sendStatus(200);
     } catch (err) {
         next(err || 'Internal Server Error')
     }
