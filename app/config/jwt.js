@@ -4,6 +4,12 @@ module.exports = {
     session: false,
   },
   getToken: function fromHeaderOrQuerystring(req, res) {
+    if (!req.headers.authorization) {
+      // let url =req.protocol + '://' + req.get('host') + req.originalUrl
+      // res.writeHead(301,{location:""})
+      return null;
+    }
+
     let length = req.headers.authorization.split(" ").length
     console.log("req.headers.authorization", req.headers.authorization)
     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {

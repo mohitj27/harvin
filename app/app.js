@@ -226,6 +226,8 @@ app.use("/", indexRoutes);
 // Error handling middleware function
 app.use(function (err, req, res, next) {
   if (err) {
+    let url = req.protocol + '://' + req.get('host') + req.originalUrl
+
     // error reportin
     console.log("error handling is working")
 
@@ -268,7 +270,10 @@ app.use(function (err, req, res, next) {
       (err.name && err.name.indexOf("AUTH") > -1)
     ) {
       req.flash("error", "Please Login");
-      return res.redirect("/HarvinQuiz/login");
+      if (url.includes('HarvinQuiz'))
+        return res.redirect("/HarvinQuiz/login");
+      if (url.includes('admin'))
+        return res.redirect("/admin/login");
     }
 
     if (flashUrl) {
