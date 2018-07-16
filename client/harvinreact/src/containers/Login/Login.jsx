@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loginAction, notifyClear } from '../../actions';
+import "./../../variables/styles/login.css";
 import {
   ErrorSnackbar,
   SuccessSnackbar,
@@ -39,7 +40,7 @@ class Login extends React.Component {
     if (
       !nextProps.isLoginInProgress &&
       nextProps.successMessage ===
-        'Successfully logged you in as ' + prevState.username
+      'Successfully logged you in as ' + prevState.username
     ) {
       return {
         isLoginInProgress: false,
@@ -85,11 +86,11 @@ class Login extends React.Component {
         {errorSnackbar}
         {loadingSnackbar}
         <Paper>
-          <Grid container className={classes.centerContainer}>
-            <Grid item xs={6} className={classes.centerContainer}>
-              <img src={logo} alt="harvin logo" style={{ height: '50px' }} />
+          <Grid container className={classes.centerContainer} style={{ padding: "3%" }}>
+            <Grid item xs={12} className={classes.centerContainer}>
+              <img src={logo} alt="harvin logo" style={{ width: "15%" }} />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Grid container>
                 <Grid item xs={12} className={classes.centerContainer}>
                   <input
