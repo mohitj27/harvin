@@ -75,10 +75,7 @@ router.get("/mdis", (req, res) => {
 
     const categoryName = 'mdis';
     Blog.find({ category: categoryName }).then();
-    // const perPage = 10;
-    // page is for which page to show (selected)
-    // let page = req.query.page || 0;
-    // page = page <= 1 ? 1 : page;
+    
   
     Blog.count({ publish: "on", category: categoryName })
       .then(

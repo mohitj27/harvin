@@ -26,6 +26,7 @@ const enquiryRoutes = require('./enquiry')
 const videoRoutes = require('./video')
 const studentAppRoutes = require('./studentApp')
 const resgisterRoutes = require('./register')
+const notFoundRoutes = require('./notfound')
 const clientRoutes = require('./client')
 
 
@@ -58,9 +59,8 @@ router.use('/studentApp/home', studentAppRoutes)
 router.use('/register', resgisterRoutes)
 router.use('/sitemap', sitemapRoutes)
 router.use('/HarvinQuiz', clientRoutes)
-
 router.use(vmsRoutes)
-
+router.use('*',notFoundRoutes)
 
 // if not route mentioned in url
 // router.get('*', function (req, res) {
