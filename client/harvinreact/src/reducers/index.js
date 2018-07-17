@@ -5,7 +5,8 @@ import notifyReducer from './notifyReducer';
 import testReducer from './testReducer'
 import loginReducer from './loginReducer'
 import batchReduces from './batchReducer'
-import questionsReducers from './questionsReducer' 
+import questionsReducers from './questionsReducer'
+import studentReducer from './studentReducer'
 
 export default combineReducers({
   notify: notifyReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   auth: loginReducer,
   batch: batchReduces,
   questions:questionsReducers,
+  student: studentReducer,
 });

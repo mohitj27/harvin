@@ -11,3 +11,4 @@ export {
   notifyClear
 } from "./notify_action";
 export { loginAction, signupAction } from "./login_action";
+export { loginSubmit } from "./studentAction";

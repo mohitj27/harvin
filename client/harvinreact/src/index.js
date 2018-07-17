@@ -18,6 +18,7 @@ import url from './config';
 import Login from './containers/Login/Login';
 import Public from './views/Public/Public';
 import Dashboard from './views/Dashboard/Dashboard.jsx';
+import StudentLogin from './views/StudentLogin/StudentLogin.jsx';
 
 const hist = createBrowserHistory();
 const composeEnhancers =
@@ -62,6 +63,7 @@ App = (
         <Route path="/HarvinQuiz/public" component={Public} />
         <Route path="/HarvinQuiz/login" component={Login} />
         <Route path="/HarvinQuiz/quiz/:id" component={Dashboard} />
+        <Route path="/HarvinQuiz/student/login" component={ StudentLogin } />
         <Route path="/HarvinQuiz/Logout" render={(props) => {
           removeAuthToken();
           return (
