@@ -81,14 +81,14 @@ class Login extends React.Component {
     }
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} style={{ display: "inlineBlock" }}>
         {successSnackbar}
         {errorSnackbar}
         {loadingSnackbar}
-        <Paper>
+        <img src={logo} alt="harvin logo" className="imageLogo" />
+        <Paper className="mainGrid">
           <Grid container className={classes.centerContainer} style={{ padding: "3%" }}>
             <Grid item xs={12} className={classes.centerContainer}>
-              <img src={logo} alt="harvin logo" style={{ width: "15%" }} />
             </Grid>
             <Grid item xs={12}>
               <Grid container>
