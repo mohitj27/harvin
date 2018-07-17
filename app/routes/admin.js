@@ -37,7 +37,8 @@ router.get(
 // Student signup -JWT
 router.post('/signup', async (req, res, next) => {
   res.locals.flashUrl = '/admin/signup'
-  // console.log('body', req.body)
+  console.log('body', req.body)
+
   const username = req.body.username || ''
   const password = req.body.password || ''
   const role = req.body.role
@@ -153,8 +154,8 @@ router.post('/login', function (req, res, next) {
     })
   } else {
     User.findOne({
-        username: username
-      },
+      username: username
+    },
       function (err, user) {
         if (err) next(err || 'Internal Server Error')
 
