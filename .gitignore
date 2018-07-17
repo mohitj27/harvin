@@ -7,4 +7,3 @@ npm*log*
 .env
 msg.txt
 binding.gyp
-src/
