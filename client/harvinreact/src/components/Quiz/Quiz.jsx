@@ -34,7 +34,9 @@ import HtmlToReact from 'html-to-react';
 import quizStyles from '../../variables/styles/quizStyles';
 import update from 'immutability-helper';
 import _ from 'lodash';
+import url from './../../config'
 const HtmlToReactParser = HtmlToReact.Parser;
+
 
 class Quiz extends Component {
   state = {
@@ -199,7 +201,7 @@ class Quiz extends Component {
     formData.append('testId', this.state.test._id);
     formData.append('answers', JSON.stringify(this.state.sectionAnswers));
     axios
-      .post(`http://localhost:3001/admin/answers/${this.state.test._id}`, formData)
+      .post(`${url}/admin/answers/${this.state.test._id}`, formData)
       .then(res => {
         alert(`You have scored ${res.data.marks}`);
         window.location.replace('/HarvinQuiz/activity');

@@ -11,6 +11,7 @@ import {
   DELETE_QUES_ERROR
 } from "./types";
 import { notifyLoading, notifyClear, notifyError, notifySuccess } from ".";
+import url from '../config'
 
 const createQues = () => ({ type: CREATE_QUES });
 const createQuesError = () => ({ type: CREATE_QUES_ERROR });
@@ -18,9 +19,9 @@ const createQuesSuccess = () => ({
   type: CREATE_QUES_SUCCESS
 });
 
-const deleteQues =()=>({type: DELETE_QUES});
-const deleteQuesError =()=>({type:DELETE_QUES_ERROR});
-const deleteQuesSuccess =(id)=>({type:DELETE_QUES_SUCCESS,id:id});
+const deleteQues = () => ({ type: DELETE_QUES });
+const deleteQuesError = () => ({ type: DELETE_QUES_ERROR });
+const deleteQuesSuccess = (id) => ({ type: DELETE_QUES_SUCCESS, id: id });
 
 const getAllQuestionsAction = () => ({ type: GET_ALL_QUESTIONS });
 const getAllQuestionError = () => ({ type: GET_ALL_QUESTIONS_ERROR });
@@ -33,7 +34,7 @@ export const getAllQuestions = () => async dispatch => {
   dispatch(getAllQuestionsAction());
   dispatch(notifyLoading());
   try {
-    const resp = await axios.get("http://localhost:3001/admin/questions");
+    const resp = await axios.get(url + "/admin/questions");
     dispatch(getAllQuestionSuccess(resp.data.questions));
     dispatch(notifySuccess(resp.data.msg))
   } catch (err) {
@@ -53,7 +54,7 @@ export const createQuesAction = ques => async dispatch => {
   dispatch(notifyLoading());
   try {
     const resp = await axios.post(
-      "http://localhost:3001/admin/questions",
+      url + "/admin/questions",
       ques
     );
     dispatch(createQuesSuccess());
@@ -71,23 +72,23 @@ export const createQuesAction = ques => async dispatch => {
   }
 };
 
-export const deleteQuesAction = ques => async dispatch =>{
+export const deleteQuesAction = ques => async dispatch => {
   dispatch(deleteQues());
   dispatch(notifyLoading());
   console.log(ques);
-  
+
   try {
     const resp = await axios.delete(
-      "http://localhost:3001/admin/questions/delete/"+ques
+      url + "/admin/questions/delete/" + ques
     );
     // console.log('got something in response .',resp);
-    
-    if(resp.data.success){
+
+    if (resp.data.success) {
       dispatch(deleteQuesSuccess(resp.data.question._id));
-    dispatch(notifySuccess("Question has been deleted successfully"));
-    }else {
+      dispatch(notifySuccess("Question has been deleted successfully"));
+    } else {
       const errMsg = resp.data & resp.data.msg ? resp.data.msg : "Error while getting your Questions!";
-      dispatch(notifyError(errMsg)); 
+      dispatch(notifyError(errMsg));
     }
   } catch (err) {
     dispatch(deleteQuesError());

@@ -5,6 +5,7 @@ import {
   GET_BATCH_LIST_ERROR
 } from './types';
 import * as notifyActions from './notify_action';
+import url from '../config'
 
 const getBatchList = () => ({
   type: GET_BATCH_LIST,
@@ -21,7 +22,7 @@ export const getBatches = () => async (dispatch) => {
   dispatch(getBatchList());
   dispatch(notifyActions.notifyLoading());
   try {
-    const res = await axios.get('http://localhost:3001/admin/batches');
+    const res = await axios.get(url + '/admin/batches');
     // console.log('res', JSON.stringify(res));
     dispatch(getBatchListSuccess(res.data.batches));
     dispatch(notifyActions.notifyClear());

@@ -15,6 +15,7 @@ import {
     notifyClear,
     notifyError,
 } from '../actions/notify_action';
+import url from '../config'
 
 const getTest = () => ({
     type: GET_TEST
@@ -42,7 +43,7 @@ export const fetchTestList = () => async dispatch => {
     dispatch(getTestList());
     dispatch(notifyLoading());
     try {
-        const res = await axios.get(`http://localhost:3001/admin/tests/`);
+        const res = await axios.get(`${url}/admin/tests/`);
         console.log('res derived', res.data);
 
         if (res.data.success) {
@@ -68,7 +69,7 @@ export const fetchTest = testid => async dispatch => {
     dispatch(getTest());
     dispatch(notifyLoading());
     try {
-        const res = await axios.get(`http://localhost:3001/admin/tests/${testid}`);
+        const res = await axios.get(`${url}/admin/tests/${testid}`);
         if (res.data.success) {
             dispatch(getTestSuccess(res.data.test));
         } else {
@@ -99,7 +100,7 @@ export const sendCreatedTest = test => async (dispatch) => {
     dispatch(sendCreatedTestAction());
     dispatch(notifyLoading());
     try {
-        const res = await axios.post(`http://localhost:3001/admin/tests/`, test);
+        const res = await axios.post(`${url}/admin/tests/`, test);
         console.log('kuchbhi', res.data);
         if (res.data.success) {
             dispatch(sendCreatedTestSuccess(res.data.msg));

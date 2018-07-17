@@ -9,6 +9,7 @@ import {
   SIGNUP_SUCCESS
 } from './types';
 import * as notifyActions from './notify_action';
+import url from '../config';
 
 const login = () => ({
   type: LOGIN,
@@ -39,7 +40,7 @@ export const loginAction = user => async (dispatch) => {
   dispatch(login());
   dispatch(notifyActions.notifyLoading());
   try {
-    const res = await axios.post('https://harvin.academy/student/loginWithPassword', user);
+    const res = await axios.post(url + '/student/loginWithPassword', user);
     console.log('res', JSON.stringify(res));
     if (res.data.success) {
       const token = res.data.token
@@ -67,7 +68,7 @@ export const signupAction = user => async (dispatch) => {
   dispatch(signup());
   dispatch(notifyActions.notifyLoading());
   try {
-    const res = await axios.post('http://localhost:3001/student/harvinSignup', user);
+    const res = await axios.post(url + '/student/harvinSignup', user);
     console.log('res', JSON.stringify(res));
 
     if (res.data.success) {
