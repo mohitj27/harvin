@@ -6,9 +6,9 @@ let BlogSchema = new Schema({
     trim: true,
     required: true
   },  
-  category: String,
+  category: Array,
   url: {
-    type: String,
+    type: Array,
     trim: true,
     required: true
   },

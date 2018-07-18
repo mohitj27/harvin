@@ -12,7 +12,9 @@ $(function () {
     $("#desc").val(desc)
     // console.log('desc',$("#desc").val());
     const formData = new FormData(e.target)
-
+          console.log(FormData.category);
+          let ans = $("#category").val();
+          console.log(ans);
     axios.post('/admin/blog', formData)
       .then(res => {
         if (res.status === 200) {
