@@ -11,11 +11,11 @@ const StudentLoginStyles = {
         '0%': {
             backgroundPosition: '0 0',
         },
-    
+
         '50%': {
             backgroundPosition: '100% 0',
         },
-    
+
         '100%': {
             backgroundPosition: '0 0'
         }
@@ -33,25 +33,23 @@ const StudentLoginStyles = {
     },
     '@keyframes NO': {
         'from, to': {
-          webkitTransform: 'translate3d(0, 0, 0)',
-          transform: 'translate3d(0, 0, 0)',
+            webkitTransform: 'translate3d(0, 0, 0)',
+            transform: 'translate3d(0, 0, 0)',
         },
-      
+
         '10%, 30%, 50%, 70%, 90%': {
-          webkitTransform: 'translate3d(-10px, 0, 0)',
-          transform: 'translate3d(-10px, 0, 0)',
+            webkitTransform: 'translate3d(-10px, 0, 0)',
+            transform: 'translate3d(-10px, 0, 0)',
         },
-      
+
         '20%, 40%, 60%, 80%': {
-          webkitTransform: 'translate3d(10px, 0, 0)',
-          transform: 'translate3d(10px, 0, 0)',
+            webkitTransform: 'translate3d(10px, 0, 0)',
+            transform: 'translate3d(10px, 0, 0)',
         },
-      },
+    },
     user: {
-        width: '90%',
         // maxWidth: '400px',
-        margin: 'auto',
-        padding: '5em',
+        margin: '0 px auto',
     },
     user__header: {
         textAlign: 'center',
@@ -76,8 +74,12 @@ const StudentLoginStyles = {
         fontFamily: 'Bungee Shade',
     },
     form: {
-        marginTop: '5em',
-        borderRadius: '6px',
+        margin: "0px auto",
+        marginLeft: "25vw",
+        marginTop: "19vh",
+        padding: " 4vw",
+        border: " 2px solid #2ab48b",
+        position: "relative",
         overflow: 'hidden',
         opacity: '0',
         transform: 'translate3d(0, 500px, 0)',
@@ -90,14 +92,14 @@ const StudentLoginStyles = {
     },
     form__input: {
         display: 'block',
-        width: '100%',
+        width: '40vw',
         padding: '15px',
         fontFamily: "Roboto",
         webkitAppearance: 'none',
         border: 0,
-        outline: 0,
+        outline: "1px solid #2ab48b",
         transition: '0.3s',
-        
+
         '& focus': {
             background: 'darken(#fff, 3%)',
         }
@@ -108,12 +110,11 @@ const StudentLoginStyles = {
         padding: '20px',
         fontFamily: "Roboto",
         webkitAppearance: 'none',
-        outline: 0,
         border: 0,
         color: 'white',
-        background: '#ABA194',
+        background: '#2ab48b',
         transition: '0.3s',
-        
+
         '& hover': {
             background: 'darken($color-primary, 5%)',
         }
@@ -122,10 +123,11 @@ const StudentLoginStyles = {
         width: '40%',
     },
     image: {
-        width: '90%'
+        width: '10vw',
+        marginLeft: "16vw"
     }
 
 };
-  
+
 export default StudentLoginStyles;
 
