@@ -30,7 +30,7 @@ function validateEmail(email) {
 
 export const loginSubmit = (user) => async (dispatch) => {
     try {
-        console.log(user, "user")
+        console.log("user is inside action: " , user, '\n\n')
         console.log((!validateEmail(user.email) || (user.password.lenght <= 2) || (user.username.lenght <= 2)), "validation check")
         if (!validateEmail(user.email) || (user.password.lenght <= 2) || (user.username.lenght <= 2)) {
            return dispatch(notifyActions.notifyError("Please fill valid details !!!"));

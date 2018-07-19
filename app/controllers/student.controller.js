@@ -33,7 +33,7 @@ let loginWithJWT=(student)=>{
               if (isMatch && !err) {
                 // Create token if the password matched and no error was thrown
                 const token = jsonwebtoken.sign(user.toObject(), jwtConfig.jwtSecret, {
-                  expiresIn: '24h' // 1 day
+                  expiresIn: '7d' // 7 day
                 })
 
                 resolve({
@@ -54,7 +54,7 @@ let loginWithJWT=(student)=>{
       }
 
   })
-}
+
 let signupWithJWT=(student)=>{
   
 }
