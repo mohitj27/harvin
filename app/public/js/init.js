@@ -91,6 +91,11 @@ function registerNowButtonClicked(e) {
   const email = $('#email').val().trim();
   const phone = $('#phone').val().trim();
   console.log(first_name, last_name, email, phone);
+  if(first_name.length<1 || last_name.length<1 || email.length<1 ||phone.length<10 ||phone.length>10){
+    Materialize.toast("Please check fields ..!",1500)
+    $(".toast").css("background-color",red);
+    return
+  }
   $.ajax({
     method: "POST",
     url: "/register",
@@ -100,8 +105,9 @@ function registerNowButtonClicked(e) {
       phone: phone
     }
   })
-  .done((res) => alert("done ", res))
-  .fail(() => alert('an error has occured'));
+  // .done((res) => alert("done ", res))
+  .done( Materialize.toast("Registered Successfully", 1500))
+  // .fail(Materialize.toast("Some error occurred", 1500));
 }
 
 function scrollDown() {

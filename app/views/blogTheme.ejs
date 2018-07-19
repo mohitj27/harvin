@@ -33,6 +33,7 @@
 <!-- Stylesheets -->
 <link rel="stylesheet" href="../dist/css/css_main.css">
 <link rel="stylesheet" href="../dist/css/css_blogTheme.css">
+<link rel="stylesheet" href="../dist/css/css_allBlogs.css">
 
 <!-- share buttons -->
 <div id="fb-root"></div>
@@ -69,11 +70,84 @@
 </script>
 
 <body>
-    <nav class="z-depth-0 no-pad">
+     <!-- NEW SECTION CHANGES FOR HERE -->
+  <main>
+        <div class="section " id="main-section">
+    
+    
+          <h4 id="topmost" class="center-align">Harvin Academy</h4>
+    
+          <nav class="z-depth-0 ">
+    
+            <div class="nav-wrapper" id="top-nav">
+              <a href="#" data-activates="mobile-demo" class="button-collapse">
+                <i class="material-icons" style="color:white;">menu</i>
+              </a>
+              <ul class="hide-on-small-only">
+                <li>
+                  <a href="/blog">Home</a>
+                </li>
+                <li>
+                  <a href="/blog/category/motivational">Motivational</a>
+                </li>
+                <li>
+                  <a href="/blog/category/about-harvin">College and Admissions</a>
+              s  </li>
+                <li>
+                  <a href="/blog/category/Tips-and-Tricks">Tips and Tricks</a>
+                </li>
+                
+                <li>
+                  <a href="/blog/category/mdis">MDIS</a>
+                </li>
+                <li>
+                  <a href="/blog/category/about-harvin">About Harvin</a>
+                </li>
+              </ul>
+              <input type="text right" placeholder="Search..." id="top-search" />
+              <ul class="side-nav" id="mobile-demo">
+                <li>
+                  <a href="sass.html">Sass</a>
+                </li>
+                <li>
+                  <a href="badges.html">Components</a>
+                </li>
+                <li>
+                  <a href="collapsible.html">Javascript</a>
+                </li>
+                <li>
+                  <a href="mobile.html">Mobile</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+    
+          <div class="" id="banner-container">
+    
+            <div class="carousel carousel-slider center" data-indicators="true" style="height:100% !important;">
+    
+              <div class="carousel-item  white-text" href="#one!">
+                <img onclick="window.location.href='./'" src="/images/banner-blog-4.jpg" class="banner-img" alt="" style="cursor:pointer">
+              </div>
+              <div class="carousel-item amber white-text" href="#two!">
+                <img onclick="window.location.href='./../mdis'" src="/images/banner-blog-1.jpg" class="banner-img" alt="" style="cursor:pointer">
+              </div>
+              <div class="carousel-item green white-text" href="#three!">
+                <img onclick="window.location.href='./'" src="/images/banner-blog-3.jpg" class="banner-img" alt="" style="cursor:pointer">
+    
+              </div>
+              <div class="carousel-item blue white-text" href="#four!">
+                <img onclick="window.location.href='./../results'" src="/images/banner-blog-2.jpg" class="banner-img" alt="" style="cursor:pointer">
+    
+              </div>
+            </div>
+    
+        </div>
+    <!-- <nav class="z-depth-0 no-pad">
         <div class="nav-wrapper ">
             <a href="#" class="brand-logo center">Harvin Academy</a>
         </div>
-    </nav>
+    </nav> -->
     <!-- NEW SECTION CHANGES FOR HERE -->
     <div class="">
 
@@ -201,3 +275,17 @@
     <script src="/js/blogTheme.js"></script>
     
     <% include partials/website_footer.ejs%>
+    <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
+    <script src="/js/init.js"></script>
+    <script src="/js/blogTheme.js"></script>
+    <script src="/js/materialize.js"></script>
+
+    <script>
+      function nextBanner() {
+        $('.carousel').carousel('next');
+
+        setTimeout(() => nextBanner(), 3000)
+      }
+      nextBanner()
+
+    </script>
