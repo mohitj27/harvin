@@ -93,7 +93,7 @@ function registerNowButtonClicked(e) {
   console.log(first_name, last_name, email, phone);
   if(first_name.length<1 || last_name.length<1 || email.length<1 ||phone.length<10 ||phone.length>10){
     Materialize.toast("Please check fields ..!",1500)
-    $(".toast").css("background-color",red);
+    $(".toast").css("background-color","red");
     return
   }
   $.ajax({
