@@ -1,6 +1,8 @@
+
 input{
     width: 60%;
     box-shadow: 2px #13b38b;
+    outline: 2px #13b38b;
 }
 input[type=text]{
     font-size:20px;
@@ -9,10 +11,10 @@ input[type=password]{
     font-size:20px;
 }
 .imageLogo{
-    /* margin: 0px auto; */
-    width:10vw;
-    position: absolute;
-    top:10%
+    margin-left: 40%;
+    width:20%;
+    /* position: absolute; */
+    /* top:10% */
 }
 .mainGrid{
     padding: 3%;

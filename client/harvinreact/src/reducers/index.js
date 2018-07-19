@@ -6,13 +6,13 @@ import testReducer from './testReducer'
 import loginReducer from './loginReducer'
 import batchReduces from './batchReducer'
 import questionsReducers from './questionsReducer'
-import studentReducer from './studentReducer'
+import applicantReducer from './applicantReducer'
 
 export default combineReducers({
   notify: notifyReducer,
   test: testReducer,
   auth: loginReducer,
   batch: batchReduces,
-  questions:questionsReducers,
-  student: studentReducer,
+  questions: questionsReducers,
+  applicant: applicantReducer,
 });

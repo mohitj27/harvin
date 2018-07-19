@@ -85,8 +85,8 @@ class Login extends React.Component {
         {successSnackbar}
         {errorSnackbar}
         {loadingSnackbar}
-        <img src={logo} alt="harvin logo" className="imageLogo" />
         <Paper className="mainGrid">
+          <img src={logo} alt="harvin logo" className="imageLogo" />
           <Grid container className={classes.centerContainer} style={{ padding: "3%" }}>
             <Grid item xs={12} className={classes.centerContainer}>
             </Grid>

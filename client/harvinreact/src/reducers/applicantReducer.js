@@ -1,30 +1,32 @@
 import update from 'immutability-helper';
 import * as actionTypes from '../actions/types';
 
-const  initialState = {
+const initialState = {
     usernameVal: '',
     emailVal: '',
     passVal: '',
+    error: '',
+    isAuthenticated: false
 };
 
 
 const studentLoginSuccess = (state, action) => {
     return update(state, {
         isAuthenticated: {
-          $set: true,
+            $set: true,
         },
         currentStudent: {
-          $set: action.currentStudent
+            $set: action.currentStudent
         }
-      });
+    });
 }
 
 const studentLoginError = (state, action) =>
     update(state, {
-    isAuthenticated: {
-        $set: false,
-    },
-});
+        isAuthenticated: {
+            $set: false,
+        },
+    });
 
 
 const reducer = (state = initialState, action) => {
@@ -33,9 +35,9 @@ const reducer = (state = initialState, action) => {
             return studentLoginSuccess(state, action);
         case actionTypes.STUDENT_LOGIN_ERROR:
             return studentLoginError(state, action);
-      default:
-        return state;
+        default:
+            return state;
     }
-  };
-  
-  export default reducer;
+};
+
+export default reducer;

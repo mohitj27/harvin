@@ -1,0 +1,75 @@
+.container{
+    width: 80%;
+    margin: 0px auto;
+    /* background-color: aliceblue */
+}
+.bannerImage{
+    width: 100vw;
+    height: 60vh;
+}
+.center{
+    /* width: 100%; */
+    margin: 0px auto;
+    /* display: inline-block; */
+}
+
+.gridMain{
+    display: grid;
+  height: 100px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 100px;
+}
+button{
+    margin: 2%;
+    background-color: white;
+    width: 50%;
+    height: 35%;
+    font-size: 14px;
+    border-radius: 20px;
+    border-color: #29b38a;
+}
+td,th{
+    width:30%;
+    border-left:2px solid #29b38a;
+}
+td{
+    border:none;
+}
+table{
+    border-collapse: collapse;
+}
+tr{
+    border: 2px solid #29b38a;
+    width:95%;
+}
+.mainHeadRow{
+    border-top: 2px solid #29b38a;
+    border-bottom: 2px solid #29b38a;
+    border-radius: 20px;
+    border-bottom-right-radius: 20px;
+    width: 100%;
+}
+.tableHead{
+    border-left: 2px solid #29b38a ;
+}
+td{
+    text-align: center;
+}
+.divButton {
+    /* float: left; */
+    /* display: inline-block */
+}
+
+.leftBorder{
+    border-radius: 10px 0 0 10px;
+    -moz-border-radius: 10px 0 0 10px;
+}
+.rightBorder{
+    border-radius: 10px 0 0 10px;
+    -moz-border-radius: 10px 0 0 10px;
+}
+
+table tr:last-child td:first-child {
+    /* border:2px solid #29b38a;
+    border-bottom-left-radius: 10px; */
+}
