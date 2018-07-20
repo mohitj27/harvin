@@ -1,6 +1,7 @@
 //TODO SWATI REMOVE CARDS, LEFT ALIGN DETAIL AND REMOVE ACTIVATOR
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import Radium, { StyleRoot } from 'radium'; // Radium for using media Queries check: (https://formidable.com/open-source/radium/)
 import {
   withStyles,
   Button,
@@ -334,16 +335,18 @@ class Quiz extends Component {
     this.setState({ currentQuestion: currentQuestionState });
   };
 
+
+
   getTestTitle = (testName, classes) => {
-    const min = Math.floor(this.state.time / 60);
-    const sec = this.state.time % 60;
+    const min = Math.floor(this.state.time / 60); //time remaning in minutes
+    const sec = this.state.time % 60;  //time remaning in seconds
     return (
       <div className={classes.testHeader}>
-        <Typography className={classes.testName} variant="display2">
+        <Typography className={classes.testName} variant="display2" >
           {testName}
         </Typography>
-        <div className={classes.testControls}>
-          <Typography variant="display2" className={classes.clock}>
+        <div className={classes.testControls} >
+          <Typography variant="display2" className={classes.clock} >
             {min}:{sec}
           </Typography>
           <Button
@@ -361,6 +364,7 @@ class Quiz extends Component {
       </div>
     );
   };
+
 
   handleArrowPrev = e => {
     let currentIndex = _.findIndex(this.state.questions, question => {
@@ -462,45 +466,47 @@ class Quiz extends Component {
       );
 
     return (
-      <Fragment>
-        {errorSnackbar}
-        {successSnackbar}
-        {processingSnackbar}
-        {finishTestSnackBar}
-        <QuizNavbar />
-        {this.getTestTitle(this.props.test.name, classes)}
-        <Grid container="container" direction="row" justify="flex-end" className={classes.containerNoSpacing}>
-          <ItemGrid xs={12} sm={6} md={6}>
-            <div classNames={classes.questionContentCard}>
-              {this.getCardContent(classes)}
-            </div>
-          </ItemGrid>
-          <ItemGrid style={{ padding: '15px !important' }} xs={12} sm={3} md={3}>
-            <Card classNames={classes.navigationContentCard}>
-              {this.getSectionNavigationContent(classes)}
-            </Card>
-            <Button
-              variant="fab"
-              color="primary"
-              name="previous"
-              onClick={this.handleArrowPrev}
-              style={{ margin: 16, backgroundColor: '#13b38b', }}
-            >
-              <KeyboardArrowLeft />
-            </Button>
-            <Button
-              variant="fab"
-              color="primary"
-              name="next"
-              onClick={this.handleArrowNext}
-              style={{ margin: 16, float: 'right', backgroundColor: '#13b38b', }}
-            >
-              <KeyboardArrowRight />
-            </Button>
+      <StyleRoot>
+        <Fragment>
+          {errorSnackbar}
+          {successSnackbar}
+          {processingSnackbar}
+          {finishTestSnackBar}
+          <QuizNavbar />
+          {this.getTestTitle(this.props.test.name, classes)}
+          <Grid container="container" direction="row" justify="center" className={classes.containerNoSpacing}>
+            <ItemGrid xs={12} sm={6} md={6}>
+              <div classNames={classes.questionContentCard}>
+                {this.getCardContent(classes)}
+              </div>
+            </ItemGrid>
+            <ItemGrid style={{ padding: '15px !important' }} xs={12} sm={3} md={3}>
+              <Card classNames={classes.navigationContentCard}>
+                {this.getSectionNavigationContent(classes)}
+              </Card>
+              <Button
+                variant="fab"
+                color="primary"
+                name="previous"
+                onClick={this.handleArrowPrev}
+                style={{ margin: 16, backgroundColor: '#13b38b', }}
+              >
+                <KeyboardArrowLeft />
+              </Button>
+              <Button
+                variant="fab"
+                color="primary"
+                name="next"
+                onClick={this.handleArrowNext}
+                style={{ margin: 16, float: 'right', backgroundColor: '#13b38b', }}
+              >
+                <KeyboardArrowRight />
+              </Button>
 
-          </ItemGrid>
-        </Grid>
-      </Fragment>
+            </ItemGrid>
+          </Grid>
+        </Fragment>
+      </StyleRoot>
     );
   }
 }
@@ -516,6 +522,7 @@ function mapDispatchToProps(dispatch) {
   return;
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(quizStyles)(Quiz)
+export default Radium(connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(quizStyles)(Quiz))
 );
+//Radium Documentation (https://formidable.com/open-source/radium/)
