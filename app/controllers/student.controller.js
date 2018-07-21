@@ -53,11 +53,11 @@ let loginWithJWT=(student)=>{
         })
       }
 
-  })
+  }) }
 
 let signupWithJWT=(student)=>{
   
 }
 module.exports={
   loginWithJWT
-}
+} 
