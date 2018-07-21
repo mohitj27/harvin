@@ -348,7 +348,8 @@ router.get("/blog/category/:categoryName", (req, res, next) => {
           res.render("blogTheme", {
             foundBlogs,
             count,
-            page
+            page,
+            categoryName
           })
         )
         .catch(err => next(err || new Error("Internal Server Error")));

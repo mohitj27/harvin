@@ -1,0 +1,464 @@
+<head>
+    <title>Harvin Academy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="google-site-verification" content="eSPtYedDuFnn9GWxmT-OZJtAugNRnUJwuZ65y7JDPfE" />
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="../dist/css/css_materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="../dist/css/css_style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="../dist/css/css_materialize-social.css" type="text/css" rel="stylesheet"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20="
+        crossorigin="anonymous" />
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97403760-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-97403760-2');
+    </script>
+
+    <style>#main-section {
+        /* padding: 0 10%; */
+      }
+      
+      @media only screen and (max-width: 600px) {
+      
+      }
+      
+      body{
+        /* background-color: red; */
+      }
+      
+      nav ul a,
+      nav .brand-logo {
+        color: white;
+      }
+      
+      nav ul a,
+      nav .brand-logo {
+        font-weight: bold;
+        font-size: small;
+      }
+      
+      nav ul a:hover {
+        color: rgba(255, 255, 255, 0.27);
+      }
+      .row .container {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+      }
+      #top-search {
+        background: #5ee0c0;
+        width: 20%;
+        height: 100%;
+        color: white;
+        border: none;
+        float: right;
+        padding-left: 20px;
+      }
+      .nav-wrapper {
+        color: white;
+        background-color: #13b38b;
+      }
+      #top-search[type="text"] {
+        background-color: white;
+        background-image: url("searchicon.png");
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding-left: 40px;
+      }
+      
+      #top-search::placeholder {
+        color: white;
+      }
+      #main-ruler {
+        background-color: #5ee0c0;
+        height: 4px;
+        border: none;
+      }
+      
+      #banner-container {
+        height: 60%;
+        border: #5ee0c0 5px solid;
+        margin: 24px 0;
+      }
+      .dark-font {
+        color: #565656;
+        font-weight: 500;
+        margin: 0;
+      }
+      #news-letter-card {
+        background-color: #f7f7f7;
+        margin: 0 auto;
+        padding: 20px 40px;
+      }
+      .carousel {
+        height: 100% !important;
+      }
+      
+      .pagination-wrapper {
+        display: flex;
+        justify-content: center;
+      }
+      
+      .grid {
+        display: grid;
+        /* grid-column-gap: 112px; */
+        grid-template-columns: 55% auto 37.5%;
+      }
+      .popular-section-col {
+        grid-column: 1/2;
+      }
+      .news-letter-col {
+        grid-column: 3/4;
+        align-self: center;
+      }
+      .latest-post-grid {
+        display: grid;
+        grid-template-columns: 40% auto 55%;
+        margin: 20px auto;
+        grid-template-rows: 33% 33% 33%;
+      }
+      .latest-post-info {
+        grid-column: 3/4;
+      }
+      .latest-post-image {
+        grid-column: 1/2;
+        max-height: 400px;
+        min-height: 250px;
+      }
+      .popular-post-grid {
+        display: grid;
+        grid-template-columns: 40% auto 55%;
+        margin: 20px auto;
+      }
+      .popular-post-info {
+        grid-column: 3/4;
+      }
+      .popular-post-image {
+        grid-column: 1/2;
+      }
+      main {
+        padding: 0 5%;
+      }
+      
+      .banner-img{
+        height: inherit;
+      }
+      
+      
+      iframe[id^="twitter-widget-"]{
+        margin-bottom: -5px;
+      }
+      
+      .dark-font{
+        font-size: 1.3em;
+      }
+      
+      .latest-post-image{
+        min-height: 150px;
+      }
+      
+      @media all and (min-width: 1366px) { 
+        .latest-post-grid {
+          grid-template-columns: 27% auto 70%;
+        }
+      
+        iframe[id^="twitter-widget-"]{
+          margin-bottom: 0px;
+        }
+      }
+      
+      @media all and (max-width: 479px) { 
+        .grid{
+          display: flex;
+          flex-direction: column
+        }
+      
+      
+        #news-letter-card{
+          padding: 20px;
+        }
+      
+        .news-letter-col{
+          margin: 20px;
+          align-self: unset;
+        }
+      }</style>
+
+</head>
+
+
+
+<!-- share buttons -->
+<div id="fb-root"></div>
+<script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src =
+            'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=1054614874673150&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<!-- twitter scripts -->
+<script>
+    window.twttr = (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function (f) {
+            t._e.push(f);
+        };
+
+        return t;
+    }(document, "script", "twitter-wjs"));
+</script>
+
+<body>
+     <!-- NEW SECTION CHANGES FOR HERE -->
+  <main>
+        <div class="section " id="main-section">
+    
+    
+          <h4 id="topmost" class="center-align">Harvin Academy</h4>
+    
+          <nav class="z-depth-0 ">
+    
+            <div class="nav-wrapper" id="top-nav">
+              <a href="#" data-activates="mobile-demo" class="button-collapse">
+                <i class="material-icons" style="color:white;">menu</i>
+              </a>
+              <ul class="hide-on-small-only">
+                <li>
+                  <a href="/blog">Home</a>
+                </li>
+                <li>
+                  <a href="/blog/category/motivational">Motivational</a>
+                </li>
+                <li>
+                  <a href="/blog/category/about-harvin">College and Admissions</a>
+              s  </li>
+                <li>
+                  <a href="/blog/category/Tips-and-Tricks">Tips and Tricks</a>
+                </li>
+                
+                <li>
+                  <a href="/blog/category/mdis">MDIS</a>
+                </li>
+                <li>
+                  <a href="/blog/category/about-harvin">About Harvin</a>
+                </li>
+              </ul>
+              <input type="text right" placeholder="Search..." id="top-search" />
+              <ul class="side-nav" id="mobile-demo">
+                <li>
+                  <a href="sass.html">Sass</a>
+                </li>
+                <li>
+                  <a href="badges.html">Components</a>
+                </li>
+                <li>
+                  <a href="collapsible.html">Javascript</a>
+                </li>
+                <li>
+                  <a href="mobile.html">Mobile</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+    
+          
+    <!-- <nav class="z-depth-0 no-pad">
+        <div class="nav-wrapper ">
+            <a href="#" class="brand-logo center">Harvin Academy</a>
+        </div>
+    </nav> -->
+    <!-- NEW SECTION CHANGES FOR HERE -->
+    <div class="">
+
+    </div>
+    <!-- NEW SECTION CHANGES TILL HERE -->
+
+
+    <%if (foundBlogs.length > 0) { %>
+      
+      <% for(var j =0;j<5;j++) { %>
+        <div class="container ">
+          <div class="row"> 
+              
+              <% foundBlogs.forEach((blog, i) => { %>
+                
+
+                
+                    <div class="col s12 m6 l4">
+                      <div class="card small">
+                        <div class="card-image">
+                          <img src="/blogImage/<%=blog.coverImgName%>">
+                          <span class="card-title"><%=blog.blogTitle%></span>
+                        </div>
+                        <div class="card-content">
+                          <p><%=blog.uploadDate%></p>
+                        </div>
+                        <div class="card-action">
+                          <a href="/blog/<%=blog.url%>">Read more........</a>
+                        </div>
+                      </div>
+                    </div>
+                  
+
+                            <% }) %>
+       
+        </div>  </div>       
+        <% } %>
+        <% } %>
+
+   
+
+    <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter bigbang">
+            <div class="gallery-curve-wrapper">
+              <a class="gallery-cover gray">
+                <img class="responsive-img" src="img/bigbang1.png" alt="placeholder">
+              </a>
+              <div class="gallery-header">
+                <span>Gallery Link</span>
+              </div>
+              <div class="gallery-body">
+                <div class="title-wrapper">
+                  <h3>Grapefruit</h3>
+                  <span class="price">$14.99</span>
+                </div>
+              </div>
+              <div class="gallery-action">
+                <a class="btn-floating btn-large waves-effect waves-light">
+                  <i class="material-icons">favorite
+                </i></a>
+              </div>
+            </div>
+          </div>
+    <div class="middle-content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- ====================== Main .blog-area ====================== -->
+                <div class="col-md-3"></div>
+                <main class="col-md-6 blog-area">
+                    <!-- Single Blog -->
+                    <% foundBlogs.forEach((blog, i) => { %>
+                            <article class="card single-blog text-center mt-5 mb-5 pt-0 pb-3" href="/blog/?title=<%=blog.url%>" href="/blog/<%=blog.url%>">
+
+
+
+                                    <mark class="catagory">
+                                        <%=blog.category%>
+                                    </mark>
+                                    <!-- Blog Content-->
+                                    <a href="/blog/<%=blog.url%>" >
+                                        <div class="blgo-content content" style="background-image:url(/blogImage/<%=blog.coverImgName%>)">
+                                            <span class="posted-date">
+                                                <%=blog.uploadDate%>
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <!-- Card Body -->
+                                    <div class="card-body p-0" href="/blog/<%=blog.url%>">
+                                        <h2 class="card-title h1 blog-title" href="/blog/<%=blog.url%>">
+                                            <a href="/blog/<%=blog.url%>" style="color:#000000c7;"><%=blog.blogTitle%></a>
+                                        </h2>
+
+
+                                        <a href="/blog/<%=blog.url%>" class="read-more double-line">read more</a>
+                                        <!-- Card Footer -->
+                                    </div>
+                                    <div class="card-footer border-0 p-0 bg-white">
+                                        <div class="share-icons">
+                                            <span>Share:</span>
+                                            <a class="fb-share-button" data-href="https://harvin.academy/blog/<%=blog.url%>" data-layout="button_count">
+
+                                            </a>
+                                            <a class="twitter-share-button" href="https://twitter.com/intent/tweet">
+                                                Tweet</a>
+
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </article>
+
+
+
+                                        <% }) %>
+                                            <!-- //Single Blog -->
+                                            <!-- //Pagination -->
+
+                                            <div class="pagination-wrapper">
+                                                <ul class="pagination">
+                                                    <li class="waves-effect">
+                                                        <a href="#!" id="prev-button" class="prev-button" onClick="prevPage()">
+                                                            <i class="material-icons">chevron_left</i>
+                                                        </a>
+                                                    </li>
+                                                    <%for(var i = 1; i <= count; i++){%>
+                                                        <li class="waves-effect">
+                                                                <a href="/blog?page=<%=i%>" class="prev-button
+                                                                <%if(page==i){%>
+                                                                    active-chip
+                                                                    <%}%>
+                                                                ">
+                                                                    <%=i%>
+                                                                </a>
+                                                        </li>
+                                                    <%}%>
+                                                    <li class="waves-effect">
+                                                        <a href="#1>" id="next-button" class="next-button" onClick="nextPage()">
+                                                            <i class="material-icons">chevron_right</i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                           
+                </main>
+                
+            </div>
+        </div>
+    </div>
+    <!-- =========================== //Middle Content =========================== -->
+    <!-- =========================== //Footer =========================== -->
+    <!-- =========================== //Footer =========================== -->
+    <!-- #preloader -->
+    <!-- <div id="preloader"></div> -->
+    <!-- ======================= Scripts ======================= -->
+    <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
+    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/assets_js_main.js"></script>
+    <script src="/js/blogTheme.js"></script>
+    
+    <% include partials/website_footer.ejs%>
+    <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
+    <script src="/js/init.js"></script>
+    <script src="/js/blogTheme.js"></script>
+    <script src="/js/materialize.js"></script>
+
+    
