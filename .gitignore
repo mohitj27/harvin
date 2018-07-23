@@ -7,3 +7,4 @@ npm*log*
 .env
 msg.txt
 binding.gyp
+client/harvinreact/src/config/index.js

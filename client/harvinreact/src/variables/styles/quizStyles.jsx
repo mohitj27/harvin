@@ -30,12 +30,31 @@ const quizStyles = {
       textAlign: 'center',
       flexGrow: '0.8',
       margin: 'auto 0',
+      fontSize: '1.5rem'
     },
     clock: {
       flexGrow: '0.5',
       margin: 'auto',
       textAlign: 'center',
+      fontSize: '1.5rem'
     },
+    //media queries can be used with the help of radium 
+    '@media (min-width: 768px)': {
+      testName: {
+        textAlign: 'center',
+        flexGrow: '0.8',
+        margin: 'auto 0',
+        fontSize: '3rem'
+      },
+
+      clock: {
+        flexGrow: '0.5',
+        margin: 'auto',
+        textAlign: 'center',
+        fontSize: '3rem'
+      },
+    },
+
     ExpansionPanelDetails: {
       padding: '24px',
     },
@@ -53,7 +72,7 @@ const quizStyles = {
     },
     containerNoSpacing: {
       margin: '-16px !important',
-      marginTop: '20px',
+      marginTop: '40px', //<--this one
       paddingTop: '20px',
     },
     markForLater: {
