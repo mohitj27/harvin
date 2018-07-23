@@ -27,6 +27,7 @@ function requrestMDIScallback(e) {
   // const form = $("#form")
   const name = $("#full_name").val()
   const contact = $("#contact").val()
+  console.log(contact);
   const email = $("#email").val()
   if (name.length < 1 || contact.length < 1 || email.length < 1 || !isEmail(email)) {
     Materialize.toast("Please check fields ..!", 1500)
@@ -34,9 +35,12 @@ function requrestMDIScallback(e) {
     return
   }
 
-  $.post('/admin/enquiries/', { name: name, contact: contact, emailId: email, 'centerName': 'mdis' })
+  $.post('/admin/enquiries/', { name: name, phone: contact, emailId: email, 'centerName': 'mdis' })
     .done(function (data) {
       console.log("form submittedß")
+      // console.log(contact)
+      //  console.log('name'+name);
+      console.log($("#contact").val());
       Materialize.toast("Will back to you !!", 1500)
       $(".toast").css("background-color", "#229976");
       $("#full_name").val('')
