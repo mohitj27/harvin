@@ -37,6 +37,7 @@ router.delete('/:enquiryId', middleware.isLoggedIn, async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
+  console.log('req body - ',req.body)
   const date = Date.now()
   console.log("an enquiry has come");
   try {
