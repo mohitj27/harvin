@@ -82,7 +82,48 @@
       .page-footer{
           background-color: #13b38b
       }
+      nav{
+        background-color: #13b38b
+      }
+      .nav-wrapper {
+  color: white;
+  background-color: #13b38b;
+}
+#top-search[type="text"] {
+  background-color: white;
+  background-image: url("searchicon.png");
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding-left: 40px;
+}
+#top-search::placeholder {
+  color: white;
+}
 
+a{
+  text-decoration: none;
+}
+a:link {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+a:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+        
+      #top-search {
+  background: #5ee0c0;
+  width: 20%;
+  height: 100%;
+  color: white;
+  border: none;
+  float: right;
+  padding-left: 20px;
+}
     
         </style>
 
@@ -122,8 +163,35 @@
 
 
 <main>
-
-
+  <div class="container">
+  <nav class = "z-depth-0">
+    <div class="nav-wrapper">
+      <!-- <a href="#" class="brand-logo right">Logo</a> -->
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li>
+          <a href="/blog">Home</a>
+        </li>
+        <li>
+          <a href="/blog/category/motivational">Motivational</a>
+        </li>
+        <li>
+          <a href="/blog/category/about-harvin">College and Admissions</a>
+        </li>
+        <li>
+          <a href="/blog/category/Tips-and-Tricks">Tips and Tricks</a>
+        </li>
+        
+        <li>
+          <a href="/blog/category/mdis">MDIS</a>
+        </li>
+        <li>
+          <a href="/blog/category/about-harvin">About Harvin</a>
+        </li>
+      </ul>
+      <input type="text right" placeholder="Search..."  id="top-search" />
+    </div>
+  </nav>
+   
   <h1><%= categoryName %></h1>
   
 <!-- <hr class="type_10" size ="2">  -->
@@ -204,7 +272,7 @@
 
 
 
-
+  </div>
     </main>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
