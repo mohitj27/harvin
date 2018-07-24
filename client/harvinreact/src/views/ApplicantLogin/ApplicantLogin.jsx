@@ -45,14 +45,10 @@ class ApplicantLogin extends Component {
     }
 
     // Handles Form Submit
-    handleSubmit = (e, name, email, pass) => {
+    handleSubmit = (e, email, pass) => {
         e.preventDefault();
-        // console.log('username: ', name, 'email: ', email, 'password: ', pass, '\n')
-        // if (name === "" || email === "" || pass === "") {
-        // alert("please fill in the fields!");
-        // }
         // Fire an action
-        this.props.loginSubmit({ username: name, email: email, password: pass });
+        this.props.loginSubmit({ email: email, password: pass });
 
     }
 
@@ -100,19 +96,19 @@ class ApplicantLogin extends Component {
                             <div className={classes.floatLeft} style={{ float: "left" }}>
                                 <img className={classes.image} src={require("../../assets/img/harvinLogo.png")} alt="Harvin Logo" />
                             </div>
-                            <div className={classes.form__group}>
+                            {/* <div className={classes.form__group}>
                                 <input type="text" placeholder="Username" value={this.state.usernameVal} onChange={(e) => this.handleChange(e, "usernameVal")} className={classes.form__input} required />
-                            </div>
+                            </div> */}
 
                             <div className={classes.form__group}>
-                                <input type="email" placeholder="Email" value={this.state.emailVal} onChange={(e) => this.handleChange(e, "emailVal")} className={classes.form__input} style={{ fontSize: "20px" }} required />
+                                <input type="username" placeholder="Email" value={this.state.emailVal} onChange={(e) => this.handleChange(e, "emailVal")} className={classes.form__input} style={{ fontSize: "20px" }} required />
                             </div>
 
                             <div className={classes.form__group}>
                                 <input type="password" placeholder="Password" value={this.state.passVal} onChange={(e) => this.handleChange(e, "passVal")} className={classes.form__input} required />
                             </div>
 
-                            <button className={classes.btn} onClick={(e) => this.handleSubmit(e, this.state.usernameVal, this.state.emailVal, this.state.passVal)} type="button" style={{ fontSize: "20px" }} >Sign in</button>
+                            <button className={classes.btn} onClick={(e) => this.handleSubmit(e, this.state.emailVal, this.state.passVal)} type="button" style={{ fontSize: "20px" }} >Sign in</button>
                         </form>
                     </div>
 
