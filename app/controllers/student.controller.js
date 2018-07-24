@@ -1,24 +1,48 @@
 const promise=require('bluebird'),
-        User=require('../models/User'),
+        HarvinQuizStudent=require('../models/csvTest'),
         jsonwebtoken=require('jsonwebtoken'),
         bcrypt=require('bcrypt'),
         jwtConfig = require('../config/jwt')
+
+
+let registerHarvinStudent = (User) => {
+    console.log('Inside controller, req.body received is: ', User, '\n\n' );
+    // UserReg = new Register(User)
+    HarvinQuizStudent.findOne({ email: User.email }).then((user) => {
+        if (user) {
+            console.log("\nA harvinStudent with this email already exists :(\n")
+            return new Promise ((resolve, reject) => {
+                reject("email address has registered already");
+            });
+        }
+        else {
+            console.log("\nProcessing...\n");
+            const UserReg = new HarvinQuizStudent(User);
+
+            return UserReg.save((err, user) => {
+                if (err) return err;
+                console.log("\nharvin student registered, user: ", user, '\n\n')
+            });
+        }
+    });
+}
 
 
 
 let loginWithJWT=(student)=>{
   return new promise((resolve,reject)=>{
 
-      let username = student.username
-      let password = student.password
-      if (!username || !password) {
+      let email = student.email;
+      let password = student.password;
+      console.log("email is: ", email, "password is: ", password, '\n')
+      if (!email || !password) {
         return reject({
           success: false,
-          msg: 'Please enter username and password.'
+          msg: 'Please enter email and password.'
         })
       } else {
-        User.findOne({
-          username: username
+        HarvinQuizStudent.findOne({
+          email: email
         }, function (err, user) {
           if (err) next(err || 'Internal Server Error')
 
@@ -38,14 +62,14 @@ let loginWithJWT=(student)=>{
 
                 resolve({
                   success: true,
-                  msg: 'Successfully logged you in as ' + username,
+                  msg: 'Successfully logged you in as ' + email,
                   token: token,
                   user
                 })
               } else {
                 reject({
                   success: false,
-                  msg: 'Authentication failed. Username or Password did not match.'
+                  msg: 'Authentication failed. email or Password did not match.'
                 })
               }
             })
@@ -59,5 +83,6 @@ let signupWithJWT=(student)=>{
   
 }
 module.exports={
-  loginWithJWT
+  loginWithJWT,
+  registerHarvinStudent
 } 

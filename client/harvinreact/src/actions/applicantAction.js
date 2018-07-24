@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import url from '../config/index.js';
 
 import {
     STUDENT_LOGIN_SUCCESS,
@@ -31,16 +32,17 @@ function validateEmail(email) {
 export const loginSubmit = (user) => async (dispatch) => {
     try {
         console.log("user is inside action: " , user, '\n\n')
-        console.log((!validateEmail(user.email) || (user.password.lenght <= 2) || (user.username.lenght <= 2)), "validation check")
-        if (!validateEmail(user.email) || (user.password.lenght <= 2) || (user.username.lenght <= 2)) {
-           return dispatch(notifyActions.notifyError("Please fill valid details !!!"));
-        }
-        const res = await axios.post("http://localhost:3001/HarvinQuiz/student/login", user);
-        // console.log("\nresponse from student login: ", res, '\n');
+        // console.log((!validateEmail(user.email) || (user.password.lenght <= 2) || (user.username.lenght <= 2)), "validation check")
+        // if (!validateEmail(user.email) || (user.password.lenght <= 2) || (user.password.lenght <= 2)) {
+        //    return dispatch(notifyActions.notifyError("Please fill valid details !!!"));
+        // }
+        console.log("url is :  ", url, '\n\n')
+        const res = await axios.post(`${url}/HarvinQuiz/applicant/login`, user);
+        console.log("\nresponse from student login: ", res, '\n');
         if (res.data.success) {
             const token = res.data.token;
             saveToken(token);
-            console.log('\ntoken is: ', token, '\n');
+            console.log('\n\nstudentToken is: ', token, '\n\n');
             const decodedToken = jwt.decode(token);
             dispatch(studentLoginSuccess(decodedToken));
             // dispatch(notifyActions.notifySuccess(res.data.msg));
