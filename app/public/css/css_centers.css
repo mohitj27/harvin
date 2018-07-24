@@ -10,6 +10,11 @@
   /* max-height: 15%; */
   /* min-height:100% */
 }
+#j-chip:hover,
+#p-chip:hover,
+#m-chip:hover {
+  cursor: pointer;
+}
 .overview{
   line-height: 2.0;
   padding-top: 10px;

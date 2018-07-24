@@ -181,7 +181,7 @@ best minds.`
 
 let sideimagesrcJ = [
   '/images/1J5A2894.JPG',
-  '/images/1J5A2945.JPG',
+  '/images/1J5A2905.JPG',
   '/images/1J5A2988.JPG',
   '/images/1J5A3009.JPG'
 ]
