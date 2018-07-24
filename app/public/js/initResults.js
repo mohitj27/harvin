@@ -6,4 +6,9 @@ $(document).ready(function() {
     $('.chip').removeClass('active-chip-rev z-depth-4')
     $(this).addClass('active-chip-rev z-depth-4')
   })
+  let testContainer = $('#testimonials-container');
+  testContainer.click(() => {
+    this.css("display", "block");
+  })
+  // setTimeout(() => testContainer.css('display', 'inline-block'), 1000);
 })

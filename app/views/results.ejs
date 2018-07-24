@@ -29,7 +29,29 @@
 		</div>
 	</div>
 	<main>
-		<div id="testimonials-container" class="section">
+		
+		<!-- <div id="results-container" class="section">Test 3</div> -->
+		<div class="section" id="achiever-container">
+			<div class="container">
+				<div class="row">
+					<%if(students){%>
+						<%students.forEach(function(student, i){%>
+							<div class="col s12 m3 l2">
+								<div class="card achiever-card">
+									<div class="card-image">
+										<img src="<%=student.src%>">
+
+									</div>
+								</div>
+							</div>
+							<% }) %>
+								<% }%>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="testimonials-container" class="section" style="display: none;">
 			<div class="container">
 				<div class="row">
 						<div class="col s12 m6">
@@ -101,26 +123,6 @@
 			</div>
 		</div>
 
-		<!-- <div id="results-container" class="section">Test 3</div> -->
-		<div class="section" id="achiever-container">
-			<div class="container">
-				<div class="row">
-					<%if(students){%>
-						<%students.forEach(function(student, i){%>
-							<div class="col s12 m3 l2">
-								<div class="card achiever-card">
-									<div class="card-image">
-										<img src="<%=student.src%>">
-
-									</div>
-								</div>
-							</div>
-							<% }) %>
-								<% }%>
-				</div>
-
-			</div>
-		</div>
 
 
 	</main>
