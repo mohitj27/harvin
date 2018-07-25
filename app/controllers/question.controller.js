@@ -14,15 +14,15 @@ const getQuestions = function (query) {
   })
 }
 
-const deleteQuestion=(query)=>{
+const deleteQuestion = (query) => {
   console.log(query);
   var query = query ? query : {};
-  
-    return new Promise(function (resolve, reject) {
-      R_Question.findOneAndRemove(query)
-        .then(foundQuestions => resolve(foundQuestions))
-        .catch(err => reject(err))
-    })
+
+  return new Promise(function (resolve, reject) {
+    R_Question.findOneAndRemove(query)
+      .then(foundQuestions => resolve(foundQuestions))
+      .catch(err => reject(err))
+  })
 }
 
 
@@ -54,6 +54,8 @@ const checkAns = (questionId, answers) => {
 
       // remove those options which are not correct ans
       _.remove(options, (o) => !o.isAns)
+      // console.log("options", options);
+      // console.log("answers", answers);
 
       // if given ans are not of same length as corrects ans
       if (options.length !== answers.length) return resolve(false)

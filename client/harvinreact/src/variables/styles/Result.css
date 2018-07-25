@@ -12,6 +12,9 @@
     margin: 0px auto;
     /* display: inline-block; */
 }
+body{
+    background-color: white;
+}
 
 .gridMain{
     display: grid;
@@ -24,9 +27,14 @@ button{
     background-color: white;
     width: 50%;
     height: 35%;
-    font-size: 14px;
+    font-size: 2.3vh;
+    border: 2px solid ;
     border-radius: 20px;
     border-color: #29b38a;
+}
+button:hover{
+    background-color: #29b38a;
+    color: white;
 }
 td,th{
     width:30%;
@@ -37,6 +45,7 @@ td{
 }
 table{
     border-collapse: collapse;
+    font-size: 2vh;
 }
 tr{
     border: 2px solid #29b38a;
@@ -50,7 +59,7 @@ tr{
     width: 100%;
 }
 .tableHead{
-    border-left: 2px solid #29b38a ;
+    border-left: 1px solid #29b38a ;
 }
 td{
     text-align: center;
@@ -68,8 +77,61 @@ td{
     border-radius: 10px 0 0 10px;
     -moz-border-radius: 10px 0 0 10px;
 }
+.footer{
+    height: 30vh;
+    background-color: black;
+    margin-top: 5vh;
+    padding-top: 5vh;
+}
+
+.footerLogoImg{
+    width: 7vh;
+    height: 7vh;
+    margin: 2vh;
+}
+.footerLogo{
+    width: 33vh;
+    margin: 0px auto;
+}
+.footerText{
+   width: 11vh;
+   text-align: center;
+   float: left;
+   margin: 0px auto;
+}
+.footerTextHolder{
+    width: 33vh;
+   margin: 0px auto;
+}
 
 table tr:last-child td:first-child {
     /* border:2px solid #29b38a;
     border-bottom-left-radius: 10px; */
+}
+
+@media only screen and (max-width: 600px) {
+    button{
+        width: 100%;
+    }
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    button{
+        width: 80%;
+    }
+    
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    button{
+        width: 60%;
+    }
+    
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
 }

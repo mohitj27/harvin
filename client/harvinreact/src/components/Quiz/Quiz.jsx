@@ -197,6 +197,7 @@ class Quiz extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+    console.log('asd')
     let formData = new FormData();
     formData.append('maxMarks', this.state.test.maxMarks);
     formData.append('testId', this.state.test._id);
@@ -204,8 +205,9 @@ class Quiz extends Component {
     axios
       .post(`${url}/admin/answers/${this.state.test._id}`, formData)
       .then(res => {
+        console.log(res)
         alert(`You have scored ${res.data.marks}`);
-        window.location.replace('/HarvinQuiz/activity');
+        // window.location.href = ('/HarvinQuiz/applicant/result/?marks=' + res.data.marks);
 
       })
       .catch(err => console.log('err', err));

@@ -6,29 +6,48 @@ const middleware = require('../middleware');
 const validator = require('validator');
 const mongoose = require('mongoose');
 const userController = require('../controllers/user.controller');
+const testResultController = require('../controllers/testResult.controller.js');
+const testResultController2 = require('../controllers/testResult.controller2.js');
+const testResultController3 = require('../controllers/testResult.controller3.js');
 const router = express.Router();
-
+const util = require('util');
 router.post('/:id', middleware.isLoggedIn, async (req, res, next) => {
   try {
-    console.log('req', req.user);
+    // console.log('req', req.user);
+    // console.log('request', req.body);
+    // console.log('request.body.answers', req.body.answers);
+    // testResultController.resultTest(req.body.testId);
+    // res.json({
+    //   success: true,
+    //   marks: `100`,
+    // });
+
+    console.log("============================request body answer===============================================")
+    // console.log("req.body.answers", util.inspect(req.body.answers, { showHidden: false, depth: null }))
     const sectionAnswers = JSON.parse(req.body.answers);
-    const marksArray = [];
-    for (let answers of sectionAnswers) {
-      for (let ans of answers.answer) {
+    const sectionAnswerMine = util.inspect(req.body.answers, { showHidden: false, depth: null });
+    var unansweredQues = []
+    // sectionAnswerMine.forEach(e=>e.forEach)
+    // console.log("req.body.testId : " + req.body.testId + " ----" + sectionAnswerMine);
 
-        // console.log(ans)
-        let isCorrect = await quesController.checkAns(ans._id, ans.options);
-        marksArray.push(isCorrect);
+    testResultController3.resultTest(req.body.testId, sectionAnswers).then((finalResult) => {
+      var marks = 0;
+      finalResult.sections.forEach(sec => {
+        marks += sec.marks;
+      });
+      finalResult.mTotal = marks;
+      finalResult.testId = req.body.testId;
+      finalResult.userId = req.user.profile;
+      // console.log("---++++++++++++++++++++++++++++++++++ response recieved ---++++++++++++++++++++++++++++++++++ \n", finalResult)
+      var response = {
+        success: true,
+        marks: finalResult.mTotal,
+        res: finalResult
       }
-    }
-
-    const marks = marksArray.reduce((sum, isCorrect) => isCorrect ? sum + 1 : sum + 0, 0);
-    const insertMarksToUser = userController.insertMarksToUser(req.body.testId, `${marks} / ${marksArray.length}`, req.user);
-
-    res.json({
-      success: true,
-      marks: `${marks} / ${marksArray.length}`,
-    });
+      // console.log(req.user);
+      testResultController3.saveResultToDb(finalResult)
+      res.json(response);
+    })
   } catch (error) {
     console.log(error);
   }
