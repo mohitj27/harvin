@@ -35,7 +35,8 @@ import HtmlToReact from 'html-to-react';
 import quizStyles from '../../variables/styles/quizStyles';
 import update from 'immutability-helper';
 import _ from 'lodash';
-import url from './../../config'
+import url from './../../config';
+import * as actions from "../../actions";
 const HtmlToReactParser = HtmlToReact.Parser;
 
 
@@ -202,15 +203,21 @@ class Quiz extends Component {
     formData.append('maxMarks', this.state.test.maxMarks);
     formData.append('testId', this.state.test._id);
     formData.append('answers', JSON.stringify(this.state.sectionAnswers));
-    axios
-      .post(`${url}/admin/answers/${this.state.test._id}`, formData)
-      .then(res => {
-        console.log(res)
-        alert(`You have scored ${res.data.marks}`);
-        // window.location.href = ('/HarvinQuiz/applicant/result/?marks=' + res.data.marks);
+    let localUrl = `${url}/admin/answers/${this.state.test._id}`;
+    this.props.onSubmitResult(localUrl, formData)
+    // axios
+    //   .post(`${url}/admin/answers/${this.state.test._id}`, formData)
+    //   .then(res => {
+    //     console.log(res)
+    //     alert(`You have scored ${res.data.marks}`);
+    //     this.props.history.push({
+    //       pathname: '/other-page',
+    //       state: res.data
+    //     })
+    //     // window.location.href = ('/HarvinQuiz/applicant/result/?marks=' + res.data.marks);
 
-      })
-      .catch(err => console.log('err', err));
+    //   })
+    //   .catch(err => console.log('err', err));
   };
 
   getSectionNavigationContent = classes => {
@@ -515,14 +522,24 @@ class Quiz extends Component {
 Quiz.PropTypes = {
   quiz: PropTypes.object.isRequired,
 };
-function mapStateToProps(state) {
-  return {};
-}
 
-function mapDispatchToProps(dispatch) {
-  bindActionCreators({}, dispatch);
-  return;
-}
+const mapStateToProps = state => {
+  return {
+    result: state.result.result,
+    successMessage: state.notify.success,
+    errorMessage: state.notify.error,
+    notifyLoading: state.notify.loading,
+    notifyClear: state.notify.clear,
+    currentUser: state.auth.currentUser
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmitResult: (url, Sections) => dispatch(actions.submitResultAction(url, Sections)),
+    onClearToast: () => dispatch(actions.notifyClear())
+  };
+};
 
 export default Radium(connect(mapStateToProps, mapDispatchToProps)(
   withStyles(quizStyles)(Quiz))

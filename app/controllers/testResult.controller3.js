@@ -61,7 +61,8 @@ const checkAnswer = (question, options) => {
             return {
                 status: 1,
                 question: {
-                    _id: question._id
+                    _id: question._id,
+                    question: question
                 }
             }
         }
@@ -69,7 +70,8 @@ const checkAnswer = (question, options) => {
             status: -1,
             question: {
                 _id: question._id,
-                options: options
+                options: options,
+                question: question
             }
         }
     }
@@ -98,6 +100,7 @@ const sectionMarksEval = (secAnswered, sectionTest) => {
         posMark: sectionTest.posMarks,
         negMark: sectionTest.negMarks,
     };
+
     secAnswered.answer.forEach(answerSelected => {
         // console.log("answerSelected", answerSelected);
         var Question = sectionTest.questions.filter(e => e._id.toString() === answerSelected._id)[0];
@@ -107,7 +110,7 @@ const sectionMarksEval = (secAnswered, sectionTest) => {
         var checkAnswerStatus = checkAnswer(Question, answerSelected.options);
         // console.log("checkAnswerStatus", checkAnswerStatus)
         if (checkAnswerStatus.status === 0) {
-            Section.nUnAnsweredQues += 1
+            Section.nUnAnsweredQues += 1;
         }
         else if (checkAnswerStatus.status === 1) {
             Section.nRightQues += 1;
@@ -120,7 +123,7 @@ const sectionMarksEval = (secAnswered, sectionTest) => {
             Section.wrongAnswers.push(checkAnswerStatus.question);
         }
     })
-    // console.log("\nSection is :-----\n", Section);
+    // console.log("\nSection is :-----\n", util.inspect(Section, { showHidden: false, depth: null }));
     return Section;
 }
 
@@ -159,28 +162,33 @@ const resultTest = (testId, resultObj) => {
 }
 
 const saveResultToDb = (ResultObj) => {
-    console.log("---++++++++++++++++++++++++++++++++++ RESULT TO STORE ---++++++++++++++++++++++++++++++++++ \n", ResultObj,
-        "\n---+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n"
-    );
+    // console.log("---++++++++++++++++++++++++++++++++++ RESULT TO STORE ---++++++++++++++++++++++++++++++++++ \n", ResultObj,
+    //     "\n---+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n"
+    // );
 
-    let resultToStore = {
-        testId: ResultObj.testId,
-        sections: [],
-        mTotal: ResultObj.mTotal,
-        user: ResultObj.userId,
-        testId: ResultObj.testId
-    }
+    return new Promise((resolve, reject) => {
 
-    var Result = new NewResult(resultToStore);
+        let resultToStore = {
+            testId: ResultObj.testId,
+            sections: [],
+            mTotal: ResultObj.mTotal,
+            user: ResultObj.userId,
+            testId: ResultObj.testId
+        }
 
-    ResultObj.sections.forEach(e => {
-        Result.sections.push(e)
+        var Result = new NewResult(resultToStore);
+
+        ResultObj.sections.forEach(e => {
+            Result.sections.push(e)
+        })
+
+
+        Result.save().then((data) => {
+            console.log(data);
+            resolve(data);
+        })
     })
 
-
-    Result.save().then((data) => {
-        console.log(data)
-    })
 }
 
 module.exports = {

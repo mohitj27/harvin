@@ -39,14 +39,16 @@ router.post('/:id', middleware.isLoggedIn, async (req, res, next) => {
       finalResult.testId = req.body.testId;
       finalResult.userId = req.user.profile;
       // console.log("---++++++++++++++++++++++++++++++++++ response recieved ---++++++++++++++++++++++++++++++++++ \n", finalResult)
-      var response = {
-        success: true,
-        marks: finalResult.mTotal,
-        res: finalResult
-      }
       // console.log(req.user);
-      testResultController3.saveResultToDb(finalResult)
-      res.json(response);
+      testResultController3.saveResultToDb(finalResult).then((data) => {
+        var response = {
+          success: true,
+          marks: data.mTotal,
+          res: data
+        }
+        res.json(response);
+
+      })
     })
   } catch (error) {
     console.log(error);
