@@ -47,7 +47,7 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.TEST_RESULT_EVAL:
             return getResult(state, action);
-        case actionTypes.GET_TEST_LIST_SUCCESS:
+        case actionTypes.TEST_RESULT_EVAL_SUCCESS:
             return getResultSuccess(state, action);
         case actionTypes.TEST_RESULT_EVAL_ERROR:
             return getResultError(state, action);

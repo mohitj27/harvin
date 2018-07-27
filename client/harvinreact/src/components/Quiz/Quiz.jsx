@@ -15,6 +15,13 @@ import {
   ExpansionPanel,
   Card,
 } from 'material-ui';
+
+import { Route, withRouter } from 'react-router-dom';
+
+import { Redirect } from 'react-router-dom';
+
+
+
 import SnackBar from '@material-ui/core/Snackbar';
 import {
   KeyboardArrowLeft,
@@ -49,6 +56,7 @@ class Quiz extends Component {
     answers: [],
     test: 'test',
     lastQuestionOpened: '',
+    redirect: false,
     time: '',
   };
   constructor(props) {
@@ -204,20 +212,10 @@ class Quiz extends Component {
     formData.append('testId', this.state.test._id);
     formData.append('answers', JSON.stringify(this.state.sectionAnswers));
     let localUrl = `${url}/admin/answers/${this.state.test._id}`;
-    this.props.onSubmitResult(localUrl, formData)
-    // axios
-    //   .post(`${url}/admin/answers/${this.state.test._id}`, formData)
-    //   .then(res => {
-    //     console.log(res)
-    //     alert(`You have scored ${res.data.marks}`);
-    //     this.props.history.push({
-    //       pathname: '/other-page',
-    //       state: res.data
-    //     })
-    //     // window.location.href = ('/HarvinQuiz/applicant/result/?marks=' + res.data.marks);
-
-    //   })
-    //   .catch(err => console.log('err', err));
+    this.props.onSubmitResult(localUrl, formData);
+    this.setState((prevState) => {
+      return { redirect: true };
+    })
   };
 
   getSectionNavigationContent = classes => {
@@ -475,7 +473,8 @@ class Quiz extends Component {
       );
 
     return (
-      <StyleRoot>
+      <StyleRoot >
+        {this.state.redirect === true ? <Redirect to="/HarvinQuiz/applicant/result" /> : <span></span>}
         <Fragment>
           {errorSnackbar}
           {successSnackbar}

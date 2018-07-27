@@ -12,21 +12,18 @@ import {
 } from '../actions/notify_action';
 
 
-const submitResult = () => {
+const submitResult = () => ({
     type: TEST_RESULT_EVAL
-}
+})
 
-const resultSuccess = (result) => {
-    console.log("resultresultresultresultresultresult\n\n", result, "\n\nresultresultresultresultresultresult\n\n")
-    return {
-        type: TEST_RESULT_EVAL_SUCCESS,
-        payload: result
-    }
-}
+const resultSuccess = (result) => ({
+    type: TEST_RESULT_EVAL_SUCCESS,
+    payload: result
+})
 
-const submitResultError = () => {
+const submitResultError = () => ({
     type: TEST_RESULT_EVAL_ERROR
-}
+})
 
 export const submitResultAction = (url, formData) => async dispatch => {
     console.log(formData)
@@ -36,11 +33,10 @@ export const submitResultAction = (url, formData) => async dispatch => {
     axios
         .post(url, formData)
         .then(res => {
-            console.log("\n\n\nresresresresresresresresresresresresresresresres\n\n\n", res)
             alert(`You have scored ${res.data.marks}`);
             dispatch(resultSuccess(res.data));
             dispatch(notifySuccess("Result evaluated successfully"));
-            // window.location.href = ('/HarvinQuiz/applicant/result/?marks=' + res.data.marks);
+            // window.location.href = ('/HarvinQuiz/applicant/result/');
 
         })
         .catch(err => {
@@ -53,15 +49,5 @@ export const submitResultAction = (url, formData) => async dispatch => {
 
         });
 }
-    // try {
-    //     const resp = await axios.post(
-    //         url + "/admin/questions",
-    //         arrOfSections
-    //     );
-    // } catch (err) {
-    // } finally {
-    //     setTimeout(() => {
-    //         dispatch(notifyClear());
-    //     }, 3000);
-    // }
+
 

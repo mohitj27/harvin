@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import ResultStyle from "../../variables/styles/ResultStyle.jsx";
-// import "../../variables/styles/Result.css";
+import "../../variables/styles/Result.css";
 import { loginSubmit } from "../../actions/applicantAction";
 import { notifyClear } from '../../actions';
 import Radium, { StyleRoot } from 'radium';
@@ -29,10 +29,59 @@ class Result extends Component {
 
     };
 
-    render() {
-        const { classes } = this.props
+    static getDerivedStateFromProps(nextProps, prevState) {
+        console.log("getDerivedStateFromProps is working fine");
+    }
+
+
+    returnTableBody = () => {
+
+        console.log(Sections, "this.props.result.res.sections")
         console.log(this.props.location);
         console.log("this.props.router", this.props.router);
+        console.log("this.props", this.props);
+        let Sections = "";
+        let TableRows = "";
+        let Overall = <tr>
+            <td>Overall</td>
+            <td>{"marksAchieved"}</td>
+            <td>{"(marksAchieved / totalMarks) * 100"}</td>
+        </tr>
+        if (this.props.result.res === undefined) {
+            return <Redirect to="/HarvinQuiz/Tests" />
+            // Sections = []
+        }
+
+        Sections = this.props.result.res.sections;
+        console.log("Sections--------------------------------", Sections);
+        TableRows = (
+            <div>{
+                Sections.map((sec, index) =>
+                    (<tr key={index}>
+                        <td>{sec.section_name}</td>
+                        <td>{sec.marks}</td>
+                        <td>{(((sec.nUnAnsweredQues + sec.nAnsweredQues) * sec.posMark) / (sec.marks)) * 100 + "%"}</td>
+                    </tr>))}
+                <tr>
+                    <td>Overall</td>
+                    <td>{marksAchieved}</td>
+                    <td>{(marksAchieved / totalMarks) * 100}</td>
+                </tr>
+            </div>
+        );
+        console.log("TableRowsTableRowsTableRowsTableRowsTableRows", TableRows);
+
+        let marksAchieved = Sections.reduce((prev, curr) => prev.marks + curr.marks);
+        let totalMarks = Sections.reduce((prev, curr) => (prev.nUnAnsweredQues + prev.nAnsweredQues) * prev.posMark + (curr.nUnAnsweredQues + curr.nAnsweredQues) * curr.posMark);
+
+
+
+
+
+    }
+
+    render() {
+        const { classes } = this.props
         return (
             <StyleRoot>
                 <div>
@@ -55,26 +104,7 @@ class Result extends Component {
                                 <th className={classes.tableHead}>SCORE</th>
                                 <th className={classes.tableHead}>PERCENTILE</th>
                             </tr>
-                            <tr>
-                                <td>Verbal Ability</td>
-                                <td>Smith</td>
-                                <td>50</td>
-                            </tr>
-                            <tr>
-                                <td>Data Interpretation and Logical Resoning</td>
-                                <td>Jackson</td>
-                                <td>94</td>
-                            </tr>
-                            <tr>
-                                <td>Quantative Ability</td>
-                                <td>Jackson</td>
-                                <td>94</td>
-                            </tr>
-                            <tr>
-                                <td>Overall</td>
-                                <td>Jackson</td>
-                                <td>94</td>
-                            </tr>
+                            {this.returnTableBody()}
                         </table>
 
                     </div>
@@ -107,7 +137,7 @@ class Result extends Component {
 
 function mapStateToProps(state) {
     return {
-
+        result: state.result.result
     };
 }
 

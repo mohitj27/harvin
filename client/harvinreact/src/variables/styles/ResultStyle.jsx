@@ -23,7 +23,7 @@ const ResultStyle = {
         gridTemplateColumns: " repeat(2, 1fr)",
         gridTemplateRows: " 100px",
     },
-    button: {
+    buttonS: {
         margin: " 2%",
         backgroundColor: " white",
         width: " 50%",
@@ -33,7 +33,7 @@ const ResultStyle = {
         borderRadius: " 20px",
         borderColor: " #29b38a",
     },
-    button: {
+    buttonS: {
         ":hover": {
             backgroundColor: " #29b38a",
             color: " white",
