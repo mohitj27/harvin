@@ -37,7 +37,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => {
-      let token = localStorage.getItem('token');
+      let token = localStorage.getItem('quizToken');
       let decoded = jwt.decode(token);
       let date = Date.now() / 1000;
       // console.log("condition", token, decoded);

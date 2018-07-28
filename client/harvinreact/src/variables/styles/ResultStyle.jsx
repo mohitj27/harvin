@@ -32,9 +32,7 @@ const ResultStyle = {
         border: " 2px solid ",
         borderRadius: " 20px",
         borderColor: " #29b38a",
-    },
-    buttonS: {
-        ":hover": {
+        "hover": {
             backgroundColor: " #29b38a",
             color: " white",
         }

@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import ResultStyle from "../../variables/styles/ResultStyle.jsx";
-import "../../variables/styles/Result.css";
+// import "../../variables/styles/Result.css";
 import { loginSubmit } from "../../actions/applicantAction";
 import { notifyClear } from '../../actions';
 import Radium, { StyleRoot } from 'radium';
@@ -48,7 +48,8 @@ class Result extends Component {
             <td>{"(marksAchieved / totalMarks) * 100"}</td>
         </tr>
         if (this.props.result.res === undefined) {
-            return <Redirect to="/HarvinQuiz/Tests" />
+            // return <Redirect to="/HarvinQuiz/Tests" />
+            return;
             // Sections = []
         }
 
@@ -91,10 +92,10 @@ class Result extends Component {
                         <div className={classes.gridMain}>
 
                             <div>
-                                <button style={{ float: "right" }} className={classes.right}>SCORECARD</button>
+                                <button style={{ float: "right" }} className={classes.buttonS}>SCORECARD</button>
                             </div>
                             <div>
-                                <button style={{ float: "left" }} className={classes.left}>BACK TO LOGIN</button>
+                                <button style={{ float: "left" }} className={classes.buttonS}>BACK TO LOGIN</button>
                             </div>
                         </div>
                         <table style={{ width: "100%", margin: "0px auto" }}>

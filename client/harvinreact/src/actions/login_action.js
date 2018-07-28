@@ -33,7 +33,7 @@ const signupError = () => ({
 });
 
 const saveToken = (token) => {
-  window.localStorage.setItem('token', token)
+  window.localStorage.setItem('quizToken', token)
 };
 
 export const loginAction = user => async (dispatch) => {
@@ -49,7 +49,7 @@ export const loginAction = user => async (dispatch) => {
       const decodedToken = jwt.decode(token)
       dispatch(loginSuccess(decodedToken));
       dispatch(notifyActions.notifySuccess(res.data.msg));
-
+      window.location.href = "/HarvinQuiz"
     } else {
 
       dispatch(loginError());
