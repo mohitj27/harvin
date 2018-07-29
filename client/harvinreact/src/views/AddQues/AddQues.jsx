@@ -27,6 +27,10 @@ import { v4 } from "uuid";
 import HtmlToReact from "html-to-react";
 import update from "immutability-helper";
 import { loginAction, notifyClear } from "../../actions";
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 import * as _ from "lodash";
 const HtmlToReactParser = HtmlToReact.Parser;
 
@@ -36,11 +40,19 @@ class AddQues extends Component {
     questions: [],
     options: [],
     optionsHtml: [],
+    questionType: "",
     isQuestionAddedSuccessfully: false
   };
 
   handleChange = value => {
     this.setState({ text: value });
+  };
+
+  handleSelectChange = event => {
+    this.setState(function (prevState, props) {
+      return { [event.target.name]: event.target.value }
+    });
+    console.log("state changed questionType")
   };
 
   handleOptionsChange = (value, pos) => {
@@ -269,7 +281,27 @@ class AddQues extends Component {
             </Grid>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-        <Grid style={{ display: "flex" }} justify="center">
+        <Grid style={{ margin: "0px auto" }}>
+          <InputLabel htmlFor="selectAutoWidth">Question Type : </InputLabel>
+          <Select
+            value={this.state.questionType}
+            onChange={this.handleSelectChange}
+            input={<Input name="questionType" id="selectAutoWidth" />}
+            style={{ width: "20%" }}
+            autoWidth
+          >
+            <MenuItem value={"default"}>
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={"physics"}>physics</MenuItem>
+            <MenuItem value={"chemistry"}>chemistry</MenuItem>
+            <MenuItem value={"math"}>math</MenuItem>
+            <MenuItem value={"botany"}>botany</MenuItem>
+            <MenuItem value={"zoology"}>zoology</MenuItem>
+            <MenuItem value={"biology"}>biology</MenuItem>
+            <MenuItem value={"english"}>english</MenuItem>
+            <MenuItem value={"mixed"}>mixed</MenuItem>
+          </Select>
           <Button
             variant="raised"
             color="primary"
