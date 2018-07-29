@@ -34,6 +34,7 @@ export const submitResultAction = (url, formData) => async dispatch => {
         .post(url, formData)
         .then(res => {
             alert(`You have scored ${res.data.marks}`);
+            console.log("\n\n--------res.data------\n\n", res.data)
             dispatch(resultSuccess(res.data));
             dispatch(notifySuccess("Result evaluated successfully"));
             // window.location.href = ('/HarvinQuiz/applicant/result/');

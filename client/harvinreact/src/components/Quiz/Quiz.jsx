@@ -186,16 +186,25 @@ class Quiz extends Component {
 
         let htmlToReactParser = new HtmlToReactParser();
         let reactElement = htmlToReactParser.parse(option.text);
+        // reactElement.props.style = {
+        //   float: "left",
+        //   display: "inline-block"
+        // }
+        // reactElement.props.style.display = "inline-block"
+        console.log(reactElement);
         return (
           <div>
-            <Checkbox
-              checked={checked}
-              onChange={this.handleChangeQuizOptionChange}
-              value={option.text}
-              id={option._id}
-            />
+            <div style={{ display: "inline-block" }}>
+              <Checkbox
+                checked={checked}
+                onChange={this.handleChangeQuizOptionChange}
+                value={option.text}
+                id={option._id}
+              />
 
-            {reactElement}
+              <span style={{ display: "inline-block" }}>{reactElement}</span>
+            </div>
+            <br />
           </div>
         );
       });
@@ -206,7 +215,7 @@ class Quiz extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log('asd')
+    // console.log('asd')
     let formData = new FormData();
     formData.append('maxMarks', this.state.test.maxMarks);
     formData.append('testId', this.state.test._id);
@@ -291,8 +300,8 @@ class Quiz extends Component {
       else badge = ``;
 
       return (
-        <Fragment>
-          <button
+        <Fragment style={{}}>
+          <button style={{ display: "inline-block" }}
             id={ans._id}
             value={ans._id}
             key={ans._id}
@@ -475,7 +484,7 @@ class Quiz extends Component {
     return (
       <StyleRoot >
         {this.state.redirect === true ? <Redirect to="/HarvinQuiz/applicant/result" /> : <span></span>}
-        <Fragment>
+        <Fragment style={{ height: "100% auto" }}>
           {errorSnackbar}
           {successSnackbar}
           {processingSnackbar}

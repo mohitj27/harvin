@@ -39,7 +39,7 @@ class Dashboard extends React.Component {
   state = {
     test: '',
     haveReadAllInstructions: false,
-    isTestStarted: true,
+    isTestStarted: false,
   };
 
   handleChange = () => {
