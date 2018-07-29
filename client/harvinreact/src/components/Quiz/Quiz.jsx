@@ -194,15 +194,16 @@ class Quiz extends Component {
         console.log(reactElement);
         return (
           <div>
-            <div style={{ display: "inline-block" }}>
+            <div style={{ display: "inline-block", width: "100%" }}>
               <Checkbox
                 checked={checked}
                 onChange={this.handleChangeQuizOptionChange}
                 value={option.text}
                 id={option._id}
+                style={{ float: "left", width: "15%" }}
               />
 
-              <span style={{ display: "inline-block" }}>{reactElement}</span>
+              <span style={{ display: "inline-block", float: "left", width: "80%" }}>{reactElement}</span>
             </div>
             <br />
           </div>
