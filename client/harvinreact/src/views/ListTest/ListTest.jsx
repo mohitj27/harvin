@@ -68,6 +68,13 @@ class EnhancedTableHead extends React.Component {
     this.props.onRequestSort(event, property);
   };
 
+  handleDelete = (e, selected) => {
+    e.preventDefault();
+    // this.props.deleteDoctors(selected)
+    console.log("\nselected ---------:", selected)
+  };
+
+
   render() {
     const {
       onSelectAllClick,
@@ -155,8 +162,12 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
-
+  const { numSelected, classes, selected, } = props;
+  this.handleDelete = (e, selected) => {
+    e.preventDefault();
+    // this.props.deleteDoctors(selected)
+    console.log("\nselected ---------:", selected)
+  };
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -176,8 +187,8 @@ let EnhancedTableToolbar = props => {
       <div className={classes.actions}>
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <Delete />
+            <IconButton aria-label="Delete" >
+              <Delete onClick={(e) => this.handleDelete(e, selected)} />
             </IconButton>
           </Tooltip>
         ) : (
@@ -244,6 +255,11 @@ class Stats extends Component {
     return null;
   }
 
+  handleDeleteSuccess = () => {
+    console.log("something will happen here ;;;;;;;;;")
+    this.setState({ selected: [], selectedDoctors: [] })
+  };
+
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = "desc";
@@ -265,15 +281,16 @@ class Stats extends Component {
       this.setState({ selected: this.state.data.map(n => n.id) });
       return;
     }
+    console.log("checked IS :", checked);
 
     this.setState({ selected: [] });
   };
 
-  handleClick = (event, id) => {
+  handleClick = (event, id, _id, n) => {
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
-
+    console.log("id IS:", id, "\n_id IS:", _id, "\n n IS:", n)
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
@@ -289,6 +306,14 @@ class Stats extends Component {
 
     this.setState({ selected: newSelected });
   };
+
+
+  handleDelete = (e, selected) => {
+    e.preventDefault();
+    // this.props.deleteDoctors(selected)
+    console.log("\nselected ---------:", selected)
+  };
+
 
   handleChangePage = (event, page) => {
     this.setState({ page });
@@ -333,6 +358,7 @@ class Stats extends Component {
               order={order}
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
+              handleDeleteSuccess={() => this.handleDeleteSuccess()}
               onRequestSort={this.handleRequestSort}
               rowCount={data.length}
               classes={classes}
@@ -346,7 +372,7 @@ class Stats extends Component {
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleClick(event, n.id)}
+                      onClick={event => this.handleClick(event, n.id, n._id, n)}
                       role="checkbox"
                       aria-checked={isSelected}
                       tabIndex={-1}

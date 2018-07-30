@@ -28,7 +28,11 @@ const loginStyles = {
   },
   centerItem: {
     padding: "10px"
-  }
+  },
+  optionStyle: {
+    textAlign: "center",
+    border: "1px solid #13b38b "
+  },
 };
 
 export default loginStyles;

@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import "react-quill/dist/quill.snow.css";
 import { Redirect, withRouter } from "react-router-dom";
+import classNames from "classnames";
+import PropTypes from "prop-types";
 import {
   Button,
   Grid,
@@ -50,7 +52,7 @@ class AddQues extends Component {
 
   handleSelectChange = event => {
     this.setState(function (prevState, props) {
-      return { [event.target.name]: event.target.value }
+      return { questionType: event.target.value }
     });
     console.log("state changed questionType")
   };
@@ -103,6 +105,7 @@ class AddQues extends Component {
       return opt;
     });
     formData.append("options", JSON.stringify(updatedOptions));
+    // formData.append("subject", JSON.stringify(this.state.questionType))
     this.props.onCreateQues(formData);
   };
 
@@ -179,6 +182,14 @@ class AddQues extends Component {
 
   render() {
     let addButton = null;
+    let optionStyle = {
+      // all: "initial",
+      // "*": {
+      //   all: "unset"
+      // },
+      textAlign: "center",
+      borderBottom: "1px solid rgb(175, 175, 175)"
+    }
 
     let successSnackbar =
       this.props.successMessage !== "" ? (
@@ -281,27 +292,28 @@ class AddQues extends Component {
             </Grid>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-        <Grid style={{ margin: "0px auto" }}>
-          <InputLabel htmlFor="selectAutoWidth">Question Type : </InputLabel>
+        {/* <div style={{ margin: "0px auto" }}>
+          <label>Question Type : </label>
           <Select
             value={this.state.questionType}
             onChange={this.handleSelectChange}
-            input={<Input name="questionType" id="selectAutoWidth" />}
             style={{ width: "20%" }}
-            autoWidth
           >
-            <MenuItem value={"default"}>
+            <option style={optionStyle} value={"default"}>
               <em>None</em>
-            </MenuItem>
-            <MenuItem value={"physics"}>physics</MenuItem>
-            <MenuItem value={"chemistry"}>chemistry</MenuItem>
-            <MenuItem value={"math"}>math</MenuItem>
-            <MenuItem value={"botany"}>botany</MenuItem>
-            <MenuItem value={"zoology"}>zoology</MenuItem>
-            <MenuItem value={"biology"}>biology</MenuItem>
-            <MenuItem value={"english"}>english</MenuItem>
-            <MenuItem value={"mixed"}>mixed</MenuItem>
+            </option>
+            <option style={optionStyle} value={"physics"}>physics</option>
+            <option style={optionStyle} value={"chemistry"}>chemistry</option>
+            <option style={optionStyle} value={"math"}>math</option>
+            <option style={optionStyle} value={"botany"}>botany</option>
+            <option style={optionStyle} value={"zoology"}>zoology</option>
+            <option style={optionStyle} value={"biology"}>biology</option>
+            <option style={optionStyle} value={"english"}>english</option>
+            <option style={optionStyle} value={"mixed"}>mixed</option>
           </Select>
+        </div> */}
+        <Grid style={{ margin: "0px auto" }}>
+
           <Button
             variant="raised"
             color="primary"
