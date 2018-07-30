@@ -22,12 +22,16 @@ const addTest = function (testObj) {
   })
 }
 
-const removeTests = test => {
+const removeTests = tests => {
   return new Promise((resolve, reject) => {
-    let query = test || {};
-    R_Test.remove(query)
-      .then(() => resolve())
-      .catch(err => reject(err));
+    R_Test.deleteMany({ _id: { $in: tests } }, function (err) {
+      if (!err) {
+        return resolve(true)
+      }
+      else {
+        reject()
+      }
+    })
   });
 };
 

@@ -1,6 +1,6 @@
 export { sendDeptOrder } from "./order_action";
 
-export { sendCreatedTest, fetchTestList, fetchTest } from "./test_action";
+export { sendCreatedTest, fetchTestList, fetchTest, deleteTests } from "./test_action";
 export { getAllQuestions, createQuesAction, deleteQuesAction } from "./question_action";
 export { getBatches } from "./batch_action";
 export {

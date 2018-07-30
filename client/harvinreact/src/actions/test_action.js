@@ -9,6 +9,10 @@ import {
     SEND_CREATED_TEST,
     SEND_CREATED_TEST_SUCCESS,
     SEND_CREATED_TEST_ERROR,
+    DELETE_TEST,
+    DELETE_TEST_SUCCESS,
+    DELETE_TEST_ERROR,
+
 } from './types'
 import {
     notifyLoading,
@@ -95,6 +99,15 @@ const sendCreatedTestError = () => ({
     type: SEND_CREATED_TEST_ERROR
 })
 
+const questionsDeletedSuccess = (tests) => ({
+    type: DELETE_TEST_SUCCESS,
+    payload: tests,
+})
+
+const questionsDeletedError = () => ({
+    type: DELETE_TEST_ERROR
+})
+
 export const sendCreatedTest = test => async (dispatch) => {
 
     dispatch(sendCreatedTestAction());
@@ -110,6 +123,27 @@ export const sendCreatedTest = test => async (dispatch) => {
         }
     } catch (err) {
         const errMsg = err.response ? err.response.data.msg : 'Error while getting the test';
+        dispatch(notifyError(errMsg))
+    } finally {
+        return dispatch(notifyClear())
+    }
+}
+
+
+export const deleteTests = tests => async (dispatch) => {
+
+    dispatch(notifyLoading());
+    try {
+        const res = await axios.post(`${url}/admin/tests/deleteByIds`, tests);
+        console.log('deleted data is ', res.data);
+        if (res.data.success) {
+            dispatch(questionsDeletedSuccess(res.data.tests));
+        } else {
+            dispatch(questionsDeletedError());
+            dispatch(notifyError(res.data.msg));
+        }
+    } catch (err) {
+        const errMsg = err.response ? err.response.data.msg : 'Error while deleting tests';
         dispatch(notifyError(errMsg))
     } finally {
         return dispatch(notifyClear())

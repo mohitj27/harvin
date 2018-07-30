@@ -68,13 +68,6 @@ class EnhancedTableHead extends React.Component {
     this.props.onRequestSort(event, property);
   };
 
-  handleDelete = (e, selected) => {
-    e.preventDefault();
-    // this.props.deleteDoctors(selected)
-    console.log("\nselected ---------:", selected)
-  };
-
-
   render() {
     const {
       onSelectAllClick,
@@ -165,7 +158,7 @@ let EnhancedTableToolbar = props => {
   const { numSelected, classes, selected, } = props;
   this.handleDelete = (e, selected) => {
     e.preventDefault();
-    // this.props.deleteDoctors(selected)
+    props.onDeleteIconClick();
     console.log("\nselected ---------:", selected)
   };
   return (
@@ -308,16 +301,17 @@ class Stats extends Component {
   };
 
 
-  handleDelete = (e, selected) => {
-    e.preventDefault();
-    // this.props.deleteDoctors(selected)
-    console.log("\nselected ---------:", selected)
-  };
-
-
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
+
+  handleDeleteIconClick = () => {
+    let confirmBox = window.confirm("Are you sure want to delete " + this.state.selected.length + " test enteries")
+    if (confirmBox) {
+      this.props.onDeleteTest(this.state.selected)
+      console.log(this.state.selected, "this.state.selected")
+    }
+  }
 
   handleChangeRowsPerPage = event => {
     this.setState({ rowsPerPage: event.target.value });
@@ -350,7 +344,7 @@ class Stats extends Component {
 
     const table = (
       <div className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} onDeleteIconClick={() => this.handleDeleteIconClick()} />
         <div className={classes.tableWrapper}>
           <Table className={classes.noPad}>
             <EnhancedTableHead
@@ -504,6 +498,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onTestListFetch: () => dispatch(actions.fetchTestList()),
+    onDeleteTest: (tests) => dispatch(actions.deleteTests(tests)),
     onClearToast: () => dispatch(notifyClear())
   };
 };

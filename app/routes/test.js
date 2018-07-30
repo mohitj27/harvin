@@ -30,6 +30,7 @@ router.post("/", middleware.isLoggedIn, async (req, res, next) => {
   }
 });
 
+
 router.get("/:id", async (req, res, next) => {
   const testId = req.params.id || ''
   if (!testId || !validator.isMongoId(testId))
@@ -101,6 +102,34 @@ router.get("/", middleware.isLoggedIn, async (req, res, next) => {
       success: true,
       tests: foundTests.reverse()
     });
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.post("/deleteByIds", middleware.isLoggedIn, async (req, res, next) => {
+  const body = req.body;
+  const user = req.user;
+  const date = Date.now();
+  console.log("body", body);
+  console.log('user', user._id);
+
+  try {
+    testController.removeTests(req.body).then(() => {
+      return res.json({
+        success: true,
+        msg: 'Test generated successfully. Test id is '
+      })
+    })
+      .catch(e => next(e))
+    // const addedTest = await testController.addTest({
+    //   created: date,
+    //   createdBy: user._id,
+    //   name: body.name,
+    //   time: body.time,
+    //   maxMarks: body.maxMarks,
+    //   sections: JSON.parse(body.sections)
+    // });
   } catch (e) {
     next(e);
   }
