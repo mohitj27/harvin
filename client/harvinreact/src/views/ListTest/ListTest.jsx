@@ -309,6 +309,7 @@ class Stats extends Component {
     let confirmBox = window.confirm("Are you sure want to delete " + this.state.selected.length + " test enteries")
     if (confirmBox) {
       this.props.onDeleteTest(this.state.selected)
+      console.log(this.state)
       console.log(this.state.selected, "this.state.selected")
     }
   }

@@ -47,6 +47,9 @@ const ResultStyle = {
     tableHead: {
         borderLeft: " 1px solid #29b38a ",
     },
+    centerContent: {
+        textAlign: "center",
+    },
     divButton: {
         /* float:" left, "*/
         /* display:" inline-block "*/

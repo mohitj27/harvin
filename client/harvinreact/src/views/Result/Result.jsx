@@ -36,7 +36,8 @@ class Result extends Component {
 
     returnTableBody = () => {
 
-        console.log(Sections, "this.props.result.res.sections")
+
+        console.log(this.props.result, "this.props.result.res.sections")
         console.log(this.props.location);
         console.log("this.props.router", this.props.router);
         console.log("this.props", this.props);
@@ -54,28 +55,40 @@ class Result extends Component {
         }
 
         Sections = this.props.result.res.sections;
+        let marksAchieved = Sections.reduce((prev, curr) => (+prev.marks) + (+curr.marks));
+        let totalMarks = Sections.reduce((prev, curr) => ((+prev.nUnAnsweredQues) + (+prev.nAnsweredQues)) * (+prev.posMark) + ((+curr.nUnAnsweredQues) + (+curr.nAnsweredQues)) * (+curr.posMark));
+
+
         console.log("Sections--------------------------------", Sections);
         TableRows = (
-            <div>{
-                Sections.map((sec, index) =>
-                    (<tr key={index}>
-                        <td>{sec.section_name}</td>
-                        <td>{sec.marks}</td>
-                        <td>{(((sec.nUnAnsweredQues + sec.nAnsweredQues) * sec.posMark) / (sec.marks)) * 100 + "%"}</td>
-                    </tr>))}
-                <tr>
-                    <td>Overall</td>
-                    <td>{marksAchieved}</td>
-                    <td>{(marksAchieved / totalMarks) * 100}</td>
+            <table style={{ width: "100%", margin: "0px auto" }}>
+
+                <tr className={this.props.classes.mainHeadRow}>
+                    <th className={this.props.classes.tableHead}>SECTION TITLE</th>
+                    <th className={this.props.classes.tableHead}>SCORE</th>
+                    <th className={this.props.classes.tableHead}>PERCENTILE</th>
                 </tr>
-            </div>
+                {
+
+                    Sections.map((sec, index) =>
+                        (<tr key={index}>
+                            <td className={this.props.classes.centerContent}>{sec.section_name}</td>
+                            <td className={this.props.classes.centerContent}>{sec.marks}</td>
+                            {/* <td className={this.props.classes.centerContent}>{((+sec.marks) / (((+sec.nUnAnsweredQues + (+sec.nAnsweredQues)) * (+sec.posMark)))) * 100 + "%"}</td> */}
+                            <td className={this.props.classes.centerContent}>{(((sec.marks / (((+sec.nAnsweredQues) + (+sec.nUnAnsweredQues)) * (+sec.posMark))) * 100) + "").substring(0, 5) + "%"}</td>
+                        </tr>))}
+                <tr>
+                    <td className={this.props.classes.centerContent}>Overall</td>
+                    <td className={this.props.classes.centerContent}>{marksAchieved}</td>
+                    <td className={this.props.classes.centerContent}>{((marksAchieved / totalMarks * 100) + "").substring(0, 5) + "%"}</td>
+                    {/* <td className={this.props.classes.centerContent}>{(marksAchieved / totalMarks) * 100}</td> */}
+                </tr>
+            </table>
         );
         console.log("TableRowsTableRowsTableRowsTableRowsTableRows", TableRows);
 
-        let marksAchieved = Sections.reduce((prev, curr) => prev.marks + curr.marks);
-        let totalMarks = Sections.reduce((prev, curr) => (prev.nUnAnsweredQues + prev.nAnsweredQues) * prev.posMark + (curr.nUnAnsweredQues + curr.nAnsweredQues) * curr.posMark);
 
-
+        return TableRows;
 
 
 
@@ -83,6 +96,7 @@ class Result extends Component {
 
     render() {
         const { classes } = this.props
+        console.log("this.returnTableBody()", this.returnTableBody())
         return (
             <StyleRoot>
                 <div>
@@ -98,15 +112,8 @@ class Result extends Component {
                                 <button style={{ float: "left" }} className={classes.buttonS}>BACK TO LOGIN</button>
                             </div>
                         </div>
-                        <table style={{ width: "100%", margin: "0px auto" }}>
 
-                            <tr className={classes.mainHeadRow}>
-                                <th className={classes.tableHead}>SECTION TITLE</th>
-                                <th className={classes.tableHead}>SCORE</th>
-                                <th className={classes.tableHead}>PERCENTILE</th>
-                            </tr>
-                            {this.returnTableBody()}
-                        </table>
+                        {this.returnTableBody()}
 
                     </div>
                     <div className={classes.footer}>

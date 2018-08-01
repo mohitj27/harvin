@@ -137,7 +137,7 @@ export const deleteTests = tests => async (dispatch) => {
         const res = await axios.post(`${url}/admin/tests/deleteByIds`, tests);
         console.log('deleted data is ', res.data);
         if (res.data.success) {
-            dispatch(questionsDeletedSuccess(res.data.tests));
+            dispatch(questionsDeletedSuccess(tests));
         } else {
             dispatch(questionsDeletedError());
             dispatch(notifyError(res.data.msg));
